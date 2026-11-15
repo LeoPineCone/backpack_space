@@ -33,6 +33,8 @@ export interface Bot {
   focus: string[];
   /** way to win the bot commits to (a path of its hero), "" = none */
   path: string;
+  /** offers frozen for the next shop */
+  frozen: (Offer | null)[];
   log: BotLog[];
 }
 
@@ -41,7 +43,7 @@ export function newBot(data: GameData, hero: string, rng: Rng, path?: string): B
   const tags: string[] = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic"];
   const focus = [rng.pick(tags), rng.pick(tags)];
   const roll = rng.next(), any = h.paths.length ? rng.pick(h.paths).id : "";
-  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), bench: [], focus, path: path ?? (roll < 0.75 ? any : ""), log: [] };
+  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), bench: [], focus, path: path ?? (roll < 0.75 ? any : ""), frozen: [], log: [] };
 }
 
 /** Does the item belong to a path focus (tag, status, kind of action or item id)? */
@@ -103,7 +105,8 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
   bot.inv = [...bot.inv, ...bot.bench]; bot.bench = [];
   bot.gold += rules.goldPerRound[round - 1]!;
   const size = (ids: readonly string[]) => ids.reduce((s, id) => s + data.items.get(id)!.size, 0);
-  let offers: (Offer | null)[] = rollOffers(data, bot.hero, round, rng, bot.inv);
+  let offers: (Offer | null)[] = rollOffers(data, bot.hero, round, rng, bot.inv, bot.frozen);
+  for (const o of offers) if (o) o.frozen = false;
   const maxRerolls = 2 + Math.floor(round / 3);
   for (let step = 0; step < 30; step++) {
     let best: { slot: number; ratio: number; drop: number } | null = null;
@@ -144,6 +147,10 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
       offers = rollOffers(data, bot.hero, round, rng, bot.inv);
     } else break;
   }
+  // freeze what it wanted but could not pay, best first
+  const wanted = offers.map((o, slot) => ({ o, slot, v: o && !data.items.get(o.item)!.isBag && !opts.randomBuys ? worth(data, bot, o.item, opts) / Math.max(1, o.price) : 0 }))
+    .filter((x) => x.o && x.o.price > bot.gold && x.v >= 1.1).sort((x, y) => y.v - x.v).slice(0, rules.shop.freezeSlots);
+  bot.frozen = offers.map((o, slot) => (o && wanted.some((x) => x.slot === slot) ? { ...o, frozen: true } : null));
   layoutBot(data, bot, rng, opts, log);
   log.goldLeft = bot.gold;
 }

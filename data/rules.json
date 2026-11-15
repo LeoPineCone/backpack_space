@@ -34,8 +34,8 @@
     17
   ],
   "shop": {
-    "slots": 5,
-    "bagOfferPct": 16,
+    "slots": 6,
+    "bagOfferPct": 22,
     "recipeOfferPct": 12,
     "rerollCost": 1,
     "heroOfferPct": 30,
@@ -115,7 +115,10 @@
         "epic": 30,
         "legendary": 20
       }
-    ]
+    ],
+    "maxBags": 1,
+    "affinityPct": 100,
+    "freezeSlots": 2
   },
   "specials": [
     {

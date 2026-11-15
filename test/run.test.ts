@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, buy, combine, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, reroll, toggleFreeze, buy, combine, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -80,5 +80,26 @@ describe("recipe partners", () => {
     // nothing owned, nothing to lean towards; another hero's parts never show up
     expect(recipePartners(data, "rook", 1, [])).toHaveLength(0);
     expect(recipePartners(data, "rook", 6, ["mushroom_cluster"]).some((i) => i.hero && i.hero !== "rook")).toBe(false);
+  });
+  it("keeps frozen offers through a reroll and into the next round, and never shows more bags than allowed", () => {
+    const rng = new Rng(4);
+    const s = newRun(data, "quill", rng);
+    s.gold = 50;
+    const kept = s.offers[2]!.item;
+    expect(toggleFreeze(s, data, 2)).toBe(true);
+    reroll(s, data, rng);
+    expect(s.offers[2]!.item).toBe(kept);
+    finishRound(s, data, true, rng);
+    expect(s.offers[2]!.item).toBe(kept);
+    expect(s.offers.length).toBe(data.rules.shop.slots);
+    for (let i = 0; i < data.rules.shop.freezeSlots; i++) toggleFreeze(s, data, i === 2 ? 5 : i);
+    expect(s.offers.filter((o) => o?.frozen).length).toBe(data.rules.shop.freezeSlots);
+    for (let i = 0; i < 200; i++) expect(rollOffers(data, "rook", 6, rng).filter((o) => data.items.get(o.item)!.isBag).length).toBeLessThanOrEqual(data.rules.shop.maxBags);
+  });
+  it("offers more of what the player already carries", () => {
+    const rng = new Rng(5);
+    const pets = ["space_pup", "burrow_rat", "guard_goose", "space_pup"];
+    const count = (owned: string[]) => { let n = 0; for (let i = 0; i < 400; i++) for (const o of rollOffers(data, "quill", 6, rng, owned)) if (data.items.get(o.item)!.tags.includes("pet")) n++; return n; };
+    expect(count(pets)).toBeGreaterThan(count([]) * 1.2);
   });
 });

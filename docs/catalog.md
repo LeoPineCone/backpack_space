@@ -31,7 +31,7 @@ Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 Pets. Her animals act the moment the fight begins and are quicker than anyone else's.
 
-- Your pets: 30 % faster, starts 100 % charged.
+- Your pets: 25 % faster, starts 100 % charged.
 - When one of your pets activates: heal 2.
 - You: +12 max health per pet in your backpack (max 12×).
 - Starts with: Field Pack, Pet Carrier, Space Pup, Treat Pouch.
@@ -495,38 +495,38 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Sun Shard | common | 2 | `#` | weapon | 3–4 damage every 1.8 s. On hit: inflict 2 Burn. | → Sunblade, Twin Suns |
+| Sun Shard | common | 2 | `#` | weapon | 3–4 damage every 1.7 s. On hit: inflict 2 Burn. | → Sunblade, Twin Suns |
 | Prayer Bell | common | 2 | `#` | accessory | Every star phase: heal 18. | → Chime of Hours |
 | Votive Candle | common | 2 | `#` | accessory | Every star phase: inflict 2 Burn. Every star phase: heal 6. | → Sacred Flame |
 | Sundial | common | 3 | `#` | accessory | Your items: 20 % faster (during Red Giant/Collapse/Supernova). | → Chime of Hours |
 | Flare Catcher | common | 3 | `##` | accessory, mechanical | When Flare begins: gain 3 Power. | → Solstice Engine, Canticle |
 | Ember Censer | common | 3 | `#/#` | accessory | Activates every 3.2 s. On use: inflict 2 Burn. | → Helios Rod |
 | Hymn Scroll | common | 3 | `##` | accessory | Every star phase: remove 2 of your debuffs. Every star phase: gain 11 Shield. | → Litany |
-| Solar Dagger | common | 3 | `#` | weapon | 1–2 damage every 1.5 s. On hit: deal 1 damage per 3 Burn on the enemy (max 5×). | → Twin Suns |
+| Solar Dagger | common | 3 | `#` | weapon | 1–2 damage every 1.4 s. On hit: deal 1 damage per 3 Burn on the enemy (max 5×). | → Twin Suns |
 | Eclipse Veil | common | 4 | `##` | armor | Every star phase: gain 22 Shield. | → Umbral Mantle |
 | Comet Rosary | rare | 5 | `###` | accessory | Every star phase: remove 3 of your debuffs. Every star phase: gain 2 Regen. | → Litany |
 | Dawn Chime | rare | 5 | `#` | accessory | Battle start: gain 4 Overclock. Battle start: gain 17 Shield. | → Solstice Engine |
 | Mirror of Dusk | rare | 5 | `#/#` | armor | When a weapon hits you: inflict 1 Jam (20 % chance). Every star phase: gain 14 Shield. | → Total Eclipse |
 | Pyre Lantern | rare | 5 | `*#*` | accessory | When a starred weapon activates: inflict 1 Burn (50 % chance). | → Sacred Flame |
-| Corona Staff | rare | 6 | `#/#/#` | weapon | 6–8 damage every 2.6 s. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | → Helios Rod |
+| Corona Staff | rare | 6 | `#/#/#` | weapon | 6–8 damage every 2.4 s. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | → Helios Rod |
 | Star Psalter | rare | 6 | `##` | accessory | Every star phase: gain 1 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | → Canticle |
 | Red Giant Heart | epic | 8 | `##/##` | accessory | When Red Giant begins: heal 42. When Red Giant begins: inflict 8 Burn. You: +28 max health. | → Dying Star Scepter |
 | Eclipse Orb | epic | 8 | `##` | accessory | Every star phase: inflict 3 Jam. Every star phase: inflict 3 Cryo. | → Total Eclipse |
-| Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage every 3 s. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
+| Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage every 2.8 s. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
 | White Dwarf | epic | 9 | `##/##` | armor | Every star phase: gain 14 Shield. When Collapse begins: gain 94 Shield. You: +42 max health. | → Event Horizon |
 | Supernova Seed | legendary | 12 | `##` | accessory | When Supernova begins: deal 120 damage. Every star phase: inflict 5 Burn. Every star phase: gain 1 Power. |  |
 | Nova Crown | artifact | 0 | `##` | accessory | When Supernova begins: gain 112 Shield. When Supernova begins: gain 6 Power. Every star phase: inflict 6 Burn. |  |
 | Eternal Dawn | artifact | 0 | `#` | accessory | Every star phase: gain 1 Power. Every star phase: gain 3 Overclock. |  |
 | Stellar Lens | artifact | 0 | `.*./*#*/.*.` | accessory | When a starred weapon activates: inflict 1 Burn (60 % chance). Starred weapons: +10 % crit. |  |
-| Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 3–5 damage every 1.9 s. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |
+| Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 3–5 damage every 1.8 s. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |
 | Chime of Hours | crafted (step 1) | 5 | `##` | accessory | Every star phase: heal 14. Every star phase: gain 8 Shield. Your items: 20 % faster (during Red Giant/Collapse/Supernova). | = Prayer Bell + Sundial |
-| Twin Suns | crafted (step 1) | 5 | `#/#` | weapon | 2–4 damage every 1.2 s. On hit: inflict 1 Burn (50 % chance). On hit: deal 1 damage per 3 Burn on the enemy (max 6×). | = Sun Shard + Solar Dagger |
+| Twin Suns | crafted (step 1) | 5 | `#/#` | weapon | 2–4 damage every 1.1 s. On hit: inflict 1 Burn (50 % chance). On hit: deal 1 damage per 3 Burn on the enemy (max 6×). | = Sun Shard + Solar Dagger |
 | Sacred Flame | crafted (step 1) | 7 | `*#*` | accessory | When a starred weapon activates: inflict 1 Burn (70 % chance). Every star phase: inflict 4 Burn. Every star phase: heal 11. | = Votive Candle + Pyre Lantern |
 | Litany | crafted (step 1) | 8 | `###` | accessory | Every star phase: remove 5 of your debuffs. Every star phase: gain 22 Shield. Every star phase: gain 3 Regen. | = Hymn Scroll + Comet Rosary |
-| Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage every 2.3 s. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
+| Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage every 2.1 s. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
 | Canticle | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 1 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
 | Umbral Mantle | crafted (step 1) | 12 | `##/##` | armor | Every star phase: gain 41 Shield. Battle start: inflict 2 Jam. | = Eclipse Veil + Force Bubble; → Event Horizon |
 | Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 4 Jam. Every star phase: inflict 3 Cryo. Every star phase: gain 17 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
-| Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.6 s. Every star phase: gain 1 Power. Every star phase: gain 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
-| Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 8–11 damage every 2.1 s. On hit: inflict 3 Burn. When Red Giant begins: heal 56. When Red Giant begins: inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
+| Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.4 s. Every star phase: gain 1 Power. Every star phase: gain 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
+| Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 8–11 damage every 2 s. On hit: inflict 3 Burn. When Red Giant begins: heal 56. When Red Giant begins: inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
 | Event Horizon | crafted (step 2) | 21 | `##/##/##` | armor | Every star phase: gain 68 Shield. When Collapse begins: gain 119 Shield. You: +70 max health. Battle start: inflict 3 Jam. | = White Dwarf + Umbral Mantle |

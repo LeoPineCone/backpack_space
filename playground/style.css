@@ -65,7 +65,8 @@ h1, h2, h3, p { margin: 0; }
 .mini { --cell: 11px; } .mini .pc.et { border-top-width: 1px; } .mini .pc.er { border-right-width: 1px; } .mini .pc.eb { border-bottom-width: 1px; } .mini .pc.el { border-left-width: 1px; }
 
 /* shop */
-.shoprow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+.shoprow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+@media (max-width: 560px) { .shoprow { grid-template-columns: repeat(3, 1fr); } }
 .offer { position: relative; background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--rar, var(--line)); border-radius: 9px; padding: 5px 3px 4px; min-height: 104px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: grab; touch-action: none; overflow: hidden; }
 .o-common { --rar: var(--common); } .o-rare { --rar: var(--rare); } .o-epic { --rar: var(--epic); } .o-legendary { --rar: var(--legendary); } .o-artifact { --rar: var(--artifact); } .o-bag { --rar: #9fb4e8; }
 .offer-name { font-size: 10.5px; line-height: 1.1; text-align: center; height: 2.2em; overflow: hidden; font-weight: 600; width: 100%; overflow-wrap: anywhere; }
@@ -184,3 +185,6 @@ body.dragging { cursor: grabbing; } body.dragging * { cursor: grabbing !importan
 .endstats { display: flex; justify-content: space-around; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
 .endstats .stat { align-items: center; } .endstats .stat b { font-size: 20px; }
 .buildlist { color: var(--dim); font-size: 12.5px; text-align: center; }
+
+.offer.frozen { outline: 2px solid #7fd4ff; outline-offset: -2px; }
+.sale.ice { background: #7fd4ff; color: #06202e; }

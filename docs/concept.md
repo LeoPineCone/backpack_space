@@ -30,6 +30,12 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - Every item has a shape of cells and optionally **stars**: cells next to it that it points at. Effects can count, buff or react to the items on its stars.
 - Items act through a small set of building blocks (see "Effect language"), so the rules text is always generated from the data.
 - **Parts that fit (assumption, own mechanic):** 12 % of the shop offers are drawn from the parts that complete or continue a recipe with something you already own (`shop.recipeOfferPct`). With close to 400 items a specific part would otherwise show up too rarely for chains to be a plan; this way owning half a recipe pulls the other half in.
+- **The shop (decided 2026-11-15):** 6 offers per roll, a reroll costs 1 gold. What shows up (all numbers in `rules.shop`):
+  - Rarity by round (`rarityOdds`); 30 % of the offers come from the hero's pool (`heroOfferPct`); 22 % are bags, but at most one bag per roll (`bagOfferPct`, `maxBags`); 10 % are on sale at half price.
+  - **Results of recipes are never sold**, whatever their rarity. Epic and legendary items in the shop are only those that no recipe makes.
+  - **Weight per item** (`weight` on the item, default 1): parts of several recipes show up more often (1.25–1.5), items without any recipe less often (0.8).
+  - **The shop follows your backpack** (`affinityPct`): an item is offered up to twice as often when your items share one of its types. With a backpack full of pets, pets show up more.
+  - **Keep for later** (`freezeSlots`): up to 2 offers can be frozen; they stay through rerolls and into the next round.
 - Each hero has an own pool: two start items, shop items only that hero is offered (30 % of the offers), own recipes and three signature artifacts.
 
 ### Combining (recipes)

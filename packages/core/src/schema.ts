@@ -87,6 +87,8 @@ export const Item = z.object({
   hero: z.string().optional(),
   /** false: never in the shop (start items) */
   shop: z.boolean().optional(),
+  /** how often the shop offers it compared with other items of its rarity (default 1) */
+  weight: z.number().positive().optional(),
   cooldown: z.number().positive().optional(),
   damage: z.tuple([z.number(), z.number()]).optional(),
   effects: z.array(Effect).default([]),
@@ -134,6 +136,12 @@ export const Rules = z.object({
   goldPerRound: z.array(z.number()),
   shop: z.object({
     slots: z.number().int(), bagOfferPct: z.number(), recipeOfferPct: z.number(), rerollCost: z.number(), heroOfferPct: z.number(), salePct: z.number(), sellPct: z.number(), benchSlots: z.number().int(),
+    /** at most this many bags among the offers of one roll */
+    maxBags: z.number().int(),
+    /** an item is offered up to this many percent more often when all owned items share one of its tags (scaled by the share that do) */
+    affinityPct: z.number(),
+    /** offers the player can freeze: they stay through rerolls and into the next round */
+    freezeSlots: z.number().int(),
     rarityOdds: z.array(Odds),
   }).strict(),
   specials: z.array(z.object({ afterRound: z.number().int(), pool: z.enum(["hero", "general"]), show: z.number().int() }).strict()),

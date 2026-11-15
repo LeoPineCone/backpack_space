@@ -33,12 +33,20 @@ export function newRun(data: GameData, hero: string, rng: Rng): RunState {
 }
 export function startRound(s: RunState, data: GameData, rng: Rng): void {
   s.gold += data.rules.goldPerRound[s.round - 1]!;
-  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench]);
+  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench], s.offers);
 }
 export function reroll(s: RunState, data: GameData, rng: Rng): boolean {
   if (s.gold < data.rules.shop.rerollCost) return false;
   s.gold -= data.rules.shop.rerollCost;
-  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench]);
+  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench], s.offers);
+  return true;
+}
+/** Freezes an offer (it stays through rerolls and into the next round) or releases it. */
+export function toggleFreeze(s: RunState, data: GameData, slot: number): boolean {
+  const o = s.offers[slot];
+  if (!o) return false;
+  if (!o.frozen && s.offers.filter((x) => x?.frozen).length >= data.rules.shop.freezeSlots) return false;
+  o.frozen = !o.frozen;
   return true;
 }
 export function validLayout(data: GameData, bags: readonly Placement[], items: readonly Placement[]): boolean {

@@ -3,7 +3,7 @@
  * A design tool: every rule decision is made by @backpack-space/core (run.ts, battle.ts); this file only calls it and draws.
  */
 import {
-  Rng, benchItem, buildOf, buy, combine, compile, describeHero, findCombos, finishRound, moveBag, moveItem, newRun, placeBench, reroll,
+  Rng, benchItem, buildOf, buy, combine, compile, describeHero, findCombos, finishRound, moveBag, moveItem, newRun, placeBench, reroll, toggleFreeze,
   sellBag, sellBench, sellItem, sellPrice, takeSpecial,
   type Build, type Combo, type ItemDef, type RunState, type Spot,
 } from "@backpack-space/core";
@@ -229,10 +229,10 @@ function renderShop(): void {
   const offers = r.offers.map((o, i) => {
     if (!o) return h("div", { class: "offer sold" }, "sold");
     const def = data.items.get(o.item)!;
-    return h("div", { class: `offer o-${def.isBag ? "bag" : def.rarity}${sameSrc(sel, { kind: "offer", i }) ? " sel" : ""}${r.gold < o.price ? " poor" : ""}`, "data-src": `offer:${i}` },
+    return h("div", { class: `offer o-${def.isBag ? "bag" : def.rarity}${sameSrc(sel, { kind: "offer", i }) ? " sel" : ""}${r.gold < o.price ? " poor" : ""}${o.frozen ? " frozen" : ""}`, "data-src": `offer:${i}` },
       h("div", { class: "offer-name" }, def.name),
       h("div", { class: "offer-pic mini" }, pieceEl(data, o.item, 0, { stars: true })),
-      h("div", { class: "offer-price" }, o.sale ? h("span", { class: "sale" }, "SALE") : null, h("span", { class: "gold" }, o.price), def.isBag && !o.sale ? " · bag" : ""));
+      h("div", { class: "offer-price" }, o.frozen ? h("span", { class: "sale ice" }, "KEPT") : null, o.sale ? h("span", { class: "sale" }, "SALE") : null, h("span", { class: "gold" }, o.price), def.isBag && !o.sale ? " · bag" : ""));
   });
   const slots = Math.max(rules.shop.benchSlots, r.bench.length);
   const bench = Array.from({ length: slots }, (_, i) => {
@@ -291,6 +291,7 @@ function refresh(): void {
     const buttons = isSel ? h("div", { class: "info-actions" },
       h("button", { class: "btn small", id: "act-rotate", onclick: rotateSel }, "⟳ Rotate"),
       focus.kind === "offer" ? h("button", { class: "btn small", id: "act-bench", onclick: () => toBench(focus) }, `Buy to bench (${offer!.price})`) : null,
+      focus.kind === "offer" ? h("button", { class: "btn small", id: "act-freeze", onclick: () => { if (!toggleFreeze(r, data, focus.i)) toast(`Only ${rules.shop.freezeSlots} offers can be kept`); render(); } }, offer!.frozen ? "Release" : "Keep for later") : null,
       focus.kind === "item" ? h("button", { class: "btn small", id: "act-bench", onclick: () => toBench(focus) }, "To bench") : null,
       focus.kind !== "offer" ? h("button", { class: "btn small danger", id: "act-sell", onclick: () => sell(focus) }, `Sell (+${sellPrice(data, id)})`) : null,
       h("button", { class: "btn small", id: "act-close", onclick: () => select(null) }, "✕"),
