@@ -158,3 +158,18 @@ describe("loose items", () => {
     expect(runReward(s)).toBe(2 + data.rules.lives - 1);
   });
 });
+
+describe("bots merge like players", () => {
+  it("fight with the separate inputs and merge only what lay together, after the fight", () => {
+    const l = playLobby(data, 12, { size: 8, immortal: true });
+    let merges = 0;
+    for (const s of l.seats) for (let r = 0; r < s.builds.length - 1; r++) {
+      const crafted = s.bot.log[r]!.crafted;
+      // every result merged after round r+1 came from inputs that lay together in that round's build
+      const due = pendingMerges(data, s.builds[r]!.bags, s.builds[r]!.items).map((c) => c.recipe.out);
+      expect([...crafted].sort()).toEqual([...due].sort());
+      merges += crafted.length;
+    }
+    expect(merges).toBeGreaterThan(10);
+  });
+});

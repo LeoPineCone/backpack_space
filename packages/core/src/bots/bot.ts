@@ -1,11 +1,13 @@
 /**
  * The balancing bot: plays a run by the rules. It values an item by its price, its synergies with what it owns,
  * the recipes it opens, a personal taste (focus tags) and optional measured ratings.
- * Simplification: a bot merges as soon as it owns all inputs. In the real game the inputs must lie next to each other and merge after the fight of that round, so a bot has a merged item one fight earlier than a player.
+ * Merging follows the player's rules: the bot lays the inputs of a recipe it owns next to each other, and they merge after the fight
+ * of that round (botMerge). A bot never locks an item, except the "never combines" bot, which in effect locks everything.
  */
 import type { GameData, ItemDef } from "../gamedata.js";
 import type { Rng } from "../rng.js";
-import type { Build, Placement } from "../schema.js";
+import { pendingMerges } from "../run.js";
+import type { Build, Placement, Recipe } from "../schema.js";
 import { rollOffers, sellPrice, specialOptions, type Offer } from "../shop.js";
 import { arrange, placeBag, shuffleLayout } from "./arrange.js";
 
@@ -21,7 +23,14 @@ export interface BotOpts {
   /** hero path the bot commits to ("" = none); default: three of four bots pick one at random */
   path?: string;
 }
-export interface BotLog { round: number; bought: string[]; sold: string[]; crafted: string[]; rerolls: number; goldLeft: number; special?: string }
+export interface BotLog {
+  round: number; bought: string[]; sold: string[];
+  /** results merged after this round's fight */
+  crafted: string[];
+  /** recipes the bot owned all inputs of but could not lay together before this round's fight */
+  missed: number;
+  rerolls: number; goldLeft: number; special?: string;
+}
 export interface Bot {
   hero: string;
   gold: number;
@@ -82,25 +91,11 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
   return v;
 }
 
-function craftAll(data: GameData, bot: Bot, log: BotLog): void {
-  for (let again = true; again; ) {
-    again = false;
-    for (const r of data.recipes) {
-      const have = [...bot.inv];
-      if (!r.in.every((n) => { const k = have.indexOf(n); if (k < 0) return false; have.splice(k, 1); return true; })) continue;
-      bot.inv = [...have, r.out];
-      bot.gold += data.heroes.get(bot.hero)!.craftGold;
-      log.crafted.push(r.out);
-      again = true;
-    }
-  }
-}
-
 /** One shop visit: income, buying, combining, laying out. */
 export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts: BotOpts = {}): void {
   const rules = data.rules;
   const room = () => bot.bags.reduce((n, p) => n + data.items.get(p.item)!.size, 0);
-  const log: BotLog = { round, bought: [], sold: [], crafted: [], rerolls: 0, goldLeft: 0 };
+  const log: BotLog = { round, bought: [], sold: [], crafted: [], missed: 0, rerolls: 0, goldLeft: 0 };
   bot.log.push(log);
   bot.inv = [...bot.inv, ...bot.loose]; bot.loose = [];
   bot.gold += rules.goldPerRound[round - 1]!;
@@ -141,7 +136,6 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
       if (b.drop >= 0) { const id = bot.inv[b.drop]!; bot.gold += sellPrice(data, id); bot.inv.splice(b.drop, 1); log.sold.push(id); }
       bot.gold -= o.price; log.bought.push(o.item); offers[b.slot] = null;
       if (data.items.get(o.item)!.isBag) bot.bags.push(placeBag(data, bot.bags, o.item)!); else bot.inv.push(o.item);
-      if (!opts.noCraft) craftAll(data, bot, log);
     } else if (bot.gold >= rules.shop.rerollCost + 3 && log.rerolls < maxRerolls) {
       bot.gold -= rules.shop.rerollCost; log.rerolls++;
       offers = rollOffers(data, bot.hero, round, rng, bot.inv);
@@ -155,13 +149,44 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
   log.goldLeft = bot.gold;
 }
 
+/** Recipes whose inputs are all among `ids` (counting copies). */
+export function ownedRecipes(data: GameData, ids: readonly string[]): Recipe[] {
+  const seen = new Set<Recipe>();
+  for (const id of ids) for (const r of data.recipesWith.get(id) ?? []) {
+    if (seen.has(r)) continue;
+    const have = [...ids];
+    if (r.in.every((n) => { const k = have.indexOf(n); if (k < 0) return false; have.splice(k, 1); return true; })) seen.add(r);
+  }
+  return [...seen];
+}
+
 function layoutBot(data: GameData, bot: Bot, rng: Rng, opts: BotOpts, log: BotLog): void {
-  const a = opts.layout === "random" ? shuffleLayout(data, bot.bags, bot.inv, rng) : arrange(data, bot.bags, bot.inv, rng);
+  const recipes = opts.noCraft ? [] : ownedRecipes(data, bot.inv);
+  const a = opts.layout === "random" ? shuffleLayout(data, bot.bags, bot.inv, rng) : arrange(data, bot.bags, bot.inv, rng, { recipes });
   bot.layout = a.items;
+  if (recipes.length) {
+    const due = pendingMerges(data, bot.bags, bot.layout, recipes).length;
+    // every owned recipe that could merge but does not lie together (an item can only serve one merge per round)
+    const could = Math.min(recipes.length, ownedRecipes(data, a.items.map((p) => p.item)).length);
+    log.missed = Math.max(0, could - due);
+  }
   const left = [...a.left].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts));
   bot.loose = left.slice(0, data.rules.shop.looseLimit);
   for (const id of left.slice(data.rules.shop.looseLimit)) { bot.gold += sellPrice(data, id); log.sold.push(id); }
   bot.inv = a.items.map((p) => p.item);
+}
+
+/** After the fight: everything that lies together merges (the same rule as for players, see mergeAll in run.ts). */
+export function botMerge(data: GameData, bot: Bot, opts: BotOpts = {}): void {
+  if (opts.noCraft) return;
+  const due = pendingMerges(data, bot.bags, bot.layout);
+  if (!due.length) return;
+  const used = new Set(due.flatMap((c) => c.idxs));
+  const out = due.map((c) => c.recipe.out);
+  bot.layout = bot.layout.filter((_, i) => !used.has(i));
+  bot.inv = [...bot.layout.map((p) => p.item), ...out];
+  bot.gold += data.heroes.get(bot.hero)!.craftGold * due.length;
+  bot.log[bot.log.length - 1]?.crafted.push(...out);
 }
 
 /** Free special item after the round just fought, if the rules grant one. */

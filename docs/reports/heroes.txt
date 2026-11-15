@@ -7,18 +7,23 @@ Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims
 
 Win share in lobby fights (the hero attacks a random other bot of the lobby):
   hero         rounds 1–4  rounds 5–8  rounds 9–12      all
-  Flora Venn      55 % ±2     47 % ±2      48 % ±2  50 % ±1
-  RK-7 "Rook"     46 % ±2     55 % ±2      51 % ±2  50 % ±1
-  Nana Quill      50 % ±2     63 % ±2      49 % ±2  54 % ±1
-  Ysel            48 % ±2     43 % ±2      49 % ±2  47 % ±1
+  Flora Venn      61 % ±2     46 % ±2      50 % ±2  52 % ±1
+  RK-7 "Rook"     44 % ±2     50 % ±2      59 % ±2  51 % ±1
+  Nana Quill      46 % ±2     60 % ±2      48 % ±2  51 % ±1
+  Ysel            48 % ±2     39 % ±2      46 % ±2  44 % ±1
 
 Hero against hero (row wins against column), builds of rounds 4, 8 and 12, 600 fights per pair:
                Flora Venn  RK-7 "Rook"  Nana Quill  Ysel
-  Flora Venn            -         55 %        52 %  44 %
-  RK-7 "Rook"        47 %            -        60 %  60 %
-  Nana Quill         44 %         43 %           -  56 %
-  Ysel               54 %         41 %        48 %     -
+  Flora Venn            -         52 %        58 %  46 %
+  RK-7 "Rook"        49 %            -        64 %  60 %
+  Nana Quill         43 %         39 %           -  54 %
+  Ysel               52 %         41 %        46 %     -
+
+## Targets (data/sim/targets.json)
+OFF  win share of every hero, overall and in each third of the run: target 45 %–55 %, measured 39 %–61 %
+OK   hero against hero: target 35 %–65 %, measured 39 %–64 %
+(Each share has a noise of about ±2 points at normal accuracy, see the ± in the table.)
 
 Run results by hero are in report:runs.
 
-(40 s)
+(61 s)

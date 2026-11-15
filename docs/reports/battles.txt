@@ -8,20 +8,50 @@ Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims
 Star clock: Calm 8 s, Flare 8 s, Red Giant 8 s, Collapse 8 s, then Supernova at 32 s.
 
   round  health  seconds  10–90 %  reaches nova  leader wins  weapons  direct  burn  toxin  spikes  nova  healed  shield  draws
-  1         100     23.0    13–37       20 % ±2         88 %     64 %     3 %   8 %   17 %     2 %   6 %      70      48    0 %
-  2         145     24.1    13–39       24 % ±2         87 %     60 %     3 %   9 %   17 %     3 %   7 %     106      75    0 %
-  3         195     23.6    13–38       22 % ±2         85 %     61 %     4 %   9 %   16 %     4 %   6 %     142      92    0 %
-  4         255     22.8    13–38       18 % ±2         88 %     59 %     4 %  10 %   16 %     5 %   6 %     164     114    0 %
-  5         400     20.5    11–35       12 % ±1         87 %     60 %     5 %  12 %   15 %     4 %   4 %     186     135    0 %
-  6         500     20.5    12–34       12 % ±1         90 %     60 %     5 %  12 %   14 %     4 %   4 %     208     161    0 %
-  7         600     20.6    12–34       11 % ±1         94 %     61 %     5 %  12 %   15 %     4 %   3 %     237     177    0 %
-  8         710     21.0    12–34       12 % ±1         95 %     60 %     6 %  12 %   14 %     5 %   3 %     260     216    0 %
-  9         830     21.4    12–34       12 % ±1         92 %     58 %     6 %  11 %   13 %    10 %   3 %     269     231    0 %
-  10        950     21.1    13–34       13 % ±1         98 %     56 %     6 %  13 %   13 %     9 %   3 %     273     247    0 %
-  11       1080     21.6    13–34       13 % ±1         94 %     57 %     6 %  12 %   12 %     9 %   2 %     304     277    0 %
-  12       1220     22.3    13–34       13 % ±1         88 %     56 %     7 %  12 %   13 %     9 %   3 %     345     305    0 %
+  1         100     22.0    13–36       17 % ±1         87 %     63 %     3 %  10 %   17 %     3 %   5 %      69      44    0 %
+  2         145     23.1    13–37       20 % ±2         85 %     62 %     3 %   8 %   16 %     4 %   6 %      98      68    0 %
+  3         195     22.4    12–36       18 % ±2         88 %     63 %     4 %   8 %   15 %     6 %   5 %     124      89    0 %
+  4         255     22.3    13–36       18 % ±2         94 %     61 %     4 %   8 %   15 %     8 %   4 %     153     111    0 %
+  5         400     19.9    11–32       10 % ±1         90 %     62 %     5 %  10 %   15 %     6 %   3 %     163     147    0 %
+  6         500     19.4    11–31        8 % ±1         89 %     63 %     5 %  10 %   14 %     6 %   2 %     188     156    0 %
+  7         600     19.8    12–31        8 % ±1         80 %     63 %     6 %   9 %   13 %     6 %   2 %     198     187    0 %
+  8         710     19.5    12–30        6 % ±1         93 %     62 %     7 %  10 %   13 %     7 %   2 %     217     186    0 %
+  9         830     19.0    11–28        5 % ±1         97 %     61 %     7 %   9 %   10 %    12 %   1 %     209     213    0 %
+  10        950     19.2    12–28        6 % ±1         92 %     62 %     7 %   9 %   10 %    11 %   1 %     233     219    0 %
+  11       1080     19.8    12–30        7 % ±1         91 %     62 %     7 %   9 %   10 %    10 %   1 %     254     235    0 %
+  12       1220     19.8    11–30        7 % ±1         91 %     62 %     7 %  10 %   10 %    10 %   2 %     279     243    0 %
 
 seconds: average fight length. reaches nova: share of fights still running when the Supernova starts. leader wins: of those, how often the hero with more health at that moment wins.
 weapons … nova: share of all health lost by source. healed / shield: average per hero and fight.
 
-(35 s)
+## Where on the star clock the fights end
+  round  Calm  Flare  Red Giant  Collapse  Supernova  nova lasts  90 %  longest
+  1       0 %   30 %       38 %      14 %       17 %         5.3    10       44
+  2       1 %   30 %       34 %      16 %       20 %         5.7    10       44
+  3       2 %   29 %       34 %      17 %       18 %         5.4    10       44
+  4       1 %   29 %       38 %      14 %       18 %         4.7     9       45
+  5       1 %   38 %       35 %      16 %       10 %         4.9    10       44
+  6       2 %   38 %       40 %      12 %        8 %         4.4     8       43
+  7       1 %   38 %       38 %      15 %        8 %         4.9     8       43
+  8       1 %   36 %       41 %      16 %        6 %         4.8     8       43
+  9       1 %   38 %       42 %      14 %        5 %         3.8     6       41
+  10      1 %   37 %       41 %      15 %        6 %         3.9     7       41
+  11      1 %   34 %       42 %      15 %        7 %         3.1     5       40
+  12      1 %   34 %       43 %      15 %        7 %         4.1     8       43
+
+Each phase column: share of the fights that end in it. nova lasts: average seconds from the start of the Supernova to the end of the fight, for the fights that reach it; 90 %: nine in ten of them are over by then. longest: longest fight of the round in seconds.
+
+## Targets (data/sim/targets.json)
+OK   average fight length in every round: target 18.0–25.0, measured 19.0–23.1
+OK   longest fight of a round (one minute of waiting at speed ×1 is too long): target at most 45.0, measured 40.0–45.0
+OFF  share of fights that reach the Supernova, every round: target 5 %–20 %, measured 5 %–20 %
+OK   nine in ten Supernova fights are over this many seconds after it starts: target at most 10.0, measured 5.0–10.0
+
+## Supernova by hero
+  hero         resists  fights reaching it  wins of those
+  Flora Venn       0 %             10 % ±1        63 % ±3
+  RK-7 "Rook"      0 %             16 % ±1        49 % ±2
+  Nana Quill       0 %             12 % ±1        33 % ±2
+  Ysel            50 %              6 % ±1        66 % ±3
+
+(55 s)
