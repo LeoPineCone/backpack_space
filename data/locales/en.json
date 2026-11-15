@@ -137,6 +137,7 @@
   "rules.item.damage": "{min}–{max} damage every {s} s.",
   "rules.item.activates": "Activates every {s} s.",
   "rules.item.weapon": "{range}, {n} Energy per attack.",
+  "rules.item.weaponFree": "{range}, attacks without Energy.",
   "rules.hero.supernovaResist": "Takes {n} % less {supernova} damage.",
   "rules.hero.craftGold": "Every combination pays {n} gold.",
   "rules.hero.hp": "{n} health."

@@ -7,40 +7,40 @@ Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims
 
 Venn – Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
   path             wins all rounds  wins rounds 9–12  run wins  survives run  path items                damage mix (rounds 9+)  healed+shielded  fight
-  Poison garden            52 % ±2           51 % ±4       4.6          17 %        72 %  toxin 59 %, weapon 22 %, spikes 11 %             63 %   23 s
-  Thorn wall               47 % ±2           51 % ±4       3.7          10 %        40 %  toxin 51 %, spikes 22 %, weapon 21 %             65 %   23 s
-  Hungry jungle            42 % ±2           36 % ±3       3.3           3 %        64 %  toxin 52 %, weapon 26 %, spikes 15 %             70 %   23 s
-  (open, no path)          51 % ±2           53 % ±4       4.3          22 %           -  toxin 51 %, weapon 25 %, spikes 17 %             57 %   23 s
+  Poison garden            52 % ±2           60 % ±4       4.7          22 %        68 %  toxin 52 %, weapon 22 %, spikes 18 %             53 %   21 s
+  Thorn wall               50 % ±2           55 % ±4       4.4          20 %        38 %  toxin 47 %, spikes 23 %, weapon 22 %             61 %   23 s
+  Hungry jungle            40 % ±2           41 % ±4       2.6           3 %        61 %  toxin 52 %, weapon 28 %, spikes 13 %             58 %   22 s
+  (open, no path)          46 % ±2           46 % ±4       4.1          10 %           -  toxin 43 %, weapon 31 %, spikes 15 %             41 %   22 s
 
 RK-7 "Rook" – Mechanical items and crafting. Combining pays gold and crafted items run faster.
-  path              wins all rounds  wins rounds 9–12  run wins  survives run  path items    damage mix (rounds 9+)  healed+shielded  fight
-  Overclocked guns          43 % ±2           40 % ±4       3.4           7 %        63 %  weapon 78 %, direct 13 %             70 %   23 s
-  Shield fortress           48 % ±2           49 % ±4       4.2          15 %        48 %  weapon 77 %, direct 11 %            122 %   27 s
-  Workshop                  54 % ±2           56 % ±4       4.7          25 %        50 %  weapon 79 %, direct 11 %             98 %   26 s
-  (open, no path)           52 % ±2           56 % ±4       4.5          22 %           -  weapon 73 %, direct 11 %             98 %   25 s
+  path              wins all rounds  wins rounds 9–12  run wins  survives run  path items                 damage mix (rounds 9+)  healed+shielded  fight
+  Overclocked guns          42 % ±2           36 % ±3       3.7           8 %        64 %               weapon 77 %, direct 13 %             58 %   21 s
+  Shield fortress           50 % ±2           46 % ±4       4.7          17 %        47 %  weapon 71 %, direct 14 %, spikes 10 %            124 %   27 s
+  Workshop                  56 % ±2           56 % ±4       5.4          30 %        48 %               weapon 74 %, direct 13 %             79 %   23 s
+  (open, no path)           50 % ±2           47 % ±4       4.4          17 %           -               weapon 70 %, direct 15 %             75 %   24 s
 
 Quill – Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.
   path             wins all rounds  wins rounds 9–12  run wins  survives run  path items  damage mix (rounds 9+)  healed+shielded  fight
-  Big beasts               56 % ±2           53 % ±4       5.4          35 %        26 %             weapon 89 %             46 %   20 s
-  Swarm                    52 % ±2           48 % ±4       4.3          18 %        22 %             weapon 88 %             42 %   20 s
-  Well-fed pack            47 % ±2           36 % ±3       4.0          12 %        40 %             weapon 92 %             52 %   22 s
-  (open, no path)          53 % ±2           51 % ±4       4.9          23 %           -             weapon 91 %             45 %   20 s
+  Big beasts               53 % ±2           50 % ±4       4.7          25 %        30 %             weapon 85 %             41 %   19 s
+  Swarm                    49 % ±2           51 % ±4       4.4          23 %        20 %             weapon 85 %             40 %   19 s
+  Well-fed pack            44 % ±2           38 % ±3       3.8          10 %        40 %             weapon 88 %             53 %   22 s
+  (open, no path)          51 % ±2           50 % ±4       4.5          22 %           -             weapon 88 %             38 %   19 s
 
 Ysel – The star itself. Starts every fight with Power and gains more with every star phase, burns the enemy and shrugs off half the Supernova.
   path             wins all rounds  wins rounds 9–12  run wins  survives run  path items  damage mix (rounds 9+)  healed+shielded  fight
-  Burning corona           56 % ±2           59 % ±4       4.8          17 %        39 %  burn 49 %, weapon 44 %             24 %   19 s
-  Late ascension           45 % ±2           46 % ±4       4.1          15 %        71 %  weapon 60 %, burn 33 %             21 %   18 s
-  Eclipse                  52 % ±2           52 % ±4       3.6           8 %        43 %  weapon 50 %, burn 36 %             46 %   24 s
-  (open, no path)          50 % ±2           48 % ±4       4.1          10 %           -  weapon 49 %, burn 41 %             33 %   21 s
+  Burning corona           53 % ±2           50 % ±4       4.6          17 %        39 %  burn 51 %, weapon 41 %             21 %   19 s
+  Late ascension           51 % ±2           45 % ±4       5.0          25 %        73 %  weapon 59 %, burn 34 %             19 %   17 s
+  Eclipse                  49 % ±2           54 % ±4       3.5          12 %        39 %  weapon 45 %, burn 41 %             38 %   22 s
+  (open, no path)          54 % ±2           49 % ±3       5.0          22 %           -  weapon 51 %, burn 37 %             27 %   19 s
 
 Reading: "wins" = share of lobby fights won against other heroes. "run wins" and "survives run" follow the real rules (4 lives).
 "path items" = share of the final build's item cost that belongs to the path. "healed+shielded" is per fight, in percent of the hero's health.
 A path carries when it wins at least 42 % and is within 6 points of the hero's best path.
 
 Verdict:
-  Venn: 2 of 3 paths carry (Poison garden 52 %, Thorn wall 47 %, Hungry jungle 42 %).
-  RK-7 "Rook": 2 of 3 paths carry (Overclocked guns 43 %, Shield fortress 48 %, Workshop 54 %).
-  Quill: 2 of 3 paths carry (Big beasts 56 %, Swarm 52 %, Well-fed pack 47 %).
-  Ysel: 2 of 3 paths carry (Burning corona 56 %, Late ascension 45 %, Eclipse 52 %).
+  Venn: 2 of 3 paths carry (Poison garden 52 %, Thorn wall 50 %, Hungry jungle 40 %).
+  RK-7 "Rook": 1 of 3 paths carry (Overclocked guns 42 %, Shield fortress 50 %, Workshop 56 %).
+  Quill: 2 of 3 paths carry (Big beasts 53 %, Swarm 49 %, Well-fed pack 44 %).
+  Ysel: 3 of 3 paths carry (Burning corona 53 %, Late ascension 51 %, Eclipse 49 %).
 
-(83 s)
+(75 s)

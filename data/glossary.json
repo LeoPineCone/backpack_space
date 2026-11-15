@@ -79,7 +79,7 @@
     { "id": "activate", "group": "fight", "en": "Activate", "de": "Auslösen", "text": "An item acts: a weapon attacks, other items use their effect.", "code": ["on: use", "starUse", "shipUse"] },
     { "id": "buff", "group": "fight", "en": "Buff", "de": "Buff", "text": "Status that helps you.", "code": ["BUFFS", "gain"] },
     { "id": "debuff", "group": "fight", "en": "Debuff", "de": "Debuff", "text": "Status that hurts the enemy.", "code": ["DEBUFFS", "inflict"] },
-    { "id": "energy", "group": "fight", "en": "Energy", "de": "Energie", "icon": "energy", "text": "Every attack costs Energy. You start with {energy.start}, it refills by {energy.regen} per second up to {energy.max}. A weapon without enough Energy waits.", "code": ["rules.energy", "item.energy", "do: energy"] },
+    { "id": "energy", "group": "fight", "en": "Energy", "de": "Energie", "icon": "energy", "text": "Every weapon attack costs Energy; pets attack without it. You start with {energy.start}, it refills by {energy.regen} per second up to {energy.max}. A weapon without enough Energy waits.", "code": ["rules.energy", "item.energy", "do: energy"] },
     { "id": "energyRegen", "group": "effect", "en": "Energy refill", "de": "Energie-Nachschub", "icon": "energyRegen", "text": "More Energy per second.", "code": ["mod.energyRegen"] },
     { "id": "melee", "group": "fight", "en": "Melee", "de": "Nahkampf", "icon": "melee", "text": "A weapon that hits up close.", "code": ["range: melee"] },
     { "id": "ranged", "group": "fight", "en": "Ranged", "de": "Fernkampf", "icon": "ranged", "text": "A weapon that shoots from afar.", "code": ["range: ranged"] },

@@ -100,6 +100,7 @@ export function buildGameData(raw: RawData): GameData {
     if (it.damage && !it.cooldown) problems.push(`${it.id}: weapon without cooldown`);
     if (it.damage && (it.range === undefined || it.energy === undefined)) problems.push(`${it.id}: weapons need "range" (melee/ranged) and "energy" (cost per attack)`);
     if (it.energy !== undefined && it.energy > rules.energy.max) problems.push(`${it.id}: costs more Energy than the maximum ${rules.energy.max}`);
+    if (it.tags.includes("pet") && it.energy) problems.push(`${it.id}: pets attack without Energy ("energy": 0)`);
     if (!it.damage && (it.range !== undefined || it.energy !== undefined)) problems.push(`${it.id}: only weapons have "range" and "energy"`);
     if (!it.cooldown && it.effects.some((e) => e.on === "use" || e.on === "hit")) problems.push(`${it.id}: "use"/"hit" effect without cooldown`);
     if (it.cooldown && !it.damage && !it.effects.some((e) => e.on === "use")) problems.push(`${it.id}: cooldown without a "use" effect`);

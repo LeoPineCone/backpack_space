@@ -96,7 +96,7 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
     first = { when: [{ icon: "clock", text: num(def.cooldown), kind: "trigger" }], then: [] };
     if (def.damage) first.then.push({ icon: "damage", text: def.damage[0] === def.damage[1] ? num(def.damage[0]) : `${num(def.damage[0])}–${num(def.damage[1])}`, kind: "debuff" });
     if (def.range) first.then.push({ icon: def.range, kind: "plain" });
-    if (def.energy !== undefined) first.then.push({ icon: "energy", text: `-${num(def.energy)}`, kind: "plain" });
+    if (def.energy) first.then.push({ icon: "energy", text: `-${num(def.energy)}`, kind: "plain" });
   }
   return effectRows(def.effects, data, def.cooldown, first);
 }

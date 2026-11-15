@@ -12,9 +12,17 @@ Smaller food helped Venn, larger weapons and pets cost Rook and Quill backpack r
 
 - Venn: organic items 20 % faster (before 25 %).
 - Rook: mechanical items 34 % faster (before 26 %).
-- Quill: pets 28 % faster (before 25 %) and pet attacks cost 1 Energy less (new).
+- Quill: unchanged in the end (see below).
 
-Still off: Quill's late game (39–43 % in rounds 9–12; more health per pet did not help, the Energy discount did a little), Ysel's rounds 5–8 (44–49 %) and rounds 9–12 (58–60 %), Rook between the two seeds (44–49 %). Fight length, Supernova share and hero against hero are within their targets as before.
+## Pets attack without Energy (decided with Ilja, 2026-11-15)
+
+Weapons need Energy, animals do not: all 45 pets that deal damage have `energy` 0 (`validate` checks it). The Energy discount tried for Quill is gone again and her pets are back at 25 % faster. Ratings measured again.
+
+| Heroes overall (Venn, Rook, Quill, Ysel) | seed 1 | seed 2 |
+|---|---|---|
+| Pets without Energy | 48 / 46 / 50 / 55 % | 50 / 45 / 50 / 53 % |
+
+Quill's late game recovered (46 % in rounds 9–12, before 39–43 %). Still off: Quill is strong in rounds 5–8 (55–59 %), Rook weak there (41–42 %), Ysel strong late (58–60 %); Venn loses to Ysel 34 % at one stage (target 35 %). Fight length, longest fight and Supernova share are within their targets.
 
 # Melee, ranged and Energy (2026-11-15)
 

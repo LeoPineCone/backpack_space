@@ -109,7 +109,7 @@ export function describeItem(it: ItemDef, data: GameData, tr: Translator = engli
   const hasUse = it.effects.some((e) => e.on === "use");
   if (it.damage) {
     lines.push(tr.t("rules.item.damage", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }));
-    if (it.range) lines.push(tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy ?? 0 }));
+    if (it.range) lines.push(it.energy ? tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy }) : tr.t("rules.item.weaponFree", { range: tr.term(it.range) }));
   }
   else if (it.cooldown && !hasUse) lines.push(tr.t("rules.item.activates", { s: it.cooldown }));
   const useLabel = it.cooldown === undefined ? undefined : it.damage ? tr.t("rules.use.attack") : tr.t("rules.use.every", { s: it.cooldown });
