@@ -8,9 +8,10 @@
  */
 import { onPath, type GameData, type SideStats } from "@backpack-space/core";
 import { makeField, type Lobby, type Seat } from "../sim/lobby";
-import { avg, pct, share, startReport, table } from "./common";
+import { avg, pct, share, startReport } from "./common";
 
 const r = startReport({
+  id: "paths",
   title: "Ways to win",
   question: "Does every hero have several paths that win, or does one strategy carry it?",
   presets: { quick: { lobbies: 12 }, normal: { lobbies: 60 }, precise: { lobbies: 240 } },
@@ -56,6 +57,7 @@ const add = (l: Lobby) => {
 lobbies.forEach(add);
 
 const verdicts: string[] = [];
+const bars: { name: string; p: number }[] = [];
 for (const h of data.heroList) {
   r.log();
   r.log(`${h.name} – ${h.focus}`);
@@ -67,17 +69,19 @@ for (const h of data.heroList) {
     const total = SOURCES.reduce((x, k) => x + g.dmg[k], 0) || 1;
     const mix = SOURCES.filter((k) => g.dmg[k] / total >= 0.1).sort((x, y) => g.dmg[y] - g.dmg[x]).map((k) => `${k} ${pct(g.dmg[k] / total)}`).join(", ");
     if (p.id) shares.push({ name: p.name, p: g.w / g.n, n: g.n });
+    bars.push({ name: `${h.name.split(" ")[0]}: ${p.id ? p.name : "open"}`, p: (100 * g.w) / g.n });
     rows.push([
       p.name, share(g.w / g.n, g.n), share(g.lw / g.ln, g.ln),
       avg(g.seats.map((s) => s.wins)).toFixed(1), pct(g.seats.filter((s) => s.livesLeft > 0).length / g.seats.length),
       p.id ? pct(avg(g.commit)) : "-", mix, pct(g.kept / Math.max(1, g.fights)), (g.secs / Math.max(1, g.fights)).toFixed(0) + " s",
     ]);
   }
-  r.log(...table(["path", "wins all rounds", `wins rounds ${late}–${data.rules.rounds}`, "run wins", "survives run", "path items", `damage mix (rounds ${late}+)`, "healed+shielded", "fight"], rows));
+  r.table(["path", "wins all rounds", `wins rounds ${late}–${data.rules.rounds}`, "run wins", "survives run", "path items", `damage mix (rounds ${late}+)`, "healed+shielded", "fight"], rows, { center: 50, span: 10, cols: [1, 2] });
   const best = Math.max(...shares.map((s) => s.p));
   const ok = shares.filter((s) => s.p >= best - 0.06 && s.p >= 0.42);
   verdicts.push(`${h.name}: ${ok.length} of ${shares.length} paths carry (${shares.map((s) => `${s.name} ${pct(s.p)}`).join(", ")}).`);
 }
+r.chart({ type: "bar", title: "Win share of every path (all rounds)", x: bars.map((b) => b.name), unit: "%", ref: 50, band: { min: 42 }, series: [{ name: "wins", values: bars.map((b) => b.p) }] });
 r.log();
 r.log("Reading: \"wins\" = share of lobby fights won against other heroes. \"run wins\" and \"survives run\" follow the real rules (4 lives).");
 r.log("\"path items\" = share of the final build's item cost that belongs to the path. \"healed+shielded\" is per fight, in percent of the hero's health.");

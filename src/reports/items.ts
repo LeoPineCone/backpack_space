@@ -10,9 +10,10 @@ import { join } from "node:path";
 import { arrange, compile, simulate, type Build, type GameData, type ItemDef, type Placement, Rng } from "@backpack-space/core";
 import { DATA_DIR } from "@backpack-space/core/node";
 import { makeField } from "../sim/lobby";
-import { avg, median, signed, startReport, stderr, table } from "./common";
+import { avg, median, signed, startReport, stderr } from "./common";
 
 const r = startReport({
+  id: "items",
   title: "Items",
   question: "How much stronger does a build get from each item, compared with what the item costs? Which items are too strong or too weak, and which do the bots never use?",
   presets: { quick: { builds: 16, lobbies: 8, fights: 6 }, normal: { builds: 50, lobbies: 30, fights: 8 }, precise: { builds: 160, lobbies: 80, fights: 10 } },
@@ -106,10 +107,10 @@ for (const [name, f] of groups) {
   if (!g.length) continue;
   r.log();
   r.log(`## ${name}`);
-  r.log(...table(["item", "rarity", "gold", "cells", "round", "gain", "±", "value", "owned", ""], g.map((x) => [
+  r.table(["item", "rarity", "gold", "cells", "round", "gain", "±", "value", "owned", ""], g.map((x) => [
     x.it.name, x.it.crafted ? `craft ${x.it.depth}` : x.it.rarity, goldOf(x.it), x.it.size, x.round, signed(x.delta), x.se.toFixed(1), Number.isNaN(ratio(x)) ? "-" : ratio(x).toFixed(2),
     `${Math.round((100 * (everOwned.get(x.it.id) ?? 0)) / runsOf(x.it))} %`, verdict(x),
-  ])));
+  ]), { center: 1, span: 0.75, cols: [7], highIsBad: true });
 }
 const priced = rows.filter((x) => !Number.isNaN(ratio(x)));
 r.log();

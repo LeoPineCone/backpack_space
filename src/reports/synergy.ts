@@ -11,9 +11,10 @@
  */
 import { compile, simulate, type Build, type CSide, type Effect, type GameData, type HeroData, type ItemDef } from "@backpack-space/core";
 import { makeField } from "../sim/lobby";
-import { pct, share, signed, startReport, table } from "./common";
+import { pct, share, signed, startReport } from "./common";
 
 const r = startReport({
+  id: "synergy",
   title: "Hero synergies and matchups",
   question: "Do the heroes' rules and items interlock more with every round, and does one hero beat all others or do they counter each other?",
   presets: {
@@ -61,7 +62,7 @@ for (const round of STAGES) for (const a of heroes) for (const b of heroes) {
 for (const round of [...STAGES, 0]) {
   r.log();
   r.log(round ? `Round ${round} builds:` : "All three stages together:");
-  r.log(...table(["", ...heroes.map((h) => h.name)], heroes.map((a) => [a.name, ...heroes.map((b) => pct(round ? perStage.get(`${round}/${a.id}/${b.id}`)! : M.get(`${a.id}/${b.id}`)!))])));
+  r.table(["", ...heroes.map((h) => h.name)], heroes.map((a) => [a.name, ...heroes.map((b) => pct(round ? perStage.get(`${round}/${a.id}/${b.id}`)! : M.get(`${a.id}/${b.id}`)!))]), { center: 50, span: 20 });
 }
 r.log(`(Noise per cell about ±${Math.round(100 * Math.sqrt(0.25 / r.n.duels))} points per stage, ±${Math.round(100 * Math.sqrt(0.25 / (r.n.duels * STAGES.length)))} for all stages.)`);
 
@@ -104,15 +105,15 @@ for (const a of paths) for (const b of paths) {
 const short = paths.map((_, i) => `P${i + 1}`);
 r.log(...paths.map((p, i) => `  ${short[i]} = ${p.label}`));
 r.log();
-r.log(...table(["", ...short], paths.map((a, i) => [short[i]!, ...paths.map((b) => (a === b ? "-" : String(Math.round(100 * P.get(`${a.label}|${b.label}`)!))))])));
+r.table(["", ...short], paths.map((a, i) => [short[i]!, ...paths.map((b) => (a === b ? "-" : String(Math.round(100 * P.get(`${a.label}|${b.label}`)!))))]), { center: 50, span: 20 });
 r.log(`(Shares in percent. Noise per cell about ±${Math.round(100 * Math.sqrt(0.25 / r.n.pathDuels))} points.)`);
 r.log();
 r.log("Each path against the paths of the other heroes: average, best and worst matchup.");
-r.log(...table(["path", "vs other heroes", "best against", "worst against"], paths.map((a) => {
+r.table(["path", "vs other heroes", "best against", "worst against"], paths.map((a) => {
   const others = paths.filter((b) => b.hero !== a.hero).map((b) => ({ b, p: P.get(`${a.label}|${b.label}`)! })).sort((x, y) => y.p - x.p);
   const mean = others.reduce((x, o) => x + o.p, 0) / others.length;
   return [a.label, pct(mean), `${others[0]!.b.label} ${pct(others[0]!.p)}`, `${others[others.length - 1]!.b.label} ${pct(others[others.length - 1]!.p)}`];
-})));
+}));
 
 // ---------------------------------------------------------------- 3. interlock
 const has = (def: ItemDef, tag: string | undefined) => tag === undefined || tag === "any" || def.tags.includes(tag as never);
@@ -190,7 +191,7 @@ for (const h of heroes) {
     sum.kit.push((full - kitOff) / n); sum.syn.push((full - synOff) / n); sum.linked.push(linked / k);
     rows.push([`round ${round}`, (items / k).toFixed(1), pct(linked / k), (pairs / k).toFixed(1), pct(byHero / k), share(full / n, n), signed((100 * (full - kitOff)) / n, 0), signed((100 * (full - synOff)) / n, 0)]);
   }
-  r.log(...table(["", "items", "linked", "links", "hero rules", "wins", "kit worth", "synergy worth"], rows));
+  r.table(["", "items", "linked", "links", "hero rules", "wins", "kit worth", "synergy worth"], rows);
   summary.push(sum);
   // what the late builds are made of
   const counts = new Map<string, number>();
@@ -202,7 +203,10 @@ for (const h of heroes) {
 for (const s of summary) worthRows.push([s.hero, `${pct(s.linked[0]!)} → ${pct(s.linked[s.linked.length - 1]!)}`, `${signed(100 * s.kit[0]!, 0)} → ${signed(100 * s.kit[s.kit.length - 1]!, 0)}`, `${signed(100 * s.syn[0]!, 0)} → ${signed(100 * s.syn[s.syn.length - 1]!, 0)}`]);
 r.log();
 r.log(`Summary, round ${ROUNDS[0]} → round ${ROUNDS[ROUNDS.length - 1]} (points of win share):`);
-r.log(...table(["hero", "linked items", "kit worth", "synergy worth"], worthRows));
+r.table(["hero", "linked items", "kit worth", "synergy worth"], worthRows);
+r.chart({ type: "line", title: "Linked items (share of the build)", x: ROUNDS, xLabel: "round", unit: "%", series: summary.map((s) => ({ name: s.hero, values: s.linked.map((v) => 100 * v) })) });
+r.chart({ type: "line", title: "Kit worth (points of win share from the hero's rules)", x: ROUNDS, xLabel: "round", ref: 0, series: summary.map((s) => ({ name: s.hero, values: s.kit.map((v) => 100 * v) })) });
+r.chart({ type: "line", title: "Synergy worth (points from item-to-item effects)", x: ROUNDS, xLabel: "round", ref: 0, series: summary.map((s) => ({ name: s.hero, values: s.syn.map((v) => 100 * v) })) });
 r.log();
 r.log("Reading: a growing \"linked\" share and growing worth mean the build grows together over the run. A kit worth near zero means the");
 r.log("hero's own rules hardly matter for the result; a synergy worth near zero means the items work alone, side by side.");

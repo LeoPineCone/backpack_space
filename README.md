@@ -62,6 +62,8 @@ npm run report:synergy    # hero against hero and path against path; do items an
 npm run report:all        # all of them into out/reports/
 ```
 
+Every report run also writes a static HTML page with tables, heatmaps (hero against hero, path against path), charts per round and a light per target: `out/reports/<report>.html`, or next to the `--out` file. `out/reports/index.html` links all report pages and lists every target that is OFF. Open it straight from disk in a browser (no server needed); `--no-html` skips the page.
+
 Balancing targets (fight length, Supernova, hero win shares, recipe dominance) live in `data/sim/targets.json`; the battles, heroes and recipes reports end with an OK / OFF line per target.
 
 Flags: `--accuracy quick|normal|precise` (or `--quick`, `--precise`), `--sims N` for the main count, `--seed S` for an independent sample, `--out file`.

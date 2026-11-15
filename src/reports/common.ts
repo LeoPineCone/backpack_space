@@ -7,18 +7,26 @@
  *   --sims N                           overrides the main count of the report (lobbies, builds or runs)
  *   --<count> N                        overrides any single count the report lists in its header
  *   --seed S                           another seed gives an independent sample
- *   --out file                         also writes the report to this file
+ *   --out file                         also writes the report to this file (and the HTML page next to it)
+ *   --no-html                          no HTML page
+ *
+ * Every run also writes a static HTML page with tables and charts: out/reports/<id>.html, or next to --out
+ * (same name, .html). index.html in that folder links all report pages found there.
  *   --no-ratings                       bots ignore data/sim/ratings.json
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
 import { Rng, type GameData } from "@backpack-space/core";
 import { loadGameData, loadRatings } from "@backpack-space/core/node";
 import { useRatings } from "../sim/lobby";
 import { parseArgs } from "../cli/args";
+import { renderIndex, renderReport, type Block, type Cell, type Chart, type Heat, type IndexEntry, type ReportPage, type TargetResult } from "./html";
 
 export type Accuracy = "quick" | "normal" | "precise";
 
 export interface ReportSpec<C extends Record<string, number>> {
+  /** file name of the report: out/reports/<id>.html */
+  id: string;
   title: string;
   /** the balancing question the report answers, one or two sentences */
   question: string;
@@ -38,6 +46,12 @@ export interface Report<C> {
   rng: Rng;
   /** prints each argument as one line and keeps it for --out; no argument prints an empty line */
   log: (...lines: string[]) => void;
+  /** a table: printed as text, and as a table in the HTML page (heat colours its cells) */
+  table: (head: string[], rows: Cell[][], heat?: Heat) => void;
+  /** a chart, only in the HTML page */
+  chart: (chart: Chart) => void;
+  /** checks a target and prints its OK / OFF line; in the HTML page it becomes a target light */
+  target: (t: Target, values: readonly number[], asPct: boolean) => void;
   /** progress on stderr, does not go into the report file */
   progress: (line: string) => void;
   done: () => void;
@@ -52,7 +66,17 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
   for (const k of keys) if (flags[k] !== undefined) n[k] = Number(flags[k]);
   const seed = Number(flags.seed ?? 1);
   const lines: string[] = [];
-  const log = (...out: string[]) => { for (const line of out.length ? out : [""]) { lines.push(line); console.log(line); } };
+  const blocks: Block[] = [];
+  const meta: string[] = [];
+  let inHeader = true;
+  const log = (...out: string[]) => {
+    for (const line of out.length ? out : [""]) {
+      lines.push(line); console.log(line);
+      if (inHeader) { if (line && !line.startsWith("# ") && !line.startsWith("Question: ")) meta.push(line); continue; }
+      if (!line.trim()) continue;
+      blocks.push(line.startsWith("## ") ? { kind: "h", text: line.slice(3) } : { kind: "p", text: line });
+    }
+  };
   const ratings = flags["no-ratings"] ? {} : loadRatings();
   useRatings(ratings);
   const t0 = Date.now();
@@ -62,15 +86,57 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
   log(`Accuracy: ${accuracy}, seed ${seed}. ${keys.map((k) => `${k} ${n[k]} (${spec.explain[k as keyof C]})`).join(", ")}.`);
   log(`Bots: ${Object.keys(ratings).length ? `use the measured item ratings in data/sim/ratings.json (${Object.keys(ratings).length} items)` : "no measured item ratings (price and synergies only)"}.`);
   log(`Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.`);
+  inHeader = false;
+  const quiet = (text: string[]) => { for (const line of text) { lines.push(line); console.log(line); } };
   return {
     data: loadGameData(), flags, rest, n: n as C, accuracy, seed, rng: new Rng(seed), log,
+    table: (head, rows, heat) => { quiet(table(head, rows)); blocks.push({ kind: "table", head, rows, heat }); },
+    chart: (chart) => { blocks.push({ kind: "chart", chart }); },
+    target: (t, values, asPct) => { const x = targetResult(t, values, asPct); quiet([targetLine(x)]); blocks.push({ kind: "target", target: x }); },
     progress: (line) => { if (process.stderr.isTTY) process.stderr.write(`\r${line}`.padEnd(60) + "\r"); },
     done: () => {
       log();
       log(`(${((Date.now() - t0) / 1000).toFixed(0)} s)`);
+      const seconds = Math.round((Date.now() - t0) / 1000);
       if (flags.out) { writeFileSync(flags.out, lines.join("\n") + "\n"); console.log(`Written to ${flags.out}`); }
+      if (!flags["no-html"]) {
+        const dir = flags.out ? dirname(flags.out) : join("out", "reports");
+        const name = flags.out ? basename(flags.out).replace(/\.[^.]*$/, "") : spec.id;
+        const page: ReportPage = {
+          kind: "backpack-space-report", id: spec.id, title: spec.title, question: spec.question, meta, accuracy, seed, seconds,
+          written: new Date().toISOString(), text: flags.out ? basename(flags.out) : undefined, blocks,
+        };
+        writeReportPage(dir, name, page);
+        console.log(`HTML page: ${join(dir, `${name}.html`)} (all reports: ${join(dir, "index.html")})`);
+      }
     },
   };
+}
+
+/** Report ids in the order the index and report:all list them. */
+export const REPORT_IDS = ["battles", "heroes", "runs", "items", "recipes", "placement", "paths", "synergy"] as const;
+
+/** Writes <name>.html and <name>.json into dir and rebuilds dir/index.html from every report page there. */
+export function writeReportPage(dir: string, name: string, page: ReportPage): void {
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, `${name}.json`), JSON.stringify(page) + "\n");
+  writeFileSync(join(dir, `${name}.html`), renderReport(page));
+  writeReportIndex(dir);
+}
+
+/** index.html for all report pages (<name>.json) in dir; reports that never ran there are listed as missing. */
+export function writeReportIndex(dir: string): void {
+  const found: IndexEntry[] = [];
+  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
+    try {
+      const page = JSON.parse(readFileSync(join(dir, f), "utf8")) as ReportPage;
+      if (page.kind === "backpack-space-report") found.push({ id: page.id, file: f.replace(/\.json$/, ".html"), page });
+    } catch { /* not a report page */ }
+  }
+  const order = (id: string) => { const i = (REPORT_IDS as readonly string[]).indexOf(id); return i < 0 ? REPORT_IDS.length : i; };
+  const entries: IndexEntry[] = [...found, ...REPORT_IDS.filter((id) => !found.some((e) => e.id === id)).map((id) => ({ id, file: "" }))];
+  entries.sort((a, b) => order(a.id) - order(b.id) || a.file.localeCompare(b.file));
+  writeFileSync(join(dir, "index.html"), renderIndex(entries));
 }
 
 export const avg = (xs: readonly number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
@@ -99,11 +165,16 @@ export interface Target { min?: number; max?: number; what: string }
 /** Balancing targets from data/sim/targets.json. */
 export function loadTargets(): Record<string, Target> { return JSON.parse(readFileSync("data/sim/targets.json", "utf8")); }
 const fmt = (x: number, asPct: boolean) => (asPct ? pct(x) : x.toFixed(1));
-/** One line "OK / OFF  what: target …, measured …" for a set of measured values. */
-export function checkTarget(t: Target, values: readonly number[], asPct: boolean): string {
+/** Checks measured values against a target. */
+export function targetResult(t: Target, values: readonly number[], asPct: boolean): TargetResult {
   const lo = Math.min(...values), hi = Math.max(...values);
   const ok = (t.min === undefined || lo >= t.min) && (t.max === undefined || hi <= t.max);
   const want = t.min !== undefined && t.max !== undefined ? `${fmt(t.min, asPct)}–${fmt(t.max, asPct)}` : t.min !== undefined ? `at least ${fmt(t.min, asPct)}` : `at most ${fmt(t.max!, asPct)}`;
   const got = lo === hi ? fmt(lo, asPct) : `${fmt(lo, asPct)}–${fmt(hi, asPct)}`;
-  return `${ok ? "OK " : "OFF"}  ${t.what}: target ${want}, measured ${got}`;
+  return { ok, what: t.what, want, got };
+}
+const targetLine = (x: TargetResult) => `${x.ok ? "OK " : "OFF"}  ${x.what}: target ${x.want}, measured ${x.got}`;
+/** One line "OK / OFF  what: target …, measured …" for a set of measured values. */
+export function checkTarget(t: Target, values: readonly number[], asPct: boolean): string {
+  return targetLine(targetResult(t, values, asPct));
 }
