@@ -10,8 +10,13 @@ describe("data", () => {
     for (const it of data.itemList) expect(it.depth).toBeLessThanOrEqual(data.rules.recipes.maxDepth);
     expect(data.recipes.every((r) => r.in.length <= data.rules.recipes.maxInputs)).toBe(true);
   });
-  it("has a picture brief with a palette accent for every item", () => {
+  it("has a picture brief with a palette accent and a description within its word limit for every item", () => {
     expect(checkItemArt(data, loadItemArt())).toEqual([]);
+  });
+  it("keeps picture descriptions of small items short", () => {
+    const art = loadItemArt();
+    const long = { ...art, rivet_gun: { ...art.rivet_gun!, description: "word ".repeat(31).trim() } };
+    expect(checkItemArt(data, long)).toEqual(["item-art.json rivet_gun: description has 31 words, 1 cell(s) allow 30"]);
   });
   it("names every status and type in the rules text the way the glossary does", () => {
     for (const id of ["shield", "burn", "overclock"]) expect(data.glossary.byId.get(id)!.de.length).toBeGreaterThan(0);

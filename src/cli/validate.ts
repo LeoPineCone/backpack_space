@@ -8,8 +8,8 @@ try {
   console.log(`OK: ${d.heroList.length} heroes, ${items.length} items (${count((i) => i.inShop)} in the shop, ${count((i) => i.crafted)} crafted, ${count((i) => i.rarity === "artifact")} artifacts), ${d.itemList.length - items.length} bags, ${d.recipes.length} recipes.`);
   console.log(`Recipe chain lengths: ${[1, 2, 3].map((n) => `${n} step${n > 1 ? "s" : ""}: ${count((i) => i.depth === n)}`).join(", ")}; recipes with 3 inputs: ${d.recipes.filter((r) => r.in.length === 3).length}.`);
   const art = checkItemArt(d, loadItemArt());
-  if (art.length) throw new Error(`Picture brief problems:\n- ${art.join("\n- ")}`);
-  console.log(`Glossary: ${d.glossary.terms.length} terms. Picture briefs: ${d.itemList.length} of ${d.itemList.length} items.`);
+  if (art.length) throw new Error(`Picture data problems:\n- ${art.join("\n- ")}`);
+  console.log(`Glossary: ${d.glossary.terms.length} terms. Pictures: brief and description for all ${d.itemList.length} items.`);
   const langs = d.locales.languages.filter((l) => l.id !== "en").map((l) => {
     const missing = d.locales.missing[l.id]!.length, unused = d.locales.unused[l.id]!.length;
     return `${l.name} ${missing ? `(${missing} texts missing, English stands in)` : "complete"}${unused ? `, ${unused} unused` : ""}`;

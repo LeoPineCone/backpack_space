@@ -33,12 +33,28 @@ These values were picked by eye from the reference images and are not final.
 - Skins come in two flavours: a serious one and a funny one. The funny ones are drawn just as seriously as the rest; the joke is in the idea.
 - Hero pictures are generated one by one today, so body details drift between images. Real skins need a fixed base model per hero first.
 
+## Items
+
+Item pictures are described in `data/item-art.json` (list: [item-art.md](item-art.md)). The rules there, in short:
+
+- **One world.** General items are worn, practical gear of people who live off salvage and long trips: chunky, riveted, patched, taped, stencilled without readable text. Animals are odd space fauna, drawn seriously with dry humour, never cute and glossy. Food is station food: packed, canned, grown in trays, a little strange.
+- **Size decides detail.** One backpack cell is about 44 px on a phone. A one-cell item gets one clear shape and one feature, a big item up to four. The picture fills its box; odd shapes (L, T, gate) leave their empty cells free.
+- **Crafted items show their parts.** A recipe result keeps something recognisable from each ingredient (the Prism Laser is the Laser Pistol with the Crystal Shard on its muzzle), so players can read where it came from.
+- **Hero items speak the hero's language** ([heroes.md](heroes.md)):
+  - *Venn:* the station's botany lab taken over by the plant. Specimen tags, petri dishes, flasks, seed trays, station pipes and crates, the botanist's drone; rust-red tendrils, pale seed bulbs, bark, thorns. Plants never get eyes or faces, only jaws.
+  - *Rook:* everything is salvage, welded or tied together from wreck parts: mismatched plates, clamps, wire, pieces of satellite housing, spare tool legs. The mustard lantern eye comes back as a lamp or sticker.
+  - *Quill:* made by the herd, not by people: woven grass and twigs, shed fur, braided cords, tusk tips, bone, shells, berries and roots. No leashes, whistles or cages.
+  - *Ysel:* relics of her order: dark iron, bent iron rings like her head cage, cracked sun pieces in flat mustard and rust red, bells, rosary stones, heavy cloth with rust-red bands. Heat is drawn as wavy ink lines, never as glow.
+- Accent colour as in the brief; the heroes' own marks (Venn's rust-red tendrils, Rook's mustard eye, Ysel's rust-red bands) may appear next to it.
+
 ## Open
 
-- Items in this style have not been tested at backpack size (about 44 px on a phone). They will need simpler shapes than the hero pictures.
+- Items in this style have not been tested at backpack size (about 44 px on a phone). The word limits in `data/item-art.json` keep the descriptions simple; the first generated items will show whether they are simple enough.
 - Rarity and item-type colours have to be mapped onto the palette.
 - The client still uses its placeholder colours.
 
 ## Prompt base for image generation
+
+For items, `npm run art:prompt -- <id>` uses the style part of this base and replaces the background sentence (items need a plain background without stars so they can be cut out).
 
 > Style: dark ink comic illustration. Heavy solid black shadows, bold angular shapes, flat matte colours with no gradients, a small muted palette of rust red, bone white, deep teal, mustard and black, rough ink texture, strong readable silhouette. No glossy highlights, no glow effects, no lens flares, no 3D rendering. Background: plain dark night-sky colour with a few simple stars, nothing else. No text, no letters, no logos, no frame.
