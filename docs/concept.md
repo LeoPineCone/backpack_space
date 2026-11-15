@@ -29,6 +29,7 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Decided:** rarities with prices: common, rare, epic, legendary. The shop shows rarer items in later rounds (`shop.rarityOdds`). Artifacts are never sold.
 - Every item has a shape of cells and optionally **stars**: cells next to it that it points at. Effects can count, buff or react to the items on its stars.
 - Items act through a small set of building blocks (see "Effect language"), so the rules text is always generated from the data.
+- **Parts that fit (assumption, own mechanic):** 12 % of the shop offers are drawn from the parts that complete or continue a recipe with something you already own (`shop.recipeOfferPct`). With 300 items a specific part would otherwise show up too rarely for chains to be a plan; this way owning half a recipe pulls the other half in.
 - Each hero has an own pool: two start items, shop items only that hero is offered (30 % of the offers), own recipes and three signature artifacts.
 
 ### Combining (recipes)
@@ -66,15 +67,16 @@ Four heroes, each with an own focus, passive, start items, shop pool and artifac
 
 | Hero | Focus | Passive |
 |---|---|---|
-| **Flora Venn**, Orbital Botanist | food and organic items; heals a lot, wins slowly through Toxin | whenever one of her food items activates, a chance to inflict Toxin |
+| **Flora Venn**, Orbital Botanist | food and organic items; heals a lot, wins slowly through Toxin | her organic items are faster; whenever one of her food items activates, it inflicts Toxin |
 | **RK-7 "Rook"**, Salvage Unit | mechanical items and crafting; Shield and Overclock | every combination pays gold; crafted items are faster |
 | **Nana Quill**, Keeper of the Last Ark | pets | her pets act the moment the fight begins and are faster |
-| **Ysel**, Singer of the Corona | the star phases; Burn; long fights | gains Power and Overclock with every star phase; takes half Supernova damage |
+| **Ysel**, Singer of the Corona | the star phases; Burn; long fights | gains Power with every star phase; takes half Supernova damage |
 
 ## What makes it its own game (open, to decide together)
 
 The base is deliberately the classic backpack mechanic. Candidates for an own identity, in the order they are already in the draft:
 
+0. **Parts that fit:** the shop leans towards the missing parts of recipes you have started (see Items).
 1. **The dying star** as fight clock and as a parameter for items and a whole hero.
 2. **Long recipe chains** up to 3 steps with crafting as a hero identity (Rook).
 3. **Themed bags** that turn "where do I put the bag" into a second packing puzzle.

@@ -1,0 +1,19 @@
+# Placement
+
+Question: How much does a build lose when the same items lie in the same bags at random instead of where the stars and bags help them?
+Accuracy: normal, seed 1. builds 150 (builds per round), lobbies 20 (lobbies that supply builds and opponents), fights 10 (fights per build and layout).
+Bots: use the measured item ratings in data/sim/ratings.json (300 items).
+Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.
+
+  round  as the bot laid it  random layout  bot − random  long search − bot  star links
+  2                    51 %           39 %    +11.3 ±1.6          +4.7 ±1.0         2.9
+  4                    53 %           38 %    +15.8 ±1.5          +2.2 ±1.1         5.2
+  6                    48 %           36 %    +12.0 ±1.5          +6.5 ±1.2         6.8
+  8                    51 %           37 %    +13.7 ±1.5          +9.8 ±1.5         9.1
+  10                   48 %           37 %    +11.3 ±1.4          +7.7 ±1.3        10.2
+  12                   47 %           36 %    +11.0 ±1.3          +6.7 ±1.2        12.7
+
+bot − random: points of win share placement is worth. long search − bot: what a six times longer layout search adds on top (how much the bots leave on the table).
+star links: items lying on a star of another item, per build.
+
+(36 s)

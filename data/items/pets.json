@@ -5,7 +5,7 @@
   { "id": "rock_crab", "name": "Rock Crab", "tags": ["pet", "armor", "organic"], "rarity": "common", "cost": 3, "shape": ["##"], "effects": [{ "on": "start", "gain": "shield", "n": 12 }, { "on": "start", "gain": "spikes", "n": 1 }] },
   { "id": "glow_beetle", "name": "Glow Beetle", "tags": ["pet", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "effects": [{ "on": "phase", "do": "heal", "n": 8 }] },
   { "id": "asteroid_mole", "name": "Asteroid Mole", "tags": ["pet", "organic"], "rarity": "common", "cost": 3, "shape": ["#", "#"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "damage", "n": 5 }] },
-  { "id": "dust_bunny", "name": "Dust Bunny", "tags": ["pet", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "effects": [{ "on": "start", "inflict": "jam", "n": 4 }] },
+  { "id": "dust_bunny", "name": "Dust Bunny", "tags": ["pet", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "effects": [{ "on": "start", "inflict": "jam", "n": 8 }] },
   { "id": "scout_drone", "name": "Scout Drone", "tags": ["pet", "mechanical"], "rarity": "common", "cost": 3, "shape": ["*#*"], "effects": [{ "on": "passive", "to": "stars", "tag": "weapon", "mod": { "speed": 20 } }] },
   { "id": "comet_fox", "name": "Comet Fox", "tags": ["pet", "weapon", "organic"], "rarity": "rare", "cost": 6, "shape": ["##"], "cooldown": 1.6, "damage": [3, 4], "effects": [{ "on": "passive", "to": "self", "mod": { "crit": 15 } }, { "on": "hit", "inflict": "burn", "n": 1, "if": { "chance": 30 } }] },
   { "id": "repair_bot", "name": "Repair Bot", "tags": ["pet", "mechanical"], "rarity": "rare", "cost": 5, "shape": ["#"], "cooldown": 3.0, "effects": [{ "on": "use", "gain": "shield", "n": 5 }] },

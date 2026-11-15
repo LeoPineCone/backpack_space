@@ -1,0 +1,27 @@
+# Battles
+
+Question: How long do fights last in each round, how often does the Supernova decide them, and where does the damage come from?
+Accuracy: normal, seed 1. lobbies 40 (lobbies of 16 bots playing all 12 rounds).
+Bots: use the measured item ratings in data/sim/ratings.json (300 items).
+Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.
+
+Star clock: Calm 8 s, Flare 8 s, Red Giant 8 s, Collapse 8 s, then Supernova at 32 s.
+
+  round  health  seconds  10–90 %  reaches nova  leader wins  weapons  direct  burn  toxin  spikes  nova  healed  shield  draws
+  1          80     18.1    10–29        8 % ±1         77 %     68 %     2 %   7 %   18 %     2 %   3 %      26      28    0 %
+  2         115     18.4    11–31        9 % ±1         90 %     65 %     3 %   9 %   17 %     3 %   4 %      41      44    0 %
+  3         155     16.9    10–28        6 % ±1         97 %     64 %     2 %   9 %   17 %     6 %   1 %      52      49    0 %
+  4         200     16.0    10–25        4 % ±1         92 %     66 %     2 %  11 %   13 %     6 %   1 %      54      56    0 %
+  5         290     14.2     8–23        3 % ±1         88 %     66 %     3 %  12 %   13 %     6 %   1 %      61      63    0 %
+  6         360     14.0     8–22        2 % ±1        100 %     67 %     3 %  12 %   12 %     6 %   0 %      65      69    0 %
+  7         430     13.7     8–21        1 % ±1        100 %     67 %     4 %  13 %   10 %     6 %   0 %      70      71    0 %
+  8         510     14.1     9–22        1 % ±1        100 %     66 %     4 %  12 %   10 %     8 %   0 %      81      81    0 %
+  9         590     13.3     8–19        2 % ±1         90 %     64 %     3 %  10 %    7 %    15 %   0 %      76      90    0 %
+  10        680     13.0     8–20        1 % ±1        100 %     64 %     4 %  10 %    7 %    16 %   0 %      80      94    0 %
+  11        770     13.7     8–20        1 % ±1        100 %     63 %     4 %  10 %    7 %    15 %   0 %      96     106    0 %
+  12        870     13.4     8–20        1 % ±1        100 %     64 %     4 %  10 %    6 %    15 %   0 %      95     109    0 %
+
+seconds: average fight length. reaches nova: share of fights still running when the Supernova starts. leader wins: of those, how often the hero with more health at that moment wins.
+weapons … nova: share of all health lost by source. healed / shield: average per hero and fight.
+
+(30 s)

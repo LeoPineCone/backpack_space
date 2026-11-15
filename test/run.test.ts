@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, buy, combine, findCombos, finishRound, moveBag, newRun, place, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, buy, combine, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -69,5 +69,16 @@ describe("bots", () => {
       expect(s.endedAfter).toBeGreaterThan(0);
       for (const bd of s.builds) expect(validLayout(data, bd.bags, bd.items)).toBe(true);
     }
+  });
+});
+
+describe("recipe partners", () => {
+  it("offers parts that fit what the player owns", () => {
+    const partners = recipePartners(data, "rook", 1, ["laser_pistol"]).map((i) => i.id);
+    expect(partners).toContain("crystal_shard");
+    expect(partners).toContain("laser_pistol");
+    // nothing owned, nothing to lean towards; another hero's parts never show up
+    expect(recipePartners(data, "rook", 1, [])).toHaveLength(0);
+    expect(recipePartners(data, "rook", 6, ["mushroom_cluster"]).some((i) => i.hero && i.hero !== "rook")).toBe(false);
   });
 });

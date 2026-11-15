@@ -1,0 +1,24 @@
+# Heroes
+
+Question: Does every hero win about half of the fights, in every part of the run and against every other hero?
+Accuracy: normal, seed 1. lobbies 40 (lobbies of 16 bots (4 per hero) playing all 12 rounds), duels 600 (extra fights per hero pair for the matrix).
+Bots: use the measured item ratings in data/sim/ratings.json (300 items).
+Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.
+
+Win share in lobby fights (the hero attacks a random other bot of the lobby):
+  hero         rounds 1–4  rounds 5–8  rounds 9–12      all
+  Flora Venn      56 % ±2     38 % ±2      42 % ±2  45 % ±1
+  RK-7 "Rook"     52 % ±2     49 % ±2      54 % ±2  52 % ±1
+  Nana Quill      35 % ±2     57 % ±2      54 % ±2  49 % ±1
+  Ysel            56 % ±2     57 % ±2      54 % ±2  56 % ±1
+
+Hero against hero (row wins against column), builds of rounds 4, 8 and 12, 600 fights per pair:
+               Flora Venn  RK-7 "Rook"  Nana Quill  Ysel
+  Flora Venn            -         50 %        52 %  29 %
+  RK-7 "Rook"        51 %            -        60 %  52 %
+  Nana Quill         53 %         38 %           -  44 %
+  Ysel               65 %         52 %        55 %     -
+
+Run results by hero are in report:runs.
+
+(38 s)

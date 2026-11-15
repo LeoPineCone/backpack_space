@@ -10,7 +10,7 @@
   { "id": "cosmic_egg", "name": "Cosmic Egg", "tags": ["food", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "cooldown": 5.0, "effects": [{ "on": "use", "do": "heal", "n": 3 }] },
   { "id": "rocket_chili", "name": "Rocket Chili", "tags": ["food", "organic"], "rarity": "rare", "cost": 5, "shape": ["#"], "cooldown": 6.0, "effects": [{ "on": "use", "gain": "power", "n": 1 }] },
   { "id": "space_noodles", "name": "Space Noodles", "tags": ["food"], "rarity": "rare", "cost": 5, "shape": ["*##*"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 5 }, { "on": "use", "do": "heal", "n": 2, "per": { "stars": "food" } }] },
-  { "id": "star_fruit", "name": "Star Fruit", "tags": ["food", "organic"], "rarity": "rare", "cost": 5, "shape": ["#"], "effects": [{ "on": "phase", "gain": "regen", "n": 1 }, { "on": "phase", "do": "heal", "n": 6 }] },
+  { "id": "star_fruit", "name": "Star Fruit", "tags": ["food", "organic"], "rarity": "rare", "cost": 5, "shape": ["#"], "effects": [{ "on": "phase", "gain": "regen", "n": 1 }, { "on": "phase", "do": "heal", "n": 10 }] },
   { "id": "nova_cola", "name": "Nova Cola", "tags": ["food"], "rarity": "rare", "cost": 5, "shape": ["#", "#"], "cooldown": 5.0, "effects": [{ "on": "use", "gain": "overclock", "n": 1 }] },
   { "id": "crystal_candy", "name": "Crystal Candy", "tags": ["food"], "rarity": "rare", "cost": 4, "shape": ["#"], "cooldown": 4.0, "effects": [{ "on": "use", "gain": "shield", "n": 6 }] },
   { "id": "comet_sorbet", "name": "Comet Sorbet", "tags": ["food"], "rarity": "rare", "cost": 5, "shape": ["##"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 3 }, { "on": "use", "inflict": "cryo", "n": 1 }, { "on": "use", "do": "cleanse", "n": 1 }] },
