@@ -6,6 +6,7 @@ import { C, H, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, disc, hearts, pillButton, roundButton, txt } from "../ui";
 import { piece, pieceFit } from "../pieces";
+import { itemPopup } from "./popup";
 import { shopScene } from "./shop";
 import { heroScene } from "./hero";
 
@@ -92,7 +93,11 @@ export function resultScene(game: Game, f: Fought): Scene {
     if (run.over) { game.addReward(runReward(run)); game.show(runEndScene(game)); }
     else {
       game.show(shopScene(game));
-      if (run.merged.length) game.toast(`Merged: ${run.merged.map((m) => data.items.get(m.out)!.name).join(", ")}`);
+      // what merged after this fight is shown once
+      if (run.merged.length) {
+        game.openOverlay(itemPopup(game, run.merged[0]!.out, { action: { label: "CONTINUE", onTap: () => game.closeOverlay() } }));
+        game.toast(`Merged: ${run.merged.map((m) => data.items.get(m.out)!.name).join(", ")}`);
+      }
     }
   }), 96, 760));
   return { root };
