@@ -15,8 +15,11 @@ declare global {
 const itemModules = import.meta.glob<unknown>("../data/items/*.json", { eager: true, import: "default" });
 const itemFiles: Record<string, unknown> = {};
 for (const path of Object.keys(itemModules).sort()) itemFiles[path.slice(path.lastIndexOf("/") + 1)] = itemModules[path];
+const localeModules = import.meta.glob<unknown>("../data/locales/*.json", { eager: true, import: "default" });
+const locales: Record<string, unknown> = {};
+for (const path of Object.keys(localeModules).sort()) locales[path.slice(path.lastIndexOf("/") + 1)] = localeModules[path];
 
-export const DATA: GameData = buildGameData({ rules, heroes, recipes, glossary, itemFiles });
+export const DATA: GameData = buildGameData({ rules, heroes, recipes, glossary, itemFiles, locales });
 
 /** Stored bot builds to fight against; index 0 = round 1. Regenerate with `npm run play:ghosts`. */
 export const GHOSTS: Build[][] = ghosts as unknown as Build[][];

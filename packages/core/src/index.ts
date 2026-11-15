@@ -9,5 +9,6 @@ export * from "./shop.js";
 export * from "./run.js";
 export * from "./describe.js";
 export * from "./glossary.js";
+export * from "./i18n.js";
 export * from "./bots/arrange.js";
 export * from "./bots/bot.js";

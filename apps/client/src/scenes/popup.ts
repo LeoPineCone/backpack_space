@@ -7,6 +7,7 @@ import { icon } from "../icons";
 import { at, box, dimmer, disc, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
 import { pieceFit, symbolRow } from "../pieces";
 import { GLOSSARY_GROUPS, heroRows, itemRows, keywordsIn, type Keyword, type Row } from "../symbols";
+import { t, tr, upper } from "../i18n";
 
 const PW = 330, PAD = 16, IW = PW - PAD * 2;
 
@@ -55,14 +56,14 @@ function subjectPopup(game: Game, s: Subject): Scene {
     // header
     const head = new Container();
     head.addChild(at(infoButton(22, () => { legend = !legend; build(); }, legend), 22, 22));
-    if (legend) head.addChild(at(txt(s.name.toUpperCase(), 16, { spacing: 0.5, anchor: [0.5, 0.5], wrap: IW - 100, align: "center" }), IW / 2, 22));
+    if (legend) head.addChild(at(txt(upper(s.name), 16, { spacing: 0.5, anchor: [0.5, 0.5], wrap: IW - 100, align: "center" }), IW / 2, 22));
     else for (let i = 0; i < s.pips; i++) head.addChild(at(disc(4.5, { fill: s.line }), IW / 2 - ((s.pips - 1) * 13) / 2 + i * 13, 22));
     head.addChild(at(roundButton("close", 22, close, { fill: C.panel, line: C.line, iconSize: 18 }), IW - 22, 22));
     add(head, 44);
 
     if (!legend) {
       if (s.art) add(s.art(), s.artH ?? 110);
-      const name = txt(s.name.toUpperCase(), 22, { spacing: 0.7, wrap: IW, align: "center" });
+      const name = txt(upper(s.name), 22, { spacing: 0.7, wrap: IW, align: "center" });
       add(name, name.height, 12, name.width);
       if (s.tags.length) {
         const tags = new Container();
@@ -112,7 +113,7 @@ function subjectPopup(game: Game, s: Subject): Scene {
         add(t, t.height, 14);
       }
       const g = new Container();
-      const label = txt("GLOSSARY", 14, { anchor: [0, 0.5] });
+      const label = txt(t("ui.glossary"), 14, { anchor: [0, 0.5] });
       const gw = 18 + 18 + 8 + label.width + 18;
       g.addChild(box(gw, 44, { line: C.dim, radius: 22 }), at(icon("book", 18, C.text), 27, 22), at(label, 44, 22));
       tappable(g, () => game.openOverlay(glossary(game)), new Rectangle(0, 0, gw, 44));
@@ -146,13 +147,13 @@ export function itemPopup(game: Game, id: string, o: ItemPopupOpts = {}): Scene 
   const data = game.data, def = data.items.get(id)!;
   const tags = def.isBag ? ["bag"] : def.tags.filter((t) => t !== "bag");
   return subjectPopup(game, {
-    name: def.name,
+    name: tr().item(id),
     line: def.isBag ? C.cyan : RARITY[def.rarity] ?? C.cyan,
     pips: def.isBag ? 0 : RARITY_PIPS[def.rarity] ?? 1,
     art: () => pieceFit(data, id, IW, 110, 36, { stars: true }),
     tags,
     rows: itemRows(def, data),
-    lines: describeItem(def, data),
+    lines: describeItem(def, data, tr()),
     recipes: (data.recipesWith.get(id) ?? []).map((r) => ({ ins: r.in, out: r.out })),
     sell: o.sell ? sellPrice(data, id) : undefined,
     action: o.action,
@@ -163,14 +164,14 @@ export function itemPopup(game: Game, id: string, o: ItemPopupOpts = {}): Scene 
 export function heroPopup(game: Game, heroId: string): Scene {
   const data = game.data, hero = data.heroes.get(heroId)!;
   return subjectPopup(game, {
-    name: hero.name,
+    name: tr().t(`hero.${hero.id}.name`),
     line: C.cyan,
     pips: 0,
-    art: () => { const t = txt(hero.title.toUpperCase(), 13, { color: C.dim, spacing: 1.5, wrap: IW, align: "center" }); const c = new Container(); c.addChild(at(t, (IW - t.width) / 2, 0)); return c; },
+    art: () => { const t = txt(upper(tr().t(`hero.${hero.id}.title`)), 13, { color: C.dim, spacing: 1.5, wrap: IW, align: "center" }); const c = new Container(); c.addChild(at(t, (IW - t.width) / 2, 0)); return c; },
     artH: 16,
     tags: [],
     rows: heroRows(hero, data),
-    lines: [hero.focus, ...describeHero(hero, data)],
+    lines: [tr().t(`hero.${hero.id}.focus`), ...describeHero(hero, data, tr())],
   });
 }
 
@@ -181,7 +182,7 @@ export function glossary(game: Game): Scene {
   const list = new Container();
   let y = 0;
   for (const g of GLOSSARY_GROUPS) {
-    list.addChild(at(txt(g.title, 14, { color: C.gold, spacing: 2 }), 4, y));
+    list.addChild(at(txt(t(g.title), 14, { color: C.gold, spacing: 2 }), 4, y));
     y += 28;
     for (const ic of g.icons) {
       const kw = game.keywords.get(ic);
@@ -199,7 +200,7 @@ export function glossary(game: Game): Scene {
   holder.mask = clip;
   list.position.set(20, top);
   root.addChild(holder);
-  root.addChild(at(txt("GLOSSARY", 26, { spacing: 2 }), 20, 28));
+  root.addChild(at(txt(t("ui.glossary"), 26, { spacing: 2 }), 20, 28));
   root.addChild(at(roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }), W - 42, 44));
   const minY = Math.min(top, top + viewH - y);
   let grab: number | null = null;

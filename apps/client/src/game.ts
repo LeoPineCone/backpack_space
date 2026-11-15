@@ -23,7 +23,8 @@ export class Game {
   private scene: Scene | null = null;
   private overlays: Scene[] = [];
   private toastLeft = 0;
-  readonly keywords: Map<string, Keyword>;
+  /** keyword legend in the current language; rebuilt by `languageChanged` */
+  keywords: Map<string, Keyword>;
 
   run: RunState | null = null;
   rng = new Rng(1);
@@ -88,6 +89,9 @@ export class Game {
     this.toastLayer.alpha = 1;
     this.toastLeft = 2.2;
   }
+
+  /** Call after switching the language: rebuilds the texts that are cached here. */
+  languageChanged(): void { this.keywords = keywords(this.data); }
 
   /** Starts a new run with the chosen hero. The seed only drives the shop; battles carry their own seed. */
   newSeed(): void {
