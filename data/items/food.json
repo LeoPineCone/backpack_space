@@ -1,0 +1,21 @@
+[
+  { "id": "protein_bar", "name": "Protein Bar", "tags": ["food"], "rarity": "common", "cost": 2, "shape": ["#"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 3 }] },
+  { "id": "moon_cheese", "name": "Moon Cheese", "tags": ["food", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "cooldown": 4.0, "effects": [{ "on": "use", "do": "heal", "n": 2 }, { "on": "use", "gain": "shield", "n": 2 }] },
+  { "id": "ice_cream", "name": "Freeze-Dried Ice Cream", "tags": ["food"], "rarity": "common", "cost": 3, "shape": ["#", "#"], "cooldown": 3.5, "effects": [{ "on": "use", "do": "heal", "n": 3 }, { "on": "use", "inflict": "cryo", "n": 1 }] },
+  { "id": "algae_shake", "name": "Algae Shake", "tags": ["food", "organic"], "rarity": "common", "cost": 3, "shape": ["#", "#"], "cooldown": 4.5, "effects": [{ "on": "use", "gain": "regen", "n": 1 }] },
+  { "id": "hydro_lettuce", "name": "Hydro Lettuce", "tags": ["food", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "cooldown": 4.0, "effects": [{ "on": "use", "do": "cleanse", "n": 1 }, { "on": "use", "do": "heal", "n": 2 }] },
+  { "id": "mushroom_cluster", "name": "Mushroom Cluster", "tags": ["food", "organic"], "rarity": "common", "cost": 3, "shape": ["##"], "cooldown": 4.5, "effects": [{ "on": "use", "inflict": "toxin", "n": 1 }, { "on": "use", "do": "heal", "n": 2 }] },
+  { "id": "gravity_dumplings", "name": "Gravity Dumplings", "tags": ["food"], "rarity": "common", "cost": 3, "shape": ["##"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 5 }] },
+  { "id": "energy_gel", "name": "Energy Gel", "tags": ["food"], "rarity": "common", "cost": 2, "shape": ["#"], "effects": [{ "on": "start", "gain": "overclock", "n": 2 }] },
+  { "id": "cosmic_egg", "name": "Cosmic Egg", "tags": ["food", "organic"], "rarity": "common", "cost": 2, "shape": ["#"], "cooldown": 5.0, "effects": [{ "on": "use", "do": "heal", "n": 3 }] },
+  { "id": "rocket_chili", "name": "Rocket Chili", "tags": ["food", "organic"], "rarity": "rare", "cost": 5, "shape": ["#"], "cooldown": 6.0, "effects": [{ "on": "use", "gain": "power", "n": 1 }] },
+  { "id": "space_noodles", "name": "Space Noodles", "tags": ["food"], "rarity": "rare", "cost": 5, "shape": ["*##*"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 5 }, { "on": "use", "do": "heal", "n": 2, "per": { "stars": "food" } }] },
+  { "id": "star_fruit", "name": "Star Fruit", "tags": ["food", "organic"], "rarity": "rare", "cost": 5, "shape": ["#"], "effects": [{ "on": "phase", "gain": "regen", "n": 1 }, { "on": "phase", "do": "heal", "n": 6 }] },
+  { "id": "nova_cola", "name": "Nova Cola", "tags": ["food"], "rarity": "rare", "cost": 5, "shape": ["#", "#"], "cooldown": 5.0, "effects": [{ "on": "use", "gain": "overclock", "n": 1 }] },
+  { "id": "crystal_candy", "name": "Crystal Candy", "tags": ["food"], "rarity": "rare", "cost": 4, "shape": ["#"], "cooldown": 4.0, "effects": [{ "on": "use", "gain": "shield", "n": 6 }] },
+  { "id": "comet_sorbet", "name": "Comet Sorbet", "tags": ["food"], "rarity": "rare", "cost": 5, "shape": ["##"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 3 }, { "on": "use", "inflict": "cryo", "n": 1 }, { "on": "use", "do": "cleanse", "n": 1 }] },
+  { "id": "asteroid_honey", "name": "Asteroid Honey", "tags": ["food", "organic"], "rarity": "epic", "cost": 8, "shape": ["*##*"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 6 }, { "on": "starUse", "tag": "food", "gain": "shield", "n": 2 }] },
+  { "id": "magma_curry", "name": "Magma Curry", "tags": ["food", "organic"], "rarity": "epic", "cost": 8, "shape": ["##"], "cooldown": 3.0, "effects": [{ "on": "use", "do": "heal", "n": 4 }, { "on": "use", "inflict": "burn", "n": 2 }] },
+  { "id": "royal_jelly", "name": "Royal Jelly", "tags": ["food", "organic"], "rarity": "epic", "cost": 8, "shape": ["#"], "effects": [{ "on": "phase", "gain": "regen", "n": 2 }, { "on": "passive", "to": "hero", "mod": { "maxHp": 20 } }] },
+  { "id": "captains_banquet", "name": "Captain's Banquet", "tags": ["food"], "rarity": "legendary", "cost": 13, "shape": ["###", "###"], "cooldown": 2.5, "effects": [{ "on": "use", "do": "heal", "n": 10 }, { "on": "phase", "gain": "power", "n": 1 }, { "on": "phase", "gain": "regen", "n": 2 }] }
+]

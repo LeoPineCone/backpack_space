@@ -1,0 +1,10 @@
+node_modules/
+out/
+dist/
+
+# Editor and OS files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+.claude/

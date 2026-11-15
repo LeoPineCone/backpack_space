@@ -1,0 +1,37 @@
+{
+  "name": "backpack-space",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Backpack Space – shared battle core, balancing tools and browser preview",
+  "scripts": {
+    "validate": "tsx src/cli/validate.ts",
+    "battle": "tsx src/cli/battle.ts",
+    "catalog": "tsx src/cli/catalog.ts",
+    "report:battles": "tsx src/reports/battles.ts",
+    "report:heroes": "tsx src/reports/heroes.ts",
+    "report:runs": "tsx src/reports/runs.ts",
+    "report:items": "tsx src/reports/items.ts",
+    "report:recipes": "tsx src/reports/recipes.ts",
+    "report:placement": "tsx src/reports/placement.ts",
+    "report:all": "tsx src/reports/all.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p playground && npm run typecheck --workspaces --if-present",
+    "play": "vite playground",
+    "play:build": "vite build playground --outDir ../out/play --emptyOutDir",
+    "play:ghosts": "tsx playground/make-ghosts.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@backpack-space/core": "*"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

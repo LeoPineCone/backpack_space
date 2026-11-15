@@ -1,0 +1,96 @@
+# Backpack Space – concept
+
+Status: first draft, 2026-11-15. Decisions by Ilja are marked **decided**; everything marked *assumption* was chosen to get a playable, measurable draft and is open for change.
+
+## The game in one paragraph
+
+A mobile auto-battler in the classic backpack genre, set in space. You pick a hero, buy items in a shop and pack them into a backpack. Where an item lies matters: stars on items point at neighbours and create synergies, bags give bonuses to what is inside, and neighbouring items can be combined into better ones along recipe chains. Then your backpack fights another player's backpack on its own. A run lasts 12 rounds with 4 lives.
+
+## Run
+
+- **Decided:** 12 rounds per run, 4 lives. A lost fight costs a life; the run ends when the lives are gone or after round 12.
+- Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
+- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`).
+- **Decided:** free special items after round 4 and round 8.
+  - After round 4: a **signature artifact** of the hero. *Assumption:* each hero has three, two are shown, you take one.
+  - After round 8: a **general artifact**. *Assumption:* three of a pool of ten are shown, you take one.
+
+## Backpack and bags
+
+- **Decided:** the grid (9×7, *assumption*) is only the maximum area. Items can only lie on cells covered by a **bag**. Bags are bought in the shop and placed like items; every hero starts with a few bags.
+- Start: a 3×3 Field Pack plus one 2×2 hero bag with a small bonus for the hero's theme (13 cells).
+- Plain bags cost about 1 gold per cell. Themed bags (Cooler Bag, Holster, Tool Roll, Pet Carrier, …) give a bonus to matching items inside.
+- A bag can be moved with everything in it. A bag can only be sold empty.
+- Bench: up to 4 items or bags can wait outside the backpack; they do nothing in the fight (*assumption*).
+
+## Items
+
+- **Decided:** types/properties: weapon, armor, accessory, pet, food, mechanical, organic. An item has one or more of them; synergies refer to them ("starred food", "your pets", "mechanical items in this bag").
+- **Decided:** rarities with prices: common, rare, epic, legendary. The shop shows rarer items in later rounds (`shop.rarityOdds`). Artifacts are never sold.
+- Every item has a shape of cells and optionally **stars**: cells next to it that it points at. Effects can count, buff or react to the items on its stars.
+- Items act through a small set of building blocks (see "Effect language"), so the rules text is always generated from the data.
+- Each hero has an own pool: two start items, shop items only that hero is offered (30 % of the offers), own recipes and three signature artifacts.
+
+### Combining (recipes)
+
+- Inputs must lie next to each other (sharing an edge, as one connected group). The player confirms; combining is final (*assumption, as in Backpack Army*).
+- **Limit (assumption):** a chain has at most 3 steps above a base item (base → step 1 → step 2 → step 3), enforced by `npm run validate`. The longest chains use 5–7 base items.
+- Most recipes take 2 items. Recipes with 3 inputs exist but are rare (8 of 119).
+- A crafted item costs the sum of its inputs and is stronger and usually smaller than them together, so chains also save space.
+- Crafted items carry the derived property "crafted"; some effects refer to it (Rook's whole kit).
+
+## Fight
+
+- Both heroes have health (by round). Items act on their own cooldowns. Weapons hit for damage; everything else heals, shields, buffs or debuffs.
+- **Buffs** (on yourself): Shield (absorbs damage), Regen (heals every 2 s), Overclock (all your items faster), Power (+1 weapon damage per stack), Spikes (weapon hits against you hurt the attacker).
+- **Debuffs** (on the enemy): Burn (damage every second, fades by 1 each time, stopped by Shield), Toxin (damage every 2 s, never fades, ignores Shield), Cryo (items slower, fades), Jam (weapons miss, fades), Radiation (less healing and less Shield gained).
+- All numbers are in `data/rules.json` → `status`.
+
+### The dying star (fight clock)
+
+**Decided:** a fight has a time limit; after it both heroes take rising damage (the Supernova). The time until then is told through the star the duel is fought next to (*proposal*):
+
+| Phase | Seconds | |
+|---|---|---|
+| Calm | 0–8 | |
+| Flare | 8–16 | |
+| Red Giant | 16–24 | |
+| Collapse | 24–32 | |
+| **Supernova** | from 32 | every second both lose health: 3 % of their maximum, +1.5 points each second, ignoring Shield |
+
+The phase is a parameter for abilities: "every star phase: …", "when Flare begins: …", "during Collapse: twice as fast". One hero (Ysel) is built around it.
+
+## Heroes
+
+Four heroes, each with an own focus, passive, start items, shop pool and artifacts (details in `docs/catalog.md`):
+
+| Hero | Focus | Passive |
+|---|---|---|
+| **Flora Venn**, Orbital Botanist | food and organic items; heals a lot, wins slowly through Toxin | whenever one of her food items activates, a chance to inflict Toxin |
+| **RK-7 "Rook"**, Salvage Unit | mechanical items and crafting; Shield and Overclock | every combination pays gold; crafted items are faster |
+| **Nana Quill**, Keeper of the Last Ark | pets | her pets act the moment the fight begins and are faster |
+| **Ysel**, Singer of the Corona | the star phases; Burn; long fights | gains Power and Overclock with every star phase; takes half Supernova damage |
+
+## What makes it its own game (open, to decide together)
+
+The base is deliberately the classic backpack mechanic. Candidates for an own identity, in the order they are already in the draft:
+
+1. **The dying star** as fight clock and as a parameter for items and a whole hero.
+2. **Long recipe chains** up to 3 steps with crafting as a hero identity (Rook).
+3. **Themed bags** that turn "where do I put the bag" into a second packing puzzle.
+
+Not in the draft, ideas only: a shared star per round with a modifier (e.g. "blue giant: Burn is doubled this round"); fights in a best-of against the same opponent with a short re-pack between; trading items with the opponent's ghost shop.
+
+## Effect language (for item design)
+
+An item is data: shape, optional cooldown, optional weapon damage, and a list of effects. An effect is a trigger plus one action, or a passive bonus.
+
+- Triggers: `start`, `use` (each cooldown), `hit` (weapon hit), `attacked`, `phase` (every phase or a named one), `starUse` (a starred item activates), `lowHp` (once below half health); for heroes also `shipUse` (any own item with a tag activates).
+- Actions: gain a buff, inflict a debuff, deal damage, heal, cleanse own debuffs, strip enemy Shield.
+- Scaling `per`: starred items with a tag, items with a tag in the backpack, own buff stacks, enemy debuff stacks (with divisor and cap).
+- Conditions `if`: chance, star phases, health below a share.
+- Passives `to`: self, starred items, all own items with a tag, the hero (health), for bags the items inside. Bonuses: weapon damage, speed, crit, health, starting charged.
+
+## Tools
+
+See `README.md`: validation, balancing reports as npm commands with accuracy presets, and the browser preview (`npm run play`).

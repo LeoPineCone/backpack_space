@@ -1,0 +1,73 @@
+import { describe, expect, it } from "vitest";
+import { Rng, buy, combine, findCombos, finishRound, moveBag, newRun, place, rollOffers, validLayout } from "@backpack-space/core";
+import { loadGameData } from "@backpack-space/core/node";
+import { playLobby } from "../src/sim/lobby";
+
+const data = loadGameData();
+
+describe("data", () => {
+  it("keeps recipe chains within the limit and every crafted item reachable", () => {
+    for (const it of data.itemList) expect(it.depth).toBeLessThanOrEqual(data.rules.recipes.maxDepth);
+    expect(data.recipes.every((r) => r.in.length <= data.rules.recipes.maxInputs)).toBe(true);
+  });
+  it("contains no alcohol", () => {
+    for (const it of data.itemList) expect(it.name).not.toMatch(/\b(beer|wine|rum|whisky|whiskey|vodka|liquor|ale|cocktail|booze|mead|sake|gin|brandy|cider)\b/i);
+  });
+});
+
+describe("shop and run", () => {
+  it("rolls the same offers for the same seed and only shop items", () => {
+    const a = rollOffers(data, "rook", 6, new Rng(9)), b = rollOffers(data, "rook", 6, new Rng(9));
+    expect(a).toEqual(b);
+    for (const o of a) { const it = data.items.get(o.item)!; expect(it.inShop).toBe(true); expect(!it.hero || it.hero === "rook").toBe(true); }
+  });
+  it("buys onto a bag cell, refuses cells without a bag", () => {
+    const s = newRun(data, "rook", new Rng(1));
+    s.gold = 99;
+    s.offers = [{ item: "rivet_gun", price: 2, sale: false }, { item: "rivet_gun", price: 2, sale: false }];
+    expect(buy(s, data, 0, { x: 8, y: 6, rot: 0 })).toBe(false);
+    expect(buy(s, data, 0, { x: 5, y: 4, rot: 0 })).toBe(true);
+    expect(s.gold).toBe(97);
+  });
+  it("combines adjacent inputs only, for good, and pays the salvage unit", () => {
+    const s = newRun(data, "rook", new Rng(1));
+    // start: welding arm at 3,2 (two cells down) and scrap metal at 4,2: adjacent
+    const combos = findCombos(data, s.bags, s.items);
+    expect(combos.map((c) => c.recipe.out)).toContain("plasma_welder");
+    const gold = s.gold;
+    combine(s, data, combos.find((c) => c.recipe.out === "plasma_welder")!);
+    expect(s.items.map((p) => p.item)).toEqual(["plasma_welder"]);
+    expect(s.gold).toBe(gold + data.heroes.get("rook")!.craftGold);
+    // apart: no combo
+    const t = newRun(data, "rook", new Rng(1));
+    t.items[1] = { item: "scrap_metal", x: 5, y: 4, rot: 0 };
+    expect(findCombos(data, t.bags, t.items)).toHaveLength(0);
+  });
+  it("moves a bag together with the items in it", () => {
+    const s = newRun(data, "quill", new Rng(1));
+    expect(place(s, data, "pouch", { x: 0, y: 0, rot: 0 })).toBe(true);
+    expect(place(s, data, "rivet_gun", { x: 0, y: 0, rot: 0 })).toBe(true);
+    expect(moveBag(s, data, s.bags.length - 1, { x: 8, y: 6, rot: 0 })).toBe(true);
+    expect(s.items[s.items.length - 1]).toMatchObject({ x: 8, y: 6 });
+    expect(validLayout(data, s.bags, s.items)).toBe(true);
+  });
+  it("ends the run when the lives are gone and hands out the special picks", () => {
+    const s = newRun(data, "ysel", new Rng(2));
+    for (let i = 0; i < 4; i++) finishRound(s, data, true, new Rng(i));
+    expect(s.round).toBe(5);
+    expect(s.special).toHaveLength(data.rules.specials[0]!.show);
+    for (let i = 0; i < data.rules.lives; i++) finishRound(s, data, false, new Rng(i));
+    expect(s.over).toBe(true);
+  });
+});
+
+describe("bots", () => {
+  it("play a whole lobby by the rules, reproducibly", () => {
+    const a = playLobby(data, 5, { size: 8 }), b = playLobby(data, 5, { size: 8 });
+    expect(a.fights.map((f) => f.res.winner)).toEqual(b.fights.map((f) => f.res.winner));
+    for (const s of a.seats) {
+      expect(s.endedAfter).toBeGreaterThan(0);
+      for (const bd of s.builds) expect(validLayout(data, bd.bags, bd.items)).toBe(true);
+    }
+  });
+});
