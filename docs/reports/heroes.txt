@@ -7,21 +7,21 @@ Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims
 
 Win share in lobby fights (the hero attacks a random other bot of the lobby):
   hero         rounds 1–4  rounds 5–8  rounds 9–12      all
-  Venn            56 % ±2     41 % ±2      47 % ±2  48 % ±1
-  RK-7 "Rook"     38 % ±2     48 % ±2      49 % ±2  45 % ±1
-  Quill           54 % ±2     58 % ±2      50 % ±2  54 % ±1
-  Ysel            50 % ±2     47 % ±2      56 % ±2  51 % ±1
+  Venn            52 % ±2     41 % ±2      47 % ±2  46 % ±1
+  RK-7 "Rook"     47 % ±2     50 % ±2      50 % ±2  49 % ±1
+  Quill           53 % ±2     58 % ±2      50 % ±2  54 % ±1
+  Ysel            47 % ±2     45 % ±2      55 % ±2  49 % ±1
 
 Hero against hero (row wins against column), builds of rounds 4, 8 and 12, 600 fights per pair:
                Venn  RK-7 "Rook"  Quill  Ysel
-  Venn            -         54 %   51 %  42 %
-  RK-7 "Rook"  47 %            -   56 %  50 %
-  Quill        51 %         46 %      -  53 %
-  Ysel         58 %         47 %   45 %     -
+  Venn            -         52 %   51 %  42 %
+  RK-7 "Rook"  51 %            -   59 %  53 %
+  Quill        51 %         44 %      -  53 %
+  Ysel         58 %         42 %   45 %     -
 
 ## Targets (data/sim/targets.json)
-OFF  win share of every hero, overall and in each third of the run: target 45 %–55 %, measured 38 %–58 %
-OK   hero against hero: target 35 %–65 %, measured 42 %–58 %
+OFF  win share of every hero, overall and in each third of the run: target 45 %–55 %, measured 41 %–58 %
+OK   hero against hero: target 35 %–65 %, measured 42 %–59 %
 (Each share has a noise of about ±2 points at normal accuracy, see the ± in the table.)
 
 Run results by hero are in report:runs.

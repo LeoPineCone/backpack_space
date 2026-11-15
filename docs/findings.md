@@ -14,24 +14,35 @@ Question from the design: equal win shares matter less than heroes whose rules a
 - **Venn: mantraps feed on poisoned prey.** Venus Mantrap, Giant Mantrap and Jungle Tyrant heal less flat and more per Toxin on the enemy, which ties Hungry jungle to the Toxin core.
 - **Quill: a fed herd hits harder.** Banquet Trough gains Power on use, Kibble Sack with a 40 % chance; Power adds to every pet hit.
 - **Rook: Workshop toned down.** Assembly Core +2 damage / +20 % speed to crafted stars (was +3 / +30 %), Master Blueprint +15 % / +1 (was +20 % / +2).
+- **Rook: merging the start no longer makes him weaker.** Plasma Welder (Welding Arm + Scrap Metal) had 3–5 damage, less than the Welding Arm alone (5–7, raised in the third pass), and lost Scrap Metal's Shield. Now 6–8. Rook in rounds 1–4: 38 % → 47 %.
 
 ## After
 
 | | Before | After |
 |---|---|---|
-| Dominance | Rook beats all three | nobody beats all others |
-| Rock-paper-scissors circles | Quill > Ysel > Venn > Quill | Rook > Ysel > Venn > Rook and Quill > Venn > Rook > Quill |
-| Hero average against the others | Venn 47, Rook 58, Quill 48, Ysel 46 % | Venn 47, Rook 54, Quill 50, Ysel 51 % |
-| Paths against other heroes | 37–68 % | 41–59 % (Workshop 59, Poison garden 41) |
+| Dominance | Rook beats all three (55–61 %) | Rook still ahead of all three, but narrowly against Venn (53 %, 60 % against Quill, 57 % against Ysel) |
+| Other matchups | – | Quill beats Ysel 56 %, Ysel beats Venn 56 %, the rest 47–51 % |
+| Hero average against the others | Venn 47, Rook 58, Quill 48, Ysel 46 % | Venn 46, Rook 57, Quill 50, Ysel 49 % |
+| Paths against other heroes | 37–68 % | 41–60 % (Workshop 60, Poison garden and Hungry jungle 41) |
 | Linked items, round 2 → 12 | Venn 40→74, Rook 46→81, Quill 61→73, Ysel 68→64 % | Venn 44→80, Rook 48→85, Quill 64→81, Ysel 72→75 % |
 | Synergy worth, round 12 | Venn +18, Rook +25, Quill +33, Ysel +21 | Venn +23, Rook +27, Quill +23, Ysel +23 |
 
-Every hero's build now grows together over the run, and the item-to-item effects are worth 23–27 points at the end for all four. Lobby win shares (report:heroes) 45–54 % overall.
+Every hero's build now grows together over the run, and the item-to-item effects are worth 23–27 points at the end for all four. Lobby win shares (report:heroes): Venn 46, Rook 49, Quill 54, Ysel 49 % overall. Without the Plasma Welder fix nobody beat all others (Rook 50/58/53 %); the fix brings Rook's early game up and tips him slightly ahead again, which the design accepts (a hero may be a bit stronger).
 
 ## Still open (needs a design decision)
 
-- **Ysel's own rule stays small late:** kit worth +15 early, +5 from round 8 on. One Power per phase is about +3 per weapon hit in a 20 s fight. The new items make Power matter, but the rule itself would need more (for example Power at fight start, or 2 per phase) to carry her late. That is a change to her hero rules, so it waits for a decision.
-- **Rook in rounds 1–4** measured 38 % in lobby fights this time (44 % before, same start items; samples move by several points). Watch it in the next pass.
+- **Ysel's own rule stays small late:** kit worth +14 early, +5 from round 8 on. Variants of the rule, measured (not applied, a hero rule change needs a decision):
+
+  | Ysel's rule | Ysel overall | kit worth round 2 → 12 | against Venn / Rook / Quill |
+  |---|---|---|---|
+  | now: 1 Power per phase | 49 % | +14 → +5 | 56 / 44 / 47 % |
+  | + 1 Power at fight start | 54 % (49 % on seed 2) | +24 → +9 | 62 / 49 / 51 % |
+  | + 2 Power at fight start | 59 % | +30 → +11 | 67 / 53 / 55 % |
+  | 2 Power per phase | 58 % | +28 → +10 | 66 / 52 / 54 % |
+  | + Power per 2–3 accessories | 62–68 % | +30–40 → +15–17 | 73–81 / 56–61 / 58–62 % |
+  | + 2 Power when Collapse begins (and +1 at Red Giant) | 49–51 % | +16–18 → +5–6 | no change |
+
+  Power is flat damage on every weapon hit, so any extra Power lifts the early game most; Power late in the fight changes nothing because most fights end before Collapse (24 s). The only variant near the target is +1 Power at fight start, and even that mostly helps early.
 - Rook mirror fights land at 45–46 % for the attacker, the other mirrors at 49–51 %: Rook's Shield-on-hit start may favour the defender slightly.
 
 # Findings of the third balance pass (2026-11-15)

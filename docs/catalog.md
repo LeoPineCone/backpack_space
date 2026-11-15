@@ -440,7 +440,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Master Blueprint | artifact | 0 | `#` | accessory | Your crafted items: +1 damage, 15 % faster. |  |
 | Perpetual Engine | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and 6 Shield. |  |
 | Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every star phase: gain 35 Shield and remove 4 of your debuffs. Every 3 s: heal 7. |  |
-| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 3–5 damage every 1.6 s. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
+| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 6–8 damage every 1.6 s. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
 | Logic Core | crafted (step 1) | 6 | `*#*` | accessory, mechanical | Every star phase: gain 2 Overclock. Starred mechanical items: 20 % faster. | = Circuit Board + Power Cell |
 | Factory Line | crafted (step 1) | 6 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (60 % chance). Every 3.5 s: gain 8 Shield and remove 1 of your debuffs. | = Conveyor Belt + Toolbox |
 | Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 3–5 damage every 1.2 s. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
