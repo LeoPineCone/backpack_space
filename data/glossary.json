@@ -76,7 +76,7 @@
 
     { "id": "fight", "group": "fight", "en": "Fight", "de": "Kampf", "text": "Both backpacks fight on their own; the player only watches.", "code": ["battle", "simulate", "Replay"] },
     { "id": "opponent", "group": "fight", "en": "Opponent", "de": "Gegner", "text": "The stored backpack of another player from the same round.", "code": ["Build", "ghosts"] },
-    { "id": "activate", "group": "fight", "en": "Activate", "de": "Auslösen", "text": "An item acts: a weapon attacks, other items use their effect." },
+    { "id": "activate", "group": "fight", "en": "Activate", "de": "Auslösen", "text": "An item acts: a weapon attacks, other items use their effect.", "code": ["on: use", "starUse", "shipUse"] },
     { "id": "buff", "group": "fight", "en": "Buff", "de": "Buff", "text": "Status that helps you.", "code": ["BUFFS", "gain"] },
     { "id": "debuff", "group": "fight", "en": "Debuff", "de": "Debuff", "text": "Status that hurts the enemy.", "code": ["DEBUFFS", "inflict"] },
 
