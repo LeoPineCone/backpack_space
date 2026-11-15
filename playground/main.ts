@@ -3,15 +3,15 @@
  * A design tool: every rule decision is made by @backpack-space/core (run.ts, battle.ts); this file only calls it and draws.
  */
 import {
-  Rng, benchItem, buildOf, buy, combine, compile, describeHero, findCombos, finishRound, moveBag, moveItem, newRun, placeBench, reroll, toggleFreeze,
-  sellBag, sellBench, sellItem, sellPrice, takeSpecial,
+  Rng, dropBag, dropItem, buildOf, buy, compile, describeHero, pendingMerges, finishRound, moveBag, moveItem, newRun, placeLoose, reroll, toggleFreeze, toggleLock,
+  sellBag, sellLoose, sellItem, sellPrice, takeSpecial,
   type Build, type Combo, type ItemDef, type RunState, type Spot,
 } from "@backpack-space/core";
 import { DATA as data, GHOSTS } from "./data";
 import { mountFight } from "./fight";
 import { boardView, h, setKids, itemInfo, itemName, pieceEl, searchText, type BoardView } from "./view";
 
-type Src = { kind: "offer"; i: number } | { kind: "bench"; i: number } | { kind: "item"; i: number } | { kind: "bag"; i: number };
+type Src = { kind: "offer"; i: number } | { kind: "loose"; i: number } | { kind: "item"; i: number } | { kind: "bag"; i: number };
 interface Drag {
   src: Src | null; item: string; rot: number; pointerId: number; touch: boolean;
   startX: number; startY: number; x: number; y: number; active: boolean;
@@ -47,16 +47,16 @@ let catalogQuery = "";
 const sameSrc = (a: Src | null, b: Src | null) => !!a && !!b && a.kind === b.kind && a.i === b.i;
 function srcItem(s: Src): string {
   const r = run!;
-  return s.kind === "offer" ? r.offers[s.i]!.item : s.kind === "bench" ? r.bench[s.i]! : s.kind === "item" ? r.items[s.i]!.item : r.bags[s.i]!.item;
+  return s.kind === "offer" ? r.offers[s.i]!.item : s.kind === "loose" ? r.loose[s.i]! : s.kind === "item" ? r.items[s.i]!.item : r.bags[s.i]!.item;
 }
 const srcPlaced = (s: Src) => (s.kind === "item" ? run!.items[s.i]! : s.kind === "bag" ? run!.bags[s.i]! : null);
-const srcExists = (s: Src) => (s.kind === "offer" ? !!run!.offers[s.i] : s.kind === "bench" ? s.i < run!.bench.length : s.kind === "item" ? s.i < run!.items.length : s.i < run!.bags.length);
+const srcExists = (s: Src) => (s.kind === "offer" ? !!run!.offers[s.i] : s.kind === "loose" ? s.i < run!.loose.length : s.kind === "item" ? s.i < run!.items.length : s.i < run!.bags.length);
 
 /** The one place a piece is put somewhere: the rules in run.ts decide whether it works. */
 function applyTo(s: RunState, src: Src, at: Spot): boolean {
   switch (src.kind) {
     case "offer": return buy(s, data, src.i, at);
-    case "bench": return placeBench(s, data, src.i, at);
+    case "loose": return placeLoose(s, data, src.i, at);
     case "item": return moveItem(s, data, src.i, at);
     case "bag": return moveBag(s, data, src.i, at);
   }
@@ -114,11 +114,11 @@ function commitPlace(src: Src, at: Spot): boolean {
   selRot = at.rot;
   return true;
 }
-function toBench(src: Src): void {
+function toFloor(src: Src): void {
   const r = run!;
-  if (src.kind === "offer") { if (!buy(r, data, src.i)) toast(r.gold < r.offers[src.i]!.price ? "Not enough gold" : "The bench is full"); }
-  else if (src.kind === "item") { if (!benchItem(r, data, src.i)) toast("The bench is full"); }
-  else if (src.kind === "bag") toast("A placed bag cannot go back to the bench — move it or sell it empty");
+  if (src.kind === "offer") { if (!buy(r, data, src.i)) toast(r.gold < r.offers[src.i]!.price ? "Not enough gold" : "Too many loose items: place or sell one first"); }
+  else if (src.kind === "item") dropItem(r, src.i);
+  else if (src.kind === "bag") dropBag(r, data, src.i);
   else return;
   sel = null;
   render();
@@ -127,7 +127,7 @@ function sell(src: Src): void {
   const r = run!;
   if (src.kind === "offer") { toast("Not yours yet"); return; }
   if (src.kind === "item") sellItem(r, data, src.i);
-  else if (src.kind === "bench") sellBench(r, data, src.i);
+  else if (src.kind === "loose") sellLoose(r, data, src.i);
   else if (!sellBag(r, data, src.i)) { toast("Only an empty bag can be sold"); return; }
   sel = null;
   render();
@@ -162,7 +162,7 @@ function pickGhost(player: Build): { ghost: Build; note?: string } {
 }
 function startFight(): void {
   const r = run!;
-  if (r.bench.length > rules.shop.benchSlots || r.special) return;
+  if (r.special) return;
   const player = buildOf(r);
   const { ghost, note } = pickGhost(player);
   screen = "fight"; sel = null; hover = null;
@@ -218,7 +218,7 @@ function header(r: RunState): HTMLElement {
 function renderShop(): void {
   const r = run!;
   if (sel && !srcExists(sel)) sel = null;
-  combos = findCombos(data, r.bags, r.items);
+  combos = pendingMerges(data, r.bags, r.items);
   view = boardView(data, r.bags, r.items, { labels: true, selBag: sel?.kind === "bag" ? sel.i : undefined });
   view.root.id = "grid";
   view.root.classList.add("live");
@@ -234,14 +234,14 @@ function renderShop(): void {
       h("div", { class: "offer-pic mini" }, pieceEl(data, o.item, 0, { stars: true })),
       h("div", { class: "offer-price" }, o.frozen ? h("span", { class: "sale ice" }, "PINNED") : null, o.sale ? h("span", { class: "sale" }, "SALE") : null, h("span", { class: "gold" }, o.price), def.isBag && !o.sale ? " · bag" : ""));
   });
-  const slots = Math.max(rules.shop.benchSlots, r.bench.length);
-  const bench = Array.from({ length: slots }, (_, i) => {
-    const id = r.bench[i];
+  const slots = r.loose.length;
+  const loose = Array.from({ length: slots }, (_, i) => {
+    const id = r.loose[i];
     if (!id) return h("div", { class: "bslot empty" });
-    return h("div", { class: `bslot${i >= rules.shop.benchSlots ? " over" : ""}${sameSrc(sel, { kind: "bench", i }) ? " sel" : ""}`, "data-src": `bench:${i}`, title: itemName(data, id) },
+    return h("div", { class: `bslot${sameSrc(sel, { kind: "loose", i }) ? " sel" : ""}`, "data-src": `loose:${i}`, title: itemName(data, id) },
       h("div", { class: "mini" }, pieceEl(data, id, 0)), h("small", null, itemName(data, id)));
   });
-  const overBench = r.bench.length > rules.shop.benchSlots;
+  const overLimit = r.loose.length >= rules.shop.looseLimit;
   sellEl = h("div", { class: "sellzone", "data-drop": "sell" }, h("b", null, "Sell"), h("small", { id: "sellprice" }, "drop here"));
   infoEl = h("div", { class: "infopanel" });
 
@@ -254,15 +254,15 @@ function renderShop(): void {
         h("button", { class: "btn small" + (bagMode ? "" : " on"), id: "mode-items", onclick: () => { bagMode = false; if (sel?.kind === "bag") sel = null; render(); } }, "Move items"),
         h("button", { class: "btn small" + (bagMode ? " on" : ""), id: "mode-bags", onclick: () => { bagMode = true; if (sel?.kind === "item") sel = null; render(); } }, "Move bags")),
       h("button", { class: "btn", id: "rotate", onclick: rotateSel }, "⟳ Rotate")),
-    combos.length ? h("div", { class: "combos" }, ...combos.map((c, ci) => h("button", { class: "btn combine", "data-combo": ci, onclick: () => { combine(r, data, c); sel = null; render(); } },
-      `Combine: ${c.recipe.in.map((i) => itemName(data, i)).join(" + ")} → ${itemName(data, c.recipe.out)}`))) : null,
+    combos.length ? h("div", { class: "combos" }, ...combos.map((c, ci) => h("div", { class: "warn", "data-combo": ci },
+      `Merges after the fight: ${c.recipe.in.map((i) => itemName(data, i)).join(" + ")} → ${itemName(data, c.recipe.out)}`))) : null,
     h("div", { class: "boardwrap" }, view.root),
-    h("div", { class: "benchrow" },
-      h("div", { class: "bench", "data-drop": "bench" }, h("small", { class: "benchlabel" }, `Bench ${r.bench.length}/${rules.shop.benchSlots}`), h("div", { class: "bslots" }, ...bench)),
+    h("div", { class: "floorrow" },
+      h("div", { class: "floor", "data-drop": "loose" }, h("small", { class: "floorlabel" }, `Loose items ${r.loose.length}/${rules.shop.looseLimit}`), h("div", { class: "bslots" }, ...loose)),
       sellEl),
     h("div", { class: "row" },
-      overBench ? h("div", { class: "warn" }, `The bench holds ${r.bench.length} of ${rules.shop.benchSlots}: place or sell something before the fight.`) : h("span", { class: "spacer" }),
-      h("button", { class: "btn primary", id: "fight", disabled: overBench || !!r.special, onclick: startFight }, "Fight ▶")),
+      overLimit ? h("div", { class: "warn" }, "Loose items do not fight. Nothing more can be bought loose until you place or sell one.") : h("span", { class: "spacer" }),
+      h("button", { class: "btn primary", id: "fight", disabled: !!r.special, onclick: startFight }, "Fight ▶")),
     infoEl,
     h("div", { class: "footer" }, `Seed ${seed} · drag pieces or tap one and then a cell · R / second finger rotates`),
   );
@@ -273,7 +273,7 @@ function renderShop(): void {
 function specialModal(r: RunState): HTMLElement {
   return h("div", { class: "modal" }, h("div", { class: "modal-box" },
     h("h2", null, "Pick a free special item"),
-    h("p", { class: "dim" }, "It goes to your bench."),
+    h("p", { class: "dim" }, "It drops below your backpack."),
     ...r.special!.map((id, i) => h("button", { class: "special", "data-special": i, onclick: () => { takeSpecial(r, i); render(); } }, itemInfo(data, id)))));
 }
 
@@ -290,15 +290,16 @@ function refresh(): void {
     const rot = drag?.active ? drag.rot : isSel ? selRot : srcPlaced(focus)?.rot ?? 0;
     const buttons = isSel ? h("div", { class: "info-actions" },
       h("button", { class: "btn small", id: "act-rotate", onclick: rotateSel }, "⟳ Rotate"),
-      focus.kind === "offer" ? h("button", { class: "btn small", id: "act-bench", onclick: () => toBench(focus) }, `Buy to bench (${offer!.price})`) : null,
+      focus.kind === "offer" ? h("button", { class: "btn small", id: "act-floor", onclick: () => toFloor(focus) }, `Buy loose (${offer!.price})`) : null,
+      focus.kind === "item" && data.recipesWith.has(r.items[focus.i]!.item) ? h("button", { class: "btn small", id: "act-lock", onclick: () => { toggleLock(r, focus.i); render(); } }, r.items[focus.i]!.lock ? "Unlock (merges again)" : "Lock (do not merge)") : null,
       focus.kind === "offer" ? h("button", { class: "btn small", id: "act-freeze", onclick: () => { toggleFreeze(r, focus.i); render(); } }, offer!.frozen ? "Unpin" : "Pin for later") : null,
-      focus.kind === "item" ? h("button", { class: "btn small", id: "act-bench", onclick: () => toBench(focus) }, "To bench") : null,
+      focus.kind === "item" || focus.kind === "bag" ? h("button", { class: "btn small", id: "act-floor", onclick: () => toFloor(focus) }, "Take out") : null,
       focus.kind !== "offer" ? h("button", { class: "btn small danger", id: "act-sell", onclick: () => sell(focus) }, `Sell (+${sellPrice(data, id)})`) : null,
       h("button", { class: "btn small", id: "act-close", onclick: () => select(null) }, "✕"),
       h("span", { class: "hint" }, srcPlaced(focus) ? "Tap a cell to move it." : "Tap a cell to place it.")) : null;
     setKids(infoEl, itemInfo(data, id, { rot, price: offer?.price, sale: offer?.sale }), buttons);
   } else {
-    infoEl.replaceChildren(h("div", { class: "dim pad" }, "Tap or hover an item to see what it does. Drag from the shop into a bag to buy; drop on the bench to keep it for later; drop on Sell to sell."));
+    infoEl.replaceChildren(h("div", { class: "dim pad" }, "Tap or hover an item to see what it does. Drag from the shop into a bag to buy; drop it below the backpack to keep it for later; drop on Sell to sell."));
   }
   if (sellEl) {
     const s = drag?.active ? drag.src : sel;
@@ -409,7 +410,7 @@ function parseSrc(el: Element | null): Src | null {
   const raw = el?.closest("[data-src]")?.getAttribute("data-src");
   if (!raw) return null;
   const [kind, i] = raw.split(":");
-  return kind === "offer" || kind === "bench" ? { kind, i: Number(i) } : null;
+  return kind === "offer" || kind === "loose" ? { kind, i: Number(i) } : null;
 }
 
 function buildFloat(d: Drag): void {
@@ -502,7 +503,7 @@ document.addEventListener("pointermove", (e) => {
     d.active = true;
     hoverCell = null;
     document.body.classList.add("dragging");
-    if (d.src.kind === "offer" || d.src.kind === "bench") document.querySelector(`[data-src="${d.src.kind}:${d.src.i}"]`)?.classList.add("dragsrc");
+    if (d.src.kind === "offer" || d.src.kind === "loose") document.querySelector(`[data-src="${d.src.kind}:${d.src.i}"]`)?.classList.add("dragsrc");
     buildFloat(d);
     refresh();
   }
@@ -528,8 +529,8 @@ function finishPointer(e: PointerEvent, cancelled: boolean): void {
     if (ok) commitPlace(src, spot);
     else { if (sameSrc(src, sel)) selRot = rot; toast(whyNotAt(src, rot)); }
     render();
-  } else if (zone === "bench") {
-    if (src.kind === "bench") render(); else toBench(src);
+  } else if (zone === "loose") {
+    if (src.kind === "loose") render(); else toFloor(src);
   } else if (zone === "sell") sell(src);
   else render();
 }

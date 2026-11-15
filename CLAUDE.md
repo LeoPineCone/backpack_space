@@ -9,4 +9,4 @@
 - After changes: `npm run validate && npm run typecheck && npm test`. After item changes also `npm run catalog`.
 - No alcohol in the game.
 - Not a clone: no names, characters or look of Backpack Brawl or other existing games.
-- Tech stack is decided: TypeScript, PixiJS, Capacitor (same as backpack_race). The PixiJS client does not exist yet; `playground/` is a design tool, not product code.
+- Tech stack is decided: TypeScript, PixiJS, Capacitor (same as backpack_race). The client lives in `apps/client` (PixiJS, placeholder symbols instead of art); it only shows and replays what the core computes and never decides a rule or a fight. `playground/` is a design tool, not product code.

@@ -1,4 +1,4 @@
-/** One run as the player plays it: rounds, gold, shop, bags, backpack, bench, combining, lives. Used by the browser preview; the bots follow the same rules. */
+/** One run as the player plays it: rounds, gold, shop, bags, backpack, loose items, merging, lives. Used by the browser preview; the bots follow the same rules. */
 import type { GameData } from "./gamedata.js";
 import { bagsUnder, boardOf, neighbours } from "./grid.js";
 import type { Rng } from "./rng.js";
@@ -11,34 +11,39 @@ export interface RunState {
   round: number;
   lives: number;
   wins: number;
+  /** one entry per round fought: won or lost */
+  results: boolean[];
   gold: number;
   bags: Placement[];
   items: Placement[];
-  /** items and bags waiting outside the backpack (no effect in battle) */
-  bench: string[];
+  /** items and bags lying loose below the backpack (no effect in battle) */
+  loose: string[];
   offers: (Offer | null)[];
   /** free special items to choose one from before shopping continues */
   special: string[] | null;
+  /** what merged after the last fight */
+  merged: Merge[];
   over: boolean;
 }
 export interface Combo { recipe: Recipe; idxs: number[] }
+export interface Merge { out: string; in: string[] }
 export interface Spot { x: number; y: number; rot: number }
 
 export function newRun(data: GameData, hero: string, rng: Rng): RunState {
   const h = data.heroes.get(hero);
   if (!h) throw new Error(`unknown hero ${hero}`);
-  const s: RunState = { hero, round: 1, lives: data.rules.lives, wins: 0, gold: 0, bags: h.bags.map((p) => ({ ...p })), items: h.start.map((p) => ({ ...p })), bench: [], offers: [], special: null, over: false };
+  const s: RunState = { hero, round: 1, lives: data.rules.lives, wins: 0, results: [], gold: 0, bags: h.bags.map((p) => ({ ...p })), items: h.start.map((p) => ({ ...p })), loose: [], offers: [], special: null, merged: [], over: false };
   startRound(s, data, rng);
   return s;
 }
 export function startRound(s: RunState, data: GameData, rng: Rng): void {
   s.gold += data.rules.goldPerRound[s.round - 1]!;
-  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench], s.offers);
+  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.loose], s.offers);
 }
 export function reroll(s: RunState, data: GameData, rng: Rng): boolean {
   if (s.gold < data.rules.shop.rerollCost) return false;
   s.gold -= data.rules.shop.rerollCost;
-  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench], s.offers);
+  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.loose], s.offers);
   return true;
 }
 /** Pins an offer (it stays through rerolls and into the next round) or releases it. Any number of offers can be pinned. */
@@ -62,7 +67,14 @@ export function place(s: RunState, data: GameData, item: string, at: Spot): bool
   return data.items.get(item)!.isBag ? commit(s, data, [...s.bags, p], s.items) : commit(s, data, s.bags, [...s.items, p]);
 }
 export function moveItem(s: RunState, data: GameData, idx: number, at: Spot): boolean {
-  return commit(s, data, s.bags, s.items.map((p, i) => (i === idx ? { item: p.item, ...at } : p)));
+  return commit(s, data, s.bags, s.items.map((p, i) => (i === idx ? { ...p, ...at } : p)));
+}
+/** Locks an item so that it does not merge after a fight, or releases it. The lock is lost when the item leaves the backpack. */
+export function toggleLock(s: RunState, idx: number): boolean {
+  const p = s.items[idx];
+  if (!p) return false;
+  if (p.lock) delete p.lock; else p.lock = true;
+  return true;
 }
 /** Moves a bag; the items lying entirely in it travel along (only without turning the bag). */
 export function moveBag(s: RunState, data: GameData, idx: number, at: Spot): boolean {
@@ -73,34 +85,43 @@ export function moveBag(s: RunState, data: GameData, idx: number, at: Spot): boo
   const dx = at.x - old.x, dy = at.y - old.y;
   return commit(s, data, s.bags.map((p, i) => (i === idx ? { item: p.item, ...at } : p)), s.items.map((p, i) => (riders[i] ? { ...p, x: p.x + dx, y: p.y + dy } : p)));
 }
-/** Buys an offer; with a spot it goes into the backpack, otherwise onto the bench. */
+/** Buys an offer; with a spot it goes into the backpack, otherwise it drops to the loose items. `shop.looseLimit` only stops buying: once that many pieces lie loose, nothing more can be bought loose. */
 export function buy(s: RunState, data: GameData, slot: number, at?: Spot): boolean {
   const o = s.offers[slot];
   if (!o || s.gold < o.price) return false;
   if (at) { if (!place(s, data, o.item, at)) return false; }
-  else { if (s.bench.length >= data.rules.shop.benchSlots) return false; s.bench.push(o.item); }
+  else { if (s.loose.length >= data.rules.shop.looseLimit) return false; s.loose.push(o.item); }
   s.gold -= o.price; s.offers[slot] = null;
   return true;
 }
-export function placeBench(s: RunState, data: GameData, idx: number, at: Spot): boolean {
-  if (!place(s, data, s.bench[idx]!, at)) return false;
-  s.bench.splice(idx, 1);
+export function placeLoose(s: RunState, data: GameData, idx: number, at: Spot): boolean {
+  if (!place(s, data, s.loose[idx]!, at)) return false;
+  s.loose.splice(idx, 1);
   return true;
 }
-export function benchItem(s: RunState, data: GameData, idx: number): boolean {
-  if (s.bench.length >= data.rules.shop.benchSlots) return false;
-  s.bench.push(s.items[idx]!.item); s.items.splice(idx, 1);
-  return true;
+/** Takes an item out of the backpack; it drops to the loose items (always allowed). */
+export function dropItem(s: RunState, idx: number): void {
+  s.loose.push(s.items[idx]!.item); s.items.splice(idx, 1);
+}
+/** Takes a bag out of the backpack; every item that loses a cell of bag under it drops with it. */
+export function dropBag(s: RunState, data: GameData, idx: number): void {
+  const bag = s.bags[idx]!;
+  const bags = s.bags.filter((_, i) => i !== idx);
+  const kept: Placement[] = [];
+  const fell: string[] = [];
+  for (const p of s.items) { if (validLayout(data, bags, [...kept, p])) kept.push(p); else fell.push(p.item); }
+  s.bags = bags; s.items = kept;
+  s.loose.push(bag.item, ...fell);
 }
 export function sellItem(s: RunState, data: GameData, idx: number): void { s.gold += sellPrice(data, s.items[idx]!.item); s.items.splice(idx, 1); }
-/** Bags can only be sold empty. */
+/** Bags in the backpack can only be sold empty. */
 export function sellBag(s: RunState, data: GameData, idx: number): boolean {
   const bags = s.bags.filter((_, i) => i !== idx);
   if (!validLayout(data, bags, s.items)) return false;
   s.gold += sellPrice(data, s.bags[idx]!.item); s.bags = bags;
   return true;
 }
-export function sellBench(s: RunState, data: GameData, idx: number): void { s.gold += sellPrice(data, s.bench[idx]!); s.bench.splice(idx, 1); }
+export function sellLoose(s: RunState, data: GameData, idx: number): void { s.gold += sellPrice(data, s.loose[idx]!); s.loose.splice(idx, 1); }
 
 /** Recipes whose inputs lie in the backpack as one connected group (sharing edges). */
 export function findCombos(data: GameData, bags: readonly Placement[], items: readonly Placement[]): Combo[] {
@@ -124,27 +145,51 @@ export function findCombos(data: GameData, bags: readonly Placement[], items: re
   }
   return out;
 }
-/** Combines for good: the inputs leave the backpack, the result lands where they were if it fits there, else on the bench. */
+/** The merges the next fight will be followed by: recipes lying together with no locked input, every item used at most once. */
+export function pendingMerges(data: GameData, bags: readonly Placement[], items: readonly Placement[]): Combo[] {
+  const used = new Set<number>();
+  const out: Combo[] = [];
+  for (const c of findCombos(data, bags, items)) {
+    if (c.idxs.some((i) => used.has(i) || items[i]!.lock)) continue;
+    c.idxs.forEach((i) => used.add(i));
+    out.push(c);
+  }
+  return out;
+}
+/** Merges everything that is due (once; a result can merge again after the next fight). */
+export function mergeAll(s: RunState, data: GameData): Merge[] {
+  const due = pendingMerges(data, s.bags, s.items).map((c) => ({ recipe: c.recipe, parts: c.idxs.map((i) => s.items[i]!) }));
+  return due.map(({ recipe, parts }) => {
+    combine(s, data, { recipe, idxs: parts.map((p) => s.items.indexOf(p)) });
+    return { out: recipe.out, in: [...recipe.in] };
+  });
+}
+/** Merges one recipe for good: the inputs leave the backpack, the result lands where they were if it fits there, else among the loose items. */
 export function combine(s: RunState, data: GameData, combo: Combo): void {
   const cells = combo.idxs.flatMap((i) => { const p = s.items[i]!; return data.shape(p.item, p.rot).cells.map(([cx, cy]) => [p.x + cx, p.y + cy] as [number, number]); });
   s.items = s.items.filter((_, i) => !combo.idxs.includes(i));
   s.gold += data.heroes.get(s.hero)!.craftGold;
   for (const [x, y] of cells) for (let rot = 0; rot < 4; rot++) if (place(s, data, combo.recipe.out, { x, y, rot })) return;
-  s.bench.push(combo.recipe.out);
+  s.loose.push(combo.recipe.out);
 }
 export function takeSpecial(s: RunState, choice: number): void {
   if (!s.special) return;
-  s.bench.push(s.special[choice]!);
+  s.loose.push(s.special[choice]!);
   s.special = null;
 }
 export function buildOf(s: RunState): Build { return { hero: s.hero, round: s.round, bags: s.bags.map((p) => ({ ...p })), items: s.items.map((p) => ({ ...p })) }; }
 
-/** Books the fight of this round and opens the next shop (or ends the run). */
+/** Books the fight of this round, merges what lies together and opens the next shop (or ends the run). */
 export function finishRound(s: RunState, data: GameData, won: boolean, rng: Rng): void {
   if (won) s.wins++; else s.lives--;
+  s.results.push(won);
   const fought = s.round;
+  s.merged = [];
   if (s.lives <= 0 || fought >= data.rules.rounds) { s.over = true; return; }
+  s.merged = mergeAll(s, data);
   s.round++;
   s.special = specialOptions(data, s.hero, fought, rng);
   startRound(s, data, rng);
 }
+/** Reward for a finished run, in the unit kept outside the run: rounds played + lives left. */
+export function runReward(s: RunState): number { return s.results.length + Math.max(0, s.lives); }

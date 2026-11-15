@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Backpack Space – shared battle core, balancing tools and browser preview",
+  "description": "Backpack Space \u2013 shared battle core, game client, balancing tools and browser preview",
   "scripts": {
     "validate": "tsx src/cli/validate.ts",
     "battle": "tsx src/cli/battle.ts",
@@ -20,7 +20,9 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p playground && npm run typecheck --workspaces --if-present",
     "play": "vite playground",
     "play:build": "vite build playground --outDir ../out/play --emptyOutDir",
-    "play:ghosts": "tsx playground/make-ghosts.ts"
+    "play:ghosts": "tsx playground/make-ghosts.ts",
+    "client": "vite apps/client",
+    "client:build": "vite build apps/client --outDir ../../out/client --emptyOutDir"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
@@ -33,6 +35,7 @@
     "@backpack-space/core": "*"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ]
 }

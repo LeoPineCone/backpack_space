@@ -41,7 +41,7 @@
     "heroOfferPct": 30,
     "salePct": 10,
     "sellPct": 50,
-    "benchSlots": 4,
+    "looseLimit": 6,
     "rarityOdds": [
       {
         "common": 90,
