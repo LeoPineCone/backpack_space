@@ -4,9 +4,10 @@
  */
 import { arrange, compile, shuffleLayout, simulate, type Build, type CSide } from "@backpack-space/core";
 import { makeField } from "../sim/lobby";
-import { avg, pct, signed, startReport, stderr, table } from "./common";
+import { avg, pct, signed, startReport, stderr } from "./common";
 
 const r = startReport({
+  id: "placement",
   title: "Placement",
   question: "How much does a build lose when the same items lie in the same bags at random instead of where the stars and bags help them?",
   presets: { quick: { builds: 40, lobbies: 6, fights: 8 }, normal: { builds: 150, lobbies: 20, fights: 10 }, precise: { builds: 500, lobbies: 50, fights: 12 } },
@@ -39,7 +40,10 @@ for (const round of [2, 4, 6, 8, 10, 12]) {
   }
   rows.push([round, pct(planned / (d.length * r.n.fights)), pct(random / (d.length * r.n.fights)), `${signed(avg(d))} ±${stderr(d).toFixed(1)}`, `${signed(avg(dBest))} ±${stderr(dBest).toFixed(1)}`, (links / d.length).toFixed(1)]);
 }
-r.log(...table(["round", "as the bot laid it", "random layout", "bot − random", "long search − bot", "star links"], rows));
+r.table(["round", "as the bot laid it", "random layout", "bot − random", "long search − bot", "star links"], rows);
+const num = (k: number) => rows.map((row) => Number.parseFloat(String(row[k]).replace("−", "-")));
+r.chart({ type: "line", title: "Win share by layout", x: rows.map((row) => row[0]!), xLabel: "round", unit: "%", ref: 50, series: [{ name: "as the bot laid it", values: num(1) }, { name: "random layout", values: num(2) }] });
+r.chart({ type: "bar", title: "What placement is worth (points of win share)", x: rows.map((row) => row[0]!), xLabel: "round", series: [{ name: "bot − random", values: num(3) }, { name: "long search − bot", values: num(4) }] });
 r.log();
 r.log("bot − random: points of win share placement is worth. long search − bot: what a six times longer layout search adds on top (how much the bots leave on the table).");
 r.log("star links: items lying on a star of another item, per build.");

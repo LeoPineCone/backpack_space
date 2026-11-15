@@ -3,9 +3,10 @@
  *   npm run report:recipes -- [--accuracy quick|normal|precise] [--sims N] [--seed S] [--out file]
  */
 import { makeField } from "../sim/lobby";
-import { avg, checkTarget, loadTargets, pct, signed, startReport, table } from "./common";
+import { avg, loadTargets, pct, signed, startReport } from "./common";
 
 const r = startReport({
+  id: "recipes",
   title: "Recipes",
   question: "Which recipes do the bots complete, in which round, and how deep do the chains get in a run?",
   presets: { quick: { lobbies: 10 }, normal: { lobbies: 50 }, precise: { lobbies: 200 } },
@@ -28,6 +29,7 @@ r.log();
 r.log(`Rules: at most ${data.rules.recipes.maxDepth} steps in a chain, at most ${data.rules.recipes.maxInputs} inputs. ${data.recipes.length} recipes, ${data.recipes.filter((x) => x.in.length === 3).length} of them with 3 inputs.`);
 const missed = seats.map((s) => s.bot.log.reduce((n, l) => n + l.missed, 0));
 r.log(`Combinations per run: ${avg(perRun).toFixed(1)}. Rounds in which an owned recipe did not lie together before the fight: ${avg(missed).toFixed(1)} per run. Deepest chain step reached in a run: ${depthReached.map((n, d) => `${d === 0 ? "none" : `step ${d}`} ${pct(n / seats.length)}`).join(", ")}.`);
+r.chart({ type: "bar", title: "Deepest chain step reached in a run", x: depthReached.map((_, d) => (d === 0 ? "none" : `step ${d}`)), unit: "%", series: [{ name: "share of runs", values: depthReached.map((n) => (100 * n) / seats.length) }] });
 r.log();
 r.log("Bots merge by the player's rules: they lay owned inputs next to each other and the recipe merges after that round's fight. They value an item higher when it completes a recipe but do not plan chains, so read the shares as a lower bound.");
 for (const depth of [1, 2, 3]) {
@@ -39,7 +41,7 @@ for (const depth of [1, 2, 3]) {
     const rounds = made.get(x.out) ?? [];
     return { name: out.name, inputs: x.in.map((i) => data.items.get(i)!.name).join(" + "), share: rounds.length / runs, round: avg(rounds), hero: out.hero ?? "" };
   }).sort((a, b) => b.share - a.share);
-  r.log(...table(["result", "made in runs", "avg round", "hero", "inputs"], rows.map((x) => [x.name, pct(x.share), x.share ? x.round.toFixed(1) : "-", x.hero, x.inputs])));
+  r.table(["result", "made in runs", "avg round", "hero", "inputs"], rows.map((x) => [x.name, pct(x.share), x.share ? x.round.toFixed(1) : "-", x.hero, x.inputs]));
 }
 r.log();
 
@@ -80,10 +82,11 @@ const domRows = [...stat].filter(([, s]) => s.n >= 60).map(([id, s]) => {
 const startIds = new Set(data.heroList.flatMap((h) => h.start.map((p) => p.item)));
 const fromStart = (id: string) => data.recipes.some((x) => x.out === id && x.in.some((i) => startIds.has(i)));
 const flag = (x: (typeof domRows)[number]) => (x.lift > T.recipeLift!.max! ? "too strong" : "") + (x.madeShare > T.recipeMadeShare!.max! && !fromStart(x.id) ? `${x.lift > T.recipeLift!.max! ? ", " : ""}everyone makes it` : "");
-r.log(...table(["result", "step", "hero", "fights held", "wins", "lift", "made in runs", ""], domRows.slice(0, 15).map((x) => [x.name, x.depth, x.hero, x.fights, pct(x.wins), `${signed(x.lift * 100, 0)} pts`, pct(x.madeShare), flag(x)])));
+r.table(["result", "step", "hero", "fights held", "wins", "lift", "made in runs", ""], domRows.slice(0, 15).map((x) => [x.name, x.depth, x.hero, x.fights, pct(x.wins), `${signed(x.lift * 100, 0)} pts`, pct(x.madeShare), flag(x)]), { center: 0, span: 100 * T.recipeLift!.max!, cols: [5], highIsBad: true });
 r.log();
 r.log("lift: win share of a hero while the result lies in its backpack, minus the win share of the same hero in the same round without it (results held in at least 60 fights; the top 15). A good build holds more crafted items anyway, so a lift of a few points is normal.");
-r.log(checkTarget(T.recipeLift!, domRows.map((x) => x.lift), true), checkTarget(T.recipeMadeShare!, domRows.filter((x) => !fromStart(x.id)).map((x) => x.madeShare), true));
+r.target(T.recipeLift!, domRows.map((x) => x.lift), true);
+r.target(T.recipeMadeShare!, domRows.filter((x) => !fromStart(x.id)).map((x) => x.madeShare), true);
 r.log("(Upgrades of a hero's start items are left out of the second check: almost every run of that hero is meant to make one of them.)");
 const off = domRows.filter((x) => flag(x));
 r.log(off.length ? `Off target: ${off.map((x) => `${x.name} (${flag(x)})`).join(", ")}.` : "No recipe result is off target.");

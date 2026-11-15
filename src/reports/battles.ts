@@ -3,9 +3,10 @@
  *   npm run report:battles -- [--accuracy quick|normal|precise] [--sims N] [--seed S] [--out file]
  */
 import { makeField } from "../sim/lobby";
-import { avg, checkTarget, loadTargets, pct, quantile, share, startReport, table } from "./common";
+import { avg, loadTargets, pct, quantile, share, startReport } from "./common";
 
 const r = startReport({
+  id: "battles",
   title: "Battles",
   question: "How long do fights last in each round, how often does the Supernova decide them, and where does the damage come from?",
   presets: { quick: { lobbies: 8 }, normal: { lobbies: 40 }, precise: { lobbies: 160 } },
@@ -19,6 +20,8 @@ r.log(`Star clock: ${r.data.rules.battle.phases.map((p) => `${p.name} ${p.second
 r.log();
 const rows: (string | number)[][] = [];
 const srcs = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
+const rounds = Array.from({ length: r.data.rules.rounds }, (_, i) => i + 1);
+const novaShare: number[] = [], dmgBy: Record<string, number[]> = { ...Object.fromEntries(srcs.map((k) => [k, [] as number[]])), nova: [] };
 for (let round = 1; round <= r.data.rules.rounds; round++) {
   const fs = fights.filter((f) => f.round === round);
   const secs = fs.map((f) => f.res.seconds);
@@ -27,6 +30,9 @@ for (let round = 1; round <= r.data.rules.rounds; round++) {
   const dmg = (k: (typeof srcs)[number]) => fs.reduce((s, f) => s + f.res.stats[0][k] + f.res.stats[1][k], 0);
   const novaDmg = fs.reduce((s, f) => s + f.res.stats[0].nova + f.res.stats[1].nova, 0);
   const total = srcs.reduce((s, k) => s + dmg(k), 0) + novaDmg;
+  novaShare.push((100 * novaFs.length) / fs.length);
+  for (const k of srcs) dmgBy[k]!.push((100 * dmg(k)) / total);
+  dmgBy.nova!.push((100 * novaDmg) / total);
   rows.push([
     round, r.data.rules.heroHp[round - 1]!, avg(secs).toFixed(1), `${quantile(secs, 0.1).toFixed(0)}–${quantile(secs, 0.9).toFixed(0)}`,
     share(novaFs.length / fs.length, fs.length), led.length ? pct(led.filter((f) => f.res.winner === f.res.leaderAtNova).length / led.length) : "-",
@@ -35,8 +41,12 @@ for (let round = 1; round <= r.data.rules.rounds; round++) {
     pct(fs.filter((f) => f.res.winner === -1).length / fs.length),
   ]);
 }
-r.log(...table(["round", "health", "seconds", "10–90 %", "reaches nova", "leader wins", "weapons", "direct", "burn", "toxin", "spikes", "nova", "healed", "shield", "draws"], rows));
+r.table(["round", "health", "seconds", "10–90 %", "reaches nova", "leader wins", "weapons", "direct", "burn", "toxin", "spikes", "nova", "healed", "shield", "draws"], rows);
 r.log();
+const T = loadTargets();
+r.chart({ type: "line", title: "Average fight length", x: rounds, xLabel: "round", unit: "s", series: [{ name: "seconds", values: rounds.map((_, i) => Number(rows[i]![2])) }], band: T.fightSeconds });
+r.chart({ type: "line", title: "Fights that reach the Supernova", x: rounds, xLabel: "round", unit: "%", series: [{ name: "reaches nova", values: novaShare }], band: { min: 100 * (T.supernovaReached!.min ?? 0), max: 100 * (T.supernovaReached!.max ?? 1) } });
+r.chart({ type: "stack", title: "Where the damage comes from (share of all health lost)", x: rounds, xLabel: "round", unit: "%", series: [...srcs, "nova" as const].map((k) => ({ name: k, values: dmgBy[k]! })) });
 r.log("seconds: average fight length. reaches nova: share of fights still running when the Supernova starts. leader wins: of those, how often the hero with more health at that moment wins.");
 r.log("weapons … nova: share of all health lost by source. healed / shield: average per hero and fight.");
 
@@ -57,7 +67,9 @@ for (let round = 1; round <= r.data.rules.rounds; round++) {
   perRound.reached.push(after.length / fs.length); if (after.length) perRound.lasts90.push(quantile(after, 0.9));
   rows2.push([round, ...ends.map(pct), after.length ? after.length >= 1 ? avg(after).toFixed(1) : "-" : "-", after.length ? quantile(after, 0.9).toFixed(0) : "-", Math.max(...fs.map((f) => f.res.seconds)).toFixed(0)]);
 }
-r.log(...table(["round", ...starts.map((p) => p.name), "nova lasts", "90 %", "longest"], rows2));
+r.table(["round", ...starts.map((p) => p.name), "nova lasts", "90 %", "longest"], rows2);
+r.chart({ type: "stack", title: "Phase of the star clock in which the fights end", x: rounds, xLabel: "round", unit: "%", series: starts.map((p, k) => ({ name: p.name, values: rows2.map((row) => Number.parseFloat(String(row[k + 1]))) })) });
+r.chart({ type: "line", title: "Longest fight of the round", x: rounds, xLabel: "round", unit: "s", series: [{ name: "longest", values: perRound.longest }], band: { max: T.longestFight!.max } });
 r.log();
 r.log(`Each phase column: share of the fights that end in it. nova lasts: average seconds from the start of the ${B.supernova.name} to the end of the fight, for the fights that reach it; 90 %: nine in ten of them are over by then. longest: longest fight of the round in seconds.`);
 
@@ -87,16 +99,20 @@ lobbies.forEach((l, li) => { for (const f of l.fights) for (const side of [0, 1]
     })));
     rowsE.push([round, avg(sides.map((x) => x.weapons)).toFixed(1), avg(sides.map((x) => x.need)).toFixed(1), avg(sides.map((x) => x.spent)).toFixed(1), avg(sides.map((x) => x.gained)).toFixed(1), pct(avg(sides.map((x) => x.wait))), pct(sides.filter((x) => x.wait > 0.25).length / sides.length)]);
   }
-  r.log(...table(["round", "weapons", "need/s", "spent/s", "from items/s", "waiting", "starved"], rowsE));
+  r.table(["round", "weapons", "need/s", "spent/s", "from items/s", "waiting", "starved"], rowsE);
+  r.chart({ type: "line", title: "Energy per second", x: rounds, xLabel: "round", series: [{ name: "need", values: rowsE.map((x) => Number(x[2])) }, { name: "spent", values: rowsE.map((x) => Number(x[3])) }, { name: "from items", values: rowsE.map((x) => Number(x[4])) }] });
+  r.chart({ type: "line", title: "Weapons waiting for Energy", x: rounds, xLabel: "round", unit: "%", series: [{ name: "waiting", values: rowsE.map((x) => Number.parseFloat(String(x[5]))) }, { name: "starved", values: rowsE.map((x) => Number.parseFloat(String(x[6]))) }] });
   r.log();
   r.log("weapons: average weapons in a backpack. need/s: Energy per second all weapons would use without waiting (before speed buffs). spent/s: Energy really spent per second. from items/s: Energy per second from items (on top of the refill). waiting: share of weapon time spent waiting for Energy. starved: share of backpacks whose weapons wait more than a quarter of the time.");
 }
 
-const T = loadTargets();
 r.log();
 r.log("## Targets (data/sim/targets.json)");
-r.log(checkTarget(T.fightSeconds!, perRound.secs, false), checkTarget(T.longestFight!, perRound.longest, false), checkTarget(T.supernovaReached!, perRound.reached, true), checkTarget(T.supernovaLasts90!, perRound.lasts90, false));
+r.target(T.fightSeconds!, perRound.secs, false);
+r.target(T.longestFight!, perRound.longest, false);
+r.target(T.supernovaReached!, perRound.reached, true);
+r.target(T.supernovaLasts90!, perRound.lasts90, false);
 r.log();
 r.log(`## ${B.supernova.name} by hero`);
-r.log(...table(["hero", "resists", "fights reaching it", "wins of those"], r.data.heroList.map((h) => { const x = perHero.get(h.id)!; return [h.name, `${h.supernovaResist} %`, share(x.nova / x.n, x.n), x.nova ? share(x.novaWins / x.nova, x.nova) : "-"]; })));
+r.table(["hero", "resists", "fights reaching it", "wins of those"], r.data.heroList.map((h) => { const x = perHero.get(h.id)!; return [h.name, `${h.supernovaResist} %`, share(x.nova / x.n, x.n), x.nova ? share(x.novaWins / x.nova, x.nova) : "-"]; }));
 r.done();
