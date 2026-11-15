@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Backpack Space</string>
+    <string name="title_activity_main">Backpack Space</string>
+    <string name="package_name">com.backpackspace.app</string>
+    <string name="custom_url_scheme">com.backpackspace.app</string>
+</resources>
