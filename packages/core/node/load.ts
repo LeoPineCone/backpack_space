@@ -22,6 +22,7 @@ export function loadGameData(dataDir = DATA_DIR): GameData {
     rules: readJson(join(dataDir, "rules.json")),
     heroes: readJson(join(dataDir, "heroes.json")),
     recipes: readJson(join(dataDir, "recipes.json")),
+    glossary: readJson(join(dataDir, "glossary.json")),
     itemFiles: Object.fromEntries(readdirSync(itemDir).filter((f) => f.endsWith(".json")).sort().map((f) => [f, readJson(join(itemDir, f))])),
   });
 }
