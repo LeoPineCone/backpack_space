@@ -4,7 +4,7 @@
  */
 import { Container, Graphics, Rectangle, type FederatedPointerEvent } from "pixi.js";
 import {
-  boardOf, buy, dropBag, dropItem, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
+  boardOf, buildOf, buy, compile, dropBag, dropItem, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
   type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
@@ -81,6 +81,10 @@ export function shopScene(game: Game): Scene {
     const gold = hudPill("coin", r.gold, C.gold, C.gold);
     view.addChild(at(gold, W - 15 - gold.width, 14));
     view.addChild(at(infoButton(15, () => openIntro()), W - 15 - gold.width - 26, 36));
+    // health of the hero in this round's fight: the round's base plus items in the backpack
+    const health = hudPill("maxHp", compile(buildOf(r), data).maxHp, C.line, C.good, 28);
+    tappable(health, () => game.toast(t("toast.roundHealth", { n: r.round, base: rules.heroHp[r.round - 1]! })), new Rectangle(0, 0, health.width, 28));
+    view.addChild(at(health, W - 15 - gold.width - 48 - health.width, 12));
 
     // offers
     r.offers.forEach((o, i) => {
@@ -323,5 +327,6 @@ export function shopScene(game: Game): Scene {
   window.addEventListener("wheel", onWheel, { passive: false });
 
   render();
+  later.push(() => game.toast(t("toast.roundHealth", { n: run().round, base: rules.heroHp[run().round - 1]! })));
   return { root, update: () => { for (const f of later.splice(0)) f(); }, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
 }

@@ -11,7 +11,7 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Decided:** 12 rounds per run, 4 lives. A lost fight costs a life; the run ends when the lives are gone or after round 12.
 - **Decided:** a finished run pays a reward of rounds played + lives left (at most 12 + 4 = 16) in a unit outside the run. Its name and what it buys are open.
 - Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
-- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`).
+- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`). **Health in even steps (decided 2026-11-15):** 100, 150, 200, 250, then +100 per round up to 1100. The shop shows the hero's health for the coming fight (heart with a plus: round base plus items) and names the round's base when the round starts, so the growth is never hidden.
 - **Decided:** free special items after round 4 and round 8.
   - After round 4: a **signature artifact** of the hero. *Assumption:* each hero has three, two are shown, you take one.
   - After round 8: a **general artifact**. *Assumption:* three of a pool of ten are shown, you take one.

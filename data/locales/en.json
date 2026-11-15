@@ -42,6 +42,7 @@
   "toast.mergesAfterFight": "Merges after the fight. Lock an item to keep it.",
   "toast.noRoomToTurn": "No room to turn it here. Drag it and tap with a second finger, or press R.",
   "toast.notEnoughGold": "Not enough gold",
+  "toast.roundHealth": "Round {n}: your hero has {base} health, items add more",
   "toast.bagNeedsRoom": "A bag needs free cells and only turns while empty",
   "toast.doesNotFit": "It does not fit there",
   "toast.onlyEmptyBag": "Only an empty bag can be sold",
