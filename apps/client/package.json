@@ -1,0 +1,14 @@
+{
+  "name": "@backpack-space/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Backpack Space – game client (PixiJS). Only shows what the core computes.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@backpack-space/core": "*",
+    "pixi.js": "^8.6.0"
+  }
+}

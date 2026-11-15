@@ -15,7 +15,20 @@ npm run typecheck
 npm test
 ```
 
-## Play it in the browser
+## The game client
+
+`apps/client` is the game itself (TypeScript + PixiJS; Capacitor wraps it for the stores later). It follows the wireframes: hero ring, shop and backpack on one screen (buying is dragging, loose pieces drop below the backpack), item popup with symbols and the "i" legend, artifact choice, fight playback with ×1/×2/×4, round result, run end with the reward. It has no art yet: items are tiles with a type symbol and their initials, all symbols are simple line icons (`src/icons.ts`). The client never decides a rule or a fight; it calls the core and replays the battle log (`Replay` in the core). Opponents are the stored bot builds of the preview until there is a server.
+
+Hosted build (private link, state of 2026-11-15): https://claude.ai/artifact/ENE9du3Hhp2LDQLeVxNQ5Q
+
+```
+npm run client        # dev server
+npm run client:build  # static build in out/client
+```
+
+Drag a piece to place it; while dragging, a second finger, the mouse wheel or R turns it. Tap a piece to see what it does.
+
+## Play it in the browser (design tool)
 
 Hosted build of the preview (private link, state of 2026-11-15): https://claude.ai/artifact/7Sn3PH5UH19ZMAp7bmgFsP
 
@@ -49,12 +62,13 @@ Other tools: `npm run battle -- --round 8 --a flora --b ysel --log` prints one f
 
 ```
 data/                 rules.json, heroes.json, recipes.json, items/*.json, sim/ratings.json
-packages/core/src/    deterministic core: grid and bags, compile, battle, shop, run rules, bots, rules text
+packages/core/src/    deterministic core: grid and bags, compile, battle, replay, shop, run rules, bots, rules text
 packages/core/node/   JSON loader (Node only)
 src/sim/              lobbies of bots playing whole runs
 src/reports/          balancing reports
 src/cli/              validate, battle, catalog
-playground/           browser preview tester (Vite)
+apps/client/          the game client (PixiJS, Vite)
+playground/           browser preview tester (Vite), a design tool
 test/                 vitest
 ```
 

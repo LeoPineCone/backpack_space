@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { compile, simulate, type Build } from "@backpack-space/core";
+import { Replay, compile, simulate, type Build } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -46,5 +46,19 @@ describe("battle", () => {
   });
   it("items must lie on bags", () => {
     expect(() => compile({ hero: hero.id, round: 1, bags, items: [{ item: "rivet_gun", x: 8, y: 6, rot: 0 }] }, data)).toThrow();
+  });
+  it("replays to the same end as the battle, in steps or in one jump", () => {
+    const a = compile(build(["rivet_gun", "protein_bar"]), data), b = compile(build(["asteroid_chunk"]), data);
+    const r = simulate(a, b, data.rules, 7, { log: true });
+    const stepped = new Replay([a, b], r, data.rules);
+    let seen = stepped.start().length;
+    for (let i = 0; i < 100000 && !stepped.done; i++) seen += stepped.advance(0.25).length;
+    expect(stepped.done).toBe(true);
+    expect(seen).toBe(r.log!.length);
+    expect([stepped.sides[0].hp, stepped.sides[1].hp]).toEqual(r.hp);
+    const jumped = new Replay([a, b], r, data.rules);
+    jumped.start();
+    expect(jumped.finish().length + 0).toBeLessThanOrEqual(r.log!.length);
+    expect(jumped.sides.map((s) => s.st)).toEqual(stepped.sides.map((s) => s.st));
   });
 });

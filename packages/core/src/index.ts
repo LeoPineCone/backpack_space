@@ -4,6 +4,7 @@ export * from "./grid.js";
 export * from "./gamedata.js";
 export * from "./compile.js";
 export * from "./battle.js";
+export * from "./replay.js";
 export * from "./shop.js";
 export * from "./run.js";
 export * from "./describe.js";
