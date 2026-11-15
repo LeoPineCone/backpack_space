@@ -42,6 +42,8 @@ Every hero's build now grows together over the run, and the item-to-item effects
   | + Power per 2–3 accessories | 62–68 % | +30–40 → +15–17 | 73–81 / 56–61 / 58–62 % |
   | + 2 Power when Collapse begins (and +1 at Red Giant) | 49–51 % | +16–18 → +5–6 | no change |
 
+  **Decided with Ilja (2026-11-15): +1 Power at fight start**, now in `data/heroes.json`. Measured with it: Ysel 54 % in lobby fights (55 / 49 / 58 % by third), kit worth +24 → +9; against Venn / Rook / Quill 62 / 49 / 51 %. Rook no longer beats Ysel but is still at or above 52 % against everyone; Venn is now the weakest (44 %) with 37 % against Ysel.
+
   Power is flat damage on every weapon hit, so any extra Power lifts the early game most; Power late in the fight changes nothing because most fights end before Collapse (24 s). The only variant near the target is +1 Power at fight start, and even that mostly helps early.
 - Rook mirror fights land at 45–46 % for the attacker, the other mirrors at 49–51 %: Rook's Shield-on-hit start may favour the defender slightly.
 

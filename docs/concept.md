@@ -82,7 +82,7 @@ Four heroes, each with an own focus, passive, start items, shop pool and artifac
 | **Venn**, The Thing in the Suit | food and organic items; heals a lot, wins slowly through Toxin | its organic items are faster; whenever one of its food items activates, it inflicts Toxin |
 | **RK-7 "Rook"**, Salvage Unit | mechanical items and crafting; Shield and Overclock | every combination pays gold; mechanical and crafted items are faster |
 | **Quill**, Foundling of the Herd | pets | her pets act the moment the fight begins and are faster; every pet that acts heals her a little; more health per pet |
-| **Ysel**, Singer of the Corona | the star phases; Burn; long fights | gains Power with every star phase; takes half Supernova damage |
+| **Ysel**, Singer of the Corona | the star phases; Burn; long fights | starts every fight with 1 Power and gains 1 with every star phase; takes half Supernova damage |
 
 ### Ways to win
 

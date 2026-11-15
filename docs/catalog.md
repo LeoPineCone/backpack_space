@@ -39,8 +39,9 @@ Pets. Her herd acts the moment the fight begins and is quicker than anyone else'
 
 ### Ysel – Singer of the Corona
 
-The star itself. Gains Power with every star phase, burns the enemy and shrugs off half the Supernova.
+The star itself. Starts every fight with Power and gains more with every star phase, burns the enemy and shrugs off half the Supernova.
 
+- Battle start: gain 1 Power.
 - Every star phase: gain 1 Power.
 - Takes 50 % less Supernova damage.
 - Starts with: Field Pack, Relic Case, Sun Shard, Prayer Bell.
