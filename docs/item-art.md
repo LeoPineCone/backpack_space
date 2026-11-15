@@ -321,157 +321,157 @@ Hero items should match the hero designs in [docs/heroes.md](heroes.md).
 
 | Item | File | Rarity | Box | Picture |
 |---|---|---|---|---|
-| Seed Pod | `items/seed_pod.png` | common | 1×1 `#` | Hard seed pod with a split seam, spitting seeds. Accent: moss. |
-| Watering Drone | `items/watering_drone.png` | common | 1×1 `#` | Small dented drone with a watering-can spout and a faded VENN stencil. Accent: deep teal. |
-| Compost Bin | `items/compost_bin.png` | common | 1×1 `.#.` | Little bin with peels and leaves spilling over. Accent: moss. |
-| Thornvine | `items/thornvine.png` | common | 3×1 `###` | Long vine covered in thorns. Accent: moss. |
-| Pollen Cloud | `items/pollen_cloud.png` | common | 1×1 `#` | Puffy cloud of pollen grains. Accent: mustard. |
-| Grow Lamp | `items/grow_lamp.png` | common | 1×1 `.#.` | Lamp on an arm with leaf shapes under it. Accent: mustard. |
-| Bramble Seed | `items/bramble_seed.png` | common | 1×1 `#` | Small spiky seed. Accent: moss. |
-| Sap Tap | `items/sap_tap.png` | common | 1×1 `.#.` | Tap stuck into a bark piece with sap dripping. Accent: mustard. |
-| Snap Sprout | `items/snap_sprout.png` | common | 1×1 `#` | Tiny sprout with a little biting mouth. Accent: moss. |
-| Moon Melon | `items/moon_melon.png` | rare | 2×2 `##/##` | Big round melon with crater spots. Accent: moss. |
-| Healing Moss | `items/healing_moss.png` | rare | 2×1 `##` | Pad of moss with tiny cross-shaped leaves. Accent: moss. |
-| Bark Shield | `items/bark_shield.png` | rare | 2×1 `##` | Shield made of thick bark with a knot in the middle. Accent: copper. |
-| Nectar Flask | `items/nectar_flask.png` | rare | 1×2 `#/#` | Flask with golden nectar and a leaf cork. Accent: mustard. |
-| Venus Mantrap | `items/venus_mantrap.png` | rare | 2×1 `##` | Snapping plant with toothy jaws on a stem. Accent: moss. |
-| Blight Bomb | `items/blight_bomb.png` | rare | 1×1 `#` | Rotten fruit used as a bomb, fumes rising. Accent: moss. |
-| Root Network | `items/root_network.png` | epic | 4×1 `####` | Tangle of roots spreading wide. Accent: copper. |
-| Carnivorous Orchid | `items/carnivorous_orchid.png` | epic | 2×1 `##` | Orchid with a mouth in the middle of its petals. Accent: rust red. |
-| Strangler Fig | `items/strangler_fig.png` | epic | 3×1 `###` | Fig tree with vines strangling a pipe. Accent: moss. |
-| Ironbark Golem | `items/ironbark_golem.png` | epic | 2×2 `##/##` | Small golem made of bark and stones. Accent: copper. |
-| Sun Blossom | `items/sun_blossom.png` | legendary | 2×2 `##/##` | Big flower with a sun in its centre. Accent: mustard. |
-| World Seed | `items/world_seed.png` | artifact | 2×2 `##/##` | Large seed with a tiny planet growing out of it. Accent: moss. |
-| Queen Spore | `items/queen_spore.png` | artifact | 1×1 `#` | Large spore with a crown of smaller spores. Accent: moss. |
-| Terrarium Heart | `items/terrarium_heart.png` | artifact | 2×1 `##` | Glass terrarium shaped like a heart with plants inside. Accent: moss. |
-| Spore Mine | `items/spore_mine.png` | crafted 1 | 2×1 `##` | Round spore pod with spikes, ready to pop. Accent: moss. |
-| Thorn Pod | `items/thorn_pod.png` | crafted 1 | 2×1 `##` | Seed pod covered in thorns. Accent: moss. |
-| Mantrap Pack | `items/mantrap_pack.png` | crafted 1 | 2×1 `##` | Two little snapping plants in one pot. Accent: moss. |
-| Giant Mantrap | `items/giant_mantrap.png` | crafted 1 | 2×2 `##/#.` | Huge snapping plant with several jaws. Accent: moss. |
-| Harvest Crate | `items/harvest_crate.png` | crafted 1 | 2×2 `.##./.##.` | Wooden crate full of vegetables. Accent: copper. |
-| Irrigation Swarm | `items/irrigation_swarm.png` | crafted 1 | 2×1 `.##.` | Three little drones spraying water over a leaf. Accent: deep teal. |
-| Living Armor | `items/living_armor.png` | crafted 1 | 3×2 `###/#..` | Chest armour grown from bark and vines. Accent: moss. |
-| Plague Blossom | `items/plague_blossom.png` | crafted 1 | 2×1 `##` | Sickly flower with toxic pollen puffing out. Accent: moss. |
-| Ambrosia | `items/ambrosia.png` | crafted 1 | 2×2 `##/##` | Golden bowl with nectar and moss leaves. Accent: mustard. |
-| Briar Fortress | `items/briar_fortress.png` | crafted 1 | 4×2 `####/#..#` | Wall of thick thorny branches. Accent: moss. |
-| Hydra Bloom | `items/hydra_bloom.png` | crafted 2 | 2×3 `##/##/#.` | Plant with three snapping flower heads on long stems. Accent: rust red. |
-| Jungle Tyrant | `items/jungle_tyrant.png` | crafted 2 | 3×2 `###/###` | Monstrous plant beast with jaws and vine arms. Accent: moss. |
+| Seed Pod | `items/seed_pod.png` | common | 1×1 `#` | Hard seed pod with a split seam spitting seeds, a paper specimen tag tied to its stem. Accent: moss. |
+| Watering Drone | `items/watering_drone.png` | common | 1×1 `#` | Small dented drone with a watering-can spout and a faded VENN stencil, a vine wound round one leg. Accent: deep teal. |
+| Compost Bin | `items/compost_bin.png` | common | 1×1 `.#.` | Station lab bin, lid forced open by tendrils, peels and leaves spilling out. Accent: moss. |
+| Thornvine | `items/thornvine.png` | common | 3×1 `###` | Long vine with hooked thorns, a torn strip of suit fabric caught on it. Accent: moss. |
+| Pollen Cloud | `items/pollen_cloud.png` | common | 1×1 `#` | Puffy cloud of pale pollen grains drifting from a cracked seed bulb. Accent: mustard. |
+| Grow Lamp | `items/grow_lamp.png` | common | 1×1 `.#.` | Bent lab grow lamp on an arm, tendrils curling up towards it. Accent: mustard. |
+| Bramble Seed | `items/bramble_seed.png` | common | 1×1 `#` | Small spiky seed in a specimen vial. Accent: moss. |
+| Sap Tap | `items/sap_tap.png` | common | 1×1 `.#.` | Lab tap driven into a piece of bark, sap dripping into a beaker. Accent: mustard. |
+| Snap Sprout | `items/snap_sprout.png` | common | 1×1 `#` | Tiny sprout with a biting mouth, poking out of a seed tray. Accent: moss. |
+| Moon Melon | `items/moon_melon.png` | rare | 2×2 `##/##` | Big pale melon with crater spots, rust-red tendrils creeping over it. Accent: moss. |
+| Healing Moss | `items/healing_moss.png` | rare | 2×1 `##` | Pad of moss in a cracked petri dish with a lab label. Accent: moss. |
+| Bark Shield | `items/bark_shield.png` | rare | 2×1 `##` | Shield of thick bark with a suit patch grown into the middle. Accent: copper. |
+| Nectar Flask | `items/nectar_flask.png` | rare | 1×2 `#/#` | Lab flask with golden nectar, a leaf pushed in as the cork. Accent: mustard. |
+| Venus Mantrap | `items/venus_mantrap.png` | rare | 2×1 `##` | Snapping offshoot with toothy jaws on a tendril stem, no eyes. Accent: rust red. |
+| Blight Bomb | `items/blight_bomb.png` | rare | 1×1 `#` | Rotten swollen fruit used as a bomb, fumes rising. Accent: moss. |
+| Root Network | `items/root_network.png` | epic | 4×1 `####` | Tangle of roots spreading wide through broken station pipes. Accent: copper. |
+| Carnivorous Orchid | `items/carnivorous_orchid.png` | epic | 2×1 `##` | Orchid with a toothed mouth among its petals, no eyes. Accent: rust red. |
+| Strangler Fig | `items/strangler_fig.png` | epic | 3×1 `###` | Fig vines strangling a station pipe until it bends. Accent: moss. |
+| Ironbark Golem | `items/ironbark_golem.png` | epic | 2×2 `##/##` | Small hulking golem of bark and stones, a seed bulb where a head should be. Accent: copper. |
+| Sun Blossom | `items/sun_blossom.png` | legendary | 2×2 `##/##` | Big flower whose centre is a cluster of pale seed bulbs, petals like a sun. Accent: mustard. |
+| World Seed | `items/world_seed.png` | artifact | 2×2 `##/##` | Large seed split open, a tiny planet growing out of the crack. Accent: moss. |
+| Queen Spore | `items/queen_spore.png` | artifact | 1×1 `#` | Large seed bulb crowned by a ring of smaller bulbs, pale and swollen. Accent: moss. |
+| Terrarium Heart | `items/terrarium_heart.png` | artifact | 2×1 `##` | Heart-shaped lab terrarium, glass cracked by the plants pushing out. Accent: moss. |
+| Spore Mine | `items/spore_mine.png` | crafted 1 | 2×1 `##` | Round spore pod with spikes, about to burst. Accent: moss. |
+| Thorn Pod | `items/thorn_pod.png` | crafted 1 | 2×1 `##` | Seed pod covered in hooked thorns. Accent: moss. |
+| Mantrap Pack | `items/mantrap_pack.png` | crafted 1 | 2×1 `##` | Two little snapping offshoots sharing one cracked lab pot. Accent: moss. |
+| Giant Mantrap | `items/giant_mantrap.png` | crafted 1 | 2×2 `##/#.` | Huge offshoot with several snapping jaws on coiled tendrils. Accent: rust red. |
+| Harvest Crate | `items/harvest_crate.png` | crafted 1 | 2×2 `.##./.##.` | Station supply crate overflowing with odd vegetables, roots growing through the slats. Accent: copper. |
+| Irrigation Swarm | `items/irrigation_swarm.png` | crafted 1 | 2×1 `.##.` | Three small watering drones like Venn's, spraying a leaf, all with VENN stencils. Accent: deep teal. |
+| Living Armor | `items/living_armor.png` | crafted 1 | 3×2 `###/#..` | Suit chest plate overgrown with bark and vines, seams split. Accent: moss. |
+| Plague Blossom | `items/plague_blossom.png` | crafted 1 | 2×1 `##` | Sickly flower puffing toxic pollen, kindly offered on a long stem. Accent: moss. |
+| Ambrosia | `items/ambrosia.png` | crafted 1 | 2×2 `##/##` | Lab bowl of golden nectar with moss leaves floating in it. Accent: mustard. |
+| Briar Fortress | `items/briar_fortress.png` | crafted 1 | 4×2 `####/#..#` | Wall of thick thorny branches grown around a station door frame. Accent: moss. |
+| Hydra Bloom | `items/hydra_bloom.png` | crafted 2 | 2×3 `##/##/#.` | Plant with three snapping flower heads on long tendril stems. Accent: rust red. |
+| Jungle Tyrant | `items/jungle_tyrant.png` | crafted 2 | 3×2 `###/###` | Monstrous plant beast of jaws and vine arms, a torn suit glove stuck on one vine. Accent: moss. |
 
 ### RK-7 "Rook" (34)
 
 | Item | File | Rarity | Box | Picture |
 |---|---|---|---|---|
-| Welding Arm | `items/welding_arm.png` | common | 1×2 `#/#` | Robot arm with a welding torch at the end. Accent: mustard. |
-| Spare Parts | `items/spare_parts.png` | common | 1×1 `.#.` | Pile of gears, bolts and a spring. Accent: copper. |
-| Circuit Board | `items/circuit_board.png` | common | 1×1 `#` | Green circuit board with chips and traces. Accent: moss. |
-| Conveyor Belt | `items/conveyor_belt.png` | common | 3×1 `###` | Short conveyor belt with rollers and a bolt riding on it. Accent: copper. |
-| Toolbox | `items/toolbox.png` | common | 2×1 `##` | Red metal toolbox with a handle. Accent: rust red. |
-| Capacitor Bank | `items/capacitor_bank.png` | common | 2×1 `##` | Row of three fat capacitors. Accent: mustard. |
-| Bolt Thrower | `items/bolt_thrower.png` | common | 1×2 `#/#` | Small crossbow that fires bolts. Accent: copper. |
-| Grav Clamp | `items/grav_clamp.png` | common | 1×1 `#` | Clamp with a gravity well symbol on it. Accent: deep teal. |
-| Magnet Crane | `items/magnet_crane.png` | rare | 2×1 `##` | Crane hook with a big horseshoe magnet. Accent: rust red. |
-| Recycler | `items/recycler.png` | rare | 2×1 `##` | Boxy machine with recycling arrows and a hopper. Accent: moss. |
-| Shield Emitter | `items/shield_emitter.png` | rare | 1×1 `.#.` | Small dish emitter with a shield symbol. Accent: deep teal. |
-| Turbo Fan | `items/turbo_fan.png` | rare | 1×1 `#` | Fan with spinning blades. Accent: copper. |
-| Junk Cannon | `items/junk_cannon.png` | rare | 2×1 `.##.` | Cannon built from pipes and a bucket. Accent: copper. |
-| Scrap Golem | `items/scrap_golem.png` | rare | 2×1 `##` | Walking robot made of scrap. Accent: copper. |
-| Tesla Coil | `items/tesla_coil.png` | epic | 1×2 `#/#` | Coil tower with a ball on top and arcs of lightning. Accent: mustard. |
-| Assembly Core | `items/assembly_core.png` | epic | 1×1 `.#.` | Cube core with robotic arms folding around it. Accent: mustard. |
-| Rail Driver | `items/rail_driver.png` | epic | 3×1 `###` | Long rail gun with copper rails. Accent: copper. |
-| Bastion Frame | `items/bastion_frame.png` | epic | 2×2 `##/##` | Heavy armour frame with plates. Accent: copper. |
-| Quantum Forge | `items/quantum_forge.png` | legendary | 2×2 `##/##` | Anvil inside an atom-shaped cage. Accent: mustard. |
-| Master Blueprint | `items/master_blueprint.png` | artifact | 1×1 `#` | Rolled blueprint with a ruler and a pencil tucked in. Accent: deep teal. |
-| Perpetual Engine | `items/perpetual_engine.png` | artifact | 2×1 `##` | Small engine with a wheel that keeps spinning. Accent: copper. |
-| Nanite Swarm | `items/nanite_swarm.png` | artifact | 2×1 `##` | Cloud of tiny robots forming a cube. Accent: deep teal. |
+| Welding Arm | `items/welding_arm.png` | common | 1×2 `#/#` | Rook's tool leg with a welding torch at the end, scorched and patched. Accent: mustard. |
+| Spare Parts | `items/spare_parts.png` | common | 1×1 `.#.` | Little hoard of gears, bolts and a spring, kept "for later". Accent: copper. |
+| Circuit Board | `items/circuit_board.png` | common | 1×1 `#` | Salvaged circuit board with chips and traces, one corner burnt. Accent: moss. |
+| Conveyor Belt | `items/conveyor_belt.png` | common | 3×1 `###` | Short conveyor belt pieced together from wreck parts, a bolt riding on it. Accent: copper. |
+| Toolbox | `items/toolbox.png` | common | 2×1 `##` | Dented metal toolbox, one hinge replaced with wire. Accent: rust red. |
+| Capacitor Bank | `items/capacitor_bank.png` | common | 2×1 `##` | Row of three fat salvaged capacitors on a scrap board. Accent: mustard. |
+| Bolt Thrower | `items/bolt_thrower.png` | common | 1×2 `#/#` | Small crossbow built from a tool leg, firing bolts. Accent: copper. |
+| Grav Clamp | `items/grav_clamp.png` | common | 1×1 `#` | Heavy clamp with a gravity ring symbol, taken from a docking arm. Accent: deep teal. |
+| Magnet Crane | `items/magnet_crane.png` | rare | 2×1 `##` | Crane hook with a big horseshoe magnet, scrap hanging off it. Accent: rust red. |
+| Recycler | `items/recycler.png` | rare | 2×1 `##` | Boxy scrap machine with a hopper and a little mustard lamp like an eye. Accent: moss. |
+| Shield Emitter | `items/shield_emitter.png` | rare | 1×1 `.#.` | Small dish emitter cut from a satellite antenna. Accent: deep teal. |
+| Turbo Fan | `items/turbo_fan.png` | rare | 1×1 `#` | Cooling fan from a wreck with bent blades. Accent: copper. |
+| Junk Cannon | `items/junk_cannon.png` | rare | 2×1 `.##.` | Cannon built from pipes and a bucket, held with clamps. Accent: copper. |
+| Scrap Golem | `items/scrap_golem.png` | rare | 2×1 `##` | Walking robot of scrap with a single mustard lantern eye. Accent: copper. |
+| Tesla Coil | `items/tesla_coil.png` | epic | 1×2 `#/#` | Coil tower made of salvaged wire with a ball on top and ink zig-zag sparks. Accent: mustard. |
+| Assembly Core | `items/assembly_core.png` | epic | 1×1 `.#.` | Cube core with small tool arms folding around it. Accent: mustard. |
+| Rail Driver | `items/rail_driver.png` | epic | 3×1 `###` | Long rail gun made from two salvaged copper rails. Accent: copper. |
+| Bastion Frame | `items/bastion_frame.png` | epic | 2×2 `##/##` | Heavy armour frame of hull plates, like a bigger shell. Accent: copper. |
+| Quantum Forge | `items/quantum_forge.png` | legendary | 2×2 `##/##` | Anvil inside an atom-shaped cage of bent rails. Accent: mustard. |
+| Master Blueprint | `items/master_blueprint.png` | artifact | 1×1 `#` | Rolled blueprint of a satellite shell with a pencil tucked in. Accent: deep teal. |
+| Perpetual Engine | `items/perpetual_engine.png` | artifact | 2×1 `##` | Small engine with a flywheel, patched from three different wrecks. Accent: copper. |
+| Nanite Swarm | `items/nanite_swarm.png` | artifact | 2×1 `##` | Cloud of tiny robots, each a minute copy of Rook, forming a cube. Accent: deep teal. |
 | Plasma Welder | `items/plasma_welder.png` | crafted 1 | 1×2 `#/#` | Welding gun with a plasma tip and a scrap guard. Accent: deep teal. |
-| Logic Core | `items/logic_core.png` | crafted 1 | 1×1 `.#.` | Chip with a battery and a little brain shape etched on it. Accent: deep teal. |
-| Factory Line | `items/factory_line.png` | crafted 1 | 3×1 `###` | Conveyor belt with robot arms and a toolbox at the end. Accent: copper. |
-| Rivet Cannon | `items/rivet_cannon.png` | crafted 1 | 1×3 `#/#/#` | Big rivet gun on a tripod. Accent: copper. |
-| Dynamo | `items/dynamo.png` | crafted 1 | 2×1 `##` | Generator with a spinning drum and wires. Accent: mustard. |
-| Gravity Well | `items/gravity_well.png` | crafted 1 | 2×1 `##` | Ring machine pulling small objects into its middle. Accent: deep teal. |
-| Scrap Howitzer | `items/scrap_howitzer.png` | crafted 1 | 2×2 `.##./.##.` | Big gun made of welded scrap with a funnel barrel. Accent: copper. |
-| Junk Titan | `items/junk_titan.png` | crafted 1 | 2×2 `##/##` | Huge robot made of scrap. Accent: copper. |
-| Salvage Rig | `items/salvage_rig.png` | crafted 1 | 2×2 `##/##` | Magnet crane on a recycler base. Accent: rust red. |
-| Bulwark Array | `items/bulwark_array.png` | crafted 1 | 2×2 `.##./.##.` | Row of shield emitters on a frame. Accent: deep teal. |
-| Arc Forge | `items/arc_forge.png` | crafted 2 | 2×2 `##/##` | Welding gun wrapped in a tesla coil, sparks flying. Accent: mustard. |
-| Storm Driver | `items/storm_driver.png` | crafted 2 | 3×2 `###/#..` | Rail gun with storm clouds and lightning around the barrel. Accent: mustard. |
+| Logic Core | `items/logic_core.png` | crafted 1 | 1×1 `.#.` | Salvaged chip with a battery taped on and a lantern-eye sticker. Accent: deep teal. |
+| Factory Line | `items/factory_line.png` | crafted 1 | 3×1 `###` | Conveyor belt with tool arms and a toolbox at the end. Accent: copper. |
+| Rivet Cannon | `items/rivet_cannon.png` | crafted 1 | 1×3 `#/#/#` | Big rivet gun on a three-legged stand. Accent: copper. |
+| Dynamo | `items/dynamo.png` | crafted 1 | 2×1 `##` | Generator with a spinning drum and loose wires. Accent: mustard. |
+| Gravity Well | `items/gravity_well.png` | crafted 1 | 2×1 `##` | Ring machine pulling small bolts into its middle. Accent: deep teal. |
+| Scrap Howitzer | `items/scrap_howitzer.png` | crafted 1 | 2×2 `.##./.##.` | Big gun of welded scrap with a funnel barrel, bolted to a piece of satellite housing. Accent: copper. |
+| Junk Titan | `items/junk_titan.png` | crafted 1 | 2×2 `##/##` | Huge robot made of scrap with a satellite housing on its back. Accent: copper. |
+| Salvage Rig | `items/salvage_rig.png` | crafted 1 | 2×2 `##/##` | Magnet crane on a recycler base, both welded together. Accent: rust red. |
+| Bulwark Array | `items/bulwark_array.png` | crafted 1 | 2×2 `.##./.##.` | Row of dish emitters on a scrap frame. Accent: deep teal. |
+| Arc Forge | `items/arc_forge.png` | crafted 2 | 2×2 `##/##` | Welding gun wrapped in a coil, sparks drawn as ink zig-zags. Accent: mustard. |
+| Storm Driver | `items/storm_driver.png` | crafted 2 | 3×2 `###/#..` | Rail gun with ink storm lines and zig-zag sparks around the barrel. Accent: mustard. |
 
 ### Quill (35)
 
 | Item | File | Rarity | Box | Picture |
 |---|---|---|---|---|
-| Space Pup | `items/space_pup.png` | common | 1×1 `#` | Small puppy in a fishbowl helmet. Accent: mustard. |
+| Space Pup | `items/space_pup.png` | common | 1×1 `#` | Small shaggy herd pup with big paws and a tuft of fur on its head. Accent: mustard. |
 | Grooming Comb | `items/grooming_comb.png` | common | 1×1 `.#.` | Wide bone comb with tufts of fur caught in its teeth. Accent: rust red. |
-| Treat Pouch | `items/treat_pouch.png` | common | 1×1 `.#.` | Small pouch with bone-shaped treats. Accent: copper. |
-| Pet Bed | `items/pet_bed.png` | common | 2×1 `.##.` | Round pet bed with a cushion. Accent: rust red. |
-| Kibble Sack | `items/kibble_sack.png` | common | 1×2 `#/#` | Sack of kibble with paw print. Accent: copper. |
-| Burrow Rat | `items/burrow_rat.png` | common | 1×1 `#` | Rat with big front teeth peeking out of a hole. Accent: copper. |
-| Feeding Bowl | `items/feeding_bowl.png` | common | 1×1 `.#.` | Pet bowl full of food. Accent: rust red. |
-| Guard Goose | `items/guard_goose.png` | common | 1×1 `#` | Angry goose with a little helmet. Accent: bone. |
-| Pack Lizard | `items/pack_lizard.png` | common | 2×1 `##` | Lizard carrying little saddle bags. Accent: moss. |
-| Hatchery | `items/hatchery.png` | rare | 2×2 `##/##` | Incubator box with eggs behind glass. Accent: mustard. |
+| Treat Pouch | `items/treat_pouch.png` | common | 1×1 `.#.` | Woven pouch of dried berries and roots the herd gathers. Accent: copper. |
+| Pet Bed | `items/pet_bed.png` | common | 2×1 `.##.` | Round woven nest padded with shed fur. Accent: rust red. |
+| Kibble Sack | `items/kibble_sack.png` | common | 1×2 `#/#` | Woven sack of dried seeds and roots, a fur tuft on the knot. Accent: copper. |
+| Burrow Rat | `items/burrow_rat.png` | common | 1×1 `#` | Rat with big front teeth peeking out of a hole in the ground. Accent: copper. |
+| Feeding Bowl | `items/feeding_bowl.png` | common | 1×1 `.#.` | Hollow half of a big shell, filled with berries and roots. Accent: rust red. |
+| Guard Goose | `items/guard_goose.png` | common | 1×1 `#` | Angry space goose, wings spread, hissing. Accent: bone. |
+| Pack Lizard | `items/pack_lizard.png` | common | 2×1 `##` | Long low lizard carrying woven bundles on its back. Accent: moss. |
+| Hatchery | `items/hatchery.png` | rare | 2×2 `##/##` | Woven nest full of eggs, kept warm under shed fur. Accent: mustard. |
 | Calling Shell | `items/calling_shell.png` | rare | 1×1 `#` | Spiral sea shell on a cord, its mouth worn smooth from humming into it. Accent: copper. |
-| War Saddle | `items/war_saddle.png` | rare | 1×1 `.#.` | Saddle with armour plates. Accent: copper. |
+| War Saddle | `items/war_saddle.png` | rare | 1×1 `.#.` | Woven saddle pad padded with fur, tusk-tip studs on the edge. Accent: copper. |
 | Glow Swarm | `items/glow_swarm.png` | rare | 2×1 `##` | Swarm of fireflies, their lit tails drawn as flat yellow dots. Accent: mustard. |
-| Star Falcon | `items/star_falcon.png` | rare | 1×2 `#/#` | Falcon with star-tipped wings, diving. Accent: mustard. |
-| Moon Bear | `items/moon_bear.png` | rare | 2×2 `##/##` | Big bear with a crescent mark on its chest. Accent: bone. |
-| Hive Queen | `items/hive_queen.png` | epic | 2×2 `##/##` | Large insect queen with a crown-shaped head. Accent: mustard. |
-| Nursery | `items/nursery.png` | epic | 2×2 `##/##` | Crib-like box with small animals sleeping. Accent: mustard. |
+| Star Falcon | `items/star_falcon.png` | rare | 1×2 `#/#` | Falcon with star-speckled wing tips, diving. Accent: mustard. |
+| Moon Bear | `items/moon_bear.png` | rare | 2×2 `##/##` | Big shaggy bear with a crescent mark on its chest. Accent: bone. |
+| Hive Queen | `items/hive_queen.png` | epic | 2×2 `##/##` | Large furry insect queen with a crown-shaped head. Accent: mustard. |
+| Nursery | `items/nursery.png` | epic | 2×2 `##/##` | Big woven nest with young animals asleep in a heap. Accent: mustard. |
 | Tusked Behemoth | `items/tusked_behemoth.png` | epic | 3×2 `###/###` | Huge shaggy beast with four tusks, low and heavy, a small woven nest between its horns. Accent: copper. |
-| Thunder Ram | `items/thunder_ram.png` | epic | 2×2 `##/##` | Ram with curled horns crackling with lightning. Accent: mustard. |
-| Sky Serpent | `items/sky_serpent.png` | legendary | 4×1 `####` | Long flying serpent with fins. Accent: deep teal. |
+| Thunder Ram | `items/thunder_ram.png` | epic | 2×2 `##/##` | Ram with curled horns, ink zig-zag sparks between them. Accent: mustard. |
+| Sky Serpent | `items/sky_serpent.png` | legendary | 4×1 `####` | Long flying serpent with fins and a shaggy mane. Accent: deep teal. |
 | Elder Tusk | `items/elder_tusk.png` | artifact | 1×1 `#` | Old cracked tusk tip on a braided cord, scratched with herd marks. Accent: rust red. |
-| Herd Heart | `items/herd_heart.png` | artifact | 2×1 `##` | Heart-shaped locket with animal silhouettes inside. Accent: mustard. |
+| Herd Heart | `items/herd_heart.png` | artifact | 2×1 `##` | Smooth stone heart wrapped in braided fur, scratched with animal outlines. Accent: mustard. |
 | Ancient Egg | `items/ancient_egg.png` | artifact | 2×2 `##/##` | Large stone egg with old carvings and a crack. Accent: bone. |
-| Star Hound | `items/star_hound.png` | crafted 1 | 2×1 `##` | Hound with star-speckled fur. Accent: deep teal. |
-| Guard Hound | `items/guard_hound.png` | crafted 1 | 2×1 `##` | Hound with a spiked collar on guard. Accent: rust red. |
-| Cozy Den | `items/cozy_den.png` | crafted 1 | 2×2 `.##./.##.` | Little den of blankets with a pet bed inside. Accent: rust red. |
-| Banquet Trough | `items/banquet_trough.png` | crafted 1 | 2×1 `.##.` | Long trough filled with food. Accent: copper. |
+| Star Hound | `items/star_hound.png` | crafted 1 | 2×1 `##` | Shaggy hound with star-speckled fur. Accent: deep teal. |
+| Guard Hound | `items/guard_hound.png` | crafted 1 | 2×1 `##` | Shaggy hound standing guard, teeth bared. Accent: rust red. |
+| Cozy Den | `items/cozy_den.png` | crafted 1 | 2×2 `.##./.##.` | Den dug into a hill, lined with shed fur and a woven nest inside. Accent: rust red. |
+| Banquet Trough | `items/banquet_trough.png` | crafted 1 | 2×1 `.##.` | Long hollow log filled with berries, roots and seeds. Accent: copper. |
 | Rat Pack | `items/rat_pack.png` | crafted 1 | 2×2 `##/#.` | Three rats sitting on top of each other. Accent: copper. |
-| Shell Dragon | `items/shell_dragon.png` | crafted 1 | 2×2 `##/##` | Small dragon with a turtle-like shell. Accent: copper. |
+| Shell Dragon | `items/shell_dragon.png` | crafted 1 | 2×2 `##/##` | Small dragon with a turtle-like shell, moss on top. Accent: copper. |
 | Pack Bond | `items/pack_bond.png` | crafted 1 | 1×1 `.#.` | Two braided fur cords knotted together with a bead. Accent: rust red. |
-| Sun Eagle | `items/sun_eagle.png` | crafted 1 | 2×2 `##/#.` | Eagle with a sun-ray crest. Accent: mustard. |
-| Armored Bear | `items/armored_bear.png` | crafted 1 | 2×2 `##/##` | Bear wearing armour plates and a saddle. Accent: copper. |
-| Swarm Cloud | `items/swarm_cloud.png` | crafted 1 | 2×2 `##/##` | Cloud of insects with a queen in the middle. Accent: mustard. |
-| Juggernaut | `items/juggernaut.png` | crafted 1 | 3×2 `###/###` | Massive horned beast charging, armour on its head. Accent: rust red. |
-| Celestial Chimera | `items/celestial_chimera.png` | crafted 2 | 2×3 `##/##/#.` | Beast with a lion head, eagle wings and a star tail. Accent: mustard. |
+| Sun Eagle | `items/sun_eagle.png` | crafted 1 | 2×2 `##/#.` | Eagle with a sun-ray crest of stiff feathers. Accent: mustard. |
+| Armored Bear | `items/armored_bear.png` | crafted 1 | 2×2 `##/##` | Bear wearing a woven saddle and plates of bark and bone. Accent: copper. |
+| Swarm Cloud | `items/swarm_cloud.png` | crafted 1 | 2×2 `##/##` | Cloud of furry insects with a queen in the middle. Accent: mustard. |
+| Juggernaut | `items/juggernaut.png` | crafted 1 | 3×2 `###/###` | Massive horned beast charging, small animals clinging to its fur. Accent: rust red. |
+| Celestial Chimera | `items/celestial_chimera.png` | crafted 2 | 2×3 `##/##/#.` | Beast with a lion head, eagle wings and a star tail, wild-maned. Accent: mustard. |
 
 ### Ysel (35)
 
 | Item | File | Rarity | Box | Picture |
 |---|---|---|---|---|
-| Sun Shard | `items/sun_shard.png` | common | 1×1 `#` | Shard of a sun, jagged and burning. Accent: mustard. |
-| Prayer Bell | `items/prayer_bell.png` | common | 1×1 `#` | Small bell with a star on the handle. Accent: mustard. |
-| Votive Candle | `items/votive_candle.png` | common | 1×1 `#` | Candle in a small cup with a star wax drop. Accent: mustard. |
-| Sundial | `items/sundial.png` | common | 1×1 `#` | Sundial with a star in place of the sun. Accent: copper. |
-| Flare Catcher | `items/flare_catcher.png` | common | 2×1 `##` | Net on a pole catching a flare. Accent: mustard. |
-| Ember Censer | `items/ember_censer.png` | common | 1×2 `#/#` | Hanging censer with embers and smoke. Accent: rust red. |
-| Hymn Scroll | `items/hymn_scroll.png` | common | 2×1 `##` | Open scroll with star notes written on it. Accent: bone. |
-| Solar Dagger | `items/solar_dagger.png` | common | 1×1 `#` | Dagger with a sun on the blade. Accent: mustard. |
-| Eclipse Veil | `items/eclipse_veil.png` | common | 2×1 `##` | Veil cloth with a black circle, an eclipse. Accent: bone. |
-| Comet Rosary | `items/comet_rosary.png` | rare | 3×1 `###` | Bead string with comet-shaped beads. Accent: bone. |
-| Dawn Chime | `items/dawn_chime.png` | rare | 1×1 `#` | Wind chime with sun rays on the tubes. Accent: mustard. |
-| Mirror of Dusk | `items/mirror_of_dusk.png` | rare | 1×2 `#/#` | Hand mirror reflecting a sunset. Accent: rust red. |
-| Pyre Lantern | `items/pyre_lantern.png` | rare | 1×1 `.#.` | Lantern with a fire inside. Accent: rust red. |
-| Corona Staff | `items/corona_staff.png` | rare | 1×3 `#/#/#` | Staff with a ring of sun-rays at the top. Accent: mustard. |
-| Star Psalter | `items/star_psalter.png` | rare | 2×1 `##` | Thick book with a star on the cover. Accent: mustard. |
-| Red Giant Heart | `items/red_giant_heart.png` | epic | 2×2 `##/##` | Large red heart-shaped star, swollen. Accent: rust red. |
-| Eclipse Orb | `items/eclipse_orb.png` | epic | 2×1 `##` | Orb with a black disk crossing a sun. Accent: bone. |
-| Collapse Engine | `items/collapse_engine.png` | epic | 2×1 `##` | Machine with a falling star collapsing into its core. Accent: rust red. |
-| White Dwarf | `items/white_dwarf.png` | epic | 2×2 `##/##` | Small, very dense white star in a heavy ring. Accent: bone. |
-| Supernova Seed | `items/supernova_seed.png` | legendary | 2×1 `##` | Seed with an exploding star inside. Accent: rust red. |
-| Nova Crown | `items/nova_crown.png` | artifact | 2×1 `##` | Crown with a burst star in the middle. Accent: mustard. |
-| Eternal Dawn | `items/eternal_dawn.png` | artifact | 1×1 `#` | Small sun rising from a ring. Accent: mustard. |
-| Stellar Lens | `items/stellar_lens.png` | artifact | 1×1 `.#.` | Large lens focusing a star into a beam. Accent: deep teal. |
-| Sunblade | `items/sunblade.png` | crafted 1 | 1×2 `#/#` | Short sword with a sun crystal in the hilt. Accent: mustard. |
-| Chime of Hours | `items/chime_of_hours.png` | crafted 1 | 2×1 `##` | Bell with a sundial on top. Accent: mustard. |
+| Sun Shard | `items/sun_shard.png` | common | 1×1 `#` | Broken piece of a dying sun, cracked flat mustard and rust, wavy heat lines. Accent: mustard. |
+| Prayer Bell | `items/prayer_bell.png` | common | 1×1 `#` | Small iron bell on a wrist cord, like the one Ysel wears. Accent: mustard. |
+| Votive Candle | `items/votive_candle.png` | common | 1×1 `#` | Candle in a small stone cup, a star pressed into the wax. Accent: mustard. |
+| Sundial | `items/sundial.png` | common | 1×1 `#` | Iron sundial whose shadow points at a cracked star. Accent: copper. |
+| Flare Catcher | `items/flare_catcher.png` | common | 2×1 `##` | Bent iron ring on a pole catching a curling flare. Accent: mustard. |
+| Ember Censer | `items/ember_censer.png` | common | 1×2 `#/#` | Hanging iron censer with embers and wavy heat lines. Accent: rust red. |
+| Hymn Scroll | `items/hymn_scroll.png` | common | 2×1 `##` | Open scroll with hymns written as star notes. Accent: bone. |
+| Solar Dagger | `items/solar_dagger.png` | common | 1×1 `#` | Iron dagger with a sun etched on the blade. Accent: mustard. |
+| Eclipse Veil | `items/eclipse_veil.png` | common | 2×1 `##` | Heavy dark veil cloth with a rust-red band and a black disc stitched on. Accent: bone. |
+| Comet Rosary | `items/comet_rosary.png` | rare | 3×1 `###` | Rosary of small stones with one comet-shaped bead. Accent: bone. |
+| Dawn Chime | `items/dawn_chime.png` | rare | 1×1 `#` | Iron chime of hanging tubes cut with sun rays. Accent: mustard. |
+| Mirror of Dusk | `items/mirror_of_dusk.png` | rare | 1×2 `#/#` | Iron hand mirror showing a setting red sun. Accent: rust red. |
+| Pyre Lantern | `items/pyre_lantern.png` | rare | 1×1 `.#.` | Iron lantern with a small fire inside, heat lines above. Accent: rust red. |
+| Corona Staff | `items/corona_staff.png` | rare | 1×3 `#/#/#` | Staff topped by an open iron cage holding a cracked sun fragment. Accent: mustard. |
+| Star Psalter | `items/star_psalter.png` | rare | 2×1 `##` | Thick hymn book with an iron star clasp. Accent: mustard. |
+| Red Giant Heart | `items/red_giant_heart.png` | epic | 2×2 `##/##` | Swollen red star in a cage of bent iron rings, cracks widening. Accent: rust red. |
+| Eclipse Orb | `items/eclipse_orb.png` | epic | 2×1 `##` | Stone orb with a black disc crossing a sun. Accent: bone. |
+| Collapse Engine | `items/collapse_engine.png` | epic | 2×1 `##` | Iron machine with a cracked star collapsing into its core. Accent: rust red. |
+| White Dwarf | `items/white_dwarf.png` | epic | 2×2 `##/##` | Small, very dense white star held in a heavy iron ring. Accent: bone. |
+| Supernova Seed | `items/supernova_seed.png` | legendary | 2×1 `##` | Seed-shaped iron cage with a star about to burst inside. Accent: rust red. |
+| Nova Crown | `items/nova_crown.png` | artifact | 2×1 `##` | Crown of bent iron rings around a star bursting apart. Accent: mustard. |
+| Eternal Dawn | `items/eternal_dawn.png` | artifact | 1×1 `#` | Small sun rising out of an iron ring, never quite up. Accent: mustard. |
+| Stellar Lens | `items/stellar_lens.png` | artifact | 1×1 `.#.` | Large lens in an iron frame focusing a star into a beam. Accent: deep teal. |
+| Sunblade | `items/sunblade.png` | crafted 1 | 1×2 `#/#` | Short iron sword with a sun shard set in the hilt. Accent: mustard. |
+| Chime of Hours | `items/chime_of_hours.png` | crafted 1 | 2×1 `##` | Iron bell with a sundial on top. Accent: mustard. |
 | Twin Suns | `items/twin_suns.png` | crafted 1 | 1×2 `#/#` | Two sun daggers crossed. Accent: mustard. |
-| Sacred Flame | `items/sacred_flame.png` | crafted 1 | 1×1 `.#.` | Flame in a stone bowl. Accent: rust red. |
-| Litany | `items/litany.png` | crafted 1 | 3×1 `###` | Long scroll wrapped around a bell. Accent: bone. |
-| Helios Rod | `items/helios_rod.png` | crafted 1 | 1×3 `#/#/#` | Staff with a small burning sun at the top. Accent: mustard. |
-| Canticle | `items/canticle.png` | crafted 1 | 2×1 `##` | Open book with a flare rising from its pages. Accent: mustard. |
-| Umbral Mantle | `items/umbral_mantle.png` | crafted 1 | 2×2 `##/##` | Dark cloak with a shield of shadow. Accent: bone. |
-| Total Eclipse | `items/total_eclipse.png` | crafted 1 | 2×2 `##/#.` | Shield with a total eclipse on it. Accent: bone. |
-| Solstice Engine | `items/solstice_engine.png` | crafted 1 | 2×2 `##/##` | Engine with two half-suns on its sides. Accent: mustard. |
-| Dying Star Scepter | `items/dying_star_scepter.png` | crafted 2 | 2×3 `##/##/#.` | Sceptre with a red dying star trapped in a cage. Accent: rust red. |
-| Event Horizon | `items/event_horizon.png` | crafted 2 | 2×3 `##/##/##` | Black ring shield with stars bending around it. Accent: deep teal. |
+| Sacred Flame | `items/sacred_flame.png` | crafted 1 | 1×1 `.#.` | Flame in a stone bowl, wavy heat lines rising. Accent: rust red. |
+| Litany | `items/litany.png` | crafted 1 | 3×1 `###` | Long scroll wrapped around an iron bell. Accent: bone. |
+| Helios Rod | `items/helios_rod.png` | crafted 1 | 1×3 `#/#/#` | Long iron rod topped by a small burning sun in rings. Accent: mustard. |
+| Canticle | `items/canticle.png` | crafted 1 | 2×1 `##` | Open hymn book with a flare curling up from its pages. Accent: mustard. |
+| Umbral Mantle | `items/umbral_mantle.png` | crafted 1 | 2×2 `##/##` | Heavy dark robe of the order with rust-red bands, its shadow longer than it should be. Accent: bone. |
+| Total Eclipse | `items/total_eclipse.png` | crafted 1 | 2×2 `##/#.` | Round iron shield painted with a total eclipse. Accent: bone. |
+| Solstice Engine | `items/solstice_engine.png` | crafted 1 | 2×2 `##/##` | Iron engine with two half-suns on its sides. Accent: mustard. |
+| Dying Star Scepter | `items/dying_star_scepter.png` | crafted 2 | 2×3 `##/##/#.` | Sceptre with a red dying star trapped in a cage of bent iron rings. Accent: rust red. |
+| Event Horizon | `items/event_horizon.png` | crafted 2 | 2×3 `##/##/##` | Black ring shield with stars bending around its edge. Accent: deep teal. |
