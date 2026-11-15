@@ -59,15 +59,17 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 
 ### The dying star (fight clock)
 
-**Decided:** a fight has a time limit; after it both heroes take rising damage (the Supernova). The time until then is told through the star the duel is fought next to (*proposal*):
+**Decided:** a fight has a time limit; after it both heroes take rising damage (the Supernova). The time until then is told through the star the duel is fought next to. The numbers below were measured and set on 2026-11-15 (`rules.battle` in `data/rules.json`, targets in `data/sim/targets.json`, checked by `npm run report:battles`):
 
-| Phase | Seconds | |
+| Phase | Seconds | What happens |
 |---|---|---|
-| Calm | 0–8 | |
-| Flare | 8–16 | |
-| Red Giant | 16–24 | |
-| Collapse | 24–32 | |
-| **Supernova** | from 32 | every second both lose health: 3 % of their maximum, +1.5 points each second, ignoring Shield |
+| Calm | 0–8 | almost no fight ends here (about 1 %) |
+| Flare | 8–16 | about a third of the fights end here (quick, one-sided builds) |
+| Red Giant | 16–24 | the most common end (about 40 %) |
+| Collapse | 24–32 | about 15 % |
+| **Supernova** | from 32 | every second both heroes lose 3 % of their maximum health, 1.5 points more each second (3, 4.5, 6, 7.5 … %), ignoring Shield. After 5 s that is 30 % of the maximum, after 8 s 66 %, after 10 s 98 %. Ysel takes half. |
+
+Targets, per round: an average fight lasts 18–25 s (measured 20–23 s), no fight lasts longer than 45 s (measured at most 44 s), 5–20 % of the fights reach the Supernova (measured 8–17 %), and nine in ten Supernova fights are over within about 10 s (measured 7–11 s). So the Supernova is a real threat in one fight of eight to ten, not the normal way a fight ends, and the waiting time stays short at speed ×1.
 
 The phase is a parameter for abilities: "every star phase: …", "when Flare begins: …", "during Collapse: twice as fast". One hero (Ysel) is built around it.
 

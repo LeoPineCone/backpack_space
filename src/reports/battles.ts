@@ -3,7 +3,7 @@
  *   npm run report:battles -- [--accuracy quick|normal|precise] [--sims N] [--seed S] [--out file]
  */
 import { makeField } from "../sim/lobby";
-import { avg, pct, quantile, share, startReport, table } from "./common";
+import { avg, checkTarget, loadTargets, pct, quantile, share, startReport, table } from "./common";
 
 const r = startReport({
   title: "Battles",
@@ -39,4 +39,43 @@ r.log(...table(["round", "health", "seconds", "10–90 %", "reaches nova", "lead
 r.log();
 r.log("seconds: average fight length. reaches nova: share of fights still running when the Supernova starts. leader wins: of those, how often the hero with more health at that moment wins.");
 r.log("weapons … nova: share of all health lost by source. healed / shield: average per hero and fight.");
+
+// where on the star clock the fights end
+const B = r.data.rules.battle;
+const starts: { name: string; at: number }[] = [];
+{ let at = 0; for (const p of B.phases) { starts.push({ name: p.name, at }); at += p.seconds; } starts.push({ name: B.supernova.name, at }); }
+const phaseOf = (sec: number) => { let k = 0; for (let i = 0; i < starts.length; i++) if (sec > starts[i]!.at) k = i; return k; };
+r.log();
+r.log("## Where on the star clock the fights end");
+const rows2: (string | number)[][] = [];
+const perRound = { secs: [] as number[], longest: [] as number[], reached: [] as number[], lasts90: [] as number[] };
+for (let round = 1; round <= r.data.rules.rounds; round++) {
+  const fs = fights.filter((f) => f.round === round);
+  const ends = starts.map((_, k) => fs.filter((f) => phaseOf(f.res.seconds) === k).length / fs.length);
+  const after = fs.filter((f) => f.res.supernova).map((f) => f.res.seconds - nova);
+  perRound.secs.push(avg(fs.map((f) => f.res.seconds))); perRound.longest.push(Math.max(...fs.map((f) => f.res.seconds)));
+  perRound.reached.push(after.length / fs.length); if (after.length) perRound.lasts90.push(quantile(after, 0.9));
+  rows2.push([round, ...ends.map(pct), after.length ? after.length >= 1 ? avg(after).toFixed(1) : "-" : "-", after.length ? quantile(after, 0.9).toFixed(0) : "-", Math.max(...fs.map((f) => f.res.seconds)).toFixed(0)]);
+}
+r.log(...table(["round", ...starts.map((p) => p.name), "nova lasts", "90 %", "longest"], rows2));
+r.log();
+r.log(`Each phase column: share of the fights that end in it. nova lasts: average seconds from the start of the ${B.supernova.name} to the end of the fight, for the fights that reach it; 90 %: nine in ten of them are over by then. longest: longest fight of the round in seconds.`);
+
+// Supernova by hero
+const seats = lobbies.map((l) => l.seats);
+const heroOf = (li: number, seat: number) => seats[li]![seat]!.bot.hero;
+const perHero = new Map<string, { n: number; nova: number; novaWins: number }>();
+lobbies.forEach((l, li) => { for (const f of l.fights) for (const side of [0, 1] as const) {
+  const h = heroOf(li, side === 0 ? f.a : f.b);
+  const x = perHero.get(h) ?? { n: 0, nova: 0, novaWins: 0 };
+  x.n++; if (f.res.supernova) { x.nova++; if (f.res.winner === side) x.novaWins++; }
+  perHero.set(h, x);
+} });
+const T = loadTargets();
+r.log();
+r.log("## Targets (data/sim/targets.json)");
+r.log(checkTarget(T.fightSeconds!, perRound.secs, false), checkTarget(T.longestFight!, perRound.longest, false), checkTarget(T.supernovaReached!, perRound.reached, true), checkTarget(T.supernovaLasts90!, perRound.lasts90, false));
+r.log();
+r.log(`## ${B.supernova.name} by hero`);
+r.log(...table(["hero", "resists", "fights reaching it", "wins of those"], r.data.heroList.map((h) => { const x = perHero.get(h.id)!; return [h.name, `${h.supernovaResist} %`, share(x.nova / x.n, x.n), x.nova ? share(x.novaWins / x.nova, x.nova) : "-"]; })));
 r.done();

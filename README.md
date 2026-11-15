@@ -54,6 +54,8 @@ npm run report:paths      # does every hero have several paths that win (bots co
 npm run report:all        # all of them into out/reports/
 ```
 
+Balancing targets (fight length, Supernova, hero win shares, recipe dominance) live in `data/sim/targets.json`; the battles, heroes and recipes reports end with an OK / OFF line per target.
+
 Flags: `--accuracy quick|normal|precise` (or `--quick`, `--precise`), `--sims N` for the main count, `--seed S` for an independent sample, `--out file`.
 `npm run report:items -- --write-ratings` also stores the measured strength per item in `data/sim/ratings.json`; the bots then prefer items that measured strong (run it again after bigger item changes).
 
@@ -75,4 +77,4 @@ test/                 vitest
 
 ## How the bots play
 
-A bot plays a run by the rules: it gets the round's gold, sees five offers, buys what it values above its price, rerolls a few times, buys bags when the backpack is nearly full, merges recipes, and lays everything out so that as many stars as possible point at something useful. It values an item by price, synergies with what it owns, recipes it opens, the hero path it committed to (see `paths` in `data/heroes.json`; one bot in four plays without one) and the measured ratings. One simplification: a bot combines as soon as it owns all inputs.
+A bot plays a run by the rules: it gets the round's gold, sees six offers, buys what it values above its price, rerolls a few times, buys bags when the backpack is nearly full, and lays everything out so that as many stars as possible point at something useful and the inputs of every recipe it owns lie together. Like a player's, those inputs fight as separate items and merge after the round's fight; a bot never locks an item. It values an item by price, synergies with what it owns, recipes it opens, the hero path it committed to (see `paths` in `data/heroes.json`; one bot in four plays without one) and the measured ratings.

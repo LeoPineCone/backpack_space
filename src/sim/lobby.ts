@@ -2,7 +2,7 @@
  * Lobbies of bots playing whole runs against each other. Every round each bot fights the current build of another bot
  * of the same lobby (async PvP: only the attacker's result counts for the attacker).
  */
-import { botBuild, botShop, botSpecial, compile, newBot, simulate, type Bot, type BotOpts, type BattleResult, type Build, type CSide, type GameData, Rng } from "@backpack-space/core";
+import { botBuild, botMerge, botShop, botSpecial, compile, newBot, simulate, type Bot, type BotOpts, type BattleResult, type Build, type CSide, type GameData, Rng } from "@backpack-space/core";
 
 /** Measured item ratings every bot uses unless its own options say otherwise (set by the reports from data/sim/ratings.json). */
 let defaultRatings: Record<string, number> = {};
@@ -69,6 +69,7 @@ export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): L
         if (won) s.wins++; else s.livesLeft--;
         if (s.livesLeft <= 0 || round === data.rules.rounds) s.endedAfter = round;
       }
+      botMerge(data, s.bot, optOf(s.seat));
       botSpecial(data, s.bot, round, rng, optOf(s.seat));
     }
   }

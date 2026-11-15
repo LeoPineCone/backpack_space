@@ -2,7 +2,8 @@
 import type { GameData, ItemDef } from "../gamedata.js";
 import { bagFits, emptyBoard, fits, stamp, starred, type Board } from "../grid.js";
 import type { Rng } from "../rng.js";
-import type { Effect, Placement } from "../schema.js";
+import { pendingMerges } from "../run.js";
+import type { Effect, Placement, Recipe } from "../schema.js";
 
 export interface Arranged { items: Placement[]; left: string[] }
 
@@ -64,7 +65,13 @@ function pack(data: GameData, bags: readonly Placement[], ids: readonly string[]
   return { items, left };
 }
 
-export interface ArrangeOpts { /** local search moves (default 250); 0 = packing only */ moves?: number; /** packing attempts (default 4) */ tries?: number }
+export interface ArrangeOpts {
+  /** local search moves (default 250); 0 = packing only */ moves?: number;
+  /** packing attempts (default 4) */ tries?: number;
+  /** recipes the layout should lay together so that they merge after the fight */ recipes?: readonly Recipe[];
+}
+/** Layout score of one merge that will happen after the fight, against the score of the stars. */
+const MERGE_SCORE = 6;
 
 export function arrange(data: GameData, bags: readonly Placement[], ids: readonly string[], rng: Rng, opts: ArrangeOpts = {}): Arranged {
   const { w, h } = data.rules.grid;
@@ -79,9 +86,11 @@ export function arrange(data: GameData, bags: readonly Placement[], ids: readonl
   const base = emptyBoard(w, h, bags, data.shape);
   const blank = (): Board => ({ w, h, occ: base.occ.slice(), bag: base.bag });
   const rebuild = () => { const b = blank(); items.forEach((p, i) => stamp(b, data.shape(p.item, p.rot), p.x, p.y, i)); return b; };
-  let score = layoutScore(data, bags, items, rebuild());
+  const recipes = opts.recipes ?? [];
+  const total = () => layoutScore(data, bags, items, rebuild()) + (recipes.length ? MERGE_SCORE * pendingMerges(data, bags, items, recipes).length : 0);
+  let score = total();
   const moves = opts.moves ?? 250;
-  for (let m = 0; m < moves && items.length > 1; m++) {
+  for (let m = 0; m < moves + (recipes.length ? 150 : 0) && items.length > 1; m++) {
     const i = rng.int(items.length);
     const old = items.map((p) => ({ ...p }));
     if (rng.next() < 0.5) {
@@ -108,7 +117,7 @@ export function arrange(data: GameData, bags: readonly Placement[], ids: readonl
       }
       if (!done) continue;
     }
-    const s2 = layoutScore(data, bags, items, rebuild());
+    const s2 = total();
     if (s2 >= score) score = s2; else old.forEach((p, k) => (items[k] = p));
   }
   return { items, left: best!.left };
