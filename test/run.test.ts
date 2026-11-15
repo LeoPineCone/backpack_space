@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { Rng, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
-import { loadGameData } from "@backpack-space/core/node";
+import { Rng, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
 const data = loadGameData();
@@ -9,6 +9,15 @@ describe("data", () => {
   it("keeps recipe chains within the limit and every crafted item reachable", () => {
     for (const it of data.itemList) expect(it.depth).toBeLessThanOrEqual(data.rules.recipes.maxDepth);
     expect(data.recipes.every((r) => r.in.length <= data.rules.recipes.maxInputs)).toBe(true);
+  });
+  it("has a picture brief with a palette accent for every item", () => {
+    expect(checkItemArt(data, loadItemArt())).toEqual([]);
+  });
+  it("names every status and type in the rules text the way the glossary does", () => {
+    for (const id of ["shield", "burn", "overclock"]) expect(data.glossary.byId.get(id)!.de.length).toBeGreaterThan(0);
+    expect(describeItem(data.items.get("scrap_metal")!, data).join(" ")).toMatch(new RegExp(`^Battle start: gain \\d+ ${data.glossary.byId.get("shield")!.en}\\.$`));
+    // items with a cooldown say "Every 3 s: ..." instead of "Activates every 3 s. On use: ..."
+    for (const it of data.itemList) if (it.cooldown && !it.damage) expect(describeItem(it, data).join(" ")).toMatch(/Every [\d.]+ s: /);
   });
   it("contains no alcohol", () => {
     for (const it of data.itemList) expect(it.name).not.toMatch(/\b(beer|wine|rum|whisky|whiskey|vodka|liquor|ale|cocktail|booze|mead|sake|gin|brandy|cider)\b/i);
@@ -134,7 +143,7 @@ describe("loose items", () => {
     expect(buy(s, data, slot)).toBe(true);
   });
   it("drops the items of a bag that is taken out", () => {
-    const s = newRun(data, "flora", new Rng(3));
+    const s = newRun(data, "venn", new Rng(3));
     const before = s.items.length + s.bags.length;
     dropBag(s, data, 0);
     expect(s.loose.length).toBeGreaterThan(1);

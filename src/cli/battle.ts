@@ -1,6 +1,6 @@
 /**
  * One fight between two bot builds, with the event log.
- *   npm run battle -- [--round 6] [--a flora] [--b ysel] [--seed 1] [--log]
+ *   npm run battle -- [--round 6] [--a venn] [--b ysel] [--seed 1] [--log]
  */
 import { compile, simulate } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";

@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { BUFFS, DEBUFFS, TAGS, Hero, Item, Recipe, Rules, SHOP_RARITIES, type Effect, type HeroData, type ItemData, type Tag } from "./schema.js";
 import { boardOf, parseShape, type Shape } from "./grid.js";
+import { buildGlossary, type Glossary } from "./glossary.js";
 
 export interface ItemDef extends Omit<ItemData, "tags"> {
   tags: (Tag | "crafted")[];
@@ -31,6 +32,8 @@ export interface GameData {
   /** bags sold in the shop */
   bags: ItemDef[];
   phaseIds: string[];
+  /** every game term in English and German (data/glossary.json) */
+  glossary: Glossary;
   shape: (item: string, rot: number) => Shape;
 }
 
@@ -40,7 +43,7 @@ export function parseOrThrow<T extends z.ZodTypeAny>(schema: T, raw: unknown, wh
   return r.data;
 }
 
-export interface RawData { rules: unknown; heroes: unknown; recipes: unknown; itemFiles: Record<string, unknown> }
+export interface RawData { rules: unknown; heroes: unknown; recipes: unknown; glossary: unknown; itemFiles: Record<string, unknown> }
 
 export function buildGameData(raw: RawData): GameData {
   const problems: string[] = [];
@@ -119,6 +122,7 @@ export function buildGameData(raw: RawData): GameData {
     if (!problems.length) try { boardOf(rules.grid.w, rules.grid.h, h.bags, h.start, shape); } catch (e) { problems.push(`hero ${h.id}: ${(e as Error).message}`); }
   }
   if (rules.heroHp.length < rules.rounds || rules.goldPerRound.length < rules.rounds || rules.shop.rarityOdds.length < rules.rounds) problems.push("rules: heroHp, goldPerRound and rarityOdds need one entry per round");
+  const glossary = buildGlossary(raw.glossary, rules, problems);
   if (problems.length) throw new Error(`Game data problems:\n- ${problems.join("\n- ")}`);
 
   const emptyPool = (): Record<ShopRarity, ItemDef[]> => ({ common: [], rare: [], epic: [], legendary: [] });
@@ -127,7 +131,7 @@ export function buildGameData(raw: RawData): GameData {
   for (const it of itemList) if (it.inShop && !it.isBag) (it.hero ? pool.hero.get(it.hero)! : pool.general)[it.rarity as ShopRarity].push(it);
   return {
     rules, heroes, heroList, items, itemList, recipes, recipesWith, pool,
-    generalArtifacts: itemList.filter((i) => i.rarity === "artifact" && !i.hero), bags: itemList.filter((i) => i.isBag && i.inShop), phaseIds, shape,
+    generalArtifacts: itemList.filter((i) => i.rarity === "artifact" && !i.hero), bags: itemList.filter((i) => i.isBag && i.inShop), phaseIds, shape, glossary,
   };
 }
 

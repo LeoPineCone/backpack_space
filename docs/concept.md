@@ -75,13 +75,13 @@ The phase is a parameter for abilities: "every star phase: …", "when Flare beg
 
 ## Heroes
 
-Four heroes, each with an own focus, passive, start items, shop pool and artifacts (details in `docs/catalog.md`):
+Four heroes, each with an own focus, passive, start items, shop pool and artifacts (details in `docs/catalog.md`; who they are and how they look: `docs/heroes.md`):
 
 | Hero | Focus | Passive |
 |---|---|---|
-| **Flora Venn**, Orbital Botanist | food and organic items; heals a lot, wins slowly through Toxin | her organic items are faster; whenever one of her food items activates, it inflicts Toxin |
+| **Venn**, The Thing in the Suit | food and organic items; heals a lot, wins slowly through Toxin | its organic items are faster; whenever one of its food items activates, it inflicts Toxin |
 | **RK-7 "Rook"**, Salvage Unit | mechanical items and crafting; Shield and Overclock | every combination pays gold; mechanical and crafted items are faster |
-| **Nana Quill**, Keeper of the Last Ark | pets | her pets act the moment the fight begins and are faster; every pet that acts heals her a little; more health per pet |
+| **Quill**, Foundling of the Herd | pets | her pets act the moment the fight begins and are faster; every pet that acts heals her a little; more health per pet |
 | **Ysel**, Singer of the Corona | the star phases; Burn; long fights | gains Power with every star phase; takes half Supernova damage |
 
 ### Ways to win
@@ -90,7 +90,7 @@ Every hero is designed for three paths (`paths` in `data/heroes.json`), each wit
 
 | Hero | Paths |
 |---|---|
-| Flora | Poison garden (Toxin, food) · Thorn wall (Spikes, armor, Regen) · Hungry jungle (plant pets that heal on hit) |
+| Venn | Poison garden (Toxin, food) · Thorn wall (Spikes, armor, Regen) · Hungry jungle (plant pets that heal on hit) |
 | Rook | Overclocked guns · Shield fortress · Workshop (crafted items, stripping enemy buffs) |
 | Quill | Big beasts · Swarm (many small pets) · Well-fed pack (food and healing around the pets) |
 | Ysel | Burning corona (Burn) · Late ascension (Power, Overclock, late phases) · Eclipse (Jam, Cryo, Shield per phase) |

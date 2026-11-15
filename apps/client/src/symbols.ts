@@ -97,46 +97,10 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
 
 export function heroRows(hero: HeroData, data: GameData): Row[] { return effectRows(hero.effects, data); }
 
-const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
-/** Every keyword with its symbol and one short sentence. Numbers come from the rules. */
+/** Every keyword with its symbol and one short sentence, from the glossary (data/glossary.json). Numbers come from the rules. */
 export function keywords(data: GameData): Map<string, Keyword> {
-  const R = data.rules.status, B = data.rules.battle;
   const k = new Map<string, Keyword>();
-  const add = (icon: string, word: string, text: string) => k.set(icon, { icon, word, text });
-  for (const t of TAGS) add(t, cap(t), "Item type.");
-  add("bag", "Bag", "Items can only lie in bags.");
-  add("crafted", "Crafted", "Made by combining items.");
-  add("any", "Any item", "Every type counts.");
-  add("shield", "Shield", "Blocks damage before health.");
-  add("regen", "Regen", `Heals every ${R.regen.interval} s, per stack.`);
-  add("overclock", "Overclock", `All your items ${R.overclock.speedPct} % faster per stack.`);
-  add("power", "Power", "+1 weapon damage per stack.");
-  add("spikes", "Spikes", "Weapon hits against you hurt the attacker.");
-  add("burn", "Burn", `Damage every ${R.burn.interval} s, then fades by ${R.burn.decay}. Shield stops it.`);
-  add("toxin", "Toxin", `Damage every ${R.toxin.interval} s. Ignores Shield.`);
-  add("cryo", "Cryo", `Items ${R.cryo.slowPct} % slower per stack. Fades.`);
-  add("jam", "Jam", `Weapons miss, ${R.jam.missPct} % per stack. Fades.`);
-  add("radiation", "Radiation", `Healing and Shield gain −${R.radiation.reducePct} % per stack.`);
-  add("damage", "Damage", "Hurts the enemy.");
-  add("heal", "Heal", "Restores health.");
-  add("cleanse", "Cleanse", "Removes your debuffs.");
-  add("strip", "Break", "Destroys enemy Shield.");
-  add("speed", "Speed", "Shorter cooldown.");
-  add("crit", "Crit", `Chance for ×${B.critMult} damage.`);
-  add("maxHp", "Max health", "More health for the hero.");
-  add("ready", "Charged", "Part of the first cooldown is already done.");
-  add("clock", "Cooldown", "Seconds between uses.");
-  add("start", "Fight start", "Once, when the fight begins.");
-  add("hit", "On hit", "When this weapon hits.");
-  add("attacked", "When hit", "When a weapon hits you.");
-  add("phase", "Star phase", `The star ages: ${B.phases.map((p) => p.name).join(", ")}, then ${B.supernova.name}.`);
-  add("lowHp", "Low health", `Once below ${B.lowHpPct} % health.`);
-  add("chance", "Chance", "Happens only sometimes.");
-  add("hero", "Hero", "Applies to the hero.");
-  add("star", "Star", "The items lying on this item's stars.");
-  add("ship", "Backpack", "Every item in your backpack.");
-  add("self", "This item", "Applies to the item itself.");
+  for (const t of data.glossary.terms) if (t.icon) k.set(t.icon, { icon: t.icon, word: t.en, text: t.text });
   return k;
 }
 
