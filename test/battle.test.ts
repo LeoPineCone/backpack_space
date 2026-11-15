@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Replay, compile, simulate, type Build } from "@backpack-space/core";
+import { Replay, buildStats, compile, simulate, type Build } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -87,5 +87,20 @@ describe("battle", () => {
     while (!replay.done) { replay.advance(0.1); low = Math.min(low, replay.sides[0].energy); }
     expect(low).toBeGreaterThanOrEqual(0);
     expect(replay.sides[0].energy).toBeCloseTo(r.stats[0].energyGained - r.stats[0].energySpent, 5);
+  });
+  it("backpack numbers: Energy used and gained per second", () => {
+    const gun = data.items.get("rivet_gun")!;
+    const few = buildStats(compile(build(["rivet_gun"]), data), data.rules);
+    expect(few.energy.need).toBeCloseTo(gun.energy! / gun.cooldown!, 5);
+    expect(few.energy.income).toBe(data.rules.energy.regen);
+    expect(few.energy.wait).toBe(0);
+    expect(few.ranged).toBe(1);
+    const many = buildStats(compile(build(Array(9).fill("rivet_gun")), data), data.rules);
+    expect(many.energy.need).toBeGreaterThan(many.energy.income);
+    expect(many.energy.wait).toBeGreaterThan(0);
+    const fed = buildStats(compile(build([...Array(8).fill("rivet_gun"), "energy_gel"]), data), data.rules);
+    expect(fed.energy.refill).toBe(data.rules.energy.regen + 1);
+    const bar = buildStats(compile(build(["protein_bar"]), data), data.rules);
+    expect(bar.energy.fromItems).toBeCloseTo(2 / 3, 5);
   });
 });
