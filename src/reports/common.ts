@@ -10,7 +10,7 @@
  *   --out file                         also writes the report to this file
  *   --no-ratings                       bots ignore data/sim/ratings.json
  */
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { Rng, type GameData } from "@backpack-space/core";
 import { loadGameData, loadRatings } from "@backpack-space/core/node";
 import { useRatings } from "../sim/lobby";
@@ -94,3 +94,16 @@ export function table(head: string[], rows: (string | number)[][]): string[] {
 
 export const median = (xs: readonly number[]) => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]!; };
 export const quantile = (xs: readonly number[], q: number) => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(s.length * q))]!; };
+
+export interface Target { min?: number; max?: number; what: string }
+/** Balancing targets from data/sim/targets.json. */
+export function loadTargets(): Record<string, Target> { return JSON.parse(readFileSync("data/sim/targets.json", "utf8")); }
+const fmt = (x: number, asPct: boolean) => (asPct ? pct(x) : x.toFixed(1));
+/** One line "OK / OFF  what: target …, measured …" for a set of measured values. */
+export function checkTarget(t: Target, values: readonly number[], asPct: boolean): string {
+  const lo = Math.min(...values), hi = Math.max(...values);
+  const ok = (t.min === undefined || lo >= t.min) && (t.max === undefined || hi <= t.max);
+  const want = t.min !== undefined && t.max !== undefined ? `${fmt(t.min, asPct)}–${fmt(t.max, asPct)}` : t.min !== undefined ? `at least ${fmt(t.min, asPct)}` : `at most ${fmt(t.max!, asPct)}`;
+  const got = lo === hi ? fmt(lo, asPct) : `${fmt(lo, asPct)}–${fmt(hi, asPct)}`;
+  return `${ok ? "OK " : "OFF"}  ${t.what}: target ${want}, measured ${got}`;
+}

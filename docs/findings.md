@@ -1,8 +1,50 @@
-# Findings of the second balance pass (2026-11-15)
+# Findings of the third balance pass (2026-11-15)
+
+Measured with `npm run report:all` at normal accuracy; full reports in `docs/reports/`. Goals of this pass: bots merge by the player's rules, set and measure the star clock, and check that no hero and no recipe chain dominates. Targets are now data (`data/sim/targets.json`) and the reports print an OK / OFF line per target.
+
+## What changed
+
+- **Bots merge like players.** Before, a bot combined the moment it owned all inputs, one fight earlier than a player can. Now it lays the inputs of every recipe it owns next to each other (part of the layout score), fights with the separate items and merges after the fight (`botMerge`). It never locks. 1.9 times per run an owned recipe does not fit together before the fight (mostly 3-input recipes).
+- **Rook lost the most from that:** his start (Welding Arm + Scrap Metal) now fights round 1 unmerged; he won 7 % of round 1 and 38 % overall. Re-tuned: Welding Arm cooldown 2.0 → 1.6, damage 4–5 → 5–7, Shield per hit 1 → 3; his speed bonus for crafted items 18 → 25 %, for mechanical items 20 → 26 %; gold per merge 2 → 3.
+- **Recipe results that won far more often than the same hero without them** were weakened: Arc Forge (cooldown 1.2 → 1.4), Plague Blossom (Toxin 4 → 3), Storm Driver (damage 16–20 → 14–17), Gravity Well (strip 24 → 18, Shield 10 → 8), Ghost Shroud (Jam 7/3 → 5/2), Total Eclipse (Jam 4 → 3, Shield 17 → 11), Living Armor (Shield 50 → 40, Regen 3 → 2).
+- **Reports:** `report:battles` shows in which star phase fights end and how long the Supernova lasts, per hero too; `report:recipes` has a new section "Does a recipe dominate?".
+
+## Where the draft stands
+
+| Question | Target | Result |
+|---|---|---|
+| Fight length | 18–25 s average, longest ≤ 45 s | 19–23 s, longest 40–45 s. OK |
+| Where fights end | – | Calm 1 %, Flare 30–38 %, Red Giant 34–43 %, Collapse 14–17 %, Supernova 5–20 % |
+| Supernova reached | 5–20 % of the fights | 17–20 % in rounds 1–4, 5–10 % later. At the edge |
+| Supernova length | 9 in 10 over within 10 s | 5–10 s, average 3–6 s. OK |
+| Heroes overall | 45–55 % | Flora 52, Rook 51, Quill 51, Ysel 44 |
+| Heroes per third of the run | 45–55 % | OFF: Flora strong early (61 %), Quill strong in rounds 5–8 (60 %), Ysel weak in rounds 5–8 (39 %), Rook strong late (59 %) |
+| Hero against hero | 35–65 % | 39–64 %. OK |
+| Paths | several per hero | Flora 3 of 3 carry, Rook 2, Quill 2, Ysel 3 |
+| Crafting | – | 10.2 merges per run; never combining wins 46 % against 54 % |
+| Runs | – | 11 % survive all 12 rounds, 7.6 rounds on average |
+
+## Does a recipe chain dominate?
+
+No single chain. The most made results (not counting the start item upgrades, which every run of a hero is meant to make) are Plague Blossom (Flora, 58–65 %), Arc Forge (Rook, 57 %), Canticle (Ysel) and Guard Hound (Quill, about 50 %). After weakening, Plague Blossom wins only 10 points more than Flora without it; Arc Forge still 9–15 points.
+
+The "lift" measure (win share while holding a result, against the same hero in the same round without it) is honest about one thing only: which results stand out. Its top list changes from sample to sample (Total Eclipse, Ghost Shroud and Living Armor came up in all three samples and were weakened twice), and a holder is also a bot whose shop went well. Read a lift above about 15 points in two samples as "too strong", not a single one.
+
+## The star clock in numbers
+
+Kept as it was, now measured and written into `docs/concept.md`: Calm, Flare, Red Giant, Collapse 8 s each, Supernova from 32 s with 3 % of maximum health per second plus 1.5 points each second (30 % after 5 s, 66 % after 8 s). The hero ahead when it begins wins about 9 in 10 of those fights. Ysel, who takes half, reaches it in only 6 % of her fights (others 10–16 %) but wins 66 % of those; her Supernova resistance hardly ever matters. Quill wins only a third of her Supernova fights.
+
+## Still open
+
+- **Hero curves** (see table). The heroes are being redesigned, so these were not tuned further.
+- **Ysel and the Supernova:** her identity says "long fights", her builds end fights early. A question for the hero redesign.
+- **Early rounds reach the Supernova more often** (17–20 %) than late ones. If that should be even, the Supernova could start a little earlier late in the run, or grow faster; that is a rule question for Ilja.
+
+# Second balance pass (2026-11-15, earlier the same day)
 
 Measured with `npm run report:*` at normal accuracy; the full reports are in `docs/reports/`. This pass had three goals: longer fights, more hero items, and an answer to "does a hero win in one way or in several?".
 
-## What changed
+### What changed
 
 - **Longer fights.** All healing, Shield and bonus health on items went up by 40 %, hero health by 10–20 %, and 24 general sustain items were added (healing, cleansing, Shield, Regen; 16 in the shop, 8 crafted).
 - **Bigger hero pools.** Every hero got 9 more shop items and 6 more crafted items (35 items per hero now, 384 in total, 151 recipes). They are built as a second and third path, and every start weapon now has two competing upgrades.
@@ -11,7 +53,7 @@ Measured with `npm run report:*` at normal accuracy; the full reports are in `do
 - **Shop rebuilt** (after the pass, decided with Ilja): 6 offers instead of 5, at most one bag per roll, a weight per item, more offers of the types the backpack already holds, and offers can be pinned for later (any number). See "The shop" in `docs/concept.md`.
 - **A runaway effect removed.** Three Flora items gained Spikes every time she was attacked. In longer fights that stacked without limit and made up half of Flora's damage in every path. They now gain Spikes at the start or per star phase.
 
-## Where the draft stands
+### Where the draft stands
 
 | Question | Result | Before |
 |---|---|---|
@@ -24,7 +66,7 @@ Measured with `npm run report:*` at normal accuracy; the full reports are in `do
 | Crafting | Bots that never combine win 45 % against 61 %. 11.3 combinations per run; 49 % of the runs reach chain step 2, 2 % step 3. | 37 / 63 % |
 | Runs | With 4 lives, 11 % of the runs survive all 12 rounds; a run lasts 7.6 rounds and wins 3.8 fights on average. | 10 % |
 
-## One way to win or several?
+### One way to win or several?
 
 Short answer: every hero has three paths that win about equally often, but the paths of a hero still do damage in the same way. They differ in defence, tempo and items, less in how the enemy dies.
 
@@ -42,18 +84,18 @@ What this means:
 3. **Winning through the Supernova is not a plan yet.** Only 9–12 % of the late fights reach it, and the hero ahead at that moment wins 83–97 % of them anyway.
 4. **Hero against hero is closer than before** (41–60 %, before 29–65 %).
 
-## Did the new shop help?
+### Did the new shop help?
 
 A little. With 6 offers the bots reroll less (0.1–0.7 times per round instead of 0.3–1.0) and still fill the backpack (45 bag cells in round 12). The share of path items in the final builds did not move beyond noise (for example Rook 63 / 52 / 59 %, Quill 26 / 18 / 34 %): the bots commit weakly, and Quill's three paths all consist of pets, so "more of what you own" cannot tell them apart. Whether a human can build a path on purpose is a question for the browser preview, not for these bots.
 
-## Still open
+### Still open
 
 - **Hero curves.** Quill is too strong and Ysel too weak in rounds 5–8. The balance moves by several points whenever the item ratings are measured again, because the bots then buy differently. Expect a few more "change, measure items, measure heroes" rounds.
 - **33 items are clearly too strong**, many of them the start weapons and their first upgrades (by design the best buys early) and several new crafted hero items (Thorn Pod, Twin Suns, Guard Hound, Living Armor, Plague Blossom). See `STRONG` in `docs/reports/items.txt`.
 - **4 lives are few for 12 rounds.** Only 11 % of the runs see round 12.
 - **The three-step capstones are trophies.** Bots make them in about 2 % of the runs.
 
-## How to continue
+### How to continue
 
 ```
 npm run report:items -- --write-ratings   # after item changes, so the bots know what is good
@@ -65,7 +107,7 @@ npm run play:ghosts                       # fresh opponents for the browser prev
 
 One pass takes about six minutes at normal accuracy.
 
-## Limits of these numbers
+### Limits of these numbers
 
 - Bots combine as soon as they own all inputs and do not plan chains, bag layouts or counters. Chain depth and bag bonuses are lower bounds.
 - A bot "commits" to a path by valuing its items 50 % higher. It does not plan the path's recipes or layout, so a human will play a path more purely than the bots do.

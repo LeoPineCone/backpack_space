@@ -124,13 +124,13 @@ export function sellBag(s: RunState, data: GameData, idx: number): boolean {
 export function sellLoose(s: RunState, data: GameData, idx: number): void { s.gold += sellPrice(data, s.loose[idx]!); s.loose.splice(idx, 1); }
 
 /** Recipes whose inputs lie in the backpack as one connected group (sharing edges). */
-export function findCombos(data: GameData, bags: readonly Placement[], items: readonly Placement[]): Combo[] {
+export function findCombos(data: GameData, bags: readonly Placement[], items: readonly Placement[], recipes: readonly Recipe[] = data.recipes): Combo[] {
   const { w, h } = data.rules.grid;
   const b = boardOf(w, h, bags, items, data.shape);
   const adj = items.map((_, i) => neighbours(b, items, i, data.shape));
   const out: Combo[] = [];
   const seen = new Set<string>();
-  for (const recipe of data.recipes) {
+  for (const recipe of recipes) {
     const pick = (k: number, chosen: number[]) => {
       if (k === recipe.in.length) {
         const reach = [chosen[0]!];
@@ -146,10 +146,10 @@ export function findCombos(data: GameData, bags: readonly Placement[], items: re
   return out;
 }
 /** The merges the next fight will be followed by: recipes lying together with no locked input, every item used at most once. */
-export function pendingMerges(data: GameData, bags: readonly Placement[], items: readonly Placement[]): Combo[] {
+export function pendingMerges(data: GameData, bags: readonly Placement[], items: readonly Placement[], recipes: readonly Recipe[] = data.recipes): Combo[] {
   const used = new Set<number>();
   const out: Combo[] = [];
-  for (const c of findCombos(data, bags, items)) {
+  for (const c of findCombos(data, bags, items, recipes)) {
     if (c.idxs.some((i) => used.has(i) || items[i]!.lock)) continue;
     c.idxs.forEach((i) => used.add(i));
     out.push(c);

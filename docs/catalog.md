@@ -21,9 +21,9 @@ Food and organic items. Her garden grows faster than anyone's, heals a lot and p
 
 Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
-- Your crafted items: 18 % faster.
-- Your mechanical items: 20 % faster.
-- Every combination pays 2 gold.
+- Your crafted items: 25 % faster.
+- Your mechanical items: 26 % faster.
+- Every combination pays 3 gold.
 - Starts with: Field Pack, Tool Roll, Welding Arm, Scrap Metal.
 - Signature artifacts (after round 4): Master Blueprint, Perpetual Engine, Nanite Swarm.
 
@@ -172,7 +172,7 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 | Thorn Plate | crafted (step 1) | 8 | `##/##` | armor, organic | Battle start: gain 28 Shield. Battle start: gain 2 Spikes. | = Thorn Mail + Hull Plating |
 | Glacier Mail | crafted (step 1) | 8 | `##/##` | armor | Battle start: gain 50 Shield. When a weapon hits you: inflict 1 Cryo (35 % chance). | = Cryo Coat + Frost Gem |
 | Aegis Projector | crafted (step 1) | 9 | `##/##` | armor, mechanical | Activates every 2.2 s. On use: gain 15 Shield. | = Deflector Dish + Power Cell; → Aegis Fortress |
-| Ghost Shroud | crafted (step 1) | 13 | `##/#.` | armor | Battle start: inflict 7 Jam. Every star phase: inflict 3 Jam. When a weapon hits you: inflict 2 Jam (20 % chance). | = Phase Cloak + Holo Decoy |
+| Ghost Shroud | crafted (step 1) | 13 | `##/#.` | armor | Battle start: inflict 5 Jam. Every star phase: inflict 2 Jam. When a weapon hits you: inflict 2 Jam (20 % chance). | = Phase Cloak + Holo Decoy |
 | Citadel Plating | crafted (step 2) | 10 | `###/###` | armor, mechanical | Activates every 2.5 s. Battle start: gain 63 Shield. On use: gain 14 Shield. | = Reinforced Bulkhead + Deflector Dish; → Dyson Bastion |
 | Life Support Suit | crafted (step 2) | 10 | `##/##/#.` | armor, mechanical | Activates every 3 s. You: +70 max health. Battle start: gain 28 Shield. On use: heal 13. On use: remove 1 of your debuffs. | = Exo Suit + Nano Medkit |
 | Aegis Fortress | crafted (step 2) | 17 | `##/##/##` | armor, mechanical | Activates every 2 s. On use: gain 18 Shield. Every star phase: gain 42 Shield. | = Aegis Projector + Force Bubble; → Dyson Bastion |
@@ -405,8 +405,8 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 | Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.8 s. On hit: heal 4. | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
 | Harvest Crate | crafted (step 1) | 8 | `*##*/*##*` | food, organic | Activates every 2.7 s. On use: heal 14. Starred food: 40 % faster. | = Compost Bin + Moon Melon |
 | Irrigation Swarm | crafted (step 1) | 8 | `*##*` | pet, mechanical | Activates every 2.2 s. On use: heal 7. On use: inflict 1 Toxin. Starred organic items: 30 % faster. | = Watering Drone + Pollen Cloud + Grow Lamp |
-| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 50 Shield. Battle start: gain 2 Spikes. Battle start: gain 3 Regen. Every star phase: gain 1 Spikes. | = Bark Shield + Thornvine |
-| Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. On hit: inflict 4 Toxin. On hit: inflict 1 Jam. | = Blight Bomb + Pollen Cloud |
+| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield. Battle start: gain 2 Spikes. Battle start: gain 2 Regen. Every star phase: gain 1 Spikes. | = Bark Shield + Thornvine |
+| Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. On hit: inflict 3 Toxin. On hit: inflict 1 Jam. | = Blight Bomb + Pollen Cloud |
 | Ambrosia | crafted (step 1) | 10 | `##/##` | food, organic | Activates every 3.1 s. Every star phase: heal 34. Every star phase: remove 3 of your debuffs. On use: heal 11. On use: gain 1 Regen. | = Nectar Flask + Healing Moss |
 | Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes. Battle start: gain 21 Shield. | = Thornvine + Root Network |
 | Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 7–10 damage every 1.4 s. On hit: heal 4. On hit: deal 1 damage per 2 Toxin on the enemy (max 20×). | = Giant Mantrap + Carnivorous Orchid |
@@ -416,7 +416,7 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Welding Arm | common | 3 | `#/#` | weapon, mechanical | 4–5 damage every 2 s. On hit: gain 1 Shield. | → Plasma Welder, Rivet Cannon |
+| Welding Arm | common | 3 | `#/#` | weapon, mechanical | 5–7 damage every 1.6 s. On hit: gain 3 Shield. | → Plasma Welder, Rivet Cannon |
 | Spare Parts | common | 3 | `*#*` | accessory, mechanical | Battle start: gain 11 Shield. Battle start: gain 17 Shield per starred mechanical item. | → Junk Titan |
 | Circuit Board | common | 3 | `#` | accessory, mechanical | Every star phase: gain 1 Overclock. | → Logic Core |
 | Conveyor Belt | common | 3 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (50 % chance). | → Factory Line |
@@ -443,13 +443,13 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 | Factory Line | crafted (step 1) | 6 | `***/###` | accessory, mechanical | Activates every 3.5 s. When a starred mechanical item activates: gain 4 Shield (60 % chance). On use: gain 8 Shield. On use: remove 1 of your debuffs. | = Conveyor Belt + Toolbox |
 | Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 3–5 damage every 1.2 s. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
 | Dynamo | crafted (step 1) | 8 | `##` | accessory, mechanical | Activates every 2.5 s. Battle start: gain 4 Overclock. Battle start: gain 16 Shield. On use: gain 1 Overclock. | = Capacitor Bank + Turbo Fan; → Storm Driver |
-| Gravity Well | crafted (step 1) | 8 | `##` | accessory, mechanical | Activates every 3 s. Every star phase: destroy 24 enemy Shield. On use: destroy 8 enemy Shield. On use: gain 10 Shield. On use: inflict 2 Cryo. | = Grav Clamp + Magnet Crane |
+| Gravity Well | crafted (step 1) | 8 | `##` | accessory, mechanical | Activates every 3 s. Every star phase: destroy 18 enemy Shield. On use: destroy 8 enemy Shield. On use: gain 8 Shield. On use: inflict 2 Cryo. | = Grav Clamp + Magnet Crane |
 | Scrap Howitzer | crafted (step 1) | 9 | `*##*/*##*` | weapon, mechanical | 7–10 damage every 2.4 s. This item: +3 damage per starred mechanical item. | = Junk Cannon + Scrap Metal + Copper Wire |
 | Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 6–8 damage every 2 s. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
 | Salvage Rig | crafted (step 1) | 10 | `##/##` | accessory, mechanical | Activates every 3 s. On use: destroy 8 enemy Shield. On use: gain 11 Shield. Every star phase: gain 6 Shield per crafted item in your backpack (max 6×). | = Magnet Crane + Recycler |
 | Bulwark Array | crafted (step 1) | 14 | `*##*/*##*` | armor, mechanical | Activates every 2.5 s. Battle start: gain 80 Shield. On use: gain 10 Shield. On use: gain 5 Shield per starred mechanical item. | = Shield Emitter + Bastion Frame |
-| Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage every 1.2 s. On hit: gain 3 Shield. On hit: inflict 1 Jam. On hit: deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
-| Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 16–20 damage every 2.4 s. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield. On hit: deal 1 damage per 2 Overclock you have (max 12×). | = Rail Driver + Dynamo |
+| Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage every 1.4 s. On hit: gain 3 Shield. On hit: inflict 1 Jam. On hit: deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
+| Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 14–17 damage every 2.4 s. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield. On hit: deal 1 damage per 2 Overclock you have (max 12×). | = Rail Driver + Dynamo |
 
 ### Nana Quill (35)
 
@@ -526,7 +526,7 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 | Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage every 2.1 s. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
 | Canticle | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 1 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
 | Umbral Mantle | crafted (step 1) | 12 | `##/##` | armor | Every star phase: gain 41 Shield. Battle start: inflict 2 Jam. | = Eclipse Veil + Force Bubble; → Event Horizon |
-| Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 4 Jam. Every star phase: inflict 3 Cryo. Every star phase: gain 17 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
+| Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 3 Jam. Every star phase: inflict 3 Cryo. Every star phase: gain 11 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
 | Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.4 s. Every star phase: gain 1 Power. Every star phase: gain 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
 | Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 8–11 damage every 2 s. On hit: inflict 3 Burn. When Red Giant begins: heal 56. When Red Giant begins: inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
 | Event Horizon | crafted (step 2) | 21 | `##/##/##` | armor | Every star phase: gain 68 Shield. When Collapse begins: gain 119 Shield. You: +70 max health. Battle start: inflict 3 Jam. | = White Dwarf + Umbral Mantle |
