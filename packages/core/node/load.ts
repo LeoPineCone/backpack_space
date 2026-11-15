@@ -36,18 +36,47 @@ export function loadRatings(dataDir = DATA_DIR): Record<string, number> {
 /** Accent colours of the palette in docs/style.md. */
 export const ART_ACCENTS = ["rust red", "deep teal", "mustard", "moss", "copper", "bone"] as const;
 
-/** Picture brief per item for the artwork (data/item-art.json): what the icon shows and its accent colour. */
-export function loadItemArt(dataDir = DATA_DIR): Record<string, string> {
-  return readJson(join(dataDir, "item-art.json")) as Record<string, string>;
+/** Picture data per item for the artwork (data/item-art.json). */
+export interface ItemArt {
+  /** One line for the asset list: what the icon shows, ending in "Accent: <palette colour>." */
+  brief: string;
+  /** The full picture description for image prompts (English, not shown in the game). Self-contained: it repeats what the brief says. */
+  description: string;
 }
 
-/** Problems with the picture briefs: items without one, briefs for unknown items, briefs without an accent colour from the palette. */
-export function checkItemArt(data: GameData, art: Record<string, string>, accents: readonly string[] = ART_ACCENTS): string[] {
+export function loadItemArt(dataDir = DATA_DIR): Record<string, ItemArt> {
+  return readJson(join(dataDir, "item-art.json")) as Record<string, ItemArt>;
+}
+
+/** Number of backpack cells an item covers. */
+export const cellCount = (shape: readonly string[]) => shape.join("").split("").filter((c) => c === "#").length;
+
+/**
+ * Word limit of a picture description by item size: an item drawn at 44 px per cell can only carry a few details.
+ * 1 cell: one shape and one feature; 2-3 cells: up to two features; 4-5 cells: up to three; 6+ cells: up to four.
+ */
+export const ART_WORD_LIMITS: readonly { maxCells: number; words: number }[] = [
+  { maxCells: 1, words: 30 },
+  { maxCells: 3, words: 45 },
+  { maxCells: 5, words: 60 },
+  { maxCells: Infinity, words: 75 },
+];
+export const artWordLimit = (cells: number) => ART_WORD_LIMITS.find((l) => cells <= l.maxCells)!.words;
+
+/** Problems with the picture data: items without a brief or description, entries for unknown items, briefs without an accent colour from the palette, descriptions too long for the item's size. */
+export function checkItemArt(data: GameData, art: Record<string, ItemArt>, accents: readonly string[] = ART_ACCENTS): string[] {
   const problems: string[] = [];
-  for (const it of data.itemList) if (!art[it.id]?.trim()) problems.push(`item-art.json: no picture brief for ${it.id}`);
-  for (const [id, brief] of Object.entries(art)) {
+  for (const it of data.itemList) {
+    const a = art[it.id];
+    if (!a?.brief?.trim()) problems.push(`item-art.json: no picture brief for ${it.id}`);
+    if (!a?.description?.trim()) { problems.push(`item-art.json: no picture description for ${it.id}`); continue; }
+    const words = a.description.trim().split(/\s+/).length, limit = artWordLimit(cellCount(it.shape));
+    if (words > limit) problems.push(`item-art.json ${it.id}: description has ${words} words, ${cellCount(it.shape)} cell(s) allow ${limit}`);
+    if (/Accent:/.test(a.description)) problems.push(`item-art.json ${it.id}: the accent colour belongs in the brief, not in the description`);
+  }
+  for (const [id, a] of Object.entries(art)) {
     if (!data.items.has(id)) problems.push(`item-art.json: ${id} is not an item`);
-    const accent = /Accent: ([a-z ]+)\.$/.exec(brief)?.[1];
+    const accent = /Accent: ([a-z ]+)\.$/.exec(a.brief ?? "")?.[1];
     if (!accent || !accents.includes(accent)) problems.push(`item-art.json ${id}: the brief must end with "Accent: <palette colour>." (${accents.join(", ")})`);
   }
   return problems;

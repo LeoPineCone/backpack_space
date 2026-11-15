@@ -7,7 +7,7 @@ Design draft of a backpack auto-battler in space: shared battle core, game data,
 - Every hero, item, bag and recipe: [docs/catalog.md](docs/catalog.md) (generated)
 - Game terms in English and German: [docs/glossary.md](docs/glossary.md) (generated from `data/glossary.json`)
 - Languages (English, German), how the game picks one and how to add one: [docs/i18n.md](docs/i18n.md)
-- Picture list for every item and bag: [docs/item-art.md](docs/item-art.md) (generated from `data/item-art.json`)
+- Picture list for every item and bag with a short brief and a full description for image prompts: [docs/item-art.md](docs/item-art.md) (generated from `data/item-art.json`; `npm run art:prompt -- <id>` prints the finished prompt)
 - Latest measurements: [docs/findings.md](docs/findings.md), full reports in [docs/reports/](docs/reports/)
 
 ## Setup
