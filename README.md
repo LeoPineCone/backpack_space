@@ -53,6 +53,7 @@ npm run report:items      # what each item adds to a build compared with its pri
 npm run report:recipes    # which recipes get made, how deep chains go
 npm run report:placement  # what the layout is worth
 npm run report:paths      # does every hero have several paths that win (bots commit to one path each)
+npm run report:synergy    # hero against hero and path against path; do items and hero rules interlock more each round
 npm run report:all        # all of them into out/reports/
 ```
 

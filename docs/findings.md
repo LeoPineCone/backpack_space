@@ -1,3 +1,39 @@
+# Hero synergies and matchups (2026-11-15)
+
+Question from the design: equal win shares matter less than heroes whose rules and items visibly interlock, builds that grow together round by round, and matchups that look like rock-paper-scissors rather than one hero beating everybody. New report `npm run report:synergy` (full output in `docs/reports/synergy.txt`) measures three things: hero against hero (mirror included) at rounds 4, 8 and 12; path against path (12 paths, rounds 8 and 12); and per hero and round how many items are linked, how much the hero's own rules are worth (same fights with the hero rules off) and how much the item-to-item effects are worth (same fights with them off).
+
+## Before
+
+- **Rook beat every hero** (58 % on average, 61 % against Quill, 58 % against Ysel). His Workshop path won 68 % against the other heroes' paths and beat every single one of them.
+- **Ysel's own rule did not reach her items.** Power per star phase adds to weapon hits, but none of her items read Power, and her kit was worth only +5 to +6 points from round 8 on (other heroes +19 to +30). Her linked share stayed flat (68 % → 64 %) while the others grew.
+- Weak paths: Quill's Well-fed pack 37 %, Venn's Hungry jungle 42 % against other heroes.
+
+## What changed (item values and synergies only)
+
+- **Ysel: Power feeds Burn and Shield.** Ember Censer adds Burn per 2 Power, Sacred Flame's phase Burn is 2 + 1 per Power, Hymn Scroll and Litany give Shield per Power (flat part lowered). The hymn now runs through the build: Power → Burn → Solar Dagger and Twin Suns, or Power → Shield in the Eclipse path.
+- **Venn: mantraps feed on poisoned prey.** Venus Mantrap, Giant Mantrap and Jungle Tyrant heal less flat and more per Toxin on the enemy, which ties Hungry jungle to the Toxin core.
+- **Quill: a fed herd hits harder.** Banquet Trough gains Power on use, Kibble Sack with a 40 % chance; Power adds to every pet hit.
+- **Rook: Workshop toned down.** Assembly Core +2 damage / +20 % speed to crafted stars (was +3 / +30 %), Master Blueprint +15 % / +1 (was +20 % / +2).
+
+## After
+
+| | Before | After |
+|---|---|---|
+| Dominance | Rook beats all three | nobody beats all others |
+| Rock-paper-scissors circles | Quill > Ysel > Venn > Quill | Rook > Ysel > Venn > Rook and Quill > Venn > Rook > Quill |
+| Hero average against the others | Venn 47, Rook 58, Quill 48, Ysel 46 % | Venn 47, Rook 54, Quill 50, Ysel 51 % |
+| Paths against other heroes | 37–68 % | 41–59 % (Workshop 59, Poison garden 41) |
+| Linked items, round 2 → 12 | Venn 40→74, Rook 46→81, Quill 61→73, Ysel 68→64 % | Venn 44→80, Rook 48→85, Quill 64→81, Ysel 72→75 % |
+| Synergy worth, round 12 | Venn +18, Rook +25, Quill +33, Ysel +21 | Venn +23, Rook +27, Quill +23, Ysel +23 |
+
+Every hero's build now grows together over the run, and the item-to-item effects are worth 23–27 points at the end for all four. Lobby win shares (report:heroes) 45–54 % overall.
+
+## Still open (needs a design decision)
+
+- **Ysel's own rule stays small late:** kit worth +15 early, +5 from round 8 on. One Power per phase is about +3 per weapon hit in a 20 s fight. The new items make Power matter, but the rule itself would need more (for example Power at fight start, or 2 per phase) to carry her late. That is a change to her hero rules, so it waits for a decision.
+- **Rook in rounds 1–4** measured 38 % in lobby fights this time (44 % before, same start items; samples move by several points). Watch it in the next pass.
+- Rook mirror fights land at 45–46 % for the attacker, the other mirrors at 49–51 %: Rook's Shield-on-hit start may favour the defender slightly.
+
 # Findings of the third balance pass (2026-11-15)
 
 Measured with `npm run report:all` at normal accuracy; full reports in `docs/reports/`. Goals of this pass: bots merge by the player's rules, set and measure the star clock, and check that no hero and no recipe chain dominates. Targets are now data (`data/sim/targets.json`) and the reports print an OK / OFF line per target.
