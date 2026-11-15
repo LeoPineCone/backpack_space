@@ -62,7 +62,7 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 **Fixed marks:** no head, a floating object held in the iron cage above the collar; the robe silhouette.
 **Skin slot:** the head object in the cage.
 
-**Mechanics, as they are:** Power with every phase is her hymn growing louder; half Supernova damage because she belongs to the star.
+**Mechanics, as they are:** she enters every fight already singing (1 Power), and every phase her hymn grows louder (1 Power more); half Supernova damage because she belongs to the star.
 
 ## Ideas kept for later heroes
 

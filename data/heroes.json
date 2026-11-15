@@ -29,9 +29,9 @@
   },
   {
     "id": "ysel", "name": "Ysel", "title": "Singer of the Corona",
-    "focus": "The star itself. Gains Power with every star phase, burns the enemy and shrugs off half the Supernova.",
+    "focus": "The star itself. Starts every fight with Power and gains more with every star phase, burns the enemy and shrugs off half the Supernova.",
     "supernovaResist": 50,
-    "effects": [{ "on": "phase", "gain": "power", "n": 1 }],
+    "effects": [{ "on": "start", "gain": "power", "n": 1 }, { "on": "phase", "gain": "power", "n": 1 }],
     "bags": [{ "item": "field_pack", "x": 3, "y": 2, "rot": 0 }, { "item": "relic_case", "x": 1, "y": 2, "rot": 0 }],
     "start": [{ "item": "sun_shard", "x": 3, "y": 2, "rot": 0 }, { "item": "prayer_bell", "x": 4, "y": 2, "rot": 0 }],
     "artifacts": ["nova_crown", "eternal_dawn", "stellar_lens"],

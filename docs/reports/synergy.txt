@@ -1,0 +1,155 @@
+# Hero synergies and matchups
+
+Question: Do the heroes' rules and items interlock more with every round, and does one hero beat all others or do they counter each other?
+Accuracy: normal, seed 1. lobbies 40 (lobbies of 16 bots (4 per hero, one per path plus one open bot) playing all 12 rounds), duels 300 (fights per hero pair and stage), pathDuels 120 (fights per path pair), builds 40 (builds per hero and round for the interlock test), opponents 12 (opponents per build in that test).
+Bots: use the measured item ratings in data/sim/ratings.json (384 items).
+Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.
+
+## 1. Hero against hero
+
+Row wins against column with builds of the same round, 300 fights per pair and stage. The mirror (same hero) shows the noise and any first-strike edge.
+
+Round 4 builds:
+               Venn  RK-7 "Rook"  Quill  Ysel
+  Venn         55 %         54 %   58 %  40 %
+  RK-7 "Rook"  43 %         48 %   55 %  58 %
+  Quill        45 %         46 %   47 %  49 %
+  Ysel         58 %         45 %   51 %  50 %
+
+Round 8 builds:
+               Venn  RK-7 "Rook"  Quill  Ysel
+  Venn         51 %         47 %   50 %  43 %
+  RK-7 "Rook"  52 %         43 %   61 %  60 %
+  Quill        52 %         39 %   46 %  61 %
+  Ysel         59 %         39 %   42 %  50 %
+
+Round 12 builds:
+               Venn  RK-7 "Rook"  Quill  Ysel
+  Venn         52 %         47 %   59 %  34 %
+  RK-7 "Rook"  52 %         46 %   60 %  42 %
+  Quill        45 %         39 %   52 %  39 %
+  Ysel         70 %         60 %   67 %  52 %
+
+All three stages together:
+               Venn  RK-7 "Rook"  Quill  Ysel
+  Venn         53 %         49 %   55 %  39 %
+  RK-7 "Rook"  49 %         46 %   59 %  53 %
+  Quill        48 %         42 %   48 %  50 %
+  Ysel         63 %         48 %   53 %  51 %
+(Noise per cell about ±3 points per stage, ±2 for all stages.)
+
+Who beats whom (all stages, an edge is a share of at least 55 %):
+  Venn         average 48 %; beats Quill 55 %; loses to Ysel 39 %
+  RK-7 "Rook"  average 54 %; beats Quill 59 %; loses to nobody clearly
+  Quill        average 46 %; beats nobody clearly; loses to RK-7 "Rook" 42 %
+  Ysel         average 55 %; beats Venn 63 %; loses to nobody clearly
+
+Dominance: no hero beats all others.
+Rock-paper-scissors circles (each step above 50 %): none.
+
+## 2. Path against path
+
+Every bot of a path is committed to it (see report:paths). Builds of rounds 8 and 12, 120 fights per pair. Row wins against column; the paths of the same hero are a mirror of that hero.
+  P1 = Venn: Poison garden
+  P2 = Venn: Thorn wall
+  P3 = Venn: Hungry jungle
+  P4 = RK-7: Overclocked guns
+  P5 = RK-7: Shield fortress
+  P6 = RK-7: Workshop
+  P7 = Quill: Big beasts
+  P8 = Quill: Swarm
+  P9 = Quill: Well-fed pack
+  P10 = Ysel: Burning corona
+  P11 = Ysel: Late ascension
+  P12 = Ysel: Eclipse
+
+       P1  P2  P3  P4  P5  P6  P7  P8  P9  P10  P11  P12
+  P1    -  51  54  41  53  41  51  44  54   30   38   51
+  P2   42   -  53  59  69  43  56  56  67   27   35   43
+  P3   48  57   -  46  57  40  50  50  58   27   31   43
+  P4   40  41  55   -  53  47  42  59  63   52   49   49
+  P5   43  38  41  44   -  37  55  57  65   43   47   38
+  P6   60  56  58  63  59   -  65  73  73   55   60   60
+  P7   44  46  51  61  41  35   -  50  58   50   64   43
+  P8   59  38  52  45  32  37  49   -  70   52   49   49
+  P9   47  37  38  37  30  31  35  39   -   44   35   43
+  P10  72  68  64  49  56  42  38  48  59    -   41   66
+  P11  59  56  65  51  52  35  43  48  63   48    -   60
+  P12  58  60  53  54  47  40  52  50  57   26   44    -
+(Shares in percent. Noise per cell about ±5 points.)
+
+Each path against the paths of the other heroes: average, best and worst matchup.
+  path                    vs other heroes                best against               worst against
+  Venn: Poison garden                45 %   Quill: Well-fed pack 54 %   Ysel: Burning corona 30 %
+  Venn: Thorn wall                   50 %  RK-7: Shield fortress 69 %   Ysel: Burning corona 27 %
+  Venn: Hungry jungle                45 %   Quill: Well-fed pack 58 %   Ysel: Burning corona 27 %
+  RK-7: Overclocked guns             50 %   Quill: Well-fed pack 63 %    Venn: Poison garden 40 %
+  RK-7: Shield fortress              47 %   Quill: Well-fed pack 65 %          Ysel: Eclipse 38 %
+  RK-7: Workshop                     62 %   Quill: Well-fed pack 73 %   Ysel: Burning corona 55 %
+  Quill: Big beasts                  48 %   Ysel: Late ascension 64 %         RK-7: Workshop 35 %
+  Quill: Swarm                       46 %    Venn: Poison garden 59 %  RK-7: Shield fortress 32 %
+  Quill: Well-fed pack               38 %    Venn: Poison garden 47 %  RK-7: Shield fortress 30 %
+  Ysel: Burning corona               55 %    Venn: Poison garden 72 %      Quill: Big beasts 38 %
+  Ysel: Late ascension               52 %    Venn: Hungry jungle 65 %         RK-7: Workshop 35 %
+  Ysel: Eclipse                      52 %       Venn: Thorn wall 60 %         RK-7: Workshop 40 %
+
+## 3. Do the builds interlock step by step?
+
+"linked" = share of the build's items that feed another item or are fed by one: a passive on its stars or on the whole backpack,
+a star trigger, a count of other items, or a stack (Burn, Toxin, Power on weapons, ...) that another item of the build produces.
+"hero rules" = share of items the hero's own rules act on (Toxin on meals, speed for organic, mechanical or crafted items, pets, Power per phase).
+"kit worth" and "synergy worth": 40 builds per cell fight 12 opponents of the same round three times with the same seeds:
+as they are, without the hero's rules (no passives, no Supernova resistance), and without item-to-item effects. The drop in win share is the worth.
+
+Venn – Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
+            items  linked  links  hero rules     wins  kit worth  synergy worth
+  round 2     9.0    44 %    3.0        54 %  49 % ±2        +22             +9
+  round 4    12.4    55 %    5.8        57 %  48 % ±2        +20            +10
+  round 6    15.2    74 %   13.6        63 %  47 % ±2        +22            +24
+  round 8    17.9    76 %   18.6        64 %  44 % ±2        +19            +26
+  round 10   20.6    77 %   25.0        62 %  41 % ±2        +17            +22
+  round 12   22.9    80 %   33.2        63 %  45 % ±2        +16            +19
+  most common in round 12 builds: Thorn Pod 61 %, Terrarium Heart 58 %, Compost Bin 54 %, Strangler Fig 53 %, Bramble Seed 53 %, Irrigation Swarm 49 %
+
+RK-7 "Rook" – Mechanical items and crafting. Combining pays gold and crafted items run faster.
+            items  linked  links  hero rules     wins  kit worth  synergy worth
+  round 2     9.0    47 %    3.3        74 %  45 % ±2        +30            +21
+  round 4    12.6    63 %    7.4        79 %  53 % ±2        +32            +24
+  round 6    16.3    72 %   15.2        78 %  49 % ±2        +30            +30
+  round 8    19.1    79 %   24.2        80 %  54 % ±2        +33            +30
+  round 10   22.4    82 %   36.3        80 %  49 % ±2        +25            +25
+  round 12   25.7    85 %   49.3        80 %  58 % ±2        +25            +26
+  most common in round 12 builds: Junk Cannon 61 %, Arc Forge 61 %, Junk Titan 55 %, Tesla Coil 47 %, Circuit Board 45 %, Master Blueprint 45 %
+
+Quill – Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.
+            items  linked  links  hero rules     wins  kit worth  synergy worth
+  round 2     8.7    64 %    5.2        36 %  52 % ±2        +40            +28
+  round 4    12.2    69 %   11.0        38 %  44 % ±2        +28            +21
+  round 6    15.2    79 %   23.6        42 %  66 % ±2        +35            +28
+  round 8    17.9    79 %   32.7        43 %  51 % ±2        +35            +21
+  round 10   20.8    79 %   43.2        42 %  38 % ±2        +26            +27
+  round 12   23.6    79 %   54.6        42 %  37 % ±2        +24            +24
+  most common in round 12 builds: Treat Pouch 100 %, Ancient Egg 69 %, Burrow Rat 66 %, Guard Goose 65 %, Guard Hound 51 %, War Saddle 48 %
+
+Ysel – The star itself. Starts every fight with Power and gains more with every star phase, burns the enemy and shrugs off half the Supernova.
+            items  linked  links  hero rules     wins  kit worth  synergy worth
+  round 2     8.7    71 %    7.3        32 %  54 % ±2        +23             +8
+  round 4    12.0    76 %   13.5        32 %  47 % ±2        +23            +13
+  round 6    15.2    78 %   22.2        31 %  48 % ±2        +13            +21
+  round 8    18.1    77 %   29.3        32 %  50 % ±2        +15            +24
+  round 10   20.7    75 %   38.5        32 %  53 % ±2        +13            +23
+  round 12   23.2    74 %   48.2        32 %  62 % ±2        +12            +22
+  most common in round 12 builds: Dawn Chime 59 %, Sacred Flame 56 %, Solar Dagger 54 %, Canticle 52 %, Twin Suns 50 %, Sunblade 47 %
+
+Summary, round 2 → round 12 (points of win share):
+  hero         linked items  kit worth  synergy worth
+  Venn          44 % → 80 %  +22 → +16       +9 → +19
+  RK-7 "Rook"   47 % → 85 %  +30 → +25      +21 → +26
+  Quill         64 % → 79 %  +40 → +24      +28 → +24
+  Ysel          71 % → 74 %  +23 → +12       +8 → +22
+
+Reading: a growing "linked" share and growing worth mean the build grows together over the run. A kit worth near zero means the
+hero's own rules hardly matter for the result; a synergy worth near zero means the items work alone, side by side.
+Noise of a worth: about ±1 points (same seeds on both sides make it smaller than the win share's noise).
+
+(89 s)
