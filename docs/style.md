@@ -1,6 +1,6 @@
 # Art style
 
-Decided direction: **dark ink comic**. Hero designs and their short bios are still open and may change; the style rules below are fixed.
+Decided direction: **dark ink comic**. The style rules below are fixed. Hero designs, fixed marks and skin slots are in `docs/heroes.md`.
 
 ## Rules
 

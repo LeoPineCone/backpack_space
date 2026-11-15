@@ -59,7 +59,7 @@ npm run report:all        # all of them into out/reports/
 Flags: `--accuracy quick|normal|precise` (or `--quick`, `--precise`), `--sims N` for the main count, `--seed S` for an independent sample, `--out file`.
 `npm run report:items -- --write-ratings` also stores the measured strength per item in `data/sim/ratings.json`; the bots then prefer items that measured strong (run it again after bigger item changes).
 
-Other tools: `npm run battle -- --round 8 --a flora --b ysel --log` prints one fight; `npm run catalog` regenerates `docs/catalog.md`, `docs/glossary.md` and `docs/item-art.md`.
+Other tools: `npm run battle -- --round 8 --a venn --b ysel --log` prints one fight; `npm run catalog` regenerates `docs/catalog.md`, `docs/glossary.md` and `docs/item-art.md`.
 
 ## Layout
 

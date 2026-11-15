@@ -143,7 +143,7 @@
   { "in": ["thunder_ram", "tusked_behemoth"], "out": "juggernaut" },
   { "in": ["feeding_bowl", "kibble_sack"], "out": "banquet_trough" },
   { "in": ["glow_swarm", "hive_queen"], "out": "swarm_cloud" },
-  { "in": ["leash", "trainers_whistle"], "out": "pack_bond" },
+  { "in": ["grooming_comb", "calling_shell"], "out": "pack_bond" },
   { "in": ["sun_shard", "solar_dagger"], "out": "twin_suns" },
   { "in": ["votive_candle", "pyre_lantern"], "out": "sacred_flame" },
   { "in": ["hymn_scroll", "comet_rosary"], "out": "litany" },

@@ -143,7 +143,7 @@ describe("loose items", () => {
     expect(buy(s, data, slot)).toBe(true);
   });
   it("drops the items of a bag that is taken out", () => {
-    const s = newRun(data, "flora", new Rng(3));
+    const s = newRun(data, "venn", new Rng(3));
     const before = s.items.length + s.bags.length;
     dropBag(s, data, 0);
     expect(s.loose.length).toBeGreaterThan(1);

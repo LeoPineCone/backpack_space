@@ -8,9 +8,9 @@ Shape: `#` cell, `*` star, `.` empty; rows separated by `/`. Recipes: `=` what i
 
 ## Heroes
 
-### Flora Venn – Orbital Botanist
+### Venn – The Thing in the Suit
 
-Food and organic items. Her garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
+Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
 
 - When one of your food activates: inflict 1 Toxin.
 - Your organic items: 25 % faster.
@@ -27,15 +27,15 @@ Mechanical items and crafting. Combining pays gold and crafted items run faster.
 - Starts with: Field Pack, Tool Roll, Welding Arm, Scrap Metal.
 - Signature artifacts (after round 4): Master Blueprint, Perpetual Engine, Nanite Swarm.
 
-### Nana Quill – Keeper of the Last Ark
+### Quill – Foundling of the Herd
 
-Pets. Her animals act the moment the fight begins and are quicker than anyone else's.
+Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.
 
 - Your pets: 25 % faster, starts 100 % charged.
 - When one of your pets activates: heal 2.
 - You: +12 max health per pet in your backpack (max 12×).
 - Starts with: Field Pack, Pet Carrier, Space Pup, Treat Pouch.
-- Signature artifacts (after round 4): Alpha Collar, Ark Heart, Ancient Egg.
+- Signature artifacts (after round 4): Elder Tusk, Herd Heart, Ancient Egg.
 
 ### Ysel – Singer of the Corona
 
@@ -372,9 +372,9 @@ The star itself. Gains Power with every star phase, burns the enemy and shrugs o
 
 ## Hero items
 
-Provisional: the heroes are being redesigned, so their items, names and pictures may still change.
+Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 
-### Flora Venn (35)
+### Venn (35)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
@@ -453,12 +453,12 @@ Provisional: the heroes are being redesigned, so their items, names and pictures
 | Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage every 1.2 s. On hit: gain 3 Shield, inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
 | Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 16–20 damage every 2.4 s. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield and deal 1 damage per 2 Overclock you have (max 12×). | = Rail Driver + Dynamo |
 
-### Nana Quill (35)
+### Quill (35)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
 | Space Pup | common | 2 | `#` | pet, weapon, organic | 3–4 damage every 1.7 s. | → Star Hound, Guard Hound |
-| Leash | common | 2 | `*#*` | accessory | Starred pets: 10 % faster, +10 % crit. | → Pack Bond |
+| Grooming Comb | common | 2 | `*#*` | accessory | Starred pets: 10 % faster, +10 % crit. | → Pack Bond |
 | Treat Pouch | common | 3 | `*#*` | food | Starred pets: +2 damage. Every 4 s: heal 4. |  |
 | Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 30 % faster. | → Cozy Den |
 | Kibble Sack | common | 3 | `#/#` | food | Every 3.5 s: heal 1 per pet in your backpack (max 6×). | → Cozy Den, Rat Pack, Banquet Trough |
@@ -467,7 +467,7 @@ Provisional: the heroes are being redesigned, so their items, names and pictures
 | Guard Goose | common | 3 | `#` | pet, weapon, organic | 2–3 damage every 1.8 s. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
 | Pack Lizard | common | 4 | `##` | pet, armor, organic | Battle start: gain 7 Shield per pet in your backpack (max 8×). | → Shell Dragon |
 | Hatchery | rare | 5 | `##/##` | accessory, mechanical | Battle start: gain 1 Power per 3 pets in your backpack (max 2×). Every star phase: heal 1 per pet in your backpack (max 6×). |  |
-| Trainer's Whistle | rare | 5 | `#` | accessory | Your pets: +1 damage. | → Pack Bond |
+| Calling Shell | rare | 5 | `#` | accessory | Your pets: +1 damage. | → Pack Bond |
 | War Saddle | rare | 5 | `*#*` | armor | Starred pets: +3 damage. Battle start: gain 16 Shield. | → Armored Bear |
 | Glow Swarm | rare | 5 | `##` | pet, organic | Every 2.5 s: deal 1 damage per 2 pets in your backpack (max 5×). | → Swarm Cloud |
 | Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 2–3 damage every 1.2 s. This item: +20 % crit. | → Sun Eagle |
@@ -477,8 +477,8 @@ Provisional: the heroes are being redesigned, so their items, names and pictures
 | Tusked Behemoth | epic | 9 | `###/###` | pet, weapon, organic | 16–22 damage every 2.9 s. Battle start: gain 28 Shield. | → Juggernaut |
 | Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
 | Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
-| Alpha Collar | artifact | 0 | `#` | accessory | Your pets: +1 damage, +15 % crit. |  |
-| Ark Heart | artifact | 0 | `##` | accessory, organic | You: +14 max health per pet in your backpack (max 10×). Every star phase: heal 4 per pet in your backpack (max 10×). |  |
+| Elder Tusk | artifact | 0 | `#` | accessory | Your pets: +1 damage, +15 % crit. |  |
+| Herd Heart | artifact | 0 | `##` | accessory, organic | You: +14 max health per pet in your backpack (max 10×). Every star phase: heal 4 per pet in your backpack (max 10×). |  |
 | Ancient Egg | artifact | 0 | `##/##` | pet, weapon, organic | 8–11 damage every 1.8 s. Every star phase: gain 2 Power. |  |
 | Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
 | Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
@@ -486,7 +486,7 @@ Provisional: the heroes are being redesigned, so their items, names and pictures
 | Banquet Trough | crafted (step 1) | 6 | `*##*` | food | Every 3 s: heal 2 per pet in your backpack (max 8×). When a starred pet activates: heal 2 (60 % chance). | = Feeding Bowl + Kibble Sack |
 | Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, weapon, organic | 2–3 damage every 0.6 s. | = Burrow Rat + Burrow Rat + Kibble Sack |
 | Shell Dragon | crafted (step 1) | 7 | `##/##` | pet, armor, organic | Battle start: gain 7 Shield per pet in your backpack (max 8×) and 2 Spikes. | = Pack Lizard + Rock Crab |
-| Pack Bond | crafted (step 1) | 7 | `*#*` | accessory | Your pets: +1 damage. Starred pets: 20 % faster, +15 % crit. | = Leash + Trainer's Whistle |
+| Pack Bond | crafted (step 1) | 7 | `*#*` | accessory | Your pets: +1 damage. Starred pets: 20 % faster, +15 % crit. | = Grooming Comb + Calling Shell |
 | Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.1 s. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
 | Armored Bear | crafted (step 1) | 11 | `##/##` | pet, weapon, armor, organic | 16–21 damage every 2.2 s. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
 | Swarm Cloud | crafted (step 1) | 13 | `##/##` | pet, organic | Every 2 s: deal 1 damage per pet in your backpack (max 10×) and inflict 1 Jam. | = Glow Swarm + Hive Queen |
