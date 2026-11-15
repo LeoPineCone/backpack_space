@@ -1,0 +1,46 @@
+# Ways to win
+
+Question: Does every hero have several paths that win, or does one strategy carry it?
+Accuracy: normal, seed 1. lobbies 60 (lobbies of 16 bots (4 per hero, one per path plus one open bot) playing all 12 rounds).
+Bots: use the measured item ratings in data/sim/ratings.json (384 items).
+Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.
+
+Flora Venn – Food and organic items. Her garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
+  path             wins all rounds  wins rounds 9–12  run wins  survives run  path items                damage mix (rounds 9+)  healed+shielded  fight
+  Poison garden            53 % ±2           53 % ±4       5.0          23 %        58 %  toxin 47 %, weapon 31 %, spikes 13 %             53 %   21 s
+  Thorn wall               53 % ±2           52 % ±4       4.6          22 %        32 %  toxin 48 %, weapon 24 %, spikes 24 %             60 %   22 s
+  Hungry jungle            50 % ±2           47 % ±4       4.3          13 %        62 %  toxin 44 %, weapon 32 %, spikes 17 %             56 %   22 s
+  (open, no path)          50 % ±2           47 % ±4       4.3          13 %           -  weapon 39 %, toxin 37 %, spikes 17 %             44 %   20 s
+
+RK-7 "Rook" – Mechanical items and crafting. Combining pays gold and crafted items run faster.
+  path              wins all rounds  wins rounds 9–12  run wins  survives run  path items    damage mix (rounds 9+)  healed+shielded  fight
+  Overclocked guns          47 % ±2           44 % ±4       3.6          10 %        63 %  weapon 75 %, direct 10 %             45 %   19 s
+  Shield fortress           40 % ±2           48 % ±4       3.0          10 %        52 %               weapon 72 %            110 %   25 s
+  Workshop                  51 % ±2           65 % ±3       4.0          20 %        59 %  weapon 75 %, direct 11 %             83 %   24 s
+  (open, no path)           43 % ±2           53 % ±4       2.9           8 %           -               weapon 72 %             64 %   21 s
+
+Nana Quill – Pets. Her animals act the moment the fight begins and are quicker than anyone else's.
+  path             wins all rounds  wins rounds 9–12  run wins  survives run  path items  damage mix (rounds 9+)  healed+shielded  fight
+  Big beasts               54 % ±2           57 % ±3       4.8          23 %        26 %             weapon 80 %             41 %   19 s
+  Swarm                    56 % ±2           54 % ±4       4.8          25 %        18 %             weapon 83 %             37 %   18 s
+  Well-fed pack            46 % ±2           41 % ±3       4.2          17 %        34 %             weapon 83 %             46 %   20 s
+  (open, no path)          60 % ±2           54 % ±4       5.5          25 %           -             weapon 82 %             39 %   19 s
+
+Ysel – The star itself. Gains Power with every star phase, burns the enemy and shrugs off half the Supernova.
+  path             wins all rounds  wins rounds 9–12  run wins  survives run  path items  damage mix (rounds 9+)  healed+shielded  fight
+  Burning corona           42 % ±2           42 % ±4       3.6          12 %        40 %  weapon 43 %, burn 43 %             25 %   19 s
+  Late ascension           43 % ±2           46 % ±4       3.4           7 %        70 %  weapon 56 %, burn 30 %             18 %   17 s
+  Eclipse                  45 % ±2           48 % ±4       3.6          13 %        44 %  weapon 48 %, burn 37 %             34 %   21 s
+  (open, no path)          46 % ±2           50 % ±4       3.1           8 %           -  weapon 53 %, burn 33 %             28 %   19 s
+
+Reading: "wins" = share of lobby fights won against other heroes. "run wins" and "survives run" follow the real rules (4 lives).
+"path items" = share of the final build's item cost that belongs to the path. "healed+shielded" is per fight, in percent of the hero's health.
+A path carries when it wins at least 42 % and is within 6 points of the hero's best path.
+
+Verdict:
+  Flora Venn: 3 of 3 paths carry (Poison garden 53 %, Thorn wall 53 %, Hungry jungle 50 %).
+  RK-7 "Rook": 2 of 3 paths carry (Overclocked guns 47 %, Shield fortress 40 %, Workshop 51 %).
+  Nana Quill: 2 of 3 paths carry (Big beasts 54 %, Swarm 56 %, Well-fed pack 46 %).
+  Ysel: 2 of 3 paths carry (Burning corona 42 %, Late ascension 43 %, Eclipse 45 %).
+
+(56 s)

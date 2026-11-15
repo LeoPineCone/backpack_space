@@ -1,0 +1,17 @@
+[
+  { "id": "field_pack", "name": "Field Pack", "tags": ["bag"], "rarity": "common", "cost": 6, "shop": false, "shape": ["###", "###", "###"] },
+  { "id": "pouch", "name": "Pouch", "tags": ["bag"], "rarity": "common", "cost": 1, "shape": ["#"] },
+  { "id": "belt_pocket", "name": "Belt Pocket", "tags": ["bag"], "rarity": "common", "cost": 2, "shape": ["##"] },
+  { "id": "sling_bag", "name": "Sling Bag", "tags": ["bag"], "rarity": "common", "cost": 3, "shape": ["###"] },
+  { "id": "side_pocket", "name": "Side Pocket", "tags": ["bag"], "rarity": "common", "cost": 3, "shape": ["##", "#."] },
+  { "id": "cargo_pocket", "name": "Cargo Pocket", "tags": ["bag"], "rarity": "common", "cost": 4, "shape": ["##", "##"] },
+  { "id": "duffel", "name": "Duffel", "tags": ["bag"], "rarity": "rare", "cost": 6, "shape": ["###", "###"] },
+  { "id": "cooler_bag", "name": "Cooler Bag", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "food", "mod": { "speed": 20 } }] },
+  { "id": "holster", "name": "Holster", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "weapon", "mod": { "crit": 15 } }] },
+  { "id": "tool_roll", "name": "Tool Roll", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "mechanical", "mod": { "speed": 15 } }] },
+  { "id": "pet_carrier", "name": "Pet Carrier", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "pet", "mod": { "speed": 15 } }] },
+  { "id": "seed_satchel", "name": "Seed Satchel", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "organic", "mod": { "speed": 15 } }] },
+  { "id": "relic_case", "name": "Relic Case", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "accessory", "mod": { "speed": 15, "ready": 50 } }] },
+  { "id": "padded_case", "name": "Padded Case", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "hero", "mod": { "maxHp": 28 } }] },
+  { "id": "stasis_vault", "name": "Stasis Vault", "tags": ["bag"], "rarity": "epic", "cost": 9, "shape": ["###", "###"], "effects": [{ "on": "passive", "to": "inside", "mod": { "speed": 12 } }] }
+]

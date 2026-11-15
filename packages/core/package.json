@@ -1,0 +1,17 @@
+{
+  "name": "@backpack-space/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic battle core – shared by client, server and balancing tools",
+  "exports": {
+    ".": "./src/index.ts",
+    "./node": "./node/load.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}

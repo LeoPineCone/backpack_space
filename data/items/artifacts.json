@@ -1,0 +1,12 @@
+[
+  { "id": "dyson_fragment", "name": "Dyson Fragment", "tags": ["accessory", "mechanical"], "rarity": "artifact", "cost": 0, "shape": ["##", "##"], "cooldown": 2.0, "effects": [{ "on": "use", "gain": "shield", "n": 11 }] },
+  { "id": "wormhole_generator", "name": "Wormhole Generator", "tags": ["accessory", "mechanical"], "rarity": "artifact", "cost": 0, "shape": ["##"], "effects": [{ "on": "passive", "to": "ship", "mod": { "speed": 12 } }] },
+  { "id": "time_dilator", "name": "Time Dilator", "tags": ["accessory"], "rarity": "artifact", "cost": 0, "shape": ["#", "#"], "cooldown": 4.0, "effects": [{ "on": "start", "inflict": "cryo", "n": 12 }, { "on": "use", "inflict": "cryo", "n": 3 }] },
+  { "id": "ancient_monolith", "name": "Ancient Monolith", "tags": ["accessory"], "rarity": "artifact", "cost": 0, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "hero", "mod": { "maxHp": 126 } }, { "on": "phase", "do": "heal", "n": 28 }] },
+  { "id": "quantum_dice", "name": "Quantum Dice", "tags": ["accessory"], "rarity": "artifact", "cost": 0, "shape": ["#"], "effects": [{ "on": "passive", "to": "ship", "tag": "weapon", "mod": { "crit": 20 } }] },
+  { "id": "plague_vault", "name": "Plague Vault", "tags": ["accessory", "organic"], "rarity": "artifact", "cost": 0, "shape": ["##"], "cooldown": 2.5, "effects": [{ "on": "use", "inflict": "toxin", "n": 1 }, { "on": "use", "inflict": "radiation", "n": 1 }] },
+  { "id": "titan_core", "name": "Titan Core", "tags": ["armor", "mechanical"], "rarity": "artifact", "cost": 0, "shape": ["##", "##"], "effects": [{ "on": "start", "gain": "shield", "n": 84 }, { "on": "start", "gain": "spikes", "n": 4 }] },
+  { "id": "star_forge", "name": "Star Forge", "tags": ["accessory", "mechanical"], "rarity": "artifact", "cost": 0, "shape": ["##"], "effects": [{ "on": "passive", "to": "ship", "tag": "weapon", "mod": { "damage": 2 } }] },
+  { "id": "galactic_cookbook", "name": "Galactic Cookbook", "tags": ["accessory"], "rarity": "artifact", "cost": 0, "shape": ["#"], "effects": [{ "on": "passive", "to": "ship", "tag": "food", "mod": { "speed": 35 } }, { "on": "start", "gain": "regen", "n": 2 }] },
+  { "id": "zoo_beacon", "name": "Zoo Beacon", "tags": ["accessory", "mechanical"], "rarity": "artifact", "cost": 0, "shape": ["#"], "effects": [{ "on": "passive", "to": "ship", "tag": "pet", "mod": { "damage": 2, "speed": 10 } }] }
+]
