@@ -1,3 +1,21 @@
+# Item sizes follow the thing (2026-11-15)
+
+Decision (Ilja): weapons and pets are larger than fruit and snacks; weapons cover 2 cells or more, one cell is rare. Four weapons and seven pets grew to 2 cells, ten foods shrank to 1 (list in `.claude/skills/item-design/SKILL.md` history / PR #14). Item ratings measured again, full reports in `docs/reports/` (normal accuracy, seed 1).
+
+| Heroes overall (Venn, Rook, Quill, Ysel) | seed 1 | seed 2 |
+|---|---|---|
+| Before the size change | 50 / 44 / 50 / 56 % | – |
+| Sizes changed, ratings measured again, hero rules unchanged | 57 / 46 / 44 / 54 % | 57 / 40 / 43 / 57 % |
+| With the hero rule changes below | 50 / 49 / 48 / 52 % | 51 / 44 / 49 / 55 % |
+
+Smaller food helped Venn, larger weapons and pets cost Rook and Quill backpack room. Hero rules changed to answer that (all in `data/heroes.json`):
+
+- Venn: organic items 20 % faster (before 25 %).
+- Rook: mechanical items 34 % faster (before 26 %).
+- Quill: pets 28 % faster (before 25 %) and pet attacks cost 1 Energy less (new).
+
+Still off: Quill's late game (39–43 % in rounds 9–12; more health per pet did not help, the Energy discount did a little), Ysel's rounds 5–8 (44–49 %) and rounds 9–12 (58–60 %), Rook between the two seeds (44–49 %). Fight length, Supernova share and hero against hero are within their targets as before.
+
 # Melee, ranged and Energy (2026-11-15)
 
 Decision (Ilja): weapons are melee or ranged; Spikes hurt both for now. Every attack costs Energy, which refills at a fixed rate; items can give Energy. Goal: no weapon spam, builds interlock more. Full reports in `docs/reports/` (normal accuracy, seed 1, ratings measured again).

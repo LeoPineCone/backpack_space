@@ -13,7 +13,7 @@ Shape: `#` cell, `*` star, `.` empty; rows separated by `/`. Recipes: `=` what i
 Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
 
 - When one of your food activates: inflict 1 Toxin.
-- Your organic items: 25 % faster.
+- Your organic items: 20 % faster.
 - Starts with: Field Pack, Seed Satchel, Seed Pod, Watering Drone.
 - Signature artifacts (after round 4): World Seed, Queen Spore, Terrarium Heart.
 
@@ -22,7 +22,7 @@ Food and organic items. Its garden grows faster than anyone's, heals a lot and p
 Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 - Your crafted items: 25 % faster.
-- Your mechanical items: 26 % faster.
+- Your mechanical items: 34 % faster.
 - Every combination pays 3 gold.
 - Starts with: Field Pack, Tool Roll, Welding Arm, Scrap Metal.
 - Signature artifacts (after round 4): Master Blueprint, Perpetual Engine, Nanite Swarm.
@@ -31,7 +31,7 @@ Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.
 
-- Your pets: 25 % faster, starts 100 % charged.
+- Your pets: 28 % faster, starts 100 % charged, -1 Energy per attack.
 - When one of your pets activates: heal 2.
 - You: +12 max health per pet in your backpack (max 12×).
 - Starts with: Field Pack, Pet Carrier, Space Pup, Treat Pouch.
