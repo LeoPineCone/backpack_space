@@ -75,4 +75,4 @@ test/                 vitest
 
 ## How the bots play
 
-A bot plays a run by the rules: it gets the round's gold, sees five offers, buys what it values above its price, rerolls a few times, buys bags when the backpack is nearly full, combines recipes, and lays everything out so that as many stars as possible point at something useful. It values an item by price, synergies with what it owns, recipes it opens, the hero path it committed to (see `paths` in `data/heroes.json`; one bot in four plays without one) and the measured ratings. One simplification: a bot combines as soon as it owns all inputs.
+A bot plays a run by the rules: it gets the round's gold, sees five offers, buys what it values above its price, rerolls a few times, buys bags when the backpack is nearly full, merges recipes, and lays everything out so that as many stars as possible point at something useful. It values an item by price, synergies with what it owns, recipes it opens, the hero path it committed to (see `paths` in `data/heroes.json`; one bot in four plays without one) and the measured ratings. One simplification: a bot combines as soon as it owns all inputs.

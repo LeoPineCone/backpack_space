@@ -4,8 +4,8 @@
  */
 import { Container, Graphics, Rectangle, type FederatedPointerEvent } from "pixi.js";
 import {
-  boardOf, buy, combine, dropBag, dropItem, findCombos, moveBag, moveItem, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze,
-  type Combo, type RunState, type Spot,
+  boardOf, buy, dropBag, dropItem, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
+  type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, RARITY, RARITY_PIPS, W } from "../theme";
@@ -103,10 +103,16 @@ export function shopScene(game: Game): Scene {
     for (let y = 0; y < gh; y++) for (let x = 0; x < gw; x++) grid.rect(GX + x * CELL + 0.5, GY + y * CELL + 0.5, CELL - 1, CELL - 1);
     grid.stroke({ width: 1, color: C.gridLine });
     view.addChild(grid);
-    const combos = uniqueCombos(findCombos(data, r.bags, r.items));
+    const combos = pendingMerges(data, r.bags, r.items);
     const inCombo = new Set(combos.flatMap((c) => c.idxs));
     r.bags.forEach((p) => view.addChild(at(piece(data, p.item, p.rot, CELL, { label: false }), GX + p.x * CELL, GY + p.y * CELL)));
     r.items.forEach((p, i) => view.addChild(at(piece(data, p.item, p.rot, CELL, inCombo.has(i) ? { line: C.gold } : {}), GX + p.x * CELL, GY + p.y * CELL)));
+    // a locked item does not merge
+    r.items.forEach((p) => {
+      if (!p.lock) return;
+      const [cx, cy] = data.shape(p.item, p.rot).cells[0]!;
+      view.addChild(at(disc(9, { fill: C.bg, line: C.text }), GX + (p.x + cx) * CELL + 11, GY + (p.y + cy) * CELL + 11), at(icon("lock", 11, C.text), GX + (p.x + cx) * CELL + 11, GY + (p.y + cy) * CELL + 11));
+    });
     const hit = new Graphics().rect(GX, GY, gw * CELL, gh * CELL).fill({ color: 0xffffff, alpha: 0.001 });
     hit.eventMode = "static";
     hit.on("pointerdown", (e) => {
@@ -118,13 +124,13 @@ export function shopScene(game: Game): Scene {
       else if (bag >= 0) press({ kind: "bag", i: bag }, e);
     });
     view.addChild(hit);
-    // combine buttons between neighbours that make a recipe
+    // a mark between neighbours that will merge after the fight; tapping it shows the result
     for (const c of combos) {
       const cells = c.idxs.flatMap((i) => { const p = r.items[i]!; return data.shape(p.item, p.rot).cells.map(([x, y]) => [p.x + x, p.y + y] as const); });
       const mx = cells.reduce((a, q) => a + q[0], 0) / cells.length, my = cells.reduce((a, q) => a + q[1], 0) / cells.length;
       const btn = new Container();
       btn.addChild(disc(20, { fill: C.gold, line: C.bg, lineW: 3 }), icon("merge", 20, C.goldInk));
-      tappable(btn, () => game.openOverlay(itemPopup(game, c.recipe.out, { action: { label: "COMBINE", onTap: () => { game.closeOverlay(); combine(run(), data, c); render(); } } })), new Rectangle(-22, -22, 44, 44));
+      tappable(btn, () => { game.openOverlay(itemPopup(game, c.recipe.out)); game.toast("Merges after the fight. Lock an item to keep it."); }, new Rectangle(-22, -22, 44, 44));
       view.addChild(at(btn, GX + (mx + 0.5) * CELL, GY + (my + 0.5) * CELL));
     }
 
@@ -163,12 +169,6 @@ export function shopScene(game: Game): Scene {
       specialOpen = true;
       game.openOverlay(specialOverlay(game, () => { specialOpen = false; render(); }));
     }
-  };
-
-  /** Several recipes can use the same neighbours; one button per group of items is enough. */
-  const uniqueCombos = (all: Combo[]): Combo[] => {
-    const seen = new Set<string>();
-    return all.filter((c) => { const k = [...c.idxs].sort((a, b) => a - b).join(","); if (seen.has(k)) return false; seen.add(k); return true; });
   };
 
   // ---------- pressing, dragging, dropping ----------
@@ -258,7 +258,8 @@ export function shopScene(game: Game): Scene {
         for (let k = 1; k < 4; k++) if (moveItem(run(), data, src.i, { x: p.x, y: p.y, rot: (p.rot + k) & 3 })) { game.closeOverlay(); render(); return; }
         game.toast("No room to turn it here. Drag it and tap with a second finger, or press R.");
       };
-      game.openOverlay(itemPopup(game, id, { sell: true, onRotate: data.shape(id, 0).cells.length > 1 ? turn : undefined }));
+      const lock = data.recipesWith.has(id) ? { label: p.lock ? "UNLOCK" : "LOCK", onTap: () => { toggleLock(run(), src.i); game.closeOverlay(); render(); } } : undefined;
+      game.openOverlay(itemPopup(game, id, { sell: true, onRotate: data.shape(id, 0).cells.length > 1 ? turn : undefined, action: lock }));
       return;
     }
     game.openOverlay(itemPopup(game, id, { sell: true }));

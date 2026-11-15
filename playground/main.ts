@@ -3,7 +3,7 @@
  * A design tool: every rule decision is made by @backpack-space/core (run.ts, battle.ts); this file only calls it and draws.
  */
 import {
-  Rng, dropBag, dropItem, buildOf, buy, combine, compile, describeHero, findCombos, finishRound, moveBag, moveItem, newRun, placeLoose, reroll, toggleFreeze,
+  Rng, dropBag, dropItem, buildOf, buy, compile, describeHero, pendingMerges, finishRound, moveBag, moveItem, newRun, placeLoose, reroll, toggleFreeze, toggleLock,
   sellBag, sellLoose, sellItem, sellPrice, takeSpecial,
   type Build, type Combo, type ItemDef, type RunState, type Spot,
 } from "@backpack-space/core";
@@ -218,7 +218,7 @@ function header(r: RunState): HTMLElement {
 function renderShop(): void {
   const r = run!;
   if (sel && !srcExists(sel)) sel = null;
-  combos = findCombos(data, r.bags, r.items);
+  combos = pendingMerges(data, r.bags, r.items);
   view = boardView(data, r.bags, r.items, { labels: true, selBag: sel?.kind === "bag" ? sel.i : undefined });
   view.root.id = "grid";
   view.root.classList.add("live");
@@ -254,8 +254,8 @@ function renderShop(): void {
         h("button", { class: "btn small" + (bagMode ? "" : " on"), id: "mode-items", onclick: () => { bagMode = false; if (sel?.kind === "bag") sel = null; render(); } }, "Move items"),
         h("button", { class: "btn small" + (bagMode ? " on" : ""), id: "mode-bags", onclick: () => { bagMode = true; if (sel?.kind === "item") sel = null; render(); } }, "Move bags")),
       h("button", { class: "btn", id: "rotate", onclick: rotateSel }, "⟳ Rotate")),
-    combos.length ? h("div", { class: "combos" }, ...combos.map((c, ci) => h("button", { class: "btn combine", "data-combo": ci, onclick: () => { combine(r, data, c); sel = null; render(); } },
-      `Combine: ${c.recipe.in.map((i) => itemName(data, i)).join(" + ")} → ${itemName(data, c.recipe.out)}`))) : null,
+    combos.length ? h("div", { class: "combos" }, ...combos.map((c, ci) => h("div", { class: "warn", "data-combo": ci },
+      `Merges after the fight: ${c.recipe.in.map((i) => itemName(data, i)).join(" + ")} → ${itemName(data, c.recipe.out)}`))) : null,
     h("div", { class: "boardwrap" }, view.root),
     h("div", { class: "floorrow" },
       h("div", { class: "floor", "data-drop": "loose" }, h("small", { class: "floorlabel" }, `Loose items ${r.loose.length}/${rules.shop.looseLimit}`), h("div", { class: "bslots" }, ...loose)),
@@ -291,6 +291,7 @@ function refresh(): void {
     const buttons = isSel ? h("div", { class: "info-actions" },
       h("button", { class: "btn small", id: "act-rotate", onclick: rotateSel }, "⟳ Rotate"),
       focus.kind === "offer" ? h("button", { class: "btn small", id: "act-floor", onclick: () => toFloor(focus) }, `Buy loose (${offer!.price})`) : null,
+      focus.kind === "item" && data.recipesWith.has(r.items[focus.i]!.item) ? h("button", { class: "btn small", id: "act-lock", onclick: () => { toggleLock(r, focus.i); render(); } }, r.items[focus.i]!.lock ? "Unlock (merges again)" : "Lock (do not merge)") : null,
       focus.kind === "offer" ? h("button", { class: "btn small", id: "act-freeze", onclick: () => { toggleFreeze(r, focus.i); render(); } }, offer!.frozen ? "Unpin" : "Pin for later") : null,
       focus.kind === "item" || focus.kind === "bag" ? h("button", { class: "btn small", id: "act-floor", onclick: () => toFloor(focus) }, "Take out") : null,
       focus.kind !== "offer" ? h("button", { class: "btn small danger", id: "act-sell", onclick: () => sell(focus) }, `Sell (+${sellPrice(data, id)})`) : null,

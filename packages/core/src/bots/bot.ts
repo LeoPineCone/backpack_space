@@ -1,7 +1,7 @@
 /**
  * The balancing bot: plays a run by the rules. It values an item by its price, its synergies with what it owns,
  * the recipes it opens, a personal taste (focus tags) and optional measured ratings.
- * Simplification: a bot combines as soon as it owns all inputs (in the real game they must lie next to each other, which re-arranging in the shop always allows).
+ * Simplification: a bot merges as soon as it owns all inputs. In the real game the inputs must lie next to each other and merge after the fight of that round, so a bot has a merged item one fight earlier than a player.
  */
 import type { GameData, ItemDef } from "../gamedata.js";
 import type { Rng } from "../rng.js";

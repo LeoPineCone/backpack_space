@@ -95,7 +95,9 @@ export const Item = z.object({
 }).strict();
 export type ItemData = z.infer<typeof Item>;
 
-export const Placement = z.object({ item: z.string(), x: z.number().int(), y: z.number().int(), rot: z.number().int().min(0).max(3) }).strict();
+export const Placement = z.object({ item: z.string(), x: z.number().int(), y: z.number().int(), rot: z.number().int().min(0).max(3),
+  /** locked by the player: this item does not merge after a fight */
+  lock: z.boolean().optional() }).strict();
 export type Placement = z.infer<typeof Placement>;
 
 export const Build = z.object({ hero: z.string(), round: z.number().int(), bags: z.array(Placement), items: z.array(Placement) }).strict();

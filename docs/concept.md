@@ -40,9 +40,11 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
   - **Pin for later (decided):** any number of offers can be pinned; pinned offers stay through rerolls and into the next round.
 - Each hero has an own pool: two start items, shop items only that hero is offered (30 % of the offers), own recipes and three signature artifacts.
 
-### Combining (recipes)
+### Merging (recipes)
 
-- Inputs must lie next to each other (sharing an edge, as one connected group). The player confirms; combining is final (*assumption, as in Backpack Army*).
+- **Merging is automatic (decided):** when the inputs of a recipe lie next to each other (sharing an edge, as one connected group), they merge **after the fight** of that round, as players know it from the genre. The fight itself is still fought with the separate items. Merging is final.
+- **Lock (decided):** the player can lock an item; a locked item does not merge. *Assumption:* the lock is lost when the item leaves the backpack.
+- *Assumptions:* every item merges at most once per round (a result can merge again after the next fight); when several recipes compete for the same item, the first in the recipe list wins; the result lands where the inputs were, or among the loose items if it does not fit; nothing merges after the last fight of a run.
 - **Limit (assumption):** a chain has at most 3 steps above a base item (base → step 1 → step 2 → step 3), enforced by `npm run validate`. The longest chains use 5–7 base items.
 - Most recipes take 2 items. Recipes with 3 inputs exist but are rare (8 of 151).
 - A crafted item costs the sum of its inputs and is stronger and usually smaller than them together, so chains also save space.

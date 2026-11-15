@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, reroll, toggleFreeze, buy, combine, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -29,19 +29,33 @@ describe("shop and run", () => {
     expect(buy(s, data, 0, { x: 5, y: 4, rot: 0 })).toBe(true);
     expect(s.gold).toBe(97);
   });
-  it("combines adjacent inputs only, for good, and pays the salvage unit", () => {
+  it("merges adjacent inputs after the fight, for good, and pays the salvage unit", () => {
     const s = newRun(data, "rook", new Rng(1));
     // start: welding arm at 3,2 (two cells down) and scrap metal at 4,2: adjacent
-    const combos = findCombos(data, s.bags, s.items);
-    expect(combos.map((c) => c.recipe.out)).toContain("plasma_welder");
+    expect(pendingMerges(data, s.bags, s.items).map((c) => c.recipe.out)).toEqual(["plasma_welder"]);
+    expect(s.items.map((p) => p.item)).not.toContain("plasma_welder");
     const gold = s.gold;
-    combine(s, data, combos.find((c) => c.recipe.out === "plasma_welder")!);
+    finishRound(s, data, true, new Rng(2));
     expect(s.items.map((p) => p.item)).toEqual(["plasma_welder"]);
-    expect(s.gold).toBe(gold + data.heroes.get("rook")!.craftGold);
-    // apart: no combo
+    expect(s.merged).toEqual([{ out: "plasma_welder", in: data.recipes.find((r) => r.out === "plasma_welder")!.in }]);
+    expect(s.gold).toBe(gold + data.heroes.get("rook")!.craftGold + data.rules.goldPerRound[1]!);
+    // apart: nothing is due
     const t = newRun(data, "rook", new Rng(1));
     t.items[1] = { item: "scrap_metal", x: 5, y: 4, rot: 0 };
     expect(findCombos(data, t.bags, t.items)).toHaveLength(0);
+  });
+  it("does not merge a locked item, and keeps the lock when the item moves", () => {
+    const s = newRun(data, "rook", new Rng(1));
+    expect(toggleLock(s, 0)).toBe(true);
+    expect(pendingMerges(data, s.bags, s.items)).toHaveLength(0);
+    finishRound(s, data, false, new Rng(2));
+    expect(s.items).toHaveLength(2);
+    expect(s.merged).toEqual([]);
+    const p = s.items[0]!;
+    expect(moveItem(s, data, 0, { x: p.x, y: p.y, rot: p.rot })).toBe(true);
+    expect(s.items[0]!.lock).toBe(true);
+    toggleLock(s, 0);
+    expect(pendingMerges(data, s.bags, s.items)).toHaveLength(1);
   });
   it("moves a bag together with the items in it", () => {
     const s = newRun(data, "quill", new Rng(1));

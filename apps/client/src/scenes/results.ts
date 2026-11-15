@@ -90,7 +90,10 @@ export function resultScene(game: Game, f: Fought): Scene {
   root.addChild(at(pillButton("CONTINUE", W - 116, 64, () => {
     finishRound(run, data, won, game.rng);
     if (run.over) { game.addReward(runReward(run)); game.show(runEndScene(game)); }
-    else game.show(shopScene(game));
+    else {
+      game.show(shopScene(game));
+      if (run.merged.length) game.toast(`Merged: ${run.merged.map((m) => data.items.get(m.out)!.name).join(", ")}`);
+    }
   }), 96, 760));
   return { root };
 }
