@@ -22,7 +22,7 @@ Weapons need Energy, animals do not: all 45 pets that deal damage have `energy` 
 |---|---|---|
 | Pets without Energy | 48 / 46 / 50 / 55 % | 50 / 45 / 50 / 53 % |
 
-Quill's late game recovered (46 % in rounds 9–12, before 39–43 %). Still off: Quill is strong in rounds 5–8 (55–59 %), Rook weak there (41–42 %), Ysel strong late (58–60 %); Venn loses to Ysel 34 % at one stage (target 35 %). Fight length, longest fight and Supernova share are within their targets.
+Quill's late game recovered (46 % in rounds 9–12, before 39–43 %). Still off: Quill is strong in rounds 5–8 (55–59 %), Rook weak there (41–42 %), Ysel strong late (58–60 %); Venn wins only 34 % against Ysel (target at least 35 %). Fight length, longest fight and Supernova share are within their targets.
 
 # Melee, ranged and Energy (2026-11-15)
 
