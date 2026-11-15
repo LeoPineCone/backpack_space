@@ -3,6 +3,7 @@
 Design draft of a backpack auto-battler in space: shared battle core, game data, balancing tools and a browser preview.
 
 - Concept: [docs/concept.md](docs/concept.md)
+- Art style: [docs/style.md](docs/style.md)
 - Every hero, item, bag and recipe: [docs/catalog.md](docs/catalog.md) (generated)
 - Latest measurements: [docs/findings.md](docs/findings.md), full reports in [docs/reports/](docs/reports/)
 
