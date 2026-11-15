@@ -72,6 +72,7 @@ const PATHS: Record<string, string> = {
   chart: "M6 20v-6M12 20V4M18 20v-10",
   home: "M4 11l8-7l8 7M6 10v10h12V10",
   rotate: "M20 12a8 8 0 1 1-3-6.200M20 4v5h-5",
+  radar: "M12 3a9 9 0 1 0 9 9M12 7.5a4.5 4.5 0 1 0 4.5 4.5M12 12l6.4-6.4M17 15.5h.01",
   merge: "M4 12h6M20 12h-6M8 9l3 3l-3 3M16 9l-3 3l3 3",
   info: "M12 11v6M12 7v.01",
   league: SHIELD + "M9 12l2 2l4-4",

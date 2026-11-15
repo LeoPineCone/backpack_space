@@ -32,6 +32,7 @@
   "ui.group.effects": "EFFECTS",
   "ui.group.when": "WHEN",
   "ui.group.who": "WHO",
+  "ui.group.merge": "MERGING",
   "ui.placeholder.backdrop": "season backdrop",
   "ui.placeholder.heroArt": "hero art",
   "ui.placeholder.silhouette": "hero silhouette",

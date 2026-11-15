@@ -111,11 +111,12 @@ export function keywords(data: GameData): Map<string, Keyword> {
 }
 
 /** The keywords that appear in these rows (and types), in order of appearance. */
-export function keywordsIn(rows: readonly Row[], tags: readonly string[], all: Map<string, Keyword>): Keyword[] {
+export function keywordsIn(rows: readonly Row[], tags: readonly string[], all: Map<string, Keyword>, extra: readonly string[] = []): Keyword[] {
   const seen = new Set<string>(), out: Keyword[] = [];
   const take = (icon: string) => { const kw = all.get(icon); if (kw && !seen.has(icon)) { seen.add(icon); out.push(kw); } };
   for (const t of tags) take(t);
   for (const r of rows) { for (const c of r.when) take(c.icon); for (const c of r.then) take(c.icon); }
+  for (const e of extra) take(e);
   return out;
 }
 
@@ -127,4 +128,5 @@ export const GLOSSARY_GROUPS: { title: string; icons: string[] }[] = [
   { title: "ui.group.effects", icons: ["damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "energy", "energyRegen", "melee", "ranged"] },
   { title: "ui.group.when", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
   { title: "ui.group.who", icons: ["self", "star", "ship", "hero"] },
+  { title: "ui.group.merge", icons: ["merge", "radar", "lock"] },
 ];

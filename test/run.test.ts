@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, mergePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -129,6 +129,20 @@ describe("recipe partners", () => {
     const pets = ["space_pup", "burrow_rat", "guard_goose", "space_pup"];
     const count = (owned: string[]) => { let n = 0; for (let i = 0; i < 400; i++) for (const o of rollOffers(data, "quill", 6, rng, owned)) if (data.items.get(o.item)!.tags.includes("pet")) n++; return n; };
     expect(count(pets)).toBeGreaterThan(count([]) * 1.2);
+  });
+});
+
+describe("merge partners", () => {
+  it("links items that hold every part of a recipe, wherever they lie", () => {
+    const p = mergePartners(data, ["laser_pistol", "crystal_shard", null, "space_pup"]);
+    expect([...p[0]!]).toEqual([1]);
+    expect([...p[1]!]).toEqual([0]);
+    expect(p[2]!.size + p[3]!.size).toBe(0);
+  });
+  it("needs a second copy for a recipe that takes the same item twice, and leaves locked (null) items out", () => {
+    expect(mergePartners(data, ["laser_pistol"])[0]!.size).toBe(0);
+    expect([...mergePartners(data, ["laser_pistol", "laser_pistol"])[0]!]).toEqual([1]);
+    expect(mergePartners(data, ["laser_pistol", null])[0]!.size).toBe(0);
   });
 });
 

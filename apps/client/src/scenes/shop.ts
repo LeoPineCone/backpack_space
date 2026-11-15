@@ -4,14 +4,14 @@
  */
 import { Container, Graphics, Rectangle, type FederatedPointerEvent } from "pixi.js";
 import {
-  boardOf, buildOf, buildStats, buy, compile, dropBag, dropItem, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
+  boardOf, buildOf, buildStats, buy, compile, dropBag, dropItem, mergePartners, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
   type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, RARITY, RARITY_PIPS, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, hearts, hudPill, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
-import { piece, pieceFit, starMarks } from "../pieces";
+import { outlinePath, piece, pieceFit, starMarks, zap, ZAP } from "../pieces";
 import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { heroPopup, itemPopup } from "./popup";
 import { specialOverlay } from "./special";
@@ -48,6 +48,20 @@ export function shopScene(game: Game): Scene {
   let specialOpen = false;
   let introOpen = false;
   const later: (() => void)[] = [];
+  // merge hints: everything on screen (offers, loose items, backpack items) in one list; locked items and empty slots are null
+  let partners: Set<number>[] = [];
+  let centers: { x: number; y: number }[] = [];
+  let glows: Graphics[] = [];
+  let beams: Graphics | null = null;
+  let clock = 0, beamAge = 1;
+  const poolIndex = (src: Src): number => { const r = run(); return src.kind === "offer" ? src.i : src.kind === "loose" ? r.offers.length + src.i : src.kind === "item" ? r.offers.length + r.loose.length + src.i : -1; };
+  /** a soft pulsing outline; drawn into `g`, kept for the animation */
+  const glow = (g: Graphics, draw: (g: Graphics) => void): Graphics => {
+    draw(g); g.stroke({ width: 7, color: ZAP, alpha: 0.16 });
+    draw(g); g.stroke({ width: 2.5, color: ZAP, alpha: 0.85 });
+    glows.push(g);
+    return g;
+  };
 
   const srcItem = (s: Src): string => { const r = run(); return s.kind === "offer" ? r.offers[s.i]!.item : s.kind === "loose" ? r.loose[s.i]! : s.kind === "item" ? r.items[s.i]!.item : r.bags[s.i]!.item; };
   const applyTo = (r: RunState, s: Src, spot: Spot): boolean => {
@@ -65,6 +79,11 @@ export function shopScene(game: Game): Scene {
     const r = run();
     view.removeChildren().forEach((c) => c.destroy({ children: true }));
     view.addChild(box(W, 844, { fill: C.bg }));
+    glows = [];
+    const ids = [...r.offers.map((o) => o?.item ?? null), ...r.loose, ...r.items.map((p) => (p.lock ? null : p.item))];
+    partners = mergePartners(data, ids);
+    centers = ids.map(() => ({ x: 0, y: 0 }));
+    const canMerge = (k: number) => partners[k]!.size > 0;
 
     // top bar: hero, lives, rounds, gold
     const hero = data.heroes.get(r.hero)!;
@@ -96,6 +115,8 @@ export function shopScene(game: Game): Scene {
       if (!def.isBag) for (let p = 0; p < (RARITY_PIPS[def.rarity] ?? 1); p++) tile.addChild(at(disc(2.5, { fill: frame }), 10 + p * 8, 9));
       tile.addChild(at(icon("coin", 14, C.gold), 14, OFFER.h - 13));
       tile.addChild(at(txt(o.price, 15, { color: r.gold < o.price ? C.line : o.sale ? C.good : C.text, anchor: [0, 0.5] }), 24, OFFER.h - 13));
+      centers[i] = { x: x + OFFER.w / 2, y: y + OFFER.h / 2 };
+      if (canMerge(i)) tile.addChild(glow(new Graphics(), (g) => g.roundRect(-2, -2, OFFER.w + 4, OFFER.h + 4, 14)));
       tile.eventMode = "static"; tile.cursor = "grab"; tile.hitArea = new Rectangle(0, 0, OFFER.w, OFFER.h);
       tile.on("pointerdown", (e) => press({ kind: "offer", i }, e));
       const pin = new Container();
@@ -114,6 +135,13 @@ export function shopScene(game: Game): Scene {
     const inCombo = new Set(combos.flatMap((c) => c.idxs));
     r.bags.forEach((p) => view.addChild(at(piece(data, p.item, p.rot, CELL, { label: false }), GX + p.x * CELL, GY + p.y * CELL)));
     r.items.forEach((p, i) => view.addChild(at(piece(data, p.item, p.rot, CELL, inCombo.has(i) ? { line: C.gold } : {}), GX + p.x * CELL, GY + p.y * CELL)));
+    // items that could merge with something on screen glow softly (a locked item never does)
+    r.items.forEach((p, i) => {
+      const k = r.offers.length + r.loose.length + i;
+      const cells = data.shape(p.item, p.rot).cells;
+      centers[k] = { x: GX + (p.x + cells.reduce((a, q) => a + q[0], 0) / cells.length + 0.5) * CELL, y: GY + (p.y + cells.reduce((a, q) => a + q[1], 0) / cells.length + 0.5) * CELL };
+      if (canMerge(k)) view.addChild(at(glow(new Graphics(), (g) => outlinePath(g, data, p.item, p.rot, CELL, -1)), GX + p.x * CELL, GY + p.y * CELL));
+    });
     // a locked item does not merge
     r.items.forEach((p) => {
       if (!p.lock) return;
@@ -157,6 +185,9 @@ export function shopScene(game: Game): Scene {
       node.position.set(lx + pw / 2, FLOOR.y + FLOOR.h - 8 - ph / 2);
       node.eventMode = "static"; node.cursor = "grab"; node.hitArea = new Rectangle(-3, -3, pw + 6, ph + 6);
       node.on("pointerdown", (e) => press({ kind: "loose", i }, e));
+      const k = r.offers.length + i;
+      centers[k] = { x: node.x, y: node.y };
+      if (canMerge(k)) node.addChild(glow(new Graphics(), (g) => outlinePath(g, data, id, 0, lc, 1)));
       view.addChild(node);
       lx += pw + 8;
     });
@@ -276,6 +307,7 @@ export function shopScene(game: Game): Scene {
   };
   const endDrag = () => {
     drag = null;
+    beams = null;
     sellLabel = null;
     dragLayer.removeChildren().forEach((c) => c.destroy({ children: true }));
   };
@@ -340,5 +372,23 @@ export function shopScene(game: Game): Scene {
 
   render();
   later.push(() => game.toast(t("toast.roundHealth", { n: run().round, base: rules.heroHp[run().round - 1]! })));
-  return { root, update: () => { for (const f of later.splice(0)) f(); }, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
+  /** the soft pulse on items that could merge; while dragging, energy beams from the dragged item to its partners */
+  const animate = (dt: number) => {
+    clock += dt;
+    const d = drag?.active ? drag : null;
+    const mine = d ? partners[poolIndex(d.src)] : undefined;
+    const pulse = 0.45 + 0.3 * Math.sin(clock * 2.4);
+    glows.forEach((g) => { g.alpha = pulse; });
+    if (!d || !d.ghost || !mine?.size) { beams?.clear(); return; }
+    if (!beams) { beams = new Graphics(); dragLayer.addChildAt(beams, 0); }
+    beamAge += dt;
+    if (beamAge < 0.06) return;
+    beamAge = 0;
+    const s = data.shape(d.id, d.rot);
+    const fx = d.ghost.x + (s.w * CELL) / 2, fy = d.ghost.y + (s.h * CELL) / 2;
+    beams.clear();
+    for (const k of mine) zap(beams, fx, fy, centers[k]!.x, centers[k]!.y, Math.random);
+  };
+
+  return { root, update: (dt) => { for (const f of later.splice(0)) f(); animate(dt); }, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
 }

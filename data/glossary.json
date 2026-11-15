@@ -62,11 +62,11 @@
     { "id": "signature_artifact", "group": "rarity", "en": "Signature artifact", "de": "Helden-Artefakt", "text": "One of the hero's own artifacts.", "code": ["Hero.artifacts", "pool: hero"] },
     { "id": "general_artifact", "group": "rarity", "en": "General artifact", "de": "Allgemeines Artefakt", "text": "An artifact any hero can get.", "code": ["generalArtifacts", "pool: general"] },
 
-    { "id": "merge", "group": "merge", "en": "Merge", "de": "Verschmelzen", "text": "Recipe parts lying next to each other merge into a new item after the fight.", "code": ["pendingMerges", "mergeAll", "combine", "Merge"] },
-    { "id": "recipe", "group": "merge", "en": "Recipe", "de": "Rezept", "text": "Which items merge into which.", "code": ["Recipe", "recipes.json"] },
+    { "id": "merge", "group": "merge", "en": "Merge", "de": "Verschmelzen", "icon": "merge", "text": "Recipe parts lying next to each other merge into a new item after the fight.", "code": ["pendingMerges", "mergeAll", "combine", "Merge"] },
+    { "id": "recipe", "group": "merge", "en": "Recipe", "de": "Rezept", "icon": "radar", "text": "Which items merge into which.", "code": ["Recipe", "recipes.json"] },
     { "id": "part", "group": "merge", "en": "Part", "de": "Zutat", "text": "An item that goes into a recipe.", "code": ["Recipe.in"] },
     { "id": "chain", "group": "merge", "en": "Chain", "de": "Rezeptkette", "text": "A result that merges again. At most {recipes.maxDepth} steps above a base item.", "code": ["depth", "rules.recipes.maxDepth"] },
-    { "id": "lock", "group": "merge", "en": "Lock", "de": "Sperren", "text": "A locked item does not merge.", "code": ["Placement.lock", "toggleLock"] },
+    { "id": "lock", "group": "merge", "en": "Lock", "de": "Sperren", "icon": "lock", "text": "A locked item does not merge.", "code": ["Placement.lock", "toggleLock"] },
 
     { "id": "hero", "group": "hero", "en": "Hero", "de": "Held", "icon": "hero", "text": "Who you play. Has health, a passive, start items and an own item pool.", "code": ["Hero", "to: hero"] },
     { "id": "health", "group": "hero", "en": "Health", "de": "Lebenspunkte", "text": "The hero's hit points in a fight; they grow every round.", "code": ["hp", "rules.heroHp"] },
