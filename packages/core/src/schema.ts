@@ -140,8 +140,6 @@ export const Rules = z.object({
     maxBags: z.number().int(),
     /** an item is offered up to this many percent more often when all owned items share one of its tags (scaled by the share that do) */
     affinityPct: z.number(),
-    /** offers the player can freeze: they stay through rerolls and into the next round */
-    freezeSlots: z.number().int(),
     rarityOdds: z.array(Odds),
   }).strict(),
   specials: z.array(z.object({ afterRound: z.number().int(), pool: z.enum(["hero", "general"]), show: z.number().int() }).strict()),

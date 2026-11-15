@@ -41,11 +41,10 @@ export function reroll(s: RunState, data: GameData, rng: Rng): boolean {
   s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.bench], s.offers);
   return true;
 }
-/** Freezes an offer (it stays through rerolls and into the next round) or releases it. */
-export function toggleFreeze(s: RunState, data: GameData, slot: number): boolean {
+/** Pins an offer (it stays through rerolls and into the next round) or releases it. Any number of offers can be pinned. */
+export function toggleFreeze(s: RunState, slot: number): boolean {
   const o = s.offers[slot];
   if (!o) return false;
-  if (!o.frozen && s.offers.filter((x) => x?.frozen).length >= data.rules.shop.freezeSlots) return false;
   o.frozen = !o.frozen;
   return true;
 }

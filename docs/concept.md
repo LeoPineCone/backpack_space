@@ -35,7 +35,7 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
   - **Results of recipes are never sold**, whatever their rarity. Epic and legendary items in the shop are only those that no recipe makes.
   - **Weight per item** (`weight` on the item, default 1): parts of several recipes show up more often (1.25–1.5), items without any recipe less often (0.8).
   - **The shop follows your backpack** (`affinityPct`): an item is offered up to twice as often when your items share one of its types. With a backpack full of pets, pets show up more.
-  - **Keep for later** (`freezeSlots`): up to 2 offers can be frozen; they stay through rerolls and into the next round.
+  - **Pin for later (decided):** any number of offers can be pinned; pinned offers stay through rerolls and into the next round.
 - Each hero has an own pool: two start items, shop items only that hero is offered (30 % of the offers), own recipes and three signature artifacts.
 
 ### Combining (recipes)

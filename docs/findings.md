@@ -8,7 +8,7 @@ Measured with `npm run report:*` at normal accuracy; the full reports are in `do
 - **Bigger hero pools.** Every hero got 9 more shop items and 6 more crafted items (35 items per hero now, 384 in total, 151 recipes). They are built as a second and third path, and every start weapon now has two competing upgrades.
 - **Paths.** Each hero lists three designed paths in `data/heroes.json`. Balancing bots commit to one of them (three of four bots; the fourth plays open). The new report `npm run report:paths` compares them.
 - **Hero kits re-tuned** for the longer fights: Rook's mechanical items are faster, Quill's pets heal her when they act and add health, Flora's organic bonus and Ysel's late-phase speed bonuses are smaller.
-- **Shop rebuilt** (after the pass, decided with Ilja): 6 offers instead of 5, at most one bag per roll, a weight per item, more offers of the types the backpack already holds, and up to 2 offers can be kept for later. See "The shop" in `docs/concept.md`.
+- **Shop rebuilt** (after the pass, decided with Ilja): 6 offers instead of 5, at most one bag per roll, a weight per item, more offers of the types the backpack already holds, and offers can be pinned for later (any number). See "The shop" in `docs/concept.md`.
 - **A runaway effect removed.** Three Flora items gained Spikes every time she was attacked. In longer fights that stacked without limit and made up half of Flora's damage in every path. They now gain Spikes at the start or per star phase.
 
 ## Where the draft stands

@@ -147,9 +147,9 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
       offers = rollOffers(data, bot.hero, round, rng, bot.inv);
     } else break;
   }
-  // freeze what it wanted but could not pay, best first
+  // pin what it wanted but could not pay
   const wanted = offers.map((o, slot) => ({ o, slot, v: o && !data.items.get(o.item)!.isBag && !opts.randomBuys ? worth(data, bot, o.item, opts) / Math.max(1, o.price) : 0 }))
-    .filter((x) => x.o && x.o.price > bot.gold && x.v >= 1.1).sort((x, y) => y.v - x.v).slice(0, rules.shop.freezeSlots);
+    .filter((x) => x.o && x.o.price > bot.gold && x.v >= 1.1);
   bot.frozen = offers.map((o, slot) => (o && wanted.some((x) => x.slot === slot) ? { ...o, frozen: true } : null));
   layoutBot(data, bot, rng, opts, log);
   log.goldLeft = bot.gold;

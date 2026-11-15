@@ -86,14 +86,14 @@ describe("recipe partners", () => {
     const s = newRun(data, "quill", rng);
     s.gold = 50;
     const kept = s.offers[2]!.item;
-    expect(toggleFreeze(s, data, 2)).toBe(true);
+    expect(toggleFreeze(s, 2)).toBe(true);
     reroll(s, data, rng);
     expect(s.offers[2]!.item).toBe(kept);
     finishRound(s, data, true, rng);
     expect(s.offers[2]!.item).toBe(kept);
     expect(s.offers.length).toBe(data.rules.shop.slots);
-    for (let i = 0; i < data.rules.shop.freezeSlots; i++) toggleFreeze(s, data, i === 2 ? 5 : i);
-    expect(s.offers.filter((o) => o?.frozen).length).toBe(data.rules.shop.freezeSlots);
+    for (let i = 0; i < s.offers.length; i++) if (!s.offers[i]!.frozen) toggleFreeze(s, i);
+    expect(s.offers.filter((o) => o?.frozen).length).toBe(data.rules.shop.slots);
     for (let i = 0; i < 200; i++) expect(rollOffers(data, "rook", 6, rng).filter((o) => data.items.get(o.item)!.isBag).length).toBeLessThanOrEqual(data.rules.shop.maxBags);
   });
   it("offers more of what the player already carries", () => {

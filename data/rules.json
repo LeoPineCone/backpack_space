@@ -117,8 +117,7 @@
       }
     ],
     "maxBags": 1,
-    "affinityPct": 100,
-    "freezeSlots": 2
+    "affinityPct": 100
   },
   "specials": [
     {
