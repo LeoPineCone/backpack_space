@@ -116,8 +116,8 @@ export const Hero = z.object({
   start: z.array(Placement),
   /** signature items offered for free after round 4 */
   artifacts: z.array(z.string()),
-  /** tags the balancing bots of this hero lean towards */
-  botTags: z.array(Tag).default([]),
+  /** ways to win this hero is designed for; a balancing bot commits to one. Focus entries are tags, statuses, "heal", "cleanse", "strip", "crafted" or item ids */
+  paths: z.array(z.object({ id: z.string(), name: z.string(), focus: z.array(z.string()).min(1) }).strict()).default([]),
 }).strict();
 export type HeroData = z.infer<typeof Hero>;
 

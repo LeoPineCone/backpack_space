@@ -17,6 +17,8 @@ export interface LobbyOpts {
   bot?: BotOpts | ((seat: number) => BotOpts);
   /** fixed hero per seat */
   hero?: (seat: number) => string;
+  /** fixed path per seat ("" = none); default: the bot chooses */
+  path?: (seat: number) => string | undefined;
 }
 export interface Fight { round: number; a: number; b: number; res: BattleResult }
 export interface Seat {
@@ -39,7 +41,7 @@ export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): L
   const optOf = (i: number): BotOpts => ({ ratings: defaultRatings, ...(typeof opts.bot === "function" ? opts.bot(i) : opts.bot ?? {}) });
   const seats: Seat[] = Array.from({ length: size }, (_, i) => {
     const hero = opts.hero ? opts.hero(i) : data.heroList[i % data.heroList.length]!.id;
-    return { bot: newBot(data, hero, rng), seat: i, builds: [], won: [], endedAfter: 0, wins: 0, livesLeft: data.rules.lives };
+    return { bot: newBot(data, hero, rng, opts.path?.(i)), seat: i, builds: [], won: [], endedAfter: 0, wins: 0, livesLeft: data.rules.lives };
   });
   const fights: Fight[] = [];
   for (let round = 1; round <= data.rules.rounds; round++) {

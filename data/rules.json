@@ -5,8 +5,34 @@
   },
   "rounds": 12,
   "lives": 4,
-  "heroHp": [80, 115, 155, 200, 290, 360, 430, 510, 590, 680, 770, 870],
-  "goldPerRound": [14, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17],
+  "heroHp": [
+    100,
+    145,
+    195,
+    255,
+    400,
+    500,
+    600,
+    710,
+    830,
+    950,
+    1080,
+    1220
+  ],
+  "goldPerRound": [
+    14,
+    12,
+    13,
+    13,
+    14,
+    14,
+    15,
+    15,
+    16,
+    16,
+    17,
+    17
+  ],
   "shop": {
     "slots": 5,
     "bagOfferPct": 16,
@@ -17,18 +43,78 @@
     "sellPct": 50,
     "benchSlots": 4,
     "rarityOdds": [
-      { "common": 90, "rare": 10, "epic": 0, "legendary": 0 },
-      { "common": 80, "rare": 20, "epic": 0, "legendary": 0 },
-      { "common": 68, "rare": 28, "epic": 4, "legendary": 0 },
-      { "common": 58, "rare": 33, "epic": 9, "legendary": 0 },
-      { "common": 50, "rare": 35, "epic": 13, "legendary": 2 },
-      { "common": 43, "rare": 36, "epic": 17, "legendary": 4 },
-      { "common": 37, "rare": 36, "epic": 21, "legendary": 6 },
-      { "common": 32, "rare": 35, "epic": 24, "legendary": 9 },
-      { "common": 28, "rare": 34, "epic": 26, "legendary": 12 },
-      { "common": 25, "rare": 32, "epic": 28, "legendary": 15 },
-      { "common": 22, "rare": 31, "epic": 29, "legendary": 18 },
-      { "common": 20, "rare": 30, "epic": 30, "legendary": 20 }
+      {
+        "common": 90,
+        "rare": 10,
+        "epic": 0,
+        "legendary": 0
+      },
+      {
+        "common": 80,
+        "rare": 20,
+        "epic": 0,
+        "legendary": 0
+      },
+      {
+        "common": 68,
+        "rare": 28,
+        "epic": 4,
+        "legendary": 0
+      },
+      {
+        "common": 58,
+        "rare": 33,
+        "epic": 9,
+        "legendary": 0
+      },
+      {
+        "common": 50,
+        "rare": 35,
+        "epic": 13,
+        "legendary": 2
+      },
+      {
+        "common": 43,
+        "rare": 36,
+        "epic": 17,
+        "legendary": 4
+      },
+      {
+        "common": 37,
+        "rare": 36,
+        "epic": 21,
+        "legendary": 6
+      },
+      {
+        "common": 32,
+        "rare": 35,
+        "epic": 24,
+        "legendary": 9
+      },
+      {
+        "common": 28,
+        "rare": 34,
+        "epic": 26,
+        "legendary": 12
+      },
+      {
+        "common": 25,
+        "rare": 32,
+        "epic": 28,
+        "legendary": 15
+      },
+      {
+        "common": 22,
+        "rare": 31,
+        "epic": 29,
+        "legendary": 18
+      },
+      {
+        "common": 20,
+        "rare": 30,
+        "epic": 30,
+        "legendary": 20
+      }
     ]
   },
   "specials": [

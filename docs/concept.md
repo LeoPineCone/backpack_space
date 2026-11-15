@@ -29,14 +29,14 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Decided:** rarities with prices: common, rare, epic, legendary. The shop shows rarer items in later rounds (`shop.rarityOdds`). Artifacts are never sold.
 - Every item has a shape of cells and optionally **stars**: cells next to it that it points at. Effects can count, buff or react to the items on its stars.
 - Items act through a small set of building blocks (see "Effect language"), so the rules text is always generated from the data.
-- **Parts that fit (assumption, own mechanic):** 12 % of the shop offers are drawn from the parts that complete or continue a recipe with something you already own (`shop.recipeOfferPct`). With 300 items a specific part would otherwise show up too rarely for chains to be a plan; this way owning half a recipe pulls the other half in.
+- **Parts that fit (assumption, own mechanic):** 12 % of the shop offers are drawn from the parts that complete or continue a recipe with something you already own (`shop.recipeOfferPct`). With close to 400 items a specific part would otherwise show up too rarely for chains to be a plan; this way owning half a recipe pulls the other half in.
 - Each hero has an own pool: two start items, shop items only that hero is offered (30 % of the offers), own recipes and three signature artifacts.
 
 ### Combining (recipes)
 
 - Inputs must lie next to each other (sharing an edge, as one connected group). The player confirms; combining is final (*assumption, as in Backpack Army*).
 - **Limit (assumption):** a chain has at most 3 steps above a base item (base → step 1 → step 2 → step 3), enforced by `npm run validate`. The longest chains use 5–7 base items.
-- Most recipes take 2 items. Recipes with 3 inputs exist but are rare (8 of 119).
+- Most recipes take 2 items. Recipes with 3 inputs exist but are rare (8 of 151).
 - A crafted item costs the sum of its inputs and is stronger and usually smaller than them together, so chains also save space.
 - Crafted items carry the derived property "crafted"; some effects refer to it (Rook's whole kit).
 
@@ -68,9 +68,20 @@ Four heroes, each with an own focus, passive, start items, shop pool and artifac
 | Hero | Focus | Passive |
 |---|---|---|
 | **Flora Venn**, Orbital Botanist | food and organic items; heals a lot, wins slowly through Toxin | her organic items are faster; whenever one of her food items activates, it inflicts Toxin |
-| **RK-7 "Rook"**, Salvage Unit | mechanical items and crafting; Shield and Overclock | every combination pays gold; crafted items are faster |
-| **Nana Quill**, Keeper of the Last Ark | pets | her pets act the moment the fight begins and are faster |
+| **RK-7 "Rook"**, Salvage Unit | mechanical items and crafting; Shield and Overclock | every combination pays gold; mechanical and crafted items are faster |
+| **Nana Quill**, Keeper of the Last Ark | pets | her pets act the moment the fight begins and are faster; every pet that acts heals her a little; more health per pet |
 | **Ysel**, Singer of the Corona | the star phases; Burn; long fights | gains Power with every star phase; takes half Supernova damage |
+
+### Ways to win
+
+Every hero is designed for three paths (`paths` in `data/heroes.json`), each with own shop items, own recipes and a different upgrade of the start weapon. `npm run report:paths` lets bots commit to one path each and compares them.
+
+| Hero | Paths |
+|---|---|
+| Flora | Poison garden (Toxin, food) · Thorn wall (Spikes, armor, Regen) · Hungry jungle (plant pets that heal on hit) |
+| Rook | Overclocked guns · Shield fortress · Workshop (crafted items, stripping enemy buffs) |
+| Quill | Big beasts · Swarm (many small pets) · Well-fed pack (food and healing around the pets) |
+| Ysel | Burning corona (Burn) · Late ascension (Power, Overclock, late phases) · Eclipse (Jam, Cryo, Shield per phase) |
 
 ## What makes it its own game (open, to decide together)
 

@@ -36,6 +36,7 @@ npm run report:runs       # where runs end with the real lives, backpack and gol
 npm run report:items      # what each item adds to a build compared with its price (STRONG / WEAK)
 npm run report:recipes    # which recipes get made, how deep chains go
 npm run report:placement  # what the layout is worth
+npm run report:paths      # does every hero have several paths that win (bots commit to one path each)
 npm run report:all        # all of them into out/reports/
 ```
 
@@ -59,4 +60,4 @@ test/                 vitest
 
 ## How the bots play
 
-A bot plays a run by the rules: it gets the round's gold, sees five offers, buys what it values above its price, rerolls a few times, buys bags when the backpack is nearly full, combines recipes, and lays everything out so that as many stars as possible point at something useful. It values an item by price, synergies with what it owns, recipes it opens, a personal taste and the measured ratings. One simplification: a bot combines as soon as it owns all inputs.
+A bot plays a run by the rules: it gets the round's gold, sees five offers, buys what it values above its price, rerolls a few times, buys bags when the backpack is nearly full, combines recipes, and lays everything out so that as many stars as possible point at something useful. It values an item by price, synergies with what it owns, recipes it opens, the hero path it committed to (see `paths` in `data/heroes.json`; one bot in four plays without one) and the measured ratings. One simplification: a bot combines as soon as it owns all inputs.

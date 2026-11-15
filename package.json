@@ -14,6 +14,7 @@
     "report:items": "tsx src/reports/items.ts",
     "report:recipes": "tsx src/reports/recipes.ts",
     "report:placement": "tsx src/reports/placement.ts",
+    "report:paths": "tsx src/reports/paths.ts",
     "report:all": "tsx src/reports/all.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit && tsc --noEmit -p playground && npm run typecheck --workspaces --if-present",

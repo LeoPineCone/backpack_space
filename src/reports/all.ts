@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 
-export const REPORTS = ["battles", "heroes", "runs", "items", "recipes", "placement"] as const;
+export const REPORTS = ["battles", "heroes", "runs", "items", "recipes", "placement", "paths"] as const;
 const args = process.argv.slice(2);
 const dir = join("out", "reports");
 mkdirSync(dir, { recursive: true });

@@ -12,6 +12,6 @@
   { "id": "pet_carrier", "name": "Pet Carrier", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "pet", "mod": { "speed": 15 } }] },
   { "id": "seed_satchel", "name": "Seed Satchel", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "organic", "mod": { "speed": 15 } }] },
   { "id": "relic_case", "name": "Relic Case", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "inside", "tag": "accessory", "mod": { "speed": 15, "ready": 50 } }] },
-  { "id": "padded_case", "name": "Padded Case", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "hero", "mod": { "maxHp": 20 } }] },
+  { "id": "padded_case", "name": "Padded Case", "tags": ["bag"], "rarity": "rare", "cost": 5, "shape": ["##", "##"], "effects": [{ "on": "passive", "to": "hero", "mod": { "maxHp": 28 } }] },
   { "id": "stasis_vault", "name": "Stasis Vault", "tags": ["bag"], "rarity": "epic", "cost": 9, "shape": ["###", "###"], "effects": [{ "on": "passive", "to": "inside", "mod": { "speed": 12 } }] }
 ]

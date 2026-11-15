@@ -1,6 +1,6 @@
 /** Builds the validated, indexed game data from raw JSON. Shared by Node and browser loaders. */
 import { z } from "zod";
-import { Hero, Item, Recipe, Rules, SHOP_RARITIES, type Effect, type HeroData, type ItemData, type Tag } from "./schema.js";
+import { BUFFS, DEBUFFS, TAGS, Hero, Item, Recipe, Rules, SHOP_RARITIES, type Effect, type HeroData, type ItemData, type Tag } from "./schema.js";
 import { boardOf, parseShape, type Shape } from "./grid.js";
 
 export interface ItemDef extends Omit<ItemData, "tags"> {
@@ -112,6 +112,8 @@ export function buildGameData(raw: RawData): GameData {
   for (const h of heroList) {
     h.effects.forEach((e, i) => checkEffect(e, `hero ${h.id} effect ${i + 1}`, phaseIds, problems, false, true));
     for (const a of h.artifacts) if (items.get(a)?.rarity !== "artifact" || items.get(a)?.hero !== h.id) problems.push(`hero ${h.id}: ${a} is not an artifact of this hero`);
+    const words: readonly string[] = [...TAGS, ...BUFFS, ...DEBUFFS, "heal", "cleanse", "strip", "damage", "crafted"];
+    for (const p of h.paths) for (const f of p.focus) if (!words.includes(f) && !items.has(f)) problems.push(`hero ${h.id} path ${p.id}: unknown focus ${f}`);
     for (const p of h.bags) if (!items.get(p.item)?.isBag) problems.push(`hero ${h.id}: ${p.item} is not a bag`);
     for (const p of h.start) if (!items.has(p.item) || items.get(p.item)!.isBag) problems.push(`hero ${h.id}: bad start item ${p.item}`);
     if (!problems.length) try { boardOf(rules.grid.w, rules.grid.h, h.bags, h.start, shape); } catch (e) { problems.push(`hero ${h.id}: ${(e as Error).message}`); }

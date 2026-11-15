@@ -18,6 +18,8 @@ export interface BotOpts {
   randomBuys?: boolean;
   /** never combines */
   noCraft?: boolean;
+  /** hero path the bot commits to ("" = none); default: three of four bots pick one at random */
+  path?: string;
 }
 export interface BotLog { round: number; bought: string[]; sold: string[]; crafted: string[]; rerolls: number; goldLeft: number; special?: string }
 export interface Bot {
@@ -27,16 +29,26 @@ export interface Bot {
   bags: Placement[];
   layout: Placement[];
   bench: string[];
+  /** tags the bot likes a little */
   focus: string[];
+  /** way to win the bot commits to (a path of its hero), "" = none */
+  path: string;
   log: BotLog[];
 }
 
-export function newBot(data: GameData, hero: string, rng: Rng): Bot {
+export function newBot(data: GameData, hero: string, rng: Rng, path?: string): Bot {
   const h = data.heroes.get(hero)!;
   const tags: string[] = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic"];
-  const focus = [rng.next() < 0.7 && h.botTags.length ? rng.pick(h.botTags) : rng.pick(tags), rng.pick(tags)];
-  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), bench: [], focus, log: [] };
+  const focus = [rng.pick(tags), rng.pick(tags)];
+  const roll = rng.next(), any = h.paths.length ? rng.pick(h.paths).id : "";
+  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), bench: [], focus, path: path ?? (roll < 0.75 ? any : ""), log: [] };
 }
+
+/** Does the item belong to a path focus (tag, status, kind of action or item id)? */
+export function onPath(def: ItemDef, focus: readonly string[]): boolean {
+  return focus.some((f) => f === def.id || (def.tags as string[]).includes(f) || def.effects.some((e) => e.gain === f || e.inflict === f || e.do === f || e.per?.buff === f || e.per?.debuff === f));
+}
+const PATH_LIKING = 1.5;
 
 const ARTIFACT_WORTH = 14;
 const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
@@ -49,7 +61,9 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
   for (const t of refs(def)) syn += Math.min(4, defs.filter((o) => (o.tags as string[]).includes(t)).length) * 0.1;
   for (const o of defs) if (refs(o).some((t) => (def.tags as string[]).includes(t))) syn += 0.06;
   v *= 1 + Math.min(0.8, syn);
-  if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
+  const path = data.heroes.get(bot.hero)!.paths.find((p) => p.id === bot.path);
+  if (path) { if (onPath(def, path.focus)) v *= PATH_LIKING; }
+  else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;
   const copies = owned.filter((o) => o === id).length;
