@@ -38,7 +38,7 @@ Kept as it was, now measured and written into `docs/concept.md`: Calm, Flare, Re
 
 - **Hero curves** (see table). The heroes are being redesigned, so these were not tuned further.
 - **Ysel and the Supernova:** her identity says "long fights", her builds end fights early. A question for the hero redesign.
-- **Early rounds reach the Supernova more often** (17–20 %) than late ones. If that should be even, the Supernova could start a little earlier late in the run, or grow faster; that is a rule question for Ilja.
+- **Early rounds reach the Supernova more often** (17–20 %) than late ones (5–10 %). Decided with Ilja (2026-11-15): it stays that way.
 
 # Second balance pass (2026-11-15, earlier the same day)
 
