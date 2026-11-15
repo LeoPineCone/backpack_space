@@ -103,7 +103,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Activate** | Auslösen | An item acts: a weapon attacks, other items use their effect. | `on: use`, `starUse`, `shipUse` |
 | **Buff** | Buff | Status that helps you. | `BUFFS`, `gain` |
 | **Debuff** | Debuff | Status that hurts the enemy. | `DEBUFFS`, `inflict` |
-| **Energy** | Energie | Every attack costs Energy. You start with 20, it refills by 10 per second up to 20. A weapon without enough Energy waits. | `rules.energy`, `item.energy`, `do: energy` |
+| **Energy** | Energie | Every attack costs Energy. You start with 20, it refills by 12 per second up to 20. A weapon without enough Energy waits. | `rules.energy`, `item.energy`, `do: energy` |
 | **Melee** | Nahkampf | A weapon that hits up close. | `range: melee` |
 | **Ranged** | Fernkampf | A weapon that shoots from afar. | `range: ranged` |
 

@@ -11,411 +11,411 @@ owned: share of bot runs that ever held the item (hero items: runs of that hero)
 
 ## General shop items
   item                       rarity  gold  cells  round   gain    ±  value  owned         
-  Protein Bar                common     2      1      3  +13.0  2.5   2.48   39 %   STRONG
-  Frost Gem                  common     3      1      3  +17.3  3.2   2.19   41 %  strong?
-  Flare Gun                  common     3      1      3  +17.1  3.1   2.17   22 %  strong?
-  Cryo Sprayer                 rare     5      2      5  +17.5  2.7   2.15   20 %  strong?
-  Stasis Field                 epic     8      2      7  +21.5  2.9   2.15   25 %   STRONG
-  Scrubber Unit              common     3      2      3  +15.5  2.6   1.97   20 %  strong?
-  Hydro Lettuce              common     2      1      3  +10.3  2.4   1.95   31 %  strong?
-  Ice Ferret                   rare     5      2      5  +15.8  2.9   1.94   21 %  strong?
-  Laser Pistol               common     3      2      3  +14.6  2.6   1.86   25 %  strong?
-  Nebula Prism            legendary    12      4      9  +20.5  2.7   1.82    9 %  strong?
-  Magma Newt                   rare     5      2      5  +14.6  3.1   1.80    5 %  strong?
-  Gravity Dumplings          common     3      2      3  +13.9  2.6   1.76   16 %  strong?
-  Reactive Armor               rare     5      2      5  +14.0  2.5   1.72   12 %  strong?
-  Space Hamster              common     3      1      3  +13.1  2.6   1.67   24 %  strong?
-  Shield Battery             common     3      2      3  +12.5  2.4   1.59   11 %  strong?
-  Rocket Chili                 rare     5      1      5  +12.5  3.3   1.54   26 %  strong?
-  Crystal Candy                rare     4      1      5  +10.0  2.4   1.54   22 %  strong?
-  Guardian Drone               rare     6      2      5  +14.9  2.5   1.53    7 %  strong?
-  Fang Dagger                common     2      1      3   +8.0  2.2   1.52   18 %  strong?
-  Comet Broth                common     3      2      3  +11.9  2.6   1.51   11 %  strong?
-  Ripper Saw                   rare     6      2      5  +14.5  2.9   1.49   10 %         
-  Stardust Vial                rare     5      1      5  +12.0  2.1   1.48   44 %         
-  Plasma Cutter              common     4      2      3  +15.5  2.5   1.48   16 %         
-  Antitoxin                    rare     4      1      5   +9.5  2.3   1.46   14 %         
-  Holo Decoy                   rare     5      1      5  +11.0  2.9   1.35   34 %         
-  Phase Cloak                  epic     8      2      7  +13.5  2.4   1.35   27 %         
-  Gamma Lance                  epic     8      3      7  +13.5  2.4   1.35   10 %         
-  Space Suit                 common     3      2      3  +10.5  2.4   1.33   10 %         
-  Medi Moss                    rare     5      2      5  +10.8  2.6   1.32   14 %         
-  Cryo Coat                    rare     5      2      5  +10.5  2.5   1.29   13 %         
-  Lucky Comet                common     3      1      3  +10.0  1.8   1.27   22 %         
-  Void Kraken             legendary    14      8      9  +16.5  2.6   1.26    1 %         
-  Boomerang Blade            common     3      2      3   +9.9  2.0   1.25   13 %         
-  Star Chart                   rare     5      2      5  +10.0  2.8   1.23   25 %         
-  Nebula Jelly                 rare     5      2      5  +10.0  2.4   1.23   10 %         
-  Shock Gauntlet               rare     5      1      5  +10.0  2.5   1.23   21 %         
-  Photon Bow                   epic     8      3      7  +12.3  2.4   1.23    5 %         
-  Mirror Shield                epic     9      4      7  +13.8  3.0   1.22    2 %         
-  Glow Beetle                common     2      1      3   +6.4  1.8   1.21   19 %         
-  Thermal Blanket            common     3      2      3   +9.5  1.9   1.21    4 %         
-  Mushroom Cluster           common     3      2      3   +9.5  2.5   1.21   26 %         
-  Swarm Missiles               epic     9      4      7  +13.3  2.0   1.18    2 %         
-  Jammer Beacon                rare     5      2      5   +9.5  2.1   1.17   21 %         
-  War Horn                     rare     5      2      5   +9.5  2.0   1.17   21 %         
-  Venom Sac                  common     3      1      3   +9.1  2.3   1.16   15 %         
-  Captain's Banquet       legendary    13      6      9  +14.0  2.2   1.15    0 %         
-  Asteroid Mole              common     3      2      3   +8.9  2.0   1.13   15 %         
-  Magma Curry                  epic     8      2      7  +11.3  2.5   1.13   16 %         
-  Solar Panel                common     4      2      3  +11.8  2.5   1.12    9 %         
-  Biogel                     common     2      1      3   +5.9  2.0   1.12   38 %         
-  Stun Baton                 common     3      2      3   +8.8  2.2   1.11   25 %         
-  Ion Blaster                  rare     5      2      5   +9.0  1.9   1.11   19 %         
-  Dust Bunny                 common     2      1      3   +5.8  1.8   1.10   14 %         
-  Warp Coil                    epic     9      2      7  +12.3  2.0   1.09   14 %         
-  Mining Pick                common     3      3      3   +8.5  1.5   1.08   12 %         
-  Thorn Mail                   rare     5      2      5   +8.5  2.6   1.05   19 %         
-  Moon Cheese                common     2      1      3   +5.4  1.9   1.02   36 %         
-  Healing Spring               epic     9      4      7  +11.5  2.1   1.02    2 %         
-  Regen Pod                    rare     6      4      5   +9.8  2.1   1.00    1 %         
-  Emergency Beacon        legendary    12      4      9  +11.3  2.5   1.00    1 %         
-  Cosmic Egg                 common     2      1      3   +5.3  2.3   1.00   49 %         
-  Comet Sorbet                 rare     5      2      5   +8.1  1.8   1.00   20 %         
-  Spore Launcher               rare     5      2      5   +8.1  2.1   1.00    3 %         
-  Tentacle Whip                rare     6      3      5   +9.6  2.3   0.99    1 %         
-  Magnetic Boots             common     2      1      3   +5.1  2.5   0.98    7 %         
-  Rivet Gun                  common     2      1      3   +5.1  1.9   0.98   27 %         
-  Meteor Hammer                rare     6      4      5   +9.5  2.5   0.97    2 %         
-  Purifier Bot                 rare     5      1      5   +7.9  1.5   0.97   28 %         
-  Needle Rifle                 rare     5      3      5   +7.9  1.6   0.97   11 %         
-  Coolant Tank               common     3      2      3   +7.5  2.1   0.95   26 %         
-  Rock Crab                  common     3      2      3   +7.5  1.8   0.95   24 %         
-  Shadow Lynx                  epic     8      3      7   +9.5  2.8   0.95   12 %         
-  Sentry Drone                 rare     6      2      5   +9.3  2.4   0.95   11 %         
-  Plasma Sword                 rare     6      3      5   +9.3  1.8   0.95   11 %         
-  Space Noodles                rare     5      2      5   +7.6  1.8   0.94   12 %         
-  Royal Jelly                  epic     8      1      7   +9.4  2.4   0.94   17 %         
-  Deflector Dish               rare     6      4      5   +9.0  1.9   0.92    3 %         
-  Repair Kit                 common     3      2      3   +7.3  2.1   0.92   25 %         
-  Comet Fox                    rare     6      2      5   +8.9  1.9   0.91   15 %         
-  Dark Matter                  epic     8      1      7   +8.6  2.2   0.86   34 %         
-  Life Orchid                  epic     8      2      7   +8.6  2.1   0.86    5 %         
-  Overclock Chip               rare     5      1      5   +7.0  1.5   0.86   34 %         
-  Tardigrade                   rare     4      1      5   +5.5  1.7   0.85   12 %         
-  Energy Gel                 common     2      1      3   +4.3  1.8   0.81   13 %         
-  Singularity Core        legendary    13      4      9   +9.8  2.2   0.80    1 %         
-  Asteroid Chunk             common     2      1      3   +4.1  1.7   0.79   28 %         
-  Void Scythe             legendary    13      4      9   +9.4  2.0   0.77    1 %         
-  Saline Drip                common     3      2      3   +6.0  2.0   0.76   17 %         
-  Rock Shell                 common     3      2      3   +6.0  2.3   0.76    6 %         
-  Freeze-Dried Ice Cream     common     3      2      3   +6.0  2.3   0.76   14 %         
-  Bulwark Generator       legendary    13      6      9   +9.0  2.3   0.74    1 %         
-  Oxygen Tank                common     3      2      3   +5.8  1.5   0.73   10 %         
-  Star Compass                 rare     5      1      5   +5.8  2.3   0.71   12 %         
-  Targeting Lens             common     3      1      3   +5.5  1.9   0.70   45 %         
-  Lead Vest                  common     3      2      3   +5.5  1.9   0.70    1 %         
-  Geiger Counter               rare     4      1      5   +4.1  2.2   0.63    8 %         
-  Black Box                    epic     7      2      7   +5.5  2.5   0.63    7 %         
-  Vitamin Pack               common     2      1      3   +3.3  2.5   0.62   11 %         
-  Thruster                   common     3      2      3   +4.8  2.3   0.60   35 %         
-  Scout Drone                common     3      1      3   +4.8  1.6   0.60   12 %         
-  First Aid Patch            common     2      1      3   +3.1  2.1   0.60   22 %         
-  Force Bubble                 epic     8      2      7   +5.8  1.7   0.57    7 %         
-  Antimatter Dagger            epic     8      1      7   +5.8  2.3   0.57   15 %         
-  Visor Helmet               common     2      1      3   +3.0  1.8   0.57   15 %         
-  Algae Shake                common     3      2      3   +4.5  2.8   0.57   16 %         
-  Repair Bot                   rare     5      1      5   +4.6  1.8   0.57   26 %         
-  Nova Cola                    rare     5      2      5   +4.5  2.1   0.55    6 %         
-  Solar Cannon            legendary    13      6      9   +6.8  2.3   0.55    0 %         
-  Nano Weave                   epic     8      2      7   +5.5  2.6   0.55    2 %         
-  Graviton Maul           legendary    12      5      9   +6.1  2.0   0.54    1 %         
-  Power Cell                 common     3      1      3   +4.3  2.8   0.54   49 %         
-  Gravity Anchor               rare     5      1      5   +4.1  2.3   0.51    4 %         
-  Crystal Shard              common     3      1      3   +3.8  2.1   0.48   58 %    weak?
-  Pilot Jacket               common     3      2      3   +3.8  1.8   0.48    3 %    weak?
-  Asteroid Honey               epic     8      2      7   +4.5  2.0   0.45    7 %    weak?
-  Star Whale Calf              epic     9      6      7   +5.0  1.9   0.44    0 %    weak?
-  Copper Wire                common     2      1      3   +2.3  1.5   0.43   50 %    weak?
-  Vacuum Slug                common     3      2      3   +3.4  2.6   0.43   19 %    weak?
-  Railgun                      epic     9      4      7   +4.5  2.2   0.40    1 %    weak?
-  Med Scanner                  rare     4      1      5   +2.5  1.7   0.38    5 %    weak?
-  Harpoon Launcher             rare     6      3      5   +3.8  1.2   0.38    4 %    weak?
-  Star Fruit                   rare     5      1      5   +2.8  2.6   0.34   25 %    weak?
-  Ablative Tiles             common     2      1      3   +1.8  1.8   0.33    6 %    weak?
-  Antenna                    common     2      1      3   +1.6  2.3   0.31   18 %    weak?
-  Laser Parrot                 rare     5      1      5   +2.5  2.2   0.31    3 %    weak?
-  Metronome                    epic     8      2      7   +2.3  1.9   0.23    5 %    weak?
-  Fuel Canister              common     3      1      3   +1.3  1.7   0.16   37 %    weak?
-  Hull Plating               common     3      2      3   +1.1  1.7   0.14   21 %    weak?
-  Moon Moth                  common     2      1      3   +0.5  1.7   0.10   19 %    weak?
-  Lodestone                  common     2      1      3   -1.5  1.8  -0.29    5 %     WEAK
-  Acid Flask                   rare     4      1      5   -2.3  2.0  -0.35    9 %     WEAK
-  Scrap Metal                common     1      1      3   -1.0  1.5  -0.38   54 %    weak?
+  Thorn Mail                   rare     5      2      5  +18.4  2.5   2.23   16 %   STRONG
+  Nebula Prism            legendary    12      4      9  +23.0  2.8   2.14    8 %   STRONG
+  Cryo Sprayer                 rare     5      2      5  +16.5  2.9   2.00   31 %  strong?
+  Fang Dagger                common     2      1      3  +11.9  2.8   1.98   22 %  strong?
+  Stasis Field                 epic     8      2      7  +15.3  2.3   1.97   23 %  strong?
+  Flare Gun                  common     3      1      3  +17.5  3.1   1.94   25 %  strong?
+  Holo Decoy                   rare     5      1      5  +15.0  2.3   1.82   41 %  strong?
+  Mirror Shield                epic     9      4      7  +15.3  2.7   1.75    4 %  strong?
+  Rocket Chili                 rare     5      1      5  +14.3  2.1   1.73   34 %  strong?
+  Phase Cloak                  epic     8      2      7  +13.3  2.5   1.71   28 %  strong?
+  Comet Broth                common     3      2      3  +15.3  2.3   1.69   13 %  strong?
+  Ice Ferret                   rare     5      2      5  +13.8  2.2   1.67   21 %  strong?
+  Star Chart                   rare     5      2      5  +13.0  1.9   1.58   15 %  strong?
+  Medi Moss                    rare     5      2      5  +13.0  2.4   1.58   21 %  strong?
+  Magma Curry                  epic     8      2      7  +11.8  2.4   1.52   25 %  strong?
+  Protein Bar                common     2      1      3   +9.0  2.2   1.50   38 %         
+  Gamma Lance                  epic     8      3      7  +11.5  2.2   1.48   21 %         
+  Warp Coil                    epic     9      2      7  +12.8  2.2   1.46   13 %         
+  Captain's Banquet       legendary    13      6      9  +16.4  2.0   1.41    1 %         
+  Gravity Dumplings          common     3      2      3  +12.5  2.2   1.39   24 %         
+  Rock Crab                  common     3      2      3  +12.5  2.4   1.39   23 %         
+  Asteroid Mole              common     3      2      3  +12.5  2.1   1.39   15 %         
+  Metronome                    epic     8      2      7  +10.8  2.3   1.39    4 %         
+  Dark Matter                  epic     8      1      7  +10.5  2.2   1.35   26 %         
+  Dust Bunny                 common     2      1      3   +8.1  2.6   1.35   23 %         
+  War Horn                     rare     5      2      5  +11.1  3.1   1.35   12 %         
+  Overclock Chip               rare     5      1      5  +10.8  2.4   1.30   37 %         
+  Comet Sorbet                 rare     5      2      5  +10.8  2.4   1.30   13 %         
+  Laser Pistol               common     3      2      3  +11.6  2.3   1.29   29 %         
+  Emergency Beacon        legendary    12      4      9  +13.8  2.7   1.28    2 %         
+  Guardian Drone               rare     6      2      5  +12.5  2.1   1.26    9 %         
+  Hydro Lettuce              common     2      1      3   +7.5  2.0   1.25   33 %         
+  Plasma Cutter              common     4      2      3  +15.0  2.5   1.25   20 %         
+  Stun Baton                 common     3      2      3  +11.3  2.5   1.25   18 %         
+  Stardust Vial                rare     5      1      5  +10.3  2.2   1.24   45 %         
+  Deflector Dish               rare     6      4      5  +12.3  2.0   1.24    6 %         
+  Space Suit                 common     3      2      3  +11.0  2.5   1.22   18 %         
+  Space Hamster              common     3      1      3  +10.8  2.1   1.19   20 %         
+  Jammer Beacon                rare     5      2      5   +9.8  2.2   1.18   10 %         
+  Reactive Armor               rare     5      2      5   +9.8  2.5   1.18    7 %         
+  Freeze-Dried Ice Cream     common     3      2      3  +10.6  2.5   1.18   11 %         
+  Glow Beetle                common     2      1      3   +7.0  2.1   1.17   14 %         
+  Antitoxin                    rare     4      1      5   +7.6  2.4   1.16   24 %         
+  Comet Fox                    rare     6      2      5  +11.4  2.6   1.15   16 %         
+  Scrubber Unit              common     3      2      3  +10.3  2.7   1.14   24 %         
+  Moon Cheese                common     2      1      3   +6.8  1.6   1.13   35 %         
+  Saline Drip                common     3      2      3  +10.0  2.1   1.11   16 %         
+  Thermal Blanket            common     3      2      3  +10.0  2.3   1.11    7 %         
+  Magma Newt                   rare     5      2      5   +9.0  1.9   1.09    8 %         
+  Life Orchid                  epic     8      2      7   +8.4  2.5   1.08    8 %         
+  First Aid Patch            common     2      1      3   +6.4  2.3   1.06   15 %         
+  Ion Blaster                  rare     5      2      5   +8.8  2.8   1.06    9 %         
+  Thruster                   common     3      2      3   +9.5  2.4   1.06   38 %         
+  Rock Shell                 common     3      2      3   +9.5  1.7   1.06    4 %         
+  Boomerang Blade            common     3      2      3   +9.5  2.7   1.06   15 %         
+  Bulwark Generator       legendary    13      6      9  +12.0  2.2   1.03    0 %         
+  Asteroid Chunk             common     2      1      3   +6.1  2.5   1.02   25 %         
+  Coolant Tank               common     3      2      3   +9.0  1.9   1.00   30 %         
+  Frost Gem                  common     3      1      3   +9.0  2.7   1.00   39 %         
+  Nano Weave                   epic     8      2      7   +7.8  1.7   1.00    8 %         
+  Nebula Jelly                 rare     5      2      5   +8.3  2.6   1.00   10 %         
+  Crystal Candy                rare     4      1      5   +6.5  1.6   0.98   15 %         
+  Geiger Counter               rare     4      1      5   +6.3  1.6   0.95   24 %         
+  Void Kraken             legendary    14      8      9  +11.9  2.5   0.95    1 %         
+  Healing Spring               epic     9      4      7   +8.3  2.4   0.95    6 %         
+  Cryo Coat                    rare     5      2      5   +7.8  2.3   0.94    9 %         
+  Photon Bow                   epic     8      3      7   +7.3  2.4   0.94    1 %         
+  Venom Sac                  common     3      1      3   +8.3  2.1   0.92   25 %         
+  Meteor Hammer                rare     6      4      5   +9.0  2.9   0.91    1 %         
+  Space Noodles                rare     5      2      5   +7.5  2.1   0.91   18 %         
+  Mining Pick                common     3      3      3   +8.1  2.6   0.90    6 %         
+  Singularity Core        legendary    13      4      9  +10.3  2.8   0.88    2 %         
+  Oxygen Tank                common     3      2      3   +7.8  1.7   0.86    6 %         
+  Magnetic Boots             common     2      1      3   +5.0  1.9   0.83   13 %         
+  Algae Shake                common     3      2      3   +7.5  2.3   0.83    8 %         
+  Plasma Sword                 rare     6      3      5   +8.0  2.1   0.81   11 %         
+  Purifier Bot                 rare     5      1      5   +6.5  1.9   0.79   23 %         
+  Lead Vest                  common     3      2      3   +7.0  2.2   0.78    7 %         
+  Force Bubble                 epic     8      2      7   +6.0  1.9   0.77   18 %         
+  Crystal Shard              common     3      1      3   +6.9  2.5   0.76   53 %         
+  Needle Rifle                 rare     5      3      5   +6.3  1.9   0.76    5 %         
+  Copper Wire                common     2      1      3   +4.5  1.4   0.75   48 %         
+  Star Whale Calf              epic     9      6      7   +6.5  2.1   0.75    1 %         
+  Sentry Drone                 rare     6      2      5   +7.3  2.5   0.73    9 %         
+  Lucky Comet                common     3      1      3   +6.5  1.8   0.72   18 %         
+  Shadow Lynx                  epic     8      3      7   +5.5  2.3   0.71    5 %         
+  Pilot Jacket               common     3      2      3   +6.4  1.9   0.71    5 %         
+  Cosmic Egg                 common     2      1      3   +4.1  2.0   0.69   46 %         
+  Scrap Metal                common     1      1      3   +2.0  2.6   0.67   53 %         
+  Hull Plating               common     3      2      3   +6.0  2.1   0.67   22 %         
+  Repair Bot                   rare     5      1      5   +5.5  1.9   0.67   21 %         
+  Fuel Canister              common     3      1      3   +5.9  2.7   0.65   40 %         
+  Rivet Gun                  common     2      1      3   +3.9  2.4   0.65   28 %         
+  Void Scythe             legendary    13      4      9   +7.5  1.8   0.64    1 %         
+  Solar Cannon            legendary    13      6      9   +7.5  1.9   0.64    0 %         
+  Mushroom Cluster           common     3      2      3   +5.8  1.7   0.64   27 %         
+  Biogel                     common     2      1      3   +3.8  2.0   0.63   45 %         
+  Regen Pod                    rare     6      4      5   +6.1  2.0   0.62    0 %         
+  Ripper Saw                   rare     6      2      5   +6.1  3.1   0.62   21 %         
+  Black Box                    epic     7      2      7   +4.0  1.9   0.59    6 %         
+  Targeting Lens             common     3      1      3   +5.3  2.0   0.58   45 %         
+  Asteroid Honey               epic     8      2      7   +4.5  1.8   0.58    8 %         
+  Acid Flask                   rare     4      1      5   +3.8  2.1   0.57   23 %         
+  Solar Panel                common     4      2      3   +6.8  2.1   0.56    7 %         
+  Nova Cola                    rare     5      2      5   +4.6  1.4   0.56    4 %         
+  Gravity Anchor               rare     5      1      5   +4.3  1.7   0.52    6 %         
+  Laser Parrot                 rare     5      1      5   +4.3  1.9   0.52    5 %         
+  Repair Kit                 common     3      2      3   +4.6  2.3   0.51   28 %         
+  Moon Moth                  common     2      1      3   +3.0  2.0   0.50   28 %         
+  Star Compass                 rare     5      1      5   +4.0  1.2   0.48   25 %    weak?
+  Graviton Maul           legendary    12      5      9   +5.0  2.3   0.47    1 %    weak?
+  Spore Launcher               rare     5      2      5   +3.8  2.1   0.45    2 %    weak?
+  Antimatter Dagger            epic     8      1      7   +3.5  1.7   0.45    9 %    weak?
+  Scout Drone                common     3      1      3   +3.5  1.7   0.39   14 %    weak?
+  Star Fruit                   rare     5      1      5   +2.9  1.9   0.35   22 %    weak?
+  Tentacle Whip                rare     6      3      5   +3.3  2.4   0.33    0 %    weak?
+  Royal Jelly                  epic     8      1      7   +2.5  1.9   0.32   13 %    weak?
+  Power Cell                 common     3      1      3   +2.8  1.8   0.31   35 %    weak?
+  Shock Gauntlet               rare     5      1      5   +2.3  2.2   0.27    8 %    weak?
+  Shield Battery             common     3      2      3   +2.3  2.3   0.25   11 %    weak?
+  Energy Gel                 common     2      1      3   +1.5  2.3   0.25    2 %    weak?
+  Railgun                      epic     9      4      7   +2.0  2.1   0.23    1 %    weak?
+  Vacuum Slug                common     3      2      3   +1.9  2.0   0.21    9 %    weak?
+  Harpoon Launcher             rare     6      3      5   +2.0  2.2   0.20    3 %    weak?
+  Tardigrade                   rare     4      1      5   +0.8  2.7   0.11   15 %    weak?
+  Visor Helmet               common     2      1      3   +0.5  1.7   0.08    8 %    weak?
+  Ablative Tiles             common     2      1      3   +0.5  1.9   0.08    2 %    weak?
+  Vitamin Pack               common     2      1      3   -0.1  2.4  -0.02   11 %    weak?
+  Antenna                    common     2      1      3   -0.5  2.5  -0.08   22 %    weak?
+  Lodestone                  common     2      1      3   -0.6  2.0  -0.10    5 %    weak?
+  Med Scanner                  rare     4      1      5   -0.8  2.8  -0.11    0 %    weak?
+  Swarm Missiles               epic     9      4      7   -1.8  3.0  -0.20    1 %     WEAK
 
-## Flora Venn: shop and start items
+## Venn: shop and start items
   item                   rarity  gold  cells  round   gain    ±  value  owned         
-  Seed Pod               common     2      1      3  +17.1  2.1   3.26  100 %   STRONG
-  Strangler Fig            epic     9      3      7  +33.8  3.2   3.00   56 %   STRONG
-  Moon Melon               rare     5      4      5  +17.0  2.3   2.09   43 %   STRONG
-  Nectar Flask             rare     5      2      5  +15.5  2.2   1.91   48 %  strong?
-  Watering Drone         common     2      1      3  +10.0  1.7   1.90  100 %  strong?
-  Blight Bomb              rare     6      1      5  +18.4  2.1   1.88   77 %  strong?
-  Pollen Cloud           common     3      1      3  +14.8  2.1   1.87   88 %  strong?
-  Venus Mantrap            rare     6      2      5  +18.3  2.6   1.87   58 %  strong?
-  Bramble Seed           common     3      1      3  +14.3  2.1   1.81   86 %  strong?
-  Sun Blossom         legendary    12      4      9  +18.1  2.2   1.61   25 %  strong?
-  Carnivorous Orchid       epic     9      2      7  +16.0  2.2   1.42   48 %         
-  Compost Bin            common     3      1      3  +11.0  1.8   1.40   76 %         
-  Thornvine              common     3      3      3  +10.4  2.1   1.32   43 %         
-  Ironbark Golem           epic     9      4      7  +14.3  2.5   1.27   23 %         
-  Snap Sprout            common     3      1      3   +8.6  1.8   1.10   53 %         
-  Root Network             epic     8      4      7  +10.0  1.7   1.00   20 %         
-  Healing Moss             rare     5      2      5   +6.5  2.3   0.80   42 %         
-  Grow Lamp              common     3      1      3   +6.0  1.8   0.76   83 %         
-  Sap Tap                common     3      1      3   +1.5  1.5   0.19   29 %    weak?
-  Bark Shield              rare     5      2      5   +1.5  1.5   0.18   18 %    weak?
+  Ironbark Golem           epic     9      4      7  +24.3  2.5   2.78   38 %   STRONG
+  Strangler Fig            epic     9      3      7  +23.5  3.1   2.70   53 %   STRONG
+  Seed Pod               common     2      1      3  +15.4  2.3   2.56  100 %   STRONG
+  Root Network             epic     8      4      7  +16.8  2.5   2.16    7 %   STRONG
+  Thornvine              common     3      3      3  +19.4  2.3   2.15   58 %   STRONG
+  Moon Melon               rare     5      4      5  +15.9  2.5   1.92   47 %  strong?
+  Nectar Flask             rare     5      2      5  +14.3  2.0   1.73   65 %  strong?
+  Compost Bin            common     3      1      3  +14.3  2.4   1.58   75 %  strong?
+  Sun Blossom         legendary    12      4      9  +16.3  2.2   1.51   38 %  strong?
+  Pollen Cloud           common     3      1      3  +13.3  1.9   1.47   93 %         
+  Watering Drone         common     2      1      3   +8.8  1.8   1.46  100 %         
+  Bramble Seed           common     3      1      3  +11.5  2.0   1.28   82 %         
+  Blight Bomb              rare     6      1      5  +11.6  2.5   1.17   63 %         
+  Healing Moss             rare     5      2      5   +9.5  2.2   1.15   44 %         
+  Venus Mantrap            rare     6      2      5  +10.8  2.1   1.09   48 %         
+  Carnivorous Orchid       epic     9      2      7   +8.5  1.9   0.97   54 %         
+  Grow Lamp              common     3      1      3   +6.0  1.9   0.67   83 %         
+  Sap Tap                common     3      1      3   +4.8  2.0   0.53   33 %         
+  Bark Shield              rare     5      2      5   +3.3  2.1   0.39   27 %    weak?
+  Snap Sprout            common     3      1      3   +2.5  2.3   0.28   66 %    weak?
 
 ## RK-7 "Rook": shop and start items
   item               rarity  gold  cells  round   gain    ±  value  owned         
-  Welding Arm        common     3      2      3  +35.3  2.9   4.48  100 %   STRONG
-  Tesla Coil           epic     8      2      7  +16.6  2.9   1.66   70 %  strong?
-  Toolbox            common     3      2      3  +12.0  2.7   1.52   68 %  strong?
-  Bolt Thrower       common     3      2      3   +8.8  2.1   1.11   57 %         
-  Turbo Fan            rare     5      1      5   +9.0  2.1   1.11   73 %         
-  Assembly Core        epic     9      1      7  +12.0  2.5   1.07   38 %         
-  Capacitor Bank     common     3      2      3   +8.0  2.6   1.02   71 %         
-  Rail Driver          epic     9      3      7  +11.4  1.9   1.01   47 %         
-  Junk Cannon          rare     6      2      5   +9.0  2.5   0.92   71 %         
-  Shield Emitter       rare     5      1      5   +7.3  2.1   0.89   56 %         
-  Quantum Forge   legendary    12      4      9   +9.8  2.0   0.87    2 %         
-  Spare Parts        common     3      1      3   +6.8  2.2   0.86   73 %         
-  Recycler             rare     5      2      5   +6.6  2.3   0.82   47 %         
-  Scrap Golem          rare     6      2      5   +7.5  2.3   0.77   64 %         
-  Bastion Frame        epic     9      4      7   +6.5  2.5   0.58    8 %         
-  Conveyor Belt      common     3      3      3   +4.1  2.2   0.52   47 %         
-  Circuit Board      common     3      1      3   +2.5  1.5   0.32   77 %    weak?
-  Magnet Crane         rare     5      2      5   +2.5  2.1   0.31   63 %    weak?
-  Grav Clamp         common     3      1      3   -2.1  1.7  -0.27   63 %     WEAK
+  Welding Arm        common     3      2      3  +29.4  3.3   3.26  100 %   STRONG
+  Bolt Thrower       common     3      2      3  +14.8  2.7   1.64   53 %  strong?
+  Toolbox            common     3      2      3  +14.5  2.1   1.61   53 %  strong?
+  Turbo Fan            rare     5      1      5  +13.0  2.9   1.58   61 %  strong?
+  Tesla Coil           epic     8      2      7   +9.1  2.5   1.18   78 %         
+  Circuit Board      common     3      1      3   +9.5  2.4   1.06   54 %         
+  Junk Cannon          rare     6      2      5   +9.9  2.6   1.00   47 %         
+  Recycler             rare     5      2      5   +6.6  1.9   0.80   49 %         
+  Conveyor Belt      common     3      3      3   +6.8  2.6   0.75   46 %         
+  Quantum Forge   legendary    12      4      9   +7.3  2.9   0.67   21 %         
+  Grav Clamp         common     3      1      3   +5.5  2.1   0.61   74 %         
+  Shield Emitter       rare     5      1      5   +4.8  2.0   0.58   68 %         
+  Scrap Golem          rare     6      2      5   +5.0  2.1   0.51   62 %         
+  Rail Driver          epic     9      3      7   +4.4  2.6   0.50   42 %         
+  Capacitor Bank     common     3      2      3   +4.5  2.3   0.50   34 %         
+  Magnet Crane         rare     5      2      5   +3.8  2.5   0.45   65 %    weak?
+  Assembly Core        epic     9      1      7   +2.5  2.1   0.29   33 %    weak?
+  Bastion Frame        epic     9      4      7   +1.5  2.3   0.17   17 %    weak?
+  Spare Parts        common     3      1      3   +0.0  1.7   0.00   74 %     WEAK
 
-## Nana Quill: shop and start items
-  item                  rarity  gold  cells  round   gain    ±  value  owned         
-  Space Pup             common     2      1      3  +19.3  3.0   3.67  100 %   STRONG
-  Guard Goose           common     3      1      3  +22.8  2.8   2.89   83 %   STRONG
-  Moon Bear               rare     6      4      5  +19.8  3.1   2.03   40 %  strong?
-  Sky Serpent        legendary    13      4      9  +24.5  2.4   2.01   53 %   STRONG
-  Tusked Behemoth         epic     9      6      7  +20.0  2.8   1.78    8 %  strong?
-  Burrow Rat            common     3      1      3  +13.0  2.7   1.65   91 %  strong?
-  Treat Pouch           common     3      1      3  +12.0  2.5   1.52  100 %  strong?
-  Thunder Ram             epic     9      4      7  +12.8  2.1   1.13   39 %         
-  Hatchery                rare     5      4      5   +9.0  2.1   1.11   17 %         
-  Star Falcon             rare     6      2      5   +9.9  1.9   1.01   66 %         
-  Nursery                 epic     8      4      7   +6.5  2.9   0.65   18 %         
-  Trainer's Whistle       rare     5      1      5   +5.3  1.5   0.65   53 %         
-  Glow Swarm              rare     5      2      5   +5.3  1.6   0.65   55 %         
-  Hive Queen              epic     8      4      7   +6.3  1.7   0.63   24 %         
-  Pack Lizard           common     4      2      3   +5.4  1.7   0.51   58 %         
-  Leash                 common     2      1      3   +2.5  1.8   0.48   33 %    weak?
-  Pet Bed               common     3      2      3   +3.3  2.3   0.41   18 %    weak?
-  Kibble Sack           common     3      2      3   +2.1  2.4   0.27   78 %    weak?
-  Feeding Bowl          common     3      1      3   +2.0  2.0   0.25   45 %    weak?
-  War Saddle              rare     5      1      5   +2.0  1.6   0.25   58 %    weak?
+## Quill: shop and start items
+  item                rarity  gold  cells  round   gain    ±  value  owned         
+  Space Pup           common     2      1      3  +20.8  2.4   3.46  100 %   STRONG
+  Guard Goose         common     3      1      3  +23.8  2.7   2.64   80 %   STRONG
+  Burrow Rat          common     3      1      3  +20.5  2.8   2.28   93 %   STRONG
+  Sky Serpent      legendary    13      4      9  +24.5  2.7   2.10   43 %   STRONG
+  Thunder Ram           epic     9      4      7  +17.0  2.5   1.95   19 %  strong?
+  Kibble Sack         common     3      2      3  +16.9  2.2   1.88   90 %  strong?
+  Star Falcon           rare     6      2      5  +16.3  2.5   1.64   64 %  strong?
+  Hatchery              rare     5      4      5  +12.5  2.3   1.52   16 %  strong?
+  Tusked Behemoth       epic     9      6      7  +12.0  2.0   1.38    7 %         
+  Hive Queen            epic     8      4      7   +9.5  2.2   1.23   34 %         
+  Calling Shell         rare     5      1      5   +9.5  2.0   1.15   39 %         
+  Moon Bear             rare     6      4      5  +11.0  1.8   1.11   32 %         
+  Treat Pouch         common     3      1      3   +9.3  2.3   1.03  100 %         
+  Nursery               epic     8      4      7   +7.8  1.9   1.00   11 %         
+  Glow Swarm            rare     5      2      5   +4.3  1.6   0.52   44 %         
+  Grooming Comb       common     2      1      3   +3.0  2.2   0.50   60 %         
+  War Saddle            rare     5      1      5   +2.9  1.6   0.35   43 %    weak?
+  Pet Bed             common     3      2      3   +0.8  2.6   0.08   30 %    weak?
+  Feeding Bowl        common     3      1      3   +0.5  1.8   0.06   72 %     WEAK
+  Pack Lizard         common     4      2      3   +0.5  2.2   0.04   42 %     WEAK
 
 ## Ysel: shop and start items
   item                rarity  gold  cells  round   gain    ±  value  owned         
-  Sun Shard           common     2      1      3  +33.5  3.2   6.38  100 %   STRONG
-  Ember Censer        common     3      2      3  +19.0  2.5   2.41   57 %   STRONG
-  Corona Staff          rare     6      3      5  +21.3  3.0   2.18   53 %   STRONG
-  Eclipse Orb           epic     8      2      7  +18.8  3.0   1.88   45 %  strong?
-  Votive Candle       common     2      1      3   +9.5  1.9   1.81   76 %  strong?
-  Dawn Chime            rare     5      1      5  +14.1  2.1   1.74   74 %  strong?
-  Solar Dagger        common     3      1      3  +13.6  2.4   1.73   82 %  strong?
-  Eclipse Veil        common     4      2      3  +16.6  2.3   1.58   42 %  strong?
-  Hymn Scroll         common     3      2      3  +10.9  1.6   1.38   48 %         
-  Supernova Seed   legendary    12      2      9  +15.0  2.0   1.33   38 %         
-  Mirror of Dusk        rare     5      2      5  +10.5  2.8   1.29   31 %         
-  Flare Catcher       common     3      2      3   +9.5  2.3   1.21   85 %         
-  Comet Rosary          rare     5      3      5   +9.4  2.2   1.15   24 %         
-  Prayer Bell         common     2      1      3   +5.3  1.8   1.00  100 %         
-  Pyre Lantern          rare     5      1      5   +7.0  1.9   0.86   62 %         
-  Star Psalter          rare     6      2      5   +7.1  2.7   0.73   77 %         
-  Red Giant Heart       epic     8      4      7   +6.5  2.1   0.65   11 %         
-  White Dwarf           epic     9      4      7   +7.1  2.2   0.63    6 %         
-  Sundial             common     3      1      3   +4.3  1.8   0.54   78 %         
-  Collapse Engine       epic     9      2      7   +6.0  1.9   0.53   53 %         
+  Sun Shard           common     2      1      3  +29.6  3.0   4.94  100 %   STRONG
+  Ember Censer        common     3      2      3  +29.0  2.9   3.22   68 %   STRONG
+  Votive Candle       common     2      1      3  +13.3  2.2   2.21   77 %  strong?
+  Corona Staff          rare     6      3      5  +21.0  2.7   2.12   51 %   STRONG
+  Solar Dagger        common     3      1      3  +19.0  2.3   2.11   78 %   STRONG
+  Flare Catcher       common     3      2      3  +14.8  2.3   1.64   73 %  strong?
+  Dawn Chime            rare     5      1      5  +12.1  2.1   1.47   68 %         
+  Eclipse Orb           epic     8      2      7   +9.8  2.6   1.26   52 %         
+  Mirror of Dusk        rare     5      2      5   +9.6  2.1   1.17   34 %         
+  Hymn Scroll         common     3      2      3  +10.0  2.3   1.11   49 %         
+  Eclipse Veil        common     4      2      3  +13.3  2.6   1.10   50 %         
+  Star Psalter          rare     6      2      5  +10.1  1.9   1.02   65 %         
+  Supernova Seed   legendary    12      2      9  +10.8  2.3   1.00   48 %         
+  Comet Rosary          rare     5      3      5   +8.0  2.2   0.97   19 %         
+  Red Giant Heart       epic     8      4      7   +6.5  2.3   0.84   27 %         
+  Pyre Lantern          rare     5      1      5   +6.8  1.8   0.82   71 %         
+  White Dwarf           epic     9      4      7   +6.3  1.9   0.72    4 %         
+  Prayer Bell         common     2      1      3   +3.8  1.3   0.63  100 %         
+  Collapse Engine       epic     9      2      7   +5.0  1.6   0.57   23 %         
+  Sundial             common     3      1      3   +3.4  1.8   0.38   85 %    weak?
 
 ## Crafted items
   item                  rarity  gold  cells  round   gain    ±  value  owned         
-  Twin Suns            craft 1     5      2      5  +27.8  2.4   3.42   57 %   STRONG
-  Nail Storm           craft 1     4      2      5  +18.5  2.9   2.85   13 %   STRONG
-  Thorn Pod            craft 1     5      2      5  +22.9  3.2   2.82   63 %   STRONG
-  Plasma Welder        craft 1     4      2      5  +17.0  2.9   2.62   78 %   STRONG
-  Living Armor         craft 1     8      4      5  +32.5  2.8   2.50   10 %   STRONG
-  Med Bay              craft 1     6      3      5  +24.3  3.0   2.49    6 %   STRONG
-  Guard Hound          craft 1     5      2      5  +19.5  2.6   2.40   47 %   STRONG
-  Sacred Flame         craft 1     7      1      5  +26.8  3.1   2.35   50 %   STRONG
-  Helios Rod           craft 1     9      3      5  +34.4  2.7   2.35   33 %   STRONG
-  Leviathan            craft 3    29      9     11  +42.5  3.5   2.34    0 %   STRONG
-  Sunblade             craft 1     5      2      5  +18.9  2.5   2.32   37 %   STRONG
-  Rat Pack             craft 1     7      3      5  +25.8  3.4   2.26   31 %   STRONG
-  Entropy Engine       craft 3    27      8     11  +38.1  2.9   2.26    0 %   STRONG
-  Jungle Tyrant        craft 2    17      6      8  +41.3  3.7   2.22    4 %   STRONG
-  Cryo Baton           craft 1     6      2      5  +20.0  3.0   2.05   13 %  strong?
-  Ambrosia             craft 1    10      4      5  +33.0  3.0   2.03   23 %   STRONG
-  Arc Forge            craft 2    12      4      8  +26.5  2.6   2.02   53 %   STRONG
-  Rivet Cannon         craft 1     6      3      5  +19.5  3.0   2.00   20 %  strong?
-  Plague Blossom       craft 1     9      2      5  +29.0  2.7   1.98   58 %   STRONG
-  Astronaut Ration     craft 1     4      2      5  +12.8  1.9   1.96    9 %  strong?
-  Solar Drake          craft 2    13      4      8  +27.9  3.3   1.96    2 %  strong?
-  Litany               craft 1     8      3      5  +25.1  2.1   1.93   17 %   STRONG
-  Glacier Cannon       craft 1     8      4      5  +24.4  3.4   1.88    5 %  strong?
-  Harvest Crate        craft 1     8      4      5  +24.3  2.8   1.87   28 %  strong?
-  Celestial Chimera    craft 2    14      5      8  +28.3  2.7   1.84   19 %  strong?
-  Star Hound           craft 1     5      2      5  +14.8  2.4   1.82   53 %  strong?
-  Prism Laser          craft 1     6      2      5  +17.5  2.9   1.79   11 %  strong?
-  Phoenix              craft 3    22      4     11  +24.3  2.6   1.76    0 %  strong?
-  Glacier Drake        craft 2    10      4      8  +19.0  2.8   1.74    3 %  strong?
-  Blizzard Gem         craft 1     6      2      5  +16.5  3.3   1.69   11 %  strong?
-  Fire Drakeling       craft 1     5      2      5  +13.8  2.5   1.69    7 %  strong?
-  Scrap Howitzer       craft 1     9      4      5  +24.4  3.0   1.67   10 %  strong?
-  Panacea              craft 1     9      2      5  +24.3  2.7   1.66    6 %  strong?
-  Sun Eagle            craft 1     9      3      5  +24.3  3.6   1.66   38 %  strong?
-  Dynamo               craft 1     8      2      5  +21.5  2.9   1.65   43 %  strong?
-  Hydra Bloom          craft 2    17      5      8  +30.8  3.2   1.65    8 %  strong?
-  Dragon Engine        craft 2    10      4      8  +18.0  2.9   1.65    3 %  strong?
-  Solar Array          craft 1     6      3      5  +16.0  2.0   1.64    2 %  strong?
-  War Banner           craft 1     8      2      5  +21.0  3.2   1.62   10 %  strong?
-  Drill Mole           craft 1     6      4      5  +15.6  2.2   1.60    3 %  strong?
-  Garden Bowl          craft 1     5      2      5  +13.0  2.4   1.60   10 %  strong?
-  Slag Mace            craft 1     3      2      5   +7.8  1.9   1.59   10 %  strong?
-  Flamethrower         craft 1     7      3      5  +18.0  2.5   1.58    8 %  strong?
-  Storm Coil           craft 2    15      4      8  +25.8  3.5   1.57    2 %  strong?
-  Trauma Kit           craft 1     5      2      5  +12.8  2.5   1.57    3 %  strong?
-  Absolute Zero        craft 2    13      6      8  +22.3  2.9   1.56    2 %  strong?
-  Snow Lynx            craft 1    13      4      5  +32.5  3.3   1.54    3 %  strong?
-  Mantrap Pack         craft 1     6      2      5  +14.9  2.5   1.53   34 %  strong?
-  Gravity Well         craft 1     8      2      5  +19.5  2.7   1.50   42 %         
-  Worldbreaker         craft 3    17      6     11  +15.8  2.4   1.48    0 %         
-  Frost Hatchling      craft 1     5      2      5  +12.0  2.3   1.48    8 %         
-  Spore Mine           craft 1     5      2      5  +12.0  1.9   1.48   29 %         
-  Caretaker Bot        craft 1    10      2      5  +23.8  3.0   1.46   10 %         
-  Factory Line         craft 1     6      3      5  +14.3  2.2   1.46   19 %         
-  Nano Medkit          craft 1     5      2      5  +11.8  2.2   1.45    8 %         
-  Inferno Blade        craft 2    15      3      8  +23.5  3.4   1.43    0 %         
-  EMP Cannon           craft 1    10      4      5  +23.1  3.2   1.42    7 %         
-  Juggernaut           craft 1    18      6      5  +41.6  4.4   1.42    1 %         
-  Sanctuary            craft 2    15      6      8  +23.3  2.3   1.42    1 %         
-  Space Burger         craft 1     6      2      5  +13.8  1.8   1.41    2 %         
-  Reactor Heart        craft 2    13      2      8  +20.0  3.1   1.41    1 %         
-  Laser Turret         craft 1     6      2      5  +13.6  3.0   1.40    3 %         
-  Astrolabe            craft 1     9      2      5  +20.3  3.1   1.38   13 %         
-  Titan Crab           craft 2    15      6      8  +22.6  3.0   1.38    0 %         
-  Briar Fortress       craft 1    11      6      5  +24.4  2.5   1.36    5 %         
-  Fire Jerky           craft 1     7      2      5  +15.5  3.1   1.36   10 %         
-  Power Meal           craft 1     4      2      5   +8.8  1.8   1.35    4 %         
-  Plasma Katana        craft 1     9      3      5  +19.5  3.2   1.33    5 %         
-  Gatling Laser        craft 2    11      4      8  +16.0  3.1   1.33    0 %         
-  Grand Buffet         craft 2    22      6      8  +32.0  3.0   1.33    0 %         
-  Buzz Blade           craft 1     9      3      5  +19.3  3.3   1.32    3 %         
-  Winch Harpoon        craft 1     8      3      5  +16.9  2.8   1.30    2 %         
-  Afterburner          craft 1     6      2      5  +12.5  2.6   1.28    9 %         
-  Chili Noodles        craft 1    10      2      5  +20.8  2.7   1.28    6 %         
-  Slime Pup            craft 1     4      1      5   +8.3  2.1   1.27   13 %         
-  Supernova Sundae     craft 1     8      2      5  +16.5  3.0   1.27    6 %         
-  Dying Star Scepter   craft 2    17      5      8  +23.0  3.0   1.24    8 %         
-  Spiked Bulkhead      craft 1     8      4      5  +16.0  2.4   1.23    2 %         
-  Exo Suit             craft 1     5      3      5  +10.0  2.2   1.23    1 %         
-  Inferno Canister     craft 1     6      2      5  +12.0  2.2   1.23    7 %         
-  Dust Storm           craft 1     4      2      5   +8.0  2.5   1.23    1 %         
-  Survival Suit        craft 1     6      4      5  +12.0  2.6   1.23    0 %         
-  Shell Dragon         craft 1     7      4      5  +14.0  2.1   1.23   22 %         
-  Command Drone        craft 2    15      6      8  +20.0  2.7   1.22    0 %         
-  Captain's Dinner     craft 2    11      4      8  +14.5  2.4   1.21    1 %         
-  Magma Hound          craft 1    11      4      5  +21.5  3.4   1.20    4 %         
-  Acid Sprayer         craft 1     9      3      5  +17.5  3.0   1.20    3 %         
-  Giant Mantrap        craft 1     8      3      5  +15.5  2.0   1.19   20 %         
-  Pack Bond            craft 1     7      1      5  +13.5  2.3   1.19   18 %         
-  Plague Hydra         craft 2    13      5      8  +16.6  2.4   1.17    0 %         
-  Armored Bear         craft 1    11      4      5  +20.9  3.6   1.17   20 %         
-  Twin Lasers          craft 1     6      4      5  +11.3  2.4   1.15    1 %         
-  Life Tank            craft 1     6      4      5  +11.3  2.7   1.15    1 %         
-  Bloom Artillery      craft 2    14      6      8  +17.5  2.9   1.14    0 %         
-  Turbo Cola           craft 1     7      2      5  +12.9  2.8   1.13    4 %         
-  Aegis Fortress       craft 2    17      6      8  +21.0  2.3   1.13    0 %         
-  Storm Driver         craft 2    17      4      8  +21.0  2.6   1.13   21 %         
-  Junk Titan           craft 1     9      4      5  +16.5  2.9   1.13   52 %         
-  Beetle Lantern       craft 1     5      1      5   +9.1  2.6   1.12    9 %         
-  Chime of Hours       craft 1     5      2      5   +9.1  2.4   1.12   63 %         
-  Irrigation Swarm     craft 1     8      2      5  +14.5  2.0   1.12   59 %         
-  Gunship Drone        craft 1     9      4      5  +16.3  2.9   1.11    1 %         
-  Venom Fang           craft 1     5      1      5   +9.0  2.4   1.11    7 %         
-  Aegis Projector      craft 1     9      4      5  +16.1  2.7   1.10    1 %         
-  Prism Cluster        craft 1     6      1      5  +10.8  2.8   1.10    9 %         
-  Lunar Moth           craft 1     6      1      5  +10.8  2.2   1.10    9 %         
-  Salvage Rig          craft 1    10      4      5  +17.8  2.1   1.09   18 %         
-  Hazmat Suit          craft 1     6      4      5  +10.5  2.6   1.08    0 %         
-  Glacier Mail         craft 1     8      4      5  +14.0  2.3   1.08    4 %         
-  Sniper Scope         craft 1     6      1      5  +10.5  2.3   1.08   15 %         
-  Medic Drone          craft 1     6      2      5  +10.5  2.1   1.08    4 %         
-  Dyson Bastion        craft 3    27      9     11  +18.0  2.4   1.07    0 %         
-  Star Hatchling       craft 1    14      2      5  +24.3  3.2   1.07    1 %         
-  Honey Cake           craft 1    12      2      5  +20.0  3.0   1.03    3 %         
-  Logic Core           craft 1     6      1      5  +10.0  2.3   1.03   48 %         
-  Total Eclipse        craft 1    13      3      5  +21.3  3.0   1.01   19 %         
-  Burst Rifle          craft 1     8      3      5  +13.0  2.3   1.00    5 %         
-  Fallout Beacon       craft 1     6      1      5   +9.8  2.3   1.00    2 %         
-  Hamster Wheel        craft 1     6      2      5   +9.5  2.6   0.97   11 %         
-  Plague Slug          craft 1     6      4      5   +9.5  2.0   0.97    1 %         
-  Cozy Den             craft 1     6      4      5   +9.5  1.8   0.97    5 %         
-  Overdrive Core       craft 1     8      2      5  +12.5  2.1   0.96    8 %         
-  Star Piercer         craft 2    15      4      8  +15.8  2.5   0.96    1 %         
-  Ghost Shroud         craft 1    13      3      5  +20.0  2.9   0.95    9 %         
-  Shock Trap           craft 1     7      2      5  +10.8  2.1   0.95    7 %         
-  Jelly Swarm          craft 1     8      4      5  +12.3  2.3   0.94    2 %         
-  Neutron Hammer       craft 2     9      5      8   +9.3  2.8   0.94    1 %         
-  Life Support Suit    craft 2    10      5      8  +10.0  2.1   0.91    0 %         
-  Solstice Engine      craft 1    17      4      5  +25.0  2.7   0.90   21 %         
-  Welder Bot           craft 1     6      2      5   +8.8  1.8   0.90    6 %         
-  Canticle             craft 1     9      2      5  +13.1  2.1   0.90   59 %         
-  Candied Star Fruit   craft 1     9      2      5  +12.9  2.2   0.88    9 %         
-  Fungal Mortar        craft 1     8      4      5  +11.3  2.4   0.87    1 %         
-  Event Horizon        craft 2    21      6      8  +19.6  2.5   0.85    0 %         
-  Clockwork Chick      craft 1     4      1      5   +5.5  1.6   0.85    9 %         
-  Shield Capacitor     craft 1     6      2      5   +8.3  2.8   0.85    5 %         
-  Thorn Plate          craft 1     8      4      5  +10.6  1.9   0.82    1 %         
-  Fortress Crab        craft 1     6      4      5   +7.5  2.4   0.77    1 %         
-  Bulwark Array        craft 1    14      4      5  +17.5  2.4   0.77    2 %         
-  Death Blossom        craft 3    25      6     11  +12.0  3.0   0.77    0 %         
-  Spore Stew           craft 1     6      2      5   +7.3  2.5   0.74    3 %         
-  Banquet Trough       craft 1     6      2      5   +7.0  1.8   0.72   27 %         
-  Swarm Cloud          craft 1    13      4      5  +13.3  2.4   0.63    8 %         
-  Fusion Battery       craft 1     5      1      5   +5.0  2.7   0.62   15 %         
-  Umbral Mantle        craft 1    12      4      5  +11.5  2.4   0.59    6 %         
-  Void Beam            craft 2    14      3      8   +7.8  2.1   0.51    6 %         
-  Crit Array           craft 1     8      1      5   +6.3  2.0   0.48    8 %    weak?
-  Hawk-Eye Parrot      craft 1     8      1      5   +6.0  1.7   0.46    2 %    weak?
-  Citadel Plating      craft 2    10      6      8   +4.1  1.9   0.38    0 %    weak?
-  Toxic Gland          craft 1     6      2      5   +2.3  1.7   0.23    1 %    weak?
-  Reinforced Bulkhead  craft 1     4      3      5   +0.0  1.6   0.00    3 %     WEAK
+  Sacred Flame         craft 1     7      1      5  +32.5  2.8   2.81   55 %   STRONG
+  Celestial Chimera    craft 2    14      5      8  +35.0  2.8   2.68   11 %   STRONG
+  Plasma Welder        craft 1     4      2      5  +17.6  2.8   2.67   78 %   STRONG
+  Living Armor         craft 1     8      4      5  +33.5  2.4   2.54   24 %   STRONG
+  Twin Suns            craft 1     5      2      5  +20.8  2.8   2.52   54 %   STRONG
+  Guard Hound          craft 1     5      2      5  +18.8  2.5   2.27   43 %   STRONG
+  Jungle Tyrant        craft 2    17      6      8  +35.8  3.1   2.26    8 %   STRONG
+  Thorn Pod            craft 1     5      2      5  +18.5  2.3   2.24   55 %   STRONG
+  Banquet Trough       craft 1     6      2      5  +21.9  2.8   2.21   59 %   STRONG
+  Harvest Crate        craft 1     8      4      5  +28.8  2.7   2.18   28 %   STRONG
+  Sanctuary            craft 2    15      6      8  +29.8  2.9   2.13    1 %   STRONG
+  Rat Pack             craft 1     7      3      5  +24.3  3.2   2.10   33 %   STRONG
+  Ambrosia             craft 1    10      4      5  +34.0  3.1   2.06   33 %   STRONG
+  Sun Eagle            craft 1     9      3      5  +30.0  2.5   2.02   23 %   STRONG
+  Sunblade             craft 1     5      2      5  +16.5  2.5   2.00   41 %  strong?
+  Inferno Blade        craft 2    15      3      8  +27.8  3.2   1.98    0 %   STRONG
+  Plague Blossom       craft 1     9      2      5  +29.3  2.5   1.97   48 %   STRONG
+  Fire Jerky           craft 1     7      2      5  +22.6  2.7   1.96   11 %  strong?
+  Med Bay              craft 1     6      3      5  +19.0  2.7   1.92    9 %  strong?
+  Grand Buffet         craft 2    22      6      8  +39.3  3.1   1.91    0 %   STRONG
+  Reactor Heart        craft 2    13      2      8  +22.9  2.9   1.89    1 %  strong?
+  Briar Fortress       craft 1    11      6      5  +34.3  3.4   1.89    3 %   STRONG
+  Space Burger         craft 1     6      2      5  +18.5  2.7   1.87    4 %  strong?
+  Dynamo               craft 1     8      2      5  +24.5  3.0   1.86   20 %  strong?
+  Armored Bear         craft 1    11      4      5  +33.3  3.0   1.83    3 %   STRONG
+  Helios Rod           craft 1     9      3      5  +27.0  2.8   1.82   41 %  strong?
+  Gravity Well         craft 1     8      2      5  +23.8  2.8   1.80   48 %  strong?
+  Hydra Bloom          craft 2    17      5      8  +28.3  2.9   1.78    5 %  strong?
+  Slime Pup            craft 1     4      1      5  +11.8  1.9   1.78   19 %  strong?
+  Titan Crab           craft 2    15      6      8  +24.9  3.0   1.78    0 %  strong?
+  Fallout Beacon       craft 1     6      1      5  +17.5  2.3   1.77    4 %  strong?
+  Garden Bowl          craft 1     5      2      5  +14.5  2.8   1.76    5 %  strong?
+  Solar Drake          craft 2    13      4      8  +21.3  2.5   1.75    2 %  strong?
+  Dust Storm           craft 1     4      2      5  +11.5  2.1   1.74    8 %  strong?
+  Inferno Canister     craft 1     6      2      5  +16.8  3.1   1.69    8 %  strong?
+  Dragon Engine        craft 2    10      4      8  +15.8  2.3   1.69    5 %  strong?
+  Beetle Lantern       craft 1     5      1      5  +13.5  2.9   1.64    7 %  strong?
+  Solar Array          craft 1     6      3      5  +15.8  2.3   1.59    3 %  strong?
+  War Banner           craft 1     8      2      5  +21.0  2.6   1.59    5 %  strong?
+  Litany               craft 1     8      3      5  +20.5  2.5   1.55   13 %  strong?
+  Astrolabe            craft 1     9      2      5  +22.9  2.9   1.54    8 %  strong?
+  Dying Star Scepter   craft 2    17      5      8  +24.1  3.0   1.52   13 %  strong?
+  Star Hound           craft 1     5      2      5  +12.5  2.6   1.52   56 %  strong?
+  Entropy Engine       craft 3    27      8     11  +32.9  3.3   1.48    0 %         
+  Astronaut Ration     craft 1     4      2      5   +9.8  2.9   1.48   12 %         
+  Arc Forge            craft 2    12      4      8  +16.5  2.4   1.47   63 %         
+  Rivet Cannon         craft 1     6      3      5  +14.5  2.8   1.46   22 %         
+  Sniper Scope         craft 1     6      1      5  +14.4  2.1   1.45   15 %         
+  Chili Noodles        craft 1    10      2      5  +23.9  2.8   1.45    9 %         
+  Storm Coil           craft 2    15      4      8  +20.1  2.9   1.44    0 %         
+  Storm Driver         craft 2    17      4      8  +22.8  2.7   1.44    7 %         
+  Juggernaut           craft 1    18      6      5  +42.5  3.5   1.43    0 %         
+  Scrap Howitzer       craft 1     9      4      5  +21.3  3.2   1.43   13 %         
+  Nail Storm           craft 1     4      2      5   +9.1  2.5   1.38   11 %         
+  Spiked Bulkhead      craft 1     8      4      5  +18.3  2.5   1.38    1 %         
+  Factory Line         craft 1     6      3      5  +13.5  2.5   1.36   18 %         
+  Panacea              craft 1     9      2      5  +20.0  2.8   1.35   10 %         
+  Overdrive Core       craft 1     8      2      5  +17.8  2.5   1.34   11 %         
+  Absolute Zero        craft 2    13      6      8  +16.3  2.8   1.34    1 %         
+  Captain's Dinner     craft 2    11      4      8  +13.8  2.3   1.34    0 %         
+  Jelly Swarm          craft 1     8      4      5  +17.6  2.6   1.34    0 %         
+  Glacier Cannon       craft 1     8      4      5  +17.5  2.4   1.33    7 %         
+  Life Support Suit    craft 2    10      5      8  +12.3  2.2   1.31    0 %         
+  Slag Mace            craft 1     3      2      5   +6.5  2.0   1.31    7 %         
+  Giant Mantrap        craft 1     8      3      5  +17.3  2.5   1.31   20 %         
+  Event Horizon        craft 2    21      6      8  +25.0  3.1   1.28    1 %         
+  Hamster Wheel        craft 1     6      2      5  +12.6  2.5   1.28    8 %         
+  Flamethrower         craft 1     7      3      5  +14.6  3.0   1.27    9 %         
+  Laser Turret         craft 1     6      2      5  +12.5  2.6   1.26    2 %         
+  Afterburner          craft 1     6      2      5  +12.5  3.0   1.26    8 %         
+  Phoenix              craft 3    22      4     11  +22.8  2.8   1.26    0 %         
+  Life Tank            craft 1     6      4      5  +12.3  2.4   1.24    1 %         
+  Welder Bot           craft 1     6      2      5  +12.3  2.5   1.24    6 %         
+  Survival Suit        craft 1     6      4      5  +12.3  2.4   1.24    1 %         
+  Logic Core           craft 1     6      1      5  +12.3  2.5   1.24   28 %         
+  Leviathan            craft 3    29      9     11  +29.5  3.0   1.24    0 %         
+  Frost Hatchling      craft 1     5      2      5  +10.1  2.6   1.23    5 %         
+  Lunar Moth           craft 1     6      1      5  +12.1  3.1   1.22   12 %         
+  Shell Dragon         craft 1     7      4      5  +14.0  2.1   1.21   18 %         
+  Mantrap Pack         craft 1     6      2      5  +11.9  2.5   1.20   30 %         
+  Chime of Hours       craft 1     5      2      5   +9.9  2.3   1.20   79 %         
+  Total Eclipse        craft 1    13      3      5  +25.5  2.8   1.19   18 %         
+  Trauma Kit           craft 1     5      2      5   +9.8  2.3   1.18    2 %         
+  EMP Cannon           craft 1    10      4      5  +19.3  3.1   1.17    2 %         
+  Cryo Baton           craft 1     6      2      5  +11.5  2.6   1.16    9 %         
+  Shield Capacitor     craft 1     6      2      5  +11.5  2.6   1.16    3 %         
+  Caretaker Bot        craft 1    10      2      5  +19.1  2.5   1.16    6 %         
+  Snow Lynx            craft 1    13      4      5  +24.0  2.5   1.12    2 %         
+  Prism Laser          craft 1     6      2      5  +11.0  1.8   1.11    8 %         
+  Pack Bond            craft 1     7      1      5  +12.8  2.4   1.10   28 %         
+  Plasma Katana        craft 1     9      3      5  +16.3  2.8   1.09    3 %         
+  Buzz Blade           craft 1     9      3      5  +16.3  2.5   1.09    4 %         
+  Gunship Drone        craft 1     9      4      5  +16.3  3.0   1.09    3 %         
+  Canticle             craft 1     9      2      5  +16.1  2.1   1.09   38 %         
+  Supernova Sundae     craft 1     8      2      5  +14.3  2.2   1.08    4 %         
+  Fusion Battery       craft 1     5      1      5   +8.5  2.5   1.03   11 %         
+  Irrigation Swarm     craft 1     8      2      5  +13.1  2.6   0.99   69 %         
+  Bloom Artillery      craft 2    14      6      8  +12.8  2.5   0.98    0 %         
+  Acid Sprayer         craft 1     9      3      5  +14.5  2.5   0.98    6 %         
+  Candied Star Fruit   craft 1     9      2      5  +14.5  2.8   0.98    5 %         
+  Command Drone        craft 2    15      6      8  +13.6  2.8   0.97    0 %         
+  Plague Slug          craft 1     6      4      5   +9.6  1.9   0.97    1 %         
+  Burst Rifle          craft 1     8      3      5  +12.8  2.3   0.97    2 %         
+  Citadel Plating      craft 2    10      6      8   +9.0  2.7   0.97    0 %         
+  Glacier Drake        craft 2    10      4      8   +9.0  2.7   0.97    2 %         
+  Blizzard Gem         craft 1     6      2      5   +9.5  2.7   0.96   10 %         
+  Ghost Shroud         craft 1    13      3      5  +20.5  2.9   0.96    9 %         
+  Nano Medkit          craft 1     5      2      5   +7.9  2.4   0.95   11 %         
+  Plague Hydra         craft 2    13      5      8  +11.5  2.0   0.95    0 %         
+  Fungal Mortar        craft 1     8      4      5  +12.5  2.6   0.95    1 %         
+  Clockwork Chick      craft 1     4      1      5   +6.3  1.9   0.95   10 %         
+  Hazmat Suit          craft 1     6      4      5   +9.3  2.1   0.93    2 %         
+  Fire Drakeling       craft 1     5      2      5   +7.6  2.4   0.92    7 %         
+  Star Hatchling       craft 1    14      2      5  +21.3  2.7   0.92    2 %         
+  Medic Drone          craft 1     6      2      5   +9.0  2.2   0.91    5 %         
+  Glacier Mail         craft 1     8      4      5  +11.8  1.9   0.89    3 %         
+  Magma Hound          craft 1    11      4      5  +16.1  2.7   0.89    3 %         
+  Thorn Plate          craft 1     8      4      5  +11.5  1.9   0.87    2 %         
+  Solstice Engine      craft 1    17      4      5  +24.3  2.5   0.86    7 %         
+  Turbo Cola           craft 1     7      2      5   +9.9  1.9   0.85    0 %         
+  Shock Trap           craft 1     7      2      5   +9.5  2.1   0.82    6 %         
+  Void Beam            craft 2    14      3      8  +10.5  2.3   0.80    4 %         
+  Aegis Fortress       craft 2    17      6      8  +12.8  2.4   0.80    0 %         
+  Worldbreaker         craft 3    17      6     11  +11.3  2.3   0.80    0 %         
+  Winch Harpoon        craft 1     8      3      5  +10.5  2.3   0.80    1 %         
+  Aegis Projector      craft 1     9      4      5  +11.8  1.9   0.79    0 %         
+  Venom Fang           craft 1     5      1      5   +6.5  2.6   0.79   10 %         
+  Exo Suit             craft 1     5      3      5   +6.5  2.3   0.79    1 %         
+  Spore Mine           craft 1     5      2      5   +6.5  1.3   0.79   32 %         
+  Junk Titan           craft 1     9      4      5  +11.5  2.6   0.77   40 %         
+  Umbral Mantle        craft 1    12      4      5  +15.3  2.1   0.77    7 %         
+  Honey Cake           craft 1    12      2      5  +15.0  2.8   0.76    1 %         
+  Crit Array           craft 1     8      1      5   +9.9  2.1   0.75   13 %         
+  Neutron Hammer       craft 2     9      5      8   +6.1  2.3   0.73    0 %         
+  Power Meal           craft 1     4      2      5   +4.6  2.3   0.70    3 %         
+  Bulwark Array        craft 1    14      4      5  +16.0  2.3   0.69    5 %         
+  Prism Cluster        craft 1     6      1      5   +6.8  1.9   0.68    9 %         
+  Hawk-Eye Parrot      craft 1     8      1      5   +9.0  2.0   0.68    4 %         
+  Dyson Bastion        craft 3    27      9     11  +14.3  2.1   0.64    0 %         
+  Cozy Den             craft 1     6      4      5   +6.3  1.7   0.63    8 %         
+  Twin Lasers          craft 1     6      4      5   +6.1  2.2   0.62    1 %         
+  Spore Stew           craft 1     6      2      5   +6.0  2.1   0.61    4 %         
+  Drill Mole           craft 1     6      4      5   +5.8  2.2   0.58    2 %         
+  Swarm Cloud          craft 1    13      4      5  +12.0  2.2   0.56   10 %         
+  Reinforced Bulkhead  craft 1     4      3      5   +3.5  1.8   0.53    2 %         
+  Star Piercer         craft 2    15      4      8   +7.0  1.9   0.50    0 %         
+  Death Blossom        craft 3    25      6     11   +9.8  2.7   0.47    0 %    weak?
+  Toxic Gland          craft 1     6      2      5   +3.8  2.0   0.38    3 %    weak?
+  Salvage Rig          craft 1    10      4      5   +6.3  2.5   0.38   12 %    weak?
+  Fortress Crab        craft 1     6      4      5   +3.0  2.0   0.30    1 %    weak?
+  Gatling Laser        craft 2    11      4      8   +2.5  3.6   0.24    0 %    weak?
 
 ## Artifacts (free picks)
   item                  rarity  gold  cells  round   gain    ±  value  owned  
-  Time Dilator        artifact     0      2      9  +27.0  3.9      -   26 %  
-  Ancient Egg         artifact     0      4      5  +23.3  3.6      -   64 %  
-  Nova Crown          artifact     0      2      5  +21.3  2.8      -   36 %  
-  Titan Core          artifact     0      4      9  +21.0  2.4      -   25 %  
-  Eternal Dawn        artifact     0      1      5  +20.0  2.6      -   33 %  
-  Nanite Swarm        artifact     0      2      5  +18.6  2.5      -    3 %  
-  Terrarium Heart     artifact     0      2      5  +18.5  2.6      -   60 %  
-  Master Blueprint    artifact     0      1      5  +18.0  3.0      -   41 %  
-  World Seed          artifact     0      4      5  +16.4  2.7      -   14 %  
-  Alpha Collar        artifact     0      1      5  +16.0  2.5      -   25 %  
-  Perpetual Engine    artifact     0      2      5  +15.5  2.5      -   57 %  
-  Queen Spore         artifact     0      1      5  +14.9  2.2      -   25 %  
-  Wormhole Generator  artifact     0      2      9  +13.6  2.2      -    2 %  
-  Quantum Dice        artifact     0      1      9  +12.0  2.3      -    8 %  
-  Ancient Monolith    artifact     0      4      9   +9.1  2.0      -    1 %  
-  Stellar Lens        artifact     0      1      5   +8.8  2.7      -   32 %  
-  Star Forge          artifact     0      2      9   +8.1  2.2      -   16 %  
-  Plague Vault        artifact     0      2      9   +7.5  2.1      -    0 %  
-  Ark Heart           artifact     0      2      5   +6.5  1.4      -   11 %  
-  Galactic Cookbook   artifact     0      1      9   +4.5  1.7      -    8 %  
-  Dyson Fragment      artifact     0      4      9   +3.8  1.4      -    1 %  
-  Zoo Beacon          artifact     0      1      9   +3.5  2.4      -    5 %  
+  Ancient Egg         artifact     0      4      5  +31.5  3.7      -   70 %  
+  Nova Crown          artifact     0      2      5  +21.9  2.9      -   60 %  
+  Perpetual Engine    artifact     0      2      5  +20.5  3.3      -   37 %  
+  Time Dilator        artifact     0      2      9  +18.3  2.6      -   29 %  
+  Queen Spore         artifact     0      1      5  +17.5  2.8      -   22 %  
+  Terrarium Heart     artifact     0      2      5  +17.0  2.0      -   62 %  
+  Eternal Dawn        artifact     0      1      5  +15.9  2.6      -   14 %  
+  Stellar Lens        artifact     0      1      5  +13.6  2.6      -   26 %  
+  World Seed          artifact     0      4      5  +13.5  1.9      -   16 %  
+  Elder Tusk          artifact     0      1      5  +12.9  2.2      -   30 %  
+  Titan Core          artifact     0      4      9  +12.8  2.8      -   19 %  
+  Nanite Swarm        artifact     0      2      5  +11.5  2.4      -   63 %  
+  Dyson Fragment      artifact     0      4      9   +9.9  2.3      -    1 %  
+  Ancient Monolith    artifact     0      4      9   +9.9  2.2      -    1 %  
+  Master Blueprint    artifact     0      1      5   +8.3  3.1      -    0 %  
+  Zoo Beacon          artifact     0      1      9   +7.6  2.3      -    3 %  
+  Quantum Dice        artifact     0      1      9   +7.0  1.8      -   10 %  
+  Galactic Cookbook   artifact     0      1      9   +6.5  2.3      -    5 %  
+  Wormhole Generator  artifact     0      2      9   +5.8  1.7      -    1 %  
+  Plague Vault        artifact     0      2      9   +5.8  2.5      -    3 %  
+  Star Forge          artifact     0      2      9   +5.4  1.6      -   17 %  
+  Herd Heart          artifact     0      2      5   +5.0  1.3      -    0 %  
 
-Summary: 231 of 362 priced items within 0.5–1.5; STRONG 30, WEAK 4, unclear 97.
-Win share per gold by test round: round 3: 2.63, round 5: 1.63, round 7: 1.25, round 8: 1.09, round 9: 0.94, round 11: 0.63.
-Never owned by a bot: Gatling Laser, Bloom Artillery, Citadel Plating, Life Support Suit, Titan Crab, Command Drone, Grand Buffet, Aegis Fortress, Plague Hydra, Death Blossom, Phoenix, Entropy Engine, Dyson Bastion, Leviathan, Event Horizon, Star Whale Calf.
+Summary: 238 of 362 priced items within 0.5–1.5; STRONG 35, WEAK 4, unclear 85.
+Win share per gold by test round: round 3: 3.00, round 5: 1.65, round 7: 0.97, round 8: 0.93, round 9: 0.90, round 11: 0.82.
+Never owned by a bot: Med Scanner, Neutron Hammer, Star Piercer, Command Drone, Aegis Fortress, Plague Hydra, Worldbreaker, Death Blossom, Entropy Engine, Dyson Bastion, Leviathan, Herd Heart, Juggernaut, Master Blueprint.
 
-(238 s)
+(207 s)

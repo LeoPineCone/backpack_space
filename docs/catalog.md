@@ -190,7 +190,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Biogel | common | 2 | `#` | accessory, organic | Every 4 s: heal 6. | → Nano Medkit, Slime Pup, Giant Mantrap |
 | First Aid Patch | common | 2 | `#` | accessory | Once below 50 % health: heal 26. | → Trauma Kit |
 | Targeting Lens | common | 3 | `.*./*#*/.*.` | accessory, mechanical | Starred weapons: +25 % crit. | → Burst Rifle, Sniper Scope, Crit Array, Hawk-Eye Parrot, Sun Eagle |
-| Power Cell | common | 3 | `*/#/*` | accessory, mechanical | Starred mechanical items: 15 % faster. You: +1 Energy per second. | → Aegis Projector, Fusion Battery, Hamster Wheel, Logic Core, Shield Capacitor |
+| Power Cell | common | 3 | `*/#/*` | accessory, mechanical | Starred mechanical items: 25 % faster. You: +1 Energy per second. | → Aegis Projector, Fusion Battery, Hamster Wheel, Logic Core, Shield Capacitor |
 | Coolant Tank | common | 3 | `#/#` | accessory, mechanical | Every 3.5 s: remove 1 of your debuffs and inflict 2 Cryo. | → Glacier Cannon, Frost Hatchling |
 | Lucky Comet | common | 3 | `#` | accessory | Battle start: gain 1 Power. | → War Banner |
 | Repair Kit | common | 3 | `##` | accessory, mechanical | Every 3.5 s: heal 7. | → Nano Medkit, Life Tank, Medic Drone |
@@ -202,7 +202,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Oxygen Tank | common | 3 | `#/#` | accessory, mechanical | Once below 50 % health: heal 31. | → Life Tank, Trauma Kit |
 | Saline Drip | common | 3 | `#/#` | accessory, mechanical | Every 2.5 s: heal 5. | → Med Bay |
 | Scrubber Unit | common | 3 | `##` | accessory, mechanical | Every 3 s: remove 2 of your debuffs and heal 2. | → Med Bay |
-| Solar Panel | common | 4 | `##` | accessory, mechanical | Every star phase: gain 8 Energy. When Flare begins: gain 14 Shield. | → Solar Array |
+| Solar Panel | common | 4 | `##` | accessory, mechanical | Every star phase: gain 1 Overclock and gain 6 Energy. When Flare begins: gain 14 Shield. | → Solar Array |
 | Geiger Counter | rare | 4 | `*#*` | accessory, mechanical | When a starred weapon activates: inflict 1 Radiation (50 % chance). | → Fallout Beacon |
 | Med Scanner | rare | 4 | `.*./*#*/.*.` | accessory, mechanical | Starred food: 40 % faster. |  |
 | Overclock Chip | rare | 5 | `#` | accessory, mechanical | Every 2.5 s: gain 1 Overclock. | → Overdrive Core, Storm Coil |
@@ -419,88 +419,88 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Welding Arm | common | 3 | `#/#` | weapon, mechanical | 5–7 damage every 1.6 s. Melee, 3 Energy per attack. On hit: gain 3 Shield. | → Plasma Welder, Rivet Cannon |
+| Welding Arm | common | 3 | `#/#` | weapon, mechanical | 5–7 damage every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | → Plasma Welder, Rivet Cannon |
 | Spare Parts | common | 3 | `*#*` | accessory, mechanical | Battle start: gain 11 Shield, +17 per starred mechanical item. | → Junk Titan |
 | Circuit Board | common | 3 | `#` | accessory, mechanical | Every star phase: gain 1 Overclock and gain 5 Energy. | → Logic Core |
-| Conveyor Belt | common | 3 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (50 % chance). | → Factory Line |
+| Conveyor Belt | common | 3 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield and gain 1 Energy (50 % chance). | → Factory Line |
 | Toolbox | common | 3 | `##` | accessory, mechanical | Every 4 s: gain 7 Shield and remove 1 of your debuffs. | → Factory Line |
-| Capacitor Bank | common | 3 | `##` | accessory, mechanical | Battle start: gain 2 Overclock and 10 Shield. | → Dynamo |
-| Bolt Thrower | common | 3 | `#/#` | weapon, mechanical | 2–3 damage every 1.6 s. Ranged, 3 Energy per attack. | → Rivet Cannon |
+| Capacitor Bank | common | 3 | `##` | accessory, mechanical | Battle start: gain 2 Overclock. You: +1.5 Energy per second. | → Dynamo |
+| Bolt Thrower | common | 3 | `#/#` | weapon, mechanical | 2–3 damage every 1.6 s. Ranged, 2 Energy per attack. | → Rivet Cannon |
 | Grav Clamp | common | 3 | `#` | accessory, mechanical | Every star phase: destroy 14 enemy Shield and gain 6 Shield. | → Gravity Well |
 | Magnet Crane | rare | 5 | `##` | accessory, mechanical | Every 3.5 s: destroy 5 enemy Shield and gain 7 Shield. | → Salvage Rig, Gravity Well |
 | Recycler | rare | 5 | `##` | accessory, mechanical | Every star phase: gain 8 Shield, +6 per crafted item in your backpack (max 5×). | → Salvage Rig |
 | Shield Emitter | rare | 5 | `*#*` | armor, mechanical | Every 3 s: gain 6 Shield, +4 per starred mechanical item. | → Bulwark Array |
 | Turbo Fan | rare | 5 | `#` | accessory, mechanical | Every 3 s: gain 1 Overclock. | → Dynamo |
-| Junk Cannon | rare | 6 | `*##*` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 5 Energy per attack. This item: +3 damage per starred mechanical item. | → Scrap Howitzer |
-| Scrap Golem | rare | 6 | `##` | pet, weapon, mechanical | 4–6 damage every 2.2 s. Melee, 4 Energy per attack. Battle start: gain 6 Shield per crafted item in your backpack (max 6×). | → Junk Titan |
-| Tesla Coil | epic | 8 | `#/#` | weapon, mechanical | 2–4 damage every 1.6 s. Ranged, 3 Energy per attack. On hit: inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 6×). | → Arc Forge |
+| Junk Cannon | rare | 6 | `*##*` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 4 Energy per attack. This item: +3 damage per starred mechanical item. | → Scrap Howitzer |
+| Scrap Golem | rare | 6 | `##` | pet, weapon, mechanical | 4–6 damage every 2.2 s. Melee, 3 Energy per attack. Battle start: gain 6 Shield per crafted item in your backpack (max 6×). | → Junk Titan |
+| Tesla Coil | epic | 8 | `#/#` | weapon, mechanical | 2–4 damage every 1.6 s. Ranged, 2 Energy per attack. On hit: inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 6×). | → Arc Forge |
 | Assembly Core | epic | 9 | `.*./*#*/.*.` | accessory, mechanical | Starred crafted items: +2 damage, 20 % faster. |  |
-| Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage every 3 s. Ranged, 6 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per 2 Overclock you have (max 10×). | → Storm Driver |
+| Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage every 3 s. Ranged, 5 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per 2 Overclock you have (max 10×). | → Storm Driver |
 | Bastion Frame | epic | 9 | `##/##` | armor, mechanical | Battle start: gain 70 Shield. When a weapon hits you: gain 6 Shield (20 % chance). | → Bulwark Array |
-| Quantum Forge | legendary | 12 | `##/##` | accessory, mechanical | Every star phase: gain 2 Overclock and 26 Shield. Every 3 s: destroy 8 enemy Shield. |  |
+| Quantum Forge | legendary | 12 | `##/##` | accessory, mechanical | Every star phase: gain 2 Overclock and 26 Shield. Every 3 s: destroy 8 enemy Shield. You: +2 Energy per second. |  |
 | Master Blueprint | artifact | 0 | `#` | accessory | Your crafted items: +1 damage, 15 % faster. |  |
-| Perpetual Engine | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and 6 Shield. |  |
+| Perpetual Engine | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: gain 1 Overclock, 6 Shield and gain 3 Energy. |  |
 | Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every star phase: gain 35 Shield and remove 4 of your debuffs. Every 3 s: heal 7. |  |
-| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 6–8 damage every 1.6 s. Melee, 3 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
-| Logic Core | crafted (step 1) | 6 | `*#*` | accessory, mechanical | Every star phase: gain 2 Overclock. Starred mechanical items: 20 % faster. | = Circuit Board + Power Cell |
+| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 6–8 damage every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
+| Logic Core | crafted (step 1) | 6 | `*#*` | accessory, mechanical | Every star phase: gain 2 Overclock. Starred mechanical items: 20 % faster. You: +1 Energy per second. | = Circuit Board + Power Cell |
 | Factory Line | crafted (step 1) | 6 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (60 % chance). Every 3.5 s: gain 8 Shield and remove 1 of your debuffs. | = Conveyor Belt + Toolbox |
-| Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 3–5 damage every 1.2 s. Ranged, 3 Energy per attack. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
+| Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 3–5 damage every 1.2 s. Ranged, 2 Energy per attack. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
 | Dynamo | crafted (step 1) | 8 | `##` | accessory, mechanical | Battle start: gain 4 Overclock and 16 Shield. Every 2.5 s: gain 1 Overclock. You: +2 Energy per second. | = Capacitor Bank + Turbo Fan; → Storm Driver |
 | Gravity Well | crafted (step 1) | 8 | `##` | accessory, mechanical | Every star phase: destroy 18 enemy Shield. Every 3 s: destroy 8 enemy Shield, gain 8 Shield and inflict 2 Cryo. | = Grav Clamp + Magnet Crane |
-| Scrap Howitzer | crafted (step 1) | 9 | `*##*/*##*` | weapon, mechanical | 7–10 damage every 2.4 s. Ranged, 5 Energy per attack. This item: +3 damage per starred mechanical item. | = Junk Cannon + Scrap Metal + Copper Wire |
-| Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 6–8 damage every 2 s. Melee, 4 Energy per attack. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
+| Scrap Howitzer | crafted (step 1) | 9 | `*##*/*##*` | weapon, mechanical | 7–10 damage every 2.4 s. Ranged, 4 Energy per attack. This item: +3 damage per starred mechanical item. | = Junk Cannon + Scrap Metal + Copper Wire |
+| Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 6–8 damage every 2 s. Melee, 3 Energy per attack. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
 | Salvage Rig | crafted (step 1) | 10 | `##/##` | accessory, mechanical | Every 3 s: destroy 8 enemy Shield and gain 11 Shield. Every star phase: gain 6 Shield per crafted item in your backpack (max 6×). | = Magnet Crane + Recycler |
 | Bulwark Array | crafted (step 1) | 14 | `*##*/*##*` | armor, mechanical | Battle start: gain 80 Shield. Every 2.5 s: gain 10 Shield, +5 per starred mechanical item. | = Shield Emitter + Bastion Frame |
-| Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage every 1.4 s. Melee, 3 Energy per attack. On hit: gain 3 Shield, inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
-| Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 14–17 damage every 2.4 s. Ranged, 5 Energy per attack. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield and deal 1 damage per 2 Overclock you have (max 12×). | = Rail Driver + Dynamo |
+| Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage every 1.4 s. Melee, 2 Energy per attack. On hit: gain 3 Shield, inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
+| Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 14–17 damage every 2.4 s. Ranged, 4 Energy per attack. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield and deal 1 damage per 2 Overclock you have (max 12×). | = Rail Driver + Dynamo |
 
 ### Quill (35)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Space Pup | common | 2 | `#` | pet, weapon, organic | 3–4 damage every 1.7 s. Melee, 4 Energy per attack. | → Star Hound, Guard Hound |
-| Grooming Comb | common | 2 | `*#*` | accessory | Starred pets: 10 % faster, +10 % crit. | → Pack Bond |
+| Space Pup | common | 2 | `#` | pet, weapon, organic | 3–4 damage every 1.7 s. Melee, 3 Energy per attack. | → Star Hound, Guard Hound |
+| Grooming Comb | common | 2 | `*#*` | accessory | Starred pets: 10 % faster, +10 % crit, -1 Energy per attack. | → Pack Bond |
 | Treat Pouch | common | 3 | `*#*` | food | Starred pets: +2 damage. Every 4 s: heal 4 and gain 2 Energy. |  |
-| Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 30 % faster. | → Cozy Den |
+| Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 30 % faster, -1 Energy per attack. | → Cozy Den |
 | Kibble Sack | common | 3 | `#/#` | food | Every 3.5 s: heal 1 per pet in your backpack (max 6×) and gain 3 Energy. Every 3.5 s: gain 1 Power (40 % chance). | → Cozy Den, Rat Pack, Banquet Trough |
-| Burrow Rat | common | 3 | `#` | pet, weapon, organic | 1–2 damage every 1.4 s. Melee, 3 Energy per attack. | → Star Hound, Rat Pack |
+| Burrow Rat | common | 3 | `#` | pet, weapon, organic | 1–2 damage every 1.4 s. Melee, 2 Energy per attack. | → Star Hound, Rat Pack |
 | Feeding Bowl | common | 3 | `*#*` | food | When a starred pet activates: heal 2 and gain 1 Energy (50 % chance). | → Banquet Trough |
-| Guard Goose | common | 3 | `#` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, 4 Energy per attack. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
+| Guard Goose | common | 3 | `#` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, 3 Energy per attack. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
 | Pack Lizard | common | 4 | `##` | pet, armor, organic | Battle start: gain 7 Shield per pet in your backpack (max 8×). | → Shell Dragon |
-| Hatchery | rare | 5 | `##/##` | accessory, mechanical | Battle start: gain 1 Power per 3 pets in your backpack (max 2×). Every star phase: heal 1 per pet in your backpack (max 6×). |  |
+| Hatchery | rare | 5 | `##/##` | accessory, mechanical | Battle start: gain 1 Power per 3 pets in your backpack (max 2×). Every star phase: heal 1 per pet in your backpack (max 6×) and gain 4 Energy. |  |
 | Calling Shell | rare | 5 | `#` | accessory | Your pets: +1 damage. | → Pack Bond |
 | War Saddle | rare | 5 | `*#*` | armor | Starred pets: +3 damage. Battle start: gain 16 Shield. | → Armored Bear |
 | Glow Swarm | rare | 5 | `##` | pet, organic | Every 2.5 s: deal 1 damage per 2 pets in your backpack (max 5×). | → Swarm Cloud |
 | Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 2–3 damage every 1.2 s. Melee, 3 Energy per attack. This item: +20 % crit. | → Sun Eagle |
 | Moon Bear | rare | 6 | `##/##` | pet, weapon, organic | 8–11 damage every 2.6 s. Melee, 5 Energy per attack. You: +28 max health. | → Armored Bear |
 | Hive Queen | epic | 8 | `##/##` | pet, organic | Every 2.5 s: deal 1 damage per pet in your backpack (max 8×). | → Swarm Cloud |
-| Nursery | epic | 8 | `##/##` | accessory, mechanical | Every star phase: heal 4 per pet in your backpack (max 8×). Your pets: 10 % faster. |  |
-| Tusked Behemoth | epic | 9 | `###/###` | pet, weapon, organic | 16–22 damage every 2.9 s. Melee, 5 Energy per attack. Battle start: gain 28 Shield. | → Juggernaut |
-| Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, 5 Energy per attack. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
-| Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, 3 Energy per attack. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
+| Nursery | epic | 8 | `##/##` | accessory, mechanical | Every star phase: heal 4 per pet in your backpack (max 8×). Your pets: 10 % faster. You: +1.5 Energy per second. |  |
+| Tusked Behemoth | epic | 9 | `###/###` | pet, weapon, organic | 16–22 damage every 2.9 s. Melee, 4 Energy per attack. Battle start: gain 28 Shield. | → Juggernaut |
+| Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, 4 Energy per attack. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
+| Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, 2 Energy per attack. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
 | Elder Tusk | artifact | 0 | `#` | accessory | Your pets: +1 damage, +15 % crit. |  |
 | Herd Heart | artifact | 0 | `##` | accessory, organic | You: +14 max health per pet in your backpack (max 10×). Every star phase: heal 4 per pet in your backpack (max 10×). |  |
-| Ancient Egg | artifact | 0 | `##/##` | pet, weapon, organic | 8–11 damage every 1.8 s. Melee, 4 Energy per attack. Every star phase: gain 2 Power. |  |
+| Ancient Egg | artifact | 0 | `##/##` | pet, weapon, organic | 8–11 damage every 1.8 s. Melee, 3 Energy per attack. Every star phase: gain 2 Power. |  |
 | Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, 3 Energy per attack. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
 | Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, 3 Energy per attack. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
 | Cozy Den | crafted (step 1) | 6 | `*##*/*##*` | accessory | Starred pets: 40 % faster. Every 3 s: heal 1 per pet in your backpack (max 8×). | = Pet Bed + Kibble Sack |
-| Banquet Trough | crafted (step 1) | 6 | `*##*` | food | Every 3 s: heal 2 per pet in your backpack (max 8×) and gain 1 Power. When a starred pet activates: heal 2 (60 % chance). | = Feeding Bowl + Kibble Sack |
+| Banquet Trough | crafted (step 1) | 6 | `*##*` | food | Every 3 s: heal 2 per pet in your backpack (max 8×), gain 1 Power and gain 2 Energy. When a starred pet activates: heal 2 (60 % chance). | = Feeding Bowl + Kibble Sack |
 | Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, weapon, organic | 2–3 damage every 0.6 s. Melee, 2 Energy per attack. | = Burrow Rat + Burrow Rat + Kibble Sack |
 | Shell Dragon | crafted (step 1) | 7 | `##/##` | pet, armor, organic | Battle start: gain 7 Shield per pet in your backpack (max 8×) and 2 Spikes. | = Pack Lizard + Rock Crab |
 | Pack Bond | crafted (step 1) | 7 | `*#*` | accessory | Your pets: +1 damage. Starred pets: 20 % faster, +15 % crit. | = Grooming Comb + Calling Shell |
-| Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.1 s. Melee, 3 Energy per attack. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
-| Armored Bear | crafted (step 1) | 11 | `##/##` | pet, weapon, armor, organic | 16–21 damage every 2.2 s. Melee, 4 Energy per attack. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
+| Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.1 s. Melee, 2 Energy per attack. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
+| Armored Bear | crafted (step 1) | 11 | `##/##` | pet, weapon, armor, organic | 16–21 damage every 2.2 s. Melee, 3 Energy per attack. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
 | Swarm Cloud | crafted (step 1) | 13 | `##/##` | pet, organic | Every 2 s: deal 1 damage per pet in your backpack (max 10×) and inflict 1 Jam. | = Glow Swarm + Hive Queen |
-| Juggernaut | crafted (step 1) | 18 | `###/###` | pet, weapon, organic | 28–36 damage every 2.4 s. Melee, 5 Energy per attack. This item: +25 % crit. On hit: destroy 12 enemy Shield. Battle start: gain 56 Shield. | = Thunder Ram + Tusked Behemoth |
-| Celestial Chimera | crafted (step 2) | 14 | `##/##/#.` | pet, weapon, organic | 8–12 damage every 0.8 s. Melee, 2 Energy per attack. This item: +35 % crit. On hit: inflict 2 Burn (20 % chance). | = Star Hound + Sun Eagle |
+| Juggernaut | crafted (step 1) | 18 | `###/###` | pet, weapon, organic | 28–36 damage every 2.4 s. Melee, 4 Energy per attack. This item: +25 % crit. On hit: destroy 12 enemy Shield. Battle start: gain 56 Shield. | = Thunder Ram + Tusked Behemoth |
+| Celestial Chimera | crafted (step 2) | 14 | `##/##/#.` | pet, weapon, organic | 8–12 damage every 0.8 s. Melee, 1 Energy per attack. This item: +35 % crit. On hit: inflict 2 Burn (20 % chance). | = Star Hound + Sun Eagle |
 
 ### Ysel (35)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
 | Sun Shard | common | 2 | `#` | weapon | 3–4 damage every 1.7 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. | → Sunblade, Twin Suns |
-| Prayer Bell | common | 2 | `#` | accessory | Every star phase: heal 18 and gain 6 Energy. | → Chime of Hours |
-| Votive Candle | common | 2 | `#` | accessory | Every star phase: inflict 2 Burn, heal 6 and gain 4 Energy. | → Sacred Flame |
+| Prayer Bell | common | 2 | `#` | accessory | Every star phase: heal 18. | → Chime of Hours |
+| Votive Candle | common | 2 | `#` | accessory | Every star phase: inflict 2 Burn and heal 6. | → Sacred Flame |
 | Sundial | common | 3 | `#` | accessory | Your items: 20 % faster (during Red Giant/Collapse/Supernova). | → Chime of Hours |
 | Flare Catcher | common | 3 | `##` | accessory, mechanical | When Flare begins: gain 3 Power. | → Solstice Engine, Canticle |
 | Ember Censer | common | 3 | `#/#` | accessory | Every 3.2 s: inflict 2 Burn, +1 per 2 Power you have (max 4×). | → Helios Rod |

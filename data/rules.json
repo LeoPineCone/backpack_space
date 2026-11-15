@@ -203,6 +203,6 @@
   "energy": {
     "max": 20,
     "start": 20,
-    "regen": 10
+    "regen": 12
   }
 }
