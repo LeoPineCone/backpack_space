@@ -79,6 +79,10 @@
     { "id": "activate", "group": "fight", "en": "Activate", "de": "Auslösen", "text": "An item acts: a weapon attacks, other items use their effect.", "code": ["on: use", "starUse", "shipUse"] },
     { "id": "buff", "group": "fight", "en": "Buff", "de": "Buff", "text": "Status that helps you.", "code": ["BUFFS", "gain"] },
     { "id": "debuff", "group": "fight", "en": "Debuff", "de": "Debuff", "text": "Status that hurts the enemy.", "code": ["DEBUFFS", "inflict"] },
+    { "id": "energy", "group": "fight", "en": "Energy", "de": "Energie", "icon": "energy", "text": "Every attack costs Energy. You start with {energy.start}, it refills by {energy.regen} per second up to {energy.max}. A weapon without enough Energy waits.", "code": ["rules.energy", "item.energy", "do: energy"] },
+    { "id": "energyRegen", "group": "effect", "en": "Energy refill", "de": "Energie-Nachschub", "icon": "energyRegen", "text": "More Energy per second.", "code": ["mod.energyRegen"] },
+    { "id": "melee", "group": "fight", "en": "Melee", "de": "Nahkampf", "icon": "melee", "text": "A weapon that hits up close.", "code": ["range: melee"] },
+    { "id": "ranged", "group": "fight", "en": "Ranged", "de": "Fernkampf", "icon": "ranged", "text": "A weapon that shoots from afar.", "code": ["range: ranged"] },
 
     { "id": "dying_star", "group": "clock", "en": "Dying star", "de": "Sterbender Stern", "text": "The fight clock: the star next to the duel ages through its phases.", "code": ["rules.battle.phases"] },
     { "id": "phase", "group": "clock", "en": "Star phase", "de": "Sternphase", "icon": "phase", "text": "The star ages: {phases}, then {supernova}.", "code": ["on: phase", "if.phase"] },
@@ -92,7 +96,7 @@
     { "id": "regen", "group": "buff", "en": "Regen", "de": "Regeneration", "icon": "regen", "text": "Heals every {status.regen.interval} s, per stack." },
     { "id": "overclock", "group": "buff", "en": "Overclock", "de": "Übertakten", "icon": "overclock", "text": "All your items {status.overclock.speedPct} % faster per stack." },
     { "id": "power", "group": "buff", "en": "Power", "de": "Kraft", "icon": "power", "text": "+1 weapon damage per stack." },
-    { "id": "spikes", "group": "buff", "en": "Spikes", "de": "Stacheln", "icon": "spikes", "text": "Weapon hits against you hurt the attacker." },
+    { "id": "spikes", "group": "buff", "en": "Spikes", "de": "Stacheln", "icon": "spikes", "text": "Weapon hits against you hurt the attacker, melee and ranged alike." },
 
     { "id": "burn", "group": "debuff", "en": "Burn", "de": "Brand", "icon": "burn", "text": "Damage every {status.burn.interval} s, then fades by {status.burn.decay}. Shield stops it." },
     { "id": "toxin", "group": "debuff", "en": "Toxin", "de": "Gift", "icon": "toxin", "text": "Damage every {status.toxin.interval} s. Ignores Shield." },

@@ -1,7 +1,7 @@
 /** Turns a build (hero + placed items) into a battle-ready side: stars resolved, passives applied. */
 import type { GameData, ItemDef } from "./gamedata.js";
 import { bagsUnder, boardOf, starred } from "./grid.js";
-import type { Build, Effect, FilterTag, HeroData, Mod, Placement } from "./schema.js";
+import type { Build, Effect, FilterTag, HeroData, Mod, Placement, Range } from "./schema.js";
 
 export interface CEffect {
   e: Effect;
@@ -21,6 +21,9 @@ export interface CItem {
   /** percent */
   speed: number;
   ready: number;
+  /** Energy one attack costs (weapons) */
+  energy: number;
+  range: Range | null;
   /** triggered effects of this item */
   effects: CEffect[];
   /** phase-dependent passive bonuses */
@@ -30,6 +33,8 @@ export interface CSide {
   hero: HeroData;
   round: number;
   maxHp: number;
+  /** Energy per second on top of the refill in the rules (from items) */
+  energyBonus: number;
   items: CItem[];
   heroEffects: CEffect[];
   /** starUse and shipUse effects to fire when item i activates */
@@ -77,10 +82,11 @@ export function compile(build: Build, data: GameData): CSide {
   const board = boardOf(w, h, build.bags, build.items, data.shape);
   const items: CItem[] = build.items.map((p, idx) => {
     const def = data.items.get(p.item)!;
-    return { def, idx, starred: starred(board, build.items, idx, data.shape), cooldown: def.cooldown ?? 0, dmg: def.damage ? [def.damage[0], def.damage[1]] : null, crit: 0, speed: 0, ready: 0, effects: [], dyn: [] };
+    return { def, idx, starred: starred(board, build.items, idx, data.shape), cooldown: def.cooldown ?? 0, dmg: def.damage ? [def.damage[0], def.damage[1]] : null, crit: 0, speed: 0, ready: 0, energy: def.energy ?? 0, range: def.range ?? null, effects: [], dyn: [] };
   });
   const round = Math.min(Math.max(build.round, 1), data.rules.rounds);
   let maxHp = data.rules.heroHp[round - 1]! + hero.hpBonus;
+  let energyBonus = 0;
 
   const staticMult = (e: Effect, it: CItem | null): number => {
     const per = e.per;
@@ -97,6 +103,7 @@ export function compile(build: Build, data: GameData): CSide {
     if (mod.speed) target.speed += mod.speed * k;
     if (mod.crit) target.crit += mod.crit * k;
     if (mod.ready) target.ready = Math.min(100, target.ready + mod.ready * k);
+    if (mod.energy && target.dmg) target.energy += mod.energy * k;
   };
   const scale = (mod: Mod, k: number): Mod => Object.fromEntries(Object.entries(mod).map(([key, v]) => [key, (v as number) * k]));
 
@@ -106,7 +113,7 @@ export function compile(build: Build, data: GameData): CSide {
     const mult = staticMult(e, it);
     if (e.on === "passive") {
       if (mult === 0) return;
-      if (e.to === "hero") { maxHp += (e.mod!.maxHp ?? 0) * mult; return; }
+      if (e.to === "hero") { maxHp += (e.mod!.maxHp ?? 0) * mult; energyBonus += (e.mod!.energyRegen ?? 0) * mult; return; }
       const targets = e.to === "self" ? (it ? [it] : []) : e.to === "stars" ? it!.starred.map((j) => items[j]!).filter((t) => has(t.def, e.tag)) : items.filter((t) => has(t.def, e.tag));
       for (const t of targets) {
         if (e.if?.phase) t.dyn.push({ phases: e.if.phase, mod: scale(e.mod!, mult) });
@@ -127,10 +134,10 @@ export function compile(build: Build, data: GameData): CSide {
   const under = build.items.map((_, i) => bagsUnder(board, build.items, i, data.shape));
   build.bags.forEach((bp, bi) => {
     for (const e of data.items.get(bp.item)!.effects) {
-      if (e.to === "hero") maxHp += e.mod!.maxHp ?? 0;
+      if (e.to === "hero") { maxHp += e.mod!.maxHp ?? 0; energyBonus += e.mod!.energyRegen ?? 0; }
       else for (const t of items) if (under[t.idx]!.includes(bi) && has(t.def, e.tag)) applyMod(t, e.mod!, 1);
     }
   });
-  for (const it of items) if (it.dmg) { it.dmg[0] = Math.max(0, it.dmg[0]); it.dmg[1] = Math.max(it.dmg[0], it.dmg[1]); }
-  return { hero, round, maxHp: Math.round(maxHp), items, heroEffects, watchers };
+  for (const it of items) if (it.dmg) { it.dmg[0] = Math.max(0, it.dmg[0]); it.dmg[1] = Math.max(it.dmg[0], it.dmg[1]); it.energy = Math.max(0, it.energy); }
+  return { hero, round, maxHp: Math.round(maxHp), energyBonus, items, heroEffects, watchers };
 }

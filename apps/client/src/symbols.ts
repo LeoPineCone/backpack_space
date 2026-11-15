@@ -51,6 +51,7 @@ function thenChips(e: Effect): Chip[] {
   if (e.do === "heal") out.push({ icon: "heal", text: n, kind: "buff" });
   if (e.do === "cleanse") out.push({ icon: "cleanse", text: n, kind: "buff" });
   if (e.do === "strip") out.push({ icon: "strip", text: n, kind: "debuff" });
+  if (e.do === "energy") out.push({ icon: "energy", text: `+${n}`, kind: "buff" });
   const m = e.mod;
   if (m) {
     if (m.damage) out.push({ icon: "damage", text: `${m.damage > 0 ? "+" : ""}${num(m.damage)}`, kind: "buff" });
@@ -58,6 +59,8 @@ function thenChips(e: Effect): Chip[] {
     if (m.crit) out.push({ icon: "crit", text: `+${num(m.crit)}%`, kind: "buff" });
     if (m.maxHp) out.push({ icon: "maxHp", text: `+${num(m.maxHp)}`, kind: "buff" });
     if (m.ready) out.push({ icon: "ready", text: `${num(m.ready)}%`, kind: "buff" });
+    if (m.energy) out.push({ icon: "energy", text: `${m.energy > 0 ? "+" : ""}${num(m.energy)}`, kind: m.energy < 0 ? "buff" : "debuff" });
+    if (m.energyRegen) out.push({ icon: "energyRegen", text: `+${num(m.energyRegen)}`, kind: "buff" });
   }
   const per = e.per;
   if (per) {
@@ -92,6 +95,8 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
   if (def.cooldown !== undefined) {
     first = { when: [{ icon: "clock", text: num(def.cooldown), kind: "trigger" }], then: [] };
     if (def.damage) first.then.push({ icon: "damage", text: def.damage[0] === def.damage[1] ? num(def.damage[0]) : `${num(def.damage[0])}–${num(def.damage[1])}`, kind: "debuff" });
+    if (def.range) first.then.push({ icon: def.range, kind: "plain" });
+    if (def.energy !== undefined) first.then.push({ icon: "energy", text: `-${num(def.energy)}`, kind: "plain" });
   }
   return effectRows(def.effects, data, def.cooldown, first);
 }
@@ -119,7 +124,7 @@ export const GLOSSARY_GROUPS: { title: string; icons: string[] }[] = [
   { title: "ui.group.types", icons: [...TAGS, "bag", "crafted"] },
   { title: "ui.group.buffs", icons: [...BUFFS] },
   { title: "ui.group.debuffs", icons: [...DEBUFFS] },
-  { title: "ui.group.effects", icons: ["damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready"] },
+  { title: "ui.group.effects", icons: ["damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "energy", "energyRegen", "melee", "ranged"] },
   { title: "ui.group.when", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
   { title: "ui.group.who", icons: ["self", "star", "ship", "hero"] },
 ];

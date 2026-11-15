@@ -8,6 +8,8 @@ import { BUFFS, DEBUFFS, type Rules } from "./schema.js";
 
 export interface ReplaySide {
   hp: number;
+  /** rebuilt from the refill rate, the attacks and the Energy events */
+  energy: number;
   st: Record<Status, number>;
   /** the shown Shield is an estimate (a fully blocked hit is not in the log) */
   shieldRough: boolean;
@@ -28,7 +30,7 @@ export class Replay {
     this.log = result.log ?? [];
     this.endTick = Math.round(result.seconds / rules.battle.tick);
     this.sides = [0, 1].map((i) => ({
-      hp: result.maxHp[i as 0 | 1], shieldRough: false,
+      hp: result.maxHp[i as 0 | 1], energy: Math.min(rules.energy.max, rules.energy.start), shieldRough: false,
       st: Object.fromEntries([...BUFFS, ...DEBUFFS].map((s) => [s, 0])) as Record<Status, number>,
     })) as [ReplaySide, ReplaySide];
   }
@@ -69,6 +71,7 @@ export class Replay {
     this.tickDone++;
     const T = this.tickDone * B.tick + 1e-6;
     const every = (interval: number) => this.tickDone % Math.max(1, Math.round(interval / B.tick)) === 0;
+    this.sides.forEach((s, i) => { s.energy = Math.min(this.rules.energy.max, s.energy + Math.max(0, this.rules.energy.regen + this.c[i]!.energyBonus) * B.tick); });
     let decayed = false;
     const decay = () => {
       if (decayed) return;
@@ -100,6 +103,7 @@ export class Replay {
     switch (e.k) {
       case "attack": {
         const it = this.c[e.s]!.items[e.i];
+        me.energy = Math.max(0, me.energy - (it?.energy ?? 0));
         foe.hp -= e.v;
         this.block(foe, null, e.v, it?.dmg ? (it.dmg[0] + it.dmg[1]) / 2 + me.st.power : 0);
         break;
@@ -132,7 +136,9 @@ export class Replay {
         break;
       }
       case "phase": this.phaseIdx = e.v; break;
-      case "miss": case "use": break;
+      case "miss": me.energy = Math.max(0, me.energy - (this.c[e.s]!.items[e.i]?.energy ?? 0)); break;
+      case "energy": me.energy = Math.min(this.rules.energy.max, me.energy + e.v); break;
+      case "use": break;
     }
   }
 }

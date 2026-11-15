@@ -103,6 +103,9 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Activate** | Auslösen | An item acts: a weapon attacks, other items use their effect. | `on: use`, `starUse`, `shipUse` |
 | **Buff** | Buff | Status that helps you. | `BUFFS`, `gain` |
 | **Debuff** | Debuff | Status that hurts the enemy. | `DEBUFFS`, `inflict` |
+| **Energy** | Energie | Every attack costs Energy. You start with 20, it refills by 12 per second up to 20. A weapon without enough Energy waits. | `rules.energy`, `item.energy`, `do: energy` |
+| **Melee** | Nahkampf | A weapon that hits up close. | `range: melee` |
+| **Ranged** | Fernkampf | A weapon that shoots from afar. | `range: ranged` |
 
 ## The dying star
 
@@ -124,7 +127,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Regen** | Regeneration | Heals every 2 s, per stack. | `regen` |
 | **Overclock** | Übertakten | All your items 3 % faster per stack. | `overclock` |
 | **Power** | Kraft | +1 weapon damage per stack. | `power` |
-| **Spikes** | Stacheln | Weapon hits against you hurt the attacker. | `spikes` |
+| **Spikes** | Stacheln | Weapon hits against you hurt the attacker, melee and ranged alike. | `spikes` |
 
 ## Debuffs
 
@@ -140,6 +143,7 @@ Every game term with the English word used in the game, the docs and the code, t
 
 | English | German | Meaning | In code |
 |---|---|---|---|
+| **Energy refill** | Energie-Nachschub | More Energy per second. | `mod.energyRegen` |
 | **Damage** | Schaden | Hurts the enemy. | `damage`, `do: damage`, `mod.damage` |
 | **Heal** | Heilen | Restores health. | `do: heal` |
 | **Cleanse** | Reinigen | Removes your debuffs. | `do: cleanse` |

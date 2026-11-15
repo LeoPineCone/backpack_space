@@ -29,6 +29,10 @@ const PATHS: Record<string, string> = {
   jam: "M12 4a8 8 0 1 0 0 16a8 8 0 0 0 0-16zM6.5 6.5l11 11",
   radiation: "M12 10a2 2 0 1 0 0 4a2 2 0 0 0 0-4zM12 3v4M4.2 16.5l3.500-2M19.800 16.500l-3.500-2M12 3a9 9 0 0 1 7.800 13.500M4.200 16.500A9 9 0 0 1 12 3",
   // effects
+  energy: "M7 7h10v12H7zM10 4h4v3M13 9l-3 4h4l-3 4",
+  energyRegen: "M7 7h10v12H7zM10 4h4v3M12 10v6M9 13h6",
+  melee: "M5 19l3-3M7 14l3 3M9 15L19 5V3h-2L7 13",
+  ranged: "M12 5a7 7 0 1 0 0 14a7 7 0 0 0 0-14zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6zM12 2v4M12 18v4M2 12h4M18 12h4",
   damage: "M12 3l2 6l6-2l-4 5l4 5l-6-2l-2 6l-2-6l-6 2l4-5l-4-5l6 2z",
   heal: "M12 5v14M5 12h14",
   cleanse: "M11 3l1.800 5.200L18 10l-5.200 1.800L11 17l-1.800-5.200L4 10l5.200-1.800zM18 16v4M16 18h4",

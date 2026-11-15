@@ -4,7 +4,7 @@
  */
 import { Container, Graphics, Rectangle, type FederatedPointerEvent } from "pixi.js";
 import {
-  boardOf, buy, dropBag, dropItem, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
+  boardOf, buildOf, buildStats, buy, compile, dropBag, dropItem, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
   type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
@@ -16,6 +16,7 @@ import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { heroPopup, itemPopup } from "./popup";
 import { specialOverlay } from "./special";
 import { battleScene } from "./battle";
+import { fmt, statsOverlay } from "./stats";
 import { t } from "../i18n";
 
 type Src = { kind: "offer" | "loose" | "item" | "bag"; i: number };
@@ -81,6 +82,7 @@ export function shopScene(game: Game): Scene {
     const gold = hudPill("coin", r.gold, C.gold, C.gold);
     view.addChild(at(gold, W - 15 - gold.width, 14));
     view.addChild(at(infoButton(15, () => openIntro()), W - 15 - gold.width - 26, 36));
+
 
     // offers
     r.offers.forEach((o, i) => {
@@ -159,6 +161,20 @@ export function shopScene(game: Game): Scene {
       lx += pw + 8;
     });
     if (r.loose.length >= rules.shop.looseLimit) view.addChild(at(txt(`${r.loose.length}/${rules.shop.looseLimit}`, 12, { color: C.bad, anchor: [1, 0] }), FLOOR.x + FLOOR.w - 8, FLOOR.y + 6));
+
+    // running numbers between the loose items and the bottom row: health for the next fight, Energy used / gained per second, all numbers
+    {
+      const st = buildStats(compile(buildOf(r), data), rules);
+      const short = st.energy.need > st.energy.income + 1e-9;
+      const row = new Container();
+      const health = hudPill("maxHp", st.maxHp, C.line, C.good, 34);
+      tappable(health, () => game.toast(t("toast.roundHealth", { n: r.round, base: rules.heroHp[r.round - 1]! })), new Rectangle(0, 0, health.width, 34));
+      const energy = hudPill("energy", `${fmt(st.energy.need)} / ${fmt(st.energy.income)}`, short ? C.bad : C.line, short ? C.bad : C.gold, 34);
+      tappable(energy, () => game.toast(t(short ? "toast.energyShort" : "toast.energyOk", { need: fmt(st.energy.need), income: fmt(st.energy.income) })), new Rectangle(0, 0, energy.width, 34));
+      const more = roundButton("chart", 17, () => game.openOverlay(statsOverlay(game)), { line: C.dim, iconSize: 18 });
+      row.addChild(health, at(energy, health.width + 8, 0), at(more, health.width + 8 + energy.width + 8 + 17, 17));
+      view.addChild(at(row, (W - row.width) / 2, FLOOR.y + FLOOR.h + 12));
+    }
 
     // bottom row: reroll, fight, sell
     const rr = roundButton("dice", 32, () => { if (reroll(run(), data, game.rng)) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
@@ -323,5 +339,6 @@ export function shopScene(game: Game): Scene {
   window.addEventListener("wheel", onWheel, { passive: false });
 
   render();
+  later.push(() => game.toast(t("toast.roundHealth", { n: run().round, base: rules.heroHp[run().round - 1]! })));
   return { root, update: () => { for (const f of later.splice(0)) f(); }, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
 }

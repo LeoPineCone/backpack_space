@@ -13,10 +13,10 @@ export interface BattleEvent {
   s: 0 | 1;
   /** item index, -1 = hero or the star */
   i: number;
-  k: "attack" | "miss" | "damage" | "heal" | "gain" | "inflict" | "cleanse" | "strip" | "tick" | "phase" | "nova" | "use";
+  k: "attack" | "miss" | "damage" | "heal" | "gain" | "inflict" | "cleanse" | "strip" | "tick" | "phase" | "nova" | "use" | "energy";
   /** amount */
   v: number;
-  /** status id, phase id or damage source */
+  /** status id, phase id, damage source or (attack, miss) the weapon's range */
   w?: string;
   crit?: boolean;
 }
@@ -26,6 +26,10 @@ export interface SideStats {
   /** received */
   nova: number;
   healed: number; shielded: number;
+  /** Energy spent on attacks and gained from items (not the steady refill) */
+  energySpent: number; energyGained: number;
+  /** seconds weapons stood ready but waited for Energy, summed over weapons */
+  energyWait: number;
   /** per item: activations and damage */
   uses: number[]; itemDamage: number[];
 }
@@ -44,19 +48,19 @@ export interface BattleResult {
 }
 
 interface Side {
-  c: CSide; hp: number; st: Record<Status, number>; prog: number[]; low: boolean; stats: SideStats;
+  c: CSide; hp: number; energy: number; st:  Record<Status, number>; prog: number[]; low: boolean; stats: SideStats;
 }
 
-const newSide = (c: CSide): Side => ({
-  c, hp: c.maxHp, low: false,
+const newSide = (c: CSide, rules: Rules): Side => ({
+  c, hp: c.maxHp, energy: Math.min(rules.energy.max, rules.energy.start), low: false,
   st: Object.fromEntries([...BUFFS, ...DEBUFFS].map((s) => [s, 0])) as Record<Status, number>,
   prog: c.items.map((it) => (it.cooldown * it.ready) / 100),
-  stats: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0, nova: 0, healed: 0, shielded: 0, uses: c.items.map(() => 0), itemDamage: c.items.map(() => 0) },
+  stats: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0, nova: 0, healed: 0, shielded: 0, energySpent: 0, energyGained: 0, energyWait: 0, uses: c.items.map(() => 0), itemDamage: c.items.map(() => 0) },
 });
 
 export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: { log?: boolean } = {}): BattleResult {
   const rng = new Rng(seed);
-  const S: [Side, Side] = [newSide(a), newSide(b)];
+  const S: [Side, Side] = [newSide(a, rules), newSide(b, rules)];
   const R = rules.status, B = rules.battle;
   const log: BattleEvent[] | undefined = opts.log ? [] : undefined;
   const dt = B.tick;
@@ -119,6 +123,9 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
         const take = Math.min(left, me.st[top]); me.st[top] -= take; left -= take;
       }
       if (left < n) ev(side, ce.src, "cleanse", n - left);
+    } else if (e.do === "energy") {
+      const v = Math.min(rules.energy.max - me.energy, n);
+      if (v > 0) { me.energy += v; me.stats.energyGained += v; ev(side, ce.src, "energy", v); }
     } else if (e.do === "strip") {
       const take = Math.min(n, foe.st.shield);
       if (take > 0) { foe.st.shield -= take; ev(side, ce.src, "strip", take); }
@@ -142,14 +149,15 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     me.stats.uses[it.idx]!++;
     if (it.dmg) {
       const miss = Math.min(R.jam.capPct, me.st.jam * R.jam.missPct);
-      if (rng.next() * 100 < miss) ev(side, it.idx, "miss", 0);
+      me.energy -= it.energy; me.stats.energySpent += it.energy;
+      if (rng.next() * 100 < miss) ev(side, it.idx, "miss", 0, it.range ?? undefined);
       else {
         let bonus = 0, crit = it.crit;
         for (const d of it.dyn) if (d.phases.includes(phase)) { bonus += d.mod.damage ?? 0; crit += d.mod.crit ?? 0; }
         let dmg = it.dmg[0] + rng.int(it.dmg[1] - it.dmg[0] + 1) + bonus + me.st.power;
         const isCrit = crit > 0 && rng.next() * 100 < crit;
         if (isCrit) dmg *= B.critMult;
-        ev(side, it.idx, "attack", hurt(1 - side, dmg, "weapon", false, it.idx), undefined, isCrit);
+        ev(side, it.idx, "attack", hurt(1 - side, dmg, "weapon", false, it.idx), it.range ?? undefined, isCrit);
         fire(side, "hit", it);
         if (foe.st.spikes > 0) ev(1 - side, -1, "damage", hurt(side, foe.st.spikes, "spikes", false), "spikes");
         fireAll(1 - side, "attacked");
@@ -180,6 +188,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     // items
     for (const side of order) {
       const me = S[side]!;
+      me.energy = Math.min(rules.energy.max, me.energy + Math.max(0, rules.energy.regen + me.c.energyBonus) * dt);
       const global = (1 + Math.min(R.overclock.capPct, me.st.overclock * R.overclock.speedPct) / 100) * (1 - Math.min(R.cryo.capPct, me.st.cryo * R.cryo.slowPct) / 100);
       for (const it of me.c.items) {
         if (!it.cooldown) continue;
@@ -187,7 +196,11 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
         for (const d of it.dyn) if (d.mod.speed && d.phases.includes(phase)) speed += d.mod.speed;
         me.prog[it.idx]! += dt * global * Math.max(0.1, 1 + speed / 100);
         let guard = 0;
-        while (me.prog[it.idx]! >= it.cooldown - 1e-9 && guard++ < 5) { me.prog[it.idx]! -= it.cooldown; activate(side, it); }
+        while (me.prog[it.idx]! >= it.cooldown - 1e-9 && guard++ < 5) {
+          // a weapon without enough Energy stays ready and waits
+          if (it.dmg && me.energy < it.energy - 1e-9) { me.prog[it.idx] = it.cooldown; me.stats.energyWait += dt; break; }
+          me.prog[it.idx]! -= it.cooldown; activate(side, it);
+        }
       }
     }
     // statuses

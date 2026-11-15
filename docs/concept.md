@@ -11,7 +11,7 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Decided:** 12 rounds per run, 4 lives. A lost fight costs a life; the run ends when the lives are gone or after round 12.
 - **Decided:** a finished run pays a reward of rounds played + lives left (at most 12 + 4 = 16) in a unit outside the run. Its name and what it buys are open.
 - Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
-- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`).
+- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`). **Health in even steps (decided 2026-11-15):** 100, 150, 200, 250, then +100 per round up to 1100. The shop shows the hero's health for the coming fight (heart with a plus: round base plus items) and names the round's base when the round starts, so the growth is never hidden.
 - **Decided:** free special items after round 4 and round 8.
   - After round 4: a **signature artifact** of the hero. *Assumption:* each hero has three, two are shown, you take one.
   - After round 8: a **general artifact**. *Assumption:* three of a pool of ten are shown, you take one.
@@ -56,6 +56,16 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Buffs** (on yourself): Shield (absorbs damage), Regen (heals every 2 s), Overclock (all your items faster), Power (+1 weapon damage per stack), Spikes (weapon hits against you hurt the attacker).
 - **Debuffs** (on the enemy): Burn (damage every second, fades by 1 each time, stopped by Shield), Toxin (damage every 2 s, never fades, ignores Shield), Cryo (items slower, fades), Jam (weapons miss, fades), Radiation (less healing and less Shield gained).
 - All numbers are in `data/rules.json` → `status`.
+
+### Melee, ranged and Energy (decided 2026-11-15)
+
+- **Every weapon is melee or ranged** (`range` on the item). Melee hits up close (blades, maces, claws, bites), ranged shoots (guns, cannons, bows, breath, thrown things). *For now Spikes hurt both alike* (decided as the simple start); the split makes later rules possible, e.g. Spikes only against melee and a counter against ranged.
+- **Every attack costs Energy** (`energy` on the item, 1–7). Energy refills at a fixed rate up to a maximum, the bar starts full (`rules.energy`: max 20, start 20, refill 12 per second). A weapon that is ready but lacks the Energy waits until there is enough; nothing else is lost. A missed attack (Jam) costs Energy too.
+- Costs follow the cooldown (about 1 + 1.5 × cooldown), so one weapon draws about 2 Energy per second whether fast or slow; fast weapons pay a little more per second. The refill carries about six weapons; Rook's and Quill's own weapons (except Quill's rare pets) cost 1 less, because their heroes make them faster. Faster attacks (Overclock, speed bonuses) use more Energy per second, so speed and Energy items work together.
+- **Why:** a backpack full of weapons no longer wins by itself. Past six or so weapons, more weapons mostly wait; Energy items, slower heavy weapons or the other damage kinds (Burn, Toxin, direct damage) pay off instead.
+- **Energy items:** effects can give Energy (`do: energy`, e.g. Protein Bar, Nova Cola, Solar Panel, Glow Beetle, Feeding Bowl), raise the refill (`mod.energyRegen` on the hero, e.g. Energy Gel, Power Cell, Fusion Battery, Dynamo) or make starred weapons cheaper (`mod.energy`, Gravity Anchor). 29 items in all (`npm run catalog` lists them). Own pools: Rook (Dynamo, Capacitor Bank, Logic Core, Circuit Board, Conveyor Belt, Quantum Forge, Perpetual Engine), Quill (Kibble Sack, Treat Pouch, Feeding Bowl, Banquet Trough, Hatchery, Nursery; Pet Bed and Grooming Comb make starred pets cheaper), Venn (Moon Melon, Compost Bin, Sap Tap). Ysel has none: her Burn and phase effects hardly need Energy.
+- In the fight the client shows a thin Energy bar under each health bar.
+- **In the shop (decided 2026-11-15):** a row under the loose items shows the hero's health for the next fight, Energy used / gained per second (red when the weapons need more than comes in) and a chart button. The button opens the backpack numbers: health, Energy used, gained (refill and items) and the share of a fight weapons would wait, damage per second (weapons, direct), debuff stacks per second, healing, Shield, melee and ranged weapons. The core estimates them without an opponent (`buildStats` in packages/core/src/stats.ts); the fight stays the only truth.
 
 ### The dying star (fight clock)
 
@@ -108,13 +118,13 @@ Not in the draft, ideas only: a shared star per round with a modifier (e.g. "blu
 
 ## Effect language (for item design)
 
-An item is data: shape, optional cooldown, optional weapon damage, and a list of effects. An effect is a trigger plus one action, or a passive bonus.
+An item is data: shape, optional cooldown, optional weapon damage with range (melee/ranged) and Energy cost, and a list of effects. An effect is a trigger plus one action, or a passive bonus.
 
 - Triggers: `start`, `use` (each cooldown), `hit` (weapon hit), `attacked`, `phase` (every phase or a named one), `starUse` (a starred item activates), `lowHp` (once below half health); for heroes also `shipUse` (any own item with a tag activates).
-- Actions: gain a buff, inflict a debuff, deal damage, heal, cleanse own debuffs, strip enemy Shield.
+- Actions: gain a buff, inflict a debuff, deal damage, heal, cleanse own debuffs, strip enemy Shield, gain Energy.
 - Scaling `per`: starred items with a tag, items with a tag in the backpack, own buff stacks, enemy debuff stacks (with divisor and cap).
 - Conditions `if`: chance, star phases, health below a share.
-- Passives `to`: self, starred items, all own items with a tag, the hero (health), for bags the items inside. Bonuses: weapon damage, speed, crit, health, starting charged.
+- Passives `to`: self, starred items, all own items with a tag, the hero (health), for bags the items inside. Bonuses: weapon damage, speed, crit, health, starting charged, Energy cost of weapons, Energy refill (hero).
 
 ## Tools
 

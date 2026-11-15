@@ -6,6 +6,8 @@ export const TAGS = ["weapon", "armor", "accessory", "pet", "food", "mechanical"
 export const BAG = "bag" as const;
 export const BUFFS = ["shield", "regen", "overclock", "power", "spikes"] as const;
 export const DEBUFFS = ["burn", "toxin", "cryo", "jam", "radiation"] as const;
+export const RANGES = ["melee", "ranged"] as const;
+export type Range = (typeof RANGES)[number];
 export const RARITIES = ["common", "rare", "epic", "legendary", "artifact"] as const;
 export const SHOP_RARITIES = ["common", "rare", "epic", "legendary"] as const;
 
@@ -54,6 +56,10 @@ const Mod = z.object({
   maxHp: z.number().optional(),
   /** percent of the first cooldown already charged at battle start */
   ready: z.number().optional(),
+  /** weapons: change of the Energy one attack costs */
+  energy: z.number().optional(),
+  /** to: "hero": Energy regained per second */
+  energyRegen: z.number().optional(),
 }).strict();
 export type Mod = z.infer<typeof Mod>;
 
@@ -66,7 +72,7 @@ export const Effect = z.object({
   if: Cond.optional(),
   gain: Buff.optional(),
   inflict: Debuff.optional(),
-  do: z.enum(["damage", "heal", "cleanse", "strip"]).optional(),
+  do: z.enum(["damage", "heal", "cleanse", "strip", "energy"]).optional(),
   n: z.number().optional(),
   per: Per.optional(),
   /** "inside" (bags only): the items lying in this bag */
@@ -91,6 +97,10 @@ export const Item = z.object({
   weight: z.number().positive().optional(),
   cooldown: z.number().positive().optional(),
   damage: z.tuple([z.number(), z.number()]).optional(),
+  /** weapons: melee (hits up close) or ranged (shoots); every item with damage has one */
+  range: z.enum(RANGES).optional(),
+  /** weapons: Energy one attack costs; every item with damage has one */
+  energy: z.number().min(0).optional(),
   effects: z.array(Effect).default([]),
 }).strict();
 export type ItemData = z.infer<typeof Item>;
@@ -152,6 +162,8 @@ export const Rules = z.object({
     supernova: z.object({ id: z.string(), name: z.string(), basePct: z.number(), growthPct: z.number(), interval: z.number() }).strict(),
     critMult: z.number(), lowHpPct: z.number(), maxSeconds: z.number(),
   }).strict(),
+  /** every weapon attack costs Energy; Energy refills at a fixed rate. A weapon without enough Energy waits. */
+  energy: z.object({ max: z.number().positive(), start: z.number().min(0), regen: z.number().min(0) }).strict(),
   status: z.object({
     burn: z.object({ interval: z.number(), decay: z.number() }).strict(),
     toxin: z.object({ interval: z.number() }).strict(),

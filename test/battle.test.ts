@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Replay, compile, simulate, type Build } from "@backpack-space/core";
+import { Replay, buildStats, compile, simulate, type Build } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -60,5 +60,47 @@ describe("battle", () => {
     jumped.start();
     expect(jumped.finish().length + 0).toBeLessThanOrEqual(r.log!.length);
     expect(jumped.sides.map((s) => s.st)).toEqual(stepped.sides.map((s) => s.st));
+  });
+  it("every attack costs Energy; without Energy a weapon waits", () => {
+    const rules = { ...data.rules, energy: { max: 10, start: 10, regen: 0 } };
+    const cost = data.items.get("rivet_gun")!.energy!;
+    const target = compile(build(["scrap_metal"], 12), data);
+    const r = simulate(compile(build(["rivet_gun", "rivet_gun"], 12), data), target, rules, 4, { log: true });
+    const attacks = r.log!.filter((e) => e.s === 0 && (e.k === "attack" || e.k === "miss"));
+    expect(attacks.length).toBe(Math.floor(10 / cost));
+    expect(r.stats[0].energyWait).toBeGreaterThan(0);
+    expect(attacks.every((e) => e.w === "ranged")).toBe(true);
+    // an Energy item lets the same weapons attack more often
+    const fed = simulate(compile(build(["rivet_gun", "rivet_gun", "energy_gel"], 12), data), target, rules, 4, { log: true });
+    expect(fed.log!.filter((e) => e.s === 0 && e.k === "attack").length).toBeGreaterThan(attacks.length);
+  });
+  it("Energy items restore Energy and the replay follows it", () => {
+    const rules = { ...data.rules, energy: { max: 20, start: 0, regen: 0 } };
+    const a = compile(build(["protein_bar", "rivet_gun"]), data), b = compile(build(["scrap_metal"]), data);
+    const r = simulate(a, b, rules, 2, { log: true });
+    const gains = r.log!.filter((e) => e.k === "energy" && e.s === 0);
+    expect(gains.length).toBeGreaterThan(0);
+    expect(r.stats[0].energyGained).toBe(gains.reduce((s, e) => s + e.v, 0));
+    const replay = new Replay([a, b], r, rules);
+    replay.start();
+    let low = Infinity;
+    while (!replay.done) { replay.advance(0.1); low = Math.min(low, replay.sides[0].energy); }
+    expect(low).toBeGreaterThanOrEqual(0);
+    expect(replay.sides[0].energy).toBeCloseTo(r.stats[0].energyGained - r.stats[0].energySpent, 5);
+  });
+  it("backpack numbers: Energy used and gained per second", () => {
+    const gun = data.items.get("rivet_gun")!;
+    const few = buildStats(compile(build(["rivet_gun"]), data), data.rules);
+    expect(few.energy.need).toBeCloseTo(gun.energy! / gun.cooldown!, 5);
+    expect(few.energy.income).toBe(data.rules.energy.regen);
+    expect(few.energy.wait).toBe(0);
+    expect(few.ranged).toBe(1);
+    const many = buildStats(compile(build(Array(9).fill("rivet_gun")), data), data.rules);
+    expect(many.energy.need).toBeGreaterThan(many.energy.income);
+    expect(many.energy.wait).toBeGreaterThan(0);
+    const fed = buildStats(compile(build([...Array(8).fill("rivet_gun"), "energy_gel"]), data), data.rules);
+    expect(fed.energy.refill).toBe(data.rules.energy.regen + 1);
+    const bar = buildStats(compile(build(["protein_bar"]), data), data.rules);
+    expect(bar.energy.fromItems).toBeCloseTo(2 / 3, 5);
   });
 });

@@ -15,6 +15,8 @@ function modText(m: Mod, tr: Translator): string {
   if (m.crit) parts.push(tr.t("rules.mod.crit", { n: m.crit }));
   if (m.maxHp) parts.push(tr.t("rules.mod.maxHp", { n: m.maxHp }));
   if (m.ready) parts.push(tr.t("rules.mod.ready", { n: m.ready }));
+  if (m.energy) parts.push(tr.t("rules.mod.energy", { n: tr.signed(m.energy) }));
+  if (m.energyRegen) parts.push(tr.t("rules.mod.energyRegen", { n: m.energyRegen }));
   return parts.join(tr.t("list.sep"));
 }
 
@@ -105,7 +107,10 @@ function describeEffects(effects: readonly Effect[], data: GameData, tr: Transla
 export function describeItem(it: ItemDef, data: GameData, tr: Translator = english(data)): string[] {
   const lines: string[] = [];
   const hasUse = it.effects.some((e) => e.on === "use");
-  if (it.damage) lines.push(tr.t("rules.item.damage", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }));
+  if (it.damage) {
+    lines.push(tr.t("rules.item.damage", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }));
+    if (it.range) lines.push(tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy ?? 0 }));
+  }
   else if (it.cooldown && !hasUse) lines.push(tr.t("rules.item.activates", { s: it.cooldown }));
   const useLabel = it.cooldown === undefined ? undefined : it.damage ? tr.t("rules.use.attack") : tr.t("rules.use.every", { s: it.cooldown });
   lines.push(...describeEffects(it.effects, data, tr, useLabel));

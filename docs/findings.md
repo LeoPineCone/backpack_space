@@ -1,3 +1,32 @@
+# Melee, ranged and Energy (2026-11-15)
+
+Decision (Ilja): weapons are melee or ranged; Spikes hurt both for now. Every attack costs Energy, which refills at a fixed rate; items can give Energy. Goal: no weapon spam, builds interlock more. Full reports in `docs/reports/` (normal accuracy, seed 1, ratings measured again).
+
+## What changed
+
+- Every weapon has `range` (66 melee, 59 ranged, read from the item and its picture brief) and `energy` (cost per attack, about 1 + 1.5 × cooldown, 2–7). Rules: `energy` max 20, start 20, refill 12 per second. A ready weapon without the Energy waits; a miss costs Energy too.
+- New effect parts: `do: energy`, `mod.energyRegen` (hero), `mod.energy` (cost of starred weapons). 29 items give Energy or make weapons cheaper (list in docs/concept.md); Rook, Quill and Venn have some in their own pools, Ysel none (her damage hardly needs Energy).
+- Bots count Energy: another weapon is worth less once the weapons need more Energy than comes in, Energy items are worth more then.
+- First measurement with refill 5–10: bots kept 7–8 weapons late, those waited 40–85 % of the time, fights ran 28–32 s and Rook and Quill (weapon heroes) fell to 33–37 %. Refill 12 and two data changes brought it back: Rook's and Quill's own weapons cost 1 less (Quill's rare pets excepted), and hero health is lower late, because weapons deal less damage over a fight now. Health per round is now even steps (decided with Ilja): 100, 150, 200, 250, then +100 per round up to 1100 (before 100, 145, 195, 255, 400 … 1220). The shop shows the hero's health for the coming fight (round base plus items) and says the round's base at the start of each round.
+
+## Measured
+
+| | Before (main) | After |
+|---|---|---|
+| Weapons in a backpack, round 12 | 7.7 | 6.5 |
+| Weapon time spent waiting for Energy, round 4 / 8 / 12 | – | 1 / 9 / 14 % (a quarter of the round-12 backpacks wait more than 25 %) |
+| Fight length, Supernova share | 19–23 s, 5–20 % | 20–23 s, 11–16 % |
+| Heroes overall (Venn, Rook, Quill, Ysel) | 49 / 45 / 51 / 54 % | 50 / 44 / 51 / 56 % |
+| Hero against hero, all stages | Ysel beats Venn 61 %, rest 44–57 % | Ysel beats Venn 64 %, Venn beats Rook 58 %, Rook beats Quill 58 %, rest 42–54 % |
+
+Energy hits weapon heroes (Rook with his speed bonuses, Quill's pet herd) and helps heroes that win with Burn and Toxin (Ysel, Venn), as expected: damage that does not cost Energy becomes worth more. Ysel ends slightly above 50 % against each other hero (51–52 % against Rook and Quill is within the noise) and is strong late (64 % in rounds 9–12); Rook stays a little weak (44 %, early game 44 %, as before). Each new rating measurement moves a hero by up to ±5 points, so single numbers are rough.
+
+## Open
+
+- Spikes only against melee (and something against ranged) once the simple start has been played.
+- Ysel late and Rook early, if they hold up in playtests. Hero rules unchanged (they need Ilja's okay).
+- Recipe report: Dynamo and Banquet Trough (both got Energy) now show as too strong; Energy numbers per item are a first guess.
+
 # Hero synergies and matchups (2026-11-15)
 
 Question from the design: equal win shares matter less than heroes whose rules and items visibly interlock, builds that grow together round by round, and matchups that look like rock-paper-scissors rather than one hero beating everybody. New report `npm run report:synergy` (full output in `docs/reports/synergy.txt`) measures three things: hero against hero (mirror included) at rounds 4, 8 and 12; path against path (12 paths, rounds 8 and 12); and per hero and round how many items are linked, how much the hero's own rules are worth (same fights with the hero rules off) and how much the item-to-item effects are worth (same fights with them off).
