@@ -16,7 +16,7 @@ Both apps show exactly the same client as the browser. Nothing native decides ga
 | --- | --- |
 | both | Node.js 22 or newer, then `npm install` in the repo root |
 | iOS | a Mac with Xcode 26 or newer (App Store, free). For your own iPhone: an Apple ID signed in under Xcode → Settings → Accounts (free) |
-| Android | Android Studio (free, any OS). It installs the Android SDK and its own Java on first start |
+| Android | the Android SDK with an emulator (Android Studio installs both; you never have to open it to build) and **Java 21 or newer** (`brew install --cask zulu@21`) |
 | store release | Apple Developer Program (99 USD/year) and Google Play Console (25 USD once). Not needed to test on your own phone |
 
 ## Daily commands (repo root)
@@ -52,6 +52,15 @@ The iOS simulator needs none of this: pick an iPhone simulator in Xcode and pres
 4. Pick the phone at the top of Android Studio and press ▶ (Run).
 
 To pass an installable file around without a cable: in Android Studio Build → Build App Bundle(s) / APK(s) → Build APK(s). The debug APK lands in `apps/client/android/app/build/outputs/apk/debug/` and can be sent to any Android phone (it asks to allow installs from unknown sources).
+
+## Android build fails with "invalid source release: 21"
+
+Capacitor 8 compiles for Java 21, and the terminal still uses an older JDK (often 17 from React Native work). `npm run app:run:android` already looks for an installed JDK 21+ by itself (`JAVA_HOME`, `/usr/libexec/java_home -v 21+`, Homebrew, Android Studio's bundled Java) and uses it only for this build; your other projects keep their JDK. If it finds none it stops with a message. Then:
+
+```
+brew install --cask zulu@21
+npm run app:run:android
+```
 
 ## Fixed settings
 
