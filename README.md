@@ -17,6 +17,8 @@ npm test
 
 ## Play it in the browser
 
+Hosted build of the preview (private link, state of 2026-11-15): https://claude.ai/artifact/7Sn3PH5UH19ZMAp7bmgFsP
+
 ```
 npm run play          # dev server with the preview tester
 npm run play:ghosts   # refresh the stored bot builds you fight against (after data changes)
