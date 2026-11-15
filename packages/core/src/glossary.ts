@@ -25,7 +25,7 @@ export const GlossaryData = z.object({
 }).strict();
 export type GlossaryData = z.infer<typeof GlossaryData>;
 
-export interface Term { id: string; group: string; en: string; de: string; icon?: string; text: string; code: string[] }
+export interface Term { id: string; group: string; en: string; de: string; icon?: string; text: string; /** the meaning with its {placeholders}, as written */ source: string; code: string[] }
 export interface Glossary { groups: GlossaryData["groups"]; terms: Term[]; byId: Map<string, Term> }
 
 /** Terms the glossary must always contain: everything the effect language and the rules can name. */
@@ -58,7 +58,7 @@ export function buildGlossary(raw: unknown, rules: Rules, problems: string[]): G
       if (typeof v !== "number" && typeof v !== "string") { problems.push(`glossary ${t.id}: {${path}} is not a rules value`); return path; }
       return String(v);
     });
-    const term: Term = { ...t, text, code: t.code ?? [] };
+    const term: Term = { ...t, text, source: t.text, code: t.code ?? [] };
     byId.set(t.id, term);
     terms.push(term);
   }

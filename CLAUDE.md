@@ -7,6 +7,7 @@
 - Game values belong in `data/*.json`, not in code. Item rules text is generated from the effect data (`describe.ts`), never written by hand.
 - Items are maintained directly in `data/items/*.json` (no generator scripts). Every item and bag needs a picture brief in `data/item-art.json` (ends with "Accent: <palette colour>."). A new effect idea that the effect schema cannot express needs a schema + battle change first.
 - Game words come from `data/glossary.json` (English for game and code, German for design talk); add a term there before using a new word in the game.
+- Every text the player sees goes through the language files (`data/locales/*.json`, see `docs/i18n.md`); the client never shows a hard-coded word. English is the source; new items and texts also need their German translation (`npm run i18n` lists what is missing).
 - After changes: `npm run validate && npm run typecheck && npm test`. After item changes also `npm run catalog`.
 - No alcohol in the game.
 - Not a clone: no names, characters or look of Backpack Brawl or other existing games.

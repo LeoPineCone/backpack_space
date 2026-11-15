@@ -8,6 +8,7 @@
     "validate": "tsx src/cli/validate.ts",
     "battle": "tsx src/cli/battle.ts",
     "catalog": "tsx src/cli/catalog.ts",
+    "i18n": "tsx src/cli/i18n.ts",
     "report:battles": "tsx src/reports/battles.ts",
     "report:heroes": "tsx src/reports/heroes.ts",
     "report:runs": "tsx src/reports/runs.ts",

@@ -6,6 +6,7 @@ Design draft of a backpack auto-battler in space: shared battle core, game data,
 - Art style: [docs/style.md](docs/style.md)
 - Every hero, item, bag and recipe: [docs/catalog.md](docs/catalog.md) (generated)
 - Game terms in English and German: [docs/glossary.md](docs/glossary.md) (generated from `data/glossary.json`)
+- Languages (English, German), how the game picks one and how to add one: [docs/i18n.md](docs/i18n.md)
 - Picture list for every item and bag: [docs/item-art.md](docs/item-art.md) (generated from `data/item-art.json`)
 - Latest measurements: [docs/findings.md](docs/findings.md), full reports in [docs/reports/](docs/reports/)
 
@@ -65,12 +66,14 @@ Balancing targets (fight length, Supernova, hero win shares, recipe dominance) l
 Flags: `--accuracy quick|normal|precise` (or `--quick`, `--precise`), `--sims N` for the main count, `--seed S` for an independent sample, `--out file`.
 `npm run report:items -- --write-ratings` also stores the measured strength per item in `data/sim/ratings.json`; the bots then prefer items that measured strong (run it again after bigger item changes).
 
+`npm run i18n` lists texts that are missing in a language (English stands in for them).
+
 Other tools: `npm run battle -- --round 8 --a venn --b ysel --log` prints one fight; `npm run catalog` regenerates `docs/catalog.md`, `docs/glossary.md` and `docs/item-art.md`.
 
 ## Layout
 
 ```
-data/                 rules.json, heroes.json, recipes.json, glossary.json, item-art.json, items/*.json, sim/ratings.json
+data/                 rules.json, heroes.json, recipes.json, glossary.json, item-art.json, items/*.json, locales/*.json, sim/ratings.json
 packages/core/src/    deterministic core: grid and bags, compile, battle, replay, shop, run rules, bots, rules text
 packages/core/node/   JSON loader (Node only)
 src/sim/              lobbies of bots playing whole runs

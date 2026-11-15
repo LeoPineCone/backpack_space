@@ -5,8 +5,13 @@ import { C, RARITY, TAG_FILL } from "./theme";
 import { icon } from "./icons";
 import { at, disc, txt } from "./ui";
 import type { Chip, Row } from "./symbols";
+import { tr } from "./i18n";
 
-export const initials = (name: string) => name.replace(/[^A-Za-z0-9 -]/g, "").split(/[ -]+/).filter(Boolean).map((w) => w[0]!.toUpperCase()).slice(0, 3).join("");
+/** "Plasma Sword" -> "PS"; a one-word name ("Plasmaschwert") keeps two letters -> "PL" */
+export const initials = (name: string) => {
+  const words = name.replace(/[^\p{L}\p{N} -]/gu, "").split(/[ -]+/).filter(Boolean);
+  return (words.length === 1 ? words[0]!.slice(0, 2) : words.map((w) => w[0]!).slice(0, 3).join("")).toLocaleUpperCase();
+};
 
 export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number }
 
@@ -46,7 +51,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const label = o.label !== false && cell >= 26;
   if (!def.isBag || o.label !== false) {
     c.addChild(at(icon(def.isBag ? "bag" : def.tags[0] ?? "any", cell * (label ? 0.42 : 0.55), def.isBag ? C.dim : C.text), cx, cy - (label ? cell * 0.12 : 0)));
-    if (label) c.addChild(at(txt(initials(def.name), cell * 0.24, { color: def.isBag ? C.dim : C.text, anchor: [0.5, 0.5] }), cx, cy + cell * 0.27));
+    if (label) c.addChild(at(txt(initials(tr().item(id)), cell * 0.24, { color: def.isBag ? C.dim : C.text, anchor: [0.5, 0.5] }), cx, cy + cell * 0.27));
   }
   if (o.stars) for (const [x, y] of s.stars) c.addChild(at(icon("starFull", cell * 0.45, C.gold), x * cell + cell / 2, y * cell + cell / 2));
   return c;

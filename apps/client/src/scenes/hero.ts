@@ -6,7 +6,9 @@ import { C, W } from "../theme";
 import { icon, hasIcon } from "../icons";
 import { at, box, disc, hudPill, infoButton, placeholder, roundButton, tappable, txt } from "../ui";
 import { glossary, heroPopup } from "./popup";
+import { settingsOverlay } from "./settings";
 import { shopScene } from "./shop";
+import { t, upper } from "../i18n";
 
 type Slot = { kind: "own"; id: string; letter: string } | { kind: "locked" } | { kind: "soon" };
 
@@ -39,12 +41,12 @@ export function heroScene(game: Game): Scene {
     root.addChild(box(W, 420, { fill: C.backdrop }), at(new Graphics().rect(0, 0, W, 1).fill(C.line), 0, 420));
     root.addChild(at(new Graphics().circle(0, 0, 130).stroke({ width: 1.5, color: C.line }), 360, 70));
     root.addChild(at(new Graphics().circle(0, 0, 90).stroke({ width: 1.5, color: C.line }), 20, 340));
-    root.addChild(at(txt("season backdrop", 10, { font: "text", color: C.dim }), 14, 400));
+    root.addChild(at(txt(t("ui.placeholder.backdrop"), 10, { font: "text", color: C.dim }), 14, 400));
 
     // league and currency
     const league = new Container();
     league.addChild(box(128, 44, { fill: C.panel, line: C.gold, radius: 22 }), at(icon("league", 28, C.gold), 24, 22));
-    league.addChild(at(txt("UNRANKED", 13), 44, 7), at(txt("0", 11, { font: "text", color: C.dim }), 44, 24));
+    league.addChild(at(txt(t("ui.unranked"), 13), 44, 7), at(txt("0", 11, { font: "text", color: C.dim }), 44, 24));
     root.addChild(at(league, 14, 14));
     const cur = hudPill("gem", game.reward, C.line, C.cyan);
     root.addChild(at(cur, W - 14 - cur.width, 14));
@@ -52,23 +54,23 @@ export function heroScene(game: Game): Scene {
     // the chosen hero
     const art = new Container();
     if (hero && sel.kind === "own") {
-      art.addChild(placeholder(200, 250, "", 24), at(txt("hero art", 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 200));
+      art.addChild(placeholder(200, 250, "", 24), at(txt(t("ui.placeholder.heroArt"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 200));
       art.addChild(at(txt(sel.letter, 96, { color: C.line, anchor: [0.5, 0.5] }), 100, 110));
-      art.addChild(at(disc(28, { fill: C.bg, line: C.cyan, lineW: 2 }), 3, 44), at(txt("LV", 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 3, 33), at(txt("1", 22, { anchor: [0.5, 0.5] }), 3, 49));
+      art.addChild(at(disc(28, { fill: C.bg, line: C.cyan, lineW: 2 }), 3, 44), at(txt(t("ui.level"), 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 3, 33), at(txt("1", 22, { anchor: [0.5, 0.5] }), 3, 49));
     } else {
       art.addChild(box(200, 250, { fill: C.bg, radius: 24 }), placeholder(200, 250, "", 24), at(icon("lock", 56, C.dim), 100, 110));
-      art.addChild(at(txt(sel.kind === "locked" ? "hero silhouette" : "coming soon", 12, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 160));
+      art.addChild(at(txt(t(sel.kind === "locked" ? "ui.placeholder.silhouette" : "ui.placeholder.comingSoon"), 12, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 160));
     }
     root.addChild(at(art, 95, 70));
 
-    root.addChild(at(txt(hero ? hero.name.replace(/"/g, "").toUpperCase() : sel.kind === "locked" ? "[SEASON HERO]" : "COMING SOON", 26, { spacing: 1, anchor: [0.5, 0] }), W / 2, 328));
+    root.addChild(at(txt(hero ? upper(t(`hero.${hero.id}.name`).replace(/"/g, "")) : t(sel.kind === "locked" ? "ui.seasonHero" : "ui.comingSoon"), 26, { spacing: 1, anchor: [0.5, 0] }), W / 2, 328));
     const row = new Container();
     let x = 0;
     if (hero) {
       for (const t of traits(game, hero.id)) { row.addChild(at(disc(16, { fill: C.bg, line: C.line }), x + 16, 16), at(icon(t, 18, C.text), x + 16, 16)); x += 40; }
       row.addChild(at(infoButton(16, () => game.openOverlay(heroPopup(game, hero.id))), x + 16, 16)); x += 32;
     } else if (sel.kind === "locked") {
-      const tag = txt("SEASON 2", 13, { color: C.bg, anchor: [0.5, 0.5] });
+      const tag = txt(t("ui.season", { n: 2 }), 13, { color: C.bg, anchor: [0.5, 0.5] });
       row.addChild(box(tag.width + 24, 26, { fill: C.dim, radius: 13 }), at(tag, tag.width / 2 + 12, 13)); x = tag.width + 24;
     }
     root.addChild(at(row, (W - x) / 2, 366));
@@ -90,17 +92,18 @@ export function heroScene(game: Game): Scene {
     // the button in the middle
     const mid = new Container();
     if (sel.kind === "own") {
-      mid.addChild(disc(69, { fill: C.gold }), disc(63, { fill: C.gold, line: C.bg, lineW: 4 }), txt("START", 26, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
+      mid.addChild(disc(69, { fill: C.gold }), disc(63, { fill: C.gold, line: C.bg, lineW: 4 }), txt(t("ui.start"), 26, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
       tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.rng); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
     } else {
-      mid.addChild(disc(69, { fill: C.cyan }), disc(63, { fill: C.cyan, line: C.bg, lineW: 4 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt("SHOP", 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));
-      tappable(mid, () => game.toast("The hero shop opens later"), new Rectangle(-69, -69, 138, 138));
+      mid.addChild(disc(69, { fill: C.cyan }), disc(63, { fill: C.cyan, line: C.bg, lineW: 4 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));
+      tappable(mid, () => game.toast(t("toast.heroShopLater")), new Rectangle(-69, -69, 138, 138));
     }
     ring.addChild(at(mid, 170, 170));
     root.addChild(at(ring, 25, 446));
 
     root.addChild(at(roundButton("book", 24, () => game.openOverlay(glossary(game)), { iconSize: 22 }), 38, 806));
-    root.addChild(at(roundButton("cart", 24, () => game.toast("The hero shop opens later"), { iconSize: 22 }), W - 38, 806));
+    root.addChild(at(roundButton("settings", 24, () => game.openOverlay(settingsOverlay(game, render)), { iconSize: 22 }), 96, 806));
+    root.addChild(at(roundButton("cart", 24, () => game.toast(t("toast.heroShopLater")), { iconSize: 22 }), W - 38, 806));
   };
   render();
   return { root };

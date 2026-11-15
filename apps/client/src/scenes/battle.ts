@@ -8,6 +8,7 @@ import { icon } from "../icons";
 import { at, box, disc, tappable, txt } from "../ui";
 import { piece, starMarks } from "../pieces";
 import { resultScene } from "./results";
+import { t, tr, upper } from "../i18n";
 import type { SavedFight } from "../save";
 
 const CELL = 34, BX = 42;
@@ -97,7 +98,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
       clock.circle(cx, 346, r).stroke({ width: 2, color: col });
       x += r * 2 + 8;
     });
-    phaseLabel.text = (replay.phaseIdx >= B.phases.length ? B.supernova.name : B.phases[replay.phaseIdx]?.name ?? "").toUpperCase();
+    phaseLabel.text = upper(tr().term(replay.phaseIdx >= B.phases.length ? B.supernova.id : B.phases[replay.phaseIdx]?.id ?? ""));
     phaseLabel.style.fill = replay.time > novaAt ? C.bad : C.dim;
   };
 
@@ -113,7 +114,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     root.addChild(at(b, W - 15 - (3 - i) * 60 + 8, 786));
     return { paint };
   });
-  root.addChild(at(txt(`ROUND ${player.round}`, 13, { color: C.dim, spacing: 2 }), 15, 800));
+  root.addChild(at(txt(t("ui.round", { n: player.round }), 13, { color: C.dim, spacing: 2 }), 15, 800));
   root.addChild(fx);
 
   const paint = () => {
