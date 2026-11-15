@@ -382,22 +382,22 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Seed Pod | common | 2 | `#` | weapon, organic | 3–4 damage every 2.4 s. On hit: inflict 1 Toxin. | → Spore Mine, Thorn Pod |
 | Watering Drone | common | 2 | `#` | pet, mechanical | Every 3 s: heal 8. | → Irrigation Swarm |
 | Compost Bin | common | 3 | `*#*` | accessory, organic | Starred food: 30 % faster. Every 4 s: gain 1 Regen. | → Harvest Crate |
-| Thornvine | common | 3 | `###` | armor, organic | Battle start: gain 1 Spikes and 11 Shield. | → Briar Fortress, Living Armor |
+| Thornvine | common | 3 | `###` | armor, organic | Battle start: gain 1 Spikes and 11 Shield. When a weapon hits you: inflict 1 Toxin (25 % chance). | → Briar Fortress, Living Armor |
 | Pollen Cloud | common | 3 | `#` | accessory, organic | Every 3.5 s: inflict 1 Jam and 1 Toxin. | → Irrigation Swarm, Plague Blossom |
 | Grow Lamp | common | 3 | `.*./*#*/.*.` | accessory, mechanical | Starred organic items: 25 % faster. | → Irrigation Swarm |
 | Bramble Seed | common | 3 | `#` | accessory, organic | Every star phase: gain 1 Spikes. | → Thorn Pod |
 | Sap Tap | common | 3 | `*#*` | accessory, organic | When a starred organic item activates: heal 2 (50 % chance). |  |
 | Snap Sprout | common | 3 | `#` | pet, weapon, organic | 1–3 damage every 1.6 s. On hit: heal 1. | → Mantrap Pack |
-| Moon Melon | rare | 5 | `##/##` | food, organic | Every 3.5 s: heal 13. | → Harvest Crate |
+| Moon Melon | rare | 5 | `##/##` | food, organic | Every 2.8 s: heal 13. | → Harvest Crate |
 | Healing Moss | rare | 5 | `##` | food, organic | Every star phase: heal 22 and remove 2 of your debuffs. | → Ambrosia |
 | Bark Shield | rare | 5 | `##` | armor, organic | Battle start: gain 28 Shield and 2 Regen. | → Living Armor |
-| Nectar Flask | rare | 5 | `#/#` | food, organic | Every 4.5 s: heal 8 and gain 1 Regen. | → Ambrosia |
+| Nectar Flask | rare | 5 | `#/#` | food, organic | Every 3.8 s: heal 8 and gain 1 Regen. | → Ambrosia |
 | Venus Mantrap | rare | 6 | `##` | pet, weapon, organic | 5–7 damage every 2.2 s. On hit: heal 2, +1 per 3 Toxin on the enemy (max 4×). | → Giant Mantrap |
 | Blight Bomb | rare | 6 | `#` | weapon, organic | 1–2 damage every 3.2 s. On hit: inflict 3 Toxin. | → Plague Blossom |
 | Root Network | epic | 8 | `####` | accessory, organic | You: +14 max health per organic item in your backpack (max 10×). | → Briar Fortress |
 | Carnivorous Orchid | epic | 9 | `##` | weapon, organic | 4–6 damage every 1.8 s. On hit: deal 1 damage per 2 Toxin on the enemy (max 12×). | → Hydra Bloom |
 | Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage every 2.2 s. On hit: inflict 2 Cryo and heal 3. | → Jungle Tyrant |
-| Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. |  |
+| Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. When a weapon hits you: inflict 1 Toxin (30 % chance). |  |
 | Sun Blossom | legendary | 12 | `##/##` | food, organic | Every star phase: heal 40 and gain 3 Regen. Every 2.7 s: inflict 1 Toxin. |  |
 | World Seed | artifact | 0 | `##/##` | accessory, organic | Every star phase: gain 4 Regen and heal 28. |  |
 | Queen Spore | artifact | 0 | `#` | accessory, organic | Battle start: inflict 5 Toxin. Every 3 s: inflict 2 Toxin. |  |
@@ -408,10 +408,10 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.8 s. On hit: heal 3, +1 per 2 Toxin on the enemy (max 6×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
 | Harvest Crate | crafted (step 1) | 8 | `*##*/*##*` | food, organic | Every 2.7 s: heal 14. Starred food: 40 % faster. | = Compost Bin + Moon Melon |
 | Irrigation Swarm | crafted (step 1) | 8 | `*##*` | pet, mechanical | Every 2.2 s: heal 7 and inflict 1 Toxin. Starred organic items: 30 % faster. | = Watering Drone + Pollen Cloud + Grow Lamp |
-| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 2 Spikes and 2 Regen. Every star phase: gain 1 Spikes. | = Bark Shield + Thornvine |
+| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 2 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
 | Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. On hit: inflict 3 Toxin and 1 Jam. | = Blight Bomb + Pollen Cloud |
 | Ambrosia | crafted (step 1) | 10 | `##/##` | food, organic | Every star phase: heal 34 and remove 3 of your debuffs. Every 3.1 s: heal 11 and gain 1 Regen. | = Nectar Flask + Healing Moss |
-| Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes and 21 Shield. | = Thornvine + Root Network |
+| Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes and 21 Shield. When a weapon hits you: inflict 1 Toxin (40 % chance). | = Thornvine + Root Network |
 | Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 7–10 damage every 1.4 s. On hit: heal 4 and deal 1 damage per 2 Toxin on the enemy (max 20×). | = Giant Mantrap + Carnivorous Orchid |
 | Jungle Tyrant | crafted (step 2) | 17 | `###/###` | pet, weapon, organic | 10–13 damage every 1.6 s. On hit: inflict 2 Cryo and heal 4, +1 per 2 Toxin on the enemy (max 8×). | = Strangler Fig + Giant Mantrap |
 

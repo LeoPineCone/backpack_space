@@ -47,6 +47,15 @@ Every hero's build now grows together over the run, and the item-to-item effects
   Power is flat damage on every weapon hit, so any extra Power lifts the early game most; Power late in the fight changes nothing because most fights end before Collapse (24 s). The only variant near the target is +1 Power at fight start, and even that mostly helps early.
 - Rook mirror fights land at 45–46 % for the attacker, the other mirrors at 49–51 %: Rook's Shield-on-hit start may favour the defender slightly.
 
+## Venn (after Ysel's change)
+
+With Ysel's start Power, Venn was the weakest hero: 44 % in lobby fights, 39 % in rounds 5–8, Thorn wall 41 %, 37 % against Ysel. Changed (items only):
+
+- **Poisoned thorns:** Thornvine (25 %), Living Armor and Ironbark Golem (30 %) and Briar Fortress (40 %) inflict 1 Toxin when Venn is hit. Thorn wall now feeds the same Toxin as the rest of the garden, and the Toxin readers (Carnivorous Orchid, Hydra Bloom, the mantraps) profit from it.
+- **Faster meals:** Moon Melon cooldown 3.5 → 2.8 s, Nectar Flask 4.5 → 3.8 s, so Venn's own rule (every meal spreads Toxin) fires more often.
+
+Result: Venn 49 % in lobby fights (52 / 47 / 49 % by third), all three paths carry (Poison garden 48, Thorn wall 49, Hungry jungle 46 %). No hero beats all others any more: Venn 49 % against Rook, 55 % against Quill. Venn against Ysel stays at 39 %: Ysel's phase cleansing (Hymn Scroll, Litany, Comet Rosary) removes Toxin, a counter that fits the rock-paper-scissors picture and is inside the duel target (35–65 %).
+
 # Findings of the third balance pass (2026-11-15)
 
 Measured with `npm run report:all` at normal accuracy; full reports in `docs/reports/`. Goals of this pass: bots merge by the player's rules, set and measure the star clock, and check that no hero and no recipe chain dominates. Targets are now data (`data/sim/targets.json`) and the reports print an OK / OFF line per target.
