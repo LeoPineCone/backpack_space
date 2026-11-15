@@ -10,11 +10,13 @@ import {
 import type { Game, Scene } from "../game";
 import { C, RARITY, RARITY_PIPS, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, disc, hearts, hudPill, pillButton, roundButton, tappable, txt } from "../ui";
-import { piece, pieceFit } from "../pieces";
+import { at, box, disc, hearts, hudPill, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
+import { piece, pieceFit, starMarks } from "../pieces";
+import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { heroPopup, itemPopup } from "./popup";
 import { specialOverlay } from "./special";
 import { battleScene } from "./battle";
+import { t } from "../i18n";
 
 type Src = { kind: "offer" | "loose" | "item" | "bag"; i: number };
 
@@ -43,6 +45,8 @@ export function shopScene(game: Game): Scene {
   let drag: Drag | null = null;
   let sellLabel: Container | null = null;
   let specialOpen = false;
+  let introOpen = false;
+  const later: (() => void)[] = [];
 
   const srcItem = (s: Src): string => { const r = run(); return s.kind === "offer" ? r.offers[s.i]!.item : s.kind === "loose" ? r.loose[s.i]! : s.kind === "item" ? r.items[s.i]!.item : r.bags[s.i]!.item; };
   const applyTo = (r: RunState, s: Src, spot: Spot): boolean => {
@@ -76,6 +80,7 @@ export function shopScene(game: Game): Scene {
     view.addChild(pips);
     const gold = hudPill("coin", r.gold, C.gold, C.gold);
     view.addChild(at(gold, W - 15 - gold.width, 14));
+    view.addChild(at(infoButton(15, () => openIntro()), W - 15 - gold.width - 26, 36));
 
     // offers
     r.offers.forEach((o, i) => {
@@ -124,13 +129,15 @@ export function shopScene(game: Game): Scene {
       else if (bag >= 0) press({ kind: "bag", i: bag }, e);
     });
     view.addChild(hit);
+    // stars that have an item on them, so it shows which items work together
+    view.addChild(at(starMarks(data, r.bags, r.items, CELL), GX, GY));
     // a mark between neighbours that will merge after the fight; tapping it shows the result
     for (const c of combos) {
       const cells = c.idxs.flatMap((i) => { const p = r.items[i]!; return data.shape(p.item, p.rot).cells.map(([x, y]) => [p.x + x, p.y + y] as const); });
       const mx = cells.reduce((a, q) => a + q[0], 0) / cells.length, my = cells.reduce((a, q) => a + q[1], 0) / cells.length;
       const btn = new Container();
       btn.addChild(disc(20, { fill: C.gold, line: C.bg, lineW: 3 }), icon("merge", 20, C.goldInk));
-      tappable(btn, () => { game.openOverlay(itemPopup(game, c.recipe.out)); game.toast("Merges after the fight. Lock an item to keep it."); }, new Rectangle(-22, -22, 44, 44));
+      tappable(btn, () => { game.openOverlay(itemPopup(game, c.recipe.out)); game.toast(t("toast.mergesAfterFight")); }, new Rectangle(-22, -22, 44, 44));
       view.addChild(at(btn, GX + (mx + 0.5) * CELL, GY + (my + 0.5) * CELL));
     }
 
@@ -154,21 +161,39 @@ export function shopScene(game: Game): Scene {
     if (r.loose.length >= rules.shop.looseLimit) view.addChild(at(txt(`${r.loose.length}/${rules.shop.looseLimit}`, 12, { color: C.bad, anchor: [1, 0] }), FLOOR.x + FLOOR.w - 8, FLOOR.y + 6));
 
     // bottom row: reroll, fight, sell
-    const rr = roundButton("dice", 32, () => { if (reroll(run(), data, game.rng)) render(); else game.toast("Not enough gold"); }, { line: C.dim, iconSize: 28 });
+    const rr = roundButton("dice", 32, () => { if (reroll(run(), data, game.rng)) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
     rr.addChild(at(disc(11, { fill: C.gold }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
     view.addChild(at(rr, 47, 796));
-    view.addChild(at(pillButton("FIGHT", 208, 64, () => { if (!run().special) game.show(battleScene(game)); }, { iconName: "swords" }), 91, 764));
+    view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) game.show(battleScene(game)); }, { iconName: "swords" }), 91, 764));
     const bin = new Container();
     const ring = new Graphics();
     for (let k = 0; k < 16; k++) ring.arc(0, 0, SELL.r, (k * Math.PI) / 8, (k * Math.PI) / 8 + 0.24).stroke({ width: 2, color: C.dim });
     bin.addChild(ring, icon("bin", 26, C.dim));
     view.addChild(at(bin, SELL.x, SELL.y));
 
+    // popups wait for the next frame: this screen may still be on its way in, and showing a screen closes all popups
     if (r.special && !specialOpen) {
       specialOpen = true;
-      game.openOverlay(specialOverlay(game, () => { specialOpen = false; render(); }));
+      later.push(() => game.openOverlay(specialOverlay(game, () => { specialOpen = false; render(); })));
     }
+    if (!introOpen && !introSeen()) { introOpen = true; later.push(openIntro); }
+    game.save();
+  };
+
+  // ---------- the introduction on the first run ----------
+  const openIntro = () => {
+    introOpen = true;
+    const { w: gw, h: gh } = rules.grid;
+    const pack = { x: GX, y: GY, w: gw * CELL, h: gh * CELL };
+    const steps: IntroStep[] = [
+      { spot: { x: OFFER.x, y: OFFER.y, w: 3 * OFFER.w + 2 * OFFER.gap, h: 2 * OFFER.h + OFFER.gap }, icons: ["coin", "arrow", "bag"], line: t("intro.buy") },
+      { spot: pack, icons: ["starFull"], line: t("intro.stars") },
+      { spot: pack, icons: ["merge", "lock"], line: t("intro.merge") },
+      { spot: { x: SELL.x - SELL.r, y: SELL.y - SELL.r, w: SELL.r * 2, h: SELL.r * 2 }, icons: ["arrow", "bin", "coin"], line: t("intro.sell") },
+      { spot: { x: 91, y: 764, w: 208, h: 64 }, icons: ["swords"], line: t("intro.fight") },
+    ];
+    game.openOverlay(introOverlay(game, steps));
   };
 
   // ---------- pressing, dragging, dropping ----------
@@ -256,9 +281,9 @@ export function shopScene(game: Game): Scene {
       const p = r.items[src.i]!;
       const turn = () => {
         for (let k = 1; k < 4; k++) if (moveItem(run(), data, src.i, { x: p.x, y: p.y, rot: (p.rot + k) & 3 })) { game.closeOverlay(); render(); return; }
-        game.toast("No room to turn it here. Drag it and tap with a second finger, or press R.");
+        game.toast(t("toast.noRoomToTurn"));
       };
-      const lock = data.recipesWith.has(id) ? { label: p.lock ? "UNLOCK" : "LOCK", onTap: () => { toggleLock(run(), src.i); game.closeOverlay(); render(); } } : undefined;
+      const lock = data.recipesWith.has(id) ? { label: t(p.lock ? "ui.unlock" : "ui.lock"), onTap: () => { toggleLock(run(), src.i); game.closeOverlay(); render(); } } : undefined;
       game.openOverlay(itemPopup(game, id, { sell: true, onRotate: data.shape(id, 0).cells.length > 1 ? turn : undefined, action: lock }));
       return;
     }
@@ -274,14 +299,14 @@ export function shopScene(game: Game): Scene {
     endDrag();
     if (spot) {
       if (ok) applyTo(r, src, spot);
-      else game.toast(src.kind === "offer" && r.gold < r.offers[src.i]!.price ? "Not enough gold" : src.kind === "bag" ? "A bag needs free cells and only turns while empty" : "It does not fit there");
+      else game.toast(t(src.kind === "offer" && r.gold < r.offers[src.i]!.price ? "toast.notEnoughGold" : src.kind === "bag" ? "toast.bagNeedsRoom" : "toast.doesNotFit"));
     } else if (overSell(pos.x, pos.y)) {
       if (src.kind === "item") sellItem(r, data, src.i);
       else if (src.kind === "loose") sellLoose(r, data, src.i);
-      else if (src.kind === "bag" && !sellBag(r, data, src.i)) game.toast("Only an empty bag can be sold");
+      else if (src.kind === "bag" && !sellBag(r, data, src.i)) game.toast(t("toast.onlyEmptyBag"));
     } else if (src.kind === "offer") {
       // let go below the shop: bought, and it drops below the backpack
-      if (pos.y > GY - 8 && !buy(r, data, src.i)) game.toast(r.gold < r.offers[src.i]!.price ? "Not enough gold" : "Too many loose items. Place or sell one first.");
+      if (pos.y > GY - 8 && !buy(r, data, src.i)) game.toast(t(r.gold < r.offers[src.i]!.price ? "toast.notEnoughGold" : "toast.tooManyLoose"));
     } else if (src.kind === "item") dropItem(r, src.i);
     else if (src.kind === "bag") dropBag(r, data, src.i);
     render();
@@ -298,5 +323,5 @@ export function shopScene(game: Game): Scene {
   window.addEventListener("wheel", onWheel, { passive: false });
 
   render();
-  return { root, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
+  return { root, update: () => { for (const f of later.splice(0)) f(); }, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
 }

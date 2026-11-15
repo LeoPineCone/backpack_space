@@ -3,6 +3,7 @@
  * Like the generated rules text, the symbols come from the effect data, so they cannot disagree with the battle.
  */
 import { BUFFS, DEBUFFS, TAGS, type Effect, type GameData, type HeroData, type ItemDef } from "@backpack-space/core";
+import { tr } from "./i18n";
 
 export interface Chip {
   icon: string;
@@ -69,7 +70,7 @@ function thenChips(e: Effect): Chip[] {
   return out;
 }
 
-const phaseName = (data: GameData, id: string) => (id === data.rules.battle.supernova.id ? data.rules.battle.supernova.name : data.rules.battle.phases.find((p) => p.id === id)?.name ?? id);
+const phaseName = (_data: GameData, id: string) => tr().term(id);
 
 /** Groups effects that share a trigger into one row. */
 export function effectRows(effects: readonly Effect[], data: GameData, cooldown?: number, first?: Row): Row[] {
@@ -97,10 +98,10 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
 
 export function heroRows(hero: HeroData, data: GameData): Row[] { return effectRows(hero.effects, data); }
 
-/** Every keyword with its symbol and one short sentence, from the glossary (data/glossary.json). Numbers come from the rules. */
+/** Every keyword with its symbol and one short sentence, from the glossary (data/glossary.json), in the current language. Numbers come from the rules. */
 export function keywords(data: GameData): Map<string, Keyword> {
   const k = new Map<string, Keyword>();
-  for (const t of data.glossary.terms) if (t.icon) k.set(t.icon, { icon: t.icon, word: t.en, text: t.text });
+  for (const t of data.glossary.terms) if (t.icon) k.set(t.icon, { icon: t.icon, word: tr().term(t.id), text: tr().termText(t.id) });
   return k;
 }
 
@@ -113,11 +114,12 @@ export function keywordsIn(rows: readonly Row[], tags: readonly string[], all: M
   return out;
 }
 
+/** `title` is a text key (data/locales) */
 export const GLOSSARY_GROUPS: { title: string; icons: string[] }[] = [
-  { title: "TYPES", icons: [...TAGS, "bag", "crafted"] },
-  { title: "BUFFS", icons: [...BUFFS] },
-  { title: "DEBUFFS", icons: [...DEBUFFS] },
-  { title: "EFFECTS", icons: ["damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready"] },
-  { title: "WHEN", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
-  { title: "WHO", icons: ["self", "star", "ship", "hero"] },
+  { title: "ui.group.types", icons: [...TAGS, "bag", "crafted"] },
+  { title: "ui.group.buffs", icons: [...BUFFS] },
+  { title: "ui.group.debuffs", icons: [...DEBUFFS] },
+  { title: "ui.group.effects", icons: ["damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready"] },
+  { title: "ui.group.when", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
+  { title: "ui.group.who", icons: ["self", "star", "ship", "hero"] },
 ];

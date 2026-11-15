@@ -6,8 +6,10 @@ import { GHOSTS } from "../data";
 import { C, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, tappable, txt } from "../ui";
-import { piece } from "../pieces";
+import { piece, starMarks } from "../pieces";
 import { resultScene } from "./results";
+import { t, tr, upper } from "../i18n";
+import type { SavedFight } from "../save";
 
 const CELL = 34, BX = 42;
 const STATUSES: Status[] = [...BUFFS, ...DEBUFFS];
@@ -29,13 +31,16 @@ function pickGhost(game: Game, player: Build): Build {
 
 interface SideView { hpFill: Graphics; hpText: Text; chips: Container; chipKey: string; flashes: Graphics[]; barY: number }
 
-export function battleScene(game: Game): Scene {
+/** `saved`: a fight started before a reload; it is fought again with the same opponent and seed, so it ends the same way. */
+export function battleScene(game: Game, saved?: SavedFight): Scene {
   const root = new Container();
   const data = game.data, rules = data.rules, B = rules.battle;
   const player = buildOf(game.run!);
-  const ghost = pickGhost(game, player);
+  const fight: SavedFight = saved ?? { ghost: pickGhost(game, player), seed: (Math.random() * 0x7fffffff) | 0 };
+  game.save(fight);
+  const ghost = fight.ghost;
   const sides: [CSide, CSide] = [compile(player, data), compile(ghost, data)];
-  const result = simulate(sides[0], sides[1], rules, (Math.random() * 0x7fffffff) | 0, { log: true });
+  const result = simulate(sides[0], sides[1], rules, fight.seed, { log: true });
   const replay = new Replay(sides, result, rules);
   let speed = 1, endWait = 0.9, left = false;
 
@@ -70,6 +75,7 @@ export function battleScene(game: Game): Scene {
       root.addChild(at(f, BX + p.x * CELL, gridY[i]! + p.y * CELL));
       return f;
     });
+    root.addChild(at(starMarks(data, b.bags, b.items, CELL), BX, gridY[i]!));
     return { hpFill, hpText, chips, chipKey: "?", flashes, barY: barY[i]! };
   });
 
@@ -92,7 +98,7 @@ export function battleScene(game: Game): Scene {
       clock.circle(cx, 346, r).stroke({ width: 2, color: col });
       x += r * 2 + 8;
     });
-    phaseLabel.text = (replay.phaseIdx >= B.phases.length ? B.supernova.name : B.phases[replay.phaseIdx]?.name ?? "").toUpperCase();
+    phaseLabel.text = upper(tr().term(replay.phaseIdx >= B.phases.length ? B.supernova.id : B.phases[replay.phaseIdx]?.id ?? ""));
     phaseLabel.style.fill = replay.time > novaAt ? C.bad : C.dim;
   };
 
@@ -108,7 +114,7 @@ export function battleScene(game: Game): Scene {
     root.addChild(at(b, W - 15 - (3 - i) * 60 + 8, 786));
     return { paint };
   });
-  root.addChild(at(txt(`ROUND ${player.round}`, 13, { color: C.dim, spacing: 2 }), 15, 800));
+  root.addChild(at(txt(t("ui.round", { n: player.round }), 13, { color: C.dim, spacing: 2 }), 15, 800));
   root.addChild(fx);
 
   const paint = () => {

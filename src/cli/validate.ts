@@ -10,6 +10,11 @@ try {
   const art = checkItemArt(d, loadItemArt());
   if (art.length) throw new Error(`Picture brief problems:\n- ${art.join("\n- ")}`);
   console.log(`Glossary: ${d.glossary.terms.length} terms. Picture briefs: ${d.itemList.length} of ${d.itemList.length} items.`);
+  const langs = d.locales.languages.filter((l) => l.id !== "en").map((l) => {
+    const missing = d.locales.missing[l.id]!.length, unused = d.locales.unused[l.id]!.length;
+    return `${l.name} ${missing ? `(${missing} texts missing, English stands in)` : "complete"}${unused ? `, ${unused} unused` : ""}`;
+  });
+  console.log(`Languages: English (source)${langs.length ? `, ${langs.join(", ")}` : ""}. Details: npm run i18n`);
   const orphans = items.filter((i) => i.crafted && !d.recipes.some((r) => r.out === i.id));
   if (orphans.length) console.log(`Warning: crafted without recipe: ${orphans.map((i) => i.id).join(", ")}`);
 } catch (e) {

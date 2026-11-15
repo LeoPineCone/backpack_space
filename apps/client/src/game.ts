@@ -4,6 +4,7 @@ import { Rng, type GameData, type RunState } from "@backpack-space/core";
 import { C, H, W } from "./theme";
 import { at, box, txt } from "./ui";
 import { keywords, type Keyword } from "./symbols";
+import { clearSave, readSave, writeSave, type SavedFight } from "./save";
 
 export interface Scene {
   root: Container;
@@ -23,7 +24,8 @@ export class Game {
   private scene: Scene | null = null;
   private overlays: Scene[] = [];
   private toastLeft = 0;
-  readonly keywords: Map<string, Keyword>;
+  /** keyword legend in the current language; rebuilt by `languageChanged` */
+  keywords: Map<string, Keyword>;
 
   run: RunState | null = null;
   rng = new Rng(1);
@@ -89,10 +91,33 @@ export class Game {
     this.toastLeft = 2.2;
   }
 
+  /** Call after switching the language: rebuilds the texts that are cached here. */
+  languageChanged(): void { this.keywords = keywords(this.data); }
+
   /** Starts a new run with the chosen hero. The seed only drives the shop; battles carry their own seed. */
   newSeed(): void {
     this.seed = (Date.now() ^ (Math.random() * 0x7fffffff)) >>> 0;
     this.rng = new Rng(this.seed);
+  }
+
+  /** Stores the run on this device; `fight` while a fight of this round is running or shown. */
+  save(fight: SavedFight | null = null): void {
+    if (this.run && !this.run.over) writeSave({ run: this.run, rng: this.rng.state, seed: this.seed, fight });
+    else clearSave();
+  }
+
+  /** Ends the stored run (finished or left). */
+  dropSave(): void { clearSave(); }
+
+  /** Takes up a stored run; returns its running fight, or undefined when there is no run to continue. */
+  resume(): { fight: SavedFight | null } | undefined {
+    const s = readSave(this.data);
+    if (!s) return undefined;
+    this.run = s.run;
+    this.seed = s.seed;
+    this.rng = new Rng(s.rng);
+    this.hero = s.run.hero;
+    return { fight: s.fight };
   }
 
   /** The reward unit kept between runs (stored on this device for now). */

@@ -2,6 +2,8 @@
 export class Rng {
   private s: number;
   constructor(seed: number) { this.s = seed >>> 0; }
+  /** The current position; `new Rng(rng.state)` continues the same sequence (used to save a run). */
+  get state(): number { return this.s; }
   next(): number {
     let t = (this.s = (this.s + 0x6d2b79f5) >>> 0);
     t = Math.imul(t ^ (t >>> 15), t | 1);

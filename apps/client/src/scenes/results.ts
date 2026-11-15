@@ -5,10 +5,11 @@ import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, disc, hearts, pillButton, roundButton, txt } from "../ui";
-import { piece, pieceFit } from "../pieces";
+import { piece, pieceFit, starMarks } from "../pieces";
 import { itemPopup } from "./popup";
 import { shopScene } from "./shop";
 import { heroScene } from "./hero";
+import { t, tr } from "../i18n";
 
 const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
 const SOURCE_ICON: Record<string, string> = { weapon: "weapon", direct: "damage", burn: "burn", toxin: "toxin", spikes: "spikes" };
@@ -54,8 +55,8 @@ export function resultScene(game: Game, f: Fought): Scene {
 
   root.addChild(box(W, H, { fill: C.bg }));
   root.addChild(at(new Graphics().circle(0, 0, 160).fill(C.backdrop).stroke({ width: 1.5, color: col }), W / 2, -30));
-  root.addChild(at(txt(`ROUND ${run.round}`, 14, { color: C.dim, spacing: 3, anchor: [0.5, 0] }), W / 2, 62));
-  root.addChild(at(txt(won ? "VICTORY" : "DEFEAT", 52, { color: col, spacing: 3, anchor: [0.5, 0] }), W / 2, 82));
+  root.addChild(at(txt(t("ui.round", { n: run.round }), 14, { color: C.dim, spacing: 3, anchor: [0.5, 0] }), W / 2, 62));
+  root.addChild(at(txt(t(won ? "ui.victory" : "ui.defeat"), 52, { color: col, spacing: 3, anchor: [0.5, 0] }), W / 2, 82));
   const hs = hearts(livesAfter, data.rules.lives, 34, 8);
   root.addChild(at(hs, (W - hs.width) / 2, 166));
 
@@ -88,15 +89,16 @@ export function resultScene(game: Game, f: Fought): Scene {
   }
 
   root.addChild(at(roundButton("chart", 32, () => game.openOverlay(details(game, f)), { iconSize: 26 }), 52, 792));
-  root.addChild(at(pillButton("CONTINUE", W - 116, 64, () => {
+  root.addChild(at(pillButton(t("ui.continue"), W - 116, 64, () => {
     finishRound(run, data, won, game.rng);
-    if (run.over) { game.addReward(runReward(run)); game.show(runEndScene(game)); }
+    // the stored run ends before the reward is booked, so a reload cannot book it twice
+    if (run.over) { game.dropSave(); game.addReward(runReward(run)); game.show(runEndScene(game)); }
     else {
       game.show(shopScene(game));
       // what merged after this fight is shown once
       if (run.merged.length) {
-        game.openOverlay(itemPopup(game, run.merged[0]!.out, { action: { label: "CONTINUE", onTap: () => game.closeOverlay() } }));
-        game.toast(`Merged: ${run.merged.map((m) => data.items.get(m.out)!.name).join(", ")}`);
+        game.openOverlay(itemPopup(game, run.merged[0]!.out, { action: { label: t("ui.continue"), onTap: () => game.closeOverlay() } }));
+        game.toast(t("toast.merged", { items: tr().list(run.merged.map((m) => tr().item(m.out))) }));
       }
     }
   }), 96, 760));
@@ -107,7 +109,7 @@ export function runEndScene(game: Game): Scene {
   const root = new Container();
   const data = game.data, run = game.run!;
   root.addChild(box(W, H, { fill: C.bg }));
-  root.addChild(at(disc(55, { fill: C.panel, line: C.gold, lineW: 3 }), W / 2, 95), at(txt(run.wins, 48, { color: C.gold, anchor: [0.5, 0.5] }), W / 2, 86), at(txt("WINS", 12, { color: C.dim, spacing: 2, anchor: [0.5, 0.5] }), W / 2, 122));
+  root.addChild(at(disc(55, { fill: C.panel, line: C.gold, lineW: 3 }), W / 2, 95), at(txt(run.wins, 48, { color: C.gold, anchor: [0.5, 0.5] }), W / 2, 86), at(txt(t("ui.wins"), 12, { color: C.dim, spacing: 2, anchor: [0.5, 0.5] }), W / 2, 122));
 
   const pips = new Graphics();
   const n = data.rules.rounds, x0 = (W - (n * 20 + (n - 1) * 5)) / 2;
@@ -138,9 +140,10 @@ export function runEndScene(game: Game): Scene {
   root.addChild(g);
   for (const p of run.bags) root.addChild(at(piece(data, p.item, p.rot, cell, { label: false }), gx + p.x * cell, gy + p.y * cell));
   for (const p of run.items) root.addChild(at(piece(data, p.item, p.rot, cell), gx + p.x * cell, gy + p.y * cell));
+  root.addChild(at(starMarks(data, run.bags, run.items, cell), gx, gy));
 
-  root.addChild(at(roundButton("share", 32, () => game.toast("Sharing comes later"), { iconSize: 26 }), 52, 792));
-  root.addChild(at(pillButton("NEW RUN", W - 192, 64, () => { game.newSeed(); game.run = newRun(data, run.hero, game.rng); game.show(shopScene(game)); }), 96, 760));
-  root.addChild(at(roundButton("home", 32, () => { game.run = null; game.show(heroScene(game)); }, { iconSize: 26 }), W - 52, 792));
+  root.addChild(at(roundButton("share", 32, () => game.toast(t("toast.shareLater")), { iconSize: 26 }), 52, 792));
+  root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.newSeed(); game.run = newRun(data, run.hero, game.rng); game.show(shopScene(game)); }), 96, 760));
+  root.addChild(at(roundButton("home", 32, () => { game.run = null; game.dropSave(); game.show(heroScene(game)); }, { iconSize: 26 }), W - 52, 792));
   return { root };
 }

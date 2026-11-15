@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Backpack Space \u2013 shared battle core, game client, balancing tools and browser preview",
+  "description": "Backpack Space – shared battle core, game client, balancing tools and browser preview",
   "scripts": {
     "validate": "tsx src/cli/validate.ts",
     "battle": "tsx src/cli/battle.ts",
     "catalog": "tsx src/cli/catalog.ts",
+    "i18n": "tsx src/cli/i18n.ts",
     "report:battles": "tsx src/reports/battles.ts",
     "report:heroes": "tsx src/reports/heroes.ts",
     "report:runs": "tsx src/reports/runs.ts",
@@ -23,7 +24,12 @@
     "play:build": "vite build playground --outDir ../out/play --emptyOutDir",
     "play:ghosts": "tsx playground/make-ghosts.ts",
     "client": "vite apps/client",
-    "client:build": "vite build apps/client --outDir ../../out/client --emptyOutDir"
+    "client:build": "vite build apps/client --outDir ../../out/client --emptyOutDir",
+    "app:sync": "npm run cap:sync -w @backpack-space/client",
+    "app:ios": "npm run cap:ios -w @backpack-space/client",
+    "app:android": "npm run cap:android -w @backpack-space/client",
+    "app:run:ios": "npm run cap:run:ios -w @backpack-space/client",
+    "app:run:android": "npm run cap:run:android -w @backpack-space/client"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
