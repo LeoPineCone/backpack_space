@@ -29,7 +29,7 @@ function pickGhost(game: Game, player: Build): Build {
   return { ...player };
 }
 
-interface SideView { hpFill: Graphics; hpText: Text; chips: Container; chipKey: string; flashes: Graphics[]; barY: number }
+interface SideView { hpFill: Graphics; enFill: Graphics; hpText: Text; chips: Container; chipKey: string; flashes: Graphics[]; barY: number }
 
 /** `saved`: a fight started before a reload; it is fought again with the same opponent and seed, so it ends the same way. */
 export function battleScene(game: Game, saved?: SavedFight): Scene {
@@ -48,7 +48,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const fx = new Container();
 
   // side 1 (enemy) on top, side 0 (you) below
-  const gridY = [384, 82], barY = [634, 14];
+  const gridY = [384, 82], barY = [630, 8];
   const builds = [player, ghost];
   const views: SideView[] = [0, 1].map((i) => {
     const b = builds[i]!, hero = sides[i]!.hero;
@@ -58,7 +58,10 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     const hpFill = new Graphics();
     const hpText = txt("", 15, { anchor: [0, 0.5] });
     const chips = new Container();
-    bar.addChild(at(hpFill, 66, 6), at(hpText, 324, 17), at(chips, 66, 34));
+    // Energy: a thin bar under the health bar
+    bar.addChild(at(box(250, 8, { fill: C.panel, line: C.dim, lineW: 1, radius: 4 }), 66, 31), at(icon("energy", 12, C.gold), 330, 35));
+    const enFill = new Graphics();
+    bar.addChild(at(hpFill, 66, 6), at(enFill, 66, 31), at(hpText, 324, 17), at(chips, 66, 42));
     root.addChild(at(bar, 15, barY[i]!));
     // the backpack
     const g = new Graphics();
@@ -76,7 +79,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
       return f;
     });
     root.addChild(at(starMarks(data, b.bags, b.items, CELL), BX, gridY[i]!));
-    return { hpFill, hpText, chips, chipKey: "?", flashes, barY: barY[i]! };
+    return { hpFill, enFill, hpText, chips, chipKey: "?", flashes, barY: barY[i]! };
   });
 
   // the star clock
@@ -121,6 +124,9 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     for (const i of [0, 1] as const) {
       const v = views[i]!, s = replay.sides[i], max = result.maxHp[i], hp = Math.max(0, Math.round(s.hp));
       v.hpFill.clear().roundRect(2, 2, Math.max(0, (250 - 4) * Math.min(1, hp / max)), 18, 9).fill(i === 0 ? C.text : C.dim);
+      const en = Math.max(0, Math.min(1, s.energy / rules.energy.max));
+      v.enFill.clear();
+      if (en > 0) v.enFill.roundRect(1, 1, Math.max(2, (250 - 2) * en), 6, 3).fill(C.gold);
       const label = String(hp);
       if (v.hpText.text !== label) v.hpText.text = label;
       const key = STATUSES.map((k) => s.st[k]).join(",");

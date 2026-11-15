@@ -31,7 +31,7 @@ export interface Glossary { groups: GlossaryData["groups"]; terms: Term[]; byId:
 /** Terms the glossary must always contain: everything the effect language and the rules can name. */
 export function requiredTerms(rules: Rules): string[] {
   return [...TAGS, "bag", "crafted", "any", ...BUFFS, ...DEBUFFS, ...RARITIES, ...rules.battle.phases.map((p) => p.id), rules.battle.supernova.id,
-    "damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "clock", "start", "hit", "attacked", "phase", "lowHp", "chance", "self", "starred", "ship", "hero",
+    "damage", "heal", "cleanse", "strip", "energy", "energyRegen", "melee", "ranged", "speed", "crit", "maxHp", "ready", "clock", "start", "hit", "attacked", "phase", "lowHp", "chance", "self", "starred", "ship", "hero",
     "run", "round", "life", "gold", "shop", "backpack", "merge", "recipe", "lock", "fight", "star"];
 }
 

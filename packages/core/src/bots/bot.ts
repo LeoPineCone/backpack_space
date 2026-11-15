@@ -62,6 +62,26 @@ export function onPath(def: ItemDef, focus: readonly string[]): boolean {
 const PATH_LIKING = 1.5;
 
 const ARTIFACT_WORTH = 14;
+/** the bot accepts weapons that need this much more Energy than comes in (the full bar at the start covers some) */
+const ENERGY_SLACK = 1.25;
+
+/** Energy per second all weapons of a list would use without waiting. */
+export function energyNeed(defs: readonly ItemDef[]): number {
+  return defs.reduce((s, d) => s + (d.damage && d.cooldown ? (d.energy ?? 0) / d.cooldown : 0), 0);
+}
+/** Rough Energy per second an item gives (refill bonus, Energy on use, per phase, on hit, when a starred item activates). */
+export function energySupply(data: GameData, def: ItemDef): number {
+  const phase = data.rules.battle.phases[0]!.seconds;
+  let v = 0;
+  for (const e of def.effects) {
+    if (e.mod?.energyRegen) v += e.mod.energyRegen;
+    if (e.mod?.energy && e.mod.energy < 0) v += 0.5 * -e.mod.energy;
+    if (e.do !== "energy") continue;
+    const n = (e.n ?? 0) * (e.if?.chance ?? 100) / 100;
+    v += e.on === "use" || e.on === "hit" ? n / (def.cooldown ?? 4) : e.on === "phase" ? n / phase : e.on === "start" ? 0 : n / 2;
+  }
+  return v;
+}
 const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
 
 export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned: readonly string[] = bot.inv): number {
@@ -77,6 +97,11 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
   else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;
+  // Energy: another weapon is worth less when the weapons already use more Energy than comes in; Energy is worth more then
+  const supply = data.rules.energy.regen + defs.reduce((s, o) => s + energySupply(data, o), 0), need = energyNeed(defs);
+  if (def.damage) { const after = need + energyNeed([def]); if (after > supply * ENERGY_SLACK) v *= Math.max(0.4, (supply * ENERGY_SLACK) / after); }
+  const gives = energySupply(data, def);
+  if (gives > 0) v *= need > supply ? 1 + Math.min(1.5, (need - supply) / Math.max(1, gives * 2)) : 0.8;
   const copies = owned.filter((o) => o === id).length;
   if (copies >= 2) v *= 0.6;
   if (!opts.noCraft) for (const r of data.recipesWith.get(id) ?? []) {

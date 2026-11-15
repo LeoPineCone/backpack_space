@@ -71,6 +71,27 @@ lobbies.forEach((l, li) => { for (const f of l.fights) for (const side of [0, 1]
   x.n++; if (f.res.supernova) { x.nova++; if (f.res.winner === side) x.novaWins++; }
   perHero.set(h, x);
 } });
+// Energy
+{
+  const E = r.data.rules.energy;
+  r.log();
+  r.log("## Energy");
+  r.log(`Every attack costs Energy; Energy refills by ${E.regen} per second up to ${E.max} (start ${E.start}). A weapon without enough Energy waits.`);
+  const rowsE: (string | number)[][] = [];
+  for (let round = 1; round <= r.data.rules.rounds; round++) {
+    const sides = lobbies.flatMap((l, li) => l.fights.filter((f) => f.round === round).flatMap((f) => [0, 1].map((side) => {
+      const build = seats[li]![side === 0 ? f.a : f.b]!.builds[round - 1]!;
+      const weapons = build.items.map((p) => r.data.items.get(p.item)!).filter((d) => d.damage);
+      const st = f.res.stats[side]!;
+      return { weapons: weapons.length, need: weapons.reduce((s, d) => s + (d.energy ?? 0) / d.cooldown!, 0), wait: weapons.length ? st.energyWait / (weapons.length * f.res.seconds) : 0, gained: st.energyGained / f.res.seconds, spent: st.energySpent / f.res.seconds };
+    })));
+    rowsE.push([round, avg(sides.map((x) => x.weapons)).toFixed(1), avg(sides.map((x) => x.need)).toFixed(1), avg(sides.map((x) => x.spent)).toFixed(1), avg(sides.map((x) => x.gained)).toFixed(1), pct(avg(sides.map((x) => x.wait))), pct(sides.filter((x) => x.wait > 0.25).length / sides.length)]);
+  }
+  r.log(...table(["round", "weapons", "need/s", "spent/s", "from items/s", "waiting", "starved"], rowsE));
+  r.log();
+  r.log("weapons: average weapons in a backpack. need/s: Energy per second all weapons would use without waiting (before speed buffs). spent/s: Energy really spent per second. from items/s: Energy per second from items (on top of the refill). waiting: share of weapon time spent waiting for Energy. starved: share of backpacks whose weapons wait more than a quarter of the time.");
+}
+
 const T = loadTargets();
 r.log();
 r.log("## Targets (data/sim/targets.json)");

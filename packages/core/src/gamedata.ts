@@ -98,6 +98,9 @@ export function buildGameData(raw: RawData): GameData {
     if (!it.isBag && it.effects.some((e) => e.to === "inside")) problems.push(`${it.id}: only bags target "inside"`);
     if ((it.damage === undefined) !== !it.tags.includes("weapon")) problems.push(`${it.id}: weapons (and only weapons) need damage`);
     if (it.damage && !it.cooldown) problems.push(`${it.id}: weapon without cooldown`);
+    if (it.damage && (it.range === undefined || it.energy === undefined)) problems.push(`${it.id}: weapons need "range" (melee/ranged) and "energy" (cost per attack)`);
+    if (it.energy !== undefined && it.energy > rules.energy.max) problems.push(`${it.id}: costs more Energy than the maximum ${rules.energy.max}`);
+    if (!it.damage && (it.range !== undefined || it.energy !== undefined)) problems.push(`${it.id}: only weapons have "range" and "energy"`);
     if (!it.cooldown && it.effects.some((e) => e.on === "use" || e.on === "hit")) problems.push(`${it.id}: "use"/"hit" effect without cooldown`);
     if (it.cooldown && !it.damage && !it.effects.some((e) => e.on === "use")) problems.push(`${it.id}: cooldown without a "use" effect`);
     it.effects.forEach((e, i) => checkEffect(e, `${it.id} effect ${i + 1}`, phaseIds, problems, it.shape.join("").includes("*")));
@@ -118,7 +121,7 @@ export function buildGameData(raw: RawData): GameData {
   for (const h of heroList) {
     h.effects.forEach((e, i) => checkEffect(e, `hero ${h.id} effect ${i + 1}`, phaseIds, problems, false, true));
     for (const a of h.artifacts) if (items.get(a)?.rarity !== "artifact" || items.get(a)?.hero !== h.id) problems.push(`hero ${h.id}: ${a} is not an artifact of this hero`);
-    const words: readonly string[] = [...TAGS, ...BUFFS, ...DEBUFFS, "heal", "cleanse", "strip", "damage", "crafted"];
+    const words: readonly string[] = [...TAGS, ...BUFFS, ...DEBUFFS, "heal", "cleanse", "strip", "damage", "crafted", "energy"];
     for (const p of h.paths) for (const f of p.focus) if (!words.includes(f) && !items.has(f)) problems.push(`hero ${h.id} path ${p.id}: unknown focus ${f}`);
     for (const p of h.bags) if (!items.get(p.item)?.isBag) problems.push(`hero ${h.id}: ${p.item} is not a bag`);
     for (const p of h.start) if (!items.has(p.item) || items.get(p.item)!.isBag) problems.push(`hero ${h.id}: bad start item ${p.item}`);
@@ -147,6 +150,8 @@ function checkEffect(e: Effect, where: string, phases: string[], problems: strin
     if (e.to === "stars" && !hasStars) problems.push(`${where}: targets stars but the shape has none`);
     if (hero && (e.to === "self" || e.to === "stars")) problems.push(`${where}: hero passives target "ship" or "hero"`);
     if (e.per?.buff || e.per?.debuff || e.if?.chance || e.if?.hpBelow) problems.push(`${where}: passives cannot depend on stacks, chance or health`);
+    if (e.mod?.energyRegen && e.to !== "hero") problems.push(`${where}: "energyRegen" only with to: "hero"`);
+    if ((e.mod?.energyRegen || e.mod?.energy) && e.if?.phase) problems.push(`${where}: "energyRegen" and "energy" cannot depend on the phase`);
   } else {
     if (actions !== 1 || e.n === undefined || e.to || e.mod) problems.push(`${where}: needs exactly one of gain/inflict/do with "n"`);
     if (e.on === "starUse" && !hasStars) problems.push(`${where}: "starUse" but the shape has no stars`);

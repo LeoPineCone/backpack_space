@@ -70,6 +70,7 @@ export function mountFight(root: HTMLElement, data: GameData, setup: FightSetup,
       case "tick": return { text: `${cap(e.w ?? "")} deals ${e.v} to ${foe}`, cls: "bad" };
       case "phase": return { text: `★ The star enters ${phaseDefs[e.v]?.name ?? e.w ?? "a new phase"}`, cls: "phaseline" };
       case "nova": return { text: `${B.supernova.name} burns ${me} for ${e.v}`, cls: "novaline" };
+      case "energy": return { text: `${me}: ${src} gives +${e.v} Energy`, cls: "good" };
       case "use": return null;
     }
   };
