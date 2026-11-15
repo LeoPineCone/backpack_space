@@ -135,7 +135,7 @@ export const Rules = z.object({
   heroHp: z.array(z.number()),
   goldPerRound: z.array(z.number()),
   shop: z.object({
-    slots: z.number().int(), bagOfferPct: z.number(), recipeOfferPct: z.number(), rerollCost: z.number(), heroOfferPct: z.number(), salePct: z.number(), sellPct: z.number(), benchSlots: z.number().int(),
+    slots: z.number().int(), bagOfferPct: z.number(), recipeOfferPct: z.number(), rerollCost: z.number(), heroOfferPct: z.number(), salePct: z.number(), sellPct: z.number(), looseLimit: z.number().int(),
     /** at most this many bags among the offers of one roll */
     maxBags: z.number().int(),
     /** an item is offered up to this many percent more often when all owned items share one of its tags (scaled by the share that do) */

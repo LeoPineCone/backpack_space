@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, reroll, toggleFreeze, buy, combine, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, reroll, toggleFreeze, buy, combine, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -101,5 +101,37 @@ describe("recipe partners", () => {
     const pets = ["space_pup", "burrow_rat", "guard_goose", "space_pup"];
     const count = (owned: string[]) => { let n = 0; for (let i = 0; i < 400; i++) for (const o of rollOffers(data, "quill", 6, rng, owned)) if (data.items.get(o.item)!.tags.includes("pet")) n++; return n; };
     expect(count(pets)).toBeGreaterThan(count([]) * 1.2);
+  });
+});
+
+describe("loose items", () => {
+  it("stops loose buying at the limit, but never gifts, take-outs or the fight", () => {
+    const s = newRun(data, "rook", new Rng(3));
+    s.gold = 999;
+    const limit = data.rules.shop.looseLimit;
+    s.loose = Array.from({ length: limit }, () => "space_pup");
+    const slot = s.offers.findIndex((o) => o);
+    expect(buy(s, data, slot)).toBe(false);
+    s.special = ["space_pup"];
+    takeSpecial(s, 0);
+    dropItem(s, 0);
+    expect(s.loose.length).toBe(limit + 2);
+    s.loose.pop(); s.loose.pop(); s.loose.pop();
+    expect(buy(s, data, slot)).toBe(true);
+  });
+  it("drops the items of a bag that is taken out", () => {
+    const s = newRun(data, "flora", new Rng(3));
+    const before = s.items.length + s.bags.length;
+    dropBag(s, data, 0);
+    expect(s.loose.length).toBeGreaterThan(1);
+    expect(s.items.length + s.bags.length + s.loose.length).toBe(before);
+    expect(validLayout(data, s.bags, s.items)).toBe(true);
+  });
+  it("pays rounds played plus lives left at the end of a run", () => {
+    const rng = new Rng(5);
+    const s = newRun(data, "ysel", rng);
+    finishRound(s, data, true, rng); finishRound(s, data, false, rng);
+    expect(s.results).toEqual([true, false]);
+    expect(runReward(s)).toBe(2 + data.rules.lives - 1);
   });
 });

@@ -9,6 +9,7 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 ## Run
 
 - **Decided:** 12 rounds per run, 4 lives. A lost fight costs a life; the run ends when the lives are gone or after round 12.
+- **Decided:** a finished run pays a reward of rounds played + lives left (at most 12 + 4 = 16) in a unit outside the run. Its name and what it buys are open.
 - Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
 - Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`).
 - **Decided:** free special items after round 4 and round 8.
@@ -20,8 +21,9 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Decided:** the grid (9×7, *assumption*) is only the maximum area. Items can only lie on cells covered by a **bag**. Bags are bought in the shop and placed like items; every hero starts with a few bags.
 - Start: a 3×3 Field Pack plus one 2×2 hero bag with a small bonus for the hero's theme (13 cells).
 - Plain bags cost about 1 gold per cell. Themed bags (Cooler Bag, Holster, Tool Roll, Pet Carrier, …) give a bonus to matching items inside.
-- A bag can be moved with everything in it. A bag can only be sold empty.
-- Bench: up to 4 items or bags can wait outside the backpack; they do nothing in the fight (*assumption*).
+- A bag can be moved with everything in it. A bag in the backpack can only be sold empty.
+- **Decided:** there is no bench. Whatever is bought without placing it, or taken out of the backpack, drops below the backpack and lies there loose. Loose items and bags do nothing in the fight and stay between rounds; they can be picked up and placed, or sold. Taking a bag out drops the items in it too.
+- Loose limit (`shop.looseLimit`, 6, *assumption*): once that many pieces lie loose, nothing more can be bought without placing it. The limit only stops buying: free artifacts, recipe results and pieces taken out of the backpack always drop, and the fight can always be started.
 
 ## Items
 

@@ -28,7 +28,7 @@ export interface Bot {
   inv: string[];
   bags: Placement[];
   layout: Placement[];
-  bench: string[];
+  loose: string[];
   /** tags the bot likes a little */
   focus: string[];
   /** way to win the bot commits to (a path of its hero), "" = none */
@@ -43,7 +43,7 @@ export function newBot(data: GameData, hero: string, rng: Rng, path?: string): B
   const tags: string[] = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic"];
   const focus = [rng.pick(tags), rng.pick(tags)];
   const roll = rng.next(), any = h.paths.length ? rng.pick(h.paths).id : "";
-  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), bench: [], focus, path: path ?? (roll < 0.75 ? any : ""), frozen: [], log: [] };
+  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), loose: [], focus, path: path ?? (roll < 0.75 ? any : ""), frozen: [], log: [] };
 }
 
 /** Does the item belong to a path focus (tag, status, kind of action or item id)? */
@@ -102,7 +102,7 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
   const room = () => bot.bags.reduce((n, p) => n + data.items.get(p.item)!.size, 0);
   const log: BotLog = { round, bought: [], sold: [], crafted: [], rerolls: 0, goldLeft: 0 };
   bot.log.push(log);
-  bot.inv = [...bot.inv, ...bot.bench]; bot.bench = [];
+  bot.inv = [...bot.inv, ...bot.loose]; bot.loose = [];
   bot.gold += rules.goldPerRound[round - 1]!;
   const size = (ids: readonly string[]) => ids.reduce((s, id) => s + data.items.get(id)!.size, 0);
   let offers: (Offer | null)[] = rollOffers(data, bot.hero, round, rng, bot.inv, bot.frozen);
@@ -159,8 +159,8 @@ function layoutBot(data: GameData, bot: Bot, rng: Rng, opts: BotOpts, log: BotLo
   const a = opts.layout === "random" ? shuffleLayout(data, bot.bags, bot.inv, rng) : arrange(data, bot.bags, bot.inv, rng);
   bot.layout = a.items;
   const left = [...a.left].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts));
-  bot.bench = left.slice(0, data.rules.shop.benchSlots);
-  for (const id of left.slice(data.rules.shop.benchSlots)) { bot.gold += sellPrice(data, id); log.sold.push(id); }
+  bot.loose = left.slice(0, data.rules.shop.looseLimit);
+  for (const id of left.slice(data.rules.shop.looseLimit)) { bot.gold += sellPrice(data, id); log.sold.push(id); }
   bot.inv = a.items.map((p) => p.item);
 }
 
@@ -169,7 +169,7 @@ export function botSpecial(data: GameData, bot: Bot, afterRound: number, rng: Rn
   const options = specialOptions(data, bot.hero, afterRound, rng);
   if (!options) return;
   const pick = opts.randomBuys ? rng.pick(options) : [...options].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts))[0]!;
-  bot.bench.push(pick);
+  bot.loose.push(pick);
   const log = bot.log[bot.log.length - 1];
   if (log) log.special = pick;
 }

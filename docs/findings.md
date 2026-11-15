@@ -17,7 +17,7 @@ Measured with `npm run report:*` at normal accuracy; the full reports are in `do
 |---|---|---|
 | Fight length | 23–24 s in rounds 1–4, 20–21 s from round 5 on (80 % of the fights between 11 and 39 s). | 18 s, falling to 13–14 s |
 | Supernova | Reached in 19–23 % of the fights in rounds 1–4, 9–12 % later. The Red Giant phase (from 16 s) is now seen in most fights. | 8 %, then 1 % |
-| Heroes | Win share 46–54 %: Ysel 46, Flora 50, Rook 52, Quill 54. Hero against hero between 41 and 60 %. By part of the run: Quill is strong in rounds 5–8 (61 %), Ysel is weak there (36 %). | 45–56 % |
+| Heroes | Win share 47–54 %: Ysel 47, Flora 50, Rook 50, Quill 54. Hero against hero between 41 and 60 %. By part of the run: Quill is strong in rounds 5–8 (63 %), Ysel is weak there (43 %). Measured again after the bench became loose items with a limit of 6 (was 4): no change beyond the usual noise. | 45–56 % |
 | Damage sources | Weapons 56–64 %, Toxin 11–17 %, Burn 8–13 %, Spikes 2–10 %, direct 3–7 %. | Weapons 64–68 % |
 | Items | 225 of 362 priced items are worth between half and one and a half times their price; 33 are clearly too strong, 2 clearly too weak, 102 are unclear at this sample size. | 178 of 278 |
 | Placement | A build laid out by the bot wins 8–13 points more than the same items laid out at random. | 11–16 |

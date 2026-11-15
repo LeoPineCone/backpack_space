@@ -104,11 +104,11 @@ h1, h2, h3, p { margin: 0; }
 .float { position: fixed; z-index: 50; pointer-events: none; opacity: .85; filter: drop-shadow(0 6px 8px #000a); }
 body.dragging { cursor: grabbing; } body.dragging * { cursor: grabbing !important; }
 
-/* bench + sell */
-.benchrow { display: flex; gap: 6px; align-items: stretch; }
-.bench { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 3px 6px 6px; }
-.bench.over, .sellzone.over { border-color: #fff; background: #26335a; }
-.benchlabel { color: var(--dim); font-size: 10.5px; }
+/* loose items + sell */
+.floorrow { display: flex; gap: 6px; align-items: stretch; }
+.floor { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 3px 6px 6px; }
+.floor.over, .sellzone.over { border-color: #fff; background: #26335a; }
+.floorlabel { color: var(--dim); font-size: 10.5px; }
 .bslots { display: flex; gap: 5px; flex-wrap: wrap; }
 .bslot { --cell: 10px; width: 62px; height: 56px; border: 1px solid var(--line); border-radius: 7px; background: #0c1122; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: grab; touch-action: none; overflow: hidden; padding: 2px; }
 .bslot .mini { --cell: 8px; }

@@ -38,7 +38,7 @@ function pickWeighted(data: GameData, list: readonly ItemDef[], shares: Map<stri
   return list[list.length - 1]!;
 }
 
-/** One shop offer. `owned` (backpack and bench) lets the shop lean towards what the player carries; `noBag` keeps bags out. */
+/** One shop offer. `owned` (backpack and loose) lets the shop lean towards what the player carries; `noBag` keeps bags out. */
 export function rollOffer(data: GameData, hero: string, round: number, rng: Rng, owned: readonly string[] = [], noBag = false): Offer {
   const shop = data.rules.shop;
   const odds = shop.rarityOdds[Math.min(round, data.rules.rounds) - 1]!;
