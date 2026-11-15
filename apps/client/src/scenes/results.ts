@@ -5,7 +5,7 @@ import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, disc, hearts, pillButton, roundButton, txt } from "../ui";
-import { piece, pieceFit } from "../pieces";
+import { piece, pieceFit, starMarks } from "../pieces";
 import { itemPopup } from "./popup";
 import { shopScene } from "./shop";
 import { heroScene } from "./hero";
@@ -91,7 +91,8 @@ export function resultScene(game: Game, f: Fought): Scene {
   root.addChild(at(roundButton("chart", 32, () => game.openOverlay(details(game, f)), { iconSize: 26 }), 52, 792));
   root.addChild(at(pillButton(t("ui.continue"), W - 116, 64, () => {
     finishRound(run, data, won, game.rng);
-    if (run.over) { game.addReward(runReward(run)); game.show(runEndScene(game)); }
+    // the stored run ends before the reward is booked, so a reload cannot book it twice
+    if (run.over) { game.dropSave(); game.addReward(runReward(run)); game.show(runEndScene(game)); }
     else {
       game.show(shopScene(game));
       // what merged after this fight is shown once
@@ -139,9 +140,10 @@ export function runEndScene(game: Game): Scene {
   root.addChild(g);
   for (const p of run.bags) root.addChild(at(piece(data, p.item, p.rot, cell, { label: false }), gx + p.x * cell, gy + p.y * cell));
   for (const p of run.items) root.addChild(at(piece(data, p.item, p.rot, cell), gx + p.x * cell, gy + p.y * cell));
+  root.addChild(at(starMarks(data, run.bags, run.items, cell), gx, gy));
 
   root.addChild(at(roundButton("share", 32, () => game.toast(t("toast.shareLater")), { iconSize: 26 }), 52, 792));
   root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.newSeed(); game.run = newRun(data, run.hero, game.rng); game.show(shopScene(game)); }), 96, 760));
-  root.addChild(at(roundButton("home", 32, () => { game.run = null; game.show(heroScene(game)); }, { iconSize: 26 }), W - 52, 792));
+  root.addChild(at(roundButton("home", 32, () => { game.run = null; game.dropSave(); game.show(heroScene(game)); }, { iconSize: 26 }), W - 52, 792));
   return { root };
 }

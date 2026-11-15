@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -171,5 +171,29 @@ describe("bots merge like players", () => {
       merges += crafted.length;
     }
     expect(merges).toBeGreaterThan(10);
+  });
+});
+
+describe("stars and saving", () => {
+  it("lists the stars that have an item on them and whether their effect counts it", () => {
+    const weapon = data.itemList.find((it) => it.tags.includes("weapon") && data.shape(it.id, 0).cells.length === 1 && !it.crafted)!;
+    const other = data.itemList.find((it) => !it.isBag && !it.tags.includes("weapon") && data.shape(it.id, 0).cells.length === 1 && !it.crafted)!;
+    // a roomy layout: every bag of the grid filled, so placing only depends on the items
+    const bag = data.itemList.find((it) => it.isBag && data.shape(it.id, 0).cells.length === 1)!;
+    const { w, h } = data.rules.grid;
+    const bags = Array.from({ length: w * h }, (_, k) => ({ item: bag.id, x: k % w, y: Math.floor(k / w), rot: 0 }));
+    // crystal_shard: "*#*", its stars make starred weapons stronger
+    const items = [{ item: "crystal_shard", x: 3, y: 2, rot: 0 }, { item: weapon.id, x: 2, y: 2, rot: 0 }, { item: other.id, x: 4, y: 2, rot: 0 }];
+    const links = starLinks(data, bags, items);
+    expect(links.filter((l) => l.from === 0).sort((a, b) => a.to - b.to)).toEqual([
+      { from: 0, to: 1, star: [2, 2], active: true },
+      { from: 0, to: 2, star: [4, 2], active: false },
+    ]);
+  });
+  it("continues the same random sequence from a saved state", () => {
+    const a = new Rng(42);
+    a.next(); a.next();
+    const b = new Rng(a.state);
+    expect([b.next(), b.next()]).toEqual([a.next(), a.next()]);
   });
 });

@@ -6,6 +6,8 @@ import { Game } from "./game";
 import { loadIcons } from "./icons";
 import { C } from "./theme";
 import { heroScene } from "./scenes/hero";
+import { shopScene } from "./scenes/shop";
+import { battleScene } from "./scenes/battle";
 
 async function boot(): Promise<void> {
   const app = new Application();
@@ -15,7 +17,9 @@ async function boot(): Promise<void> {
   const fonts = Promise.all(['700 16px "Chakra Petch"', "400 12px Inter", "600 12px Inter"].map((f) => document.fonts.load(f))).catch(() => undefined);
   await Promise.all([loadIcons(), Promise.race([fonts, new Promise((r) => setTimeout(r, 2500))])]);
   const game = new Game(app, DATA);
-  game.show(heroScene(game));
+  // a stored run continues where it was left: in the shop, or in the fight that was already started
+  const resumed = game.resume();
+  game.show(!resumed ? heroScene(game) : resumed.fight ? battleScene(game, resumed.fight) : shopScene(game));
   // for automated checks
   (window as unknown as { __game: Game }).__game = game;
 }

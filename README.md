@@ -21,14 +21,18 @@ npm test
 
 ## The game client
 
-`apps/client` is the game itself (TypeScript + PixiJS; Capacitor wraps it for the stores later). It follows the wireframes: hero ring, shop and backpack on one screen (buying is dragging, loose pieces drop below the backpack), item popup with symbols and the "i" legend, artifact choice, fight playback with ×1/×2/×4, round result, run end with the reward. It has no art yet: items are tiles with a type symbol and their initials, all symbols are simple line icons (`src/icons.ts`). The client never decides a rule or a fight; it calls the core and replays the battle log (`Replay` in the core). Opponents are the stored bot builds of the preview until there is a server.
+`apps/client` is the game itself (TypeScript + PixiJS; Capacitor wraps it as an iOS and Android app). It follows the wireframes: hero ring, shop and backpack on one screen (buying is dragging, loose pieces drop below the backpack), item popup with symbols and the "i" legend, artifact choice, fight playback with ×1/×2/×4, round result, run end with the reward. It has no art yet: items are tiles with a type symbol and their initials, all symbols are simple line icons (`src/icons.ts`). The client never decides a rule or a fight; it calls the core and replays the battle log (`Replay` in the core). Opponents are the stored bot builds of the preview until there is a server. A running run is kept on the device (`src/save.ts`): a reload continues in the shop, or replays a fight that was already started with the same opponent and seed, so it ends the same way. Stars that have an item on them are always shown in the backpack (gold when the star's effect counts that item, `starLinks` in the core), and the first run starts with a short introduction of five spots on the shop screen (`scenes/intro.ts`, again behind the i button).
 
 Hosted build (private link, state of 2026-11-15): https://claude.ai/artifact/ENE9du3Hhp2LDQLeVxNQ5Q
 
 ```
 npm run client        # dev server
 npm run client:build  # static build in out/client
+npm run app:ios       # build, copy into the iOS project, open Xcode
+npm run app:android   # build, copy into the Android project, open Android Studio
 ```
+
+How to get it onto a phone: [docs/mobile.md](docs/mobile.md).
 
 Drag a piece to place it; while dragging, a second finger, the mouse wheel or R turns it. Tap a piece to see what it does.
 
@@ -75,7 +79,7 @@ packages/core/node/   JSON loader (Node only)
 src/sim/              lobbies of bots playing whole runs
 src/reports/          balancing reports
 src/cli/              validate, battle, catalog
-apps/client/          the game client (PixiJS, Vite)
+apps/client/          the game client (PixiJS, Vite); ios/ and android/ are the Capacitor app projects
 playground/           browser preview tester (Vite), a design tool
 test/                 vitest
 ```

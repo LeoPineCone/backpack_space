@@ -10,8 +10,9 @@ import {
 import type { Game, Scene } from "../game";
 import { C, RARITY, RARITY_PIPS, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, disc, hearts, hudPill, pillButton, roundButton, tappable, txt } from "../ui";
-import { piece, pieceFit } from "../pieces";
+import { at, box, disc, hearts, hudPill, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
+import { piece, pieceFit, starMarks } from "../pieces";
+import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { heroPopup, itemPopup } from "./popup";
 import { specialOverlay } from "./special";
 import { battleScene } from "./battle";
@@ -44,6 +45,8 @@ export function shopScene(game: Game): Scene {
   let drag: Drag | null = null;
   let sellLabel: Container | null = null;
   let specialOpen = false;
+  let introOpen = false;
+  const later: (() => void)[] = [];
 
   const srcItem = (s: Src): string => { const r = run(); return s.kind === "offer" ? r.offers[s.i]!.item : s.kind === "loose" ? r.loose[s.i]! : s.kind === "item" ? r.items[s.i]!.item : r.bags[s.i]!.item; };
   const applyTo = (r: RunState, s: Src, spot: Spot): boolean => {
@@ -77,6 +80,7 @@ export function shopScene(game: Game): Scene {
     view.addChild(pips);
     const gold = hudPill("coin", r.gold, C.gold, C.gold);
     view.addChild(at(gold, W - 15 - gold.width, 14));
+    view.addChild(at(infoButton(15, () => openIntro()), W - 15 - gold.width - 26, 36));
 
     // offers
     r.offers.forEach((o, i) => {
@@ -125,6 +129,8 @@ export function shopScene(game: Game): Scene {
       else if (bag >= 0) press({ kind: "bag", i: bag }, e);
     });
     view.addChild(hit);
+    // stars that have an item on them, so it shows which items work together
+    view.addChild(at(starMarks(data, r.bags, r.items, CELL), GX, GY));
     // a mark between neighbours that will merge after the fight; tapping it shows the result
     for (const c of combos) {
       const cells = c.idxs.flatMap((i) => { const p = r.items[i]!; return data.shape(p.item, p.rot).cells.map(([x, y]) => [p.x + x, p.y + y] as const); });
@@ -166,10 +172,28 @@ export function shopScene(game: Game): Scene {
     bin.addChild(ring, icon("bin", 26, C.dim));
     view.addChild(at(bin, SELL.x, SELL.y));
 
+    // popups wait for the next frame: this screen may still be on its way in, and showing a screen closes all popups
     if (r.special && !specialOpen) {
       specialOpen = true;
-      game.openOverlay(specialOverlay(game, () => { specialOpen = false; render(); }));
+      later.push(() => game.openOverlay(specialOverlay(game, () => { specialOpen = false; render(); })));
     }
+    if (!introOpen && !introSeen()) { introOpen = true; later.push(openIntro); }
+    game.save();
+  };
+
+  // ---------- the introduction on the first run ----------
+  const openIntro = () => {
+    introOpen = true;
+    const { w: gw, h: gh } = rules.grid;
+    const pack = { x: GX, y: GY, w: gw * CELL, h: gh * CELL };
+    const steps: IntroStep[] = [
+      { spot: { x: OFFER.x, y: OFFER.y, w: 3 * OFFER.w + 2 * OFFER.gap, h: 2 * OFFER.h + OFFER.gap }, icons: ["coin", "arrow", "bag"], line: t("intro.buy") },
+      { spot: pack, icons: ["starFull"], line: t("intro.stars") },
+      { spot: pack, icons: ["merge", "lock"], line: t("intro.merge") },
+      { spot: { x: SELL.x - SELL.r, y: SELL.y - SELL.r, w: SELL.r * 2, h: SELL.r * 2 }, icons: ["arrow", "bin", "coin"], line: t("intro.sell") },
+      { spot: { x: 91, y: 764, w: 208, h: 64 }, icons: ["swords"], line: t("intro.fight") },
+    ];
+    game.openOverlay(introOverlay(game, steps));
   };
 
   // ---------- pressing, dragging, dropping ----------
@@ -299,5 +323,5 @@ export function shopScene(game: Game): Scene {
   window.addEventListener("wheel", onWheel, { passive: false });
 
   render();
-  return { root, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
+  return { root, update: () => { for (const f of later.splice(0)) f(); }, destroy: () => { window.removeEventListener("keydown", onKey); window.removeEventListener("wheel", onWheel); } };
 }

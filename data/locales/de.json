@@ -50,6 +50,12 @@
   "toast.tooManyLoose": "Zu viele lose Items. Platziere oder verkaufe erst eins.",
   "toast.merged": "Verschmolzen: {items}",
 
+  "intro.buy": "Ziehe ein Item in eine Tasche, um es zu kaufen.",
+  "intro.stars": "Sterne verbinden Items. Ein goldener Stern heißt: Der Bonus ist an.",
+  "intro.merge": "Passende Items nebeneinander verschmelzen nach dem Kampf. Ein gesperrtes Item bleibt, wie es ist.",
+  "intro.sell": "Lege ein Item hier ab, um es zu verkaufen.",
+  "intro.fight": "Dein Rucksack kämpft von allein.",
+
   "noun.weapon.one": "Waffe",
   "noun.weapon.other": "Waffen",
   "noun.weapon.count": "Waffen",

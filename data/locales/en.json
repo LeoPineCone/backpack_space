@@ -48,6 +48,12 @@
   "toast.tooManyLoose": "Too many loose items. Place or sell one first.",
   "toast.merged": "Merged: {items}",
 
+  "intro.buy": "Drag an item into a bag to buy it.",
+  "intro.stars": "Stars link items. A gold star means the bonus is on.",
+  "intro.merge": "Matching items side by side merge after the fight. A locked item stays as it is.",
+  "intro.sell": "Drop an item here to sell it.",
+  "intro.fight": "Your backpack fights on its own.",
+
   "noun.weapon.one": "weapon",
   "noun.weapon.other": "weapons",
   "noun.armor.one": "armor",

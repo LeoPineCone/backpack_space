@@ -1,7 +1,7 @@
 /** Turns a build (hero + placed items) into a battle-ready side: stars resolved, passives applied. */
 import type { GameData, ItemDef } from "./gamedata.js";
 import { bagsUnder, boardOf, starred } from "./grid.js";
-import type { Build, Effect, FilterTag, HeroData, Mod } from "./schema.js";
+import type { Build, Effect, FilterTag, HeroData, Mod, Placement } from "./schema.js";
 
 export interface CEffect {
   e: Effect;
@@ -37,6 +37,38 @@ export interface CSide {
 }
 
 const has = (def: ItemDef, tag: FilterTag | "any" | undefined) => tag === undefined || tag === "any" || def.tags.includes(tag);
+
+/** The tags an item's stars look for (per.stars, to: "stars", on: "starUse"); empty when its stars have no effect. */
+export function starTags(def: ItemDef): (FilterTag | "any")[] {
+  const out = new Set<FilterTag | "any">();
+  for (const e of def.effects) {
+    if (e.per?.stars) out.add(e.per.stars);
+    if (e.to === "stars" || e.on === "starUse") out.add(e.tag ?? "any");
+  }
+  return [...out];
+}
+
+/** A star of item `from` that has item `to` lying on it; `active` when `to` is something the star looks for. */
+export interface StarLink { from: number; to: number; star: [number, number]; active: boolean }
+
+/** Every occupied star in a backpack, so a screen can show which items work together. */
+export function starLinks(data: GameData, bags: readonly Placement[], items: readonly Placement[]): StarLink[] {
+  const { w, h } = data.rules.grid;
+  const board = boardOf(w, h, bags, items, data.shape);
+  const out: StarLink[] = [];
+  items.forEach((p, from) => {
+    const tags = starTags(data.items.get(p.item)!);
+    for (const [sx, sy] of data.shape(p.item, p.rot).stars) {
+      const x = p.x + sx, y = p.y + sy;
+      if (x < 0 || y < 0 || x >= w || y >= h) continue;
+      const to = board.occ[y * w + x]!;
+      if (to < 0 || to === from) continue;
+      const def = data.items.get(items[to]!.item)!;
+      out.push({ from, to, star: [x, y], active: tags.some((t) => has(def, t)) });
+    }
+  });
+  return out;
+}
 
 export function compile(build: Build, data: GameData): CSide {
   const hero = data.heroes.get(build.hero);

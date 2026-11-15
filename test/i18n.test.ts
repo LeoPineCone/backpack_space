@@ -62,7 +62,7 @@ describe("languages", () => {
       const src = readFileSync(f, "utf8");
       for (const m of src.matchAll(/\bt\("([a-z]\w*\.[\w.]+)"/g)) expect(known(m[1]!), `${f}: ${m[1]}`).toBe(true);
       // no hard-coded words on screen: texts go through t()
-      expect(src.match(/\b(txt|pillButton|toast)\((["'`])[A-Za-z]{2}/g), f).toBeNull();
+      expect(src.match(/\b(txt|pillButton|toast)\((["'`])[A-Za-z]{2}|\bline: ["'`][A-Za-z]{2}/g), f).toBeNull();
       for (const m of src.matchAll(/"((?:ui|toast)\.[\w.]+)"/g)) expect(known(m[1]!), `${f}: ${m[1]}`).toBe(true);
     }
   });
