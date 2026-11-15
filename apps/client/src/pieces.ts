@@ -1,9 +1,9 @@
 /** Draws items and bags as placeholder tiles: the shape in cells, a type symbol and the item's initials. */
 import { Container, Graphics } from "pixi.js";
-import type { GameData } from "@backpack-space/core";
+import { starLinks, type GameData, type Placement, type StarLink } from "@backpack-space/core";
 import { C, RARITY, TAG_FILL } from "./theme";
 import { icon } from "./icons";
-import { at, txt } from "./ui";
+import { at, disc, txt } from "./ui";
 import type { Chip, Row } from "./symbols";
 
 export const initials = (name: string) => name.replace(/[^A-Za-z0-9 -]/g, "").split(/[ -]+/).filter(Boolean).map((w) => w[0]!.toUpperCase()).slice(0, 3).join("");
@@ -105,4 +105,29 @@ export function symbolRow(row: Row, maxW: number, size = 32): { node: Container;
   put(arrow, 14);
   for (const ch of row.then) { const k = chip(ch, size); put(k.node, k.w); }
   return { node: c, h: y + size };
+}
+
+/**
+ * The stars of a placed backpack that have an item on them, drawn on the edge between the two items:
+ * gold when the star's effect counts that item, faint when it lies there without effect. Origin = top-left of the grid.
+ */
+export function starMarks(data: GameData, bags: readonly Placement[], items: readonly Placement[], cell: number): Container {
+  const c = new Container();
+  let links: StarLink[];
+  try { links = starLinks(data, bags, items); } catch { return c; }
+  const seen = new Set<string>();
+  // active stars last, so they sit on top
+  for (const l of [...links].sort((a, b) => Number(a.active) - Number(b.active))) {
+    const p = items[l.from]!;
+    const [sx, sy] = l.star;
+    const near = data.shape(p.item, p.rot).cells.map(([x, y]) => [p.x + x, p.y + y] as const).sort((a, b) => Math.hypot(a[0] - sx, a[1] - sy) - Math.hypot(b[0] - sx, b[1] - sy))[0]!;
+    const mx = ((near[0] + sx) / 2 + 0.5) * cell, my = ((near[1] + sy) / 2 + 0.5) * cell;
+    const key = `${mx},${my}`;
+    if (seen.has(key) && !l.active) continue;
+    seen.add(key);
+    const r = cell * 0.2;
+    if (l.active) c.addChild(at(disc(r, { fill: C.bgDeep, line: C.gold, lineW: 1.5 }), mx, my), at(icon("starFull", r * 1.45, C.gold), mx, my));
+    else c.addChild(at(icon("star", r * 1.3, C.dim), mx, my)).alpha = 0.6;
+  }
+  return c;
 }
