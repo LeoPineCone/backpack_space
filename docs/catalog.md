@@ -360,14 +360,14 @@ The star itself. Starts every fight with Power and gains more with every star ph
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Dyson Fragment | artifact | 0 | `*....*/..##../..##../*....*` | accessory, mechanical | Battle start: gain 20 Shield. When a starred item activates: gain 8 Shield. |  |
+| Dyson Fragment | artifact | 0 | `*....*/..##../..##../*....*` | accessory, mechanical | Every 2 s: gain 5 Shield per starred item (max 4×). When a starred item activates: gain 4 Shield. |  |
 | Wormhole Generator | artifact | 0 | `*..##..*` | accessory, mechanical | Starred items: +2 damage, 50 % faster, starts 100 % charged. |  |
-| Time Dilator | artifact | 0 | `*/./#/#/./*` | accessory | Battle start: inflict 6 Cryo. When a starred ranged weapon activates: inflict 1 Cryo. |  |
+| Time Dilator | artifact | 0 | `*/./#/#/./*` | accessory | Battle start: inflict 4 Cryo. When a starred ranged weapon activates: inflict 1 Cryo. |  |
 | Ancient Monolith | artifact | 0 | `.*.*./*...*/..#../*...*/.*.*.` | accessory | You: +60 max health. When a starred item activates: heal 4 (below 50 % health). |  |
-| Quantum Dice | artifact | 0 | `*.*/.#./*.*` | accessory | When a starred item activates: gain 1 Power (8 % chance). When a starred item activates: gain 1 Overclock (10 % chance). When a starred item activates: gain 5 Shield (15 % chance). |  |
+| Quantum Dice | artifact | 0 | `*.*/.#./*.*` | accessory | When a starred item activates: gain 1 Power (6 % chance). When a starred item activates: gain 1 Overclock (8 % chance). When a starred item activates: gain 5 Shield (12 % chance). |  |
 | Plague Vault | artifact | 0 | `*..*/.##./*..*` | accessory, organic | When a starred food activates: inflict 1 Toxin. When a starred organic item activates: inflict 1 Toxin. Every 2.5 s: inflict 1 Radiation. |  |
-| Titan Core | artifact | 0 | `**..**/..##../..##..` | armor, mechanical | Battle start: gain 30 Shield, +20 per starred armor. When a weapon hits you: gain 1 Spikes (6 % chance). |  |
-| Star Forge | artifact | 0 | `*.##.*` | accessory, mechanical | Starred melee weapons: +8 damage. When a starred melee weapon activates: gain 1 Power. |  |
+| Titan Core | artifact | 0 | `**..**/..##../..##..` | armor, mechanical | Battle start: gain 30 Shield, +20 per starred armor. When a weapon hits you: gain 1 Spikes (10 % chance). |  |
+| Star Forge | artifact | 0 | `*.##.*` | accessory, mechanical | Starred melee weapons: +3 damage. When a starred melee weapon activates: gain 1 Power (20 % chance). |  |
 | Galactic Cookbook | artifact | 0 | `***/*#*/***` | accessory | Starred food: 25 % faster. When a starred food activates: gain 1 Overclock (40 % chance). |  |
 | Zoo Beacon | artifact | 0 | `*...*/..#../*...*` | accessory, mechanical | Starred pets: +3 damage, +30 % crit. When a starred pet activates: heal 3. |  |
 
@@ -401,8 +401,8 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. When a weapon hits you: inflict 1 Toxin (30 % chance). |  |
 | Sun Blossom | legendary | 12 | `##/##` | food, organic | Every star phase: heal 40 and gain 3 Regen. Every 2.7 s: inflict 1 Toxin. |  |
 | World Seed | artifact | 0 | `##/##` | accessory, organic | Battle start: gain 2 Spikes. Every star phase: gain 1 Spikes and 2 Regen. |  |
-| Queen Spore | artifact | 0 | `*#*` | accessory, organic | Battle start: inflict 5 Toxin. Every 3 s: inflict 2 Toxin. When a starred food activates: inflict 2 Toxin. |  |
-| Terrarium Heart | artifact | 0 | `*##*` | accessory, organic | Starred pets: +5 damage, 25 % faster. When a starred pet activates: heal 4. |  |
+| Queen Spore | artifact | 0 | `*#*` | accessory, organic | Battle start: inflict 5 Toxin. Every 3 s: inflict 3 Toxin. When a starred food activates: inflict 2 Toxin. |  |
+| Terrarium Heart | artifact | 0 | `*##*` | accessory, organic | Starred pets: +7 damage, 25 % faster. When a starred pet activates: heal 5. |  |
 | Spore Mine | crafted (step 1) | 5 | `##` | weapon, organic | 2–3 damage every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin (45 % chance). Each attack: heal 1. | = Seed Pod + Mushroom Cluster |
 | Thorn Pod | crafted (step 1) | 5 | `##` | weapon, organic | 2–4 damage every 2 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin. Battle start: gain 1 Spikes. | = Seed Pod + Bramble Seed |
 | Mantrap Pack | crafted (step 1) | 6 | `##` | pet, weapon, organic | 3–4 damage every 0.9 s. Melee, attacks without Energy. On hit: heal 1. | = Snap Sprout + Snap Sprout |
@@ -482,7 +482,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Tusked Behemoth | epic | 9 | `###/###` | pet, weapon, organic | 16–22 damage every 2.9 s. Melee, attacks without Energy. Battle start: gain 28 Shield. | → Juggernaut |
 | Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
 | Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
-| Elder Tusk | artifact | 0 | `*#*` | accessory | Starred pets: +5 damage, 20 % faster. Battle start: gain 24 Shield. |  |
+| Elder Tusk | artifact | 0 | `*#*` | accessory | Starred pets: +6 damage, 20 % faster. Battle start: gain 24 Shield. |  |
 | Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 1 Power. Every star phase: heal 4 per pet in your backpack (max 10×). |  |
 | Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 1.5 s: deal 1 damage per pet in your backpack (max 12×). Your pets: 15 % faster. |  |
 | Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |

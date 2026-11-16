@@ -40,7 +40,7 @@ describe("melee / ranged filters", () => {
     const melee = data.itemList.find((i) => i.range === "melee" && i.shape.length === 2 && i.shape.every((r) => r === "#") && !i.hero)!;
     const ranged = data.itemList.find((i) => i.range === "ranged" && i.shape.length === 2 && i.shape.every((r) => r === "#") && !i.hero)!;
     const dmg = (id: string) => { const c = compile(at(id, 0), data); return c.items.find((x) => x.def.id === id)!.dmg![0]; };
-    expect(dmg(melee.id)).toBe(melee.damage![0] + 8);
+    expect(dmg(melee.id)).toBe(melee.damage![0] + 3);
     expect(dmg(ranged.id)).toBe(ranged.damage![0]);
   });
 });
