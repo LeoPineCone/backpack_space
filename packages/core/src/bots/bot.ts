@@ -22,6 +22,8 @@ export interface BotOpts {
   noCraft?: boolean;
   /** hero path the bot commits to ("" = none); default: three of four bots choose one with the hero item after round 4 */
   path?: string;
+  /** how hard the bot tries to lay its items out well (default: the arranger's own 250 moves, 4 tries) */
+  arrange?: { moves?: number; tries?: number };
 }
 export interface BotLog {
   round: number; bought: string[]; sold: string[];
@@ -195,7 +197,7 @@ export function ownedRecipes(data: GameData, ids: readonly string[]): Recipe[] {
 
 function layoutBot(data: GameData, bot: Bot, rng: Rng, opts: BotOpts, log: BotLog): void {
   const recipes = opts.noCraft ? [] : ownedRecipes(data, bot.inv);
-  const a = opts.layout === "random" ? shuffleLayout(data, bot.bags, bot.inv, rng) : arrange(data, bot.bags, bot.inv, rng, { recipes });
+  const a = opts.layout === "random" ? shuffleLayout(data, bot.bags, bot.inv, rng) : arrange(data, bot.bags, bot.inv, rng, { recipes, ...opts.arrange });
   bot.layout = a.items;
   if (recipes.length) {
     const due = pendingMerges(data, bot.bags, bot.layout, recipes).length;

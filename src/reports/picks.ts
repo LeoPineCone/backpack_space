@@ -1,6 +1,6 @@
 /**
  * Are the free picks fair?
- *   npm run report:picks -- [--accuracy quick|normal|precise] [--seed S] [--out file]
+ *   npm run report:picks -- [--accuracy quick|normal|precise] [--seed S] [--jobs N] [--careful] [--out file]
  *
  * After round 4 a bot is shown two of its hero's three hero items, after round 8 three of the general artifacts.
  * This report takes real bots at that moment and plays the rest of the run once with every item of the pool
@@ -10,8 +10,13 @@
  * Because every option of the pool is played on the same moment, every possible offer is scored exactly
  * (round 8: all 120 offers of 3 out of 10), without extra fights.
  */
-import { botBuild, botMerge, botShop, botSpecial, compile, simulate, Rng, type Bot, type Build, type GameData } from "@backpack-space/core";
-import { currentRatings, makeField } from "../sim/lobby";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { type Build } from "@backpack-space/core";
+import { seedOf } from "../sim/items";
+import { currentRatings } from "../sim/lobby";
+import { jobsFrom, runParallel } from "../sim/parallel";
+import { playPickLobby, scoreMoment, type Moment, type PickLobby, type Scored } from "../sim/picks";
 import { avg, loadTargets, markOf, median, pct, signed, startReport, stderr, type Target } from "./common";
 import type { Mark } from "./html";
 
@@ -20,65 +25,42 @@ const r = startReport({
   title: "Free picks",
   question: "Is any free pick (hero item after round 4, general artifact after round 8) so strong that it is always taken, or so weak that it is never worth it?",
   presets: { quick: { lobbies: 6, moments: 6, fights: 4 }, normal: { lobbies: 20, moments: 24, fights: 6 }, precise: { lobbies: 50, moments: 70, fights: 8 } },
-  explain: { lobbies: "lobbies that supply the moments and the opponents", moments: "pick moments per hero and pick", fights: "fights per remaining round and option" },
+  explain: { lobbies: "lobbies that supply the moments and the opponents", moments: "pick moments per hero for the general artifacts (hero items: three times as many, they have fewer options to play)", fights: "fights per remaining round and option" },
 });
 const data = r.data;
+const jobs = jobsFrom(r.flags), careful = !!r.flags.careful;
+if (careful) r.log("Careful placement: every bot searches its layout much longer after the pick (all options and the run without a pick alike). Compare with the normal run: an item that gains a lot here is laid out badly by the normal bots, not weak.");
 
 // ---- collect pick moments from real lobbies
-interface Moment { hero: string; after: number; bot: Bot }
-const moments: Moment[] = [];
-const { byRound } = makeField(data, r.n.lobbies, r.seed, { onSpecial: (s, after) => moments.push({ hero: s.bot.hero, after, bot: structuredClone(s.bot) }) }, (i) => r.progress(`lobby ${i + 1}/${r.n.lobbies}`));
+mkdirSync("out", { recursive: true });
+const ratingsFile = join("out", `.ratings-${process.pid}.json`), fieldFile = join("out", `.field-${process.pid}.json`), momentsFile = join("out", `.moments-${process.pid}.json`);
+writeFileSync(ratingsFile, JSON.stringify(currentRatings()));
+const played = await runParallel<PickLobby>({ kind: "pickLobby", seed: r.seed, ratings: true, ratingsFile }, r.n.lobbies, jobs, (i) => playPickLobby(data, r.seed, i), (d) => r.progress(`lobby ${d}/${r.n.lobbies}`));
+const byRound: Build[][] = Array.from({ length: data.rules.rounds }, () => []);
+for (const l of played) for (const seat of l.builds) seat.forEach((b, k) => byRound[k]!.push(b));
+const moments: Moment[] = played.flatMap((l) => l.moments);
 
-/** the pool a pick draws from and how many the rules show */
+/** how many the rules show */
 const specials = data.rules.specials;
-const poolOf = (hero: string, after: number): string[] => {
-  const sp = specials.find((s) => s.afterRound === after)!;
-  return sp.pool === "hero" ? [...data.heroes.get(hero)!.artifacts] : data.generalArtifacts.map((i) => i.id);
-};
 const showOf = (after: number) => specials.find((s) => s.afterRound === after)!.show;
-
-/** Plays the rest of the run with `extra` added at the pick; returns the share of fights won. Same seed = same dice. */
-function playRest(m: Moment, extra: string | null, seed: number): number {
-  const bot = structuredClone(m.bot);
-  if (extra) bot.loose.push(extra);
-  const opts = { ratings: currentRatings() };
-  let w = 0, n = 0;
-  for (let round = m.after + 1; round <= data.rules.rounds; round++) {
-    botShop(data, bot, round, new Rng(seed + 7919 * round), opts);
-    const me = compile(botBuild(bot, round), data);
-    const field: Build[] = byRound[round - 1]!.filter((b) => b.hero !== m.hero);
-    const pick = new Rng(seed * 31 + round);
-    for (let f = 0; f < r.n.fights; f++) {
-      const opp = field[pick.int(field.length)]!;
-      const res = simulate(me, compile(opp, data), data.rules, pick.int(2 ** 31));
-      w += res.winner === 0 ? 1 : res.winner === -1 ? 0.5 : 0; n++;
-    }
-    botMerge(data, bot, opts);
-    botSpecial(data, bot, round, new Rng(seed + 104729 * round), opts);
-  }
-  return w / Math.max(1, n);
-}
 
 /** all k-subsets of xs */
 const subsets = <T,>(xs: readonly T[], k: number): T[][] => k === 0 ? [[]] : xs.flatMap((x, i) => subsets(xs.slice(i + 1), k - 1).map((s) => [x, ...s]));
 
 // ---- score every moment: every option of its pool plus "nothing"
-interface Scored { hero: string; after: number; none: number; score: Record<string, number> }
-const scored: Scored[] = [];
-for (const after of specials.map((s) => s.afterRound)) {
+const chosen: { m: Moment; seed: number }[] = [];
+for (const sp of specials) {
   for (const h of data.heroList) {
-    const ms = moments.filter((m) => m.after === after && m.hero === h.id);
-    const take = Math.min(r.n.moments, ms.length);
-    for (let k = 0; k < take; k++) {
-      const m = ms[Math.floor((k * ms.length) / take)]!;
-      r.progress(`after round ${after}: ${h.id} ${k + 1}/${take}`);
-      const seed = r.rng.int(2 ** 30);
-      const score: Record<string, number> = {};
-      for (const id of poolOf(h.id, after)) score[id] = playRest(m, id, seed);
-      scored.push({ hero: h.id, after, none: playRest(m, null, seed), score });
-    }
+    const ms = moments.filter((m) => m.after === sp.afterRound && m.hero === h.id);
+    const take = Math.min(sp.pool === "hero" ? 3 * r.n.moments : r.n.moments, ms.length);
+    for (let k = 0; k < take; k++) chosen.push({ m: ms[Math.floor((k * ms.length) / take)]!, seed: seedOf(r.seed, `${sp.afterRound}/${h.id}/${k}`) % 2 ** 30 });
   }
 }
+writeFileSync(fieldFile, JSON.stringify(byRound));
+writeFileSync(momentsFile, JSON.stringify(chosen));
+const scored = await runParallel<Scored>({ kind: "picks", seed: r.seed, ratings: true, ratingsFile, field: fieldFile, moments: momentsFile, fights: r.n.fights, careful }, chosen.length, jobs,
+  (i) => scoreMoment(data, byRound, chosen[i]!.m, chosen[i]!.seed, r.n.fights, careful), (d) => r.progress(`pick moment ${d}/${chosen.length}`));
+for (const f of [ratingsFile, fieldFile, momentsFile]) rmSync(f, { force: true });
 
 // ---- tables
 const T = loadTargets();

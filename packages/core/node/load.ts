@@ -2,7 +2,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildGameData, type GameData } from "../src/gamedata.js";
+import { buildGameData, type GameData, type RawData } from "../src/gamedata.js";
 
 /** repository root (this file lives in packages/core/node/) */
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
@@ -16,16 +16,21 @@ function readJson(path: string): unknown {
   }
 }
 
-export function loadGameData(dataDir = DATA_DIR): GameData {
+/** The raw JSON of /data, before validation (balancing tools patch this and build the game data from it). */
+export function loadRawData(dataDir = DATA_DIR): RawData {
   const itemDir = join(dataDir, "items");
-  return buildGameData({
+  return {
     rules: readJson(join(dataDir, "rules.json")),
     heroes: readJson(join(dataDir, "heroes.json")),
     recipes: readJson(join(dataDir, "recipes.json")),
     glossary: readJson(join(dataDir, "glossary.json")),
     locales: Object.fromEntries(readdirSync(join(dataDir, "locales")).filter((f) => f.endsWith(".json")).sort().map((f) => [f, readJson(join(dataDir, "locales", f))])),
     itemFiles: Object.fromEntries(readdirSync(itemDir).filter((f) => f.endsWith(".json")).sort().map((f) => [f, readJson(join(itemDir, f))])),
-  });
+  };
+}
+
+export function loadGameData(dataDir = DATA_DIR): GameData {
+  return buildGameData(loadRawData(dataDir));
 }
 
 /** Optional bot ratings (data/sim/ratings.json), written by `npm run report:items -- --write-ratings`. */

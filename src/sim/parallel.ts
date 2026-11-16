@@ -7,7 +7,14 @@ import { availableParallelism } from "node:os";
 import { fileURLToPath } from "node:url";
 
 export interface WorkerTask {
-  kind: "paths";
+  /** "paths": the seat stats of every lobby (report:paths); "panel": the lobbies with builds, pairings and fight records (baseline) */
+  kind: "paths" | "panel" | "items" | "pickLobby" | "picks";
+  /** "picks": file with the chosen moments and their seeds ({ m, seed }[]), scored from/to; the field comes from `field` */
+  moments?: string; careful?: boolean;
+  /** "panel": bots choose their path themselves (the field the item measurement uses) instead of one bot per path */
+  free?: boolean;
+  /** "items": file with the field (builds by round), the ids to measure (from/to index into it) and the sample sizes */
+  field?: string; ids?: string[]; builds?: number; fights?: number;
   seed: number;
   from: number;
   to: number;
@@ -15,6 +22,10 @@ export interface WorkerTask {
   ratings: boolean;
   /** self-test: paths made stronger in this measurement only */
   boost?: { path: string; pct: number }[];
+  /** number changes to play with (see src/balance/patch.ts) */
+  patch?: { changes: { item?: string; hero?: string; rules?: true; set: Record<string, number | string | boolean | number[]> }[] };
+  /** bots use these ratings instead of data/sim/ratings.json */
+  ratingsFile?: string;
 }
 
 /** jobs from --jobs N, default: all cores */

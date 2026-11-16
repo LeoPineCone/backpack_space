@@ -23,7 +23,9 @@ export interface LobbyOpts {
   /** called right before a bot gets its free special item after a round (the moment of the pick) */
   onSpecial?: (seat: Seat, afterRound: number) => void;
 }
-export interface Fight { round: number; a: number; b: number; res: BattleResult }
+export interface Fight { round: number; a: number; b: number; res: BattleResult;
+  /** the dice of this fight: the same two builds with this seed fight the same fight again */
+  seed: number }
 export interface Seat {
   bot: Bot;
   seat: number;
@@ -64,8 +66,9 @@ export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): L
       if (pool.length < 2) break;
       let o = pool[rng.int(pool.length - 1)]!;
       if (o.seat === s.seat) o = pool[pool.length - 1]!;
-      const res = simulate(sides.get(s.seat)!, sides.get(o.seat)!, data.rules, rng.int(2 ** 31));
-      fights.push({ round, a: s.seat, b: o.seat, res });
+      const fightSeed = rng.int(2 ** 31);
+      const res = simulate(sides.get(s.seat)!, sides.get(o.seat)!, data.rules, fightSeed);
+      fights.push({ round, a: s.seat, b: o.seat, res, seed: fightSeed });
       const won = res.winner === 0;
       s.won.push(won);
       if (s.endedAfter === 0) {
