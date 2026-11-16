@@ -143,7 +143,7 @@
   "rules.when.phase": "When {phase} begins",
   "rules.when.everyPhase": "Every star phase",
   "rules.when.starUse": "When a starred {tag|one} activates",
-  "rules.when.shipUse": "When one of your {tag|other} activates",
+  "rules.when.shipUse": "When any of your {tag|other} activates",
   "rules.use.attack": "Each attack",
   "rules.use.every": "Every {s} s",
   "rules.item.damage": "{min}–{max} damage every {s} s.",

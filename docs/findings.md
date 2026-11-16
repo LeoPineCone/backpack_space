@@ -1,3 +1,22 @@
+# Hero items equal inside each hero's pool (2026-11-16)
+
+Question (Ilja): the hero items of one hero must be worth about the same, so that none is taken every time it is offered. `report:picks` now compares a hero item with the median of **its own hero's three** (a player only ever chooses between those), and lists them per hero.
+
+**Before** (precise, gain over the rest of the run in points, ±2–3): Quill Herd Heart +31 / Elder Tusk +7 / Ancient Egg +4 (Herd Heart the better choice in 89 % of its offers); Rook Perpetual Engine +18 / Nanite Swarm +18 / Master Blueprint +3; Ysel Eternal Dawn +15 / Stellar Lens +15 / Nova Crown +5; Venn +16 / +15 / +13. The three weak ones count something that is not there in round 3 (crafted items, swarm pets, Cryo).
+
+**Changed:**
+- Herd Heart: 1 Power (80 % chance) per starred food instead of 3; phase heal 2 instead of 4 per 2 pet cells.
+- Counting anchors get a base that works at once: Ancient Egg deals 5 damage plus 1 per swarm pet; Master Blueprint 9 damage plus 1 per crafted item (max 4, was 6), destroys 5 Shield (was 3), crafted items 20 % faster (was 10); Nova Crown 5 damage plus 3 per Cryo (max 5; was 1 per Cryo, max 8).
+- Elder Tusk: beasts +12 damage, 25 % faster, 36 Shield (was +8, 20 %, 24).
+- **Well-fed pack lost its only payoff with the weaker Herd Heart (38 %, late rounds 31 %)**. Its converters were dead numbers: Glutton Toad and Trough Boar only reacted to the one or two foods on their stars. They now react to **every food in the backpack** (`shipUse`, allowed on items now; shapes without stars): Toad 1 damage, Boar 2 damage per Power (max 10). A build with ten foods triggers them about three times a second.
+- English wording of that trigger: "When any of your food activates".
+
+**After** (precise): Quill +14 / +11 / +9, Rook +19 / +18 / +14, Ysel +18 / +17 / +11, Venn +17 / +15 / +13. No item is the better choice in more than 59 % or the weaker in more than 61 % of its offers (target ≤ 65 %). Gain against the hero's median 0.67–1.22 (target 0.7–1.4; Nova Crown just below).
+
+**Balance** (new baseline, seed 1 / 2): Venn 49 / 51, Rook 49 / 50, Quill 51 / 50, Ysel 51 / 50 %. Paths: all inside 46–54 % except Hungry jungle 45 / 47 and Thorn wall 51 / 55. Well-fed pack 46 / 46, late 48 / 48 (before this pass 47 / 49, late 41 / 44, carried by Herd Heart). 34 of 124 targets off (36 before).
+
+**Still open:** Nova Crown is the weaker pick (a stronger Crown makes Eclipse too strong late: 2 Cryo per use gave 62 % late). Late rounds: Big beasts 58 / 56, Swarm 52 / 58, Eclipse 60 / 56, Thorn wall 56 / 61 strong; Overclocked guns 41, Shield fortress 42, Late ascension 39 / 36 weak. Lower caps on Elder Tusk, Ancient Egg and Trough Boar did not move Quill's late rounds (replays, both seeds).
+
 # Free picks moved forward: hero item after round 2, general artifact after round 6 (2026-11-16)
 
 Question (Ilja, after the first hand-played runs showed that a path only begins at round 5): pick the hero item earlier, and the general artifact with it? Decided: rounds 2 and 6 instead of 4 and 8, then balance.

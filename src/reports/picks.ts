@@ -82,6 +82,8 @@ for (const after of specials.map((s) => s.afterRound)) {
   const best: Record<string, number> = {}, worst: Record<string, number> = {}, seen: Record<string, number> = {};
   const empty: Record<string, { n: number; empty: number }> = {};
   const med = median(ids.map((id) => avg(gainOf(id))));
+  // A hero item is only ever chosen against the other items of its own hero, so it is compared with their median.
+  const medOf = (id: string) => (hero ? median(ids.filter((x) => data.items.get(x)!.hero === data.items.get(id)!.hero).map((x) => avg(gainOf(x)))) : med);
   for (const s of rows) {
     const opts = Object.keys(s.score);
     for (const offer of subsets(opts, Math.min(show, opts.length))) {
@@ -97,10 +99,11 @@ for (const after of specials.map((s) => s.afterRound)) {
     }
   }
   const table: (string | number)[][] = [], marks: Mark[][] = [];
-  const order = [...ids].sort((a, b) => avg(gainOf(b)) - avg(gainOf(a)));
+  const heroAt = (id: string) => (hero ? data.heroList.findIndex((h) => h.id === data.items.get(id)!.hero) : 0);
+  const order = [...ids].sort((a, b) => heroAt(a) - heroAt(b) || avg(gainOf(b)) - avg(gainOf(a)));
   const gains: number[] = [], bests: number[] = [], worsts: number[] = [], floors: number[] = [];
   for (const id of order) {
-    const g = gainOf(id), q = avg(g) / (med || 1);
+    const g = gainOf(id), q = avg(g) / (medOf(id) || 1);
     const b = (best[id] ?? 0) / Math.max(1, seen[id] ?? 0), w = (worst[id] ?? 0) / Math.max(1, seen[id] ?? 0);
     const per = hero ? [] : data.heroList.map((h) => avg(gainOf(id, h.id)));
     gains.push(q); bests.push(b); worsts.push(w); if (!hero) floors.push(Math.min(...per) / (med || 1));
@@ -109,7 +112,7 @@ for (const after of specials.map((s) => s.afterRound)) {
   }
   const range = (t: Target) => `${t.min !== undefined ? `≥ ${t.min}` : ""}${t.min !== undefined && t.max !== undefined ? ", " : ""}${t.max !== undefined ? `≤ ${t.max}` : ""}`;
   const fair = (1 / show);
-  r.table(["item", "gain (pts, rest of run)", `× median [${range(tGain)}]`, `best in its offer [≤ ${pct(tBest.max!)}; fair ${pct(fair)}]`, `worst in its offer [≤ ${pct(tWorst.max!)}]`, ...(hero ? ["hero"] : data.heroList.map((h) => `gain ${short(h.id)} [≥ ${tFloor.min} × median]`))], table, undefined, marks);
+  r.table(["item", "gain (pts, rest of run)", `× median${hero ? " of its hero" : ""} [${range(tGain)}]`, `best in its offer [≤ ${pct(tBest.max!)}; fair ${pct(fair)}]`, `worst in its offer [≤ ${pct(tWorst.max!)}]`, ...(hero ? ["hero"] : data.heroList.map((h) => `gain ${short(h.id)} [≥ ${tFloor.min} × median]`))], table, undefined, marks);
   r.chart({ type: "bar", title: `Gain of every ${hero ? "hero item" : "general artifact"} (points of win share, rest of the run)`, x: order.map(name), unit: "", series: [{ name: "gain", values: order.map((id) => 100 * avg(gainOf(id))) }] });
   r.target({ ...tGain, what: `after round ${after}: ${tGain.what}` }, gains, false);
   r.target({ ...tBest, what: `after round ${after}: ${tBest.what}` }, bests, true);
@@ -125,6 +128,6 @@ for (const after of specials.map((s) => s.afterRound)) {
 }
 r.log();
 r.log("Reading: \"gain\" = how many more of the remaining fights (to round 12) the bot wins with the item than with no pick at all, in points of win share; ± = two standard errors.");
-r.log("\"× median\" compares the gain with the median item of the same pick. \"best / worst in its offer\" = over every offer the rules can show that contains the item, how often it was the option that won the most / the least of the rest of the run (ties shared).");
+r.log("\"× median\" compares the gain with the median item of the same pick (hero items: with the median of the same hero's three, because that is the only choice a player ever has). \"best / worst in its offer\" = over every offer the rules can show that contains the item, how often it was the option that won the most / the least of the rest of the run (ties shared).");
 r.log("All options of one moment play the same shop rolls, opponents and fight dice, so their difference is the item; the bots shop on after the pick as usual (stale ratings: run npm run ratings first).");
 r.done();

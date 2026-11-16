@@ -12,7 +12,7 @@ Shape: `#` cell, `*` star, `.` empty; rows separated by `/`. Recipes: `=` what i
 
 Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
 
-- When one of your food activates: inflict 1 Toxin.
+- When any of your food activates: inflict 1 Toxin.
 - Your organic items: 16 % faster.
 - Starts with: Field Pack, Seed Satchel, Seed Pod, Watering Drone.
 - Signature artifacts (after round 2): World Seed, Queen Spore, Terrarium Heart.
@@ -448,7 +448,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage every 3 s. Ranged, 5 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per Overclock you have (max 12×). | → Storm Driver |
 | Bastion Frame | epic | 9 | `##/##` | armor, mechanical | Battle start: gain 70 Shield. When a weapon hits you: deal 1 damage per 12 Shield you have (max 6×). | → Bulwark Array |
 | Quantum Forge | legendary | 12 | `##/##` | accessory, mechanical | Every star phase: gain 3 Overclock and 26 Shield. Every 3 s: destroy 8 enemy Shield. You: +2 Energy per second. |  |
-| Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 1 damage per crafted item in your backpack (max 6×) and destroy 3 enemy Shield. Your crafted items: 10 % faster. |  |
+| Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 9 damage, +1 per crafted item in your backpack (max 4×) and destroy 5 enemy Shield. Your crafted items: 20 % faster. |  |
 | Perpetual Engine | artifact | 0 | `*##*` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and gain 3 Energy. When a starred weapon activates: deal 1 damage per 2 Overclock you have (max 4×). |  |
 | Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: deal 2 damage per 3 Shield you have (max 20×). Every star phase: gain 30 Shield and remove 2 of your debuffs. |  |
 | Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 5–7 damage every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
@@ -473,7 +473,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Treat Pouch | common | 3 | `*#*` | food | Starred pets: +2 damage. Every 4 s: heal 4 and gain 2 Energy. |  |
 | Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 40 % faster, -1 Energy per attack. | → Cozy Den |
 | Kibble Sack | common | 3 | `#/#` | food | Every 3.5 s: heal 1 per 2 cells your pets cover (max 6×) and gain 3 Energy. Every 3.5 s: gain 1 Power (60 % chance). | → Cozy Den, Rat Pack, Banquet Trough |
-| Glutton Toad | common | 3 | `#*/#.` | pet, weapon, organic | 1–2 damage every 1.9 s. Melee, attacks without Energy. When a starred food activates: deal 4 damage. |  |
+| Glutton Toad | common | 3 | `#/#` | pet, weapon, organic | 1–2 damage every 1.9 s. Melee, attacks without Energy. When any of your food activates: deal 1 damage. |  |
 | Burrow Rat | common | 3 | `#` | pet, swarm, weapon, organic | 1–2 damage every 1.4 s. Melee, attacks without Energy. | → Star Hound, Rat Pack |
 | Feeding Bowl | common | 3 | `*#*` | food | When a starred pet activates: heal 3 and gain 1 Energy (50 % chance). | → Banquet Trough |
 | Guard Goose | common | 3 | `#/#` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, attacks without Energy. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
@@ -483,7 +483,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | War Saddle | rare | 5 | `*#*` | armor | Starred beasts: +6 damage. Battle start: gain 16 Shield. | → Armored Bear |
 | Glow Swarm | rare | 5 | `##` | pet, swarm, organic | Every 2.5 s: deal 1 damage per swarm pet in your backpack (max 5×). | → Swarm Cloud |
 | Marrow Treat | rare | 5 | `*#*` | food | Every 3.5 s: gain 1 Power. Starred pets: 15 % faster. |  |
-| Trough Boar | rare | 6 | `*##*` | pet, weapon, organic | 3–5 damage every 2.2 s. Melee, attacks without Energy. When a starred food activates: deal 1 damage per Power you have (max 10×). |  |
+| Trough Boar | rare | 6 | `##` | pet, weapon, organic | 3–5 damage every 2.2 s. Melee, attacks without Energy. When any of your food activates: deal 2 damage per Power you have (max 10×). |  |
 | Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 2–3 damage every 1.2 s. Melee, attacks without Energy. This item: +20 % crit. | → Sun Eagle |
 | Moon Bear | rare | 6 | `##/##` | pet, beast, weapon, organic | 8–11 damage every 2.6 s. Melee, attacks without Energy. You: +28 max health. Battle start: gain 10 Shield. | → Armored Bear |
 | Hive Queen | epic | 8 | `##/##` | pet, swarm, organic | Every 2.2 s: deal 1 damage per swarm pet in your backpack (max 8×). | → Swarm Cloud |
@@ -491,9 +491,9 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Tusked Behemoth | epic | 9 | `###/###` | pet, beast, weapon, organic | 16–22 damage every 2.9 s. Melee, attacks without Energy. Battle start: gain 28 Shield. | → Juggernaut |
 | Thunder Ram | epic | 9 | `##/##` | pet, beast, weapon, organic | 13–16 damage every 2.4 s. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
 | Sky Serpent | legendary | 13 | `####` | pet, beast, weapon, organic | 9–13 damage every 1.5 s. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
-| Elder Tusk | artifact | 0 | `#` | accessory | Your beasts: +8 damage, 20 % faster. Battle start: gain 24 Shield. |  |
-| Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 3 Power. Every star phase: heal 4 per 2 cells your pets cover (max 10×). |  |
-| Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 1.2 s: deal 1 damage per swarm pet in your backpack (max 10×). Your swarm pets: 25 % faster. |  |
+| Elder Tusk | artifact | 0 | `#` | accessory | Your beasts: +12 damage, 25 % faster. Battle start: gain 36 Shield. |  |
+| Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 1 Power (80 % chance). Every star phase: heal 2 per 2 cells your pets cover (max 10×). |  |
+| Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 1.2 s: deal 5 damage, +1 per swarm pet in your backpack (max 10×). Your swarm pets: 25 % faster. |  |
 | Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
 | Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
 | Cozy Den | crafted (step 1) | 6 | `*##*/*##*` | accessory | Starred pets: 40 % faster. Every 3 s: heal 1 per 2 cells your pets cover (max 8×). | = Pet Bed + Kibble Sack |
@@ -534,7 +534,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 5 Energy per attack. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
 | White Dwarf | epic | 9 | `##/##` | armor | Every star phase: gain 14 Shield. When Collapse begins: gain 94 Shield. You: +42 max health. | → Event Horizon |
 | Supernova Seed | legendary | 12 | `##` | accessory | When Supernova begins: deal 110 damage. Every star phase: inflict 5 Burn and gain 1 Power. |  |
-| Nova Crown | artifact | 0 | `##` | accessory | Every 2.5 s: inflict 1 Cryo and deal 1 damage per Cryo on the enemy (max 8×). Every star phase: inflict 1 Jam. When Supernova begins: gain 112 Shield. |  |
+| Nova Crown | artifact | 0 | `##` | accessory | Every 2.5 s: deal 5 damage, inflict 1 Cryo and deal 3 damage per Cryo on the enemy (max 5×). Every star phase: inflict 1 Jam. When Supernova begins: gain 112 Shield. |  |
 | Eternal Dawn | artifact | 0 | `#` | accessory | Every star phase: gain 1 Power and 2 Overclock. |  |
 | Stellar Lens | artifact | 0 | `.*./*#*/.*.` | accessory | When a starred weapon activates: inflict 1 Burn (80 % chance). Starred weapons: +15 % crit. |  |
 | Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 3–5 damage every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |

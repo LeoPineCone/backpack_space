@@ -163,7 +163,6 @@ function checkEffect(e: Effect, where: string, phases: string[], problems: strin
   } else {
     if (actions !== 1 || e.n === undefined || e.to || e.mod) problems.push(`${where}: needs exactly one of gain/inflict/do with "n"`);
     if (e.on === "starUse" && !hasStars) problems.push(`${where}: "starUse" but the shape has no stars`);
-    if (e.on === "shipUse" && !hero) problems.push(`${where}: "shipUse" is for hero effects`);
     if (hero && (e.on === "use" || e.on === "hit" || e.on === "starUse")) problems.push(`${where}: heroes have no cooldown or stars`);
   }
   if (e.per?.stars && !hasStars) problems.push(`${where}: counts stars but the shape has none`);
