@@ -1,3 +1,24 @@
+# How strongly should a path pull? Three sweeps (2026-11-16)
+
+Question (Ilja, open since the path anchors): how strongly should a path pull the build? New tool `npm run balance:sweep` (one number at several values, every value a full run on the baseline's lobbies, bots shop again; about 3 min per value). No game number changed. Baseline of main, 2 × 240 lobbies, mean of seeds 1 and 2; * = at least two paired standard errors on both seeds.
+
+| Knob | Values | Build on the path | Path against open bot (average) | Other |
+|---|---|---|---|---|
+| Bots' path liking (bots only; now 2) | 1 / 1.5 / 2 / 3 / 4 | 29 * / 40 * / 47 / 55 * / 60 * % | +1.5 * / −0.1 * / −4.2 / −7.8 * / −11.7 * | largest gap between the paths of a hero 2.7 / 9.0 / 12.7 / 15.7 / 20.6 |
+| Shop lean to the anchor's path (`shop.anchorPathWeight`, now 1.5) | 1 / 1.5 / 2 / 3 / 4 | 46 / 47 / 48 / 50 / 50 % | −3.5 / −4.2 / −3.9 / −3.7 / −4.5 | heroes and paths unchanged |
+| Hero's own items in the shop (`shop.heroOfferPct`, now 30) | 20 / 30 / 40 / 50 | 46 / 47 / 48 / 49 % | −3.5 / −4.2 / −3.3 / −3.3 | hero items in the build 35 / 47 / 57 / 66 %; Quill 44 / 50 / 56 / 61 %, Rook 55 / 52 / 49 / 46 %, Venn 49 / 48 / 46 / 44 % |
+
+What this says:
+- **The shop lean does almost nothing** between 1 and 4 (it only touches the hero's own items that carry a path). It is safe wherever it stands and is not the lever for this question.
+- **More hero offers do not pull to a path.** They fill the build with the hero's items, make runs more alike (items two runs do not share: 88 / 86 / 83 / 80 %) and shift the heroes hard, because Quill's own items are stronger than the general ones and Rook's and Venn's are weaker. That gap is a balancing finding of its own.
+- **What decides is how much the player (here: the bot) wants the path, and today wanting it more loses.** Every step of path liking puts more of the build on the path and makes the path bots lose more against the hero's open bot, most for Rook Overclocked guns and Shield fortress (−25 / −24 at liking 4), Quill Well-fed pack (−22), Hungry jungle and Late ascension (−15). Only Thorn wall, Burning corona, Swarm and Poison garden stay near the open bot. A path's items together are not stronger than the best general buys, so the open-bot target (≥ +2) cannot be reached by more pull: the paths need payoff (their items must reward being together), not pull.
+- **Paths do not make runs the same.** Two runs of the same path share as few items as two runs without a path (86 % not shared) at every value; two paths of one hero differ a little more with more liking (86 → 91 %). The fear "too much pull, every run the same" does not show up in this range.
+- The damage mix of the closest two paths of a hero stays the same (0.01) whatever the pull: distinctness is a matter of what the items do, not of how many are bought.
+
+Reports: `out/reports/sweep-pathLiking.html`, `sweep-shop-anchorPathWeight.html`, `sweep-shop-heroOfferPct.html`.
+
+Open (design decision): leave both shop numbers as they are; make the weak paths pay through their own items (numbers of path items, first real pass) and then set `pathCommit` to what a path that pays delivers. The bots' path liking stays 2 until then; it is a guess about players, and the win shares of single paths depend on it (see the liking column: Rook guns 54 → 37 %).
+
 # Item strength, matchups and meta, picks (2026-11-16)
 
 Third stage of the balancing tools (`docs/proposals/balancing-workflow.md`). No game number changed. All on the baseline of main (2 × 240 lobbies, seeds 1 and 2).

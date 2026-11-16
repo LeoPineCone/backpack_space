@@ -197,6 +197,12 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Lessons learned (keep adding)
 
+- 2026-11-16: path pull, three sweeps (findings.md). The shop lean (`shop.anchorPathWeight` 1–4) moves almost
+  nothing. `shop.heroOfferPct` is a hero-balance lever, not a path lever (Quill 44 → 61 % from 20 to 50). The
+  bots' path liking decides how much of a build is on the path (29 → 60 %), and more liking loses against the
+  open bot: paths lack payoff, not pull. Path win shares depend on the liking (a guess about players), so read a
+  weak path as "weak when a bot forces it", and check `balance:sweep -- --knob bot:pathLiking` before tuning one.
+
 - 2026-11-16: Dyson Fragment and Wormhole Generator stay weak with careful placement (+0.7 / +1.7 points normal,
   −0.8 / +2.4 careful; median artifact +8.5). The earlier guess "bots only place the far stars badly" does not
   hold for the arranger's search; they are weak for the builds bots make. (The arranger's score may still not
@@ -235,5 +241,6 @@ reaches the path distinctness target. The ratings have not been measured with th
 first `npm run ratings -- --seeds 1,2` writes `data/sim/ratings-meta.json` and will shift the heroes once.
 Meta: Rook 36 % (Workshop alone 28 %), Quill 14 %; Hungry jungle, Well-fed pack and Late ascension are hardly
 played. General artifacts Dyson Fragment, Wormhole Generator (and Ancient Monolith) are weak.
-Not built yet (see `docs/proposals/balancing-workflow.md`): sweeps and search for numbers the bots read, the
-path-pull sweep, and the first real pass.
+Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.
+Not built yet (see `docs/proposals/balancing-workflow.md`): search for numbers the bots read, and the first
+real pass.
