@@ -173,7 +173,7 @@ export function outlinePath(g: Graphics, data: GameData, id: string, rot: number
 }
 
 /** Colour of the merge hints: the soft glow on items that could merge and the energy beam while dragging. */
-export const ZAP = 0x8ff3ff;
+export const ZAP = C.zap;
 
 /** A jagged energy beam from (x0, y0) to (x1, y1). `rnd` returns 0..1; a new one each frame makes it flicker. */
 export function zap(g: Graphics, x0: number, y0: number, x1: number, y1: number, rnd: () => number, alpha = 1): void {

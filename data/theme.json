@@ -1,0 +1,61 @@
+{
+  "$comment": "The look of the game UI in one place (docs/theme.md). Dark blue and strong yellow. 'palette' holds every colour once; 'ui' gives each colour a job and is what the client uses. Change a colour here, never in code.",
+  "palette": {
+    "space": "#070b18",
+    "night": "#0d1326",
+    "dusk": "#141c38",
+    "hull": "#1a2340",
+    "plate": "#24305a",
+    "rivet": "#4a5a8c",
+    "seam": "#2a3558",
+    "wire": "#3a476e",
+    "floor": "#101830",
+    "starlight": "#eef1fb",
+    "haze": "#a9b4d6",
+    "sun": "#f5b942",
+    "sunInk": "#1a1300",
+    "beacon": "#5cc8ff",
+    "beaconInk": "#04202e",
+    "spark": "#8ff3ff",
+    "mint": "#6fe3a1",
+    "flare": "#ff7a59",
+    "white": "#ffffff"
+  },
+  "ui": {
+    "bgDeep": "space",
+    "bg": "night",
+    "backdrop": "dusk",
+    "panel": "hull",
+    "line": "wire",
+    "text": "starlight",
+    "dim": "haze",
+    "gold": "sun",
+    "goldInk": "sunInk",
+    "cyan": "beacon",
+    "cyanInk": "beaconInk",
+    "bag": "plate",
+    "bagLine": "rivet",
+    "gridLine": "seam",
+    "floor": "floor",
+    "zap": "spark",
+    "flash": "white",
+    "good": "mint",
+    "bad": "flare"
+  },
+  "buttons": {
+    "$comment": "Kinds of buttons. primary: the one main action per screen (FIGHT, START, TAKE). icon: round symbol buttons. secondary: outline only. Locked buttons use 'lockedAlpha'.",
+    "primary": { "fill": "gold", "ink": "goldInk", "ring": "bg" },
+    "icon": { "fill": "panel", "line": "line", "ink": "text" },
+    "secondary": { "fill": "bg", "line": "gold", "ink": "gold" },
+    "lockedAlpha": 0.4
+  },
+  "rarity": { "common": "#8892b0", "rare": "#5cc8ff", "epic": "#c9a0ff", "legendary": "#f5b942", "artifact": "#ff7a59" },
+  "tagFill": {
+    "$comment": "Fill of an item tile by its first type, so types can be told apart while items have no pictures.",
+    "weapon": "#6b3340", "armor": "#2f4a7a", "accessory": "#56397a", "pet": "#7a5230", "food": "#6a6a2c", "mechanical": "#485468", "organic": "#2f6a45", "beast": "#7a5230", "swarm": "#7a5230", "bag": "#24305a"
+  },
+  "fonts": {
+    "display": "\"Chakra Petch\", \"Trebuchet MS\", sans-serif",
+    "text": "Inter, system-ui, sans-serif"
+  }
+}
