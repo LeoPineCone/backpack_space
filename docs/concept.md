@@ -122,7 +122,7 @@ Not in the draft, ideas only: a shared star per round with a modifier (e.g. "blu
 
 An item is data: shape, optional cooldown, optional weapon damage with range (melee/ranged) and Energy cost, and a list of effects. An effect is a trigger plus one action, or a passive bonus.
 
-- Triggers: `start`, `use` (each cooldown), `hit` (weapon hit), `attacked`, `phase` (every phase or a named one), `starUse` (a starred item activates), `lowHp` (once below half health); for heroes also `shipUse` (any own item with a tag activates).
+- Triggers: `start`, `use` (each cooldown), `hit` (weapon hit), `attacked`, `phase` (every phase or a named one), `starUse` (a starred item activates), `shipUse` (any own item with a tag activates; heroes and items), `lowHp` (once below half health).
 - Actions: gain a buff, inflict a debuff, deal damage, heal, cleanse own debuffs, strip enemy Shield, gain Energy.
 - Scaling `per`: starred items with a tag, items with a tag in the backpack, own buff stacks, enemy debuff stacks (with divisor and cap).
 - Tag filters (`tag`, `per.stars`, `per.ship`, `per.cells` = cells that items of a type cover): the item types (with the pet kinds `beast` and `swarm`), `crafted`, and `melee` / `ranged` for weapons by range. Stars (`*` in the shape) may sit further away than the neighbours, with empty cells (`.`) in between.

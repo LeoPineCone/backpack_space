@@ -23,7 +23,7 @@
   "pickWorst": { "max": 0.55, "what": "general artifact: share of its offers (3 shown) in which it is the worst choice (fair: 33 %)" },
   "pickFloor": { "min": 0.4, "what": "general artifact: gain for every single hero, compared with the median artifact (no hero gets a useless pick)" },
   "pickEmpty": { "max": 0.1, "what": "general artifact: share of a hero's offers in which no option reaches the pickFloor" },
-  "pickHeroGain": { "min": 0.7, "max": 1.4, "what": "hero item: gain over the rest of the run compared with the median hero item (× median)" },
+  "pickHeroGain": { "min": 0.7, "max": 1.4, "what": "hero item: gain over the rest of the run compared with the median of its hero's three items (× median)" },
   "pickHeroBest": { "max": 0.65, "what": "hero item: share of its offers (2 shown) in which it is the better choice (fair: 50 %)" },
   "pickHeroWorst": { "max": 0.65, "what": "hero item: share of its offers (2 shown) in which it is the weaker choice (fair: 50 %)" },
   "metaHero": { "min": 0.1, "max": 0.45, "what": "share of every hero in a settled meta of the path-against-path table (fair: 25 %); wide on purpose, it only catches blunders" },

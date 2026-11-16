@@ -68,6 +68,10 @@ so the formula is a good start. Then:
 - Effects instead of damage (heal, shield, buffs, debuffs): there is no exact exchange rate. Start from an item
   of the same rarity with a similar effect and adjust; the measurement decides.
 - Effects that **count** (`per`) grow with the build: cap them (`max`) and check the late rounds.
+- A free pick that counts needs a **flat base effect** next to the counting one, otherwise it is worthless at the
+  moment it is picked (round 3). Check with `npm run report:picks`: inside a hero the three items must be close.
+- `starUse` reaches the one or two items on the stars; `shipUse` ("when any of your food activates") reaches the
+  whole backpack and scales with the build. Use it for converters of a path, with a small number.
 - **Saturating numbers:** Strip above ~10 rarely does more (enemies seldom hold more stacks); Jam/Cryo/
   Overclock are capped in `rules.status`. Raising a capped number changes nothing.
 - **Cheap items every bot buys are strong levers** (start items, common food, artifacts): change them in small

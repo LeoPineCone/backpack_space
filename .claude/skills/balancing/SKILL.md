@@ -284,10 +284,18 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
   far apart (Herd Heart 2–2.6 × median, three counting anchors at 0.3). Run it after every pass that touches a
   hero item or what it counts.
 
+- 2026-11-16: hero items are compared inside their hero (`report:picks`, "× median of its hero"). An anchor that
+  only counts (crafted items, swarm pets, Cryo) is worth a quarter of the others as a pick in round 3: give it a
+  flat base effect and let the counting come on top. An anchor that hands out Power per activation is the opposite
+  (always taken). Iterate at normal (1 min, ±4–5), confirm at precise (4 min, ±2–3).
+- 2026-11-16: a path that lives on its anchor falls with it (Well-fed pack 47 → 38 % when Herd Heart went from 3
+  Power to 1). The payoff belongs into the path's shop items. `balance:sense` showed the converters as dead numbers:
+  a star trigger reaches one or two items, a backpack trigger (`shipUse`) scales with the build. That one change
+  moved the path by +8 and its late rounds by +16, other paths by +1.
+
 ## Still open (2026-11-16)
 Free picks are after rounds 2 and 6 since 2026-11-16 (health curve 100, 150, 300, 350, then +100). Heroes 49–51 % on
-both seeds, all paths in band on seed 1, 36 of 124 targets off. Open: hero items unequal (Herd Heart far too
-strong, Master Blueprint, Ancient Egg, Nova Crown weak as picks); late rounds of Overclocked guns, Well-fed pack,
+both seeds, all paths in band on seed 1, 36 of 124 targets off. Hero items are equal inside each hero since the pass of 2026-11-16 (Nova Crown slightly weak). Open: late rounds of Overclocked guns, Well-fed pack,
 Late ascension (41–47), Eclipse and Thorn wall (55–58).
 
 
