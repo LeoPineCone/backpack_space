@@ -66,7 +66,8 @@ export function onPath(def: ItemDef, path: { id: string; focus: readonly string[
   const focus = path.focus;
   return focus.some((f) => f === def.id || (def.tags as string[]).includes(f) || def.effects.some((e) => e.gain === f || e.inflict === f || e.do === f || e.per?.buff === f || e.per?.debuff === f));
 }
-const PATH_LIKING = 1.5;
+/** how much more a bot committed to a path values that path's items (a committed player builds around them) */
+const PATH_LIKING = 2;
 
 const ARTIFACT_WORTH = 14;
 /** the bot accepts weapons that need this much more Energy than comes in (the full bar at the start covers some) */
@@ -225,7 +226,9 @@ export function botMerge(data: GameData, bot: Bot, opts: BotOpts = {}): void {
 export function botSpecial(data: GameData, bot: Bot, afterRound: number, rng: Rng, opts: BotOpts = {}): void {
   const options = specialOptions(data, bot.hero, afterRound, rng);
   if (!options) return;
-  const pick = opts.randomBuys ? rng.pick(options) : [...options].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts))[0]!;
+  // a bot committed to a path takes that path's anchor when it is shown
+  const own = options.find((id) => bot.path && data.items.get(id)!.path === bot.path);
+  const pick = own ?? (opts.randomBuys ? rng.pick(options) : [...options].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts))[0]!);
   bot.loose.push(pick);
   // a bot that has not chosen a path yet follows the anchor it took
   const path = data.items.get(pick)!.path;

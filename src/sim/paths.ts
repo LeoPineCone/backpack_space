@@ -22,8 +22,7 @@ export const MECHANIC_TEXT: Record<Mechanic, string> = {
 };
 /** the mechanic an item's damage counts as */
 export function mechanicOf(def: ItemDef): Mechanic {
-  if ((def.tags as string[]).includes("pet")) return "pet";
-  if (def.damage) return "weapon";
+  if (def.damage) return (def.tags as string[]).includes("pet") ? "pet" : "weapon";
   const dmg = def.effects.find((e) => e.do === "damage");
   if (dmg?.per?.buff === "shield") return "shield";
   if (dmg?.per?.ship || dmg?.per?.stars) return "count";
