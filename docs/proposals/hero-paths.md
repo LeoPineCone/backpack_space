@@ -1,6 +1,6 @@
 # Proposal: paths that play differently, anchored by the hero item
 
-Status: **proposal, 2026-11-16, revised after Ilja's answers the same day; nothing built yet.** Game data and code are unchanged. Every point marked **needs OK** still waits for Ilja.
+Status: **decided and built 2026-11-16** (Ilja: "ja"). The data follows this document; numbers are first drafts set by measurement (`report:paths`, `report:picks`, results in `docs/findings.md`). Built differently from the first draft: the Swarm anchor is the reworked Ancient Egg (no new artifact), so 9 hero items were reworked and 5 shop items added.
 
 Decided by Ilja (2026-11-16):
 - The round-4 pick stays **two of three, at random**, so every run brings its own luck.
