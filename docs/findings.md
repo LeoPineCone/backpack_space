@@ -1,3 +1,29 @@
+# Item sizes follow the thing (2026-11-15)
+
+Decision (Ilja): weapons and pets are larger than fruit and snacks; weapons cover 2 cells or more, one cell is rare. Four weapons and seven pets grew to 2 cells, ten foods shrank to 1 (list in `.claude/skills/item-design/SKILL.md` history / PR #14). Item ratings measured again, full reports in `docs/reports/` (normal accuracy, seed 1).
+
+| Heroes overall (Venn, Rook, Quill, Ysel) | seed 1 | seed 2 |
+|---|---|---|
+| Before the size change | 50 / 44 / 50 / 56 % | – |
+| Sizes changed, ratings measured again, hero rules unchanged | 57 / 46 / 44 / 54 % | 57 / 40 / 43 / 57 % |
+| With the hero rule changes below | 50 / 49 / 48 / 52 % | 51 / 44 / 49 / 55 % |
+
+Smaller food helped Venn, larger weapons and pets cost Rook and Quill backpack room. Hero rules changed to answer that (all in `data/heroes.json`):
+
+- Venn: organic items 20 % faster (before 25 %).
+- Rook: mechanical items 34 % faster (before 26 %).
+- Quill: unchanged in the end (see below).
+
+## Pets attack without Energy (decided with Ilja, 2026-11-15)
+
+Weapons need Energy, animals do not: all 45 pets that deal damage have `energy` 0 (`validate` checks it). The Energy discount tried for Quill is gone again and her pets are back at 25 % faster. Ratings measured again.
+
+| Heroes overall (Venn, Rook, Quill, Ysel) | seed 1 | seed 2 |
+|---|---|---|
+| Pets without Energy | 48 / 46 / 50 / 55 % | 50 / 45 / 50 / 53 % |
+
+Quill's late game recovered (46 % in rounds 9–12, before 39–43 %). Still off: Quill is strong in rounds 5–8 (55–59 %), Rook weak there (41–42 %), Ysel strong late (58–60 %); Venn wins only 34 % against Ysel (target at least 35 %). Fight length, longest fight and Supernova share are within their targets.
+
 # Melee, ranged and Energy (2026-11-15)
 
 Decision (Ilja): weapons are melee or ranged; Spikes hurt both for now. Every attack costs Energy, which refills at a fixed rate; items can give Energy. Goal: no weapon spam, builds interlock more. Full reports in `docs/reports/` (normal accuracy, seed 1, ratings measured again).

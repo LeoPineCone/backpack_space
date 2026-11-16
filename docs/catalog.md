@@ -13,7 +13,7 @@ Shape: `#` cell, `*` star, `.` empty; rows separated by `/`. Recipes: `=` what i
 Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.
 
 - When one of your food activates: inflict 1 Toxin.
-- Your organic items: 25 % faster.
+- Your organic items: 20 % faster.
 - Starts with: Field Pack, Seed Satchel, Seed Pod, Watering Drone.
 - Signature artifacts (after round 4): World Seed, Queen Spore, Terrarium Heart.
 
@@ -22,7 +22,7 @@ Food and organic items. Its garden grows faster than anyone's, heals a lot and p
 Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 - Your crafted items: 25 % faster.
-- Your mechanical items: 26 % faster.
+- Your mechanical items: 34 % faster.
 - Every combination pays 3 gold.
 - Starts with: Field Pack, Tool Roll, Welding Arm, Scrap Metal.
 - Signature artifacts (after round 4): Master Blueprint, Perpetual Engine, Nanite Swarm.
@@ -75,20 +75,20 @@ The star itself. Starts every fight with Power and gains more with every star ph
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Rivet Gun | common | 2 | `#` | weapon, mechanical | 1–2 damage every 1.5 s. Ranged, 3 Energy per attack. | → Nail Storm |
-| Asteroid Chunk | common | 2 | `#` | weapon | 3–5 damage every 3 s. Ranged, 6 Energy per attack. | → Slag Mace |
+| Rivet Gun | common | 2 | `##` | weapon, mechanical | 2–2 damage every 1.5 s. Ranged, 3 Energy per attack. | → Nail Storm |
+| Asteroid Chunk | common | 2 | `##` | weapon | 3–5 damage every 3 s. Ranged, 6 Energy per attack. | → Slag Mace |
 | Fang Dagger | common | 2 | `#` | weapon, organic | 1–2 damage every 1.5 s. Melee, 3 Energy per attack. This item: +15 % crit. | → Venom Fang |
 | Laser Pistol | common | 3 | `#/#` | weapon, mechanical | 3–4 damage every 2 s. Ranged, 4 Energy per attack. | → Prism Laser, Twin Lasers, Gunship Drone |
 | Stun Baton | common | 3 | `#/#` | weapon, mechanical | 2–3 damage every 2 s. Melee, 4 Energy per attack. On hit: inflict 1 Jam. | → Cryo Baton |
 | Mining Pick | common | 3 | `##/#.` | weapon | 4–6 damage every 2.6 s. Melee, 5 Energy per attack. On hit: destroy 2 enemy Shield. | → Drill Mole |
-| Flare Gun | common | 3 | `#` | weapon, mechanical | 1–2 damage every 3 s. Ranged, 6 Energy per attack. On hit: inflict 2 Burn. |  |
+| Flare Gun | common | 3 | `##` | weapon, mechanical | 1–2 damage every 3 s. Ranged, 6 Energy per attack. On hit: inflict 2 Burn. |  |
 | Boomerang Blade | common | 3 | `##` | weapon | 3–5 damage every 2.4 s. Ranged, 5 Energy per attack. Each attack: deal 3 damage (30 % chance). | → Buzz Blade |
 | Plasma Cutter | common | 4 | `##` | weapon, mechanical | 3–4 damage every 2.5 s. Melee, 5 Energy per attack. On hit: inflict 1 Burn. | → Flamethrower |
 | Acid Flask | rare | 4 | `#` | weapon, organic | 1–2 damage every 3 s. Ranged, 6 Energy per attack. On hit: destroy 6 enemy Shield. On hit: inflict 1 Toxin (50 % chance). | → Acid Sprayer |
 | Cryo Sprayer | rare | 5 | `##` | weapon, mechanical | 2–3 damage every 2.2 s. Ranged, 4 Energy per attack. On hit: inflict 2 Cryo. | → Glacier Cannon, Acid Sprayer |
 | Ion Blaster | rare | 5 | `#/#` | weapon, mechanical | 3–5 damage every 2 s. Ranged, 4 Energy per attack. On hit: inflict 1 Jam. | → EMP Cannon |
 | Spore Launcher | rare | 5 | `##` | weapon, organic | 1–2 damage every 2.6 s. Ranged, 5 Energy per attack. On hit: inflict 1 Toxin. | → Fungal Mortar |
-| Shock Gauntlet | rare | 5 | `#` | weapon, mechanical | 2–3 damage every 1.4 s. Melee, 3 Energy per attack. On hit: deal 1 damage per 3 Overclock you have (max 6×). |  |
+| Shock Gauntlet | rare | 5 | `#/#` | weapon, mechanical | 2–3 damage every 1.4 s. Melee, 3 Energy per attack. On hit: deal 1 damage per 3 Overclock you have (max 6×). |  |
 | Needle Rifle | rare | 5 | `###` | weapon, mechanical | 6–8 damage every 2.8 s. Ranged, 5 Energy per attack. This item: +25 % crit. | → Burst Rifle |
 | Plasma Sword | rare | 6 | `#/#/#` | weapon, mechanical | 5–7 damage every 2 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. | → Plasma Katana |
 | Harpoon Launcher | rare | 6 | `###` | weapon, mechanical | 8–11 damage every 3.2 s. Ranged, 6 Energy per attack. On hit: destroy 5 enemy Shield. | → Winch Harpoon |
@@ -256,57 +256,57 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Moon Moth | common | 2 | `#` | pet, organic | Every 3 s: inflict 1 Jam. | → Lunar Moth, Dust Storm |
 | Glow Beetle | common | 2 | `#` | pet, organic | Every star phase: heal 11 and gain 6 Energy. | → Beetle Lantern |
 | Dust Bunny | common | 2 | `#` | pet, organic | Battle start: inflict 8 Jam. | → Dust Storm |
-| Space Hamster | common | 3 | `*#*` | pet, weapon, organic | 1–2 damage every 1.5 s. Melee, 3 Energy per attack. This item: +1 damage per starred food. On hit: gain 2 Energy. | → Hamster Wheel |
+| Space Hamster | common | 3 | `*#*` | pet, weapon, organic | 1–2 damage every 1.5 s. Melee, attacks without Energy. This item: +1 damage per starred food. On hit: gain 2 Energy. | → Hamster Wheel |
 | Vacuum Slug | common | 3 | `##` | pet, organic | Every 4 s: inflict 1 Toxin. | → Plague Slug, Jelly Swarm |
 | Rock Crab | common | 3 | `##` | pet, armor, organic | Battle start: gain 17 Shield and 1 Spikes. | → Fortress Crab, Shell Dragon |
 | Asteroid Mole | common | 3 | `#/#` | pet, organic | Every 3 s: deal 5 damage. | → Drill Mole |
-| Scout Drone | common | 3 | `*#*` | pet, mechanical | Starred weapons: 20 % faster. | → Medic Drone |
+| Scout Drone | common | 3 | `*#*/.#.` | pet, mechanical | Starred weapons: 20 % faster. | → Medic Drone |
 | Tardigrade | rare | 4 | `#` | pet, organic | Once below 50 % health: gain 49 Shield. You: +21 max health. |  |
-| Repair Bot | rare | 5 | `#` | pet, mechanical | Every 3 s: gain 7 Shield. | → Welder Bot, Caretaker Bot |
+| Repair Bot | rare | 5 | `#/#` | pet, mechanical | Every 3 s: gain 7 Shield. | → Welder Bot, Caretaker Bot |
 | Laser Parrot | rare | 5 | `*#*` | pet, organic | When a starred weapon activates: deal 3 damage (60 % chance). | → Hawk-Eye Parrot |
 | Nebula Jelly | rare | 5 | `##` | pet, organic | When a weapon hits you: inflict 1 Toxin (15 % chance). Every 5 s: gain 1 Regen. | → Jelly Swarm |
 | Magma Newt | rare | 5 | `##` | pet, organic | Every 3 s: inflict 2 Burn. | → Magma Hound |
-| Ice Ferret | rare | 5 | `##` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Cryo. | → Snow Lynx, Glacier Drake |
-| Purifier Bot | rare | 5 | `#` | pet, mechanical | Every 2.5 s: remove 1 of your debuffs and gain 4 Shield. | → Caretaker Bot |
-| Comet Fox | rare | 6 | `##` | pet, weapon, organic | 3–4 damage every 1.6 s. Melee, 3 Energy per attack. This item: +15 % crit. On hit: inflict 1 Burn (30 % chance). | → Magma Hound |
-| Sentry Drone | rare | 6 | `#/#` | pet, weapon, mechanical | 2–3 damage every 1.2 s. Ranged, 3 Energy per attack. | → Gunship Drone |
+| Ice Ferret | rare | 5 | `##` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, attacks without Energy. On hit: inflict 1 Cryo. | → Snow Lynx, Glacier Drake |
+| Purifier Bot | rare | 5 | `#/#` | pet, mechanical | Every 2.5 s: remove 1 of your debuffs and gain 4 Shield. | → Caretaker Bot |
+| Comet Fox | rare | 6 | `##` | pet, weapon, organic | 3–4 damage every 1.6 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn (30 % chance). | → Magma Hound |
+| Sentry Drone | rare | 6 | `#/#` | pet, weapon, mechanical | 2–3 damage every 1.2 s. Ranged, attacks without Energy. | → Gunship Drone |
 | Guardian Drone | rare | 6 | `##` | pet, mechanical | Every 3 s: gain 7 Shield. When a weapon hits you: gain 5 Shield (20 % chance). |  |
-| Shadow Lynx | epic | 8 | `##/#.` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, 3 Energy per attack. This item: +25 % crit. | → Snow Lynx |
+| Shadow Lynx | epic | 8 | `##/#.` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. This item: +25 % crit. | → Snow Lynx |
 | Star Whale Calf | epic | 9 | `###/###` | pet, organic | You: +70 max health. Every 4 s: heal 11. |  |
-| Void Kraken | legendary | 14 | `###/###/#.#` | pet, weapon, organic | 9–12 damage every 2.2 s. Melee, 4 Energy per attack. On hit: inflict 1 Cryo and 1 Toxin. | → Leviathan |
+| Void Kraken | legendary | 14 | `###/###/#.#` | pet, weapon, organic | 9–12 damage every 2.2 s. Melee, attacks without Energy. On hit: inflict 1 Cryo and 1 Toxin. | → Leviathan |
 
 ### Pet: crafted (28)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Slime Pup | crafted (step 1) | 4 | `#` | pet, organic | Every 3 s: heal 6. When a weapon hits you: inflict 1 Toxin (12 % chance). | = Cosmic Egg + Biogel |
+| Slime Pup | crafted (step 1) | 4 | `#/#` | pet, organic | Every 3 s: heal 6. When a weapon hits you: inflict 1 Toxin (12 % chance). | = Cosmic Egg + Biogel |
 | Clockwork Chick | crafted (step 1) | 4 | `#` | pet, mechanical | Every 4.5 s: gain 1 Overclock. | = Cosmic Egg + Copper Wire |
 | Dust Storm | crafted (step 1) | 4 | `##` | pet, organic | Battle start: inflict 4 Jam. Every 2.5 s: inflict 1 Jam. | = Dust Bunny + Moon Moth |
-| Fire Drakeling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2–3 damage every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Burn. | = Cosmic Egg + Fuel Canister; → Solar Drake |
-| Frost Hatchling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2–4 damage every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Cryo. | = Cosmic Egg + Coolant Tank; → Glacier Drake |
+| Fire Drakeling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2–3 damage every 1.8 s. Ranged, attacks without Energy. On hit: inflict 1 Burn. | = Cosmic Egg + Fuel Canister; → Solar Drake |
+| Frost Hatchling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2–4 damage every 1.8 s. Ranged, attacks without Energy. On hit: inflict 1 Cryo. | = Cosmic Egg + Coolant Tank; → Glacier Drake |
 | Beetle Lantern | crafted (step 1) | 5 | `#` | pet, organic | Every star phase: heal 14 and gain 1 Power. | = Glow Beetle + Crystal Shard |
-| Laser Turret | crafted (step 1) | 6 | `##` | pet, weapon, mechanical | 2–4 damage every 1.2 s. Ranged, 3 Energy per attack. | = Scrap Metal + Copper Wire + Crystal Shard |
-| Hamster Wheel | crafted (step 1) | 6 | `*##*` | pet, weapon, mechanical | 2–3 damage every 1.3 s. Melee, 3 Energy per attack. Starred mechanical items: 30 % faster. On hit: gain 3 Energy. | = Space Hamster + Power Cell |
+| Laser Turret | crafted (step 1) | 6 | `##` | pet, weapon, mechanical | 2–4 damage every 1.2 s. Ranged, attacks without Energy. | = Scrap Metal + Copper Wire + Crystal Shard |
+| Hamster Wheel | crafted (step 1) | 6 | `*##*` | pet, weapon, mechanical | 2–3 damage every 1.3 s. Melee, attacks without Energy. Starred mechanical items: 30 % faster. On hit: gain 3 Energy. | = Space Hamster + Power Cell |
 | Lunar Moth | crafted (step 1) | 6 | `#` | pet, organic | Every 2.5 s: inflict 1 Jam. Battle start: gain 1 Power and 1 Overclock. | = Moon Moth + Stardust Vial |
 | Fortress Crab | crafted (step 1) | 6 | `##/##` | pet, armor, organic | Battle start: gain 36 Shield and 1 Spikes. | = Rock Crab + Hull Plating; → Titan Crab |
 | Plague Slug | crafted (step 1) | 6 | `##/##` | pet, organic | Every 3 s: inflict 1 Toxin and heal 4. | = Vacuum Slug + Mushroom Cluster; → Bloom Artillery |
 | Welder Bot | crafted (step 1) | 6 | `##` | pet, mechanical | Battle start: gain 11 Shield. Every 2.5 s: gain 8 Shield. | = Repair Bot + Scrap Metal |
-| Drill Mole | crafted (step 1) | 6 | `##/##` | pet, weapon, organic | 5–7 damage every 2.2 s. Melee, 4 Energy per attack. On hit: destroy 4 enemy Shield. Each attack: deal 3 damage. | = Asteroid Mole + Mining Pick |
+| Drill Mole | crafted (step 1) | 6 | `##/##` | pet, weapon, organic | 5–7 damage every 2.2 s. Melee, attacks without Energy. On hit: destroy 4 enemy Shield. Each attack: deal 3 damage. | = Asteroid Mole + Mining Pick |
 | Medic Drone | crafted (step 1) | 6 | `*##*` | pet, mechanical | Every 2.5 s: heal 8. Starred weapons: 20 % faster. | = Repair Kit + Scout Drone; → Command Drone |
 | Hawk-Eye Parrot | crafted (step 1) | 8 | `*#*` | pet, organic | When a starred weapon activates: deal 4 damage (80 % chance). Starred weapons: +20 % crit. | = Laser Parrot + Targeting Lens |
 | Jelly Swarm | crafted (step 1) | 8 | `##/##` | pet, organic | When a weapon hits you: inflict 1 Toxin (20 % chance). Every 3.5 s: inflict 1 Toxin and gain 1 Regen. | = Nebula Jelly + Vacuum Slug; → Plague Hydra |
-| Gunship Drone | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 3–5 damage every 0.9 s. Ranged, 2 Energy per attack. | = Sentry Drone + Laser Pistol; → Command Drone |
+| Gunship Drone | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 3–5 damage every 0.9 s. Ranged, attacks without Energy. | = Sentry Drone + Laser Pistol; → Command Drone |
 | Caretaker Bot | crafted (step 1) | 10 | `##` | pet, mechanical | Every 2.2 s: gain 8 Shield, remove 1 of your debuffs and heal 4. | = Purifier Bot + Repair Bot |
-| Magma Hound | crafted (step 1) | 11 | `##/##` | pet, weapon, organic | 4–6 damage every 1.4 s. Melee, 3 Energy per attack. This item: +15 % crit. On hit: inflict 1 Burn. | = Comet Fox + Magma Newt |
-| Snow Lynx | crafted (step 1) | 13 | `##/##` | pet, weapon, organic | 4–6 damage every 1.2 s. Melee, 3 Energy per attack. This item: +25 % crit. On hit: inflict 1 Cryo. | = Shadow Lynx + Ice Ferret |
+| Magma Hound | crafted (step 1) | 11 | `##/##` | pet, weapon, organic | 4–6 damage every 1.4 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn. | = Comet Fox + Magma Newt |
+| Snow Lynx | crafted (step 1) | 13 | `##/##` | pet, weapon, organic | 4–6 damage every 1.2 s. Melee, attacks without Energy. This item: +25 % crit. On hit: inflict 1 Cryo. | = Shadow Lynx + Ice Ferret |
 | Star Hatchling | crafted (step 1) | 14 | `##` | pet, organic | Every star phase: gain 1 Power, 3 Regen and 1 Overclock. You: +42 max health. | = Cosmic Egg + Stardust Vial + Royal Jelly |
-| Glacier Drake | crafted (step 2) | 10 | `##/##` | pet, weapon, organic | 4–6 damage every 1.4 s. Ranged, 3 Energy per attack. On hit: inflict 1 Cryo. | = Frost Hatchling + Ice Ferret |
-| Solar Drake | crafted (step 2) | 13 | `##/##` | pet, weapon, organic | 5–7 damage every 1.5 s. Melee, 3 Energy per attack. On hit: inflict 2 Burn. Each attack: heal 3. | = Fire Drakeling + Magma Curry; → Phoenix |
-| Plague Hydra | crafted (step 2) | 13 | `##/##/#.` | pet, weapon, organic | 3–5 damage every 1.3 s. Melee, 3 Energy per attack. This item: +15 % crit. On hit: inflict 1 Toxin (50 % chance). When a weapon hits you: inflict 1 Toxin (20 % chance). | = Venom Fang + Jelly Swarm |
+| Glacier Drake | crafted (step 2) | 10 | `##/##` | pet, weapon, organic | 4–6 damage every 1.4 s. Ranged, attacks without Energy. On hit: inflict 1 Cryo. | = Frost Hatchling + Ice Ferret |
+| Solar Drake | crafted (step 2) | 13 | `##/##` | pet, weapon, organic | 5–7 damage every 1.5 s. Melee, attacks without Energy. On hit: inflict 2 Burn. Each attack: heal 3. | = Fire Drakeling + Magma Curry; → Phoenix |
+| Plague Hydra | crafted (step 2) | 13 | `##/##/#.` | pet, weapon, organic | 3–5 damage every 1.3 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Toxin (50 % chance). When a weapon hits you: inflict 1 Toxin (20 % chance). | = Venom Fang + Jelly Swarm |
 | Titan Crab | crafted (step 2) | 15 | `###/###` | pet, armor, organic | Battle start: gain 70 Shield and 3 Spikes. When a weapon hits you: gain 7 Shield (20 % chance). | = Fortress Crab + Mirror Shield; → Leviathan |
-| Command Drone | crafted (step 2) | 15 | `###/###` | pet, weapon, mechanical | 5–7 damage every 0.9 s. Ranged, 2 Energy per attack. Each attack: heal 4 (30 % chance). | = Gunship Drone + Medic Drone |
-| Phoenix | crafted (step 3) | 22 | `##/##` | pet, weapon, organic | 6–9 damage every 1.3 s. Melee, 3 Energy per attack. On hit: inflict 3 Burn. Once below 50 % health: heal 98. Every star phase: gain 2 Regen. | = Solar Drake + Star Fruit + Stardust Vial |
-| Leviathan | crafted (step 3) | 29 | `###/###/###` | pet, weapon, armor, organic | 12–16 damage every 2 s. Melee, 4 Energy per attack. On hit: inflict 2 Cryo and 2 Toxin. Battle start: gain 140 Shield and 6 Spikes. | = Titan Crab + Void Kraken |
+| Command Drone | crafted (step 2) | 15 | `###/###` | pet, weapon, mechanical | 5–7 damage every 0.9 s. Ranged, attacks without Energy. Each attack: heal 4 (30 % chance). | = Gunship Drone + Medic Drone |
+| Phoenix | crafted (step 3) | 22 | `##/##` | pet, weapon, organic | 6–9 damage every 1.3 s. Melee, attacks without Energy. On hit: inflict 3 Burn. Once below 50 % health: heal 98. Every star phase: gain 2 Regen. | = Solar Drake + Star Fruit + Stardust Vial |
+| Leviathan | crafted (step 3) | 29 | `###/###/###` | pet, weapon, armor, organic | 12–16 damage every 2 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and 2 Toxin. Battle start: gain 140 Shield and 6 Spikes. | = Titan Crab + Void Kraken |
 
 ### Food: shop (24)
 
@@ -318,19 +318,19 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Energy Gel | common | 2 | `#` | food | You: +1 Energy per second. | → Turbo Cola |
 | Cosmic Egg | common | 2 | `#` | food, organic | Every 5 s: heal 4. | → Fire Drakeling, Frost Hatchling, Slime Pup, Clockwork Chick, Star Hatchling |
 | Vitamin Pack | common | 2 | `#` | food | You: +20 max health. | → Power Meal |
-| Freeze-Dried Ice Cream | common | 3 | `#/#` | food | Every 3.5 s: heal 4 and inflict 1 Cryo. | → Supernova Sundae |
-| Algae Shake | common | 3 | `#/#` | food, organic | Every 4.5 s: gain 1 Regen. | → Garden Bowl |
-| Mushroom Cluster | common | 3 | `##` | food, organic | Every 4.5 s: inflict 1 Toxin and heal 3. | → Fungal Mortar, Plague Slug, Spore Stew, Spore Mine |
-| Gravity Dumplings | common | 3 | `##` | food | Every 3 s: heal 7. | → Space Burger, Spore Stew |
-| Comet Broth | common | 3 | `##` | food, organic | Every 3.5 s: heal 8. |  |
+| Freeze-Dried Ice Cream | common | 3 | `#` | food | Every 3.5 s: heal 4 and inflict 1 Cryo. | → Supernova Sundae |
+| Algae Shake | common | 3 | `#` | food, organic | Every 4.5 s: gain 1 Regen. | → Garden Bowl |
+| Mushroom Cluster | common | 3 | `#` | food, organic | Every 4.5 s: inflict 1 Toxin and heal 3. | → Fungal Mortar, Plague Slug, Spore Stew, Spore Mine |
+| Gravity Dumplings | common | 3 | `#` | food | Every 3 s: heal 7. | → Space Burger, Spore Stew |
+| Comet Broth | common | 3 | `#` | food, organic | Every 3.5 s: heal 8. |  |
 | Crystal Candy | rare | 4 | `#` | food | Every 4 s: gain 8 Shield. | → Honey Cake, Candied Star Fruit |
 | Antitoxin | rare | 4 | `#` | food | Every 3.5 s: remove 2 of your debuffs and heal 4. | → Panacea |
 | Rocket Chili | rare | 5 | `#` | food, organic | Every 6 s: gain 1 Power. | → Fire Jerky, Chili Noodles |
 | Space Noodles | rare | 5 | `*##*` | food | Every 3 s: heal 7, +3 per starred food. | → Chili Noodles |
 | Star Fruit | rare | 5 | `#` | food, organic | Every star phase: gain 1 Regen and heal 14. | → Candied Star Fruit, Phoenix |
-| Nova Cola | rare | 5 | `#/#` | food | Every 5 s: gain 1 Overclock and gain 5 Energy. | → Turbo Cola |
-| Comet Sorbet | rare | 5 | `##` | food | Every 3 s: heal 4, inflict 1 Cryo and remove 1 of your debuffs. | → Supernova Sundae, Absolute Zero |
-| Medi Moss | rare | 5 | `##` | food, organic | Every 3 s: heal 8 and remove 1 of your debuffs. | → Panacea |
+| Nova Cola | rare | 5 | `#` | food | Every 5 s: gain 1 Overclock and gain 5 Energy. | → Turbo Cola |
+| Comet Sorbet | rare | 5 | `#` | food | Every 3 s: heal 4, inflict 1 Cryo and remove 1 of your debuffs. | → Supernova Sundae, Absolute Zero |
+| Medi Moss | rare | 5 | `#` | food, organic | Every 3 s: heal 8 and remove 1 of your debuffs. | → Panacea |
 | Asteroid Honey | epic | 8 | `*##*` | food, organic | Every 3 s: heal 8. When a starred food activates: gain 3 Shield. | → Honey Cake |
 | Magma Curry | epic | 8 | `##` | food, organic | Every 3 s: heal 6 and inflict 2 Burn. | → Solar Drake |
 | Royal Jelly | epic | 8 | `#` | food, organic | Every star phase: gain 2 Regen. You: +28 max health. | → Star Hatchling |
@@ -380,23 +380,23 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
 | Seed Pod | common | 2 | `#` | weapon, organic | 3–4 damage every 2.4 s. Ranged, 5 Energy per attack. On hit: inflict 1 Toxin. | → Spore Mine, Thorn Pod |
-| Watering Drone | common | 2 | `#` | pet, mechanical | Every 3 s: heal 8. | → Irrigation Swarm |
+| Watering Drone | common | 2 | `#/#` | pet, mechanical | Every 3 s: heal 8. | → Irrigation Swarm |
 | Compost Bin | common | 3 | `*#*` | accessory, organic | Starred food: 30 % faster. Every 4 s: gain 1 Regen and gain 3 Energy. | → Harvest Crate |
 | Thornvine | common | 3 | `###` | armor, organic | Battle start: gain 1 Spikes and 11 Shield. When a weapon hits you: inflict 1 Toxin (25 % chance). | → Briar Fortress, Living Armor |
 | Pollen Cloud | common | 3 | `#` | accessory, organic | Every 3.5 s: inflict 1 Jam and 1 Toxin. | → Irrigation Swarm, Plague Blossom |
 | Grow Lamp | common | 3 | `.*./*#*/.*.` | accessory, mechanical | Starred organic items: 25 % faster. | → Irrigation Swarm |
 | Bramble Seed | common | 3 | `#` | accessory, organic | Every star phase: gain 1 Spikes. | → Thorn Pod |
 | Sap Tap | common | 3 | `*#*` | accessory, organic | When a starred organic item activates: heal 2 and gain 1 Energy (50 % chance). |  |
-| Snap Sprout | common | 3 | `#` | pet, weapon, organic | 1–3 damage every 1.6 s. Melee, 3 Energy per attack. On hit: heal 1. | → Mantrap Pack |
+| Snap Sprout | common | 3 | `#` | pet, weapon, organic | 1–3 damage every 1.6 s. Melee, attacks without Energy. On hit: heal 1. | → Mantrap Pack |
 | Moon Melon | rare | 5 | `##/##` | food, organic | Every 2.8 s: heal 13 and gain 3 Energy. | → Harvest Crate |
-| Healing Moss | rare | 5 | `##` | food, organic | Every star phase: heal 22 and remove 2 of your debuffs. | → Ambrosia |
+| Healing Moss | rare | 5 | `#` | food, organic | Every star phase: heal 22 and remove 2 of your debuffs. | → Ambrosia |
 | Bark Shield | rare | 5 | `##` | armor, organic | Battle start: gain 28 Shield and 2 Regen. | → Living Armor |
-| Nectar Flask | rare | 5 | `#/#` | food, organic | Every 3.8 s: heal 8 and gain 1 Regen. | → Ambrosia |
-| Venus Mantrap | rare | 6 | `##` | pet, weapon, organic | 5–7 damage every 2.2 s. Melee, 4 Energy per attack. On hit: heal 2, +1 per 3 Toxin on the enemy (max 4×). | → Giant Mantrap |
+| Nectar Flask | rare | 5 | `#` | food, organic | Every 3.8 s: heal 8 and gain 1 Regen. | → Ambrosia |
+| Venus Mantrap | rare | 6 | `##` | pet, weapon, organic | 5–7 damage every 2.2 s. Melee, attacks without Energy. On hit: heal 2, +1 per 3 Toxin on the enemy (max 4×). | → Giant Mantrap |
 | Blight Bomb | rare | 6 | `#` | weapon, organic | 1–2 damage every 3.2 s. Ranged, 6 Energy per attack. On hit: inflict 3 Toxin. | → Plague Blossom |
 | Root Network | epic | 8 | `####` | accessory, organic | You: +14 max health per organic item in your backpack (max 10×). | → Briar Fortress |
 | Carnivorous Orchid | epic | 9 | `##` | weapon, organic | 4–6 damage every 1.8 s. Melee, 4 Energy per attack. On hit: deal 1 damage per 2 Toxin on the enemy (max 12×). | → Hydra Bloom |
-| Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage every 2.2 s. Melee, 4 Energy per attack. On hit: inflict 2 Cryo and heal 3. | → Jungle Tyrant |
+| Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage every 2.2 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and heal 3. | → Jungle Tyrant |
 | Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. When a weapon hits you: inflict 1 Toxin (30 % chance). |  |
 | Sun Blossom | legendary | 12 | `##/##` | food, organic | Every star phase: heal 40 and gain 3 Regen. Every 2.7 s: inflict 1 Toxin. |  |
 | World Seed | artifact | 0 | `##/##` | accessory, organic | Every star phase: gain 4 Regen and heal 28. |  |
@@ -404,16 +404,16 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Terrarium Heart | artifact | 0 | `##` | accessory, organic | Your organic items: 30 % faster. You: +84 max health. |  |
 | Spore Mine | crafted (step 1) | 5 | `##` | weapon, organic | 2–3 damage every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin (45 % chance). Each attack: heal 1. | = Seed Pod + Mushroom Cluster |
 | Thorn Pod | crafted (step 1) | 5 | `##` | weapon, organic | 2–4 damage every 2 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin. Battle start: gain 1 Spikes. | = Seed Pod + Bramble Seed |
-| Mantrap Pack | crafted (step 1) | 6 | `##` | pet, weapon, organic | 2–4 damage every 0.9 s. Melee, 2 Energy per attack. On hit: heal 1. | = Snap Sprout + Snap Sprout |
-| Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.8 s. Melee, 4 Energy per attack. On hit: heal 3, +1 per 2 Toxin on the enemy (max 6×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
+| Mantrap Pack | crafted (step 1) | 6 | `##` | pet, weapon, organic | 2–4 damage every 0.9 s. Melee, attacks without Energy. On hit: heal 1. | = Snap Sprout + Snap Sprout |
+| Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.8 s. Melee, attacks without Energy. On hit: heal 3, +1 per 2 Toxin on the enemy (max 6×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
 | Harvest Crate | crafted (step 1) | 8 | `*##*/*##*` | food, organic | Every 2.7 s: heal 14. Starred food: 40 % faster. | = Compost Bin + Moon Melon |
 | Irrigation Swarm | crafted (step 1) | 8 | `*##*` | pet, mechanical | Every 2.2 s: heal 7 and inflict 1 Toxin. Starred organic items: 30 % faster. | = Watering Drone + Pollen Cloud + Grow Lamp |
 | Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 2 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
 | Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. Ranged, 4 Energy per attack. On hit: inflict 3 Toxin and 1 Jam. | = Blight Bomb + Pollen Cloud |
 | Ambrosia | crafted (step 1) | 10 | `##/##` | food, organic | Every star phase: heal 34 and remove 3 of your debuffs. Every 3.1 s: heal 11 and gain 1 Regen. | = Nectar Flask + Healing Moss |
 | Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes and 21 Shield. When a weapon hits you: inflict 1 Toxin (40 % chance). | = Thornvine + Root Network |
-| Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 7–10 damage every 1.4 s. Melee, 3 Energy per attack. On hit: heal 4 and deal 1 damage per 2 Toxin on the enemy (max 20×). | = Giant Mantrap + Carnivorous Orchid |
-| Jungle Tyrant | crafted (step 2) | 17 | `###/###` | pet, weapon, organic | 10–13 damage every 1.6 s. Melee, 3 Energy per attack. On hit: inflict 2 Cryo and heal 4, +1 per 2 Toxin on the enemy (max 8×). | = Strangler Fig + Giant Mantrap |
+| Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 7–10 damage every 1.4 s. Melee, attacks without Energy. On hit: heal 4 and deal 1 damage per 2 Toxin on the enemy (max 20×). | = Giant Mantrap + Carnivorous Orchid |
+| Jungle Tyrant | crafted (step 2) | 17 | `###/###` | pet, weapon, organic | 10–13 damage every 1.6 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and heal 4, +1 per 2 Toxin on the enemy (max 8×). | = Strangler Fig + Giant Mantrap |
 
 ### RK-7 "Rook" (34)
 
@@ -432,7 +432,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Shield Emitter | rare | 5 | `*#*` | armor, mechanical | Every 3 s: gain 6 Shield, +4 per starred mechanical item. | → Bulwark Array |
 | Turbo Fan | rare | 5 | `#` | accessory, mechanical | Every 3 s: gain 1 Overclock. | → Dynamo |
 | Junk Cannon | rare | 6 | `*##*` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 4 Energy per attack. This item: +3 damage per starred mechanical item. | → Scrap Howitzer |
-| Scrap Golem | rare | 6 | `##` | pet, weapon, mechanical | 4–6 damage every 2.2 s. Melee, 3 Energy per attack. Battle start: gain 6 Shield per crafted item in your backpack (max 6×). | → Junk Titan |
+| Scrap Golem | rare | 6 | `##` | pet, weapon, mechanical | 4–6 damage every 2.2 s. Melee, attacks without Energy. Battle start: gain 6 Shield per crafted item in your backpack (max 6×). | → Junk Titan |
 | Tesla Coil | epic | 8 | `#/#` | weapon, mechanical | 2–4 damage every 1.6 s. Ranged, 2 Energy per attack. On hit: inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 6×). | → Arc Forge |
 | Assembly Core | epic | 9 | `.*./*#*/.*.` | accessory, mechanical | Starred crafted items: +2 damage, 20 % faster. |  |
 | Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage every 3 s. Ranged, 5 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per 2 Overclock you have (max 10×). | → Storm Driver |
@@ -448,7 +448,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Dynamo | crafted (step 1) | 8 | `##` | accessory, mechanical | Battle start: gain 4 Overclock and 16 Shield. Every 2.5 s: gain 1 Overclock. You: +2 Energy per second. | = Capacitor Bank + Turbo Fan; → Storm Driver |
 | Gravity Well | crafted (step 1) | 8 | `##` | accessory, mechanical | Every star phase: destroy 18 enemy Shield. Every 3 s: destroy 8 enemy Shield, gain 8 Shield and inflict 2 Cryo. | = Grav Clamp + Magnet Crane |
 | Scrap Howitzer | crafted (step 1) | 9 | `*##*/*##*` | weapon, mechanical | 7–10 damage every 2.4 s. Ranged, 4 Energy per attack. This item: +3 damage per starred mechanical item. | = Junk Cannon + Scrap Metal + Copper Wire |
-| Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 6–8 damage every 2 s. Melee, 3 Energy per attack. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
+| Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 6–8 damage every 2 s. Melee, attacks without Energy. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
 | Salvage Rig | crafted (step 1) | 10 | `##/##` | accessory, mechanical | Every 3 s: destroy 8 enemy Shield and gain 11 Shield. Every star phase: gain 6 Shield per crafted item in your backpack (max 6×). | = Magnet Crane + Recycler |
 | Bulwark Array | crafted (step 1) | 14 | `*##*/*##*` | armor, mechanical | Battle start: gain 80 Shield. Every 2.5 s: gain 10 Shield, +5 per starred mechanical item. | = Shield Emitter + Bastion Frame |
 | Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage every 1.4 s. Melee, 2 Energy per attack. On hit: gain 3 Shield, inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
@@ -458,41 +458,41 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Space Pup | common | 2 | `#` | pet, weapon, organic | 3–4 damage every 1.7 s. Melee, 3 Energy per attack. | → Star Hound, Guard Hound |
+| Space Pup | common | 2 | `#/#` | pet, weapon, organic | 3–4 damage every 1.7 s. Melee, attacks without Energy. | → Star Hound, Guard Hound |
 | Grooming Comb | common | 2 | `*#*` | accessory | Starred pets: 10 % faster, +10 % crit, -1 Energy per attack. | → Pack Bond |
 | Treat Pouch | common | 3 | `*#*` | food | Starred pets: +2 damage. Every 4 s: heal 4 and gain 2 Energy. |  |
 | Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 30 % faster, -1 Energy per attack. | → Cozy Den |
 | Kibble Sack | common | 3 | `#/#` | food | Every 3.5 s: heal 1 per pet in your backpack (max 6×) and gain 3 Energy. Every 3.5 s: gain 1 Power (40 % chance). | → Cozy Den, Rat Pack, Banquet Trough |
-| Burrow Rat | common | 3 | `#` | pet, weapon, organic | 1–2 damage every 1.4 s. Melee, 2 Energy per attack. | → Star Hound, Rat Pack |
+| Burrow Rat | common | 3 | `#` | pet, weapon, organic | 1–2 damage every 1.4 s. Melee, attacks without Energy. | → Star Hound, Rat Pack |
 | Feeding Bowl | common | 3 | `*#*` | food | When a starred pet activates: heal 2 and gain 1 Energy (50 % chance). | → Banquet Trough |
-| Guard Goose | common | 3 | `#` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, 3 Energy per attack. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
+| Guard Goose | common | 3 | `#/#` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, attacks without Energy. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
 | Pack Lizard | common | 4 | `##` | pet, armor, organic | Battle start: gain 7 Shield per pet in your backpack (max 8×). | → Shell Dragon |
 | Hatchery | rare | 5 | `##/##` | accessory, mechanical | Battle start: gain 1 Power per 3 pets in your backpack (max 2×). Every star phase: heal 1 per pet in your backpack (max 6×) and gain 4 Energy. |  |
 | Calling Shell | rare | 5 | `#` | accessory | Your pets: +1 damage. | → Pack Bond |
 | War Saddle | rare | 5 | `*#*` | armor | Starred pets: +3 damage. Battle start: gain 16 Shield. | → Armored Bear |
 | Glow Swarm | rare | 5 | `##` | pet, organic | Every 2.5 s: deal 1 damage per 2 pets in your backpack (max 5×). | → Swarm Cloud |
-| Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 2–3 damage every 1.2 s. Melee, 3 Energy per attack. This item: +20 % crit. | → Sun Eagle |
-| Moon Bear | rare | 6 | `##/##` | pet, weapon, organic | 8–11 damage every 2.6 s. Melee, 5 Energy per attack. You: +28 max health. | → Armored Bear |
+| Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 2–3 damage every 1.2 s. Melee, attacks without Energy. This item: +20 % crit. | → Sun Eagle |
+| Moon Bear | rare | 6 | `##/##` | pet, weapon, organic | 8–11 damage every 2.6 s. Melee, attacks without Energy. You: +28 max health. | → Armored Bear |
 | Hive Queen | epic | 8 | `##/##` | pet, organic | Every 2.5 s: deal 1 damage per pet in your backpack (max 8×). | → Swarm Cloud |
 | Nursery | epic | 8 | `##/##` | accessory, mechanical | Every star phase: heal 4 per pet in your backpack (max 8×). Your pets: 10 % faster. You: +1.5 Energy per second. |  |
-| Tusked Behemoth | epic | 9 | `###/###` | pet, weapon, organic | 16–22 damage every 2.9 s. Melee, 4 Energy per attack. Battle start: gain 28 Shield. | → Juggernaut |
-| Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, 4 Energy per attack. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
-| Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, 2 Energy per attack. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
+| Tusked Behemoth | epic | 9 | `###/###` | pet, weapon, organic | 16–22 damage every 2.9 s. Melee, attacks without Energy. Battle start: gain 28 Shield. | → Juggernaut |
+| Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
+| Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
 | Elder Tusk | artifact | 0 | `#` | accessory | Your pets: +1 damage, +15 % crit. |  |
 | Herd Heart | artifact | 0 | `##` | accessory, organic | You: +14 max health per pet in your backpack (max 10×). Every star phase: heal 4 per pet in your backpack (max 10×). |  |
-| Ancient Egg | artifact | 0 | `##/##` | pet, weapon, organic | 8–11 damage every 1.8 s. Melee, 3 Energy per attack. Every star phase: gain 2 Power. |  |
-| Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, 3 Energy per attack. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
-| Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, 3 Energy per attack. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
+| Ancient Egg | artifact | 0 | `##/##` | pet, weapon, organic | 8–11 damage every 1.8 s. Melee, attacks without Energy. Every star phase: gain 2 Power. |  |
+| Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
+| Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
 | Cozy Den | crafted (step 1) | 6 | `*##*/*##*` | accessory | Starred pets: 40 % faster. Every 3 s: heal 1 per pet in your backpack (max 8×). | = Pet Bed + Kibble Sack |
 | Banquet Trough | crafted (step 1) | 6 | `*##*` | food | Every 3 s: heal 2 per pet in your backpack (max 8×), gain 1 Power and gain 2 Energy. When a starred pet activates: heal 2 (60 % chance). | = Feeding Bowl + Kibble Sack |
-| Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, weapon, organic | 2–3 damage every 0.6 s. Melee, 2 Energy per attack. | = Burrow Rat + Burrow Rat + Kibble Sack |
+| Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, weapon, organic | 2–3 damage every 0.6 s. Melee, attacks without Energy. | = Burrow Rat + Burrow Rat + Kibble Sack |
 | Shell Dragon | crafted (step 1) | 7 | `##/##` | pet, armor, organic | Battle start: gain 7 Shield per pet in your backpack (max 8×) and 2 Spikes. | = Pack Lizard + Rock Crab |
 | Pack Bond | crafted (step 1) | 7 | `*#*` | accessory | Your pets: +1 damage. Starred pets: 20 % faster, +15 % crit. | = Grooming Comb + Calling Shell |
-| Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.1 s. Melee, 2 Energy per attack. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
-| Armored Bear | crafted (step 1) | 11 | `##/##` | pet, weapon, armor, organic | 16–21 damage every 2.2 s. Melee, 3 Energy per attack. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
+| Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.1 s. Melee, attacks without Energy. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
+| Armored Bear | crafted (step 1) | 11 | `##/##` | pet, weapon, armor, organic | 16–21 damage every 2.2 s. Melee, attacks without Energy. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
 | Swarm Cloud | crafted (step 1) | 13 | `##/##` | pet, organic | Every 2 s: deal 1 damage per pet in your backpack (max 10×) and inflict 1 Jam. | = Glow Swarm + Hive Queen |
-| Juggernaut | crafted (step 1) | 18 | `###/###` | pet, weapon, organic | 28–36 damage every 2.4 s. Melee, 4 Energy per attack. This item: +25 % crit. On hit: destroy 12 enemy Shield. Battle start: gain 56 Shield. | = Thunder Ram + Tusked Behemoth |
-| Celestial Chimera | crafted (step 2) | 14 | `##/##/#.` | pet, weapon, organic | 8–12 damage every 0.8 s. Melee, 1 Energy per attack. This item: +35 % crit. On hit: inflict 2 Burn (20 % chance). | = Star Hound + Sun Eagle |
+| Juggernaut | crafted (step 1) | 18 | `###/###` | pet, weapon, organic | 28–36 damage every 2.4 s. Melee, attacks without Energy. This item: +25 % crit. On hit: destroy 12 enemy Shield. Battle start: gain 56 Shield. | = Thunder Ram + Tusked Behemoth |
+| Celestial Chimera | crafted (step 2) | 14 | `##/##/#.` | pet, weapon, organic | 8–12 damage every 0.8 s. Melee, attacks without Energy. This item: +35 % crit. On hit: inflict 2 Burn (20 % chance). | = Star Hound + Sun Eagle |
 
 ### Ysel (35)
 

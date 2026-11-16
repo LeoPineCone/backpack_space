@@ -156,6 +156,24 @@ export function pendingMerges(data: GameData, bags: readonly Placement[], items:
   }
   return out;
 }
+/**
+ * Which items could merge with which, ignoring where they lie: for every entry the indices of the other entries that,
+ * together with it, hold every part of some recipe. `null` entries (empty shop slots, locked items) take no part.
+ * The shop screen uses it to show partners before anything is placed.
+ */
+export function mergePartners(data: GameData, ids: readonly (string | null)[]): Set<number>[] {
+  const out = ids.map(() => new Set<number>());
+  const where = new Map<string, number[]>();
+  ids.forEach((id, i) => { if (id !== null) where.set(id, [...(where.get(id) ?? []), i]); });
+  for (const recipe of data.recipes) {
+    const need = new Map<string, number>();
+    for (const id of recipe.in) need.set(id, (need.get(id) ?? 0) + 1);
+    if ([...need].some(([id, n]) => (where.get(id)?.length ?? 0) < n)) continue;
+    const members = [...need.keys()].flatMap((id) => where.get(id)!);
+    for (const i of members) for (const j of members) if (i !== j) out[i]!.add(j);
+  }
+  return out;
+}
 /** Merges everything that is due (once; a result can merge again after the next fight). */
 export function mergeAll(s: RunState, data: GameData): Merge[] {
   const due = pendingMerges(data, s.bags, s.items).map((c) => ({ recipe: c.recipe, parts: c.idxs.map((i) => s.items[i]!) }));

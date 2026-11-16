@@ -11,7 +11,7 @@ const build = (items: string[], round = 1, h = hero.id): Build => ({ hero: h, ro
 
 describe("battle", () => {
   it("is deterministic for the same seed", () => {
-    const a = compile(build(["rivet_gun", "protein_bar"]), data), b = compile(build(["asteroid_chunk"]), data);
+    const a = compile(build(["fang_dagger", "protein_bar"]), data), b = compile(build(["asteroid_chunk"]), data);
     const r1 = simulate(a, b, data.rules, 42, { log: true }), r2 = simulate(a, b, data.rules, 42, { log: true });
     expect(r1).toEqual(r2);
     expect(r1.log!.length).toBeGreaterThan(5);
@@ -24,12 +24,12 @@ describe("battle", () => {
     expect(Math.min(...r.hp)).toBeLessThanOrEqual(0);
   });
   it("a weapon beats no weapon", () => {
-    const a = compile(build(["rivet_gun", "rivet_gun"]), data), b = compile(build(["scrap_metal"]), data);
+    const a = compile(build(["fang_dagger", "fang_dagger"]), data), b = compile(build(["scrap_metal"]), data);
     expect(simulate(a, b, data.rules, 3).winner).toBe(0);
   });
   it("shield absorbs weapon damage, toxin ignores it", () => {
     const shielded = compile(build(["scrap_metal"]), data);
-    const gun = simulate(compile(build(["rivet_gun"]), data), shielded, data.rules, 5, { log: true });
+    const gun = simulate(compile(build(["fang_dagger"]), data), shielded, data.rules, 5, { log: true });
     const firstHit = gun.log!.find((e) => e.k === "attack" && e.s === 0)!;
     expect(firstHit.v).toBe(0);
     const tox = simulate(compile(build(["vacuum_slug"].slice(0, 0).concat(["pollen_cloud"])), data), shielded, data.rules, 5, { log: true });
@@ -40,15 +40,15 @@ describe("battle", () => {
     const lens = data.items.get("targeting_lens")!;
     expect(lens.shape.join("").includes("*")).toBe(true);
     // lens at the centre of the field pack, a gun on its right star
-    const b: Build = { hero: hero.id, round: 1, bags, items: [{ item: "targeting_lens", x: 4, y: 3, rot: 0 }, { item: "rivet_gun", x: 5, y: 3, rot: 0 }, { item: "rivet_gun", x: 3, y: 2, rot: 0 }] };
+    const b: Build = { hero: hero.id, round: 1, bags, items: [{ item: "targeting_lens", x: 4, y: 3, rot: 0 }, { item: "fang_dagger", x: 5, y: 3, rot: 0 }, { item: "fang_dagger", x: 3, y: 2, rot: 0 }] };
     const c = compile(b, data);
     expect(c.items[1]!.crit).toBeGreaterThan(c.items[2]!.crit);
   });
   it("items must lie on bags", () => {
-    expect(() => compile({ hero: hero.id, round: 1, bags, items: [{ item: "rivet_gun", x: 8, y: 6, rot: 0 }] }, data)).toThrow();
+    expect(() => compile({ hero: hero.id, round: 1, bags, items: [{ item: "fang_dagger", x: 8, y: 6, rot: 0 }] }, data)).toThrow();
   });
   it("replays to the same end as the battle, in steps or in one jump", () => {
-    const a = compile(build(["rivet_gun", "protein_bar"]), data), b = compile(build(["asteroid_chunk"]), data);
+    const a = compile(build(["fang_dagger", "protein_bar"]), data), b = compile(build(["asteroid_chunk"]), data);
     const r = simulate(a, b, data.rules, 7, { log: true });
     const stepped = new Replay([a, b], r, data.rules);
     let seen = stepped.start().length;
@@ -63,20 +63,20 @@ describe("battle", () => {
   });
   it("every attack costs Energy; without Energy a weapon waits", () => {
     const rules = { ...data.rules, energy: { max: 10, start: 10, regen: 0 } };
-    const cost = data.items.get("rivet_gun")!.energy!;
+    const cost = data.items.get("antimatter_dagger")!.energy!;
     const target = compile(build(["scrap_metal"], 12), data);
-    const r = simulate(compile(build(["rivet_gun", "rivet_gun"], 12), data), target, rules, 4, { log: true });
+    const r = simulate(compile(build(["antimatter_dagger", "antimatter_dagger"], 12), data), target, rules, 4, { log: true });
     const attacks = r.log!.filter((e) => e.s === 0 && (e.k === "attack" || e.k === "miss"));
     expect(attacks.length).toBe(Math.floor(10 / cost));
     expect(r.stats[0].energyWait).toBeGreaterThan(0);
-    expect(attacks.every((e) => e.w === "ranged")).toBe(true);
+    expect(attacks.every((e) => e.w === "melee")).toBe(true);
     // an Energy item lets the same weapons attack more often
-    const fed = simulate(compile(build(["rivet_gun", "rivet_gun", "energy_gel"], 12), data), target, rules, 4, { log: true });
+    const fed = simulate(compile(build(["antimatter_dagger", "antimatter_dagger", "energy_gel"], 12), data), target, rules, 4, { log: true });
     expect(fed.log!.filter((e) => e.s === 0 && e.k === "attack").length).toBeGreaterThan(attacks.length);
   });
   it("Energy items restore Energy and the replay follows it", () => {
     const rules = { ...data.rules, energy: { max: 20, start: 0, regen: 0 } };
-    const a = compile(build(["protein_bar", "rivet_gun"]), data), b = compile(build(["scrap_metal"]), data);
+    const a = compile(build(["protein_bar", "antimatter_dagger"]), data), b = compile(build(["scrap_metal"]), data);
     const r = simulate(a, b, rules, 2, { log: true });
     const gains = r.log!.filter((e) => e.k === "energy" && e.s === 0);
     expect(gains.length).toBeGreaterThan(0);
@@ -89,16 +89,16 @@ describe("battle", () => {
     expect(replay.sides[0].energy).toBeCloseTo(r.stats[0].energyGained - r.stats[0].energySpent, 5);
   });
   it("backpack numbers: Energy used and gained per second", () => {
-    const gun = data.items.get("rivet_gun")!;
-    const few = buildStats(compile(build(["rivet_gun"]), data), data.rules);
+    const gun = data.items.get("antimatter_dagger")!;
+    const few = buildStats(compile(build(["antimatter_dagger"]), data), data.rules);
     expect(few.energy.need).toBeCloseTo(gun.energy! / gun.cooldown!, 5);
     expect(few.energy.income).toBe(data.rules.energy.regen);
     expect(few.energy.wait).toBe(0);
-    expect(few.ranged).toBe(1);
-    const many = buildStats(compile(build(Array(9).fill("rivet_gun")), data), data.rules);
+    expect(few.melee).toBe(1);
+    const many = buildStats(compile(build(Array(9).fill("antimatter_dagger")), data), data.rules);
     expect(many.energy.need).toBeGreaterThan(many.energy.income);
     expect(many.energy.wait).toBeGreaterThan(0);
-    const fed = buildStats(compile(build([...Array(8).fill("rivet_gun"), "energy_gel"]), data), data.rules);
+    const fed = buildStats(compile(build([...Array(8).fill("antimatter_dagger"), "energy_gel"]), data), data.rules);
     expect(fed.energy.refill).toBe(data.rules.energy.regen + 1);
     const bar = buildStats(compile(build(["protein_bar"]), data), data.rules);
     expect(bar.energy.fromItems).toBeCloseTo(2 / 3, 5);

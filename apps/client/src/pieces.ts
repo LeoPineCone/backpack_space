@@ -136,3 +136,54 @@ export function starMarks(data: GameData, bags: readonly Placement[], items: rea
   }
   return c;
 }
+
+/**
+ * An item as a square icon of one fixed size, whatever its shape: type symbol and initials on the type colour, rarity frame.
+ * Used where items stand side by side (recipes). Origin top-left. Real item art replaces the inside later.
+ */
+export function itemIcon(data: GameData, id: string, size: number, o: { line?: number } = {}): Container {
+  const def = data.items.get(id)!;
+  const c = new Container();
+  const fill = def.isBag ? C.bag : TAG_FILL[def.tags[0] ?? "bag"] ?? C.line;
+  c.addChild(new Graphics().roundRect(0, 0, size, size, size * 0.2).fill(fill).stroke({ width: Math.max(2, size * 0.05), color: o.line ?? (def.isBag ? C.bagLine : RARITY[def.rarity] ?? C.dim), alignment: 1 }));
+  c.addChild(at(icon(def.isBag ? "bag" : def.tags[0] ?? "any", size * 0.42, C.text), size / 2, size * 0.4));
+  c.addChild(at(txt(initials(tr().item(id)), size * 0.22, { anchor: [0.5, 0.5] }), size / 2, size * 0.77));
+  return c;
+}
+
+/** The outline of a piece (every cell edge without a neighbour) as one path, for glows. Origin as in `piece`. */
+export function outlinePath(g: Graphics, data: GameData, id: string, rot: number, cell: number, grow = 0): Graphics {
+  const s = data.shape(id, rot);
+  const has = new Set(s.cells.map(([x, y]) => `${x},${y}`));
+  for (const [x, y] of s.cells) {
+    const x0 = x * cell - (has.has(`${x - 1},${y}`) ? 0 : grow), x1 = (x + 1) * cell + (has.has(`${x + 1},${y}`) ? 0 : grow);
+    const y0 = y * cell - (has.has(`${x},${y - 1}`) ? 0 : grow), y1 = (y + 1) * cell + (has.has(`${x},${y + 1}`) ? 0 : grow);
+    if (!has.has(`${x},${y - 1}`)) g.moveTo(x0, y0).lineTo(x1, y0);
+    if (!has.has(`${x},${y + 1}`)) g.moveTo(x0, y1).lineTo(x1, y1);
+    if (!has.has(`${x - 1},${y}`)) g.moveTo(x0, y0).lineTo(x0, y1);
+    if (!has.has(`${x + 1},${y}`)) g.moveTo(x1, y0).lineTo(x1, y1);
+  }
+  return g;
+}
+
+/** Colour of the merge hints: the soft glow on items that could merge and the energy beam while dragging. */
+export const ZAP = 0x8ff3ff;
+
+/** A jagged energy beam from (x0, y0) to (x1, y1). `rnd` returns 0..1; a new one each frame makes it flicker. */
+export function zap(g: Graphics, x0: number, y0: number, x1: number, y1: number, rnd: () => number, alpha = 1): void {
+  const len = Math.hypot(x1 - x0, y1 - y0);
+  if (len < 1) return;
+  const n = Math.max(3, Math.round(len / 16));
+  const nx = -(y1 - y0) / len, ny = (x1 - x0) / len;
+  const pts: number[] = [x0, y0];
+  for (let k = 1; k < n; k++) {
+    const f = k / n, off = (rnd() - 0.5) * 14 * Math.sin(Math.PI * f);
+    pts.push(x0 + (x1 - x0) * f + nx * off, y0 + (y1 - y0) * f + ny * off);
+  }
+  pts.push(x1, y1);
+  const line = (w: number, color: number, a: number) => { g.moveTo(pts[0]!, pts[1]!); for (let k = 2; k < pts.length; k += 2) g.lineTo(pts[k]!, pts[k + 1]!); g.stroke({ width: w, color, alpha: a * alpha, join: "round", cap: "round" }); };
+  line(8, ZAP, 0.18);
+  line(3.5, ZAP, 0.55);
+  line(1.5, 0xffffff, 0.95);
+  g.circle(x1, y1, 5).fill({ color: ZAP, alpha: 0.35 * alpha }).circle(x1, y1, 2.5).fill({ color: 0xffffff, alpha: 0.9 * alpha });
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, mergePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -15,14 +15,18 @@ describe("data", () => {
   });
   it("keeps picture descriptions of small items short", () => {
     const art = loadItemArt();
-    const long = { ...art, rivet_gun: { ...art.rivet_gun!, description: "word ".repeat(31).trim() } };
-    expect(checkItemArt(data, long)).toEqual(["item-art.json rivet_gun: description has 31 words, 1 cell(s) allow 30"]);
+    const long = { ...art, fang_dagger: { ...art.fang_dagger!, description: "word ".repeat(31).trim() } };
+    expect(checkItemArt(data, long)).toEqual(["item-art.json fang_dagger: description has 31 words, 1 cell(s) allow 30"]);
   });
   it("names every status and type in the rules text the way the glossary does", () => {
     for (const id of ["shield", "burn", "overclock"]) expect(data.glossary.byId.get(id)!.de.length).toBeGreaterThan(0);
     expect(describeItem(data.items.get("scrap_metal")!, data).join(" ")).toMatch(new RegExp(`^Battle start: gain \\d+ ${data.glossary.byId.get("shield")!.en}\\.$`));
     // items with a cooldown say "Every 3 s: ..." instead of "Activates every 3 s. On use: ..."
     for (const it of data.itemList) if (it.cooldown && !it.damage) expect(describeItem(it, data).join(" ")).toMatch(/Every [\d.]+ s: /);
+  });
+  it("keeps one-cell weapons rare among the shop weapons (sizes follow the thing: .claude/skills/item-design)", () => {
+    const weapons = data.itemList.filter((i) => i.tags[0] === "weapon" && !i.crafted && i.rarity !== "artifact");
+    expect(weapons.filter((i) => i.size === 1).length / weapons.length).toBeLessThanOrEqual(0.25);
   });
   it("contains no alcohol", () => {
     for (const it of data.itemList) expect(it.name).not.toMatch(/\b(beer|wine|rum|whisky|whiskey|vodka|liquor|ale|cocktail|booze|mead|sake|gin|brandy|cider)\b/i);
@@ -38,7 +42,7 @@ describe("shop and run", () => {
   it("buys onto a bag cell, refuses cells without a bag", () => {
     const s = newRun(data, "rook", new Rng(1));
     s.gold = 99;
-    s.offers = [{ item: "rivet_gun", price: 2, sale: false }, { item: "rivet_gun", price: 2, sale: false }];
+    s.offers = [{ item: "fang_dagger", price: 2, sale: false }, { item: "fang_dagger", price: 2, sale: false }];
     expect(buy(s, data, 0, { x: 8, y: 6, rot: 0 })).toBe(false);
     expect(buy(s, data, 0, { x: 5, y: 4, rot: 0 })).toBe(true);
     expect(s.gold).toBe(97);
@@ -74,7 +78,7 @@ describe("shop and run", () => {
   it("moves a bag together with the items in it", () => {
     const s = newRun(data, "quill", new Rng(1));
     expect(place(s, data, "pouch", { x: 0, y: 0, rot: 0 })).toBe(true);
-    expect(place(s, data, "rivet_gun", { x: 0, y: 0, rot: 0 })).toBe(true);
+    expect(place(s, data, "fang_dagger", { x: 0, y: 0, rot: 0 })).toBe(true);
     expect(moveBag(s, data, s.bags.length - 1, { x: 8, y: 6, rot: 0 })).toBe(true);
     expect(s.items[s.items.length - 1]).toMatchObject({ x: 8, y: 6 });
     expect(validLayout(data, s.bags, s.items)).toBe(true);
@@ -129,6 +133,20 @@ describe("recipe partners", () => {
     const pets = ["space_pup", "burrow_rat", "guard_goose", "space_pup"];
     const count = (owned: string[]) => { let n = 0; for (let i = 0; i < 400; i++) for (const o of rollOffers(data, "quill", 6, rng, owned)) if (data.items.get(o.item)!.tags.includes("pet")) n++; return n; };
     expect(count(pets)).toBeGreaterThan(count([]) * 1.2);
+  });
+});
+
+describe("merge partners", () => {
+  it("links items that hold every part of a recipe, wherever they lie", () => {
+    const p = mergePartners(data, ["laser_pistol", "crystal_shard", null, "space_pup"]);
+    expect([...p[0]!]).toEqual([1]);
+    expect([...p[1]!]).toEqual([0]);
+    expect(p[2]!.size + p[3]!.size).toBe(0);
+  });
+  it("needs a second copy for a recipe that takes the same item twice, and leaves locked (null) items out", () => {
+    expect(mergePartners(data, ["laser_pistol"])[0]!.size).toBe(0);
+    expect([...mergePartners(data, ["laser_pistol", "laser_pistol"])[0]!]).toEqual([1]);
+    expect(mergePartners(data, ["laser_pistol", null])[0]!.size).toBe(0);
   });
 });
 

@@ -6,164 +6,164 @@ Bots: use the measured item ratings in data/sim/ratings.json (384 items).
 Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.
 
 Rules: at most 3 steps in a chain, at most 3 inputs. 151 recipes, 8 of them with 3 inputs.
-Combinations per run: 10.1. Rounds in which an owned recipe did not lie together before the fight: 1.9 per run. Deepest chain step reached in a run: none 0 %, step 1 59 %, step 2 41 %, step 3 0 %.
+Combinations per run: 10.1. Rounds in which an owned recipe did not lie together before the fight: 1.9 per run. Deepest chain step reached in a run: none 0 %, step 1 55 %, step 2 45 %, step 3 0 %.
 
 Bots merge by the player's rules: they lay owned inputs next to each other and the recipe merges after that round's fight. They value an item higher when it completes a recipe but do not plan chains, so read the shares as a lower bound.
 
 ## Chain step 1
   result               made in runs  avg round   hero                                           inputs
-  Chime of Hours               85 %        2.7   ysel                            Prayer Bell + Sundial
   Plasma Welder                76 %        1.1   rook                        Welding Arm + Scrap Metal
-  Irrigation Swarm             70 %        4.1   venn        Watering Drone + Pollen Cloud + Grow Lamp
-  Banquet Trough               64 %        5.3  quill                       Feeding Bowl + Kibble Sack
-  Sacred Flame                 59 %        6.9   ysel                     Votive Candle + Pyre Lantern
-  Thorn Pod                    58 %        2.9   venn                          Seed Pod + Bramble Seed
-  Plague Blossom               57 %        6.2   venn                       Blight Bomb + Pollen Cloud
-  Star Hound                   54 %        1.7  quill                           Space Pup + Burrow Rat
-  Twin Suns                    53 %        2.7   ysel                         Sun Shard + Solar Dagger
-  Junk Titan                   51 %        6.9   rook                        Scrap Golem + Spare Parts
-  Gravity Well                 51 %        6.4   rook                        Grav Clamp + Magnet Crane
-  Guard Hound                  46 %        1.7  quill                          Space Pup + Guard Goose
-  Canticle                     46 %        6.9   ysel                     Star Psalter + Flare Catcher
-  Sunblade                     43 %        2.7   ysel                        Sun Shard + Crystal Shard
-  Rat Pack                     42 %        6.3  quill            Burrow Rat + Burrow Rat + Kibble Sack
-  Helios Rod                   41 %        6.6   ysel                      Corona Staff + Ember Censer
-  Ambrosia                     35 %        7.9   venn                      Nectar Flask + Healing Moss
-  Mantrap Pack                 34 %        6.2   venn                        Snap Sprout + Snap Sprout
-  Spore Mine                   33 %        2.4   venn                      Seed Pod + Mushroom Cluster
-  Harvest Crate                31 %        6.8   venn                         Compost Bin + Moon Melon
-  Logic Core                   30 %        5.8   rook                       Circuit Board + Power Cell
-  Sun Eagle                    30 %        7.9  quill                     Star Falcon + Targeting Lens
-  Pack Bond                    30 %        7.8  quill                    Grooming Comb + Calling Shell
-  Rivet Cannon                 25 %        2.1   rook                       Welding Arm + Bolt Thrower
-  Dynamo                       24 %        7.8   rook                       Capacitor Bank + Turbo Fan
-  Living Armor                 23 %        5.6   venn                          Bark Shield + Thornvine
-  Total Eclipse                23 %        9.1   ysel                     Mirror of Dusk + Eclipse Orb
-  Giant Mantrap                23 %        8.1   venn                           Venus Mantrap + Biogel
-  Salvage Rig                  21 %        7.6   rook                          Magnet Crane + Recycler
-  Factory Line                 21 %        4.0   rook                          Conveyor Belt + Toolbox
-  Slime Pup                    20 %        6.4                                     Cosmic Egg + Biogel
-  Cozy Den                     18 %        6.3  quill                            Pet Bed + Kibble Sack
-  Sniper Scope                 17 %        6.6                          Targeting Lens + Crystal Shard
-  Shell Dragon                 17 %        4.9  quill                          Pack Lizard + Rock Crab
-  Astronaut Ration             14 %        6.0                               Protein Bar + Moon Cheese
-  Ghost Shroud                 14 %        8.9                                Phase Cloak + Holo Decoy
-  Crit Array                   14 %        7.8                           Star Compass + Targeting Lens
-  Litany                       14 %        5.2   ysel                       Hymn Scroll + Comet Rosary
-  Slag Mace                    14 %        4.3                            Asteroid Chunk + Scrap Metal
-  Lunar Moth                   14 %        7.4                               Moon Moth + Stardust Vial
-  Nail Storm                   14 %        5.6                                 Rivet Gun + Copper Wire
-  Scrap Howitzer               14 %        5.2   rook          Junk Cannon + Scrap Metal + Copper Wire
-  Swarm Cloud                  13 %        9.1  quill                          Glow Swarm + Hive Queen
-  Fire Jerky                   12 %        7.6                              Protein Bar + Rocket Chili
-  Panacea                      12 %        8.1                                   Antitoxin + Medi Moss
-  Fusion Battery               12 %        5.4                                Power Cell + Copper Wire
-  Overdrive Core               12 %        6.9                               Overclock Chip + Thruster
-  Acid Sprayer                 11 %        8.7                               Acid Flask + Cryo Sprayer
-  Venom Fang                   11 %        5.9                                 Fang Dagger + Venom Sac
-  Blizzard Gem                 11 %        6.3                                   Frost Gem + Frost Gem
-  Armored Bear                 11 %        7.5  quill                           Moon Bear + War Saddle
-  Clockwork Chick              11 %        6.2                                Cosmic Egg + Copper Wire
-  Nano Medkit                  11 %        5.5                                     Repair Kit + Biogel
-  Chili Noodles                11 %        7.7                            Space Noodles + Rocket Chili
-  Umbral Mantle                11 %        7.1   ysel                      Eclipse Veil + Force Bubble
-  Shock Trap                   10 %        7.6                                    Holo Decoy + Antenna
-  Astrolabe                    10 %        8.3                              Star Chart + Stardust Vial
-  Cryo Baton                   10 %        5.7                                  Stun Baton + Frost Gem
-  Dust Storm                   10 %        5.9                                  Dust Bunny + Moon Moth
-  Afterburner                  10 %        5.1                                Thruster + Fuel Canister
-  Caretaker Bot                10 %        8.2                               Purifier Bot + Repair Bot
-  Prism Cluster                 9 %        6.6                           Crystal Shard + Crystal Shard
-  Fire Drakeling                9 %        6.5                              Cosmic Egg + Fuel Canister
-  Flamethrower                  9 %        5.1                           Plasma Cutter + Fuel Canister
-  Glacier Cannon                9 %        7.1                             Cryo Sprayer + Coolant Tank
-  Hamster Wheel                 9 %        6.6                              Space Hamster + Power Cell
-  Welder Bot                    9 %        6.5                                Repair Bot + Scrap Metal
-  Med Bay                       9 %        5.6                             Saline Drip + Scrubber Unit
-  Prism Laser                   9 %        4.6                            Laser Pistol + Crystal Shard
-  Candied Star Fruit            8 %        9.3                              Star Fruit + Crystal Candy
-  Inferno Canister              8 %        6.0                           Fuel Canister + Fuel Canister
-  Bulwark Array                 8 %        9.9   rook                   Shield Emitter + Bastion Frame
-  Beetle Lantern                7 %        6.6                             Glow Beetle + Crystal Shard
-  Toxic Gland                   6 %        7.0                                   Venom Sac + Venom Sac
-  Frost Hatchling               6 %        4.6                               Cosmic Egg + Coolant Tank
-  Garden Bowl                   6 %        6.0                             Algae Shake + Hydro Lettuce
-  Solstice Engine               6 %        8.5   ysel     Collapse Engine + Flare Catcher + Dawn Chime
-  Buzz Blade                    6 %        7.1                            Ripper Saw + Boomerang Blade
-  Reinforced Bulkhead           6 %        4.3                              Hull Plating + Scrap Metal
-  Glacier Mail                  6 %        7.1                                   Cryo Coat + Frost Gem
-  War Banner                    6 %        6.7                                  War Horn + Lucky Comet
-  Power Meal                    6 %        5.3                              Vitamin Pack + Protein Bar
-  Fallout Beacon                6 %        8.4                              Geiger Counter + Lodestone
-  Space Burger                  6 %        7.4         Gravity Dumplings + Moon Cheese + Hydro Lettuce
-  Medic Drone                   5 %        4.6                                Repair Kit + Scout Drone
-  Spore Stew                    5 %        4.2                    Mushroom Cluster + Gravity Dumplings
-  Hawk-Eye Parrot               5 %        7.5                           Laser Parrot + Targeting Lens
-  Twin Lasers                   5 %        3.4                             Laser Pistol + Laser Pistol
-  Thorn Plate                   4 %        6.0                               Thorn Mail + Hull Plating
-  Magma Hound                   4 %        7.9                                  Comet Fox + Magma Newt
-  Fortress Crab                 4 %        5.4                                Rock Crab + Hull Plating
-  Shield Capacitor              4 %        4.7                             Shield Battery + Power Cell
-  Solar Array                   4 %        5.9                                   Solar Panel + Antenna
-  Supernova Sundae              4 %        6.1                   Freeze-Dried Ice Cream + Comet Sorbet
-  Briar Fortress                4 %        7.4   venn                         Thornvine + Root Network
-  EMP Cannon                    3 %        6.7                             Ion Blaster + Jammer Beacon
-  Gunship Drone                 3 %        6.2                             Sentry Drone + Laser Pistol
-  Laser Turret                  3 %        6.5               Scrap Metal + Copper Wire + Crystal Shard
-  Spiked Bulkhead               3 %        5.3                           Hull Plating + Reactive Armor
-  Exo Suit                      3 %        4.8                               Space Suit + Visor Helmet
-  Plasma Katana                 3 %        6.6                            Plasma Sword + Crystal Shard
-  Burst Rifle                   3 %        6.2                           Needle Rifle + Targeting Lens
-  Honey Cake                    3 %        9.7                          Asteroid Honey + Crystal Candy
-  Plague Slug                   3 %        3.5                          Vacuum Slug + Mushroom Cluster
-  Star Hatchling                3 %        9.6                Cosmic Egg + Stardust Vial + Royal Jelly
-  Trauma Kit                    3 %        3.2                           First Aid Patch + Oxygen Tank
-  Life Tank                     2 %        4.7                                Oxygen Tank + Repair Kit
-  Hazmat Suit                   2 %        3.1                                  Space Suit + Lead Vest
-  Drill Mole                    2 %        2.5                             Asteroid Mole + Mining Pick
-  Survival Suit                 2 %        4.1                            Thermal Blanket + Space Suit
-  Winch Harpoon                 2 %        6.9                          Harpoon Launcher + Copper Wire
-  Snow Lynx                     2 %        9.1                                Shadow Lynx + Ice Ferret
-  Jelly Swarm                   2 %        6.2                              Nebula Jelly + Vacuum Slug
-  Fungal Mortar                 1 %        4.7                       Spore Launcher + Mushroom Cluster
-  Juggernaut                    1 %       12.0  quill                    Thunder Ram + Tusked Behemoth
-  Aegis Projector               1 %        3.8                             Deflector Dish + Power Cell
-  Turbo Cola                    0 %       11.0                                  Nova Cola + Energy Gel
+  Chime of Hours               66 %        2.1   ysel                            Prayer Bell + Sundial
+  Thorn Pod                    63 %        2.6   venn                          Seed Pod + Bramble Seed
+  Banquet Trough               54 %        5.0  quill                       Feeding Bowl + Kibble Sack
+  Plague Blossom               53 %        6.7   venn                       Blight Bomb + Pollen Cloud
+  Guard Hound                  53 %        1.8  quill                          Space Pup + Guard Goose
+  Twin Suns                    49 %        2.8   ysel                         Sun Shard + Solar Dagger
+  Sacred Flame                 49 %        6.7   ysel                     Votive Candle + Pyre Lantern
+  Sunblade                     47 %        2.5   ysel                        Sun Shard + Crystal Shard
+  Rat Pack                     46 %        6.7  quill            Burrow Rat + Burrow Rat + Kibble Sack
+  Star Hound                   46 %        1.6  quill                           Space Pup + Burrow Rat
+  Helios Rod                   43 %        6.3   ysel                      Corona Staff + Ember Censer
+  Ambrosia                     43 %        8.4   venn                      Nectar Flask + Healing Moss
+  Junk Titan                   42 %        6.7   rook                        Scrap Golem + Spare Parts
+  Gravity Well                 42 %        6.7   rook                        Grav Clamp + Magnet Crane
+  Irrigation Swarm             41 %        3.1   venn        Watering Drone + Pollen Cloud + Grow Lamp
+  Sun Eagle                    38 %        7.3  quill                     Star Falcon + Targeting Lens
+  Spore Mine                   34 %        2.8   venn                      Seed Pod + Mushroom Cluster
+  Pack Bond                    32 %        7.3  quill                    Grooming Comb + Calling Shell
+  Canticle                     32 %        5.9   ysel                     Star Psalter + Flare Catcher
+  Logic Core                   31 %        5.7   rook                       Circuit Board + Power Cell
+  Giant Mantrap                31 %        7.4   venn                           Venus Mantrap + Biogel
+  Dynamo                       31 %        7.5   rook                       Capacitor Bank + Turbo Fan
+  Shell Dragon                 27 %        4.3  quill                          Pack Lizard + Rock Crab
+  Factory Line                 26 %        4.3   rook                          Conveyor Belt + Toolbox
+  Rivet Cannon                 24 %        2.0   rook                       Welding Arm + Bolt Thrower
+  Living Armor                 23 %        5.0   venn                          Bark Shield + Thornvine
+  Cozy Den                     22 %        5.1  quill                            Pet Bed + Kibble Sack
+  Total Eclipse                22 %        9.4   ysel                     Mirror of Dusk + Eclipse Orb
+  Spore Stew                   20 %        7.1                    Mushroom Cluster + Gravity Dumplings
+  Scrap Howitzer               20 %        6.2   rook          Junk Cannon + Scrap Metal + Copper Wire
+  Harvest Crate                19 %        6.0   venn                         Compost Bin + Moon Melon
+  Sniper Scope                 18 %        6.0                          Targeting Lens + Crystal Shard
+  Litany                       16 %        5.6   ysel                       Hymn Scroll + Comet Rosary
+  Slime Pup                    16 %        6.0                                     Cosmic Egg + Biogel
+  Salvage Rig                  16 %        6.8   rook                          Magnet Crane + Recycler
+  Fusion Battery               15 %        5.4                                Power Cell + Copper Wire
+  Solstice Engine              15 %        9.0   ysel     Collapse Engine + Flare Catcher + Dawn Chime
+  Armored Bear                 15 %        7.3  quill                           Moon Bear + War Saddle
+  Astronaut Ration             15 %        6.2                               Protein Bar + Moon Cheese
+  Flamethrower                 14 %        6.0                           Plasma Cutter + Fuel Canister
+  Panacea                      14 %        8.3                                   Antitoxin + Medi Moss
+  Shock Trap                   14 %        7.3                                    Holo Decoy + Antenna
+  Clockwork Chick              14 %        6.1                                Cosmic Egg + Copper Wire
+  Briar Fortress               13 %        7.8   venn                         Thornvine + Root Network
+  Venom Fang                   12 %        5.7                                 Fang Dagger + Venom Sac
+  Ghost Shroud                 12 %        9.5                                Phase Cloak + Holo Decoy
+  Acid Sprayer                 11 %        8.0                               Acid Flask + Cryo Sprayer
+  Lunar Moth                   11 %        8.0                               Moon Moth + Stardust Vial
+  Garden Bowl                  11 %        6.5                             Algae Shake + Hydro Lettuce
+  Supernova Sundae             11 %        7.4                   Freeze-Dried Ice Cream + Comet Sorbet
+  Hawk-Eye Parrot              11 %        8.3                           Laser Parrot + Targeting Lens
+  Glacier Cannon               11 %        6.6                             Cryo Sprayer + Coolant Tank
+  Candied Star Fruit           11 %        9.0                              Star Fruit + Crystal Candy
+  Blizzard Gem                 11 %        6.5                                   Frost Gem + Frost Gem
+  Beetle Lantern               11 %        5.6                             Glow Beetle + Crystal Shard
+  Fire Drakeling               10 %        6.7                              Cosmic Egg + Fuel Canister
+  Cryo Baton                   10 %        5.9                                  Stun Baton + Frost Gem
+  Umbral Mantle                10 %        7.6   ysel                      Eclipse Veil + Force Bubble
+  Inferno Canister             10 %        5.9                           Fuel Canister + Fuel Canister
+  Afterburner                   9 %        5.2                                Thruster + Fuel Canister
+  Toxic Gland                   9 %        6.2                                   Venom Sac + Venom Sac
+  Frost Hatchling               9 %        5.4                               Cosmic Egg + Coolant Tank
+  Astrolabe                     9 %        8.2                              Star Chart + Stardust Vial
+  Fallout Beacon                9 %        8.1                              Geiger Counter + Lodestone
+  Mantrap Pack                  9 %        5.2   venn                        Snap Sprout + Snap Sprout
+  Overdrive Core                8 %        7.3                               Overclock Chip + Thruster
+  Nail Storm                    8 %        5.0                                 Rivet Gun + Copper Wire
+  Hamster Wheel                 8 %        6.0                              Space Hamster + Power Cell
+  Fungal Mortar                 7 %        6.9                       Spore Launcher + Mushroom Cluster
+  Prism Laser                   7 %        4.3                            Laser Pistol + Crystal Shard
+  Crit Array                    7 %        7.2                           Star Compass + Targeting Lens
+  Space Burger                  7 %        7.3         Gravity Dumplings + Moon Cheese + Hydro Lettuce
+  Slag Mace                     7 %        3.7                            Asteroid Chunk + Scrap Metal
+  Reinforced Bulkhead           7 %        3.7                              Hull Plating + Scrap Metal
+  Snow Lynx                     7 %        9.1                                Shadow Lynx + Ice Ferret
+  Glacier Mail                  7 %        7.7                                   Cryo Coat + Frost Gem
+  Juggernaut                    6 %       10.0  quill                    Thunder Ram + Tusked Behemoth
+  Prism Cluster                 6 %        6.9                           Crystal Shard + Crystal Shard
+  EMP Cannon                    6 %        7.4                             Ion Blaster + Jammer Beacon
+  Nano Medkit                   6 %        5.5                                     Repair Kit + Biogel
+  Shield Capacitor              6 %        4.5                             Shield Battery + Power Cell
+  Bulwark Array                 6 %        8.5   rook                   Shield Emitter + Bastion Frame
+  Fire Jerky                    5 %        6.8                              Protein Bar + Rocket Chili
+  Power Meal                    5 %        5.7                              Vitamin Pack + Protein Bar
+  Exo Suit                      5 %        6.5                               Space Suit + Visor Helmet
+  Swarm Cloud                   5 %        7.4  quill                          Glow Swarm + Hive Queen
+  Magma Hound                   5 %        8.0                                  Comet Fox + Magma Newt
+  Plague Slug                   5 %        5.4                          Vacuum Slug + Mushroom Cluster
+  Honey Cake                    5 %        8.9                          Asteroid Honey + Crystal Candy
+  Med Bay                       5 %        4.2                             Saline Drip + Scrubber Unit
+  Welder Bot                    4 %        5.5                                Repair Bot + Scrap Metal
+  Life Tank                     4 %        3.6                                Oxygen Tank + Repair Kit
+  Laser Turret                  4 %        5.8               Scrap Metal + Copper Wire + Crystal Shard
+  Survival Suit                 4 %        4.5                            Thermal Blanket + Space Suit
+  Buzz Blade                    4 %        6.4                            Ripper Saw + Boomerang Blade
+  War Banner                    4 %        5.9                                  War Horn + Lucky Comet
+  Star Hatchling                4 %        9.9                Cosmic Egg + Stardust Vial + Royal Jelly
+  Gunship Drone                 3 %        7.6                             Sentry Drone + Laser Pistol
+  Dust Storm                    3 %        5.6                                  Dust Bunny + Moon Moth
+  Burst Rifle                   3 %        6.1                           Needle Rifle + Targeting Lens
+  Trauma Kit                    3 %        3.5                           First Aid Patch + Oxygen Tank
+  Plasma Katana                 3 %        6.4                            Plasma Sword + Crystal Shard
+  Solar Array                   3 %        4.9                                   Solar Panel + Antenna
+  Fortress Crab                 3 %        4.6                                Rock Crab + Hull Plating
+  Chili Noodles                 3 %        8.3                            Space Noodles + Rocket Chili
+  Spiked Bulkhead               3 %        5.7                           Hull Plating + Reactive Armor
+  Medic Drone                   2 %        3.3                                Repair Kit + Scout Drone
+  Caretaker Bot                 2 %        7.0                               Purifier Bot + Repair Bot
+  Hazmat Suit                   2 %        4.8                                  Space Suit + Lead Vest
+  Twin Lasers                   2 %        4.3                             Laser Pistol + Laser Pistol
+  Winch Harpoon                 2 %        6.7                          Harpoon Launcher + Copper Wire
+  Aegis Projector               2 %        4.4                             Deflector Dish + Power Cell
+  Thorn Plate                   2 %        5.9                               Thorn Mail + Hull Plating
+  Jelly Swarm                   2 %        6.5                              Nebula Jelly + Vacuum Slug
+  Turbo Cola                    2 %        6.2                                  Nova Cola + Energy Gel
+  Drill Mole                    1 %        2.0                             Asteroid Mole + Mining Pick
 
 ## Chain step 2
   result              made in runs  avg round   hero                                inputs
-  Arc Forge                   58 %        6.8   rook            Plasma Welder + Tesla Coil
-  Dying Star Scepter          17 %        9.4   ysel          Helios Rod + Red Giant Heart
-  Celestial Chimera           14 %        8.9  quill                Star Hound + Sun Eagle
-  Storm Driver                10 %        9.3   rook                  Rail Driver + Dynamo
-  Jungle Tyrant                8 %        9.6   venn         Strangler Fig + Giant Mantrap
-  Hydra Bloom                  8 %        9.8   venn    Giant Mantrap + Carnivorous Orchid
-  Dragon Engine                5 %        6.7                      Flamethrower + Thruster
-  Solar Drake                  4 %        8.2                 Fire Drakeling + Magma Curry
-  Void Beam                    3 %        7.9                    Prism Laser + Dark Matter
-  Event Horizon                3 %       10.0   ysel           White Dwarf + Umbral Mantle
-  Sanctuary                    2 %        8.0                     Med Bay + Healing Spring
-  Glacier Drake                2 %        6.1                 Frost Hatchling + Ice Ferret
-  Absolute Zero                2 %        8.3                Glacier Cannon + Comet Sorbet
-  Reactor Heart                1 %        8.9              Fusion Battery + Overdrive Core
-  Citadel Plating              1 %        3.3         Reinforced Bulkhead + Deflector Dish
-  Storm Coil                   0 %        9.3                  EMP Cannon + Overclock Chip
-  Life Support Suit            0 %        8.3                       Exo Suit + Nano Medkit
-  Captain's Dinner             0 %        8.7                Astronaut Ration + Fire Jerky
-  Grand Buffet                 0 %       10.3                   Honey Cake + Chili Noodles
-  Star Piercer                 0 %        8.0                       Railgun + Sniper Scope
-  Gatling Laser                0 %        4.0                 Twin Lasers + Fusion Battery
-  Neutron Hammer               0 %        2.0                    Slag Mace + Meteor Hammer
-  Bloom Artillery              0 %        8.0                  Fungal Mortar + Plague Slug
-  Titan Crab                   0 %        3.0                Fortress Crab + Mirror Shield
-  Command Drone                0 %        9.0                  Gunship Drone + Medic Drone
-  Aegis Fortress               0 %        6.0               Aegis Projector + Force Bubble
-  Inferno Blade                0 %        7.0             Plasma Katana + Inferno Canister
-  Plague Hydra                 0 %          -                     Venom Fang + Jelly Swarm
+  Arc Forge                   61 %        6.7   rook            Plasma Welder + Tesla Coil
+  Celestial Chimera           16 %        7.6  quill                Star Hound + Sun Eagle
+  Dying Star Scepter          15 %        8.8   ysel          Helios Rod + Red Giant Heart
+  Hydra Bloom                 13 %        9.1   venn    Giant Mantrap + Carnivorous Orchid
+  Storm Driver                11 %        9.4   rook                  Rail Driver + Dynamo
+  Jungle Tyrant               10 %        9.0   venn         Strangler Fig + Giant Mantrap
+  Dragon Engine                5 %        7.1                      Flamethrower + Thruster
+  Glacier Drake                4 %        9.0                 Frost Hatchling + Ice Ferret
+  Solar Drake                  4 %        8.8                 Fire Drakeling + Magma Curry
+  Void Beam                    3 %        6.9                    Prism Laser + Dark Matter
+  Star Piercer                 3 %        7.5                       Railgun + Sniper Scope
+  Absolute Zero                2 %        8.5                Glacier Cannon + Comet Sorbet
+  Reactor Heart                2 %        8.3              Fusion Battery + Overdrive Core
+  Event Horizon                2 %       10.3   ysel           White Dwarf + Umbral Mantle
+  Captain's Dinner             1 %        8.9                Astronaut Ration + Fire Jerky
+  Storm Coil                   1 %        8.3                  EMP Cannon + Overclock Chip
+  Sanctuary                    1 %        7.6                     Med Bay + Healing Spring
+  Neutron Hammer               1 %        3.5                    Slag Mace + Meteor Hammer
+  Citadel Plating              1 %        3.0         Reinforced Bulkhead + Deflector Dish
+  Grand Buffet                 0 %       11.0                   Honey Cake + Chili Noodles
+  Aegis Fortress               0 %        9.0               Aegis Projector + Force Bubble
+  Plague Hydra                 0 %        9.0                     Venom Fang + Jelly Swarm
+  Gatling Laser                0 %        5.0                 Twin Lasers + Fusion Battery
+  Bloom Artillery              0 %       12.0                  Fungal Mortar + Plague Slug
+  Command Drone                0 %        3.0                  Gunship Drone + Medic Drone
+  Life Support Suit            0 %          -                       Exo Suit + Nano Medkit
+  Titan Crab                   0 %          -                Fortress Crab + Mirror Shield
+  Inferno Blade                0 %          -             Plasma Katana + Inferno Canister
 
 ## Chain step 3
   result          made in runs  avg round  hero                                    inputs
-  Phoenix                  0 %       10.5        Solar Drake + Star Fruit + Stardust Vial
+  Phoenix                  0 %        8.0        Solar Drake + Star Fruit + Stardust Vial
   Worldbreaker             0 %          -                    Neutron Hammer + Dark Matter
   Death Blossom            0 %          -                       Gatling Laser + Void Beam
   Entropy Engine           0 %          -                 Absolute Zero + Bloom Artillery
@@ -172,29 +172,29 @@ Bots merge by the player's rules: they lay owned inputs next to each other and t
 
 
 ## Does a recipe dominate?
-  result              step   hero  fights held  wins     lift  made in runs                               
-  Celestial Chimera      2  quill           85  69 %  +24 pts          14 %                     too strong
-  Dragon Engine          2                 195  65 %  +18 pts           5 %                     too strong
-  Banquet Trough         1  quill          864  59 %  +18 pts          64 %  too strong, everyone makes it
-  Gravity Well           1   rook          566  55 %  +17 pts          51 %                     too strong
-  Sun Eagle              1  quill          138  63 %  +16 pts          30 %                     too strong
-  Arc Forge              2   rook          606  53 %  +16 pts          58 %                     too strong
-  War Banner             1                 237  66 %  +16 pts           6 %                     too strong
-  Dying Star Scepter     2   ysel           87  72 %  +15 pts          17 %                     too strong
-  Shock Trap             1                 112  65 %  +14 pts          10 %                     too strong
-  Total Eclipse          1   ysel          125  72 %  +13 pts          23 %                     too strong
-  Dynamo                 1   rook          152  57 %  +13 pts          24 %                     too strong
-  Sacred Flame           1   ysel          596  65 %  +13 pts          59 %                     too strong
-  Med Bay                1                 330  60 %  +12 pts           9 %                               
-  Living Armor           1   venn          252  58 %  +11 pts          23 %                               
-  Beetle Lantern         1                 311  59 %  +11 pts           7 %                               
+  result             step   hero  fights held  wins     lift  made in runs                   
+  Gravity Well          1   rook          440  60 %  +21 pts          42 %         too strong
+  Living Armor          1   venn          290  60 %  +14 pts          23 %         too strong
+  Sacred Flame          1   ysel          515  63 %  +13 pts          49 %         too strong
+  Blizzard Gem          1                 324  61 %  +12 pts          11 %         too strong
+  Glacier Drake         2                  89  62 %  +12 pts           4 %         too strong
+  Harvest Crate         1   venn          188  59 %  +11 pts          19 %                   
+  Banquet Trough        1  quill          740  58 %  +11 pts          54 %                   
+  Celestial Chimera     2  quill          137  59 %  +10 pts          16 %                   
+  Total Eclipse         1   ysel          101  65 %  +10 pts          22 %                   
+  Dragon Engine         2                 160  58 %  +10 pts           5 %                   
+  Armored Bear          1  quill           97  60 %  +10 pts          15 %                   
+  Plasma Welder         1   rook         1003  50 %  +10 pts          76 %                   
+  Arc Forge             2   rook          646  50 %   +9 pts          61 %  everyone makes it
+  Rat Pack              1  quill          487  57 %   +9 pts          46 %                   
+  Panacea               1                 407  57 %   +9 pts          14 %                   
 
 lift: win share of a hero while the result lies in its backpack, minus the win share of the same hero in the same round without it (results held in at least 60 fights; the top 15). A good build holds more crafted items anyway, so a lift of a few points is normal.
-OFF  how much more often a hero wins while holding a recipe result than the same hero in the same round without it: target at most 12 %, measured -23 %–24 %
-OFF  share of a hero's runs that make the same recipe result (one chain everyone takes): target at most 60 %, measured 2 %–64 %
+OFF  how much more often a hero wins while holding a recipe result than the same hero in the same round without it: target at most 12 %, measured -17 %–21 %
+OFF  share of a hero's runs that make the same recipe result (one chain everyone takes): target at most 60 %, measured 2 %–61 %
 (Upgrades of a hero's start items are left out of the second check: almost every run of that hero is meant to make one of them.)
-Off target: Celestial Chimera (too strong), Dragon Engine (too strong), Banquet Trough (too strong, everyone makes it), Gravity Well (too strong), Sun Eagle (too strong), Arc Forge (too strong), War Banner (too strong), Dying Star Scepter (too strong), Shock Trap (too strong), Total Eclipse (too strong), Dynamo (too strong), Sacred Flame (too strong).
+Off target: Gravity Well (too strong), Living Armor (too strong), Sacred Flame (too strong), Blizzard Gem (too strong), Glacier Drake (too strong), Arc Forge (everyone makes it).
 
-Never made: Plague Hydra, Worldbreaker, Death Blossom, Entropy Engine, Dyson Bastion, Leviathan.
+Never made: Life Support Suit, Titan Crab, Inferno Blade, Worldbreaker, Death Blossom, Entropy Engine, Dyson Bastion, Leviathan.
 
-(60 s)
+(63 s)
