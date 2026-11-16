@@ -1,3 +1,26 @@
+# Path anchors and free picks built (2026-11-16)
+
+Question (Ilja): paths of one hero play alike; free picks must have no must-take and no useless item. Design: `docs/proposals/hero-paths.md`.
+
+Built: `path` on every hero item, one anchor per path among the round-4 hero items (9 reworked), 5 new path items, shop leans ×1.5 to an owned anchor's path, bots without a fixed path commit with their anchor (committed bots value path items ×2, was ×1.5, and take their own anchor when shown), melee/ranged filters, 10 general artifacts reworked as puzzle pieces with far stars. New measures: path profile in report:paths, report:picks. Three tuning passes; numbers below after the third (ratings measured again each time).
+
+**General artifacts (report:picks normal, seed 1; gain = points of win share over the rest of the run):**
+
+| | before | after |
+|---|---|---|
+| strongest | Time Dilator +24, best in 80 % of its offers | Galactic Cookbook +8, best in 42 % |
+| weakest | Star Forge / Plague Vault +2 | Dyson Fragment 0, Wormhole Generator +1, Star Forge +3 |
+| best in its offer | 18–80 % | 19–44 % ✓ (≤ 55 %) |
+| worst in its offer | 5–48 % | 22–52 % ✓ |
+
+No general artifact dominates any more. Still weak: Dyson Fragment, Wormhole Generator, Star Forge (the far-star pieces: the bots place them poorly, players will likely do better). Ysel gains little from most of them (37 % of her offers without a good option).
+
+**Hero items (round 4):** before −4 to +29 points, after +3 to +25. With 24 moments per hero the ± is 6–9 points, so single values move a lot between runs (Eternal Dawn +16 in one run, +4 in the next with almost no change). Measure them at precise before tuning them further.
+
+**Paths (report:paths precise, seeds 1 and 2):** every hero overall 47–52 %. Each path now shows its mechanic in the profile (Rook fortress: Shield ram 17–18 %; workshop: count damage 11 %; Quill swarm: count damage 11 %; Venn: Toxin / Spikes / pets lead in the three paths; Ysel eclipse: cold damage 12 %), but no hero reaches the distinctness target (two paths ≥ 0.35 apart; Venn best with 0.11). Cause: bots still build only 28–65 % of their item cost from path items; the rest is general items that every path buys. Weak paths: Venn Hungry jungle 41 %, Quill Well-fed pack 42–44 %, Ysel Late ascension 43–45 %; strong: Rook Workshop 56–57 %. Most paths stay below their hero's open bot (the open bot takes the best anchor).
+
+Open: how strongly a path should pull the build (more hero offers, a stronger anchor lean, items that count path items) is a design question for Ilja; the three weak artifacts.
+
 # Measuring tool checked (2026-11-16)
 
 Question (Ilja): optimising only pays if the measuring tool is reliable. Results:
