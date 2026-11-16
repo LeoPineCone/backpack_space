@@ -8,7 +8,9 @@ import { fileURLToPath } from "node:url";
 
 export interface WorkerTask {
   /** "paths": the seat stats of every lobby (report:paths); "panel": the lobbies with builds, pairings and fight records (baseline) */
-  kind: "paths" | "panel" | "items";
+  kind: "paths" | "panel" | "items" | "pickLobby" | "picks";
+  /** "picks": file with the chosen moments and their seeds ({ m, seed }[]), scored from/to; the field comes from `field` */
+  moments?: string; careful?: boolean;
   /** "panel": bots choose their path themselves (the field the item measurement uses) instead of one bot per path */
   free?: boolean;
   /** "items": file with the field (builds by round), the ids to measure (from/to index into it) and the sample sizes */

@@ -1,3 +1,13 @@
+# Item strength, matchups and meta, picks (2026-11-16)
+
+Third stage of the balancing tools (`docs/proposals/balancing-workflow.md`). No game number changed. All on the baseline of main (2 × 240 lobbies, seeds 1 and 2).
+
+**Item strength in three views (`npm run report:strength`, 1 min).** Add one = the rating; remove one = builds that own the item fight again without it; regression = logistic model over all 92 160 baseline fights. The regression repeats between the two seeds with r = 0.95; remove one and regression agree with r = 0.77, each with add one only 0.52–0.54, so they do see something else. Two views agree on STRONG for 23 items: Holo Decoy, Scrubber Unit, Stasis Field, Titan Core, Glacier Cannon, Star Falcon, Sun Eagle, Celestial Chimera, Juggernaut, Plasma Welder, Gravity Well, Thornvine, Moon Melon, Briar Fortress, Strangler Fig, Ironbark Golem, Living Armor, Jungle Tyrant, Sun Shard, Ember Censer, Corona Staff, Ice Ferret, Cryo Sprayer. WEAK: Ancient Monolith. "Needs its build" (weak as a free extra, strong where used): Solar Panel, Plague Vault. 53 items are owned by under 2 % of the bots that could have them; weak items mostly hide there, because bots do not buy what rates low.
+
+**Matchups and meta (`npm run report:meta`, 45 s).** Hero against hero 43–56 % (target 35–65 %), no hero beats all others: Rook beats Quill 56 % and Ysel 55 %, Ysel beats Venn 55 %. 37 % of the path table is rock-paper-scissors, the rest is plain strength. Meta share (new target 10–45 % per hero, agreed with Ilja as a blunder catcher): Venn 23, Rook 36, Quill 14, Ysel 26 % (seed 1 / seed 2 alone: Rook 32 / 38, Quill 19 / 12). Per path: Workshop 28 %, Burning corona 18 %, Thorn wall 16 %; Hungry jungle, Well-fed pack and Late ascension 1–2 % (hardly played), Overclocked guns 3 %.
+
+**Free picks (`npm run report:picks`, now 1 min on all cores).** Hero items with three times the moments: ±3–5 points instead of ±6–9, all twelve inside their targets (gain 0.75–1.32 × median, best in its offer 40–62 %). General artifacts: Plague Vault +10.8 to Ancient Monolith +5.2 are fine; Wormhole Generator +1.7 and Dyson Fragment +0.7 are off (0.2 and 0.1 × median). With `--careful` (bots search their layout six times longer) they stay there: +2.4 and −0.8. So they are not only laid out badly, they are weak for the builds the bots make.
+
 # Balancing tools: baseline, replay, proposals (2026-11-16)
 
 Question (Ilja): which measuring tools are good, which methods can balance the different questions, and a repeatable flow for a baseline and for new or changed items, heroes and mechanics. Design and decisions: `docs/proposals/balancing-workflow.md`; how to use it: `.claude/skills/balancing/SKILL.md`. No game number changed in this pass.

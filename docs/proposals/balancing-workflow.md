@@ -1,7 +1,8 @@
 # Balancing workflow with optimisers (proposal, 2026-11-16)
 
-Status: **stages 1 and 2 are built** (baseline, replay, sensitivity, proposals, incremental ratings; see
-section 12 and `.claude/skills/balancing/SKILL.md` for how to use them). Stages 3–5 are open. Decisions by Ilja
+Status: **stages 1 to 3 are built** (baseline, replay, sensitivity, proposals, incremental ratings, item strength
+in three views, matchups with meta share, picks improvements; see section 12 and
+`.claude/skills/balancing/SKILL.md` for how to use them). Stages 4 and 5 are open. Decisions by Ilja
 (2026-11-16) are in section 13. Asked by Ilja: review the measuring tools we have, pick mathematical
 methods and optimisers for our different balancing questions, and design a repeatable flow: take a baseline, then
 integrate new items, changed items, a new hero or a new mechanic. Balancing need not be perfect. An optimiser only
@@ -322,7 +323,7 @@ stage 3 and stays outside `packages/core` and the game.
 |---|---|---|
 | 1 | Baseline snapshot with panel (`npm run baseline`), replay with self-check (`balance:replay`, `--full`), paired metrics for all fight-level targets | **built** |
 | 2 | Sensitivity table (`balance:sense`), least-change search (`balance:propose`, patch files in `out/proposals/`); ratings parallel, with per-item dice and `--only` updates that leave all other ratings alone | **built** |
-| 3 | Item strength in three views; matchup table and meta share; picks improvements | open |
+| 3 | Item strength in three views (`report:strength`); path-against-path table, rock-paper-scissors share and meta share with the hero target `metaHero` (`report:meta`); picks on all cores with three times the moments for hero items and `--careful` placement | **built** |
 | 4 | Sweep and search for numbers the bots read (TypeScript only), path-pull sweep | open |
 | 5 | First real pass with the tools (paths that are off today, weak artifacts), starting with one full ratings run on two seeds | open |
 
@@ -332,6 +333,10 @@ What was built differs from the sections above in three points:
   guess by what was measured. That needed no library and never trusts the linear model.
 - The margin to a band edge is half a point by default, not two standard errors: the bands (48–52 %) are narrower
   than twice the ± of an absolute value, so a wider margin would make everything infeasible.
+- Item strength is not put on one scale. Remove-one and regression are judged against the item's class (z-score
+  to the class median), add-one stays the rating against the price; "two of three agree" is the verdict.
+- Picks got no sequential sampling: three times the moments for hero items on all cores gave ±3–5 points in one
+  minute, which is enough for the wide pick targets.
 - The self-check found that bots also read **cooldown** (layout score, Energy bookkeeping). A cooldown change
   makes the hero's bots drift to other builds without taking the item more or less often; replay and full run
   still agreed within noise (+1.4 vs +2.0 ±0.5). The self-check therefore separates "drift" from "bots take the
@@ -348,5 +353,6 @@ What was built differs from the sections above in three points:
 4. Meta share becomes a **wide target that only catches blunders**: every hero between 10 % and 45 % of the
    settled meta (fair would be 25 %). Per path it is information only, because an exact equilibrium jumps with
    small changes of the table; a smoothed equilibrium (players choose better options more often, not always the
-   best) will be used so that the number moves steadily. To be built in stage 3 and then added to
-   `data/sim/targets.json`.
+   best) is used so that the number moves steadily. Built: `report:meta`, target `metaHero` in
+   `data/sim/targets.json`. One point of win share more against the mix means chosen about 22 % more often;
+   between two seeds a hero's share moves by about ±4 points.

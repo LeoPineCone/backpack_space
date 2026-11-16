@@ -1,5 +1,5 @@
 {
-  "$comment": "Balancing targets the reports check (min/max). Shares are fractions (0.45 = 45 %), times are seconds. Proposed 2026-11-15, change them here when the design changes. Path targets (path*) agreed with Ilja 2026-11-16; path profile (pathMainShare, pathDistinct, pathCommit) and free picks (pick*) agreed 2026-11-16 (PR #16).",
+  "$comment": "Balancing targets the reports check (min/max). Shares are fractions (0.45 = 45 %), times are seconds. Proposed 2026-11-15, change them here when the design changes. Path targets (path*) agreed with Ilja 2026-11-16; path profile (pathMainShare, pathDistinct, pathCommit) and free picks (pick*) agreed 2026-11-16 (PR #16); metaHero agreed 2026-11-16 (PR #18).",
   "fightSeconds": { "min": 18, "max": 25, "what": "average fight length in every round" },
   "longestFight": { "max": 45, "what": "longest fight of a round (one minute of waiting at speed ×1 is too long)" },
   "supernovaReached": { "min": 0.05, "max": 0.2, "what": "share of fights that reach the Supernova, every round" },
@@ -24,6 +24,7 @@
   "pickHeroGain": { "min": 0.7, "max": 1.4, "what": "hero item: gain over the rest of the run compared with the median hero item (× median)" },
   "pickHeroBest": { "max": 0.65, "what": "hero item: share of its offers (2 shown) in which it is the better choice (fair: 50 %)" },
   "pickHeroWorst": { "max": 0.65, "what": "hero item: share of its offers (2 shown) in which it is the weaker choice (fair: 50 %)" },
+  "metaHero": { "min": 0.1, "max": 0.45, "what": "share of every hero in a settled meta of the path-against-path table (fair: 25 %); wide on purpose, it only catches blunders" },
   "selftestNoise": { "min": 0.6, "max": 1.5, "what": "self-test: two independent runs differ by about as much as their ± says (root mean square of z, 1 = honest)" },
   "selftestBoost": { "min": 3, "what": "self-test: a path made 25 % stronger rises by at least this many standard errors" }
 }

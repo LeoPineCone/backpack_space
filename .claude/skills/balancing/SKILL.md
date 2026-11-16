@@ -31,7 +31,9 @@ not chance and not a bot quirk.
 | `npm run balance:sense -- --knobs hero:venn` | which number moves which target by how much (one step each); dead numbers, strong levers, side effects | ~1 s per knob |
 | `npm run balance:propose -- --knobs hero:venn` | proposes the fewest, smallest number changes that bring the targets into their bands; writes a patch, changes nothing | 3–10 min |
 | `npm run report:paths` | win share per hero and per path, vs the hero's open bot; targets marked ✓/✗ | quick 10 s, normal 30 s, precise ~1.5 min |
-| `npm run report:picks` | free picks after rounds 4 and 8: gain per item and hero, choice test (best/worst in its offer), offers with no good option | quick 30 s |
+| `npm run report:strength` | item outliers by three views (add one, remove one, regression); needs the baseline, no bot shops | ~1 min |
+| `npm run report:meta` | path against path (12 × 12), hero against hero, rock-paper-scissors share, meta share per hero (target) and path; needs the baseline | ~45 s |
+| `npm run report:picks` | free picks after rounds 4 and 8: gain per item and hero, choice test (best/worst in its offer), offers with no good option; `--careful`: bots search their layout much longer | normal ~1 min, `--careful` ~2 min |
 | `npm run report:heroes` | hero win share per third of the run, hero against hero | single core, not timed yet |
 | `npm run report:battles` | fight length, Supernova share, damage sources | single core, not timed yet |
 | `npm run report:items` | gain per item vs its price (STRONG / WEAK), never-bought items | normal ~1.5 min |
@@ -53,7 +55,8 @@ every path 46–54 %, rounds 9–12 44–56 %, every path ≥ +2 pts over the he
 of the damage mix), path items ≥ 50 % of the build. Free picks (wide on purpose): gain 0.6–1.6 × median (hero
 items 0.7–1.4), best or worst in its offer ≤ 55 % (hero items ≤ 65 %), no general artifact below 0.4 × median
 for any hero, ≤ 10 % of offers without a good option. Older targets: fights 18–25 s, Supernova reached 5–20 %, hero 45–55 % per third, duel 35–65 %,
-recipe lift ≤ 12 pts, no recipe in > 60 % of a hero's runs.
+recipe lift ≤ 12 pts, no recipe in > 60 % of a hero's runs. Meta share (agreed 2026-11-16): every hero 10–45 % of
+a settled meta (fair 25 %); wide on purpose, it only catches blunders. Per path it is information.
 
 ## The fast loop: baseline, replay, proposal
 
@@ -87,6 +90,24 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 - The second-order effect ("a stronger item is bought more often") only appears after the ratings of the changed
   items are measured again and the lobbies are played again: `npm run ratings -- --only <ids>`, then
   `npm run baseline` (or `balance:replay --full --ratings <file>` to try it first).
+
+## Items and matchups from the baseline
+
+- **`report:strength`** puts three views of an item side by side. *Add one* (the rating: a typical build gets a
+  free copy) misses items that need a committed build. *Remove one* (builds that own it fight again without it)
+  says what it is worth where it is used, and nothing about items no bot uses. *Regression* (logistic model over
+  all baseline fights) shows what goes together with winning; it repeats well between seeds (r = 0.95) but is
+  observational. Remove-one and regression are judged against the item's class (start item, rarity, crafted
+  step, hero or general): z beyond ±2 is unusual. **STRONG / WEAK = two views agree.** "needs its build" = weak as
+  a free extra, strong where used: fine by design, do not buff it. Weak items seldom show as WEAK, because bots do
+  not buy them: look at "rarely owned" and at `report:items`.
+- **`report:meta`**: the 12 × 12 table has ±2 points per cell at normal. Meta share = how often a path would be
+  played once players adapt (smoothed equilibrium: one point of win share more against the mix = chosen about
+  22 % more often). Between two seeds a hero's share moves by about ±4 points, a path's by more: read paths as
+  "played / hardly played", not as numbers. The recipe "lift" in report:recipes is confounded (a holder is a bot
+  whose shop went well); prefer remove-one for "is this recipe result too strong".
+- **`report:picks --careful`** lets every bot search its layout much longer after the pick. An artifact that gains
+  clearly there is laid out badly by the normal bots; one that stays weak is weak.
 
 ## How exact is a number?
 
@@ -175,6 +196,13 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Lessons learned (keep adding)
 
+- 2026-11-16: Dyson Fragment and Wormhole Generator stay weak with careful placement (+0.7 / +1.7 points normal,
+  −0.8 / +2.4 careful; median artifact +8.5). The earlier guess "bots only place the far stars badly" does not
+  hold for the arranger's search; they are weak for the builds bots make. (The arranger's score may still not
+  value far stars: that is a bot change, not a number change.)
+- 2026-11-16: with three times the moments, hero items measure to ±3–5 points and all twelve are inside their
+  targets (0.75–1.32 × median); the earlier outliers were noise from 24 moments.
+
 - 2026-11-16: bots do not read damage or effect numbers, so a replay of stored builds equals a full paired run
   for them. They do read cooldown and Energy (layout, bookkeeping): one cooldown step made all 32 bots of the hero
   end with other builds in 8 lobbies, without taking the item more or less often. Drift is not a systematic shift.
@@ -204,5 +232,7 @@ Rook Workshop too strong (60 %, late 63–70 %, likely the hero's own crafted sp
 Venn Hungry jungle, Quill Well-fed pack and Ysel Late ascension weak, most paths below their open bot, no hero
 reaches the path distinctness target. The ratings have not been measured with the new per-item dice yet: the
 first `npm run ratings -- --seeds 1,2` writes `data/sim/ratings-meta.json` and will shift the heroes once.
-Not built yet (see `docs/proposals/balancing-workflow.md`): item strength in three views, matchup table with meta
-share, picks improvements, sweeps and search for numbers the bots read.
+Meta: Rook 36 % (Workshop alone 28 %), Quill 14 %; Hungry jungle, Well-fed pack and Late ascension are hardly
+played. General artifacts Dyson Fragment, Wormhole Generator (and Ancient Monolith) are weak.
+Not built yet (see `docs/proposals/balancing-workflow.md`): sweeps and search for numbers the bots read, the
+path-pull sweep, and the first real pass.

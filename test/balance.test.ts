@@ -6,6 +6,8 @@ import { lobbyStat, playPanelLobby, replay, stored, type Panel } from "../src/ba
 import { mergePatches, patchedData, touchedBy, type Patch } from "../src/balance/patch";
 import { measurePathLobby } from "../src/sim/paths";
 import { measureItem } from "../src/sim/items";
+import { cycleShare, metaShares } from "../src/balance/meta";
+import { correlation, fightModel, removeOne, ridgeLogistic, robustZ, solveSpd, type Row } from "../src/balance/strength";
 
 const data = loadGameData();
 const raw = loadRawData();
@@ -94,5 +96,49 @@ describe("item measurement", () => {
     const a = measureItem(data, it1, byRound, { builds: 4, fights: 3 }, 1);
     measureItem(data, data.items.get("venus_mantrap")!, byRound, { builds: 4, fights: 3 }, 1);
     expect(measureItem(data, it1, byRound, { builds: 4, fights: 3 }, 1)).toEqual(a);
+  });
+});
+
+describe("meta share", () => {
+  it("is even when nobody has an edge and sums to one", () => {
+    const x = metaShares([[0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]);
+    expect(x.reduce((a, b) => a + b, 0)).toBeCloseTo(1);
+    for (const v of x) expect(v).toBeCloseTo(1 / 3, 5);
+  });
+  it("plays a dominant option most and keeps rock-paper-scissors even", () => {
+    const dom = metaShares([[0.5, 0.7, 0.7], [0.3, 0.5, 0.5], [0.3, 0.5, 0.5]]);
+    expect(dom[0]).toBeGreaterThan(0.9);
+    const rps = [[0.5, 0.7, 0.3], [0.3, 0.5, 0.7], [0.7, 0.3, 0.5]];
+    for (const v of metaShares(rps)) expect(v).toBeCloseTo(1 / 3, 3);
+    expect(cycleShare(rps)).toBeCloseTo(1);
+    expect(cycleShare([[0.5, 0.6, 0.7], [0.4, 0.5, 0.6], [0.3, 0.4, 0.5]])).toBeCloseTo(0);
+  });
+});
+
+describe("item strength", () => {
+  it("solves a small system and finds the item that wins", () => {
+    const x = solveSpd(Float64Array.from([4, 2, 2, 3]), Float64Array.from([2, 1]), 2);
+    expect(x[0]).toBeCloseTo(0.5); expect(x[1]).toBeCloseTo(0);
+    // feature 0 decides most fights, feature 1 is noise
+    const rows: Row[] = [];
+    for (let i = 0; i < 400; i++) { const a = i % 2 ? 1 : -1, b = i % 4 < 2 ? 1 : -1; rows.push({ x: [[0, a], [1, b]], y: a > 0 ? (i % 10 === 1 ? 0 : 1) : (i % 10 === 0 ? 1 : 0) }); }
+    const w = ridgeLogistic(rows, 2);
+    expect(w[0]).toBeGreaterThan(1);
+    expect(Math.abs(w[1]!)).toBeLessThan(0.3);
+  });
+  it("scores against the class median and correlates", () => {
+    const z = robustZ([1, 2, 3, 4, 100]);
+    expect(z[2]).toBe(0); expect(z[4]).toBeGreaterThan(10);
+    expect(correlation([1, 2, 3, 4], [2, 4, 6, 8])).toBeCloseTo(1);
+  });
+  it("measures a loss when an owned item is taken away, and fits the fight model", () => {
+    const rem = removeOne([panel], data, 20);
+    expect(rem.size).toBeGreaterThan(20);
+    const drops = [...rem.values()].filter((x) => x.n >= 10).map((x) => x.drop);
+    expect(drops.reduce((a, b) => a + b, 0) / drops.length).toBeGreaterThan(0);
+    for (const x of rem.values()) expect(x.n).toBeLessThanOrEqual(20);
+    const model = fightModel(panel, data);
+    expect(model.size).toBe(data.itemList.filter((i) => !i.isBag).length);
+    expect([...model.values()].every(Number.isFinite)).toBe(true);
   });
 });
