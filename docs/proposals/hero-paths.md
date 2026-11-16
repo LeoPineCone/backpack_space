@@ -1,6 +1,11 @@
 # Proposal: paths that play differently, anchored by the hero item
 
-Status: **proposal, 2026-11-16, nothing built yet.** Game data and code are unchanged. Every point marked **needs OK** changes a rule, the schema or a hero and waits for Ilja.
+Status: **proposal, 2026-11-16, revised after Ilja's answers the same day; nothing built yet.** Game data and code are unchanged. Every point marked **needs OK** still waits for Ilja.
+
+Decided by Ilja (2026-11-16):
+- The round-4 pick stays **two of three, at random**, so every run brings its own luck.
+- The shop may lean a little towards the chosen path, but must not force players into it.
+- The round-8 special does **not** follow the path. The general artifacts should each bring a small mechanic of their own instead.
 
 ## The problem
 
@@ -24,7 +29,9 @@ Status: **proposal, 2026-11-16, nothing built yet.** Game data and code are unch
 
 ## The idea
 
-The hero item after round 4 becomes the **anchor** of the path: you are shown three, one per path, and the one you take decides how your build wins. Before round 4 a few cheap **feeder** items in the shop point towards each path; after round 4 the shop leans to the chosen path and **support** items make the anchor stronger. The general artifact after round 8 can **crown** the path.
+Each of the three hero items becomes the **anchor** of one path. After round 4 two of the three are shown at random, so the run offers you two paths and you choose one of them (or take the anchor that fits what you already built). Before round 4 a few cheap **feeder** items in the shop point towards each path; after round 4 the shop leans a little to the chosen path and **support** items make the anchor stronger.
+
+Because the anchor of your favourite path may not show up, **every path must also work without its anchor**: the anchor makes the path clearly better and more distinct, but the feeders and support items alone already give it its main source. The anchor is the strongest single push, not a key without which the path is dead.
 
 Each path gets **one main damage source or rhythm** that the other two paths of the same hero do not share. Everything below uses effects the schema already has (`per: buff/debuff/ship`, `starUse`, `to: stars`), unless marked otherwise.
 
@@ -32,11 +39,11 @@ Each path gets **one main damage source or rhythm** that the other two paths of 
 
 | # | Change | Kind |
 |---|---|---|
-| R1 | After round 4, show **all three** signature artifacts (one per path) instead of two of three. | rule (`rules.specials[0].show` 2 → 3), **needs OK** |
-| R2 | Every hero item gets an explicit `path` field (`"poison"`, … or none for core items such as start items). Bots and reports use it instead of guessing from `focus`. `focus` stays only as a fallback for general shop items. | schema, **needs OK** |
-| R3 | **The shop follows the anchor:** after you take an anchor, two of three hero-pool offers come from its path (`shop.anchorPathPct`, e.g. 65). | shop rule, **needs OK** |
-| R4 | Bots no longer pick a path at random at the start. Before round 4 they lean lightly to what they own; at round 4 they take the anchor that fits their build best and commit to that path. `report:paths` keeps forcing one path per bot. | bot logic |
-| R5 | Optional crown: after round 8 one of the three general artifacts shown is one that suits the anchor's path (a `suits` list per general artifact, e.g. `zoo_beacon` → swarm/beasts, `titan_core` → fortress/thorns). | rule, optional, **needs OK** |
+| R1 | ~~Show all three hero items after round 4.~~ **Rejected:** stays two of three at random. Each of the three is now the anchor of one path. | decided |
+| R2 | Every hero item gets an explicit `path` field (`"poison"`, … or none for core items such as start items). Bots and reports use it instead of guessing from `focus`. `focus` stays only as a fallback for general shop items. The player does not see it as a rule, only the item popup may show the path symbol. | schema (internal) |
+| R3 | **The shop leans to the anchor, gently:** after you take an anchor, hero-pool items of its path are offered somewhat more often (`shop.anchorPathWeight`, e.g. ×1.5, the same kind of nudge as `affinityPct`). Other paths and general items still show up as before, so switching or mixing stays possible. | shop rule, direction OK'd, number open |
+| R4 | Bots no longer pick a path at random at the start. Before round 4 they lean lightly to what they own; at round 4 they take the better fitting of the two anchors shown and commit to that path. `report:paths` keeps forcing one path per bot and also measures paths played **without** their anchor (anchor not offered). | bot logic |
+| R5 | ~~Round-8 special suits the path.~~ **Rejected.** Instead the ten general artifacts get small mechanics of their own (see below). | decided |
 
 Hero passives, rules of the fight, style and the hero designs do not change.
 
@@ -52,7 +59,7 @@ Names of new items are working names and go through the glossary and item-design
 | **Shield fortress** | **Shield ram:** slow, heavy hits that scale with own Shield | `nanite_swarm` **reworked** into a ram: every 3 s deal 1 damage per 4 Shield (cap ~25); keeps the phase Shield | `spare_parts`, `toolbox`, `conveyor_belt` | `shield_emitter`, `bastion_frame`, `bulwark_array`, **new** rare "ram plate" (armor: on attacked, deal damage per 6 Shield, chance) |
 | **Workshop** | steady pings that grow with every crafted item; strips enemy Shield | `master_blueprint` **reworked**: every 2 s deal 1 damage per crafted item (cap 8) and strip a little; keeps a smaller crafted speed bonus | `grav_clamp`, `magnet_crane`, plus the general recipe parts Rook already buys | `salvage_rig`, `gravity_well`, `assembly_core`, **new** epic "drone bay" (mechanical pet that hits harder per crafted item) |
 
-Result: guns win by weapons, fortress by its ram, workshop by crafted-count damage. Today's Rook weapons that also give Shield (`welding_arm`, `plasma_welder`, `arc_forge`, `rivet_cannon`) stay core items without a path.
+Result: guns win by weapons, fortress by its ram, workshop by crafted-count damage. Since PR #17 `shield_emitter` already deals a little damage per Shield; it becomes the fortress feeder that carries the ram idea when the anchor is not offered. Today's Rook weapons that also give Shield (`welding_arm`, `plasma_welder`, `arc_forge`, `rivet_cannon`) stay core items without a path.
 
 ### Quill – today all "weapon" (pets)
 
@@ -93,7 +100,26 @@ A parallel thread is tuning Ysel and Rook numbers right now; this proposal only 
 | new shop items | 2 | 1 | 1 | 1 | 5 |
 | items that only get a `path` | ~20 | ~25 | ~25 | ~25 | all hero items |
 
-Plus picture briefs (`data/item-art.json`), German texts and glossary terms for every new or changed item.
+Plus 8 of the 10 general artifacts reworked (round 8, see below), picture briefs (`data/item-art.json`), German texts and glossary terms for every new or changed item.
+
+## Round 8: general artifacts with small mechanics of their own
+
+Today most of the ten general artifacts are flat numbers (`wormhole_generator` +12 % speed, `star_forge` +2 weapon damage, `quantum_dice` +20 % crit, `zoo_beacon` pets +2 damage). They stay random and path-free, but each one should add a small twist to the build. First ideas, all expressible with today's effects:
+
+| Artifact | Today | Small mechanic |
+|---|---|---|
+| Dyson Fragment | Shield every 2 s | **collector:** gains Shield whenever an item on its stars activates; placement matters |
+| Wormhole Generator | all items +12 % speed | **opening jump:** items on its stars start the fight fully charged |
+| Time Dilator | Cryo at start and on use | stays (already a mechanic) |
+| Ancient Monolith | health + heal per phase | **last stand:** once below half health, a big heal and Shield |
+| Quantum Dice | weapons +20 % crit | **dice:** every 2 s, 50 % chance of Power and 50 % chance of Overclock |
+| Plague Vault | Toxin + Radiation | stays (Radiation is its mechanic) |
+| Titan Core | Shield + Spikes at start | **hardening:** when hit, chance to gain Spikes; grows thornier over the fight |
+| Star Forge | all weapons +2 damage | **forge:** only weapons on its stars, but +5 damage; four stars |
+| Galactic Cookbook | food faster + Regen | **recipe:** when a starred food activates, chance to gain Overclock |
+| Zoo Beacon | pets +2 damage, +10 % speed | **beacon:** pets on its stars +30 % crit and heal on hit |
+
+The pool could grow later (e.g. to 15) so that round 8 surprises more often. Numbers are set by balancing.
 
 ## Measuring it: the path profile
 
@@ -118,13 +144,12 @@ The report prints one light per hero: "paths distinct" or which pair is too clos
 
 1. Report: path profile + targets, measured on today's data (no game change), so the before/after is visible.
 2. `path` field on hero items (R2) and bot logic (R4).
-3. Anchors per hero, Rook and Quill first, then Venn and Ysel; R1 and R3 with them.
+3. Anchors per hero, Rook and Quill first, then Venn and Ysel; R3 with them.
 4. New feeder/support items, picture briefs, translations, catalog.
-5. Measure, balance, optional crown (R5).
+5. General artifacts with their own mechanics.
+6. Measure (with and without anchor) and balance.
 
 ## Open questions for Ilja
 
-1. R1: show all three hero items after round 4 instead of two?
-2. R2/R3: explicit `path` per hero item, and the shop leaning to the chosen path afterwards?
-3. R5: should the round-8 special lean to the path, or stay fully random?
-4. The new main sources: Shield ram (Rook fortress), crafted-count damage (Rook workshop), feeding Power (Quill well-fed), cold damage (Ysel eclipse). Do these fit the heroes?
+1. The new main sources: Shield ram (Rook fortress), crafted-count damage (Rook workshop), feeding Power (Quill well-fed), cold damage (Ysel eclipse). Do these fit the heroes?
+2. The general artifact ideas above: right direction?
