@@ -1,5 +1,6 @@
 /** Validates data/*.json and prints a summary of the catalogue. */
 import { checkItemArt, loadGameData, loadItemArt, loadMeta } from "@backpack-space/core/node";
+import { checkLore, loadLore } from "../lore/lore";
 
 try {
   const d = loadGameData();
@@ -9,6 +10,9 @@ try {
   console.log(`Recipe chain lengths: ${[1, 2, 3].map((n) => `${n} step${n > 1 ? "s" : ""}: ${count((i) => i.depth === n)}`).join(", ")}; recipes with 3 inputs: ${d.recipes.filter((r) => r.in.length === 3).length}.`);
   const art = checkItemArt(d, loadItemArt());
   if (art.length) throw new Error(`Picture data problems:\n- ${art.join("\n- ")}`);
+  const places = loadLore(), lore = checkLore(d, places);
+  if (lore.length) throw new Error(`Lore problems:\n- ${lore.join("\n- ")}`);
+  console.log(`Lore: ${places.length} places, ${places.reduce((a, p) => a + p.items.length, 0)} items with an origin (lore/planets.json).`);
   console.log(`Glossary: ${d.glossary.terms.length} terms. Pictures: brief and description for all ${d.itemList.length} items.`);
   const langs = d.locales.languages.filter((l) => l.id !== "en").map((l) => {
     const missing = d.locales.missing[l.id]!.length, unused = d.locales.unused[l.id]!.length;

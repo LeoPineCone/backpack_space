@@ -1,0 +1,127 @@
+{
+  "about": "Places of the Backpack Space world: planets, moons, comets, belts, stations and stars. Every entry is a draft until Ilja confirms it. Items and heroes link to the place they come from; one item has at most one origin. Edit here, then run npm run lore (writes lore/graph.html) and npm run validate.",
+  "places": [
+    {
+      "id": "rime",
+      "name": "Rime",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["frozen night planet", "a sun too far away to warm it", "frozen methane seas", "long darkness"],
+      "life": "Large slow animals with ice grown into their coats, wide flat feet for the frozen seas, big pale eyes for the dark.",
+      "background": "A flat sea of cracked blue-black methane ice under a tiny pale sun; frost ridges, a herd silhouette far away.",
+      "items": ["tundra_yak", "ice_ferret", "frost_gem", "cryo_coat"],
+      "heroes": []
+    },
+    {
+      "id": "cinder",
+      "name": "Cinder",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["lava world", "black basalt plains", "rivers of slow lava", "steam vents"],
+      "life": "Animals with cracked basalt skin and rust-red heat in the cracks; food that is spicy enough to smoke.",
+      "background": "Black basalt plates split by rust-red lava rivers, steam drawn as wavy ink lines, a dark red sky.",
+      "items": ["magma_newt", "magma_curry", "rocket_chili"],
+      "heroes": []
+    },
+    {
+      "id": "the_drift",
+      "name": "The Drift",
+      "kind": "comet",
+      "status": "draft",
+      "traits": ["a cloud of icy comets", "almost no gravity", "trails of frozen dust"],
+      "life": "Light, long-legged animals that leap from comet to comet, trailing dust like comet tails.",
+      "background": "Tumbling comets of dirty ice with long dust tails across a dark sky.",
+      "items": ["comet_fox", "comet_sorbet"],
+      "heroes": []
+    },
+    {
+      "id": "ochre",
+      "name": "Ochre",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["heavy-gravity desert", "layered red sandstone", "everything is squat and flat"],
+      "life": "Flat, armoured animals with short thick legs; shells and armour of layered sandstone.",
+      "background": "Low red sandstone mesas in flat layers under a heavy brown sky; nothing stands tall.",
+      "items": ["rock_crab", "rock_shell"],
+      "heroes": []
+    },
+    {
+      "id": "thinwind",
+      "name": "Thinwind",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["dry desert with very thin air", "ore pebbles everywhere", "constant dust wind"],
+      "life": "Small round burrowers with frilly breathing gills that hoard shiny ore pebbles.",
+      "background": "Pale dunes full of glinting ore pebbles, burrow holes, a dusty mustard sky.",
+      "items": ["space_hamster", "dust_bunny"],
+      "heroes": []
+    },
+    {
+      "id": "gemell",
+      "name": "Gemell",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["two moons in its sky", "long twilight", "pale forests"],
+      "life": "Night insects whose markings repeat the two moons.",
+      "background": "A pale twilight forest under two crescent moons, moths drifting between the trees.",
+      "items": ["moon_moth", "lunar_moth"],
+      "heroes": []
+    },
+    {
+      "id": "pell",
+      "name": "Pell",
+      "kind": "moon",
+      "orbits": "gemell",
+      "status": "draft",
+      "traits": ["small cratered moon", "crumbly pale crust", "a ring of drifting crumbs"],
+      "life": "Station cooks claim its craters ripen the best moon cheese.",
+      "background": "A pocked pale moon, close enough to see every crater, with a few crumbs in orbit.",
+      "items": ["moon_cheese"],
+      "heroes": []
+    },
+    {
+      "id": "scrap_belt",
+      "name": "The Scrap Belt",
+      "kind": "belt",
+      "status": "draft",
+      "traits": ["asteroid belt full of wrecks", "mining claims", "drifting ship parts"],
+      "life": "Miners, salvage robots and burrowing animals that live inside asteroids.",
+      "background": "Asteroids and broken hulls tumbling together, a mining tether between two rocks.",
+      "items": ["mining_pick", "asteroid_chunk", "asteroid_mole", "scrap_metal"],
+      "heroes": ["rook"]
+    },
+    {
+      "id": "garden_station",
+      "name": "The Garden Station",
+      "kind": "station",
+      "status": "draft",
+      "traits": ["research station that bred crops for open vacuum", "overgrown by the failed experiment"],
+      "life": "Venn and everything that grew from it; the botanist's old drone.",
+      "background": "A station ring split open, rust-red tendrils growing out of the windows into space.",
+      "items": ["seed_pod", "watering_drone"],
+      "heroes": ["venn"]
+    },
+    {
+      "id": "herdworld",
+      "name": "Herdworld",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["wide grass plains", "wild herds of space beasts", "where Quill's escape pod came down"],
+      "life": "Huge shaggy tusked beasts and the smaller animals that ride in their fur.",
+      "background": "Rolling plains with a dented escape pod half sunk in the grass and a herd on the horizon.",
+      "items": ["tusked_behemoth", "dune_ox"],
+      "heroes": ["quill"]
+    },
+    {
+      "id": "corona",
+      "name": "The Dying Corona",
+      "kind": "star",
+      "status": "draft",
+      "traits": ["a red star close to its end", "Ysel's order keeps it company", "breaking into fragments"],
+      "life": "Pilgrims of the order; cracked sun pieces carried as relics.",
+      "background": "A huge cracked red-and-mustard star filling the sky, broken pieces circling it, heat as wavy ink lines.",
+      "items": ["sun_shard"],
+      "heroes": ["ysel"]
+    }
+  ]
+}

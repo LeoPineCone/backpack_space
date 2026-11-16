@@ -29,7 +29,7 @@ Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 ### Quill – Foundling of the Herd
 
-Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.
+Pets. Her herd acts the moment the fight begins, is quicker than anyone else's, and every bite heals her. The more cells her pets fill, the more health she has.
 
 - Your pets: 25 % faster, starts 100 % charged and heal you for 30 % of the damage they deal.
 - You: +6 max health per cell your pets cover (max 24×).

@@ -52,8 +52,8 @@
     "description": "A swollen fleshy sac with dark veins, a drop of moss-green venom hanging from its tip."
   },
   "frost_gem": {
-    "brief": "Six-sided gem with icicles hanging from it. Accent: deep teal.",
-    "description": "A six-sided teal gem with small icicles hanging from its lower edges."
+    "brief": "Six-sided gem of methane ice with a crown of frost spikes. Accent: deep teal.",
+    "description": "A six-sided teal gem cut from the methane ice of a frozen night planet, frozen bubbles inside, frost spikes growing from its top like a crown."
   },
   "lodestone": {
     "brief": "Lumpy dark rock with tiny nails stuck to it. Accent: rust red.",
@@ -752,8 +752,8 @@
     "description": "A wrapped bar, the foil peeled back at one end with a bite taken out of it, copper-coloured wrapper without text."
   },
   "moon_cheese": {
-    "brief": "Wedge of cheese with crater holes. Accent: mustard.",
-    "description": "Pale wedge seen slightly from above; the cut face shows round crater holes like a tiny moon surface. Two or three craters are enough. Mustard rind."
+    "brief": "Cheese wheel shaped like a cratered mini moon, a crumb orbiting it. Accent: mustard.",
+    "description": "A small cheese wheel shaped like a cratered mini moon, one wedge cut out showing the pale inside, a single crumb orbiting it like a tiny moon. Mustard rind."
   },
   "ice_cream": {
     "brief": "Freeze-dried ice cream brick in a torn foil wrapper. Accent: rust red.",
@@ -784,8 +784,8 @@
     "description": "A speckled egg with a small star pattern on its shell and a hairline crack near the top."
   },
   "rocket_chili": {
-    "brief": "Chili pepper with tiny rocket fins at the stem. Accent: rust red.",
-    "description": "A curved chili pepper with tiny rocket fins at the stem, rust red."
+    "brief": "Lava-planet chili with basalt skin and rocket fins. Accent: rust red.",
+    "description": "A chili from a lava planet: cracked black basalt skin with rust-red heat in the cracks as flat colour, stubby rocket fins at the stem."
   },
   "space_noodles": {
     "brief": "Noodle cup with noodles floating up out of it. Accent: mustard.",
@@ -804,8 +804,8 @@
     "description": "A hard candy shaped like a teal crystal on a stick."
   },
   "comet_sorbet": {
-    "brief": "Scoop of sorbet with a comet tail of frost. Accent: deep teal.",
-    "description": "A round scoop of sorbet in a small cup, a short comet tail of frost curling off it."
+    "brief": "Scoop of comet ice in a dented ration cup, frozen dust tail. Accent: deep teal.",
+    "description": "A scoop of dirty comet ice in a dented ration cup, a long tail of frozen dust streaming off it as if still flying, a spoon on a tether cord."
   },
   "asteroid_honey": {
     "brief": "Honey jar shaped like a lumpy asteroid, honey dripping. Accent: mustard.",
@@ -1400,20 +1400,20 @@
     "description": "Lying across the box: the Star Psalter open, a flare curling up from its pages as a flat mustard ribbon."
   },
   "space_hamster": {
-    "brief": "Hamster in a tiny bubble helmet with full cheeks. Accent: mustard.",
-    "description": "A round hamster with stuffed cheeks inside a small bubble helmet, the helmet drawn as a plain outline with one dent. Mustard fur."
+    "brief": "Hamster from a desert planet, cheeks full of ore pebbles. Accent: mustard.",
+    "description": "A round hamster from a thin-air desert planet, cheeks stuffed with shiny ore pebbles, frilly breathing gills on its neck, small room around it. Mustard fur."
   },
   "moon_moth": {
-    "brief": "Pale moth with crescent marks on its wings. Accent: bone.",
-    "description": "A pale moth seen from above, wings spread, a dark crescent mark on each wing, fuzzy body."
+    "brief": "Moth from a planet with two moons. Accent: bone.",
+    "description": "A pale moth from a planet with two moons, each wing marked with two dark crescents, feathery antennae, fuzzy body, wings spread wide."
   },
   "vacuum_slug": {
     "brief": "Slug with a suction mouth and a slime trail. Accent: moss.",
     "description": "Lying across the box: a fat slug with a round suction mouth at the front, a moss-green slime trail behind it. Dry little eye stalks."
   },
   "rock_crab": {
-    "brief": "Crab with a shell of asteroid rock. Accent: copper.",
-    "description": "Lying across the box: a crab whose shell is a lumpy chunk of asteroid rock, two small claws raised, legs tucked under."
+    "brief": "Squat crab from a heavy desert planet, sandstone shell, crystal claw. Accent: copper.",
+    "description": "A squat flat crab from a heavy-gravity desert planet, its shell a slab of layered red sandstone, short thick legs, one oversized claw of rough pale crystal."
   },
   "glow_beetle": {
     "brief": "Tiny beetle with a lamp-like rear drawn as a flat mustard shape. Accent: mustard.",
@@ -1424,16 +1424,16 @@
     "description": "Upright: a stubby mole standing on its hind legs, huge digging claws in front, cracked goggles pushed up on its head."
   },
   "dust_bunny": {
-    "brief": "Fluffy round dust ball with long ears and two eyes. Accent: bone.",
-    "description": "A fluffy round ball of grey dust with two long ears and two dot eyes, a few loose fluffs around it."
+    "brief": "Rolling ball of grey fluff from a windy desert, tiny dust devil below. Accent: bone.",
+    "description": "A round ball of grey fluff from a windy desert planet, rolling like a tumbleweed, two long ears, two dot eyes, a tiny dust devil spinning under it."
   },
   "scout_drone": {
     "brief": "Small drone with one big camera eye. Accent: deep teal.",
     "description": "A small round drone with one big camera eye in deep teal and two little rotor arms."
   },
   "comet_fox": {
-    "brief": "Fox with a comet tail. Accent: rust red.",
-    "description": "Lying across the box: a lean fox mid-leap, its tail a long rust-red comet streak of flat strokes."
+    "brief": "Long-legged fox from an icy comet, tail like a comet tail. Accent: rust red.",
+    "description": "A lean fox from a small icy comet, long thin legs for low gravity, mid-leap across the box. Its tail streams behind it as a long trail of frozen dust like a comet tail. Big ears like tiny antenna dishes."
   },
   "repair_bot": {
     "brief": "Small round robot with a wrench arm. Accent: mustard.",
@@ -1452,8 +1452,8 @@
     "description": "Upright: a hovering drone with a small rust-red gun mounted underneath, two rotor arms on top, one lens eye."
   },
   "magma_newt": {
-    "brief": "Newt with cracked lava skin. Accent: rust red.",
-    "description": "Lying across the box: a newt with black skin cracked into rust-red lava lines, small puffs of smoke from its back."
+    "brief": "Newt from a lava planet with basalt skin. Accent: rust red.",
+    "description": "A newt from a lava planet lying across the box, its skin cracked like cooling black basalt with rust-red heat in the cracks as flat colour, its tail ending in a lump of volcanic glass, steam as wavy ink lines."
   },
   "ice_ferret": {
     "brief": "Ferret with frosty white fur and icy whiskers. Accent: deep teal.",
@@ -1488,8 +1488,8 @@
     "description": "Upright in the tall box, barrel pointing up: a blocky pistol in chipped grey plating, a ribbed heat sink along the barrel, the grip wrapped in tape. Rust red on the emitter tip."
   },
   "rivet_gun": {
-    "brief": "Industrial rivet gun with a hose. Accent: copper.",
-    "description": "Squat pistol body in scuffed grey plating, a fat rivet poking out of the nozzle, a short hose curling back from the grip. Copper only on the hose fittings."
+    "brief": "Hull-repair rivet gun built from a thruster nozzle. Accent: copper.",
+    "description": "A stubby hull-repair gun built from a cut-down thruster nozzle. Fat rivets ride round the barrel on a wire ring like a planet ring; the muzzle is a rubber suction clamp for hull plates. Copper hose fittings."
   },
   "plasma_cutter": {
     "brief": "Handheld cutter with a short plasma flame. Accent: deep teal.",
@@ -1504,8 +1504,8 @@
     "description": "Upright, prongs at the top: a rubber-gripped baton with two bent metal prongs and a flat mustard zig-zag spark between them."
   },
   "mining_pick": {
-    "brief": "Mining pick with a worn handle. Accent: copper.",
-    "description": "The pick head runs along the top two cells, the handle drops down the left cell; the empty corner stays free. Chipped iron head, copper-bound collar, a strip of tape on the grip. No wood grain."
+    "brief": "Asteroid mining pick with a crystal tip. Accent: copper.",
+    "description": "The pick head runs along the top two cells, the handle drops down the left cell; the empty corner stays free. Meteor-iron head with a teal crystal tip and a small thruster on its back, taped grip, tether clip."
   },
   "fang_dagger": {
     "brief": "Dagger with a large animal fang as the blade. Accent: bone.",
@@ -1644,8 +1644,8 @@
     "description": "Three tiny mites with rock-like shells crawling over a single pebble, feelers up."
   },
   "needle_wasps": {
-    "brief": "Small swarm of wasps with long needle stingers in tight formation. Accent: mustard.",
-    "description": "A small swarm of five wasps with long needle stingers, flying in a tight arrow formation with thin motion lines behind them."
+    "brief": "One needle wasp with a syringe stinger and solar-sail wings. Accent: mustard.",
+    "description": "One single needle wasp in side view: lean striped body, a long hollow stinger like a syringe needle, stiff ribbed wings like small solar sails, a cluster of small eyes."
   },
   "thorn_hedge": {
     "brief": "Dense low hedge of thorny branches grown out of a cracked lab planter. Accent: moss.",
@@ -1660,7 +1660,7 @@
     "description": "Filling the square box: a big shaggy ox with wide curved horns, head lowered, sand caked on its long coat, a short breath cloud at its nostrils, one front hoof scraping the ground."
   },
   "tundra_yak": {
-    "brief": "Heavy long-haired yak with frost on its coat and short thick horns. Accent: bone.",
-    "description": "Filling the square box: a big heavy long-haired yak standing square, frost clinging to its coat, short thick horns and a small bell on a rope around its neck."
+    "brief": "Yak from a frozen night planet, ice-spiked coat, snowshoe hooves. Accent: bone.",
+    "description": "Filling the square box: a huge yak from a frozen night planet. Its shaggy coat is stiff with blue ice spikes, its hooves are wide and flat like snowshoes for walking on frozen methane seas, and big pale eyes for the long darkness. Short heavy horns, a dented copper bell on a rope."
   }
 }
