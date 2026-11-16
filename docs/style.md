@@ -49,6 +49,13 @@ Item pictures are described in `data/item-art.json` (list: [item-art.md](item-ar
   - *Ysel:* relics of her order: dark iron, bent iron rings like her head cage, cracked sun pieces in flat mustard and rust red, bells, rosary stones, heavy cloth with rust-red bands. Heat is drawn as wavy ink lines, never as glow.
 - Accent colour as in the brief; the heroes' own marks (Venn's rust-red tendrils, Rook's mustard eye, Ysel's rust-red bands) may appear next to it.
 
+## Menu backgrounds (planets)
+
+A menu background is a place from `lore/planets.json` as a slowly turning planet in front of a star field.
+Only the flat surface map of the planet is generated (evenly lit, seamless left to right, large shapes, same
+ink comic rules); the app adds light, the hatched shadow edge and the outline. Step by step, with the prompt:
+`.claude/skills/planet-art/SKILL.md`. Technical side: [client-art.md](client-art.md).
+
 ## Open
 
 - First item test (2026-11-16, 5 items): the style holds at backpack size; fine scratches and fur turn into noise, so prompts ask for little texture. Some swarm and crafted descriptions in `data/item-art.json` still show several animals and need rewriting to one animal.
