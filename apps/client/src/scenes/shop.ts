@@ -54,6 +54,10 @@ export function shopScene(game: Game): Scene {
   let glows: Graphics[] = [];
   let beams: Graphics | null = null;
   let clock = 0, beamAge = 1;
+  // energy beams that stay between backpack items which will merge after the fight (from the core's pendingMerges)
+  let fuseBeams: Graphics | null = null;
+  let fuseLinks: [number, number, number, number][] = [];
+  let fuseAge = 1;
   const poolIndex = (src: Src): number => { const r = run(); return src.kind === "offer" ? src.i : src.kind === "loose" ? r.offers.length + src.i : src.kind === "item" ? r.offers.length + r.loose.length + src.i : -1; };
   /** a soft pulsing outline; drawn into `g`, kept for the animation */
   const glow = (g: Graphics, draw: (g: Graphics) => void): Graphics => {
@@ -161,14 +165,31 @@ export function shopScene(game: Game): Scene {
     view.addChild(hit);
     // stars that have an item on them, so it shows which items work together
     view.addChild(at(starMarks(data, r.bags, r.items, CELL), GX, GY));
+    // items that will merge after the fight stay joined by an energy beam, like the beam while dragging
+    const itemCenter = (i: number) => centers[r.offers.length + r.loose.length + i]!;
+    fuseLinks = [];
+    for (const c of combos) {
+      const joined = [c.idxs[0]!];
+      for (const i of c.idxs.slice(1)) {
+        const a = itemCenter(i);
+        const near = joined.reduce((best, j) => (Math.hypot(itemCenter(j).x - a.x, itemCenter(j).y - a.y) < Math.hypot(itemCenter(best).x - a.x, itemCenter(best).y - a.y) ? j : best));
+        const b = itemCenter(near);
+        fuseLinks.push([b.x, b.y, a.x, a.y]);
+        joined.push(i);
+      }
+    }
+    fuseBeams = new Graphics();
+    fuseAge = 1;
+    view.addChild(fuseBeams);
     // a mark between neighbours that will merge after the fight; tapping it shows the result
     for (const c of combos) {
       const cells = c.idxs.flatMap((i) => { const p = r.items[i]!; return data.shape(p.item, p.rot).cells.map(([x, y]) => [p.x + x, p.y + y] as const); });
-      const mx = cells.reduce((a, q) => a + q[0], 0) / cells.length, my = cells.reduce((a, q) => a + q[1], 0) / cells.length;
+      // in the top right corner of the group, so the beam between the items stays visible
+      const right = Math.max(...cells.map((q) => q[0])), top = Math.min(...cells.map((q) => q[1]));
       const btn = new Container();
-      btn.addChild(disc(20, { fill: C.gold, line: C.bg, lineW: 3 }), icon("merge", 20, C.goldInk));
+      btn.addChild(disc(14, { fill: C.gold, line: C.bg, lineW: 2.5 }), icon("merge", 15, C.goldInk));
       tappable(btn, () => { game.openOverlay(itemPopup(game, c.recipe.out)); game.toast(t("toast.mergesAfterFight")); }, new Rectangle(-22, -22, 44, 44));
-      view.addChild(at(btn, GX + (mx + 0.5) * CELL, GY + (my + 0.5) * CELL));
+      view.addChild(at(btn, GX + (right + 1) * CELL - 4, GY + top * CELL + 4));
     }
 
     // loose pieces below the backpack
@@ -379,6 +400,15 @@ export function shopScene(game: Game): Scene {
     const mine = d ? partners[poolIndex(d.src)] : undefined;
     const pulse = 0.45 + 0.3 * Math.sin(clock * 2.4);
     glows.forEach((g) => { g.alpha = pulse; });
+    if (fuseBeams) {
+      fuseBeams.visible = !d;
+      fuseAge += dt;
+      if (!d && fuseAge >= 0.09) {
+        fuseAge = 0;
+        fuseBeams.clear();
+        for (const [x0, y0, x1, y1] of fuseLinks) zap(fuseBeams, x0, y0, x1, y1, Math.random, 0.85);
+      }
+    }
     if (!d || !d.ghost || !mine?.size) { beams?.clear(); return; }
     if (!beams) { beams = new Graphics(); dragLayer.addChildAt(beams, 0); }
     beamAge += dt;
