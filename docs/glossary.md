@@ -14,7 +14,6 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Round** | Runde | Shop and packing, then one fight. | `RunState.round` |
 | **Life** | Leben | A run starts with 4. A lost fight costs one. | `RunState.lives`, `rules.lives` |
 | **Gold** | Gold | Money for the shop, paid every round. | `RunState.gold`, `rules.goldPerRound` |
-| **Run reward** | Lauf-Belohnung | Paid at the end of a run: rounds played plus lives left. Its unit has no name yet. | `runReward` |
 
 ## Backpack and bags
 
@@ -96,6 +95,21 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Hero items** | Helden-Items | Items only this hero is offered. | `Item.hero`, `shop.heroOfferPct` |
 | **Path** | Siegweg | One of a hero's ways to win (design term, not shown in the game). | `Hero.paths` |
 
+## Progress between runs
+
+| English | German | Meaning | In code |
+|---|---|---|---|
+| **Galaxies** | Galaxien | Earned after every run: wins plus lives left. They move the season pass and the planet track. | `Profile.galaxies`, `meta.run.galaxies`, `runGalaxies` |
+| **Credits** | Credits | Premium currency for skins and heroes of earlier seasons. Bought, or earned slowly. | `Profile.credits` |
+| **Hero XP** | Helden-XP | Every run gives the hero you played XP. XP raises the hero's level; levels give cosmetics. | `Profile.heroXp`, `meta.heroLevels`, `heroLevel` |
+| **Planet track** | Planeten-Strang | Permanent track across seasons, moved by Galaxies. Gives planets as menu backgrounds and some Credits. | `meta.planetTrack` |
+| **Season pass** | Season-Pass | Track of one season, moved by Galaxies. Free rewards for everyone, premium rewards with the premium pass. | `meta.seasons.pass`, `passLevel` |
+| **Premium pass** | Premium-Pass | The paid side of the season pass: the season's new hero from level 1, skins, grid backgrounds. | `SeasonState.premium`, `unlockPremium` |
+| **Season** | Season | A stretch of time with its own pass and league race. A new season brings a new hero. | `meta.seasons`, `SeasonState` |
+| **League** | Liga | Your rank. Runs win or lose league points; a league you reached cannot be lost. A new season starts two leagues lower. | `meta.leagues`, `leagueOf` |
+| **League patch** | Liga-Patch | Paid at the end of a season for the league you reached. Wear one on your profile. | `patchId`, `Profile.equipped.patch` |
+| **Cosmetic** | Kosmetik | Changes the look only, never the game: skins, backgrounds, grid backgrounds, patches. | `meta.cosmetics` |
+
 ## Fight
 
 | English | German | Meaning | In code |
@@ -148,6 +162,8 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Energy refill** | Energie-Nachschub | More Energy per second. | `mod.energyRegen` |
 | **Damage** | Schaden | Hurts the enemy. | `damage`, `do: damage`, `mod.damage` |
 | **Heal** | Heilen | Restores health. | `do: heal` |
+| **Lifesteal** | Lebensraub | The hero heals by this share of the damage the item deals. | `mod.leech` |
+| **Overheal** | Überheilung | This share of the healing above full health becomes Shield. | `mod.overheal` |
 | **Cleanse** | Reinigen | Removes your debuffs. | `do: cleanse` |
 | **Break** | Schild brechen | Destroys enemy Shield. | `do: strip` |
 | **Speed** | Tempo | Shorter cooldown. | `mod.speed` |

@@ -1,10 +1,12 @@
 /** The running game: one screen at a time, popups above it, and the state of the current run. */
 import { Application, Container, Graphics, Rectangle } from "pixi.js";
-import { Rng, type GameData, type RunState } from "@backpack-space/core";
+import { Rng, bookRun, enterSeason, seasonAt, type GameData, type Meta, type Profile, type RunBooking, type RunState, type SeasonChange } from "@backpack-space/core";
 import { C, H, W } from "./theme";
 import { at, box, txt } from "./ui";
 import { keywords, type Keyword } from "./symbols";
 import { clearSave, readSave, writeSave, type SavedFight } from "./save";
+import { readProfile, today, writeProfile } from "./profile";
+import { GhostOpponents, type OpponentSource } from "./opponents";
 
 export interface Scene {
   root: Container;
@@ -12,8 +14,6 @@ export interface Scene {
   update?(dt: number): void;
   destroy?(): void;
 }
-
-const REWARD_KEY = "backpack-space.reward";
 
 export class Game {
   /** everything is laid out in a fixed 390 × 844 design space and scaled to the window */
@@ -31,9 +31,14 @@ export class Game {
   rng = new Rng(1);
   seed = 1;
   hero: string;
+  /** progress between runs (stored on this device) */
+  profile: Profile;
+  readonly opponents: OpponentSource;
 
-  constructor(readonly app: Application, readonly data: GameData) {
+  constructor(readonly app: Application, readonly data: GameData, readonly meta: Meta) {
     this.keywords = keywords(data);
+    this.profile = readProfile(meta);
+    this.opponents = new GhostOpponents(data);
     this.hero = data.heroList[0]!.id;
     const frame = new Graphics().rect(0, 0, W, H).fill(C.bg);
     const clip = new Graphics().rect(0, 0, W, H).fill(0xffffff);
@@ -120,7 +125,20 @@ export class Game {
     return { fight: s.fight };
   }
 
-  /** The reward unit kept between runs (stored on this device for now). */
-  get reward(): number { try { return Number(localStorage.getItem(REWARD_KEY)) || 0; } catch { return 0; } }
-  addReward(n: number): void { try { localStorage.setItem(REWARD_KEY, String(this.reward + n)); } catch { /* storage unavailable: the reward is only shown */ } }
+  /** Stores a changed profile. */
+  setProfile(p: Profile): void { this.profile = p; writeProfile(p); }
+
+  /** Books a finished run into the profile: hero XP, Galaxies, league points and what they unlock. */
+  bookRun(run: RunState): RunBooking {
+    const b = bookRun(this.meta, this.profile, { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.results.length });
+    this.setProfile(b.profile);
+    return b;
+  }
+
+  /** Moves the profile into the season that runs today, if a new one has started. */
+  checkSeason(): SeasonChange | null {
+    const c = enterSeason(this.meta, this.profile, seasonAt(this.meta, today()));
+    if (c) this.setProfile(c.profile);
+    return c;
+  }
 }

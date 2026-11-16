@@ -73,7 +73,7 @@ npm run app:run:android
 - **App id** `com.backpackspace.app` in `capacitor.config.ts` is a placeholder. It must be final before the first store upload and cannot change afterwards. After changing it in the config, also change it in Xcode (Signing & Capabilities → Bundle Identifier) and in `android/app/build.gradle` (`applicationId` and `namespace`, and the Java package folder of `MainActivity`).
 - **Fonts** are loaded from Google Fonts. Without internet the app falls back to system fonts. For release they should be bundled with the client.
 - **Signing**: no store accounts, certificates or keystores are set up. Release builds need your own Apple certificates (Xcode can manage them) and an Android upload keystore. Never commit a keystore or its password.
-- Saved progress (the run reward) is in the web view's local storage; it survives app restarts but not an uninstall.
+- Saved progress (the profile: Galaxies, hero XP, league, cosmetics) is in the web view's local storage; it survives app restarts but not an uninstall.
 
 ## When native parts change
 

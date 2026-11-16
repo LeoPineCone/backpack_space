@@ -1,0 +1,366 @@
+{
+  "$comment": "Meta progress between runs (docs/retention.md). Every number here is a placeholder until it is tuned.",
+  "start": {
+    "credits": 0,
+    "cosmetics": [
+      "bg_home"
+    ],
+    "background": "bg_home"
+  },
+  "run": {
+    "galaxies": {
+      "perWin": 1,
+      "perLifeLeft": 1
+    },
+    "heroXp": {
+      "perRound": 10,
+      "perWin": 10
+    }
+  },
+  "heroLevels": {
+    "xp": [
+      100,
+      250,
+      450,
+      700,
+      1000,
+      1350,
+      1750,
+      2200,
+      2700,
+      3250,
+      3850,
+      4500,
+      5200,
+      5950,
+      6750,
+      7600,
+      8500,
+      9450,
+      10450
+    ],
+    "cosmeticAt": [
+      3,
+      6,
+      10,
+      15,
+      20
+    ]
+  },
+  "planetTrack": [
+    {
+      "galaxies": 30,
+      "reward": {
+        "cosmetic": "bg_ice"
+      }
+    },
+    {
+      "galaxies": 60,
+      "reward": {
+        "credits": 20
+      }
+    },
+    {
+      "galaxies": 100,
+      "reward": {
+        "cosmetic": "bg_gas"
+      }
+    },
+    {
+      "galaxies": 150,
+      "reward": {
+        "credits": 20
+      }
+    },
+    {
+      "galaxies": 220,
+      "reward": {
+        "cosmetic": "bg_lava"
+      }
+    },
+    {
+      "galaxies": 300,
+      "reward": {
+        "credits": 30
+      }
+    },
+    {
+      "galaxies": 400,
+      "reward": {
+        "cosmetic": "bg_ring"
+      }
+    },
+    {
+      "galaxies": 520,
+      "reward": {
+        "credits": 30
+      }
+    },
+    {
+      "galaxies": 660,
+      "reward": {
+        "cosmetic": "bg_jungle"
+      }
+    },
+    {
+      "galaxies": 820,
+      "reward": {
+        "credits": 40
+      }
+    },
+    {
+      "galaxies": 1000,
+      "reward": {
+        "cosmetic": "bg_dying_sun"
+      }
+    }
+  ],
+  "leagues": {
+    "ids": [
+      "dust",
+      "asteroid",
+      "comet",
+      "moon",
+      "planet",
+      "gasGiant",
+      "star",
+      "nova",
+      "pulsar",
+      "quasar"
+    ],
+    "pointsPerLeague": 100,
+    "pointsByWins": [
+      -30,
+      -25,
+      -20,
+      -15,
+      -10,
+      -5,
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60
+    ],
+    "seasonDrop": 2
+  },
+  "cosmetics": [
+    {
+      "id": "bg_home",
+      "kind": "background"
+    },
+    {
+      "id": "bg_ice",
+      "kind": "background"
+    },
+    {
+      "id": "bg_gas",
+      "kind": "background"
+    },
+    {
+      "id": "bg_lava",
+      "kind": "background"
+    },
+    {
+      "id": "bg_ring",
+      "kind": "background"
+    },
+    {
+      "id": "bg_jungle",
+      "kind": "background"
+    },
+    {
+      "id": "bg_dying_sun",
+      "kind": "background"
+    },
+    {
+      "id": "grid_s1_a",
+      "kind": "grid"
+    },
+    {
+      "id": "grid_s1_b",
+      "kind": "grid"
+    },
+    {
+      "id": "skin_s1_venn",
+      "kind": "skin",
+      "hero": "venn"
+    },
+    {
+      "id": "skin_s1_rook",
+      "kind": "skin",
+      "hero": "rook"
+    },
+    {
+      "id": "skin_s1_quill",
+      "kind": "skin",
+      "hero": "quill"
+    },
+    {
+      "id": "skin_s1_ysel",
+      "kind": "skin",
+      "hero": "ysel"
+    }
+  ],
+  "seasons": [
+    {
+      "id": 1,
+      "start": "2026-11-01",
+      "pass": {
+        "galaxiesPerLevel": 10,
+        "levels": [
+          {},
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "cosmetic": "skin_s1_venn"
+            }
+          },
+          {
+            "free": {
+              "credits": 10
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {},
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "cosmetic": "grid_s1_a"
+            }
+          },
+          {},
+          {
+            "free": {
+              "credits": 10
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {},
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 10
+            },
+            "premium": {
+              "cosmetic": "skin_s1_rook"
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {},
+          {
+            "free": {
+              "credits": 10
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {},
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "cosmetic": "skin_s1_quill"
+            }
+          },
+          {
+            "free": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {},
+          {
+            "free": {
+              "credits": 10
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "cosmetic": "grid_s1_b"
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {},
+          {
+            "free": {
+              "credits": 10
+            },
+            "premium": {
+              "cosmetic": "skin_s1_ysel"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

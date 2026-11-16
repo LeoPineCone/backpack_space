@@ -82,6 +82,15 @@ const PATHS: Record<string, string> = {
   info: "M12 11v6M12 7v.01",
   league: SHIELD + "M9 12l2 2l4-4",
   plus: "M12 6v12M6 12h12",
+  // progress between runs
+  galaxy: "M12 12a1.500 1.500 0 0 1 3 0a3 3 0 0 1-6 0a4.500 4.500 0 0 1 9 0a6 6 0 0 1-12 0a7.500 7.500 0 0 1 9-7.300M19.500 4.500v.01M4 20v.01",
+  credits: "M12 3l8 4.500v9L12 21l-8-4.500v-9zM14.500 9.500a3 3 0 1 0 0 5",
+  xp: "M6 13l6-6l6 6M6 19l6-6l6 6",
+  planet: "M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10zM5.500 14C2 17 3 19 8 17.500S19 12 20.500 8.500C21.500 6 19 5.600 17 6.500",
+  pass: "M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4zM14 7v10",
+  patch: "M7 4h10l4 8l-4 8H7l-4-8zM9 12l2 2l4-4",
+  skin: "M8 4L3 7l2 4l3-1v10h8V10l3 1l2-4l-5-3c-1 2-2.500 2.500-4 2.500S9 6 8 4z",
+  premium: "M4 19h16M5 16L4 7l5 4l3-6l3 6l5-4l-1 9z",
 };
 /** Filled variants. */
 const FILLED: Record<string, string> = { heartFull: HEART, starFull: STAR };

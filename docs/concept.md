@@ -9,7 +9,7 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 ## Run
 
 - **Decided:** 12 rounds per run, 4 lives. A lost fight costs a life; the run ends when the lives are gone or after round 12.
-- **Decided:** a finished run pays a reward of rounds played + lives left (at most 12 + 4 = 16) in a unit outside the run. Its name and what it buys are open.
+- **Decided:** a finished run pays Galaxies = wins + lives left (at most 12 + 4 = 16), plus hero XP and league points. What they drive: `docs/retention.md`; numbers in `data/meta.json`.
 - Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
 - Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`). **Health in even steps (decided 2026-11-15, moved with the free picks 2026-11-16):** 100, 150, then 300, 350 after the hero item, then +100 per round up to 1150. The jump sits right after the hero item (it used to sit after round 4 for the same reason): the anchor makes fights faster, the health keeps them at 18–25 s. The shop shows the hero's health for the coming fight (heart with a plus: round base plus items) and names the round's base when the round starts, so the growth is never hidden.
 - **Decided:** free special items after round 2 and round 6 (moved forward from 4 and 8 on 2026-11-16: the path should steer most of the run and the artifact should act for half of it).

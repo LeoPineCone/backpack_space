@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, runReward, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, mergePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, mergePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -174,12 +174,13 @@ describe("loose items", () => {
     expect(s.items.length + s.bags.length + s.loose.length).toBe(before);
     expect(validLayout(data, s.bags, s.items)).toBe(true);
   });
-  it("pays rounds played plus lives left at the end of a run", () => {
+  it("keeps the results and lives that the run reward is paid from (test/meta.test.ts)", () => {
     const rng = new Rng(5);
     const s = newRun(data, "ysel", rng);
     finishRound(s, data, true, rng); finishRound(s, data, false, rng);
     expect(s.results).toEqual([true, false]);
-    expect(runReward(s)).toBe(2 + data.rules.lives - 1);
+    expect(s.wins).toBe(1);
+    expect(s.lives).toBe(data.rules.lives - 1);
   });
 });
 
