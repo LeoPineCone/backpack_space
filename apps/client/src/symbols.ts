@@ -132,4 +132,5 @@ export const GLOSSARY_GROUPS: { title: string; icons: string[] }[] = [
   { title: "ui.group.when", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
   { title: "ui.group.who", icons: ["self", "star", "ship", "hero", "cell"] },
   { title: "ui.group.merge", icons: ["merge", "radar", "lock"] },
+  { title: "ui.group.progress", icons: ["galaxy", "credits", "xp", "planet", "pass", "premium", "league", "patch", "skin"] },
 ];

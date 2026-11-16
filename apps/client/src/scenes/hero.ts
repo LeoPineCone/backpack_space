@@ -1,6 +1,6 @@
 /** Choose a hero: heroes on a ring, the start button in the middle, the chosen hero large on top. */
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { BUFFS, DEBUFFS, TAGS, newRun } from "@backpack-space/core";
+import { BUFFS, DEBUFFS, TAGS, heroLevel, leagueOf, newRun, ownsHero } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, W } from "../theme";
 import { icon, hasIcon } from "../icons";
@@ -8,6 +8,7 @@ import { at, box, disc, hudPill, infoButton, placeholder, roundButton, tappable,
 import { glossary, heroPopup } from "./popup";
 import { settingsOverlay } from "./settings";
 import { shopScene } from "./shop";
+import { progressOverlay, type Tab } from "./progress";
 import { t, upper } from "../i18n";
 
 type Slot = { kind: "own"; id: string; letter: string } | { kind: "locked" } | { kind: "soon" };
@@ -27,13 +28,15 @@ export function heroScene(game: Game): Scene {
   const root = new Container();
   const data = game.data;
   const slots: Slot[] = [
-    ...data.heroList.map((h): Slot => ({ kind: "own", id: h.id, letter: h.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase() })),
+    ...data.heroList.filter((h) => ownsHero(game.meta, game.profile, h.id)).map((h): Slot => ({ kind: "own", id: h.id, letter: h.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase() })),
     { kind: "locked" }, { kind: "locked" }, { kind: "soon" }, { kind: "soon" },
   ];
   let selected = Math.max(0, slots.findIndex((s) => s.kind === "own" && s.id === game.hero));
 
+  const progress = (tab: Tab) => game.openOverlay(progressOverlay(game, tab, render));
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
+    const p = game.profile, meta = game.meta;
     const sel = slots[selected]!;
     const hero = sel.kind === "own" ? data.heroes.get(sel.id)! : null;
 
@@ -41,22 +44,32 @@ export function heroScene(game: Game): Scene {
     root.addChild(box(W, 420, { fill: C.backdrop }), at(new Graphics().rect(0, 0, W, 1).fill(C.line), 0, 420));
     root.addChild(at(new Graphics().circle(0, 0, 130).stroke({ width: 1.5, color: C.line }), 360, 70));
     root.addChild(at(new Graphics().circle(0, 0, 90).stroke({ width: 1.5, color: C.line }), 20, 340));
-    root.addChild(at(txt(t("ui.placeholder.backdrop"), 10, { font: "text", color: C.dim }), 14, 400));
+    // the equipped menu background (a planet); placeholder until the art exists
+    root.addChild(at(icon("planet", 14, C.dim), 21, 406), at(txt(t(`cosmetic.${p.equipped.background}`), 10, { font: "text", color: C.dim }), 34, 400));
 
     // league and currency
+    const lg = leagueOf(meta, p.season.points);
     const league = new Container();
-    league.addChild(box(128, 44, { fill: C.panel, line: C.gold, radius: 22 }), at(icon("league", 28, C.gold), 24, 22));
-    league.addChild(at(txt(t("ui.unranked"), 13), 44, 7), at(txt("0", 11, { font: "text", color: C.dim }), 44, 24));
+    const lname = txt(upper(t(`league.${meta.leagues.ids[lg]}`)), 13);
+    const lw = Math.max(128, 56 + lname.width);
+    league.addChild(box(lw, 44, { fill: C.panel, line: C.gold, radius: 22 }), at(icon(p.equipped.patch ? "patch" : "league", 28, C.gold), 24, 22));
+    league.addChild(at(lname, 44, 7), at(txt(p.season.points - lg * meta.leagues.pointsPerLeague, 11, { font: "text", color: C.dim }), 44, 24));
+    tappable(league, () => progress("leagues"), new Rectangle(0, 0, lw, 44));
     root.addChild(at(league, 14, 14));
-    const cur = hudPill("gem", game.reward, C.line, C.cyan);
-    root.addChild(at(cur, W - 14 - cur.width, 14));
+    const gal = tappable(hudPill("galaxy", p.galaxies, C.line, C.text), () => progress("planets"));
+    root.addChild(at(gal, W - 14 - gal.width, 14));
+    const cr = hudPill("credits", p.credits, C.line, C.gold, 36);
+    root.addChild(at(cr, W - 14 - cr.width, 64));
 
     // the chosen hero
     const art = new Container();
     if (hero && sel.kind === "own") {
       art.addChild(placeholder(200, 250, "", 24), at(txt(t("ui.placeholder.heroArt"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 200));
       art.addChild(at(txt(sel.letter, 96, { color: C.line, anchor: [0.5, 0.5] }), 100, 110));
-      art.addChild(at(disc(28, { fill: C.bg, line: C.cyan, lineW: 2 }), 3, 44), at(txt(t("ui.level"), 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 3, 33), at(txt("1", 22, { anchor: [0.5, 0.5] }), 3, 49));
+      const lvl = new Container();
+      lvl.addChild(disc(28, { fill: C.bg, line: C.cyan, lineW: 2 }), at(txt(t("ui.level"), 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 0, -11), at(txt(heroLevel(meta, p.heroXp[sel.id] ?? 0).level, 22, { anchor: [0.5, 0.5] }), 0, 5));
+      tappable(lvl, () => progress("hero"), new Rectangle(-32, -32, 64, 64));
+      art.addChild(at(lvl, 3, 44));
     } else {
       art.addChild(box(200, 250, { fill: C.bg, radius: 24 }), placeholder(200, 250, "", 24), at(icon("lock", 56, C.dim), 100, 110));
       art.addChild(at(txt(t(sel.kind === "locked" ? "ui.placeholder.silhouette" : "ui.placeholder.comingSoon"), 12, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 160));
@@ -103,6 +116,7 @@ export function heroScene(game: Game): Scene {
 
     root.addChild(at(roundButton("book", 24, () => game.openOverlay(glossary(game)), { iconSize: 22 }), 38, 806));
     root.addChild(at(roundButton("settings", 24, () => game.openOverlay(settingsOverlay(game, render)), { iconSize: 22 }), 96, 806));
+    root.addChild(at(roundButton("pass", 24, () => progress("pass"), { iconSize: 22 }), W - 96, 806));
     root.addChild(at(roundButton("cart", 24, () => game.toast(t("toast.heroShopLater")), { iconSize: 22 }), W - 38, 806));
   };
   render();
