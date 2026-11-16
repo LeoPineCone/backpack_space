@@ -25,6 +25,7 @@ No alcohol.
   written right after `pet` in `tags`. Name and picture must fit the kind. Most pets are neither; those fit every
   build. Quill's Big beasts items act on beasts only, her Swarm items count swarm pets only. Effects that should
   not prefer many small pets over few large ones count cells (`per.cells`), not pets.
+- Healing from damage: `mod.leech` (percent of the damage an item deals heals its owner; Quill's pets have 30).
 - **Every hero brings the same number of personal items** (38 today, start items and artifacts included). An extra
   item a path needs goes into the general files (as the swarm pets Pebble Mites and Needle Wasps did), or another
   hero item makes room.

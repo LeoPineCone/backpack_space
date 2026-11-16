@@ -1,3 +1,26 @@
+# Realistic path bots, Quill heals by damage: balance back in the bands, paths moderately apart (2026-11-16)
+
+Follow-up to the entry below, after Ilja's objections: the strict bot rule reads too much into the paths for general balancing (a player on a path still takes another path's item when it fits), and the fix for Quill's heal must not favour small pets even more.
+
+- **Bots value fit instead of obeying the path.** The strict rule (other paths' items at half) is off by default and only an option (`BotOpts.pathStrict`, `npm run balance:sweep -- --knob bot:pathStrict --values 0,1`) for the question "what can a path do alone". New in `worth()`: an item that counts or needs something (a type such as swarm pets or beasts, a status such as Toxin or Spikes) is worth 0.6× with nothing of it in the build and up to 1.4× with three or more sources.
+- **Quill: "Your pets heal you for 30 % of the damage they deal"** (new mod `leech`; fractions add up, health stays whole) instead of 2 health per pet attack. Neutral to pet size and speed; boosts such as Elder Tusk count. Health back to +6 per pet cell (max 24×).
+- **Hero steps (replay first, both seeds, then a full run):** Venn organic 20 → 16 % faster, Rook mechanical 34 → 38 % faster, Quill as above. Full ratings run on both seeds before it, since the bots changed.
+
+Result, 2 × 240 lobbies, seed 1 / seed 2: heroes Venn 50 / 51, Rook 49 / 47, Quill 50 / 49, Ysel 50 / 52 %. All 12 paths inside 46–54 % on seed 1 (seed 2: Overclocked guns 45, Shield fortress 44). Paths against their open bot −6 to +2 (with the strict rule −2 to −14). 31 of 124 target checks off (34 of 120 before the path split). Still off: Thorn wall late 57 / 58, Late ascension late 39 / 43.
+
+Play style with these bots (1 = clearly different; before the split → strict rule → now, seed 1 / seed 2):
+
+| Pair | Before | Strict bots | Now |
+|---|---|---|---|
+| Quill Big beasts / Swarm | 0.24 / 0.16 | 0.54 / 0.56 | 0.55 / 0.47 |
+| Quill Big beasts / Well-fed pack | 0.57 / 0.57 | 0.52 / 0.30 | 0.44 / 0.53 |
+| Quill Swarm / Well-fed pack | 0.65 / 0.73 | 0.82 / 0.73 | 0.81 / 0.89 |
+| Venn Poison garden / Thorn wall | 0.43 / 0.92 | 0.84 / 0.96 | 0.50 / 0.46 |
+| Venn Poison garden / Hungry jungle | 0.53 / 0.44 | 0.89 / 0.88 | 0.75 / 0.86 |
+| Venn Thorn wall / Hungry jungle | 0.86 / 1.02 | 1.28 / 1.26 | 0.92 / 0.82 |
+
+Reading: how different the paths play depends on how strictly a player follows a path; the items now allow clearly different builds (strict column), a bot that takes whatever fits lands in between. Poison garden / Thorn wall stay alike with such bots (both live on Venn's food Toxin and the same generally good items). Side effect of the fit rule: Rook's Shield fortress / Workshop fell from 1.1–1.3 to 0.6. A Big beasts build still holds about 8 pets with a Burrow Rat in most runs; leech removed the bias in the rule, the cheap filler stays a good buy.
+
 # Paths of Quill and Venn pulled apart: pet kinds, counting by cells, path-bound items (2026-11-16)
 
 Question (Ilja, after the play-style measurement): make the paths of Quill and Venn play differently; pets get the kinds beast and swarm; new swarm pets go to the general shop because every hero brings the same number of personal items; rebalance if needed. Four rounds of full runs (2 × 240 lobbies, seeds 1 / 2), full ratings run on both seeds at the start.
