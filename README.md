@@ -46,6 +46,18 @@ npm run play:ghosts   # refresh the stored bot builds you fight against (after d
 npm run play:build    # static build in out/play
 ```
 
+## Play a run as text (playtest)
+
+A person or an AI plays one run by the player's rules (same shop, gold, merges and free picks as the client) against the stored bot builds, and writes down what the choices felt like. Expensive per run, but it finds what the bots cannot: dead shops, picks that fit no build, hopeless matchups.
+
+```
+npm run playtest -- new beasts1 --hero quill --seed 11 --goal "Big beasts"
+npm run playtest -- beasts1 "buy 2 4 3; reroll; note no beast offered yet; fight"
+npm run playtest -- beasts1 report      # out/playtest/beasts1.md
+```
+
+Commands: show, info <id>, spots <id>, buy <slot> [x y rot], place <loose> x y [rot], move <item> x y [rot], bag <bag> x y [rot], drop, sell, sellloose, sellbag, reroll, freeze, lock, pick, tidy, fight, note <text>, report. Several commands go in one call, split by ";" (so no ";" inside a note).
+
 ## Balancing reports
 
 Every report states the question it answers, takes the same flags and can be written to a file:

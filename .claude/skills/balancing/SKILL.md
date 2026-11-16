@@ -144,6 +144,16 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
   design signal, not a number problem.
 - Win shares are **relative**: making several heroes stronger at once cancels out. Change one thing per step.
 
+## Playtest by hand: what the numbers cannot see
+
+`npm run playtest` (see README) lets you play a run yourself as text. Use it after a redesign of a hero or path, not for number tuning: one run is an anecdote about balance, but a reliable witness for feel.
+
+- Pick a goal before the run ("Big beasts") and play towards it like a player would; give up the goal only when it costs lives, and note that moment.
+- Write a `note` each round on what the shop offered for the goal, which choice was hard, what felt unfair or dead. The report keeps actions, build, fight and notes per round.
+- What to look for: rounds in which the goal had nothing to buy, free picks that fit no build, merges nobody wanted, fights that could not be won whatever was bought, room problems of big items.
+- Turn a finding into a measurement before changing a number (how often is a beast offered in rounds 1–4, win rate of swarm builds against Spikes), then follow the tuning pass.
+- Cost: about 15–20 tool calls per run. Two runs per redesigned hero are enough.
+
 ## Procedure: a tuning pass
 
 1. **State the question** and the target it is about (targets.json). If a needed target is missing, propose it
@@ -263,6 +273,8 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 - 2026-11-15: always measure two seeds before deciding; Rook swung by 5 points between seeds at normal.
 - 2026-11-15: after item size changes run `npm run play:ghosts` (stored opponent builds of the playground).
 - 2026-11-15: hero curves matter: a hero can be even overall but weak early and strong late (check thirds).
+
+- 2026-11-16, first two playtest runs (Quill beasts 9 wins, Quill swarm 5 wins, reports in docs/findings.md): both paths only start at round 5. Before that the goal has little to buy (swarm: counting items like Glow Swarm are weak with 2–3 swarm pets; beasts: few offers, Pack Lizard alone is a tax) and the player falls back on small general pets and feeders. Many small hits are hard-countered by Spikes (1226 Spikes damage in one fight) and by early Shield gain (96 attacks, 3 damage). Not yet measured over many runs.
 
 ## Still open (2026-11-16)
 

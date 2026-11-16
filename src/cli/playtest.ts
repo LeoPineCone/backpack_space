@@ -42,7 +42,7 @@ function recipesOf(id: string): string[] {
 }
 function card(id: string, withRecipes = true): string {
   const d = def(id);
-  const kind = d.isBag ? `bag, ${d.size} cells` : `${d.tags.filter((t) => t !== "crafted").join(", ")}; ${d.crafted ? "crafted" : d.rarity}; ${d.size} cell${d.size === 1 ? "" : "s"} ${d.shape.join("/")}`;
+  const kind = d.isBag ? `bag, ${d.size} cells ${d.shape.join("/")}` : `${d.tags.filter((t) => t !== "crafted").join(", ")}; ${d.crafted ? "crafted" : d.rarity}; ${d.size} cell${d.size === 1 ? "" : "s"} ${d.shape.join("/")}`;
   const text = describeItem(d, data).join(" ");
   const rec = withRecipes ? recipesOf(id) : [];
   return `${d.name} [${id}] (${kind})${text ? `: ${text}` : ""}${rec.length ? ` {${rec.join("; ")}}` : ""}`;
@@ -143,6 +143,11 @@ function run(s: Save, cmd: string): void {
   }
   else if (op === "fight") fight(s, rng, log);
   else throw new Error(`unknown command "${op}"`);
+  if (op === "buy" || op === "place" || op === "move") {
+    // A merge is easy to overlook in text, so say it right after the move that sets it up.
+    const due = pendingMerges(data, r.bags, r.items);
+    if (due.length) say(`  note: will merge after the next fight: ${due.map((c) => `${c.recipe.in.map((i) => def(i).name).join(" + ")} = ${def(c.recipe.out).name}`).join("; ")} (lock an item to keep it)`);
+  }
   s.rng = rng.state;
 }
 

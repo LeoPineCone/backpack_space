@@ -1,3 +1,23 @@
+# First playtest by hand: Quill's two new paths (2026-11-16)
+
+Two runs played as text with `npm run playtest` (an AI as the player, a goal per run, notes each round). One run each, so these are observations about feel, not balance numbers.
+
+| Run | Goal | Result | Course |
+| --- | --- | --- | --- |
+| beasts1 (seed 11) | Big beasts | 9 wins, 1 life left | W L W W L W W W W L W W |
+| swarm1 (seed 23) | Swarm of small pets | 5 wins, out in round 9 | L L L W W W W W L |
+
+- **Both paths only begin at round 5.** Beasts: one Pack Lizard in the first seven shops; I played small pets and feeders until Thunder Ram showed up. Swarm: rats were there, but the counting items are weak with two or three swarm pets (Glow Swarm: 2 damage per 2.5 s for 5 gold), so rounds 1–3 were lost. The swarm run saw two beasts in its very first shop, so part of this is luck of the seed.
+- **The high points work.** Thunder Ram + Tusked Behemoth = Juggernaut (10 cells become 6, more damage) and Ancient Egg as the free pick for a swarm build both felt like the build "switching on".
+- **Pack Lizard is a tax, not a payoff.** Two lizards cover 8 cells for 72 Shield; a feeder build did about 500 damage on fewer cells. I sold both as soon as real beasts came.
+- **Free picks often fit no build.** After round 4 both runs offered Elder Tusk or Ancient Egg; with the mixed early build of the beast run neither fit. After round 8 all three artifacts in the beast run counted starred items.
+- **Hard counters for many small hits.** Round 3 of the swarm run: 96 attacks, 3 damage to health against a Rook gaining Shield. Round 9: the enemy dealt 1226 damage through Spikes alone against 159 attacks. A beast build with a third of the attacks hardly notices Spikes.
+- **Beasts have one bad matchup:** a Rook with about 2000 Shield over the fight; the Shield breaking on Ram and Juggernaut is too little.
+- **Merges nobody asked for** happened three times (Cosmic Egg + Biogel, Star Chart + Stardust Vial, two Burrow Rats + Kibble Sack; the last one lowered the swarm count). The playtest tool now says so right after the move; the client needs the same warning.
+- **Room:** a 4-cell beast costs about three small items of room, a 6-cell one needs a bag of the right shape. That is the intended trade, and it was an interesting decision each time.
+
+Not changed yet; candidates to measure first: how often a beast is offered in rounds 1–4, swarm win rate against Spikes builds, Pack Lizard's rating.
+
 # Realistic path bots, Quill heals by damage: balance back in the bands, paths moderately apart (2026-11-16)
 
 Follow-up to the entry below, after Ilja's objections: the strict bot rule reads too much into the paths for general balancing (a player on a path still takes another path's item when it fits), and the fix for Quill's heal must not favour small pets even more.
