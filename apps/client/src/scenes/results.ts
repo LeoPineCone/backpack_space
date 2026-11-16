@@ -8,7 +8,7 @@ import { at, box, dimmer, disc, heroBadge, hearts, pillButton, roundButton, txt 
 import { piece, pieceFit, starMarks } from "../pieces";
 import { itemPopup } from "./popup";
 import { shopScene } from "./shop";
-import { heroScene } from "./hero";
+import { homeScene } from "./home";
 import { rewardTile } from "./progress";
 import { t, tr, upper } from "../i18n";
 
@@ -161,6 +161,6 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
 
   root.addChild(at(roundButton("share", 32, () => game.toast(t("toast.shareLater")), { iconSize: 26 }), 52, 792));
   root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.newSeed(); game.run = newRun(data, run.hero, game.rng); game.show(shopScene(game)); }), 96, 760));
-  root.addChild(at(roundButton("home", 32, () => { game.run = null; game.dropSave(); game.show(heroScene(game)); }, { iconSize: 26 }), W - 52, 792));
+  root.addChild(at(roundButton("home", 32, () => { game.run = null; game.dropSave(); game.show(homeScene(game)); }, { iconSize: 26 }), W - 52, 792));
   return { root };
 }

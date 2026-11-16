@@ -5,7 +5,7 @@ import { DATA, META } from "./data";
 import { Game } from "./game";
 import { loadIcons } from "./icons";
 import { C } from "./theme";
-import { heroScene } from "./scenes/hero";
+import { homeScene } from "./scenes/home";
 import { shopScene } from "./scenes/shop";
 import { battleScene } from "./scenes/battle";
 import { t } from "./i18n";
@@ -21,7 +21,7 @@ async function boot(): Promise<void> {
   const season = game.checkSeason();
   // a stored run continues where it was left: in the shop, or in the fight that was already started
   const resumed = game.resume();
-  game.show(!resumed ? heroScene(game) : resumed.fight ? battleScene(game, resumed.fight) : shopScene(game));
+  game.show(!resumed ? homeScene(game) : resumed.fight ? battleScene(game, resumed.fight) : shopScene(game));
   if (season) game.toast(t("toast.seasonStart", { n: season.profile.season.id, league: t(`league.${META.leagues.ids[season.league[1]]}`) }));
   // for automated checks
   (window as unknown as { __game: Game }).__game = game;

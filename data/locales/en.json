@@ -37,6 +37,8 @@
   "ui.placeholder.heroArt": "hero art",
   "ui.placeholder.silhouette": "hero silhouette",
   "ui.placeholder.comingSoon": "coming soon",
+  "ui.placeholder.menuBackground": "menu background",
+  "ui.placeholder.picture": "picture",
 
   "ui.group.progress": "PROGRESS",
   "ui.tab.hero": "HERO LEVELS",

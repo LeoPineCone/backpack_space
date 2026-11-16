@@ -71,6 +71,7 @@ const PATHS: Record<string, string> = {
   lock: "M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z",
   swords: "M4 20l3-3M6 15l3 3M8 16L20 4h-3L7 14M20 20l-3-3M18 15l-3 3",
   arrow: "M5 12h14M13 6l6 6l-6 6",
+  back: "M19 12H5M11 6l-6 6l6 6",
   close: "M6 6l12 12M18 6L6 18",
   check: "M5 12l5 5l9-10",
   share: "M12 15V4M8 8l4-4l4 4M5 13v7h14v-7",
