@@ -78,6 +78,10 @@ so the formula is a good start. Then:
 
 - `npm run validate && npm run typecheck && npm test`, then `npm run catalog` (docs/catalog.md shows the
   generated rules text: read it, it is what the player sees).
-- Measure (balancing skill): `npm run ratings` so the bots value it, `npm run report:items` (gain per gold;
-  STRONG / WEAK / never bought), and the hero's `report:paths -- --precise --baseline ...` if it belongs to a
-  hero or path. Keep it only if it lands within its rarity's band and does not push a hero out of 48–52 %.
+- Measure (balancing skill): `npm run ratings -- --only <id>` so the bots value it (only its rating changes),
+  `npm run report:items -- --only <id>` (gain per gold; STRONG / WEAK), then for a changed number
+  `npm run balance:replay -- --patch …` against the baseline, for a new item `npm run baseline` and
+  `npm run balance:sense -- --knobs item:<id>`. Keep it only if it lands within its rarity's band and does not
+  push a hero out of 48–52 %.
+- Energy numbers (cost per attack, Energy gained, refill) may use halves (2.5) when a whole step is too coarse;
+  health, damage and stacks stay whole numbers.

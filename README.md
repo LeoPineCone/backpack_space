@@ -62,8 +62,16 @@ npm run report:picks      # free picks after rounds 4 and 8: gain per item and h
 npm run report:synergy    # hero against hero and path against path; do items and hero rules interlock more each round
 npm run report:selftest   # checks the measuring tool itself: same result again, honest ±, sees a real change
 npm run report:all        # all of them into out/reports/
-npm run ratings           # measure every item again and store data/sim/ratings.json (after item changes, ~4 min)
+npm run ratings           # measure every item again and store data/sim/ratings.json (rarely; --seeds 1,2 for a steadier result)
+npm run ratings -- --only a,b   # after an item change: measure only these items again, all other ratings stay
+
+npm run baseline          # the reference for tuning: lobbies on two seeds stored with every build and fight (out/baseline/main/)
+npm run balance:replay -- --patch p.json   # what a number change does to every target, in seconds (--full: bots shop again)
+npm run balance:sense -- --knobs hero:venn    # which number moves which target by how much
+npm run balance:propose -- --knobs hero:venn  # proposes the fewest number changes that bring the targets into their bands (changes nothing)
 ```
+
+Tuning never edits `data/` to try something: a patch file (`{ "changes": [{ "item": "venus_mantrap", "set": { "cooldown": 2.0 } }] }`) is measured against the baseline, and a proposal is only a patch file until the designer agrees. How this works and when a replay is exact: `.claude/skills/balancing/SKILL.md`; the design behind it: `docs/proposals/balancing-workflow.md`.
 
 Every report run also writes a static HTML page with tables, heatmaps (hero against hero, path against path), charts per round and a light per target: `out/reports/<report>.html`, or next to the `--out` file. `out/reports/index.html` links all report pages and lists every target that is OFF. Open it straight from disk in a browser (no server needed); `--no-html` skips the page.
 

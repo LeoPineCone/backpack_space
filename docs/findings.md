@@ -1,3 +1,20 @@
+# Balancing tools: baseline, replay, proposals (2026-11-16)
+
+Question (Ilja): which measuring tools are good, which methods can balance the different questions, and a repeatable flow for a baseline and for new or changed items, heroes and mechanics. Design and decisions: `docs/proposals/balancing-workflow.md`; how to use it: `.claude/skills/balancing/SKILL.md`. No game number changed in this pass.
+
+Measured first (main, seed 1):
+- A fight costs 0.55 ms, a lobby 1.46 s: 93 % of the time is bots shopping. The same two builds with other dice almost always give the same winner (p·(1−p) = 0.03): noise is which builds exist, not the dice.
+- Bots never read damage or effect numbers when they shop. Stored builds that fight again with patched numbers ("replay") gave the same change as a full paired run for four path boosts of 25 % (for example Venn Hungry jungle +10.6 ±0.8 against +12.2 ±0.9, Rook Shield fortress +17.7 ±1.3 against +17.0 ±1.3), in 10 s on one core instead of 49 s on four.
+- Bots do read cooldown (layout, Energy bookkeeping): one cooldown step made every bot of the hero drift to another build, without taking the item more or less often; replay +1.4 ±0.5 against full run +2.0 ±0.5.
+
+Built: `npm run baseline` (2 × 240 lobbies stored with every build and fight, 3 min, 33 MB per seed in `out/`), `balance:replay` (patch file, paired change of every fight-level target on both seeds, self-check, `--full`), `balance:sense` (one line per number: about 1 s each on 60 lobbies, 4 s on 240), `balance:propose` (searches on seed 1, checks on seed 2, writes a patch, changes nothing). `npm run ratings` now runs on all cores (quick 20 s), every item has its own dice, and `--only a,b` re-measures just those items like the stored run: unchanged items get exactly the same rating again.
+
+Baseline of main as it is (240 lobbies per seed, seeds 1 / 2): heroes Venn 47 / 48, Rook 52 / 52, Quill 50 / 49, Ysel 50 / 48 %; 33 of 108 target checks off on seed 1, mostly paths below their open bot, path spread, path distinctness, and the known paths (Workshop strong, Hungry jungle, Well-fed pack, Late ascension weak).
+
+First try of the search, all 136 numbers of Venn's items as knobs (8.5 min; **not applied**, the core numbers are frozen): Strangler Fig Cryo on hit 2 → 5, World Seed Spikes 2 → 1, Plague Blossom Toxin 3 → 2, Queen Spore Toxin 2 → 1. Hungry jungle +3.5 ±0.3 (check seed +2.3 ±0.8), late rounds +8.2 ±0.9 (check +5.5 ±1.4), Thorn wall −1.5, Rook Workshop late −2.3 (check −1.4). It shows the tool separating one path from its hero, which hand tuning did not manage (see below), but 14 targets stay off with Venn's numbers alone, and a Cryo of 5 per hit needs a design look first. On the smaller quick baseline one late-round gain was +5.5 on the search seed and +0.6 on the check seed: only effects on both seeds count.
+
+Open: the stored ratings were measured before the per-item dice; the first full `npm run ratings -- --seeds 1,2` will shift the heroes once and should start the first real pass. Stages 3–5 of the proposal (item strength in three views, matchup table with meta share, picks improvements, sweeps for numbers the bots read).
+
 # Path anchors and free picks built (2026-11-16)
 
 Question (Ilja): paths of one hero play alike; free picks must have no must-take and no useless item. Design: `docs/proposals/hero-paths.md`.

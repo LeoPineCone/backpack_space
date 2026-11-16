@@ -4,7 +4,7 @@
  * blocks of lobbies (batch means): fights of one bot, and bots of one lobby, are not independent, so the
  * error over single fights would look far too small.
  */
-import { onPath, type GameData, type ItemDef, type SideStats } from "@backpack-space/core";
+import { onPath, type BattleResult, type Build, type GameData, type ItemDef } from "@backpack-space/core";
 import { playLobby } from "./lobby";
 
 export const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
@@ -57,45 +57,70 @@ export function pathOfSeat(data: GameData, seat: number): string {
   return h.paths[Math.floor(seat / data.heroList.length)]?.id ?? "";
 }
 
-/** One lobby of the paths measurement. Lobby i of seed s is the same lobby wherever it is played. */
-export function measurePathLobby(data: GameData, seed: number, i: number): SeatStat[] {
-  const l = playLobby(data, seed * 100003 + i, { path: (s) => pathOfSeat(data, s), immortal: true });
+/** What a measurement keeps of one fight (attacker's view): enough to add up every fight-level number again. */
+export interface FightRec {
+  /** attacker won */
+  w: 0 | 1;
+  secs: number;
+  /** the fight reached the Supernova */
+  nova: boolean;
+  /** attacker: maximum health, healed + shielded, damage by source (order of SOURCES), per item, from the third phase on, weapon attacks */
+  hp: number; kept: number; dmg: number[]; items: number[]; late: number; attacks: number;
+}
+export function recOf(res: BattleResult): FightRec {
+  const st = res.stats[0];
+  return { w: res.winner === 0 ? 1 : 0, secs: res.seconds, nova: res.supernova, hp: res.maxHp[0], kept: st.healed + st.shielded, dmg: SOURCES.map((k) => st[k]), items: [...st.itemDamage], late: st.late, attacks: st.attacks };
+}
+/** A bot of a played lobby: its hero, path and build per round (index 0 = round 1). */
+export interface LobbySeat { hero: string; path: string; builds: Build[] }
+export interface LobbyFight { round: number; a: number; b: number; rec: FightRec }
+
+/** One SeatStat per bot from the fights of a lobby (attacker's results; mirror fights do not count for the shares). */
+export function seatStats(data: GameData, seats: readonly LobbySeat[], fights: readonly LobbyFight[]): SeatStat[] {
   const late = lateRound(data);
   const cost = (id: string) => Math.max(1, data.items.get(id)!.cost);
-  const out: SeatStat[] = l.seats.map((s) => {
-    const path = data.heroes.get(s.bot.hero)!.paths.find((p) => p.id === s.bot.path);
+  const lives = seats.map(() => data.rules.lives);
+  const out: SeatStat[] = seats.map((s) => {
+    const path = data.heroes.get(s.hero)!.paths.find((p) => p.id === s.path);
     const last = s.builds[s.builds.length - 1]!;
     const all = last.items.reduce((x, p) => x + cost(p.item), 0);
     const commit = path ? last.items.filter((p) => onPath(data.items.get(p.item)!, path)).reduce((x, p) => x + cost(p.item), 0) / Math.max(1, all) : null;
-    return { key: `${s.bot.hero}/${s.bot.path}`, w: 0, n: 0, lw: 0, ln: 0, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit, wins: s.wins, alive: s.livesLeft > 0, mech: emptyMech(), top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0 };
+    return { key: `${s.hero}/${s.path}`, w: 0, n: 0, lw: 0, ln: 0, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit, wins: 0, alive: false, mech: emptyMech(), top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0 };
   });
-  for (const f of l.fights) {
-    const a = l.seats[f.a]!, b = l.seats[f.b]!;
-    if (a.bot.hero === b.bot.hero) continue;
+  for (const f of fights) {
+    const a = seats[f.a]!, b = seats[f.b]!;
     const g = out[f.a]!;
-    const won = f.res.winner === 0 ? 1 : 0;
-    g.n++; g.w += won;
+    // the run by the real rules: wins until the lives are gone (fights are listed in round order)
+    if (lives[f.a]! > 0) { if (f.rec.w) g.wins++; else lives[f.a]!--; }
+    if (a.hero === b.hero) continue;
+    g.n++; g.w += f.rec.w;
     if (f.round < late) continue;
-    g.ln++; g.lw += won;
-    const st: SideStats = f.res.stats[0];
-    for (const k of SOURCES) g.dmg[k] += st[k];
-    g.kept += (st.healed + st.shielded) / f.res.maxHp[0];
-    g.fights++; g.secs += f.res.seconds;
+    g.ln++; g.lw += f.rec.w;
+    SOURCES.forEach((k, i) => { g.dmg[k] += f.rec.dmg[i]!; });
+    g.kept += f.rec.kept / f.rec.hp;
+    g.fights++; g.secs += f.rec.secs;
     // path profile: which mechanic and which items did the damage
     const build = a.builds[f.round - 1]!;
-    const path = data.heroes.get(a.bot.hero)!.paths.find((p) => p.id === a.bot.path);
+    const path = data.heroes.get(a.hero)!.paths.find((p) => p.id === a.path);
     let top = 0;
-    st.itemDamage.forEach((d, k) => {
+    f.rec.items.forEach((d, k) => {
       if (d <= 0) return;
       const def = data.items.get(build.items[k]!.item)!;
       g.mech[mechanicOf(def)] += d;
       if (path && onPath(def, path)) g.onPath += d;
       top = Math.max(top, d); g.dealers++;
     });
-    g.mech.burn += st.burn; g.mech.toxin += st.toxin; g.mech.spikes += st.spikes;
-    g.top += top; g.lateDmg += st.late; g.attacks += st.attacks;
+    g.mech.burn += f.rec.dmg[2]!; g.mech.toxin += f.rec.dmg[3]!; g.mech.spikes += f.rec.dmg[4]!;
+    g.top += top; g.lateDmg += f.rec.late; g.attacks += f.rec.attacks;
   }
+  out.forEach((g, i) => { g.alive = lives[i]! > 0; });
   return out;
+}
+
+/** One lobby of the paths measurement. Lobby i of seed s is the same lobby wherever it is played. */
+export function measurePathLobby(data: GameData, seed: number, i: number): SeatStat[] {
+  const l = playLobby(data, seed * 100003 + i, { path: (s) => pathOfSeat(data, s), immortal: true });
+  return seatStats(data, l.seats.map((s) => ({ hero: s.bot.hero, path: s.bot.path, builds: s.builds })), l.fights.map((f) => ({ round: f.round, a: f.a, b: f.b, rec: recOf(f.res) })));
 }
 
 /** a share with its standard error and the share in every block of lobbies */

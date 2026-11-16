@@ -1,6 +1,8 @@
 # Balancing workflow with optimisers (proposal, 2026-11-16)
 
-Status: **concept only, nothing built.** Asked by Ilja: review the measuring tools we have, pick mathematical
+Status: **stages 1 and 2 are built** (baseline, replay, sensitivity, proposals, incremental ratings; see
+section 12 and `.claude/skills/balancing/SKILL.md` for how to use them). Stages 3–5 are open. Decisions by Ilja
+(2026-11-16) are in section 13. Asked by Ilja: review the measuring tools we have, pick mathematical
 methods and optimisers for our different balancing questions, and design a repeatable flow: take a baseline, then
 integrate new items, changed items, a new hero or a new mechanic. Balancing need not be perfect. An optimiser only
 proposes; changes are adopted after Ilja's OK; hero rules need his OK.
@@ -314,19 +316,37 @@ stage 3 and stays outside `packages/core` and the game.
 - Conflicting targets (a path must be ≥ +2 over an open bot that takes the best anchor) show up as
   "infeasible"; that is a finding for the design, not a failure of the tool.
 
-## 12. Stages (each ends usable; build only after Ilja's OK)
+## 12. Stages (each ends usable)
 
-| Stage | Content | Effort |
+| Stage | Content | State |
 |---|---|---|
-| 1 | Baseline snapshot with panel, replay with self-check, paired metrics for all fight-level targets, self-test for replay | small–medium |
-| 2 | Sensitivity table, least-change solver, proposal files; incremental + paired + parallel ratings | medium |
-| 3 | Item strength in three views; matchup table and meta share; picks improvements | medium |
-| 4 | Sweep and black-box search (Optuna), path-pull sweep | medium |
-| 5 | Update the balancing skill with the new flows; first real pass (paths that are off today, weak artifacts) | small |
+| 1 | Baseline snapshot with panel (`npm run baseline`), replay with self-check (`balance:replay`, `--full`), paired metrics for all fight-level targets | **built** |
+| 2 | Sensitivity table (`balance:sense`), least-change search (`balance:propose`, patch files in `out/proposals/`); ratings parallel, with per-item dice and `--only` updates that leave all other ratings alone | **built** |
+| 3 | Item strength in three views; matchup table and meta share; picks improvements | open |
+| 4 | Sweep and search for numbers the bots read (TypeScript only), path-pull sweep | open |
+| 5 | First real pass with the tools (paths that are off today, weak artifacts), starting with one full ratings run on two seeds | open |
 
-## 13. Questions for Ilja
+What was built differs from the sections above in three points:
+- The solver has no linear programme. One replay per knob gives a first guess; the search then takes the step
+  that the guess rates best, checks it with a real replay, keeps it only if it really helped and replaces the
+  guess by what was measured. That needed no library and never trusts the linear model.
+- The margin to a band edge is half a point by default, not two standard errors: the bands (48–52 %) are narrower
+  than twice the ± of an absolute value, so a wider margin would make everything infeasible.
+- The self-check found that bots also read **cooldown** (layout score, Energy bookkeeping). A cooldown change
+  makes the hero's bots drift to other builds without taking the item more or less often; replay and full run
+  still agreed within noise (+1.4 vs +2.0 ±0.5). The self-check therefore separates "drift" from "bots take the
+  patched item clearly more or less often"; only the second calls for a full run before trusting the direction.
 
-1. Build order as above (replay and solver first, Bayesian search last)?
-2. Python + Optuna as an optional tool for stage 4, or TypeScript only?
-3. Decimals for Energy cost, Energy gain and refill (one decimal place): OK?
-4. Meta-share targets (hero 15–35 %, two live paths per hero): useful as a target or only as information?
+## 13. Decisions (Ilja, 2026-11-16)
+
+1. Build order as proposed: replay and solver first, search for bot-read numbers last.
+2. **TypeScript only**, as long as that has no big disadvantage. It has none for stages 1–3. For stage 4 a sweep
+   and a small direct search (or a Gaussian-process search for up to ~8 knobs, about 200 lines) are enough; no
+   Python, no Optuna.
+3. Decimals where they make balancing easier: Energy cost, Energy gained and refill move in halves in the knobs.
+   Health, damage and stacks stay whole.
+4. Meta share becomes a **wide target that only catches blunders**: every hero between 10 % and 45 % of the
+   settled meta (fair would be 25 %). Per path it is information only, because an exact equilibrium jumps with
+   small changes of the table; a smoothed equilibrium (players choose better options more often, not always the
+   best) will be used so that the number moves steadily. To be built in stage 3 and then added to
+   `data/sim/targets.json`.
