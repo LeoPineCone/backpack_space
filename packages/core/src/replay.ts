@@ -71,7 +71,7 @@ export class Replay {
     this.tickDone++;
     const T = this.tickDone * B.tick + 1e-6;
     const every = (interval: number) => this.tickDone % Math.max(1, Math.round(interval / B.tick)) === 0;
-    this.sides.forEach((s, i) => { s.energy = Math.min(this.rules.energy.max, s.energy + Math.max(0, this.rules.energy.regen + this.c[i]!.energyBonus) * B.tick); });
+    this.sides.forEach((s, i) => { s.energy = Math.min(this.rules.energy.max, s.energy + Math.max(0, this.rules.energy.regen + this.c[i]!.energyBonus) * (1 + Math.min(R.overclock.capPct, s.st.overclock * R.overclock.energyPct) / 100) * B.tick); });
     let decayed = false;
     const decay = () => {
       if (decayed) return;

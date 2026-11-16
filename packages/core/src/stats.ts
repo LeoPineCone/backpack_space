@@ -88,11 +88,12 @@ export function buildStats(side: CSide, rules: Rules): BuildStats {
     return t;
   };
 
-  const refill = Math.max(0, rules.energy.regen + side.energyBonus);
+  let refill = Math.max(0, rules.energy.regen + side.energyBonus);
   // first without waiting, then with the waiting that follows (Energy on hit depends on how often weapons hit)
   let scale = 1, t = tally(1);
   const oc = rules.status.overclock;
   global = 1 + Math.min(oc.capPct, t.overclock * oc.speedPct) / 100;
+  refill *= 1 + Math.min(oc.capPct, t.overclock * oc.energyPct) / 100;
   need = weapons.reduce((s, it) => s + rate(it) * it.energy, 0);
   for (let i = 0; i < 3; i++) { scale = need > 0 ? Math.min(1, (refill + t.energy) / need) : 1; t = tally(scale); }
   const income = refill + t.energy;

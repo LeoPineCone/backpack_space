@@ -198,7 +198,8 @@
     },
     "overclock": {
       "speedPct": 3,
-      "capPct": 60
+      "capPct": 60,
+      "energyPct": 3
     }
   },
   "energy": {

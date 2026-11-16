@@ -27,6 +27,22 @@ describe("battle", () => {
     const a = compile(build(["fang_dagger", "fang_dagger"]), data), b = compile(build(["scrap_metal"]), data);
     expect(simulate(a, b, data.rules, 3).winner).toBe(0);
   });
+  it("healing above full health becomes Shield only with overheal", () => {
+    const foe = compile(build(["scrap_metal"], 1, data.heroList[1]!.id), data);
+    const plain = simulate(compile(build(["watering_drone"]), data), foe, data.rules, 2);
+    const moss = compile(build(["watering_drone", "sap_tap"]), data);
+    expect(moss.overheal).toBe(25);
+    const over = simulate(moss, foe, data.rules, 2);
+    expect(plain.stats[0].shielded).toBe(0);
+    expect(over.stats[0].shielded).toBeGreaterThan(0);
+  });
+  it("Overclock refills Energy faster", () => {
+    const rules = (energyPct: number) => ({ ...data.rules, energy: { ...data.rules.energy, regen: 1 }, status: { ...data.rules.status, overclock: { ...data.rules.status.overclock, energyPct } } });
+    const a = compile(build(["overclock_chip", "fang_dagger", "fang_dagger", "fang_dagger"], 12), data), b = compile(build(["scrap_metal"], 12, data.heroList[1]!.id), data);
+    const without = simulate(a, b, rules(0), 4), withIt = simulate(a, b, rules(10), 4);
+    expect(without.stats[0].energyWait).toBeGreaterThan(0);
+    expect(withIt.stats[0].energySpent / withIt.seconds).toBeGreaterThan(without.stats[0].energySpent / without.seconds);
+  });
   it("shield absorbs weapon damage, toxin ignores it", () => {
     const shielded = compile(build(["scrap_metal"]), data);
     const gun = simulate(compile(build(["fang_dagger"]), data), shielded, data.rules, 5, { log: true });
