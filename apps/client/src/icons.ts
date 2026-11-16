@@ -42,6 +42,8 @@ const PATHS: Record<string, string> = {
   strip: SHIELD + "M13 7l-3 5h4l-3 5",
   speed: "M4 6l7 6l-7 6zM13 6l7 6l-7 6z",
   crit: "M12 2l3 7l7 3l-7 3l-3 7l-3-7l-7-3l7-3z",
+  overheal: SHIELD + "M9.500 12h5M12 9.500v5",
+  leech: HEART + "M9 10l1.500 3L12 10l1.500 3L15 10",
   maxHp: HEART + "M12 9v5M9.500 11.500h5",
   ready: "M6 4l14 8l-14 8z",
   // triggers and targets
