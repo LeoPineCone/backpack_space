@@ -7,7 +7,7 @@ import type { Effect, Placement, Recipe } from "../schema.js";
 
 export interface Arranged { items: Placement[]; left: string[] }
 
-const matches = (def: ItemDef, tag: string | undefined) => tag === undefined || tag === "any" || (def.tags as string[]).includes(tag);
+const matches = (def: ItemDef, tag: string | undefined) => tag === undefined || tag === "any" || (tag === "melee" || tag === "ranged" ? def.range === tag : (def.tags as string[]).includes(tag));
 
 /** Worth of one star link from `src` (through effect e) to `target`. */
 function linkValue(e: Effect, target: ItemDef): number {

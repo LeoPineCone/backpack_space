@@ -27,6 +27,7 @@ not chance and not a bot quirk.
 | Command | Answers | Time here (4 cores) |
 |---|---|---|
 | `npm run report:paths` | win share per hero and per path, vs the hero's open bot; targets marked ✓/✗ | quick 10 s, normal 30 s, precise ~1.5 min |
+| `npm run report:picks` | free picks after rounds 4 and 8: gain per item and hero, choice test (best/worst in its offer), offers with no good option | quick 30 s |
 | `npm run report:heroes` | hero win share per third of the run, hero against hero | single core, not timed yet |
 | `npm run report:battles` | fight length, Supernova share, damage sources | single core, not timed yet |
 | `npm run report:items` | gain per item vs its price (STRONG / WEAK), never-bought items | normal ~4 min (single core) |
@@ -43,7 +44,10 @@ by default; the result does not depend on it), `--baseline file.json` (paths). E
 
 Targets are data: `data/sim/targets.json`. The paths targets (agreed 2026-11-16): hero overall 48–52 %,
 every path 46–54 %, rounds 9–12 44–56 %, every path ≥ +2 pts over the hero's open bot, best-to-weakest path
-≤ 6 pts. Older targets: fights 18–25 s, Supernova reached 5–20 %, hero 45–55 % per third, duel 35–65 %,
+≤ 6 pts. Path profile: main mechanic ≥ 40 % of the damage, every two paths of a hero differ ≥ 0.35 (1 − cosine
+of the damage mix), path items ≥ 50 % of the build. Free picks (wide on purpose): gain 0.6–1.6 × median (hero
+items 0.7–1.4), best or worst in its offer ≤ 55 % (hero items ≤ 65 %), no general artifact below 0.4 × median
+for any hero, ≤ 10 % of offers without a good option. Older targets: fights 18–25 s, Supernova reached 5–20 %, hero 45–55 % per third, duel 35–65 %,
 recipe lift ≤ 12 pts, no recipe in > 60 % of a hero's runs.
 
 ## How exact is a number?

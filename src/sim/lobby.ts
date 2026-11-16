@@ -7,6 +7,7 @@ import { botBuild, botMerge, botShop, botSpecial, compile, newBot, simulate, typ
 /** Measured item ratings every bot uses unless its own options say otherwise (set by the reports from data/sim/ratings.json). */
 let defaultRatings: Record<string, number> = {};
 export function useRatings(r: Record<string, number>): void { defaultRatings = r; }
+export const currentRatings = (): Record<string, number> => defaultRatings;
 
 export interface LobbyOpts {
   /** bots per lobby (default 16, heroes evenly spread) */
@@ -19,6 +20,8 @@ export interface LobbyOpts {
   hero?: (seat: number) => string;
   /** fixed path per seat ("" = none); default: the bot chooses */
   path?: (seat: number) => string | undefined;
+  /** called right before a bot gets its free special item after a round (the moment of the pick) */
+  onSpecial?: (seat: Seat, afterRound: number) => void;
 }
 export interface Fight { round: number; a: number; b: number; res: BattleResult }
 export interface Seat {
@@ -70,6 +73,7 @@ export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): L
         if (s.livesLeft <= 0 || round === data.rules.rounds) s.endedAfter = round;
       }
       botMerge(data, s.bot, optOf(s.seat));
+      if (opts.onSpecial && data.rules.specials.some((x) => x.afterRound === round)) opts.onSpecial(s, round);
       botSpecial(data, s.bot, round, rng, optOf(s.seat));
     }
   }

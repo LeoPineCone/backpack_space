@@ -13,8 +13,8 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
 - Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`). **Health in even steps (decided 2026-11-15):** 100, 150, 200, 250, then +100 per round up to 1100. The shop shows the hero's health for the coming fight (heart with a plus: round base plus items) and names the round's base when the round starts, so the growth is never hidden.
 - **Decided:** free special items after round 4 and round 8.
-  - After round 4: a **signature artifact** of the hero. *Assumption:* each hero has three, two are shown, you take one.
-  - After round 8: a **general artifact**. *Assumption:* three of a pool of ten are shown, you take one.
+  - After round 4: a **hero item** (signature artifact). Each hero has three, one per path: the **anchor** of that path. **Decided 2026-11-16:** two of the three are shown at random (luck in every run), you take one and with it a path. The shop then offers that path's hero items a little more often (`shop.anchorPathWeight`), without forcing anything.
+  - After round 8: a **general artifact**. Three of a pool of ten are shown, you take one. **Decided 2026-11-16:** they do not follow the path; each is a small puzzle piece with its own mechanic, often with stars that reach further than the neighbours and filters such as melee weapons, pets or food. No pick may be one you always take, none may be useless (`npm run report:picks`).
 
 ## Backpack and bags
 
@@ -98,14 +98,14 @@ Four heroes, each with an own focus, passive, start items, shop pool and artifac
 
 ### Ways to win
 
-Every hero is designed for three paths (`paths` in `data/heroes.json`), each with own shop items, own recipes and a different upgrade of the start weapon. `npm run report:paths` lets bots commit to one path each and compares them.
+Every hero is designed for three paths (`paths` in `data/heroes.json`). Every hero item names its path (`path`; none = core item of the hero). Each path has its own main damage source or rhythm, an **anchor** among the hero items after round 4, feeder items in the shop before round 4 and support items after it; a path also works without its anchor. `npm run report:paths` lets bots commit to one path each, compares them and shows each path's profile (damage by mechanic, best item, rhythm); the design is in `docs/proposals/hero-paths.md`.
 
 | Hero | Paths |
 |---|---|
-| Venn | Poison garden (Toxin, food) · Thorn wall (Spikes, armor, Regen) · Hungry jungle (plant pets that heal on hit) |
-| Rook | Overclocked guns · Shield fortress · Workshop (crafted items, stripping enemy buffs) |
-| Quill | Big beasts · Swarm (many small pets) · Well-fed pack (food and healing around the pets) |
-| Ysel | Burning corona (Burn) · Late ascension (Power, Overclock, late phases) · Eclipse (Jam, Cryo, Shield per phase) |
+| Venn | Poison garden (Toxin, food; anchor Queen Spore) · Thorn wall (Spikes; World Seed) · Hungry jungle (plant pets that heal on hit, no food; Terrarium Heart) |
+| Rook | Overclocked guns (weapon hits, Overclock; Perpetual Engine) · Shield fortress (Shield ram: damage per own Shield; Nanite Swarm) · Workshop (damage per crafted item, Strip; Master Blueprint) |
+| Quill | Big beasts (one starred beast carries; Elder Tusk) · Swarm (damage per pet; Ancient Egg) · Well-fed pack (feeding gives Power, strong late; Herd Heart) |
+| Ysel | Burning corona (Burn; Stellar Lens) · Late ascension (Power, Overclock, late phases; Eternal Dawn) · Eclipse (cold damage per Cryo, Jam, Shield; Nova Crown) |
 
 ## What makes it its own game (open, to decide together)
 
@@ -125,6 +125,7 @@ An item is data: shape, optional cooldown, optional weapon damage with range (me
 - Triggers: `start`, `use` (each cooldown), `hit` (weapon hit), `attacked`, `phase` (every phase or a named one), `starUse` (a starred item activates), `lowHp` (once below half health); for heroes also `shipUse` (any own item with a tag activates).
 - Actions: gain a buff, inflict a debuff, deal damage, heal, cleanse own debuffs, strip enemy Shield, gain Energy.
 - Scaling `per`: starred items with a tag, items with a tag in the backpack, own buff stacks, enemy debuff stacks (with divisor and cap).
+- Tag filters (`tag`, `per.stars`, `per.ship`): the item types, `crafted`, and `melee` / `ranged` for weapons by range. Stars (`*` in the shape) may sit further away than the neighbours, with empty cells (`.`) in between.
 - Conditions `if`: chance, star phases, health below a share.
 - Passives `to`: self, starred items, all own items with a tag, the hero (health), for bags the items inside. Bonuses: weapon damage, speed, crit, health, starting charged, Energy cost of weapons, Energy refill (hero).
 

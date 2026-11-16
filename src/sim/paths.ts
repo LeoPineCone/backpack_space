@@ -4,11 +4,32 @@
  * blocks of lobbies (batch means): fights of one bot, and bots of one lobby, are not independent, so the
  * error over single fights would look far too small.
  */
-import { onPath, type GameData, type SideStats } from "@backpack-space/core";
+import { onPath, type GameData, type ItemDef, type SideStats } from "@backpack-space/core";
 import { playLobby } from "./lobby";
 
 export const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
 export type Source = (typeof SOURCES)[number];
+
+/**
+ * Path profile: damage by mechanic instead of by battle source. Item damage (weapon hits and effect damage) goes to
+ * the class of the item that dealt it; Burn, Toxin and Spikes are not tied to an item.
+ */
+export const MECHANICS = ["weapon", "pet", "shield", "count", "debuff", "direct", "burn", "toxin", "spikes"] as const;
+export type Mechanic = (typeof MECHANICS)[number];
+export const MECHANIC_TEXT: Record<Mechanic, string> = {
+  weapon: "weapon hits", pet: "pet hits", shield: "Shield ram (damage per own Shield)", count: "count damage (per item in the backpack)",
+  debuff: "debuff damage (per enemy debuff)", direct: "other item damage", burn: "Burn", toxin: "Toxin", spikes: "Spikes",
+};
+/** the mechanic an item's damage counts as */
+export function mechanicOf(def: ItemDef): Mechanic {
+  if (def.damage) return (def.tags as string[]).includes("pet") ? "pet" : "weapon";
+  const dmg = def.effects.find((e) => e.do === "damage");
+  if (dmg?.per?.buff === "shield") return "shield";
+  if (dmg?.per?.ship || dmg?.per?.stars) return "count";
+  if (dmg?.per?.debuff) return "debuff";
+  return "direct";
+}
+const emptyMech = (): Record<Mechanic, number> => Object.fromEntries(MECHANICS.map((m) => [m, 0])) as Record<Mechanic, number>;
 
 /** what one bot did in one lobby, against bots of other heroes */
 export interface SeatStat {
@@ -22,6 +43,9 @@ export interface SeatStat {
   commit: number | null;
   /** run wins and whether lives were left, by the real rules */
   wins: number; alive: boolean;
+  /** late rounds, path profile: damage by mechanic; damage of the single best item, of path items, from the third phase on;
+   *  items that dealt damage (summed over fights), weapon attacks, fight seconds */
+  mech: Record<Mechanic, number>; top: number; onPath: number; lateDmg: number; dealers: number; attacks: number;
 }
 
 /** first round of the last third of the run */
@@ -42,8 +66,8 @@ export function measurePathLobby(data: GameData, seed: number, i: number): SeatS
     const path = data.heroes.get(s.bot.hero)!.paths.find((p) => p.id === s.bot.path);
     const last = s.builds[s.builds.length - 1]!;
     const all = last.items.reduce((x, p) => x + cost(p.item), 0);
-    const commit = path ? last.items.filter((p) => onPath(data.items.get(p.item)!, path.focus)).reduce((x, p) => x + cost(p.item), 0) / Math.max(1, all) : null;
-    return { key: `${s.bot.hero}/${s.bot.path}`, w: 0, n: 0, lw: 0, ln: 0, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit, wins: s.wins, alive: s.livesLeft > 0 };
+    const commit = path ? last.items.filter((p) => onPath(data.items.get(p.item)!, path)).reduce((x, p) => x + cost(p.item), 0) / Math.max(1, all) : null;
+    return { key: `${s.bot.hero}/${s.bot.path}`, w: 0, n: 0, lw: 0, ln: 0, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit, wins: s.wins, alive: s.livesLeft > 0, mech: emptyMech(), top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0 };
   });
   for (const f of l.fights) {
     const a = l.seats[f.a]!, b = l.seats[f.b]!;
@@ -57,6 +81,19 @@ export function measurePathLobby(data: GameData, seed: number, i: number): SeatS
     for (const k of SOURCES) g.dmg[k] += st[k];
     g.kept += (st.healed + st.shielded) / f.res.maxHp[0];
     g.fights++; g.secs += f.res.seconds;
+    // path profile: which mechanic and which items did the damage
+    const build = a.builds[f.round - 1]!;
+    const path = data.heroes.get(a.bot.hero)!.paths.find((p) => p.id === a.bot.path);
+    let top = 0;
+    st.itemDamage.forEach((d, k) => {
+      if (d <= 0) return;
+      const def = data.items.get(build.items[k]!.item)!;
+      g.mech[mechanicOf(def)] += d;
+      if (path && onPath(def, path)) g.onPath += d;
+      top = Math.max(top, d); g.dealers++;
+    });
+    g.mech.burn += st.burn; g.mech.toxin += st.toxin; g.mech.spikes += st.spikes;
+    g.top += top; g.lateDmg += st.late; g.attacks += st.attacks;
   }
   return out;
 }
@@ -68,6 +105,7 @@ export interface PathGroup {
   all: Measured; late: Measured;
   dmg: Record<Source, number>; kept: number; fights: number; secs: number;
   commit: number[]; wins: number[]; alive: number; seats: number;
+  mech: Record<Mechanic, number>; top: number; onPath: number; lateDmg: number; dealers: number; attacks: number;
 }
 
 /** how many blocks of lobbies the standard error uses */
@@ -86,7 +124,7 @@ export function aggregatePaths(lobbies: readonly SeatStat[][]): Map<string, Path
   const groups = new Map<string, PathGroup & { bw: [number, number, number, number][] }>();
   const get = (key: string) => {
     let g = groups.get(key);
-    if (!g) { g = { key, all: { p: 0, se: 0, blocks: [] }, late: { p: 0, se: 0, blocks: [] }, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit: [], wins: [], alive: 0, seats: 0, bw: Array.from({ length: K }, (): [number, number, number, number] => [0, 0, 0, 0]) }; groups.set(key, g); }
+    if (!g) { g = { key, all: { p: 0, se: 0, blocks: [] }, late: { p: 0, se: 0, blocks: [] }, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit: [], wins: [], alive: 0, seats: 0, mech: emptyMech(), top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0, bw: Array.from({ length: K }, (): [number, number, number, number] => [0, 0, 0, 0]) }; groups.set(key, g); }
     return g;
   };
   lobbies.forEach((seats, i) => {
@@ -98,6 +136,8 @@ export function aggregatePaths(lobbies: readonly SeatStat[][]): Map<string, Path
         bw[0] += s.w; bw[1] += s.n; bw[2] += s.lw; bw[3] += s.ln;
         for (const k of SOURCES) g.dmg[k] += s.dmg[k];
         g.kept += s.kept; g.fights += s.fights; g.secs += s.secs;
+        for (const m of MECHANICS) g.mech[m] += s.mech[m];
+        g.top += s.top; g.onPath += s.onPath; g.lateDmg += s.lateDmg; g.dealers += s.dealers; g.attacks += s.attacks;
         if (s.commit !== null) g.commit.push(s.commit);
         g.wins.push(s.wins); g.alive += s.alive ? 1 : 0; g.seats++;
       }
@@ -125,10 +165,26 @@ export function boostPath(data: GameData, key: string, pct: number): string[] {
   const f = 1 + pct / 100;
   const touched: string[] = [];
   for (const it of data.itemList) {
-    if (it.hero !== hero || !onPath(it, path.focus)) continue;
+    if (it.hero !== hero || !onPath(it, path)) continue;
     if (it.damage) it.damage = [Math.round(it.damage[0] * f), Math.round(it.damage[1] * f)];
     for (const e of it.effects) if (e.n !== undefined) e.n = Math.max(e.n + 1, Math.round(e.n * f));
     touched.push(it.id);
   }
   return touched;
+}
+
+/** a path's profile from its group: shares of the damage, carry, rhythm */
+export interface Profile { mix: Record<Mechanic, number>; main: Mechanic; carry: number; dealers: number; late: number; attacksPerSec: number; pathDamage: number }
+export function profileOf(g: PathGroup): Profile {
+  const total = MECHANICS.reduce((x, m) => x + g.mech[m], 0) || 1;
+  const mix = Object.fromEntries(MECHANICS.map((m) => [m, g.mech[m] / total])) as Record<Mechanic, number>;
+  const main = [...MECHANICS].sort((a, b) => mix[b] - mix[a])[0]!;
+  const f = Math.max(1, g.fights);
+  return { mix, main, carry: g.top / total, dealers: g.dealers / f, late: g.lateDmg / total, attacksPerSec: g.attacks / Math.max(1, g.secs), pathDamage: g.onPath / total };
+}
+/** how different two profiles are: 1 - cosine similarity of their damage mix (0 = same, 1 = nothing shared) */
+export function profileDistance(a: Profile, b: Profile): number {
+  let ab = 0, aa = 0, bb = 0;
+  for (const m of MECHANICS) { ab += a.mix[m] * b.mix[m]; aa += a.mix[m] ** 2; bb += b.mix[m] ** 2; }
+  return aa && bb ? 1 - ab / Math.sqrt(aa * bb) : 0;
 }

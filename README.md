@@ -57,7 +57,8 @@ npm run report:runs       # where runs end with the real lives, backpack and gol
 npm run report:items      # what each item adds to a build compared with its price (STRONG / WEAK)
 npm run report:recipes    # which recipes get made, how deep chains go
 npm run report:placement  # what the layout is worth
-npm run report:paths      # does every hero have several paths that win (bots commit to one path each)
+npm run report:paths      # does every hero have several paths that win (bots commit to one path each); path profile: does each path win in its own way
+npm run report:picks      # free picks after rounds 4 and 8: gain per item and hero, choice test (is one always taken?)
 npm run report:synergy    # hero against hero and path against path; do items and hero rules interlock more each round
 npm run report:selftest   # checks the measuring tool itself: same result again, honest ±, sees a real change
 npm run report:all        # all of them into out/reports/

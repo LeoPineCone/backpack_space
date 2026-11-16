@@ -117,7 +117,8 @@
       }
     ],
     "maxBags": 1,
-    "affinityPct": 100
+    "affinityPct": 100,
+    "anchorPathWeight": 1.5
   },
   "specials": [
     {

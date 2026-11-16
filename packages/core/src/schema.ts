@@ -13,8 +13,9 @@ export const SHOP_RARITIES = ["common", "rare", "epic", "legendary"] as const;
 
 export const Tag = z.enum([...TAGS, BAG]);
 export type Tag = z.infer<typeof Tag>;
-/** "crafted" is derived: every recipe output carries it. */
-export const FilterTag = z.enum([...TAGS, "crafted"]);
+/** "crafted" is derived: every recipe output carries it. "melee" / "ranged" pick weapons by their range. */
+export const RANGE_FILTERS = ["melee", "ranged"] as const;
+export const FilterTag = z.enum([...TAGS, "crafted", ...RANGE_FILTERS]);
 export type FilterTag = z.infer<typeof FilterTag>;
 export const Buff = z.enum(BUFFS);
 export type Buff = z.infer<typeof Buff>;
@@ -25,7 +26,7 @@ export type Rarity = z.infer<typeof Rarity>;
 
 const Per = z.object({
   /** number of starred items with this tag ("any" = every starred item) */
-  stars: z.enum([...TAGS, "crafted", "any"]).optional(),
+  stars: z.enum([...TAGS, "crafted", ...RANGE_FILTERS, "any"]).optional(),
   /** number of items in the backpack with this tag */
   ship: FilterTag.optional(),
   /** own buff stacks */
@@ -91,6 +92,8 @@ export const Item = z.object({
   shape: z.array(z.string()).min(1),
   /** hero id: only this hero is offered the item */
   hero: z.string().optional(),
+  /** hero items: the path of the hero this item belongs to (none = core item of the hero); a hero item with a path is the anchor of that path */
+  path: z.string().optional(),
   /** false: never in the shop (start items) */
   shop: z.boolean().optional(),
   /** how often the shop offers it compared with other items of its rarity (default 1) */
@@ -152,6 +155,8 @@ export const Rules = z.object({
     maxBags: z.number().int(),
     /** an item is offered up to this many percent more often when all owned items share one of its tags (scaled by the share that do) */
     affinityPct: z.number(),
+    /** once the player owns a hero item (anchor) of a path, hero shop items of that path are offered this many times as often */
+    anchorPathWeight: z.number().positive().default(1),
     rarityOdds: z.array(Odds),
   }).strict(),
   specials: z.array(z.object({ afterRound: z.number().int(), pool: z.enum(["hero", "general"]), show: z.number().int() }).strict()),

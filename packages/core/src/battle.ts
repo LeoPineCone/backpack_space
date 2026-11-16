@@ -32,6 +32,10 @@ export interface SideStats {
   energyWait: number;
   /** per item: activations and damage */
   uses: number[]; itemDamage: number[];
+  /** damage dealt to the enemy from the third star phase on (how late a build does its work) */
+  late: number;
+  /** weapon attacks (hits and misses) */
+  attacks: number;
 }
 export interface BattleResult {
   /** 0 or 1; -1 = draw */
@@ -55,7 +59,7 @@ const newSide = (c: CSide, rules: Rules): Side => ({
   c, hp: c.maxHp, energy: Math.min(rules.energy.max, rules.energy.start), low: false,
   st: Object.fromEntries([...BUFFS, ...DEBUFFS].map((s) => [s, 0])) as Record<Status, number>,
   prog: c.items.map((it) => (it.cooldown * it.ready) / 100),
-  stats: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0, nova: 0, healed: 0, shielded: 0, energySpent: 0, energyGained: 0, energyWait: 0, uses: c.items.map(() => 0), itemDamage: c.items.map(() => 0) },
+  stats: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0, nova: 0, healed: 0, shielded: 0, energySpent: 0, energyGained: 0, energyWait: 0, uses: c.items.map(() => 0), itemDamage: c.items.map(() => 0), late: 0, attacks: 0 },
 });
 
 export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: { log?: boolean } = {}): BattleResult {
@@ -69,6 +73,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
   const phaseStarts: { at: number; id: string }[] = [];
   { let at = 0; for (const p of B.phases) { phaseStarts.push({ at, id: p.id }); at += p.seconds; } phaseStarts.push({ at, id: B.supernova.id }); }
   const novaAt = phaseStarts[phaseStarts.length - 1]!.at;
+  const lateAt = phaseStarts[Math.min(2, phaseStarts.length - 1)]!.at;
   let leaderAtNova = -1;
   const ev = (s: number, i: number, k: BattleEvent["k"], v: number, w?: string, crit?: boolean) => { if (log) log.push({ t: Math.round(t * 10) / 10, s: s as 0 | 1, i, k, v, ...(w ? { w } : {}), ...(crit ? { crit } : {}) }); };
 
@@ -78,7 +83,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     let dmg = Math.max(0, Math.round(amount));
     if (!pierce && d.st.shield > 0) { const block = Math.min(d.st.shield, dmg); d.st.shield -= block; dmg -= block; }
     d.hp -= dmg;
-    if (source === "nova") d.stats.nova += dmg; else o.stats[source] += dmg;
+    if (source === "nova") d.stats.nova += dmg; else { o.stats[source] += dmg; if (t >= lateAt) o.stats.late += dmg; }
     if (item >= 0) o.stats.itemDamage[item]! += dmg;
     return dmg;
   };
@@ -149,7 +154,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     me.stats.uses[it.idx]!++;
     if (it.dmg) {
       const miss = Math.min(R.jam.capPct, me.st.jam * R.jam.missPct);
-      me.energy -= it.energy; me.stats.energySpent += it.energy;
+      me.energy -= it.energy; me.stats.energySpent += it.energy; me.stats.attacks++;
       if (rng.next() * 100 < miss) ev(side, it.idx, "miss", 0, it.range ?? undefined);
       else {
         let bonus = 0, crit = it.crit;

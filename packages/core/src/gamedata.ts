@@ -94,6 +94,7 @@ export function buildGameData(raw: RawData): GameData {
     if (it.depth > rules.recipes.maxDepth) problems.push(`${it.id}: recipe chain of ${it.depth} steps, the limit is ${rules.recipes.maxDepth}`);
     it.inShop = !it.crafted && it.rarity !== "artifact" && it.shop !== false;
     if (it.hero && !heroes.has(it.hero)) problems.push(`${it.id}: unknown hero ${it.hero}`);
+    if (it.path !== undefined && !heroes.get(it.hero ?? "")?.paths.some((p) => p.id === it.path)) problems.push(`${it.id}: path ${it.path} is not a path of its hero`);
     if (it.isBag && (it.tags.length > 1 || it.cooldown || it.crafted || it.effects.some((e) => e.on !== "passive" || (e.to !== "inside" && e.to !== "hero")))) problems.push(`${it.id}: a bag only has the tag "bag" and passives for the items inside or the hero`);
     if (!it.isBag && it.effects.some((e) => e.to === "inside")) problems.push(`${it.id}: only bags target "inside"`);
     if ((it.damage === undefined) !== !it.tags.includes("weapon")) problems.push(`${it.id}: weapons (and only weapons) need damage`);
@@ -122,6 +123,8 @@ export function buildGameData(raw: RawData): GameData {
   for (const h of heroList) {
     h.effects.forEach((e, i) => checkEffect(e, `hero ${h.id} effect ${i + 1}`, phaseIds, problems, false, true));
     for (const a of h.artifacts) if (items.get(a)?.rarity !== "artifact" || items.get(a)?.hero !== h.id) problems.push(`hero ${h.id}: ${a} is not an artifact of this hero`);
+    // every path has exactly one anchor among the hero items picked after round 4
+    for (const p of h.paths) { const n = h.artifacts.filter((a) => items.get(a)?.path === p.id).length; if (n !== 1) problems.push(`hero ${h.id} path ${p.id}: needs exactly one hero item (anchor) with this path, has ${n}`); }
     const words: readonly string[] = [...TAGS, ...BUFFS, ...DEBUFFS, "heal", "cleanse", "strip", "damage", "crafted", "energy"];
     for (const p of h.paths) for (const f of p.focus) if (!words.includes(f) && !items.has(f)) problems.push(`hero ${h.id} path ${p.id}: unknown focus ${f}`);
     for (const p of h.bags) if (!items.get(p.item)?.isBag) problems.push(`hero ${h.id}: ${p.item} is not a bag`);
