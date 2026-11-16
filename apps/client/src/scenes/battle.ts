@@ -1,8 +1,7 @@
 /** The fight: computed once by the core, then played back. Enemy on top, your backpack below, the ageing star between. */
 import { Container, Graphics, Rectangle, type Text } from "pixi.js";
-import { BUFFS, DEBUFFS, Replay, buildOf, compile, simulate, type BattleEvent, type Build, type CSide, type Status } from "@backpack-space/core";
+import { BUFFS, DEBUFFS, Replay, buildOf, compile, leagueOf, simulate, type BattleEvent, type Build, type CSide, type Status } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { GHOSTS } from "../data";
 import { C, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, tappable, txt } from "../ui";
@@ -14,21 +13,6 @@ import type { SavedFight } from "../save";
 const CELL = 34, BX = 42;
 const STATUSES: Status[] = [...BUFFS, ...DEBUFFS];
 
-/** A stored bot build of this round (or the nearest round that has one). */
-function pickGhost(game: Game, player: Build): Build {
-  const order: number[] = [];
-  for (let r = player.round - 1; r >= 0; r--) order.push(r);
-  for (let r = player.round; r < GHOSTS.length; r++) order.push(r);
-  for (const r of order) {
-    const pool = [...(GHOSTS[r] ?? [])];
-    while (pool.length) {
-      const g = pool.splice(Math.floor(Math.random() * pool.length), 1)[0]!;
-      try { compile(g, game.data); return g; } catch { /* stale ghost: the data changed since it was stored */ }
-    }
-  }
-  return { ...player };
-}
-
 interface SideView { hpFill: Graphics; enFill: Graphics; hpText: Text; chips: Container; chipKey: string; flashes: Graphics[]; barY: number }
 
 /** `saved`: a fight started before a reload; it is fought again with the same opponent and seed, so it ends the same way. */
@@ -36,7 +20,9 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const root = new Container();
   const data = game.data, rules = data.rules, B = rules.battle;
   const player = buildOf(game.run!);
-  const fight: SavedFight = saved ?? { ghost: pickGhost(game, player), seed: (Math.random() * 0x7fffffff) | 0 };
+  const league = leagueOf(game.meta, game.profile.season.points);
+  if (!saved) game.opponents.submit(player, league);
+  const fight: SavedFight = saved ?? { ghost: game.opponents.pick(player, league), seed: (Math.random() * 0x7fffffff) | 0 };
   game.save(fight);
   const ghost = fight.ghost;
   const sides: [CSide, CSide] = [compile(player, data), compile(ghost, data)];

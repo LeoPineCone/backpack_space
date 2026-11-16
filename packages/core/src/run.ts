@@ -209,5 +209,3 @@ export function finishRound(s: RunState, data: GameData, won: boolean, rng: Rng)
   s.special = specialOptions(data, s.hero, fought, rng);
   startRound(s, data, rng);
 }
-/** Reward for a finished run, in the unit kept outside the run: rounds played + lives left. */
-export function runReward(s: RunState): number { return s.results.length + Math.max(0, s.lives); }

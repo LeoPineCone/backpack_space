@@ -29,7 +29,7 @@ interface Subject {
   onRotate?: () => void;
 }
 
-function keywordRow(kw: Keyword, w: number): { node: Container; h: number } {
+export function keywordRow(kw: Keyword, w: number): { node: Container; h: number } {
   const c = new Container();
   const text = txt(kw.text, 12, { font: "text", color: C.dim, wrap: w - 72, lineHeight: 16 });
   const h = Math.max(56, 30 + text.height + 10);

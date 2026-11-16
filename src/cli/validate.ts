@@ -1,5 +1,5 @@
 /** Validates data/*.json and prints a summary of the catalogue. */
-import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
+import { checkItemArt, loadGameData, loadItemArt, loadMeta } from "@backpack-space/core/node";
 
 try {
   const d = loadGameData();
@@ -15,6 +15,9 @@ try {
     return `${l.name} ${missing ? `(${missing} texts missing, English stands in)` : "complete"}${unused ? `, ${unused} unused` : ""}`;
   });
   console.log(`Languages: English (source)${langs.length ? `, ${langs.join(", ")}` : ""}. Details: npm run i18n`);
+  const meta = loadMeta(d);
+  const season = meta.seasons[meta.seasons.length - 1]!;
+  console.log(`Meta: ${meta.heroLevels.xp.length + 1} hero levels, ${meta.planetTrack.length} planet track steps, ${meta.leagues.ids.length} leagues, ${meta.seasons.length} season(s) (latest: ${season.pass.levels.length} pass levels), ${meta.cosmeticById.size} cosmetics.`);
   const orphans = items.filter((i) => i.crafted && !d.recipes.some((r) => r.out === i.id));
   if (orphans.length) console.log(`Warning: crafted without recipe: ${orphans.map((i) => i.id).join(", ")}`);
 } catch (e) {

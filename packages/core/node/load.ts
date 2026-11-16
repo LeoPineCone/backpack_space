@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildGameData, type GameData, type RawData } from "../src/gamedata.js";
+import { buildMeta, type Meta } from "../src/meta.js";
 
 /** repository root (this file lives in packages/core/node/) */
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
@@ -31,6 +32,11 @@ export function loadRawData(dataDir = DATA_DIR): RawData {
 
 export function loadGameData(dataDir = DATA_DIR): GameData {
   return buildGameData(loadRawData(dataDir));
+}
+
+/** Meta progress between runs (data/meta.json), checked against the game data. */
+export function loadMeta(data: GameData = loadGameData(), dataDir = DATA_DIR): Meta {
+  return buildMeta(readJson(join(dataDir, "meta.json")), data);
 }
 
 /** Optional bot ratings (data/sim/ratings.json), written by `npm run report:items -- --write-ratings`. */

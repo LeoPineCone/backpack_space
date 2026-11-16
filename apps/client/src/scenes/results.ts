@@ -1,15 +1,16 @@
 /** After a fight: the result of the round, and at the end of a run the summary with its reward. */
 import { Container, Graphics } from "pixi.js";
-import { finishRound, newRun, runReward, type BattleResult, type Build, type CSide } from "@backpack-space/core";
+import { finishRound, heroLevel, newRun, type BattleResult, type Build, type CSide, type RunBooking } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, dimmer, disc, hearts, pillButton, roundButton, txt } from "../ui";
+import { at, box, dimmer, disc, heroBadge, hearts, pillButton, roundButton, txt } from "../ui";
 import { piece, pieceFit, starMarks } from "../pieces";
 import { itemPopup } from "./popup";
 import { shopScene } from "./shop";
 import { heroScene } from "./hero";
-import { t, tr } from "../i18n";
+import { rewardTile } from "./progress";
+import { t, tr, upper } from "../i18n";
 
 const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
 const SOURCE_ICON: Record<string, string> = { weapon: "weapon", direct: "damage", burn: "burn", toxin: "toxin", spikes: "spikes" };
@@ -92,7 +93,7 @@ export function resultScene(game: Game, f: Fought): Scene {
   root.addChild(at(pillButton(t("ui.continue"), W - 116, 64, () => {
     finishRound(run, data, won, game.rng);
     // the stored run ends before the reward is booked, so a reload cannot book it twice
-    if (run.over) { game.dropSave(); game.addReward(runReward(run)); game.show(runEndScene(game)); }
+    if (run.over) { game.dropSave(); game.show(runEndScene(game, game.bookRun(run))); }
     else {
       game.show(shopScene(game));
       // what merged after this fight is shown once
@@ -105,7 +106,7 @@ export function resultScene(game: Game, f: Fought): Scene {
   return { root };
 }
 
-export function runEndScene(game: Game): Scene {
+export function runEndScene(game: Game, b: RunBooking): Scene {
   const root = new Container();
   const data = game.data, run = game.run!;
   root.addChild(box(W, H, { fill: C.bg }));
@@ -120,16 +121,16 @@ export function runEndScene(game: Game): Scene {
   }
   root.addChild(pips);
 
-  // reward: rounds played + lives left
+  // Galaxies: wins + lives left
   const lives = Math.max(0, run.lives);
   const sum = new Container();
-  const a = txt(run.results.length, 18, { color: C.dim, anchor: [0, 0.5] });
-  const b = txt(`+  ${lives}`, 18, { color: C.dim, anchor: [0, 0.5] });
-  sum.addChild(at(a, 0, 28), at(icon("swords", 18, C.dim), a.width + 14, 28), at(b, a.width + 32, 28), at(icon("heart", 18, C.dim), a.width + 32 + b.width + 14, 28));
-  const sw = a.width + 32 + b.width + 26;
-  const total = txt(`+${runReward(run)}`, 28, { anchor: [0, 0.5] });
+  const a = txt(run.wins, 18, { color: C.dim, anchor: [0, 0.5] });
+  const bl = txt(`+  ${lives}`, 18, { color: C.dim, anchor: [0, 0.5] });
+  sum.addChild(at(a, 0, 28), at(icon("swords", 18, C.dim), a.width + 14, 28), at(bl, a.width + 32, 28), at(icon("heart", 18, C.dim), a.width + 32 + bl.width + 14, 28));
+  const sw = a.width + 32 + bl.width + 26;
+  const total = txt(`+${b.galaxies}`, 28, { anchor: [0, 0.5] });
   const pw = 22 + total.width + 8 + 24 + 22;
-  sum.addChild(at(box(pw, 56, { fill: C.panel, line: C.cyan, lineW: 2, radius: 28 }), sw + 14, 0), at(total, sw + 36, 28), at(icon("gem", 24, C.cyan), sw + 36 + total.width + 20, 28));
+  sum.addChild(at(box(pw, 56, { fill: C.panel, line: C.cyan, lineW: 2, radius: 28 }), sw + 14, 0), at(total, sw + 36, 28), at(icon("galaxy", 24, C.text), sw + 36 + total.width + 20, 28));
   root.addChild(at(sum, (W - (sw + 14 + pw)) / 2, 216));
 
   // the final backpack
@@ -141,6 +142,22 @@ export function runEndScene(game: Game): Scene {
   for (const p of run.bags) root.addChild(at(piece(data, p.item, p.rot, cell, { label: false }), gx + p.x * cell, gy + p.y * cell));
   for (const p of run.items) root.addChild(at(piece(data, p.item, p.rot, cell), gx + p.x * cell, gy + p.y * cell));
   root.addChild(at(starMarks(data, run.bags, run.items, cell), gx, gy));
+
+  // hero XP and level, league points, what was unlocked
+  const meta = game.meta, p = game.profile;
+  const lv = heroLevel(meta, p.heroXp[run.hero] ?? 0);
+  const xpRow = new Container();
+  xpRow.addChild(at(heroBadge(data.heroes.get(run.hero)!.name, 18), 18, 18));
+  xpRow.addChild(at(txt(b.level[1] > b.level[0] ? `${t("ui.level")} ${b.level[0]} → ${b.level[1]}` : `${t("ui.level")} ${b.level[1]}`, 15, { color: b.level[1] > b.level[0] ? C.gold : C.text, anchor: [0, 0.5] }), 46, 18));
+  xpRow.addChild(at(box(110, 8, { fill: C.bg, line: C.line, radius: 4 }), 150, 14), at(box(Math.max(8, 110 * (lv.need ? lv.into / lv.need : 1)), 8, { fill: C.cyan, radius: 4 }), 150, 14));
+  xpRow.addChild(at(txt(`+${b.xp}`, 15, { anchor: [0, 0.5] }), 272, 18), at(icon("xp", 16, C.dim), 334, 18));
+  root.addChild(at(xpRow, 20, 568));
+  const lgRow = new Container();
+  lgRow.addChild(at(icon("league", 26, C.gold), 18, 18), at(txt(upper(t(`league.${meta.leagues.ids[b.league[1]]}`)), 15, { color: b.league[1] > b.league[0] ? C.gold : C.text, anchor: [0, 0.5] }), 46, 18));
+  lgRow.addChild(at(txt(b.points > 0 ? `+${b.points}` : `${b.points}`, 16, { color: b.points > 0 ? C.good : b.points < 0 ? C.bad : C.dim, anchor: [1, 0.5] }), 350, 18));
+  root.addChild(at(lgRow, 20, 614));
+  const shown = b.rewards.slice(0, 6);
+  shown.forEach((r, i) => root.addChild(at(rewardTile(game, r, 48), (W - (shown.length * 58 - 10)) / 2 + i * 58, 664)));
 
   root.addChild(at(roundButton("share", 32, () => game.toast(t("toast.shareLater")), { iconSize: 26 }), 52, 792));
   root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.newSeed(); game.run = newRun(data, run.hero, game.rng); game.show(shopScene(game)); }), 96, 760));
