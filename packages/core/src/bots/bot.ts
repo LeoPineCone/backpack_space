@@ -24,6 +24,8 @@ export interface BotOpts {
   path?: string;
   /** how hard the bot tries to lay its items out well (default: the arranger's own 250 moves, 4 tries) */
   arrange?: { moves?: number; tries?: number };
+  /** how much more a bot committed to a path values that path's items (default PATH_LIKING) */
+  pathLiking?: number;
 }
 export interface BotLog {
   round: number; bought: string[]; sold: string[];
@@ -68,8 +70,9 @@ export function onPath(def: ItemDef, path: { id: string; focus: readonly string[
   const focus = path.focus;
   return focus.some((f) => f === def.id || (def.tags as string[]).includes(f) || def.effects.some((e) => e.gain === f || e.inflict === f || e.do === f || e.per?.buff === f || e.per?.debuff === f));
 }
-/** how much more a bot committed to a path values that path's items (a committed player builds around them) */
-const PATH_LIKING = 2;
+/** how much more a bot committed to a path values that path's items (a committed player builds around them);
+ *  a measurement can try other values with BotOpts.pathLiking (npm run balance:sweep -- --knob bot:pathLiking) */
+export const PATH_LIKING = 2;
 
 const ARTIFACT_WORTH = 14;
 /** the bot accepts weapons that need this much more Energy than comes in (the full bar at the start covers some) */
@@ -103,7 +106,7 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
   for (const o of defs) if (refs(o).some((t) => (def.tags as string[]).includes(t))) syn += 0.06;
   v *= 1 + Math.min(0.8, syn);
   const path = data.heroes.get(bot.hero)!.paths.find((p) => p.id === bot.path);
-  if (path) { if (onPath(def, path)) v *= PATH_LIKING; }
+  if (path) { if (onPath(def, path)) v *= opts.pathLiking ?? PATH_LIKING; }
   else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;

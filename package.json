@@ -28,6 +28,7 @@
     "balance:replay": "tsx src/balance/replay.ts",
     "balance:sense": "tsx src/balance/sense.ts",
     "balance:propose": "tsx src/balance/propose.ts",
+    "balance:sweep": "tsx src/balance/sweep.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit && tsc --noEmit -p playground && npm run typecheck --workspaces --if-present",
     "play": "vite playground",

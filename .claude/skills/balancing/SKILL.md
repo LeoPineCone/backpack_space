@@ -30,6 +30,7 @@ not chance and not a bot quirk.
 | `npm run balance:replay -- --patch p.json` | what a number change does to every fight-level target, paired on the baseline's lobbies; `--full` plays the lobbies again | 5–20 s; `--full` ~4 min |
 | `npm run balance:sense -- --knobs hero:venn` | which number moves which target by how much (one step each); dead numbers, strong levers, side effects | ~1 s per knob |
 | `npm run balance:propose -- --knobs hero:venn` | proposes the fewest, smallest number changes that bring the targets into their bands; writes a patch, changes nothing | 3–10 min |
+| `npm run balance:sweep -- --knob rule:shop.heroOfferPct --values 20,40,50` | one number at several values, every value a full run on the baseline's lobbies (bots shop again): how much of a build is on its path, variety between runs, path against open bot, hero and path win shares, as tables and curves. Knobs: `rule:<path>`, `item:<id>:<path>`, `hero:<id>:<path>`, `bot:pathLiking` | ~3 min per value |
 | `npm run report:paths` | win share per hero and per path, vs the hero's open bot; targets marked ✓/✗ | quick 10 s, normal 30 s, precise ~1.5 min |
 | `npm run report:strength` | item outliers by three views (add one, remove one, regression); needs the baseline, no bot shops | ~1 min |
 | `npm run report:meta` | path against path (12 × 12), hero against hero, rock-paper-scissors share, meta share per hero (target) and path; needs the baseline | ~45 s |
@@ -189,9 +190,9 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 1. Schema + battle change with tests. The bots must understand it (as the Energy bookkeeping in `bot.ts`),
    otherwise every number measures a bot blind spot.
-2. Its global numbers are rules: bots usually read them, so measure with full runs. Try 5–7 values of one rule
-   with patches and `balance:replay --full` (a sweep), look at fight length, Supernova and the hero bands, choose
-   a region with the designer.
+2. Its global numbers are rules: bots usually read them, so measure with full runs. Try 4–6 values of one rule
+   with `npm run balance:sweep -- --knob rule:<path> --values …` (paths and heroes per value); for fight length
+   and Supernova at the chosen value use a patch with `balance:replay --full`. Choose a region with the designer.
 3. Full `npm run ratings -- --seeds 1,2`, `npm run baseline`, then the item procedure for the items that use it.
 
 ## Lessons learned (keep adding)

@@ -71,6 +71,7 @@ npm run baseline          # the reference for tuning: lobbies on two seeds store
 npm run balance:replay -- --patch p.json   # what a number change does to every target, in seconds (--full: bots shop again)
 npm run balance:sense -- --knobs hero:venn    # which number moves which target by how much
 npm run balance:propose -- --knobs hero:venn  # proposes the fewest number changes that bring the targets into their bands (changes nothing)
+npm run balance:sweep -- --knob rule:shop.heroOfferPct --values 20,40,50   # one number at several values, full runs: paths and heroes per value, with curves
 ```
 
 Tuning never edits `data/` to try something: a patch file (`{ "changes": [{ "item": "venus_mantrap", "set": { "cooldown": 2.0 } }] }`) is measured against the baseline, and a proposal is only a patch file until the designer agrees. How this works and when a replay is exact: `.claude/skills/balancing/SKILL.md`; the design behind it: `docs/proposals/balancing-workflow.md`.

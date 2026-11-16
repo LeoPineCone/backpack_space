@@ -7,6 +7,7 @@ import { mergePatches, patchedData, touchedBy, type Patch } from "../src/balance
 import { measurePathLobby } from "../src/sim/paths";
 import { measureItem } from "../src/sim/items";
 import { cycleShare, metaShares } from "../src/balance/meta";
+import { itemDistance, pullOf } from "../src/balance/pull";
 import { correlation, fightModel, removeOne, ridgeLogistic, robustZ, solveSpd, type Row } from "../src/balance/strength";
 
 const data = loadGameData();
@@ -140,5 +141,20 @@ describe("item strength", () => {
     const model = fightModel(panel, data);
     expect(model.size).toBe(data.itemList.filter((i) => !i.isBag).length);
     expect([...model.values()].every(Number.isFinite)).toBe(true);
+  });
+});
+
+describe("path pull", () => {
+  it("compares two builds by the items they do not share", () => {
+    expect(itemDistance(["a", "b"], ["a", "b", "b"])).toBe(0);
+    expect(itemDistance(["a", "b"], ["c"])).toBe(1);
+    expect(itemDistance(["a", "b"], ["b", "c"])).toBeCloseTo(2 / 3);
+  });
+  it("bots that like their path more build more of it", () => {
+    const at = (pathLiking: number) => pullOf(data, [0, 1].map((i) => playPanelLobby(data, 5, i, false, { pathLiking })));
+    const low = at(1), high = at(4);
+    expect(pullOf(data, panel.lobbies).commit).toBeGreaterThan(low.commit!);
+    expect(high.commit).toBeGreaterThan(low.commit! + 0.1);
+    expect(Object.keys(low).filter((k) => k.startsWith("commit:")).length).toBe(data.heroList.reduce((n, h) => n + h.paths.length, 0));
   });
 });
