@@ -1658,5 +1658,9 @@
   "dune_ox": {
     "brief": "Shaggy ox with wide curved horns and sand caked on its coat, head lowered. Accent: mustard.",
     "description": "A shaggy ox with wide curved horns standing with its head lowered, sand caked on its long coat, a short breath cloud at its nostrils and one front hoof scraping the ground."
+  },
+  "tundra_yak": {
+    "brief": "Heavy long-haired yak with frost on its coat and short thick horns. Accent: bone.",
+    "description": "A heavy long-haired yak standing square, frost clinging to its coat, short thick horns and a small bell on a rope around its neck."
   }
 }
