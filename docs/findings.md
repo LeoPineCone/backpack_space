@@ -1,3 +1,23 @@
+# Free picks moved forward: hero item after round 2, general artifact after round 6 (2026-11-16)
+
+Question (Ilja, after the first hand-played runs showed that a path only begins at round 5): pick the hero item earlier, and the general artifact with it? Decided: rounds 2 and 6 instead of 4 and 8, then balance.
+
+**Measured first, nothing else changed** (`balance:replay --full` with a patch on `rules.specials`, 2 × 240 lobbies): heroes stay at 49–51 %, paths in their bands. Sure on both seeds: fights in rounds 3 and 4 last 15 s instead of 20 (Supernova reached 3 % instead of 12 %), rounds 7 and 8 about 1 s shorter, Rook +4 points in rounds 1–4, Ysel −3 to −5, Quill +2 overall. Play style of the paths (`pathStyle`) does not move: the gain is feel (a direction from round 3 on, an artifact that acts for half the run), not a number. General artifact after round 5 instead of 6 pushed more targets off (46 against 43 of 124).
+
+**Cause of the fast rounds:** the health curve jumped from 250 to 400 right after the old hero item. With the item two rounds earlier the anchors met 200 and 250 health.
+
+**Changed:**
+- `rules.specials`: after rounds 2 and 6.
+- `rules.heroHp`: 100, 150, 300, 350, 450, 550 … 1150 (was 100, 150, 200, 250, 400, 500 … 1100). The jump follows the hero item again; +50 from round 5 on brings rounds 5–8 back above 18 s. Health is not read by the bots, so the replay was exact. An even "+100 from round 3" (400 in round 4, 1200 at the end) was too much: Rook 45 %, Ysel 53 %.
+- Rook: mechanical items 42 % faster (was 38). More health costs Rook about a point; 40 was not enough.
+
+**Result (new baseline, seed 1 / seed 2):** Venn 49 / 50, Rook 49 / 50, Quill 51 / 51, Ysel 51 / 50 %. All 12 paths inside 46–54 % on seed 1 (seed 2: Burning corona 55). Fights 18.0–20.8 s in every round, Supernova 4–13 %. 36 of 124 targets off (31 before the move, 43 right after it).
+
+**Still open:**
+- Late rounds: Overclocked guns 42 / 47, Well-fed pack 41 / 44, Late ascension 42 / 40, Eclipse 58 / 55, Thorn wall 56 / 57.
+- **Hero items are worth very different amounts** (`report:picks`, normal, ±4–5): Herd Heart +32 points over the rest of the run (best in 91 % of its offers), six items +16 to +18, Master Blueprint, Ancient Egg and Nova Crown about +4 (they count crafted items, swarm pets or Cryo that are not there yet). This is not new with round 2: on main with the pick after round 4 the same four stand out (Herd Heart +29, the three at +3 to +4). It came with the path payoff and path split passes and was not re-measured then. Needs its own pass: Herd Heart down, the three counting anchors need something that works from the first round on.
+- General artifacts after round 6: Star Forge and Time Dilator at 0.53 × median, 12–22 % of offers without a good option.
+
 # First playtest by hand: Quill's two new paths (2026-11-16)
 
 Two runs played as text with `npm run playtest` (an AI as the player, a goal per run, notes each round). One run each, so these are observations about feel, not balance numbers.

@@ -55,7 +55,7 @@ point at neighbours: about 1 in 6 items has them. Larger shapes cost backpack ro
 | epic | 7–11, 8 | 3 |
 | legendary | 11–21, 13 | 4 |
 
-Artifacts are free picks (after rounds 4 and 8), never sold. `weight` (default 1) only changes how often the
+Artifacts are free picks (after rounds 2 and 6), never sold. `weight` (default 1) only changes how often the
 shop offers the item within its rarity (0.8 rarer, 1.25–1.5 more often); it is not a strength knob.
 
 ## 4. Number budget for a first draft

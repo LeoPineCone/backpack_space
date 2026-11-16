@@ -8,16 +8,16 @@
   "heroHp": [
     100,
     150,
-    200,
-    250,
-    400,
-    500,
-    600,
-    700,
-    800,
-    900,
-    1000,
-    1100
+    300,
+    350,
+    450,
+    550,
+    650,
+    750,
+    850,
+    950,
+    1050,
+    1150
   ],
   "goldPerRound": [
     14,
@@ -122,12 +122,12 @@
   },
   "specials": [
     {
-      "afterRound": 4,
+      "afterRound": 2,
       "pool": "hero",
       "show": 2
     },
     {
-      "afterRound": 8,
+      "afterRound": 6,
       "pool": "general",
       "show": 3
     }

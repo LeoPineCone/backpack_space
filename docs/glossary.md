@@ -72,7 +72,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Rare** | Selten | Offered more often in later rounds. | `rare` |
 | **Epic** | Episch | Strong; in the shop only if no recipe makes it. | `epic` |
 | **Legendary** | Legendär | Strongest; in the shop only if no recipe makes it. | `legendary` |
-| **Artifact** | Artefakt | Free special item, never sold. Signature artifact after round 4, general artifact after round 8. | `rarity: artifact`, `takeSpecial`, `rules.specials` |
+| **Artifact** | Artefakt | Free special item, never sold. Signature artifact after round 2, general artifact after round 6. | `rarity: artifact`, `takeSpecial`, `rules.specials` |
 | **Signature artifact** | Helden-Artefakt | One of the hero's own artifacts. | `Hero.artifacts`, `pool: hero` |
 | **General artifact** | Allgemeines Artefakt | An artifact any hero can get. | `generalArtifacts`, `pool: general` |
 

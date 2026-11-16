@@ -26,7 +26,7 @@ export function tagShares(data: GameData, owned: readonly string[]): Map<string,
   for (const id of owned) for (const t of data.items.get(id)!.tags) if (t !== "crafted" && t !== "bag") out.set(t, (out.get(t) ?? 0) + 1 / owned.length);
   return out;
 }
-/** The path whose anchor (a hero item with a path, picked after round 4) the player owns, or "". */
+/** The path whose anchor (a hero item with a path, picked after round 2) the player owns, or "". */
 export function anchorPath(data: GameData, owned: readonly string[]): string {
   for (const id of owned) { const d = data.items.get(id); if (d?.rarity === "artifact" && d.hero && d.path) return d.path; }
   return "";

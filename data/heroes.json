@@ -12,7 +12,7 @@
     "id": "rook", "name": "RK-7 \"Rook\"", "title": "Salvage Unit",
     "focus": "Mechanical items and crafting. Combining pays gold and crafted items run faster.",
     "craftGold": 3,
-    "effects": [{ "on": "passive", "to": "ship", "tag": "crafted", "mod": { "speed": 25 } }, { "on": "passive", "to": "ship", "tag": "mechanical", "mod": { "speed": 38 } }],
+    "effects": [{ "on": "passive", "to": "ship", "tag": "crafted", "mod": { "speed": 25 } }, { "on": "passive", "to": "ship", "tag": "mechanical", "mod": { "speed": 42 } }],
     "bags": [{ "item": "field_pack", "x": 3, "y": 2, "rot": 0 }, { "item": "tool_roll", "x": 1, "y": 2, "rot": 0 }],
     "start": [{ "item": "welding_arm", "x": 3, "y": 2, "rot": 0 }, { "item": "scrap_metal", "x": 5, "y": 2, "rot": 0 }],
     "artifacts": ["master_blueprint", "perpetual_engine", "nanite_swarm"],

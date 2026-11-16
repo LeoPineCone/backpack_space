@@ -141,7 +141,7 @@ export const Hero = z.object({
   /** bags the hero starts with */
   bags: z.array(Placement),
   start: z.array(Placement),
-  /** signature items offered for free after round 4 */
+  /** signature items offered for free after round 2 */
   artifacts: z.array(z.string()),
   /** ways to win this hero is designed for; a balancing bot commits to one. Focus entries are tags, statuses, "heal", "cleanse", "strip", "crafted" or item ids */
   paths: z.array(z.object({ id: z.string(), name: z.string(), focus: z.array(z.string()).min(1) }).strict()).default([]),

@@ -11,10 +11,10 @@ A mobile auto-battler in the classic backpack genre, set in space. You pick a he
 - **Decided:** 12 rounds per run, 4 lives. A lost fight costs a life; the run ends when the lives are gone or after round 12.
 - **Decided:** a finished run pays a reward of rounds played + lives left (at most 12 + 4 = 16) in a unit outside the run. Its name and what it buys are open.
 - Each round: shop and packing, then one fight against the stored build of another player from the same round (async PvP; in the tools: bot builds).
-- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`). **Health in even steps (decided 2026-11-15):** 100, 150, 200, 250, then +100 per round up to 1100. The shop shows the hero's health for the coming fight (heart with a plus: round base plus items) and names the round's base when the round starts, so the growth is never hidden.
-- **Decided:** free special items after round 4 and round 8.
-  - After round 4: a **hero item** (signature artifact). Each hero has three, one per path: the **anchor** of that path. **Decided 2026-11-16:** two of the three are shown at random (luck in every run), you take one and with it a path. The shop then offers that path's hero items a little more often (`shop.anchorPathWeight`), without forcing anything.
-  - After round 8: a **general artifact**. Three of a pool of ten are shown, you take one. **Decided 2026-11-16:** they do not follow the path; each is a small puzzle piece with its own mechanic, often with stars that reach further than the neighbours and filters such as melee weapons, pets or food. No pick may be one you always take, none may be useless (`npm run report:picks`).
+- Gold per round and hero health per round are tables in `data/rules.json` (`goldPerRound`, `heroHp`). **Health in even steps (decided 2026-11-15, moved with the free picks 2026-11-16):** 100, 150, then 300, 350 after the hero item, then +100 per round up to 1150. The jump sits right after the hero item (it used to sit after round 4 for the same reason): the anchor makes fights faster, the health keeps them at 18–25 s. The shop shows the hero's health for the coming fight (heart with a plus: round base plus items) and names the round's base when the round starts, so the growth is never hidden.
+- **Decided:** free special items after round 2 and round 6 (moved forward from 4 and 8 on 2026-11-16: the path should steer most of the run and the artifact should act for half of it).
+  - After round 2: a **hero item** (signature artifact). Each hero has three, one per path: the **anchor** of that path. **Decided 2026-11-16:** two of the three are shown at random (luck in every run), you take one and with it a path. The shop then offers that path's hero items a little more often (`shop.anchorPathWeight`), without forcing anything.
+  - After round 6: a **general artifact**. Three of a pool of ten are shown, you take one. **Decided 2026-11-16:** they do not follow the path; each is a small puzzle piece with its own mechanic, often with stars that reach further than the neighbours and filters such as melee weapons, pets or food. No pick may be one you always take, none may be useless (`npm run report:picks`).
 
 ## Backpack and bags
 
@@ -98,7 +98,7 @@ Four heroes, each with an own focus, passive, start items, shop pool and artifac
 
 ### Ways to win
 
-Every hero is designed for three paths (`paths` in `data/heroes.json`). Every hero item names its path (`path`; none = core item of the hero). Each path has its own main damage source or rhythm, an **anchor** among the hero items after round 4, feeder items in the shop before round 4 and support items after it; a path also works without its anchor. `npm run report:paths` lets bots commit to one path each, compares them and shows each path's profile (damage by mechanic, best item, rhythm); the design is in `docs/proposals/hero-paths.md`.
+Every hero is designed for three paths (`paths` in `data/heroes.json`). Every hero item names its path (`path`; none = core item of the hero). Each path has its own main damage source or rhythm, an **anchor** among the hero items after round 2, feeder items in the shop before it and support items after it; a path also works without its anchor. `npm run report:paths` lets bots commit to one path each, compares them and shows each path's profile (damage by mechanic, best item, rhythm); the design is in `docs/proposals/hero-paths.md`.
 
 | Hero | Paths |
 |---|---|
