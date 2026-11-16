@@ -127,6 +127,41 @@ Shapes are written as in `data/items` (`#` cell, `*` star, `.` empty). Numbers a
 
 All of these can be written with today's effects (`starUse` + `tag`, `to: stars`, `per: stars`, `if: hpBelow / chance`), except the melee/ranged filter. Each pattern is different, so two artifacts never want the same spot. The pool could grow later (e.g. to 15) with more patterns, so that round 8 surprises more often.
 
+### Balancing the free picks
+
+Ilja (2026-11-16): not too strict, but no free pick may be so strong that you always take it and it nearly decides the run, and none may be nearly useless.
+
+**Today this is already off.** `report:items` gives every artifact for free at its round and measures the gain in win share (`docs/reports/items.txt`, normal accuracy, ±2–3):
+
+| General artifact (round 9) | Gain | | General artifact (round 9) | Gain |
+|---|---|---|---|---|
+| Time Dilator | **+27.6** | | Star Forge | +6.0 |
+| Titan Core | **+20.0** | | Galactic Cookbook | +5.6 |
+| Quantum Dice | +10.5 | | Plague Vault | +5.3 |
+| Ancient Monolith | +9.3 | | Zoo Beacon | +4.6 |
+| Wormhole Generator | +6.8 | | Dyson Fragment | **+4.3** |
+
+Time Dilator is worth six Dyson Fragments. Among the hero items (round 5) the spread is +8 to +29 (Ancient Egg and Terrarium Heart strong, Herd Heart and Stellar Lens weak).
+
+**New check `report:picks`** (one report for both free picks):
+
+1. **Gain** per artifact as today, plus **per hero**, so a pet artifact that is great for Quill and weak for the others is visible.
+2. **Choice test:** take real runs at the moment of the pick and play the rest of the run once with **each** option shown (same seed, same opponents). This answers the real question: "if these three are shown, which one wins?"
+   - **best in its offer:** how often the item is the winning choice when it is shown;
+   - **worst in its offer:** how often it is the losing choice.
+3. **Empty offers:** how often a random offer contains no good option for the hero.
+
+**Targets (wide on purpose, into `data/sim/targets.json`):**
+
+| Measure | Round 8 (3 of 10) | Round 4 (2 of 3) |
+|---|---|---|
+| gain, compared with the median of its group | 0.6–1.6 × median | 0.7–1.4 × median |
+| best in its offer (fair: 33 % / 50 %) | at most 55 % | at most 65 % |
+| worst in its offer | at most 55 % | at most 65 % |
+| offers with no option above 0.6 × median, per hero | at most 10 % | – |
+
+An item outside a band is marked like the other reports do (✓/✗). Type-filtered artifacts (Zoo Beacon for pets, Cookbook for food) may be stronger for one hero, but must not be below 0.4 × median for any hero, so no offer is wasted. For the round-4 anchors the choice test also tells whether the path decision is real: if one anchor wins 80 % of the time, players are not choosing a path, they are taking the best item.
+
 | # | Change | Kind |
 |---|---|---|
 | R6 | Star and passive filters may name a weapon range: `tag: "melee"` / `tag: "ranged"` (next to the item types and `crafted`). Small schema + compile change, rules text in `describe.ts`, glossary already has melee/ranged. | schema |
@@ -156,7 +191,7 @@ The report prints one light per hero: "paths distinct" or which pair is too clos
 2. `path` field on hero items (R2) and bot logic (R4).
 3. Anchors per hero, Rook and Quill first, then Venn and Ysel; R3 with them.
 4. New feeder/support items, picture briefs, translations, catalog.
-5. General artifacts as puzzle pieces (with R6).
+5. General artifacts as puzzle pieces (with R6), with `report:picks` built before them so their numbers are set by measurement.
 6. Measure (with and without anchor) and balance.
 
 ## Open questions for Ilja
