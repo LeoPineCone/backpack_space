@@ -1008,8 +1008,8 @@
     "description": "A rat with big front teeth peeking out of a round hole in the ground, only head and paws showing."
   },
   "hatchery": {
-    "brief": "Woven nest full of eggs, kept warm under shed fur. Accent: mustard.",
-    "description": "Filling the square box: a big woven nest seen slightly from above, full of round eggs of different sizes, half covered by a blanket of shed fur. Mustard on the eggs' speckles."
+    "brief": "Salvaged egg incubator, its lid replaced by a woven nest of eggs under shed fur. Accent: mustard.",
+    "description": "Filling the square box: a dented salvaged incubator box with a small heater coil and a dial, its broken lid replaced by a woven nest full of round eggs, half covered by shed fur. Mustard on the eggs' speckles, cords tying the nest to the metal."
   },
   "star_falcon": {
     "brief": "Falcon with star-speckled wing tips, diving. Accent: mustard.",
@@ -1092,8 +1092,8 @@
     "description": "Filling the square box: a ram lowering its head, curled horns, flat mustard zig-zag sparks crackling between them, shaggy coat."
   },
   "nursery": {
-    "brief": "Big woven nest with young animals asleep in a heap. Accent: mustard.",
-    "description": "Filling the square box: a big woven nest with young animals of the herd asleep in a heap, one pup's ears sticking out, shed fur as a blanket."
+    "brief": "Old warming cradle machine, padded by the herd, young animals asleep in a heap. Accent: mustard.",
+    "description": "Filling the square box: an old rocking warming cradle of riveted metal with a small heater vent and a crank, padded with woven grass and shed fur by the herd, young animals asleep in a heap inside, one pup's ears sticking out."
   },
   "sky_serpent": {
     "brief": "Long flying serpent with fins and a shaggy mane. Accent: deep teal.",

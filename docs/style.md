@@ -44,7 +44,7 @@ Item pictures are described in `data/item-art.json` (list: [item-art.md](item-ar
 - **Hero items speak the hero's language** ([heroes.md](heroes.md)):
   - *Venn:* the station's botany lab taken over by the plant. Specimen tags, petri dishes, flasks, seed trays, station pipes and crates, the botanist's drone; rust-red tendrils, pale seed bulbs, bark, thorns. Plants never get eyes or faces, only jaws.
   - *Rook:* everything is salvage, welded or tied together from wreck parts: mismatched plates, clamps, wire, pieces of satellite housing, spare tool legs. The mustard lantern eye comes back as a lamp or sticker.
-  - *Quill:* made by the herd, not by people: woven grass and twigs, shed fur, braided cords, tusk tips, bone, shells, berries and roots. No leashes, whistles or cages.
+  - *Quill:* made by the herd, not by people: woven grass and twigs, shed fur, braided cords, tusk tips, bone, shells, berries and roots. No leashes, whistles or cages. Quill's mechanical items are machines the herd found and made their own: dented salvage padded and tied with weaving and fur.
   - *Ysel:* relics of her order: dark iron, bent iron rings like her head cage, cracked sun pieces in flat mustard and rust red, bells, rosary stones, heavy cloth with rust-red bands. Heat is drawn as wavy ink lines, never as glow.
 - Accent colour as in the brief; the heroes' own marks (Venn's rust-red tendrils, Rook's mustard eye, Ysel's rust-red bands) may appear next to it.
 
