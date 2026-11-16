@@ -381,7 +381,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 |---|---|---|---|---|---|---|
 | Seed Pod | common | 2 | `#` | weapon, organic | 3–4 damage every 2.4 s. Ranged, 5 Energy per attack. On hit: inflict 1 Toxin. | → Spore Mine, Thorn Pod |
 | Watering Drone | common | 2 | `#/#` | pet, mechanical | Every 3 s: heal 10. | → Irrigation Swarm |
-| Compost Bin | common | 3 | `*#*` | accessory, organic | Starred food: 30 % faster. Every 4 s: gain 1 Regen and gain 3 Energy. | → Harvest Crate |
+| Compost Bin | common | 3 | `*#*` | accessory, organic | Starred food: 30 % faster. Every 4 s: gain 2 Regen and gain 3 Energy. | → Harvest Crate |
 | Thornvine | common | 3 | `###` | armor, organic | Battle start: gain 1 Spikes and 11 Shield. When a weapon hits you: inflict 1 Toxin (25 % chance). | → Briar Fortress, Living Armor |
 | Pollen Cloud | common | 3 | `#` | accessory, organic | Every 3.5 s: inflict 1 Jam and 1 Toxin. | → Irrigation Swarm, Plague Blossom |
 | Grow Lamp | common | 3 | `.*./*#*/.*.` | accessory, mechanical | Starred organic items: 25 % faster. | → Irrigation Swarm |
@@ -397,10 +397,10 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Blight Bomb | rare | 6 | `#` | weapon, organic | 1–2 damage every 3.2 s. Ranged, 6 Energy per attack. On hit: inflict 3 Toxin. | → Plague Blossom |
 | Root Network | epic | 8 | `####` | accessory, organic | You: +14 max health per organic item in your backpack (max 10×). | → Briar Fortress |
 | Carnivorous Orchid | epic | 9 | `##` | weapon, organic | 4–6 damage every 1.8 s. Melee, 4 Energy per attack. On hit: deal 1 damage per 2 Toxin on the enemy (max 12×). | → Hydra Bloom |
-| Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage every 2.2 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and heal 3. | → Jungle Tyrant |
+| Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage every 2.2 s. Melee, attacks without Energy. On hit: inflict 5 Cryo and heal 3. | → Jungle Tyrant |
 | Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. When a weapon hits you: inflict 1 Toxin (30 % chance). |  |
 | Sun Blossom | legendary | 12 | `##/##` | food, organic | Every star phase: heal 40 and gain 3 Regen. Every 2.7 s: inflict 1 Toxin. |  |
-| World Seed | artifact | 0 | `##/##` | accessory, organic | Battle start: gain 2 Spikes. Every star phase: gain 1 Spikes and 2 Regen. |  |
+| World Seed | artifact | 0 | `##/##` | accessory, organic | Battle start: gain 1 Spikes. Every star phase: gain 1 Spikes and 2 Regen. |  |
 | Queen Spore | artifact | 0 | `*#*` | accessory, organic | Battle start: inflict 5 Toxin. Every 3 s: inflict 3 Toxin. When a starred food activates: inflict 2 Toxin. |  |
 | Terrarium Heart | artifact | 0 | `*##*` | accessory, organic | Starred pets: +7 damage, 25 % faster. When a starred pet activates: heal 5. You: 50 % of healing above full health becomes Shield. |  |
 | Spore Mine | crafted (step 1) | 5 | `##` | weapon, organic | 2–3 damage every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin (45 % chance). Each attack: heal 1. | = Seed Pod + Mushroom Cluster |
@@ -409,8 +409,8 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 7–9 damage every 1.8 s. Melee, attacks without Energy. On hit: heal 3, +1 per 2 pets in your backpack (max 5×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
 | Harvest Crate | crafted (step 1) | 8 | `*##*/*##*` | food, organic | Every 2.7 s: heal 14. Starred food: 40 % faster. | = Compost Bin + Moon Melon |
 | Irrigation Swarm | crafted (step 1) | 8 | `*##*` | pet, mechanical | Every 2.2 s: heal 9 and inflict 1 Toxin. Starred organic items: 30 % faster. | = Watering Drone + Pollen Cloud + Grow Lamp |
-| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 2 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
-| Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. Ranged, 4 Energy per attack. On hit: inflict 3 Toxin and 1 Jam. | = Blight Bomb + Pollen Cloud |
+| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 1 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
+| Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. Ranged, 4 Energy per attack. On hit: inflict 3 Toxin and 2 Jam. | = Blight Bomb + Pollen Cloud |
 | Ambrosia | crafted (step 1) | 10 | `##/##` | food, organic | Every star phase: heal 34 and remove 3 of your debuffs. Every 3.1 s: heal 11 and gain 1 Regen. | = Nectar Flask + Healing Moss |
 | Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes and 21 Shield. When a weapon hits you: inflict 1 Toxin (40 % chance). | = Thornvine + Root Network |
 | Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 8–11 damage every 1.4 s. Melee, attacks without Energy. On hit: heal 4 and deal 2 damage per pet in your backpack (max 6×). | = Giant Mantrap + Carnivorous Orchid |
@@ -443,10 +443,10 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage every 3 s. Ranged, 5 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per Overclock you have (max 12×). | → Storm Driver |
 | Bastion Frame | epic | 9 | `##/##` | armor, mechanical | Battle start: gain 70 Shield. When a weapon hits you: deal 1 damage per 12 Shield you have (max 6×). | → Bulwark Array |
 | Quantum Forge | legendary | 12 | `##/##` | accessory, mechanical | Every star phase: gain 3 Overclock and 26 Shield. Every 3 s: destroy 8 enemy Shield. You: +2 Energy per second. |  |
-| Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 2 damage per crafted item in your backpack (max 6×) and destroy 3 enemy Shield. Your crafted items: 10 % faster. |  |
+| Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 1 damage per crafted item in your backpack (max 6×) and destroy 3 enemy Shield. Your crafted items: 10 % faster. |  |
 | Perpetual Engine | artifact | 0 | `*##*` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and gain 3 Energy. When a starred weapon activates: deal 1 damage per 2 Overclock you have (max 4×). |  |
-| Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: deal 1 damage per 3 Shield you have (max 20×). Every star phase: gain 30 Shield and remove 2 of your debuffs. |  |
-| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 6–8 damage every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
+| Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: deal 2 damage per 3 Shield you have (max 20×). Every star phase: gain 30 Shield and remove 2 of your debuffs. |  |
+| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 5–7 damage every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
 | Logic Core | crafted (step 1) | 6 | `*#*` | accessory, mechanical | Every star phase: gain 3 Overclock. Starred mechanical items: 20 % faster. You: +1 Energy per second. | = Circuit Board + Power Cell |
 | Factory Line | crafted (step 1) | 6 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (60 % chance). Every 3.5 s: gain 8 Shield and remove 1 of your debuffs. | = Conveyor Belt + Toolbox |
 | Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 3–5 damage every 1.2 s. Ranged, 2 Energy per attack. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
@@ -468,7 +468,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Treat Pouch | common | 3 | `*#*` | food | Starred pets: +2 damage. Every 4 s: heal 4 and gain 2 Energy. |  |
 | Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 40 % faster, -1 Energy per attack. | → Cozy Den |
 | Kibble Sack | common | 3 | `#/#` | food | Every 3.5 s: heal 1 per pet in your backpack (max 6×) and gain 3 Energy. Every 3.5 s: gain 1 Power (60 % chance). | → Cozy Den, Rat Pack, Banquet Trough |
-| Glutton Toad | common | 3 | `#*/#.` | pet, weapon, organic | 2–3 damage every 1.9 s. Melee, attacks without Energy. When a starred food activates: deal 2 damage. |  |
+| Glutton Toad | common | 3 | `#*/#.` | pet, weapon, organic | 2–3 damage every 1.9 s. Melee, attacks without Energy. When a starred food activates: deal 3 damage. |  |
 | Burrow Rat | common | 3 | `#` | pet, weapon, organic | 1–2 damage every 1.4 s. Melee, attacks without Energy. | → Star Hound, Rat Pack |
 | Feeding Bowl | common | 3 | `*#*` | food | When a starred pet activates: heal 3 and gain 1 Energy (50 % chance). | → Banquet Trough |
 | Guard Goose | common | 3 | `#/#` | pet, weapon, organic | 2–3 damage every 1.8 s. Melee, attacks without Energy. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
@@ -487,7 +487,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
 | Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
 | Elder Tusk | artifact | 0 | `*#*` | accessory | Starred pets: +6 damage, 20 % faster. Battle start: gain 24 Shield. |  |
-| Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 1 Power. Every star phase: heal 4 per pet in your backpack (max 10×). |  |
+| Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 3 Power. Every star phase: heal 4 per pet in your backpack (max 10×). |  |
 | Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 1.5 s: deal 1 damage per pet in your backpack (max 12×). Your pets: 15 % faster. |  |
 | Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
 | Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
@@ -529,7 +529,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 5 Energy per attack. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
 | White Dwarf | epic | 9 | `##/##` | armor | Every star phase: gain 14 Shield. When Collapse begins: gain 94 Shield. You: +42 max health. | → Event Horizon |
 | Supernova Seed | legendary | 12 | `##` | accessory | When Supernova begins: deal 110 damage. Every star phase: inflict 5 Burn and gain 1 Power. |  |
-| Nova Crown | artifact | 0 | `##` | accessory | Every 2.5 s: inflict 2 Cryo and deal 1 damage per Cryo on the enemy (max 8×). Every star phase: inflict 1 Jam. When Supernova begins: gain 112 Shield. |  |
+| Nova Crown | artifact | 0 | `##` | accessory | Every 2.5 s: inflict 1 Cryo and deal 1 damage per Cryo on the enemy (max 8×). Every star phase: inflict 1 Jam. When Supernova begins: gain 112 Shield. |  |
 | Eternal Dawn | artifact | 0 | `#` | accessory | Every star phase: gain 1 Power and 2 Overclock. |  |
 | Stellar Lens | artifact | 0 | `.*./*#*/.*.` | accessory | When a starred weapon activates: inflict 1 Burn (80 % chance). Starred weapons: +15 % crit. |  |
 | Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 3–5 damage every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |
@@ -538,9 +538,9 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Sacred Flame | crafted (step 1) | 7 | `*#*` | accessory | When a starred weapon activates: inflict 1 Burn (70 % chance). Every star phase: inflict 2 Burn, +1 per Power you have (max 8×) and heal 11. | = Votive Candle + Pyre Lantern |
 | Litany | crafted (step 1) | 8 | `###` | accessory | Every star phase: remove 5 of your debuffs, gain 12 Shield, +3 per Power you have (max 8×) and 3 Regen. | = Hymn Scroll + Comet Rosary |
 | Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage every 2.1 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
-| Canticle | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 1 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
+| Canticle | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 2 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
 | Umbral Mantle | crafted (step 1) | 12 | `##/##` | armor | Every star phase: gain 41 Shield. Battle start: inflict 2 Jam. | = Eclipse Veil + Force Bubble; → Event Horizon |
 | Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 3 Jam, 3 Cryo and gain 11 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
-| Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.4 s. Ranged, 5 Energy per attack. Every star phase: gain 1 Power and 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
+| Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.4 s. Ranged, 5 Energy per attack. Every star phase: gain 2 Power and 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
 | Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 8–11 damage every 2 s. Ranged, 4 Energy per attack. On hit: inflict 3 Burn. When Red Giant begins: heal 56 and inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
 | Event Horizon | crafted (step 2) | 21 | `##/##/##` | armor | Every star phase: gain 68 Shield. When Collapse begins: gain 119 Shield. You: +70 max health. Battle start: inflict 3 Jam. | = White Dwarf + Umbral Mantle |

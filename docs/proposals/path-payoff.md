@@ -1,6 +1,6 @@
 # Path payoff: items of a path reward each other (proposal, 2026-11-16)
 
-Status: **proposal, nothing built, no number changed.** Asked by Ilja after the path-pull sweeps and the number
+Status: **built 2026-11-16** (Ilja: all proposals are good, go on); results and what stays open in `docs/findings.md`, top entry. The text below is the proposal as agreed. Asked by Ilja after the path-pull sweeps and the number
 proposal (`docs/findings.md`, top two entries): before any numbers, how can the items of a path reward each other?
 
 ## 1. What is wrong today, measured

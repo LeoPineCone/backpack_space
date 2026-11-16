@@ -197,6 +197,15 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Lessons learned (keep adding)
 
+- 2026-11-16: path payoff (findings.md). A path needs a **source** (makes its resource), a **converter** (turns the
+  resource into damage or survival, scaling) and a **body** (weapons or pets). Paths made only of sources lose
+  more the deeper a bot goes; check `pathPays` ("going deeper pays", ±3 points per seed at normal: read both
+  seeds). Before tuning a weak path, look for the trap first: count what its bots build and measure the resource
+  (Overclocked guns: 2 of 7 weapons waited for Energy; Shield fortress: 1056 Shield per fight with nothing using
+  it). Structural fixes moved those paths by 5–10 points, number steps by 2–5.
+- 2026-11-16: a nerf of a hero's cheap everyday item is a hero lever: Plasma Welder 6–8 → 4–6 moved Rook by
+  −7.5 points, 5–7 by about −3. Take one step and measure.
+
 - 2026-11-16: proposals per hero with `--kinds …,open` (findings.md, not applied). Merging the proposals of all
   heroes was worse than the baseline (33 → 34 targets off): each search only knows its own hero's knobs and uses
   nerfs of early items that hurt a third of the run. Pick the changes that lift a weak path or lower a strong one,
@@ -241,12 +250,12 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Still open (2026-11-16)
 
-Rook Workshop too strong (60 %, late 63–70 %, likely the hero's own crafted speed rule: needs the designer's OK),
-Venn Hungry jungle, Quill Well-fed pack and Ysel Late ascension weak, most paths below their open bot, no hero
-reaches the path distinctness target. The ratings have not been measured with the new per-item dice yet: the
-first `npm run ratings -- --seeds 1,2` writes `data/sim/ratings-meta.json` and will shift the heroes once.
-Meta: Rook 36 % (Workshop alone 28 %), Quill 14 %; Hungry jungle, Well-fed pack and Late ascension are hardly
-played. General artifacts Dyson Fragment, Wormhole Generator (and Ancient Monolith) are weak.
+After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
+fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and
+Workshop strong late (55–60 %), Late ascension weak late (40 %); Well-fed pack differs between seeds (48 / 43 %);
+every path at or below its open bot; no hero reaches the path distinctness target. General artifacts Dyson
+Fragment, Wormhole Generator (and Ancient Monolith) are weak. The path-pull sweep has not been repeated with the
+new items.
 Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.
 Not built yet (see `docs/proposals/balancing-workflow.md`): search for numbers the bots read, and the first
 real pass.

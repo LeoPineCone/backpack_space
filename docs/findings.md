@@ -1,3 +1,38 @@
+# Path payoff built: converters, bodies, two rule changes (2026-11-16)
+
+Question (Ilja, "all good proposals, go on"): build `docs/proposals/path-payoff.md`. Measured on 2 × 240 lobbies, seeds 1 / 2, with the new number **"going deeper pays"** (`pathPays`: win share of the third of a path's bots with the most of their build on the path, minus the third with the least; in `report:paths`, `baseline`, `balance:replay`, `balance:sweep`).
+
+Built:
+- **Shield fortress:** two ram weapons (Breach Ram common, Siege Ram rare: damage per own Shield); Ram Plate and Bastion Frame ram on every hit taken instead of by chance. Measured before: 1056 Shield gained per late fight and nothing that used it.
+- **Well-fed pack:** two pets that strike when a starred food is used (Glutton Toad common, Trough Boar rare: damage per Power).
+- **Late ascension:** two weapons that use Power twice (Dawn Needle common, Zenith Lance rare); Flare Catcher gives Shield per Power.
+- **Overclocked guns, rule:** Overclock also refills Energy 3 % faster per stack (`rules.status.overclock.energyPct`). Measured before: 7.3 weapons of which 2 waited for Energy all the time (next worst path 0.6).
+- **Hungry jungle, rule:** hero mod `overheal` (percent of healing above full health that becomes Shield): Terrarium Heart 50 %, Sap Tap 25 %. Mantraps and Hydra Bloom count pets in the backpack instead of enemy Toxin.
+- Numbers by the tools (search per hero, core picked by hand, two full runs): Compost Bin Regen 1 → 2, Plague Blossom Jam 1 → 2, World Seed and Living Armor start Spikes 2 → 1, Strangler Fig Cryo 2 → 5, Master Blueprint damage 2 → 1, Plasma Welder 6–8 → 5–7, Nanite Swarm ram 1 → 2, Herd Heart Power 1 → 3, Glutton Toad 2 → 3, Nova Crown Cryo 2 → 1, Canticle and Solstice Engine Power per phase 1 → 2.
+- First full ratings run with per-item dice on two seeds (`data/sim/ratings-meta.json` now exists, `ratings --only` works).
+
+| | before (main) | after, seed 1 / 2 |
+|---|---|---|
+| Heroes | Venn 47, Rook 52, Quill 50, Ysel 50 | Venn 48 / 49, Rook 51 / 51, Quill 51 / 49, Ysel 50 / 50 |
+| Overclocked guns, all / late | 47 / 38 | 48 / 48 and 51 / 48 |
+| Shield fortress | 46 / 46 | 50 / 53 and 49 / 53 |
+| Workshop | 57 / 64 | 52 / 58 and 49 / 55 |
+| Hungry jungle | 41 / 35 | 44 / 44 and 45 / 44 |
+| Well-fed pack | 42 / 38 | 48 / 44 and 43 / 38 |
+| Late ascension | 45 / 37 | 47 / 41 and 46 / 40 |
+| Largest gap between a hero's paths | 10–13 | 3–7 and 1–9 |
+| Worst path against its open bot | −13 | −5 and −11 (Well-fed pack) |
+| Target checks off (seed 1) | 33 of 108 (without the new number) | 34 of 120 (22 without the new number) |
+
+Going deeper pays (seed 1 / 2, ±3): Hungry jungle +7 / +5 and Poison garden +6 / +1 now pay, Thorn wall +1 / +1, Workshop 0 / −2. Still costing: Shield fortress −7 / −8, Well-fed pack −3 / −6, Late ascension −3 / −6, Overclocked guns −8 / −2.
+
+Still open:
+- Shield fortress, Well-fed pack and Late ascension are now even with the other paths on average, but their most committed bots still lose. Next step there is more converter (numbers of the new items by `balance:propose --knobs item:…`) or fewer pure sources in the path.
+- Well-fed pack differs between the seeds (48 / 43 %): not settled.
+- Thorn wall late 60 / 55 %, Workshop late 58 / 55 %, Late ascension late 41 / 40 %.
+- Every path is still at or below its open bot (−1 to −5 on seed 1). With bots that buy by rating this target may be too strict; "going deeper pays" is the sharper question.
+- Path pull sweep not repeated yet with the new items.
+
 # Proposal: make the weak paths pay (2026-11-16, not applied)
 
 Question (Ilja, after the path-pull sweeps): let the tools propose numbers that make the weak paths pay. `balance:propose --knobs hero:<id> --kinds …,open --max-knobs 6` for each hero (7–10 min each, search on seed 1, check on seed 2), then full runs (bots shop again). **Nothing in `data/` changed; the core numbers stay frozen until Ilja decides.**
