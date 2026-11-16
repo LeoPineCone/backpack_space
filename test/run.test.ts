@@ -49,7 +49,10 @@ describe("shop and run", () => {
   });
   it("merges adjacent inputs after the fight, for good, and pays the salvage unit", () => {
     const s = newRun(data, "rook", new Rng(1));
-    // start: welding arm at 3,2 (two cells down) and scrap metal at 4,2: adjacent
+    // start: welding arm at 3,2 (two cells down) and scrap metal at 5,2: apart, so nothing merges on its own
+    expect(findCombos(data, s.bags, s.items)).toHaveLength(0);
+    // moved next to the welding arm: due after the fight
+    expect(moveItem(s, data, 1, { x: 4, y: 2, rot: 0 })).toBe(true);
     expect(pendingMerges(data, s.bags, s.items).map((c) => c.recipe.out)).toEqual(["plasma_welder"]);
     expect(s.items.map((p) => p.item)).not.toContain("plasma_welder");
     const gold = s.gold;
@@ -57,13 +60,10 @@ describe("shop and run", () => {
     expect(s.items.map((p) => p.item)).toEqual(["plasma_welder"]);
     expect(s.merged).toEqual([{ out: "plasma_welder", in: data.recipes.find((r) => r.out === "plasma_welder")!.in }]);
     expect(s.gold).toBe(gold + data.heroes.get("rook")!.craftGold + data.rules.goldPerRound[1]!);
-    // apart: nothing is due
-    const t = newRun(data, "rook", new Rng(1));
-    t.items[1] = { item: "scrap_metal", x: 5, y: 4, rot: 0 };
-    expect(findCombos(data, t.bags, t.items)).toHaveLength(0);
   });
   it("does not merge a locked item, and keeps the lock when the item moves", () => {
     const s = newRun(data, "rook", new Rng(1));
+    expect(moveItem(s, data, 1, { x: 4, y: 2, rot: 0 })).toBe(true);
     expect(toggleLock(s, 0)).toBe(true);
     expect(pendingMerges(data, s.bags, s.items)).toHaveLength(0);
     finishRound(s, data, false, new Rng(2));
