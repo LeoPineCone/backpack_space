@@ -249,7 +249,7 @@
   "term.rare.text": "In späteren Runden häufiger im Angebot.",
   "term.epic.text": "Stark; nur im Shop, wenn kein Rezept es herstellt.",
   "term.legendary.text": "Am stärksten; nur im Shop, wenn kein Rezept es herstellt.",
-  "term.artifact.text": "Kostenloses Spezial-Item, nie im Verkauf. Helden-Artefakt nach Runde 4, allgemeines Artefakt nach Runde 8.",
+  "term.artifact.text": "Kostenloses Spezial-Item, nie im Verkauf. Helden-Artefakt nach Runde 2, allgemeines Artefakt nach Runde 6.",
   "term.signature_artifact.text": "Eines der eigenen Artefakte des Helden.",
   "term.general_artifact.text": "Ein Artefakt, das jeder Held bekommen kann.",
   "term.merge.text": "Rezept-Zutaten, die nebeneinander liegen, verschmelzen nach dem Kampf zu einem neuen Item.",

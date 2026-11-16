@@ -85,8 +85,9 @@ describe("shop and run", () => {
   });
   it("ends the run when the lives are gone and hands out the special picks", () => {
     const s = newRun(data, "ysel", new Rng(2));
-    for (let i = 0; i < 4; i++) finishRound(s, data, true, new Rng(i));
-    expect(s.round).toBe(5);
+    const first = data.rules.specials[0]!.afterRound;
+    for (let i = 0; i < first; i++) finishRound(s, data, true, new Rng(i));
+    expect(s.round).toBe(first + 1);
     expect(s.special).toHaveLength(data.rules.specials[0]!.show);
     for (let i = 0; i < data.rules.lives; i++) finishRound(s, data, false, new Rng(i));
     expect(s.over).toBe(true);

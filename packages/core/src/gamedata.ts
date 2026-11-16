@@ -127,7 +127,7 @@ export function buildGameData(raw: RawData): GameData {
   for (const h of heroList) {
     h.effects.forEach((e, i) => checkEffect(e, `hero ${h.id} effect ${i + 1}`, phaseIds, problems, false, true));
     for (const a of h.artifacts) if (items.get(a)?.rarity !== "artifact" || items.get(a)?.hero !== h.id) problems.push(`hero ${h.id}: ${a} is not an artifact of this hero`);
-    // every path has exactly one anchor among the hero items picked after round 4
+    // every path has exactly one anchor among the hero items picked after round 2
     for (const p of h.paths) { const n = h.artifacts.filter((a) => items.get(a)?.path === p.id).length; if (n !== 1) problems.push(`hero ${h.id} path ${p.id}: needs exactly one hero item (anchor) with this path, has ${n}`); }
     const words: readonly string[] = [...TAGS, ...BUFFS, ...DEBUFFS, "heal", "cleanse", "strip", "damage", "crafted", "energy"];
     for (const p of h.paths) for (const f of p.focus) if (!words.includes(f) && !items.has(f)) problems.push(`hero ${h.id} path ${p.id}: unknown focus ${f}`);

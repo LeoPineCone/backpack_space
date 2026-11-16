@@ -60,7 +60,7 @@
     { "id": "rare", "group": "rarity", "en": "Rare", "de": "Selten", "text": "Offered more often in later rounds." },
     { "id": "epic", "group": "rarity", "en": "Epic", "de": "Episch", "text": "Strong; in the shop only if no recipe makes it." },
     { "id": "legendary", "group": "rarity", "en": "Legendary", "de": "Legendär", "text": "Strongest; in the shop only if no recipe makes it." },
-    { "id": "artifact", "group": "rarity", "en": "Artifact", "de": "Artefakt", "text": "Free special item, never sold. Signature artifact after round 4, general artifact after round 8.", "code": ["rarity: artifact", "takeSpecial", "rules.specials"] },
+    { "id": "artifact", "group": "rarity", "en": "Artifact", "de": "Artefakt", "text": "Free special item, never sold. Signature artifact after round 2, general artifact after round 6.", "code": ["rarity: artifact", "takeSpecial", "rules.specials"] },
     { "id": "signature_artifact", "group": "rarity", "en": "Signature artifact", "de": "Helden-Artefakt", "text": "One of the hero's own artifacts.", "code": ["Hero.artifacts", "pool: hero"] },
     { "id": "general_artifact", "group": "rarity", "en": "General artifact", "de": "Allgemeines Artefakt", "text": "An artifact any hero can get.", "code": ["generalArtifacts", "pool: general"] },
 

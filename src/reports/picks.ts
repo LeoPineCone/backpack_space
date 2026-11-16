@@ -2,13 +2,13 @@
  * Are the free picks fair?
  *   npm run report:picks -- [--accuracy quick|normal|precise] [--seed S] [--jobs N] [--careful] [--out file]
  *
- * After round 4 a bot is shown two of its hero's three hero items, after round 8 three of the general artifacts.
+ * After round 2 a bot is shown two of its hero's three hero items, after round 6 three of the general artifacts.
  * This report takes real bots at that moment and plays the rest of the run once with every item of the pool
  * (and once with nothing), with the same shop rolls, the same opponents and the same fight dice. So it can say:
  *   - gain: how many more fights the rest of the run wins with the item than without a pick, per hero;
  *   - choice test: for every offer the rules can show, which option wins the most and which the least.
  * Because every option of the pool is played on the same moment, every possible offer is scored exactly
- * (round 8: all 120 offers of 3 out of 10), without extra fights.
+ * (round 6: all 120 offers of 3 out of 10), without extra fights.
  */
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -23,7 +23,7 @@ import type { Mark } from "./html";
 const r = startReport({
   id: "picks",
   title: "Free picks",
-  question: "Is any free pick (hero item after round 4, general artifact after round 8) so strong that it is always taken, or so weak that it is never worth it?",
+  question: "Is any free pick (hero item after round 2, general artifact after round 6) so strong that it is always taken, or so weak that it is never worth it?",
   presets: { quick: { lobbies: 6, moments: 6, fights: 4 }, normal: { lobbies: 20, moments: 24, fights: 6 }, precise: { lobbies: 50, moments: 70, fights: 8 } },
   explain: { lobbies: "lobbies that supply the moments and the opponents", moments: "pick moments per hero for the general artifacts (hero items: three times as many, they have fewer options to play)", fights: "fights per remaining round and option" },
 });

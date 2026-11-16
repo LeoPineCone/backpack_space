@@ -20,7 +20,7 @@ export interface BotOpts {
   randomBuys?: boolean;
   /** never combines */
   noCraft?: boolean;
-  /** hero path the bot commits to ("" = none); default: three of four bots choose one with the hero item after round 4 */
+  /** hero path the bot commits to ("" = none); default: three of four bots choose one with the hero item after round 2 */
   path?: string;
   /** how hard the bot tries to lay its items out well (default: the arranger's own 250 moves, 4 tries) */
   arrange?: { moves?: number; tries?: number };
@@ -46,7 +46,7 @@ export interface Bot {
   loose: string[];
   /** tags the bot likes a little */
   focus: string[];
-  /** way to win the bot commits to (a path of its hero), "" = none, CHOOSE = takes the path of the hero item it picks after round 4 */
+  /** way to win the bot commits to (a path of its hero), "" = none, CHOOSE = takes the path of the hero item it picks after round 2 */
   path: string;
   /** offers frozen for the next shop */
   frozen: (Offer | null)[];
@@ -60,7 +60,7 @@ export function newBot(data: GameData, hero: string, rng: Rng, path?: string): B
   const roll = rng.next();
   return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), loose: [], focus, path: path ?? (roll < 0.75 && h.paths.length ? CHOOSE : ""), frozen: [], log: [] };
 }
-/** Bot.path of a bot that has not chosen yet: it commits with the hero item after round 4. */
+/** Bot.path of a bot that has not chosen yet: it commits with the hero item after round 2. */
 export const CHOOSE = "?";
 
 /**

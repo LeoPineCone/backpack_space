@@ -34,7 +34,7 @@ not chance and not a bot quirk.
 | `npm run report:paths` | win share per hero and per path, vs the hero's open bot; targets marked ✓/✗ | quick 10 s, normal 30 s, precise ~1.5 min |
 | `npm run report:strength` | item outliers by three views (add one, remove one, regression); needs the baseline, no bot shops | ~1 min |
 | `npm run report:meta` | path against path (12 × 12), hero against hero, rock-paper-scissors share, meta share per hero (target) and path; needs the baseline | ~45 s |
-| `npm run report:picks` | free picks after rounds 4 and 8: gain per item and hero, choice test (best/worst in its offer), offers with no good option; `--careful`: bots search their layout much longer | normal ~1 min, `--careful` ~2 min |
+| `npm run report:picks` | free picks after rounds 2 and 6: gain per item and hero, choice test (best/worst in its offer), offers with no good option; `--careful`: bots search their layout much longer | normal ~1 min, `--careful` ~2 min |
 | `npm run report:heroes` | hero win share per third of the run, hero against hero | single core, not timed yet |
 | `npm run report:battles` | fight length, Supernova share, damage sources | single core, not timed yet |
 | `npm run report:items` | gain per item vs its price (STRONG / WEAK), never-bought items | normal ~1.5 min |
@@ -276,7 +276,20 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 - 2026-11-16, first two playtest runs (Quill beasts 9 wins, Quill swarm 5 wins, reports in docs/findings.md): both paths only start at round 5. Before that the goal has little to buy (swarm: counting items like Glow Swarm are weak with 2–3 swarm pets; beasts: few offers, Pack Lizard alone is a tax) and the player falls back on small general pets and feeders. Many small hits are hard-countered by Spikes (1226 Spikes damage in one fight) and by early Shield gain (96 attacks, 3 damage). Not yet measured over many runs.
 
+- 2026-11-16: moving a free pick moves the health curve. The health jump sat right after the hero item; with the
+  item two rounds earlier fights in the next two rounds were 5 s shorter. Health is the lever for fight length per
+  round (bots do not read it: replay is exact) and it shifts heroes (more health: Rook down, Ysel up). After any
+  change to `rules.specials` run `report:picks` too: it reads the rounds from the rules.
+- 2026-11-16: `report:picks` was not run after the path payoff and path split passes, and the hero items drifted
+  far apart (Herd Heart 2–2.6 × median, three counting anchors at 0.3). Run it after every pass that touches a
+  hero item or what it counts.
+
 ## Still open (2026-11-16)
+Free picks are after rounds 2 and 6 since 2026-11-16 (health curve 100, 150, 300, 350, then +100). Heroes 49–51 % on
+both seeds, all paths in band on seed 1, 36 of 124 targets off. Open: hero items unequal (Herd Heart far too
+strong, Master Blueprint, Ancient Egg, Nova Crown weak as picks); late rounds of Overclocked guns, Well-fed pack,
+Late ascension (41–47), Eclipse and Thorn wall (55–58).
+
 
 After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
 fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and

@@ -15,17 +15,17 @@ Food and organic items. Its garden grows faster than anyone's, heals a lot and p
 - When one of your food activates: inflict 1 Toxin.
 - Your organic items: 16 % faster.
 - Starts with: Field Pack, Seed Satchel, Seed Pod, Watering Drone.
-- Signature artifacts (after round 4): World Seed, Queen Spore, Terrarium Heart.
+- Signature artifacts (after round 2): World Seed, Queen Spore, Terrarium Heart.
 
 ### RK-7 "Rook" – Salvage Unit
 
 Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 - Your crafted items: 25 % faster.
-- Your mechanical items: 38 % faster.
+- Your mechanical items: 42 % faster.
 - Every combination pays 3 gold.
 - Starts with: Field Pack, Tool Roll, Welding Arm, Scrap Metal.
-- Signature artifacts (after round 4): Master Blueprint, Perpetual Engine, Nanite Swarm.
+- Signature artifacts (after round 2): Master Blueprint, Perpetual Engine, Nanite Swarm.
 
 ### Quill – Foundling of the Herd
 
@@ -34,7 +34,7 @@ Pets. Her herd acts the moment the fight begins and is quicker than anyone else'
 - Your pets: 25 % faster, starts 100 % charged and heal you for 30 % of the damage they deal.
 - You: +6 max health per cell your pets cover (max 24×).
 - Starts with: Field Pack, Pet Carrier, Space Pup, Treat Pouch.
-- Signature artifacts (after round 4): Elder Tusk, Herd Heart, Ancient Egg.
+- Signature artifacts (after round 2): Elder Tusk, Herd Heart, Ancient Egg.
 
 ### Ysel – Singer of the Corona
 
@@ -44,7 +44,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 - Every star phase: gain 1 Power.
 - Takes 50 % less Supernova damage.
 - Starts with: Field Pack, Relic Case, Sun Shard, Prayer Bell.
-- Signature artifacts (after round 4): Nova Crown, Eternal Dawn, Stellar Lens.
+- Signature artifacts (after round 2): Nova Crown, Eternal Dawn, Stellar Lens.
 
 ## Bags
 

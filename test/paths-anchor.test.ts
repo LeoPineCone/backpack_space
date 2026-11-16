@@ -5,7 +5,7 @@ import { loadGameData } from "@backpack-space/core/node";
 const data = loadGameData();
 
 describe("path anchors", () => {
-  it("every path of every hero has exactly one anchor among its round-4 hero items", () => {
+  it("every path of every hero has exactly one anchor among its hero items", () => {
     for (const h of data.heroList) for (const p of h.paths) expect(h.artifacts.filter((a) => data.items.get(a)!.path === p.id)).toHaveLength(1);
   });
   it("hero items belong to the path they name; core items to none", () => {
@@ -15,9 +15,9 @@ describe("path anchors", () => {
     expect(onPath(data.items.get("perpetual_engine")!, fortress)).toBe(false);
     expect(onPath(data.items.get("welding_arm")!, fortress)).toBe(false);
   });
-  it("a bot without a fixed path commits with the anchor it takes after round 4", () => {
+  it("a bot without a fixed path commits with the anchor it takes after round 2", () => {
     const bot = newBot(data, "quill", new Rng(1), CHOOSE);
-    botSpecial(data, bot, 4, new Rng(2));
+    botSpecial(data, bot, data.rules.specials[0]!.afterRound, new Rng(2));
     const took = bot.loose[bot.loose.length - 1]!;
     expect(bot.path).toBe(data.items.get(took)!.path);
   });
