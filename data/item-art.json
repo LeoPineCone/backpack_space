@@ -52,8 +52,8 @@
     "description": "A swollen fleshy sac with dark veins, a drop of moss-green venom hanging from its tip."
   },
   "frost_gem": {
-    "brief": "Six-sided gem with icicles hanging from it. Accent: deep teal.",
-    "description": "A six-sided teal gem with small icicles hanging from its lower edges."
+    "brief": "Six-sided gem of methane ice with a crown of frost spikes. Accent: deep teal.",
+    "description": "A six-sided teal gem cut from the methane ice of a frozen night planet, frozen bubbles inside, frost spikes growing from its top like a crown."
   },
   "lodestone": {
     "brief": "Lumpy dark rock with tiny nails stuck to it. Accent: rust red.",
@@ -784,8 +784,8 @@
     "description": "A speckled egg with a small star pattern on its shell and a hairline crack near the top."
   },
   "rocket_chili": {
-    "brief": "Chili pepper with tiny rocket fins at the stem. Accent: rust red.",
-    "description": "A curved chili pepper with tiny rocket fins at the stem, rust red."
+    "brief": "Lava-planet chili with basalt skin and rocket fins. Accent: rust red.",
+    "description": "A chili from a lava planet: cracked black basalt skin with rust-red heat in the cracks, stubby fins at the stem, a puff of smoke at its tip."
   },
   "space_noodles": {
     "brief": "Noodle cup with noodles floating up out of it. Accent: mustard.",
@@ -804,8 +804,8 @@
     "description": "A hard candy shaped like a teal crystal on a stick."
   },
   "comet_sorbet": {
-    "brief": "Scoop of sorbet with a comet tail of frost. Accent: deep teal.",
-    "description": "A round scoop of sorbet in a small cup, a short comet tail of frost curling off it."
+    "brief": "Scoop of comet ice in a dented ration cup, frozen dust tail. Accent: deep teal.",
+    "description": "A scoop of dirty comet ice in a dented ration cup, a long tail of frozen dust streaming off it as if still flying, a spoon on a tether cord."
   },
   "asteroid_honey": {
     "brief": "Honey jar shaped like a lumpy asteroid, honey dripping. Accent: mustard.",
@@ -1424,8 +1424,8 @@
     "description": "Upright: a stubby mole standing on its hind legs, huge digging claws in front, cracked goggles pushed up on its head."
   },
   "dust_bunny": {
-    "brief": "Fluffy round dust ball with long ears and two eyes. Accent: bone.",
-    "description": "A fluffy round ball of grey dust with two long ears and two dot eyes, a few loose fluffs around it."
+    "brief": "Rolling ball of grey fluff from a windy desert, tiny dust devil below. Accent: bone.",
+    "description": "A round ball of grey fluff from a windy desert planet, rolling like a tumbleweed, two long ears, two dot eyes, a tiny dust devil spinning under it."
   },
   "scout_drone": {
     "brief": "Small drone with one big camera eye. Accent: deep teal.",
