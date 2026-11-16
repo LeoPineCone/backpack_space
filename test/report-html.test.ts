@@ -21,6 +21,8 @@ describe("report pages", () => {
   it("checks targets", () => {
     expect(targetResult({ min: 0.45, max: 0.55, what: "w" }, [0.47, 0.6], true)).toEqual({ ok: false, what: "w", want: "45 %–55 %", got: "47 %–60 %" });
     expect(targetResult({ max: 45, what: "w" }, [40], false).ok).toBe(true);
+    expect(targetResult({ min: 0.48, max: 0.52, what: "w" }, [0.4791], true).ok).toBe(true); // printed as 48 %
+    expect(targetResult({ min: 0.02, what: "w", unit: "pts" }, [-0.03, 0.04], true)).toMatchObject({ ok: false, want: "at least +2 pts", got: "−3 pts to +4 pts" });
   });
 
   it("renders headings, heat tables, charts and target lights as escaped static HTML", () => {
@@ -37,6 +39,10 @@ describe("report pages", () => {
     expect(html).toContain("var(--neg) 100%");
     expect((html.match(/<svg /g) ?? []).length).toBe(2);
     expect(html).toContain("✗ OFF");
+    const marked = renderReport(page([{ kind: "table", head: ["path", "wins [target 46–54 %]"], rows: [["A", "58 %"], ["B", "50 %"]], marks: [["", "off"], ["", "ok"]] }]));
+    expect(marked).toContain('class="mark-off"');
+    expect(marked).toContain('class="mark-ok"');
+    expect(marked).toContain("<small>target 46–54 %</small>");
     expect(html).not.toContain("<script");
   });
 

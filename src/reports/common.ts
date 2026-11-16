@@ -20,7 +20,7 @@ import { Rng, type GameData } from "@backpack-space/core";
 import { loadGameData, loadRatings } from "@backpack-space/core/node";
 import { useRatings } from "../sim/lobby";
 import { parseArgs } from "../cli/args";
-import { renderIndex, renderReport, type Block, type Cell, type Chart, type Heat, type IndexEntry, type ReportPage, type TargetResult } from "./html";
+import { renderIndex, renderReport, type Block, type Cell, type Chart, type Heat, type IndexEntry, type Mark, type ReportPage, type TargetResult } from "./html";
 
 export type Accuracy = "quick" | "normal" | "precise";
 
@@ -46,8 +46,9 @@ export interface Report<C> {
   rng: Rng;
   /** prints each argument as one line and keeps it for --out; no argument prints an empty line */
   log: (...lines: string[]) => void;
-  /** a table: printed as text, and as a table in the HTML page (heat colours its cells) */
-  table: (head: string[], rows: Cell[][], heat?: Heat) => void;
+  /** a table: printed as text, and as a table in the HTML page (heat colours its cells; marks frame cells
+   *  checked against a target green ✓ / red ✗, in the text version as a ✓ / ✗ after the value) */
+  table: (head: string[], rows: Cell[][], heat?: Heat, marks?: Mark[][]) => void;
   /** a chart, only in the HTML page */
   chart: (chart: Chart) => void;
   /** checks a target and prints its OK / OFF line; in the HTML page it becomes a target light */
@@ -90,7 +91,10 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
   const quiet = (text: string[]) => { for (const line of text) { lines.push(line); console.log(line); } };
   return {
     data: loadGameData(), flags, rest, n: n as C, accuracy, seed, rng: new Rng(seed), log,
-    table: (head, rows, heat) => { quiet(table(head, rows)); blocks.push({ kind: "table", head, rows, heat }); },
+    table: (head, rows, heat, marks) => {
+      const text = marks ? rows.map((row, k) => row.map((c, i) => (marks[k]?.[i] ? `${c} ${marks[k]![i] === "ok" ? "✓" : "✗"}` : c))) : rows;
+      quiet(table(head, text)); blocks.push({ kind: "table", head, rows, heat, marks });
+    },
     chart: (chart) => { blocks.push({ kind: "chart", chart }); },
     target: (t, values, asPct) => { const x = targetResult(t, values, asPct); quiet([targetLine(x)]); blocks.push({ kind: "target", target: x }); },
     progress: (line) => { if (process.stderr.isTTY) process.stderr.write(`\r${line}`.padEnd(60) + "\r"); },
@@ -161,16 +165,30 @@ export function table(head: string[], rows: (string | number)[][]): string[] {
 export const median = (xs: readonly number[]) => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]!; };
 export const quantile = (xs: readonly number[], q: number) => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(s.length * q))]!; };
 
-export interface Target { min?: number; max?: number; what: string }
+export interface Target { min?: number; max?: number; what: string; /** "pts": a difference of shares, shown as "+4 pts" */ unit?: "pts" }
 /** Balancing targets from data/sim/targets.json. */
 export function loadTargets(): Record<string, Target> { return JSON.parse(readFileSync("data/sim/targets.json", "utf8")); }
-const fmt = (x: number, asPct: boolean) => (asPct ? pct(x) : x.toFixed(1));
+/** "ok" when the value lies within the target, else "off" (for table marks) */
+export const markOf = (t: Target, v: number): "ok" | "off" => { const x = whole(v); return (t.min === undefined || x >= t.min) && (t.max === undefined || x <= t.max) ? "ok" : "off"; };
+/** shares are compared as the whole percent the reports print, so "48 %" never fails a 48–52 % target */
+const whole = (v: number) => Math.round(v * 100) / 100;
+/** the target as a short range for a table header: "46–54 %", "≥ 2 pts", "≤ 6 pts" */
+export function targetRange(t: Target, unit: "%" | "pts"): string {
+  const f = (x: number) => (100 * x).toFixed(0);
+  const u = unit === "%" ? " %" : " pts";
+  return t.min !== undefined && t.max !== undefined ? `${f(t.min)}–${f(t.max)}${u}` : t.min !== undefined ? `≥ ${f(t.min)}${u}` : `≤ ${f(t.max!)}${u}`;
+}
+/** a difference of shares in points: "+4 pts", "−3 pts", "0 pts" */
+export const pts = (x: number) => { const v = Math.round(100 * x); return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)} pts`; };
+const fmt = (x: number, asPct: boolean, unit?: "pts") => (unit === "pts" ? pts(x) : asPct ? pct(x) : x.toFixed(1));
 /** Checks measured values against a target. */
 export function targetResult(t: Target, values: readonly number[], asPct: boolean): TargetResult {
-  const lo = Math.min(...values), hi = Math.max(...values);
+  const r = (v: number) => (asPct ? whole(v) : v);
+  const lo = r(Math.min(...values)), hi = r(Math.max(...values));
   const ok = (t.min === undefined || lo >= t.min) && (t.max === undefined || hi <= t.max);
-  const want = t.min !== undefined && t.max !== undefined ? `${fmt(t.min, asPct)}–${fmt(t.max, asPct)}` : t.min !== undefined ? `at least ${fmt(t.min, asPct)}` : `at most ${fmt(t.max!, asPct)}`;
-  const got = lo === hi ? fmt(lo, asPct) : `${fmt(lo, asPct)}–${fmt(hi, asPct)}`;
+  const f = (x: number) => fmt(x, asPct, t.unit);
+  const want = t.min !== undefined && t.max !== undefined ? `${f(t.min)}–${f(t.max)}` : t.min !== undefined ? `at least ${f(t.min)}` : `at most ${f(t.max!)}`;
+  const got = lo === hi ? f(lo) : `${f(lo)}${t.unit ? " to " : "–"}${f(hi)}`;
   return { ok, what: t.what, want, got };
 }
 const targetLine = (x: TargetResult) => `${x.ok ? "OK " : "OFF"}  ${x.what}: target ${x.want}, measured ${x.got}`;
