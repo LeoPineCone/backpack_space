@@ -148,6 +148,8 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Energy refill** | Energie-Nachschub | More Energy per second. | `mod.energyRegen` |
 | **Damage** | Schaden | Hurts the enemy. | `damage`, `do: damage`, `mod.damage` |
 | **Heal** | Heilen | Restores health. | `do: heal` |
+| **Lifesteal** | Lebensraub | The hero heals by this share of the damage the item deals. | `mod.leech` |
+| **Overheal** | Überheilung | This share of the healing above full health becomes Shield. | `mod.overheal` |
 | **Cleanse** | Reinigen | Removes your debuffs. | `do: cleanse` |
 | **Break** | Schild brechen | Destroys enemy Shield. | `do: strip` |
 | **Speed** | Tempo | Shorter cooldown. | `mod.speed` |

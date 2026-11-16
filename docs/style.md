@@ -37,9 +37,10 @@ These values were picked by eye from the reference images and are not final.
 
 Item pictures are described in `data/item-art.json` (list: [item-art.md](item-art.md)). The rules there, in short:
 
+- **Space first, never boring.** Every item is clearly made for, or found in, outer space, with one inventive twist that an earth object would not have (see the item-art skill, `.claude/skills/item-art/SKILL.md`). Name and look should click: Moon Cheese is a little cratered cheese moon with a crumb in orbit.
 - **One world.** General items are worn, practical gear of people who live off salvage and long trips: chunky, riveted, patched, taped, stencilled without readable text. Animals are odd space fauna, drawn seriously with dry humour, never cute and glossy. Food is station food: packed, canned, grown in trays, a little strange.
-- **Size decides detail.** One backpack cell is about 44 px on a phone. A one-cell item gets one clear shape and one feature, a big item up to four. The picture fills its box; odd shapes (L, T, gate) leave their empty cells free.
-- **Beasts and swarms read at a glance.** A beast is one single big, heavy animal that fills its box. A swarm pet is many small animals, or one tiny one with room around it.
+- **Size decides detail.** One backpack cell is 40 points on a phone (about 6 mm; the 9×7 grid fills the screen width). Pictures are generated large and stored at 176 px per cell. A one-cell item gets one clear shape and one feature, a big item up to four. The picture fills its box; odd shapes (L, T, gate) leave their empty cells free.
+- **Beasts and swarms read at a glance.** A beast is one single big, heavy animal that fills its box. A swarm pet is drawn as one single small animal with room around it, never as a group: several animals in one cell are too small to read (decided 2026-11-16). The swarm idea lives in the name and the rules, not in the picture.
 - **Crafted items show their parts.** A recipe result keeps something recognisable from each ingredient (the Prism Laser is the Laser Pistol with the Crystal Shard on its muzzle), so players can read where it came from.
 - **Hero items speak the hero's language** ([heroes.md](heroes.md)):
   - *Venn:* the station's botany lab taken over by the plant. Specimen tags, petri dishes, flasks, seed trays, station pipes and crates, the botanist's drone; rust-red tendrils, pale seed bulbs, bark, thorns. Plants never get eyes or faces, only jaws.
@@ -50,12 +51,12 @@ Item pictures are described in `data/item-art.json` (list: [item-art.md](item-ar
 
 ## Open
 
-- Items in this style have not been tested at backpack size (about 44 px on a phone). The word limits in `data/item-art.json` keep the descriptions simple; the first generated items will show whether they are simple enough.
+- First item test (2026-11-16, 5 items): the style holds at backpack size; fine scratches and fur turn into noise, so prompts ask for little texture. Some swarm and crafted descriptions in `data/item-art.json` still show several animals and need rewriting to one animal.
 - Rarity and item-type colours have to be mapped onto the palette.
 - The client still uses its placeholder colours.
 
 ## Prompt base for image generation
 
-For items, `npm run art:prompt -- <id>` uses the style part of this base and replaces the background sentence (items need a plain background without stars so they can be cut out).
+For items, `npm run art:prompt -- <id>` uses the style part of this base and replaces the background sentence: items are generated on flat light grey, because a black ink outline on a dark background cannot be cut out cleanly.
 
 > Style: dark ink comic illustration. Heavy solid black shadows, bold angular shapes, flat matte colours with no gradients, a small muted palette of rust red, bone white, deep teal, mustard and black, rough ink texture, strong readable silhouette. No glossy highlights, no glow effects, no lens flares, no 3D rendering. Background: plain dark night-sky colour with a few simple stars, nothing else. No text, no letters, no logos, no frame.

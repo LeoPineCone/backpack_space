@@ -752,8 +752,8 @@
     "description": "A wrapped bar, the foil peeled back at one end with a bite taken out of it, copper-coloured wrapper without text."
   },
   "moon_cheese": {
-    "brief": "Wedge of cheese with crater holes. Accent: mustard.",
-    "description": "Pale wedge seen slightly from above; the cut face shows round crater holes like a tiny moon surface. Two or three craters are enough. Mustard rind."
+    "brief": "Cheese wheel shaped like a cratered mini moon, a crumb orbiting it. Accent: mustard.",
+    "description": "A small cheese wheel shaped like a cratered mini moon, one wedge cut out showing the pale inside, a single crumb orbiting it like a tiny moon. Mustard rind."
   },
   "ice_cream": {
     "brief": "Freeze-dried ice cream brick in a torn foil wrapper. Accent: rust red.",
@@ -1488,8 +1488,8 @@
     "description": "Upright in the tall box, barrel pointing up: a blocky pistol in chipped grey plating, a ribbed heat sink along the barrel, the grip wrapped in tape. Rust red on the emitter tip."
   },
   "rivet_gun": {
-    "brief": "Industrial rivet gun with a hose. Accent: copper.",
-    "description": "Squat pistol body in scuffed grey plating, a fat rivet poking out of the nozzle, a short hose curling back from the grip. Copper only on the hose fittings."
+    "brief": "Hull-repair rivet gun built from a thruster nozzle. Accent: copper.",
+    "description": "A stubby hull-repair gun built from a cut-down thruster nozzle. Fat rivets ride round the barrel on a wire ring like a planet ring; the muzzle is a rubber suction clamp for hull plates. Copper hose fittings."
   },
   "plasma_cutter": {
     "brief": "Handheld cutter with a short plasma flame. Accent: deep teal.",
@@ -1504,8 +1504,8 @@
     "description": "Upright, prongs at the top: a rubber-gripped baton with two bent metal prongs and a flat mustard zig-zag spark between them."
   },
   "mining_pick": {
-    "brief": "Mining pick with a worn handle. Accent: copper.",
-    "description": "The pick head runs along the top two cells, the handle drops down the left cell; the empty corner stays free. Chipped iron head, copper-bound collar, a strip of tape on the grip. No wood grain."
+    "brief": "Asteroid mining pick with a crystal tip. Accent: copper.",
+    "description": "The pick head runs along the top two cells, the handle drops down the left cell; the empty corner stays free. Meteor-iron head with a teal crystal tip and a small thruster on its back, taped grip, tether clip."
   },
   "fang_dagger": {
     "brief": "Dagger with a large animal fang as the blade. Accent: bone.",
@@ -1644,8 +1644,8 @@
     "description": "Three tiny mites with rock-like shells crawling over a single pebble, feelers up."
   },
   "needle_wasps": {
-    "brief": "Small swarm of wasps with long needle stingers in tight formation. Accent: mustard.",
-    "description": "A small swarm of five wasps with long needle stingers, flying in a tight arrow formation with thin motion lines behind them."
+    "brief": "One needle wasp with a syringe stinger and solar-sail wings. Accent: mustard.",
+    "description": "One single needle wasp in side view: lean striped body, a long hollow stinger like a syringe needle, stiff ribbed wings like small solar sails, a cluster of small eyes."
   },
   "thorn_hedge": {
     "brief": "Dense low hedge of thorny branches grown out of a cracked lab planter. Accent: moss.",
