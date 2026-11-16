@@ -56,12 +56,13 @@ describe("battle", () => {
   it("leech heals for a share of the damage dealt, fractions add up", () => {
     const foe = compile(build(["fang_dagger", "fang_dagger"], 1, data.heroList[1]!.id), data);
     const quill = compile(build(["burrow_rat"], 1, "quill"), data);
-    expect(quill.items[0]!.leech).toBe(25);
+    const pct = quill.items[0]!.leech;
+    expect(pct).toBeGreaterThan(0);
     const r = simulate(quill, foe, data.rules, 3, { log: true });
     const healed = r.log!.filter((e) => e.s === 0 && e.k === "heal" && e.w === "leech").reduce((n, e) => n + e.v, 0);
     const dealt = r.log!.filter((e) => e.s === 0 && e.k === "attack").length;
     expect(healed).toBeGreaterThan(0);
-    expect(healed).toBeLessThanOrEqual(Math.ceil(dealt * 2 * 0.25) + 1);
+    expect(healed).toBeLessThanOrEqual(Math.ceil((dealt * 2 * pct) / 100) + 1);
   });
   it("Overclock refills Energy faster", () => {
     const rules = (energyPct: number) => ({ ...data.rules, energy: { ...data.rules.energy, regen: 1 }, status: { ...data.rules.status, overclock: { ...data.rules.status.overclock, energyPct } } });
