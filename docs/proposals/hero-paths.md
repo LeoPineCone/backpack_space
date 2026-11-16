@@ -5,7 +5,8 @@ Status: **proposal, 2026-11-16, revised after Ilja's answers the same day; nothi
 Decided by Ilja (2026-11-16):
 - The round-4 pick stays **two of three, at random**, so every run brings its own luck.
 - The shop may lean a little towards the chosen path, but must not force players into it.
-- The round-8 special does **not** follow the path. The general artifacts should each bring a small mechanic of their own instead.
+- The round-8 special does **not** follow the path. The general artifacts should each bring a small mechanic of their own instead, also through star patterns that reach further than the neighbours and through type filters (melee weapon, pet, food).
+- The new main sources per path (Shield ram, crafted-count damage, feeding Power, cold damage) fit the heroes.
 
 ## The problem
 
@@ -102,24 +103,33 @@ A parallel thread is tuning Ysel and Rook numbers right now; this proposal only 
 
 Plus 8 of the 10 general artifacts reworked (round 8, see below), picture briefs (`data/item-art.json`), German texts and glossary terms for every new or changed item.
 
-## Round 8: general artifacts with small mechanics of their own
+## Round 8: general artifacts as puzzle pieces
 
-Today most of the ten general artifacts are flat numbers (`wormhole_generator` +12 % speed, `star_forge` +2 weapon damage, `quantum_dice` +20 % crit, `zoo_beacon` pets +2 damage). They stay random and path-free, but each one should add a small twist to the build. First ideas, all expressible with today's effects:
+Today most of the ten general artifacts are flat numbers (`wormhole_generator` +12 % speed, `star_forge` +2 weapon damage, `quantum_dice` +20 % crit, `zoo_beacon` pets +2 damage). They stay random and path-free, but each one becomes a **puzzle piece** with its own small mechanic (Ilja, 2026-11-16: no boring items):
 
-| Artifact | Today | Small mechanic |
+- **Star patterns that reach further than the neighbours.** Stars may sit two or three cells away, in lines, diagonals or rings. The grid already supports this: a star is any `*` in the shape, empty `.` cells in between are allowed (`grid.ts`). This spreads a build out instead of packing everything around one item, and it makes bag placement part of the puzzle.
+- **Type filters on the stars:** "whenever a starred melee weapon activates", "whenever a starred pet activates", "starred food". Pets, food, weapon, armor work today. **Melee / ranged as a filter is new** (R6 below).
+
+Shapes are written as in `data/items` (`#` cell, `*` star, `.` empty). Numbers are first guesses; balancing sets them.
+
+| Artifact | Shape | Mechanic |
 |---|---|---|
-| Dyson Fragment | Shield every 2 s | **collector:** gains Shield whenever an item on its stars activates; placement matters |
-| Wormhole Generator | all items +12 % speed | **opening jump:** items on its stars start the fight fully charged |
-| Time Dilator | Cryo at start and on use | stays (already a mechanic) |
-| Ancient Monolith | health + heal per phase | **last stand:** once below half health, a big heal and Shield |
-| Quantum Dice | weapons +20 % crit | **dice:** every 2 s, 50 % chance of Power and 50 % chance of Overclock |
-| Plague Vault | Toxin + Radiation | stays (Radiation is its mechanic) |
-| Titan Core | Shield + Spikes at start | **hardening:** when hit, chance to gain Spikes; grows thornier over the fight |
-| Star Forge | all weapons +2 damage | **forge:** only weapons on its stars, but +5 damage; four stars |
-| Galactic Cookbook | food faster + Regen | **recipe:** when a starred food activates, chance to gain Overclock |
-| Zoo Beacon | pets +2 damage, +10 % speed | **beacon:** pets on its stars +30 % crit and heal on hit |
+| **Dyson Fragment** | `*....*` / `..##..` / `..##..` / `*....*` | **collector:** four stars far out on the diagonals. Whenever a starred item activates, gain 3 Shield. |
+| **Wormhole Generator** | `*..##..*` | **wormhole:** two stars three cells away on either end. Starred items start the fight fully charged and are 25 % faster; it connects two corners of the backpack. |
+| **Time Dilator** | `*` / `.` / `#` / `#` / `.` / `*` | **slow shots:** stars two cells above and below. Whenever a starred **ranged** weapon activates, inflict 1 Cryo; keeps a small Cryo at the start. |
+| **Ancient Monolith** | `.*.*.` / `*...*` / `..#..` / `*...*` / `.*.*.` | **last stand:** a ring of eight stars at knight's-move distance. Below half health, every starred item that activates heals 4. Plus some health. |
+| **Quantum Dice** | `*.*` / `.#.` / `*.*` | **dice:** four diagonal stars. Whenever a starred item activates: 25 % Power, 25 % Overclock, 25 % 6 Shield, 25 % nothing. |
+| **Plague Vault** | `*..*` / `.##.` / `*..*` | **spoiled stores:** whenever a starred food or organic item activates, inflict 1 Toxin; every 2.5 s 1 Radiation. |
+| **Titan Core** | `**..**` / `..##..` / `..##..` | **armour plates:** stars two cells off in the top row. Start Shield per starred armor (big); when hit, 20 % chance to gain 1 Spikes, so it grows thornier. |
+| **Star Forge** | `*.##.*` | **anvil:** stars two cells away on both sides. Starred **melee** weapons +5 damage, and whenever one activates, gain 1 Power. |
+| **Galactic Cookbook** | `***` / `*#*` / `***` | **kitchen:** eight stars all round, only for food. Starred food 25 % faster; whenever one activates, 40 % chance of 1 Overclock. |
+| **Zoo Beacon** | `*...*` / `..#..` / `*...*` | **beacon:** four stars two cells off diagonally, only for pets. Starred pets +30 % crit, and whenever one activates, heal 2. |
 
-The pool could grow later (e.g. to 15) so that round 8 surprises more often. Numbers are set by balancing.
+All of these can be written with today's effects (`starUse` + `tag`, `to: stars`, `per: stars`, `if: hpBelow / chance`), except the melee/ranged filter. Each pattern is different, so two artifacts never want the same spot. The pool could grow later (e.g. to 15) with more patterns, so that round 8 surprises more often.
+
+| # | Change | Kind |
+|---|---|---|
+| R6 | Star and passive filters may name a weapon range: `tag: "melee"` / `tag: "ranged"` (next to the item types and `crafted`). Small schema + compile change, rules text in `describe.ts`, glossary already has melee/ranged. | schema |
 
 ## Measuring it: the path profile
 
@@ -146,10 +156,9 @@ The report prints one light per hero: "paths distinct" or which pair is too clos
 2. `path` field on hero items (R2) and bot logic (R4).
 3. Anchors per hero, Rook and Quill first, then Venn and Ysel; R3 with them.
 4. New feeder/support items, picture briefs, translations, catalog.
-5. General artifacts with their own mechanics.
+5. General artifacts as puzzle pieces (with R6).
 6. Measure (with and without anchor) and balance.
 
 ## Open questions for Ilja
 
-1. The new main sources: Shield ram (Rook fortress), crafted-count damage (Rook workshop), feeding Power (Quill well-fed), cold damage (Ysel eclipse). Do these fit the heroes?
-2. The general artifact ideas above: right direction?
+None left for the concept. Next step on his go: building it in the order above.
