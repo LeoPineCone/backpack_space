@@ -2,7 +2,7 @@
 
 Status: **stages 1 to 3 are built** (baseline, replay, sensitivity, proposals, incremental ratings, item strength
 in three views, matchups with meta share, picks improvements; see section 12 and
-`.claude/skills/balancing/SKILL.md` for how to use them). Stages 4 and 5 are open. Decisions by Ilja
+`.claude/skills/balancing/SKILL.md` for how to use them). Of stage 4 the sweep is built; the search and stage 5 are open. Decisions by Ilja
 (2026-11-16) are in section 13. Asked by Ilja: review the measuring tools we have, pick mathematical
 methods and optimisers for our different balancing questions, and design a repeatable flow: take a baseline, then
 integrate new items, changed items, a new hero or a new mechanic. Balancing need not be perfect. An optimiser only
@@ -292,6 +292,10 @@ would move to data under `data/sim/`). Per value: path commit, distinctness, pat
 **variety** number (how different two runs of the same path are; too much pull makes every run the same). Ilja
 picks the point on the curve; the targets `pathCommit` / `pathDistinct` are then set to what that point delivers.
 
+Measured 2026-11-16 (`npm run balance:sweep`, `docs/findings.md`): the two shop numbers hardly pull; the bots'
+path liking does (it stays in `bot.ts` as the default of the option `BotOpts.pathLiking`), and more of it loses
+against the open bot. The paths lack payoff, not pull.
+
 ## 10. Libraries
 
 | Need | Option | Note |
@@ -324,7 +328,7 @@ stage 3 and stays outside `packages/core` and the game.
 | 1 | Baseline snapshot with panel (`npm run baseline`), replay with self-check (`balance:replay`, `--full`), paired metrics for all fight-level targets | **built** |
 | 2 | Sensitivity table (`balance:sense`), least-change search (`balance:propose`, patch files in `out/proposals/`); ratings parallel, with per-item dice and `--only` updates that leave all other ratings alone | **built** |
 | 3 | Item strength in three views (`report:strength`); path-against-path table, rock-paper-scissors share and meta share with the hero target `metaHero` (`report:meta`); picks on all cores with three times the moments for hero items and `--careful` placement | **built** |
-| 4 | Sweep and search for numbers the bots read (TypeScript only), path-pull sweep | open |
+| 4 | Sweep (`balance:sweep`: one number at several values, full runs) and the path-pull sweep: **built**, results in `docs/findings.md`. Search for numbers the bots read (TypeScript only) | sweep **built**, search open |
 | 5 | First real pass with the tools (paths that are off today, weak artifacts), starting with one full ratings run on two seeds | open |
 
 What was built differs from the sections above in three points:

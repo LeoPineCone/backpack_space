@@ -4,9 +4,10 @@ import { changeOf, itemKnobs, valueAt } from "../src/balance/knobs";
 import { loss, metricsOf, outside, paired, DEFAULT_KINDS } from "../src/balance/metrics";
 import { lobbyStat, playPanelLobby, replay, stored, type Panel } from "../src/balance/panel";
 import { mergePatches, patchedData, touchedBy, type Patch } from "../src/balance/patch";
-import { measurePathLobby } from "../src/sim/paths";
+import { commitPays, measurePathLobby, MECHANICS, styleDistance, type Profile, type SeatStat } from "../src/sim/paths";
 import { measureItem } from "../src/sim/items";
 import { cycleShare, metaShares } from "../src/balance/meta";
+import { itemDistance, pullOf } from "../src/balance/pull";
 import { correlation, fightModel, removeOne, ridgeLogistic, robustZ, solveSpd, type Row } from "../src/balance/strength";
 
 const data = loadGameData();
@@ -140,5 +141,36 @@ describe("item strength", () => {
     const model = fightModel(panel, data);
     expect(model.size).toBe(data.itemList.filter((i) => !i.isBag).length);
     expect([...model.values()].every(Number.isFinite)).toBe(true);
+  });
+});
+
+describe("path pull", () => {
+  it("compares two builds by the items they do not share", () => {
+    expect(itemDistance(["a", "b"], ["a", "b", "b"])).toBe(0);
+    expect(itemDistance(["a", "b"], ["c"])).toBe(1);
+    expect(itemDistance(["a", "b"], ["b", "c"])).toBeCloseTo(2 / 3);
+  });
+  it("says whether the more committed bots of a path win more", () => {
+    const seat = (commit: number, w: number): SeatStat => ({ commit, w, n: 10, lw: w / 2, ln: 5 } as SeatStat);
+    const pays = commitPays([seat(0.2, 3), seat(0.3, 3), seat(0.5, 5), seat(0.5, 5), seat(0.8, 7), seat(0.9, 9)])!;
+    expect(pays.all).toBeCloseTo(0.5); expect(pays.late).toBeCloseTo(0.5); expect(pays.low).toBeCloseTo(0.25);
+    expect(commitPays([seat(0.2, 3)])).toBeUndefined();
+  });
+  it("two paths with the same damage mix still differ when their rhythm does", () => {
+    const mix = Object.fromEntries(MECHANICS.map((m) => [m, m === "weapon" ? 1 : 0])) as Profile["mix"];
+    const base: Profile = { mix, main: "weapon", carry: 0.2, dealers: 5, late: 0.4, attacksPerSec: 4, pathDamage: 0.5, kept: 0.5, perAttack: 6 };
+    expect(styleDistance(base, { ...base }).score).toBe(0);
+    const fast = styleDistance(base, { ...base, attacksPerSec: 6, perAttack: 4 });
+    expect(fast.score).toBeCloseTo(1); expect(["tempo", "weight"]).toContain(fast.by);
+    const tank = styleDistance(base, { ...base, kept: 1 });
+    expect(tank.by).toBe("protection"); expect(tank.score).toBeCloseTo(2);
+    expect(styleDistance(base, { ...base, late: 0.45, carry: 0.25 }).score).toBeLessThan(1);
+  });
+  it("bots that like their path more build more of it", () => {
+    const at = (pathLiking: number) => pullOf(data, [0, 1].map((i) => playPanelLobby(data, 5, i, false, { pathLiking })));
+    const low = at(1), high = at(4);
+    expect(pullOf(data, panel.lobbies).commit).toBeGreaterThan(low.commit!);
+    expect(high.commit).toBeGreaterThan(low.commit! + 0.1);
+    expect(Object.keys(low).filter((k) => k.startsWith("commit:")).length).toBe(data.heroList.reduce((n, h) => n + h.paths.length, 0));
   });
 });

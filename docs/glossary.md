@@ -125,7 +125,7 @@ Every game term with the English word used in the game, the docs and the code, t
 |---|---|---|---|
 | **Shield** | Schild | Blocks damage before health. | `shield` |
 | **Regen** | Regeneration | Heals every 2 s, per stack. | `regen` |
-| **Overclock** | Übertakten | All your items 3 % faster per stack. | `overclock` |
+| **Overclock** | Übertakten | All your items 3 % faster per stack. Energy refills 3 % faster per stack. | `overclock` |
 | **Power** | Kraft | +1 weapon damage per stack. | `power` |
 | **Spikes** | Stacheln | Weapon hits against you hurt the attacker, melee and ranged alike. | `spikes` |
 

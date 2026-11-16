@@ -5,7 +5,7 @@
  * the replay is the same measurement as a full paired run, at a fraction of the time.
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { compile, simulate, type Build, type CSide, type GameData, type Placement } from "@backpack-space/core";
+import { compile, simulate, type BotOpts, type Build, type CSide, type GameData, type Placement } from "@backpack-space/core";
 import { playLobby } from "../sim/lobby";
 import { pathOfSeat, recOf, seatStats, type FightRec, type LobbyFight, type LobbySeat, type SeatStat } from "../sim/paths";
 import type { Touched } from "./patch";
@@ -15,9 +15,9 @@ export interface PanelLobby { seats: LobbySeat[]; fights: PanelFight[] }
 export interface Panel { seed: number; lobbies: PanelLobby[] }
 
 /** Lobby i of a seed, played with this data: one bot per path of every hero plus one open bot (as report:paths). */
-export function playPanelLobby(data: GameData, seed: number, i: number, free = false): PanelLobby {
+export function playPanelLobby(data: GameData, seed: number, i: number, free = false, bot?: BotOpts): PanelLobby {
   // free: every bot chooses its path itself (the lobbies of makeField, which the item measurement uses)
-  const l = playLobby(data, seed * 100003 + i, free ? { immortal: true } : { path: (s) => pathOfSeat(data, s), immortal: true });
+  const l = playLobby(data, seed * 100003 + i, free ? { immortal: true, bot } : { path: (s) => pathOfSeat(data, s), immortal: true, bot });
   return {
     seats: l.seats.map((s) => ({ hero: s.bot.hero, path: s.bot.path, builds: s.builds })),
     fights: l.fights.map((f) => ({ round: f.round, a: f.a, b: f.b, seed: f.seed, rec: recOf(f.res) })),

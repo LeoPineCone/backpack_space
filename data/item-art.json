@@ -1614,5 +1614,29 @@
   "frost_bell": {
     "brief": "Small dark bell rimmed with frost, a cold ring hanging below. Accent: deep teal.",
     "description": "A small dark iron bell rimmed with frost, a ring of teal cold drawn as ink lines below it."
+  },
+  "breach_ram": {
+    "brief": "Short hydraulic ram with a blunt riveted head on a welded arm. Accent: deep teal.",
+    "description": "Standing upright: a short hydraulic ram on a welded arm, blunt riveted head scuffed bright, a teal glow where its shield field gathers."
+  },
+  "siege_ram": {
+    "brief": "Long piston ram with a heavy wedge head and shield plates along its flanks. Accent: deep teal.",
+    "description": "Lying lengthwise: a long piston ram with a heavy wedge head, salvaged shield plates bolted along both flanks, hoses taped to the piston, teal force lines at the tip."
+  },
+  "glutton_toad": {
+    "brief": "Fat round toad with a wide grin and a tongue already half out. Accent: moss.",
+    "description": "A fat round moss-green toad sitting upright, wide grin, cheeks bulging, tongue half out toward the cell beside it."
+  },
+  "trough_boar": {
+    "brief": "Stocky bristled boar with small tusks, snout down as if at a trough. Accent: mustard.",
+    "description": "A stocky boar seen from the side, bristled mustard back, small tusks, snout lowered as if feeding, ears flicking toward both neighbours."
+  },
+  "dawn_needle": {
+    "brief": "Thin gilded needle of light held in a simple copper grip. Accent: copper.",
+    "description": "Standing upright: a thin needle of pale light set in a plain copper grip, a faint dawn glow at its point."
+  },
+  "zenith_lance": {
+    "brief": "Tall ceremonial lance with a sun disc below a long bright point. Accent: mustard.",
+    "description": "Standing tall: a slim ceremonial lance, a small mustard sun disc below a long bright point, prayer cords wound round the shaft."
   }
 }

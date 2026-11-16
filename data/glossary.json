@@ -94,7 +94,7 @@
 
     { "id": "shield", "group": "buff", "en": "Shield", "de": "Schild", "icon": "shield", "text": "Blocks damage before health." },
     { "id": "regen", "group": "buff", "en": "Regen", "de": "Regeneration", "icon": "regen", "text": "Heals every {status.regen.interval} s, per stack." },
-    { "id": "overclock", "group": "buff", "en": "Overclock", "de": "Übertakten", "icon": "overclock", "text": "All your items {status.overclock.speedPct} % faster per stack." },
+    { "id": "overclock", "group": "buff", "en": "Overclock", "de": "Übertakten", "icon": "overclock", "text": "All your items {status.overclock.speedPct} % faster per stack. Energy refills {status.overclock.energyPct} % faster per stack." },
     { "id": "power", "group": "buff", "en": "Power", "de": "Kraft", "icon": "power", "text": "+1 weapon damage per stack." },
     { "id": "spikes", "group": "buff", "en": "Spikes", "de": "Stacheln", "icon": "spikes", "text": "Weapon hits against you hurt the attacker, melee and ranged alike." },
 

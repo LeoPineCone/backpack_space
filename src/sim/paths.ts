@@ -198,18 +198,68 @@ export function boostPath(data: GameData, key: string, pct: number): string[] {
   return touched;
 }
 
+/**
+ * Does going deeper into a path pay? The path's bots are cut into thirds by how much of their final build is on
+ * the path; the result is the win share of the most committed third minus that of the least committed third
+ * (all rounds, late rounds). undefined with fewer than six bots.
+ */
+export function commitPays(seats: readonly SeatStat[]): { all: number; late: number; low: number; high: number } | undefined {
+  const a = seats.filter((s) => s.commit !== null).sort((x, y) => x.commit! - y.commit!);
+  const t = Math.floor(a.length / 3);
+  if (t < 2) return undefined;
+  const part = (xs: readonly SeatStat[]) => {
+    const sum = (f: (s: SeatStat) => number) => xs.reduce((n, s) => n + f(s), 0);
+    return { all: sum((s) => s.w) / Math.max(1, sum((s) => s.n)), late: sum((s) => s.lw) / Math.max(1, sum((s) => s.ln)), commit: sum((s) => s.commit!) / xs.length };
+  };
+  const lo = part(a.slice(0, t)), hi = part(a.slice(a.length - t));
+  return { all: hi.all - lo.all, late: hi.late - lo.late, low: lo.commit, high: hi.commit };
+}
+
 /** a path's profile from its group: shares of the damage, carry, rhythm */
-export interface Profile { mix: Record<Mechanic, number>; main: Mechanic; carry: number; dealers: number; late: number; attacksPerSec: number; pathDamage: number }
+export interface Profile { mix: Record<Mechanic, number>; main: Mechanic; carry: number; dealers: number; late: number; attacksPerSec: number; pathDamage: number;
+  /** healed + shielded per fight, in hero healths */
+  kept: number;
+  /** damage of one weapon or pet attack */
+  perAttack: number }
 export function profileOf(g: PathGroup): Profile {
   const total = MECHANICS.reduce((x, m) => x + g.mech[m], 0) || 1;
   const mix = Object.fromEntries(MECHANICS.map((m) => [m, g.mech[m] / total])) as Record<Mechanic, number>;
   const main = [...MECHANICS].sort((a, b) => mix[b] - mix[a])[0]!;
   const f = Math.max(1, g.fights);
-  return { mix, main, carry: g.top / total, dealers: g.dealers / f, late: g.lateDmg / total, attacksPerSec: g.attacks / Math.max(1, g.secs), pathDamage: g.onPath / total };
+  return { mix, main, carry: g.top / total, dealers: g.dealers / f, late: g.lateDmg / total, attacksPerSec: g.attacks / Math.max(1, g.secs), pathDamage: g.onPath / total, kept: g.kept / f, perAttack: (g.mech.weapon + g.mech.pet) / Math.max(1, g.attacks) };
 }
 /** how different two profiles are: 1 - cosine similarity of their damage mix (0 = same, 1 = nothing shared) */
 export function profileDistance(a: Profile, b: Profile): number {
   let ab = 0, aa = 0, bb = 0;
   for (const m of MECHANICS) { ab += a.mix[m] * b.mix[m]; aa += a.mix[m] ** 2; bb += b.mix[m] ** 2; }
   return aa && bb ? 1 - ab / Math.sqrt(aa * bb) : 0;
+}
+
+/**
+ * Play style: two paths can deal the same kind of damage and still play differently (many small hits against few
+ * heavy ones, a wall against a rush). Every dimension is scaled so that 1 means "clearly different":
+ * the damage mix by the pathDistinct target, the others by the steps below.
+ */
+export const STYLE_DIMENSIONS = ["mix", "tempo", "weight", "protection", "late", "carry"] as const;
+export type StyleDimension = (typeof STYLE_DIMENSIONS)[number];
+export const STYLE_TEXT: Record<StyleDimension, string> = {
+  mix: "damage mix", tempo: "attacks per second", weight: "damage per attack", protection: "healed + shielded per fight", late: "damage from phase 3 on", carry: "share of the best item",
+};
+/** what counts as clearly different: mix distance 0.35; 50 % more attacks; 50 % more damage per attack;
+ *  a quarter of the hero's health more healed + shielded; 15 points more late damage; 10 points more on one item */
+export const STYLE_STEP = { mix: 0.35, ratio: 1.5, protection: 0.25, late: 0.15, carry: 0.1 };
+export interface Style { score: number; by: StyleDimension; parts: Record<StyleDimension, number> }
+/** How differently two paths play: the largest of the scaled dimensions (1 = clearly different in at least one). */
+export function styleDistance(a: Profile, b: Profile): Style {
+  const ratio = (x: number, y: number) => (x > 0 && y > 0 ? Math.abs(Math.log(x / y)) / Math.log(STYLE_STEP.ratio) : 0);
+  const parts: Record<StyleDimension, number> = {
+    mix: profileDistance(a, b) / STYLE_STEP.mix,
+    tempo: ratio(a.attacksPerSec, b.attacksPerSec),
+    weight: ratio(a.perAttack, b.perAttack),
+    protection: Math.abs(a.kept - b.kept) / STYLE_STEP.protection,
+    late: Math.abs(a.late - b.late) / STYLE_STEP.late,
+    carry: Math.abs(a.carry - b.carry) / STYLE_STEP.carry,
+  };
+  const by = [...STYLE_DIMENSIONS].sort((x, y) => parts[y] - parts[x])[0]!;
+  return { score: parts[by], by, parts };
 }

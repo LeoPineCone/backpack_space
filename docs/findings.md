@@ -1,3 +1,115 @@
+# Path distinctness measured by play style: Rook and Ysel differ, Quill and Venn do not (2026-11-16, nothing changed in the game)
+
+Question (Ilja): "the paths of a hero deal their damage too alike" looks like design; extend the measurement. `pathDistinct` only compares the damage mix (weapon / pet / Burn / …), so two weapon paths count as the same even when one is fast and one is slow. New number **play style** (`pathStyle`, `styleDistance` in `src/sim/paths.ts`): six differences of two paths, each scaled so that 1 is a step a player notices, and the largest one counts: damage mix (0.35 as before), attacks per second and damage per attack (× 1.5), healed + shielded per fight (a quarter of the hero's health), share of damage from phase 3 on (15 points), share of the best item (10 points). Shown in `report:paths` (per pair, with the dimension), `baseline`, `balance:replay`, `balance:sweep` (per hero: the two paths most alike). Proposed target `pathStyle` ≥ 1. Baseline, 2 × 240 lobbies, seed 1 / seed 2:
+
+| Hero | Pair | Play style | Largest difference |
+|---|---|---|---|
+| Rook | Overclocked guns / Shield fortress | 2.28 / 2.38 | protection (tempo 1.8) |
+| Rook | Overclocked guns / Workshop | 1.14 / 1.37 | protection |
+| Rook | Shield fortress / Workshop | 1.14 / 1.01 | protection |
+| Ysel | Late ascension / Eclipse | 2.57 / 2.17 | late damage (tempo 1.6, protection 1.3) |
+| Ysel | Burning corona / Eclipse | 2.10 / 1.76 | late damage |
+| Ysel | Burning corona / Late ascension | 0.79 / 0.81 | tempo |
+| Venn | Thorn wall / Hungry jungle | 0.86 / 1.02 | tempo |
+| Venn | Poison garden / Thorn wall | 0.43 / 0.92 | damage per attack / tempo |
+| Venn | Poison garden / Hungry jungle | 0.53 / 0.44 | best item / protection |
+| Quill | Swarm / Well-fed pack | 0.65 / 0.73 | damage per attack / tempo |
+| Quill | Big beasts / Well-fed pack | 0.57 / 0.57 | damage per attack / tempo |
+| Quill | Big beasts / Swarm | 0.24 / 0.16 | none |
+
+Reading: 5 of 12 pairs are clearly different on both seeds (all of Rook, Eclipse against the other two Ysel paths), although their damage mix is almost the same (0.04–0.25 of 0.35). So the old number was too strict for Rook and Ysel. It was right for Quill and Venn: Big beasts and Swarm play the same in every dimension (same attacks per second, same damage per attack, same share of the best pet), i.e. the bots end up with the same pets whatever the anchor says. Venn's three paths differ a little in tempo only; Poison garden / Thorn wall moves between seeds (0.43 / 0.92), so read both. This is a design question (which pets and plants a path owns, and what its anchor asks for), not a number question. `pathDistinct` stays for now; if `pathStyle` is accepted it can replace it.
+
+# Three paths after the payoff pass: numbers are used up (2026-11-16, nothing changed)
+
+Question (Ilja): tune the numbers of the new items for Shield fortress, Well-fed pack and Late ascension, where the most committed bots still lose. Baseline after the payoff pass, 2 × 240 lobbies. **No number was adopted.**
+
+- `balance:propose --knobs path:<hero>/<path> --kinds …,open,pays` (one search per path): only small steps on side items; "going deeper pays" for Shield fortress +3.5 on the search seed, +0.5 on the check seed. Well-fed pack: one step (Glutton Toad cooldown).
+- Larger converter steps by hand (Breach Ram per 8 Shield max 10, Siege Ram per 8 max 24, Ram Plate max 8; Glutton Toad 5 damage and cooldown 1.7, Trough Boar max 14; Dawn Needle per Power max 8, Zenith Lance max 16, Flare Catcher 4 Shield per Power), full run: Shield fortress +1.0 / +1.6, Well-fed pack +1.2 / +0.8, Late ascension +3.2 / +2.0 (late 41 → 44 %); Venn falls to 46 %, targets off 34 → 38.
+- Only the pet and Power weapon steps, full run: Well-fed pack +1.8 / +1.4, Late ascension +1.9 / +1.1, Venn 47 %, targets off 34 → 39.
+- "Going deeper pays" did not move beyond its noise in any of them (Well-fed pack +3.5 ±2.6 / +2.3 ±2.7; Shield fortress −2.1 / +4.6, the seeds disagree).
+
+Reading: with all heroes at 48–52 % a step that lifts one path by 1–2 points pushes about as many numbers over a band edge as it brings in. The three paths are inside their win-share bands now; what is left (the deepest third of Shield fortress loses 7–8 points, Well-fed pack and Late ascension 3–6 with ±3) is not a number question. Candidates if it still shows in a playtest: fewer pure sources in these paths (turn one or two into items that also attack), or bots that stop buying sources once the build has enough.
+
+# Path payoff built: converters, bodies, two rule changes (2026-11-16)
+
+Question (Ilja, "all good proposals, go on"): build `docs/proposals/path-payoff.md`. Measured on 2 × 240 lobbies, seeds 1 / 2, with the new number **"going deeper pays"** (`pathPays`: win share of the third of a path's bots with the most of their build on the path, minus the third with the least; in `report:paths`, `baseline`, `balance:replay`, `balance:sweep`).
+
+Built:
+- **Shield fortress:** two ram weapons (Breach Ram common, Siege Ram rare: damage per own Shield); Ram Plate and Bastion Frame ram on every hit taken instead of by chance. Measured before: 1056 Shield gained per late fight and nothing that used it.
+- **Well-fed pack:** two pets that strike when a starred food is used (Glutton Toad common, Trough Boar rare: damage per Power).
+- **Late ascension:** two weapons that use Power twice (Dawn Needle common, Zenith Lance rare); Flare Catcher gives Shield per Power.
+- **Overclocked guns, rule:** Overclock also refills Energy 3 % faster per stack (`rules.status.overclock.energyPct`). Measured before: 7.3 weapons of which 2 waited for Energy all the time (next worst path 0.6).
+- **Hungry jungle, rule:** hero mod `overheal` (percent of healing above full health that becomes Shield): Terrarium Heart 50 %, Sap Tap 25 %. Mantraps and Hydra Bloom count pets in the backpack instead of enemy Toxin.
+- Numbers by the tools (search per hero, core picked by hand, two full runs): Compost Bin Regen 1 → 2, Plague Blossom Jam 1 → 2, World Seed and Living Armor start Spikes 2 → 1, Strangler Fig Cryo 2 → 5, Master Blueprint damage 2 → 1, Plasma Welder 6–8 → 5–7, Nanite Swarm ram 1 → 2, Herd Heart Power 1 → 3, Glutton Toad 2 → 3, Nova Crown Cryo 2 → 1, Canticle and Solstice Engine Power per phase 1 → 2.
+- First full ratings run with per-item dice on two seeds (`data/sim/ratings-meta.json` now exists, `ratings --only` works).
+
+| | before (main) | after, seed 1 / 2 |
+|---|---|---|
+| Heroes | Venn 47, Rook 52, Quill 50, Ysel 50 | Venn 48 / 49, Rook 51 / 51, Quill 51 / 49, Ysel 50 / 50 |
+| Overclocked guns, all / late | 47 / 38 | 48 / 48 and 51 / 48 |
+| Shield fortress | 46 / 46 | 50 / 53 and 49 / 53 |
+| Workshop | 57 / 64 | 52 / 58 and 49 / 55 |
+| Hungry jungle | 41 / 35 | 44 / 44 and 45 / 44 |
+| Well-fed pack | 42 / 38 | 48 / 44 and 43 / 38 |
+| Late ascension | 45 / 37 | 47 / 41 and 46 / 40 |
+| Largest gap between a hero's paths | 10–13 | 3–7 and 1–9 |
+| Worst path against its open bot | −13 | −5 and −11 (Well-fed pack) |
+| Target checks off (seed 1) | 33 of 108 (without the new number) | 34 of 120 (22 without the new number) |
+
+Going deeper pays (seed 1 / 2, ±3): Hungry jungle +7 / +5 and Poison garden +6 / +1 now pay, Thorn wall +1 / +1, Workshop 0 / −2. Still costing: Shield fortress −7 / −8, Well-fed pack −3 / −6, Late ascension −3 / −6, Overclocked guns −8 / −2.
+
+Still open:
+- Shield fortress, Well-fed pack and Late ascension are now even with the other paths on average, but their most committed bots still lose. Next step there is more converter (numbers of the new items by `balance:propose --knobs item:…`) or fewer pure sources in the path.
+- Well-fed pack differs between the seeds (48 / 43 %): not settled.
+- Thorn wall late 60 / 55 %, Workshop late 58 / 55 %, Late ascension late 41 / 40 %.
+- Every path is still at or below its open bot (−1 to −5 on seed 1). With bots that buy by rating this target may be too strict; "going deeper pays" is the sharper question.
+- Path pull sweep not repeated yet with the new items.
+
+# Proposal: make the weak paths pay (2026-11-16, not applied)
+
+Question (Ilja, after the path-pull sweeps): let the tools propose numbers that make the weak paths pay. `balance:propose --knobs hero:<id> --kinds …,open --max-knobs 6` for each hero (7–10 min each, search on seed 1, check on seed 2), then full runs (bots shop again). **Nothing in `data/` changed; the core numbers stay frozen until Ilja decides.**
+
+All 16 proposed changes together are not worth taking: targets off 33 → 34, Quill rises to 54 %, Ysel falls to 44 % in rounds 1–4 (Sun Shard Burn 2 → 1), Venn falls in rounds 5–8.
+
+**Core of six changes that holds on both seeds** (full run, 2 × 240 lobbies; targets off on seed 1: 33 → 26, 10 brought on target, 3 pushed off):
+
+| Item | Number | Now | Proposed | Path it serves |
+|---|---|---|---|---|
+| Strangler Fig | Cryo on hit | 2 | 5 | Venn Hungry jungle |
+| Herd Heart | Power per starred use | 1 | 2 | Quill Well-fed pack |
+| Canticle | Power per phase | 1 | 2 | Ysel Late ascension |
+| Solstice Engine | Power per phase | 1 | 2 | Ysel Late ascension |
+| Ram Plate | damage when attacked | 1 | 2 | Rook Shield fortress |
+| Master Blueprint | damage on use | 2 | 1 | Rook Workshop (down) |
+
+Change seed 1 / seed 2, paired: Hungry jungle +4.5 / +2.8 (41 → 45 %), late +9.2 / +6.4 (35 → 44 %); Well-fed pack +4.4 / +2.8 (42 → 47 %); Late ascension +2.1 / +1.8 (45 → 47 %), late +4.6 / +4.2 (37 → 42 %); Workshop −3.8 / −3.9 (57 → 53 %), late −6.0 / −5.3 (64 → 58 %); Venn overall 47 → 49 %, Rook 52 → 50 %, all heroes inside 48–52 %; gap between a hero's paths: Venn 10 → 7, Rook 11 → 8, Quill 13 → 8, Ysel 8 → 5.
+Pushed off: Rook Overclocked guns 47 → 45 % (late 38 → 35 %), Thorn wall late 56 → 58 %, Thorn wall against the open bot +2 → +1.
+
+**What numbers do not fix:** every weak path stays below its open bot (Well-fed pack −13 → −7, Shield fortress −11 → −9, Hungry jungle −8 → −6, Late ascension −7 → −5; Overclocked guns −10 unchanged). Small number steps close a third to a half of the gap. The rest is design: path items must reward being together (as Herd Heart does: its one step gave the largest gain), or the open-bot target is too strict for bots that buy by rating.
+
+Patch: `out/proposals/pay-core.json` (`{"item":"strangler_fig","set":{"effects.0.n":5}}`, `herd_heart effects.0.n 2`, `canticle effects.0.n 2`, `solstice_engine effects.0.n 2`, `ram_plate effects.1.n 2`, `master_blueprint effects.0.n 1`). If adopted: numbers into `data/items/hero_*.json`, `npm run ratings -- --only <ids>`, `npm run catalog`, `npm run baseline`.
+
+# How strongly should a path pull? Three sweeps (2026-11-16)
+
+Question (Ilja, open since the path anchors): how strongly should a path pull the build? New tool `npm run balance:sweep` (one number at several values, every value a full run on the baseline's lobbies, bots shop again; about 3 min per value). No game number changed. Baseline of main, 2 × 240 lobbies, mean of seeds 1 and 2; * = at least two paired standard errors on both seeds.
+
+| Knob | Values | Build on the path | Path against open bot (average) | Other |
+|---|---|---|---|---|
+| Bots' path liking (bots only; now 2) | 1 / 1.5 / 2 / 3 / 4 | 29 * / 40 * / 47 / 55 * / 60 * % | +1.5 * / −0.1 * / −4.2 / −7.8 * / −11.7 * | largest gap between the paths of a hero 2.7 / 9.0 / 12.7 / 15.7 / 20.6 |
+| Shop lean to the anchor's path (`shop.anchorPathWeight`, now 1.5) | 1 / 1.5 / 2 / 3 / 4 | 46 / 47 / 48 / 50 / 50 % | −3.5 / −4.2 / −3.9 / −3.7 / −4.5 | heroes and paths unchanged |
+| Hero's own items in the shop (`shop.heroOfferPct`, now 30) | 20 / 30 / 40 / 50 | 46 / 47 / 48 / 49 % | −3.5 / −4.2 / −3.3 / −3.3 | hero items in the build 35 / 47 / 57 / 66 %; Quill 44 / 50 / 56 / 61 %, Rook 55 / 52 / 49 / 46 %, Venn 49 / 48 / 46 / 44 % |
+
+What this says:
+- **The shop lean does almost nothing** between 1 and 4 (it only touches the hero's own items that carry a path). It is safe wherever it stands and is not the lever for this question.
+- **More hero offers do not pull to a path.** They fill the build with the hero's items, make runs more alike (items two runs do not share: 88 / 86 / 83 / 80 %) and shift the heroes hard, because Quill's own items are stronger than the general ones and Rook's and Venn's are weaker. That gap is a balancing finding of its own.
+- **What decides is how much the player (here: the bot) wants the path, and today wanting it more loses.** Every step of path liking puts more of the build on the path and makes the path bots lose more against the hero's open bot, most for Rook Overclocked guns and Shield fortress (−25 / −24 at liking 4), Quill Well-fed pack (−22), Hungry jungle and Late ascension (−15). Only Thorn wall, Burning corona, Swarm and Poison garden stay near the open bot. A path's items together are not stronger than the best general buys, so the open-bot target (≥ +2) cannot be reached by more pull: the paths need payoff (their items must reward being together), not pull.
+- **Paths do not make runs the same.** Two runs of the same path share as few items as two runs without a path (86 % not shared) at every value; two paths of one hero differ a little more with more liking (86 → 91 %). The fear "too much pull, every run the same" does not show up in this range.
+- The damage mix of the closest two paths of a hero stays the same (0.01) whatever the pull: distinctness is a matter of what the items do, not of how many are bought.
+
+Reports: `out/reports/sweep-pathLiking.html`, `sweep-shop-anchorPathWeight.html`, `sweep-shop-heroOfferPct.html`.
+
+Open (design decision): leave both shop numbers as they are; make the weak paths pay through their own items (numbers of path items, first real pass) and then set `pathCommit` to what a path that pays delivers. The bots' path liking stays 2 until then; it is a guess about players, and the win shares of single paths depend on it (see the liking column: Rook guns 54 → 37 %).
+
 # Item strength, matchups and meta, picks (2026-11-16)
 
 Third stage of the balancing tools (`docs/proposals/balancing-workflow.md`). No game number changed. All on the baseline of main (2 × 240 lobbies, seeds 1 and 2).

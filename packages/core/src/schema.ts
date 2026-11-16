@@ -61,6 +61,8 @@ const Mod = z.object({
   energy: z.number().optional(),
   /** to: "hero": Energy regained per second */
   energyRegen: z.number().optional(),
+  /** to: "hero": percent of healing above full health that becomes Shield (all items together at most 100) */
+  overheal: z.number().optional(),
 }).strict();
 export type Mod = z.infer<typeof Mod>;
 
@@ -176,7 +178,8 @@ export const Rules = z.object({
     cryo: z.object({ slowPct: z.number(), capPct: z.number(), decayInterval: z.number() }).strict(),
     jam: z.object({ missPct: z.number(), capPct: z.number(), decayInterval: z.number() }).strict(),
     radiation: z.object({ reducePct: z.number(), capPct: z.number() }).strict(),
-    overclock: z.object({ speedPct: z.number(), capPct: z.number() }).strict(),
+    /** energyPct: Energy also refills this much faster per stack (same cap), so faster weapons do not starve */
+    overclock: z.object({ speedPct: z.number(), capPct: z.number(), energyPct: z.number().default(0) }).strict(),
   }).strict(),
 }).strict();
 export type Rules = z.infer<typeof Rules>;

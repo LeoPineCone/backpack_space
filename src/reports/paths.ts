@@ -11,7 +11,7 @@
  * lobbies, so the change is measured much more exactly than two independent runs could.
  */
 import { existsSync, readFileSync } from "node:fs";
-import { aggregatePaths, blockSe, lateRound, MECHANIC_TEXT, MECHANICS, measurePathLobby, profileDistance, profileOf, SOURCES, type Measured, type Profile } from "../sim/paths";
+import { commitPays, aggregatePaths, blockSe, lateRound, MECHANIC_TEXT, MECHANICS, measurePathLobby, profileDistance, profileOf, styleDistance, STYLE_TEXT, SOURCES, type Measured, type Profile } from "../sim/paths";
 import { jobsFrom, runParallel } from "../sim/parallel";
 import { avg, loadTargets, markOf, pct, pts, startReport, targetRange, type Target } from "./common";
 import type { Mark, ReportPage } from "./html";
@@ -52,7 +52,8 @@ r.value("lobbies", [L]);
 // ---- tables
 const T = loadTargets();
 const tHero = T.pathHeroWinShare!, tPath = T.pathWinShare!, tLate = T.pathLateWinShare!, tOpen = T.pathOverOpen!, tSpread = T.pathSpread!;
-const tMain = T.pathMainShare!, tDistinct = T.pathDistinct!, tCommit = T.pathCommit!;
+const tMain = T.pathMainShare!, tDistinct = T.pathDistinct!, tCommit = T.pathCommit!, tPays = T.pathPays!, tStyle = T.pathStyle!;
+const flat = seats.flat();
 const hd = (label: string, t: Target, unit: "%" | "pts" = "%") => `${label} [target ${targetRange(t, unit)}]`;
 const show = (m: Measured) => `${pct(m.p)} ±${Number.isFinite(m.se) ? Math.max(1, Math.round(100 * m.se)) : "-"}`;
 
@@ -102,25 +103,34 @@ for (const h of data.heroList) {
   // ---- path profile: does every path win in its own way?
   const profs: { name: string; p: Profile }[] = [];
   const prow: (string | number)[][] = [], pmarks: Mark[][] = [];
+  const paysAll: number[] = [];
   for (const p of [...h.paths, { id: "", name: "(open, no path)", focus: [] as string[] }]) {
     const g = groups.get(`${h.id}/${p.id}`);
     if (!g) continue;
     const pr = profileOf(g);
     if (p.id) profs.push({ name: p.name, p: pr });
+    const pays = p.id ? commitPays(flat.filter((q) => q.key === `${h.id}/${p.id}`)) : undefined;
+    if (pays) { paysAll.push(pays.all); r.value(`${h.id}/${p.id}:pays`, [pays.all, pays.late]); }
     const mix = MECHANICS.filter((m) => pr.mix[m] >= 0.1).sort((x, y) => pr.mix[y] - pr.mix[x]).map((m) => `${m} ${pct(pr.mix[m])}`).join(", ");
-    prow.push([p.name, `${pr.main} ${pct(pr.mix[pr.main])}`, mix, pct(pr.carry), pr.dealers.toFixed(1), pr.attacksPerSec.toFixed(1), pct(pr.late), p.id ? pct(pr.pathDamage) : "-", p.id ? pct(avg(g.commit)) : "-"]);
-    pmarks.push(p.id ? ["", markOf(tMain, pr.mix[pr.main]), "", "", "", "", "", "", markOf(tCommit, avg(g.commit))] : []);
+    prow.push([p.name, `${pr.main} ${pct(pr.mix[pr.main])}`, mix, pct(pr.carry), pr.dealers.toFixed(1), pr.attacksPerSec.toFixed(1), pct(pr.late), p.id ? pct(pr.pathDamage) : "-", p.id ? pct(avg(g.commit)) : "-", pays ? `${pts(pays.all)} (late ${pts(pays.late)})` : "-"]);
+    pmarks.push(p.id ? ["", markOf(tMain, pr.mix[pr.main]), "", "", "", "", "", "", markOf(tCommit, avg(g.commit)), pays ? markOf(tPays, pays.all) : ""] : []);
   }
   r.log();
   r.log(`Path profile of ${h.name.split(" ")[0]} (rounds ${late}+):`);
-  r.table(["path", hd("main mechanic", tMain), "damage mix", "best item", "items dealing damage", "attacks / s", "damage from phase 3 on", "damage by path items", hd("path items (cost)", tCommit)], prow, undefined, pmarks);
+  r.table(["path", hd("main mechanic", tMain), "damage mix", "best item", "items dealing damage", "attacks / s", "damage from phase 3 on", "damage by path items", hd("path items (cost)", tCommit), hd("going deeper pays", tPays, "pts")], prow, undefined, pmarks);
   const pairs: { a: string; b: string; d: number }[] = [];
   for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) pairs.push({ a: profs[i]!.name, b: profs[j]!.name, d: profileDistance(profs[i]!.p, profs[j]!.p) });
   pairs.sort((x, y) => x.d - y.d);
   if (pairs.length) r.log(`  How different (1 − cosine of the damage mix, target ≥ ${tDistinct.min}): ${pairs.map((x) => `${x.a} / ${x.b} ${x.d.toFixed(2)}${markOf(tDistinct, x.d) === "ok" ? " ✓" : " ✗"}`).join(", ")}`);
+  const styles: { a: string; b: string; s: ReturnType<typeof styleDistance> }[] = [];
+  for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) styles.push({ a: profs[i]!.name, b: profs[j]!.name, s: styleDistance(profs[i]!.p, profs[j]!.p) });
+  styles.sort((x, y) => x.s.score - y.s.score);
+  if (styles.length) r.log(`  Play style (largest difference of a pair, 1 = clearly different, target ≥ ${tStyle.min}): ${styles.map((x) => `${x.a} / ${x.b} ${x.s.score.toFixed(2)} by ${STYLE_TEXT[x.s.by]}${markOf(tStyle, x.s.score) === "ok" ? " ✓" : " ✗"}`).join(", ")}`);
+  if (styles.length) r.target(named(tStyle), styles.map((x) => x.s.score), false);
   for (const pr of profs) r.value(`${h.id}/${pr.name}:mix`, MECHANICS.map((m) => pr.p.mix[m]));
   r.target(named(tMain), profs.map((x) => x.p.mix[x.p.main]), true);
   r.target(named(tDistinct), pairs.map((x) => x.d), true);
+  if (paysAll.length) r.target(named(tPays), paysAll, true);
   r.target(named(tCommit), h.paths.map((p) => avg(groups.get(`${h.id}/${p.id}`)?.commit ?? [0])), true);
   const closest = pairs[0];
   const okPaths = shares.filter((s) => markOf(tPath, s.p) === "ok" && markOf(tLate, s.late) === "ok" && markOf(tOpen, s.overOpen) === "ok");

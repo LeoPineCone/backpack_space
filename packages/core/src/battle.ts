@@ -87,6 +87,15 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     if (item >= 0) o.stats.itemDamage[item]! += dmg;
     return dmg;
   };
+  /** Heals side `side` by up to n; healing above full health becomes Shield for sides with overheal. Returns health gained. */
+  const heal = (side: number, n: number, src: number, w?: string): number => {
+    const me = S[side]!;
+    const v = Math.min(me.c.maxHp - me.hp, n);
+    if (v > 0) { me.hp += v; me.stats.healed += v; ev(side, src, "heal", v, w); }
+    const over = me.c.overheal > 0 ? Math.floor(((n - Math.max(0, v)) * me.c.overheal) / 100) : 0;
+    if (over > 0) { me.st.shield += over; me.stats.shielded += over; ev(side, src, "gain", over, "shield"); }
+    return v;
+  };
   const reduced = (s: Side, n: number) => n * (1 - Math.min(R.radiation.capPct, s.st.radiation * R.radiation.reducePct) / 100);
 
   const apply = (side: number, ce: CEffect) => {
@@ -117,8 +126,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     } else if (e.do === "damage") {
       ev(side, ce.src, "damage", hurt(1 - side, n, "direct", false, ce.src), "direct");
     } else if (e.do === "heal") {
-      const v = Math.min(me.c.maxHp - me.hp, Math.round(reduced(me, n)));
-      if (v > 0) { me.hp += v; me.stats.healed += v; ev(side, ce.src, "heal", v); }
+      heal(side, Math.round(reduced(me, n)), ce.src);
     } else if (e.do === "cleanse") {
       let left = n;
       while (left > 0) {
@@ -193,7 +201,8 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     // items
     for (const side of order) {
       const me = S[side]!;
-      me.energy = Math.min(rules.energy.max, me.energy + Math.max(0, rules.energy.regen + me.c.energyBonus) * dt);
+      // Overclock also refills Energy faster, so that faster weapons do not starve
+      me.energy = Math.min(rules.energy.max, me.energy + Math.max(0, rules.energy.regen + me.c.energyBonus) * (1 + Math.min(R.overclock.capPct, me.st.overclock * R.overclock.energyPct) / 100) * dt);
       const global = (1 + Math.min(R.overclock.capPct, me.st.overclock * R.overclock.speedPct) / 100) * (1 - Math.min(R.cryo.capPct, me.st.cryo * R.cryo.slowPct) / 100);
       for (const it of me.c.items) {
         if (!it.cooldown) continue;
@@ -214,8 +223,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
       if (me.st.burn > 0 && every(R.burn.interval)) { ev(1 - side, -1, "tick", hurt(side, me.st.burn, "burn", false), "burn"); me.st.burn = Math.max(0, me.st.burn - R.burn.decay); }
       if (me.st.toxin > 0 && every(R.toxin.interval)) ev(1 - side, -1, "tick", hurt(side, me.st.toxin, "toxin", true), "toxin");
       if (me.st.regen > 0 && every(R.regen.interval)) {
-        const v = Math.min(me.c.maxHp - me.hp, Math.round(reduced(me, me.st.regen)));
-        if (v > 0) { me.hp += v; me.stats.healed += v; ev(side, -1, "heal", v, "regen"); }
+        heal(side, Math.round(reduced(me, me.st.regen)), -1, "regen");
       }
       if (me.st.cryo > 0 && every(R.cryo.decayInterval)) me.st.cryo--;
       if (me.st.jam > 0 && every(R.jam.decayInterval)) me.st.jam--;

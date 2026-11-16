@@ -35,6 +35,8 @@ export interface CSide {
   maxHp: number;
   /** Energy per second on top of the refill in the rules (from items) */
   energyBonus: number;
+  /** percent of healing above full health that becomes Shield */
+  overheal: number;
   items: CItem[];
   heroEffects: CEffect[];
   /** starUse and shipUse effects to fire when item i activates */
@@ -86,7 +88,7 @@ export function compile(build: Build, data: GameData): CSide {
   });
   const round = Math.min(Math.max(build.round, 1), data.rules.rounds);
   let maxHp = data.rules.heroHp[round - 1]! + hero.hpBonus;
-  let energyBonus = 0;
+  let energyBonus = 0, overheal = 0;
 
   const staticMult = (e: Effect, it: CItem | null): number => {
     const per = e.per;
@@ -113,7 +115,7 @@ export function compile(build: Build, data: GameData): CSide {
     const mult = staticMult(e, it);
     if (e.on === "passive") {
       if (mult === 0) return;
-      if (e.to === "hero") { maxHp += (e.mod!.maxHp ?? 0) * mult; energyBonus += (e.mod!.energyRegen ?? 0) * mult; return; }
+      if (e.to === "hero") { maxHp += (e.mod!.maxHp ?? 0) * mult; energyBonus += (e.mod!.energyRegen ?? 0) * mult; overheal += (e.mod!.overheal ?? 0) * mult; return; }
       const targets = e.to === "self" ? (it ? [it] : []) : e.to === "stars" ? it!.starred.map((j) => items[j]!).filter((t) => has(t.def, e.tag)) : items.filter((t) => has(t.def, e.tag));
       for (const t of targets) {
         if (e.if?.phase) t.dyn.push({ phases: e.if.phase, mod: scale(e.mod!, mult) });
@@ -139,5 +141,5 @@ export function compile(build: Build, data: GameData): CSide {
     }
   });
   for (const it of items) if (it.dmg) { it.dmg[0] = Math.max(0, it.dmg[0]); it.dmg[1] = Math.max(it.dmg[0], it.dmg[1]); it.energy = Math.max(0, it.energy); }
-  return { hero, round, maxHp: Math.round(maxHp), energyBonus, items, heroEffects, watchers };
+  return { hero, round, maxHp: Math.round(maxHp), energyBonus, overheal: Math.min(100, overheal), items, heroEffects, watchers };
 }

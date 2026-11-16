@@ -30,6 +30,7 @@ not chance and not a bot quirk.
 | `npm run balance:replay -- --patch p.json` | what a number change does to every fight-level target, paired on the baseline's lobbies; `--full` plays the lobbies again | 5–20 s; `--full` ~4 min |
 | `npm run balance:sense -- --knobs hero:venn` | which number moves which target by how much (one step each); dead numbers, strong levers, side effects | ~1 s per knob |
 | `npm run balance:propose -- --knobs hero:venn` | proposes the fewest, smallest number changes that bring the targets into their bands; writes a patch, changes nothing | 3–10 min |
+| `npm run balance:sweep -- --knob rule:shop.heroOfferPct --values 20,40,50` | one number at several values, every value a full run on the baseline's lobbies (bots shop again): how much of a build is on its path, variety between runs, path against open bot, hero and path win shares, as tables and curves. Knobs: `rule:<path>`, `item:<id>:<path>`, `hero:<id>:<path>`, `bot:pathLiking` | ~3 min per value |
 | `npm run report:paths` | win share per hero and per path, vs the hero's open bot; targets marked ✓/✗ | quick 10 s, normal 30 s, precise ~1.5 min |
 | `npm run report:strength` | item outliers by three views (add one, remove one, regression); needs the baseline, no bot shops | ~1 min |
 | `npm run report:meta` | path against path (12 × 12), hero against hero, rock-paper-scissors share, meta share per hero (target) and path; needs the baseline | ~45 s |
@@ -189,12 +190,38 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 1. Schema + battle change with tests. The bots must understand it (as the Energy bookkeeping in `bot.ts`),
    otherwise every number measures a bot blind spot.
-2. Its global numbers are rules: bots usually read them, so measure with full runs. Try 5–7 values of one rule
-   with patches and `balance:replay --full` (a sweep), look at fight length, Supernova and the hero bands, choose
-   a region with the designer.
+2. Its global numbers are rules: bots usually read them, so measure with full runs. Try 4–6 values of one rule
+   with `npm run balance:sweep -- --knob rule:<path> --values …` (paths and heroes per value); for fight length
+   and Supernova at the chosen value use a patch with `balance:replay --full`. Choose a region with the designer.
 3. Full `npm run ratings -- --seeds 1,2`, `npm run baseline`, then the item procedure for the items that use it.
 
 ## Lessons learned (keep adding)
+
+- 2026-11-16: when every hero is at 48–52 % and most paths are in their bands, single number steps stop paying:
+  three tries on three paths each lifted the path by 1–3 points and left more targets off than before (34 → 38 /
+  39), because many values sit near a band edge. Stop there; count "targets off" only as a rough guide (± about 5
+  between two full runs of patches that do little). `pathPays` moves less than its noise (±3) for number steps.
+
+- 2026-11-16: path payoff (findings.md). A path needs a **source** (makes its resource), a **converter** (turns the
+  resource into damage or survival, scaling) and a **body** (weapons or pets). Paths made only of sources lose
+  more the deeper a bot goes; check `pathPays` ("going deeper pays", ±3 points per seed at normal: read both
+  seeds). Before tuning a weak path, look for the trap first: count what its bots build and measure the resource
+  (Overclocked guns: 2 of 7 weapons waited for Energy; Shield fortress: 1056 Shield per fight with nothing using
+  it). Structural fixes moved those paths by 5–10 points, number steps by 2–5.
+- 2026-11-16: a nerf of a hero's cheap everyday item is a hero lever: Plasma Welder 6–8 → 4–6 moved Rook by
+  −7.5 points, 5–7 by about −3. Take one step and measure.
+
+- 2026-11-16: proposals per hero with `--kinds …,open` (findings.md, not applied). Merging the proposals of all
+  heroes was worse than the baseline (33 → 34 targets off): each search only knows its own hero's knobs and uses
+  nerfs of early items that hurt a third of the run. Pick the changes that lift a weak path or lower a strong one,
+  drop the rest, and measure the merged patch with `--full` before showing it. Number steps closed a third to a
+  half of a path's gap to its open bot, never all of it.
+
+- 2026-11-16: path pull, three sweeps (findings.md). The shop lean (`shop.anchorPathWeight` 1–4) moves almost
+  nothing. `shop.heroOfferPct` is a hero-balance lever, not a path lever (Quill 44 → 61 % from 20 to 50). The
+  bots' path liking decides how much of a build is on the path (29 → 60 %), and more liking loses against the
+  open bot: paths lack payoff, not pull. Path win shares depend on the liking (a guess about players), so read a
+  weak path as "weak when a bot forces it", and check `balance:sweep -- --knob bot:pathLiking` before tuning one.
 
 - 2026-11-16: Dyson Fragment and Wormhole Generator stay weak with careful placement (+0.7 / +1.7 points normal,
   −0.8 / +2.4 careful; median artifact +8.5). The earlier guess "bots only place the far stars badly" does not
@@ -228,11 +255,16 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Still open (2026-11-16)
 
-Rook Workshop too strong (60 %, late 63–70 %, likely the hero's own crafted speed rule: needs the designer's OK),
-Venn Hungry jungle, Quill Well-fed pack and Ysel Late ascension weak, most paths below their open bot, no hero
-reaches the path distinctness target. The ratings have not been measured with the new per-item dice yet: the
-first `npm run ratings -- --seeds 1,2` writes `data/sim/ratings-meta.json` and will shift the heroes once.
-Meta: Rook 36 % (Workshop alone 28 %), Quill 14 %; Hungry jungle, Well-fed pack and Late ascension are hardly
-played. General artifacts Dyson Fragment, Wormhole Generator (and Ancient Monolith) are weak.
-Not built yet (see `docs/proposals/balancing-workflow.md`): sweeps and search for numbers the bots read, the
-path-pull sweep, and the first real pass.
+After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
+fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and
+Workshop strong late (55–60 %), Late ascension weak late (40 %); Well-fed pack differs between seeds (48 / 43 %);
+every path at or below its open bot. Path distinctness: by damage mix (`pathDistinct`) no hero reaches the
+target; by play style (`pathStyle`, largest of mix / tempo / damage per attack / protection / late damage / best
+item, 1 = clearly different, proposed target ≥ 1) Rook's paths and Ysel's Eclipse differ clearly, Quill's Big
+beasts and Swarm play the same (0.2), Venn's paths 0.4–1.0 and Burning corona / Late ascension 0.8. That is a
+design question (what a path owns), not a number question; read `pathStyle` on both seeds (Venn moves by 0.5). General artifacts Dyson
+Fragment, Wormhole Generator (and Ancient Monolith) are weak. The path-pull sweep has not been repeated with the
+new items.
+Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.
+Not built yet (see `docs/proposals/balancing-workflow.md`): search for numbers the bots read, and the first
+real pass.
