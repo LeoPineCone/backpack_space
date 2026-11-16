@@ -13,6 +13,8 @@
  * Every run also writes a static HTML page with tables and charts: out/reports/<id>.html, or next to --out
  * (same name, .html). index.html in that folder links all report pages found there.
  *   --no-ratings                       bots ignore data/sim/ratings.json
+ *   --jobs N                           reports that play lobbies use N processor cores (default: all); same result
+ *   --baseline file.json               reports that support it compare with an earlier run (its .json page)
  */
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -53,6 +55,8 @@ export interface Report<C> {
   chart: (chart: Chart) => void;
   /** checks a target and prints its OK / OFF line; in the HTML page it becomes a target light */
   target: (t: Target, values: readonly number[], asPct: boolean) => void;
+  /** stores measured numbers in the page's .json, so a later run can compare itself with this one (--baseline) */
+  value: (key: string, nums: number[]) => void;
   /** progress on stderr, does not go into the report file */
   progress: (line: string) => void;
   done: () => void;
@@ -69,6 +73,7 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
   const lines: string[] = [];
   const blocks: Block[] = [];
   const meta: string[] = [];
+  const values: Record<string, number[]> = {};
   let inHeader = true;
   const log = (...out: string[]) => {
     for (const line of out.length ? out : [""]) {
@@ -97,18 +102,20 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
     },
     chart: (chart) => { blocks.push({ kind: "chart", chart }); },
     target: (t, values, asPct) => { const x = targetResult(t, values, asPct); quiet([targetLine(x)]); blocks.push({ kind: "target", target: x }); },
+    value: (key, nums) => { values[key] = nums; },
     progress: (line) => { if (process.stderr.isTTY) process.stderr.write(`\r${line}`.padEnd(60) + "\r"); },
     done: () => {
       log();
       log(`(${((Date.now() - t0) / 1000).toFixed(0)} s)`);
       const seconds = Math.round((Date.now() - t0) / 1000);
-      if (flags.out) { writeFileSync(flags.out, lines.join("\n") + "\n"); console.log(`Written to ${flags.out}`); }
+      if (flags.out) { mkdirSync(dirname(flags.out) || ".", { recursive: true }); writeFileSync(flags.out, lines.join("\n") + "\n"); console.log(`Written to ${flags.out}`); }
       if (!flags["no-html"]) {
         const dir = flags.out ? dirname(flags.out) : join("out", "reports");
         const name = flags.out ? basename(flags.out).replace(/\.[^.]*$/, "") : spec.id;
         const page: ReportPage = {
           kind: "backpack-space-report", id: spec.id, title: spec.title, question: spec.question, meta, accuracy, seed, seconds,
           written: new Date().toISOString(), text: flags.out ? basename(flags.out) : undefined, blocks,
+          values: Object.keys(values).length ? values : undefined,
         };
         writeReportPage(dir, name, page);
         console.log(`HTML page: ${join(dir, `${name}.html`)} (all reports: ${join(dir, "index.html")})`);
@@ -118,7 +125,7 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
 }
 
 /** Report ids in the order the index and report:all list them. */
-export const REPORT_IDS = ["battles", "heroes", "runs", "items", "recipes", "placement", "paths", "synergy"] as const;
+export const REPORT_IDS = ["battles", "heroes", "runs", "items", "recipes", "placement", "paths", "synergy", "selftest"] as const;
 
 /** Writes <name>.html and <name>.json into dir and rebuilds dir/index.html from every report page there. */
 export function writeReportPage(dir: string, name: string, page: ReportPage): void {

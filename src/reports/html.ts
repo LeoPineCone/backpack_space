@@ -62,6 +62,8 @@ export interface ReportPage {
   /** file name of the text version next to the page, if any */
   text?: string;
   blocks: Block[];
+  /** measured numbers by key, for comparing a later run with this one (--baseline) */
+  values?: Record<string, number[]>;
 }
 
 const esc = (s: Cell) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");

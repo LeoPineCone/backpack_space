@@ -1,3 +1,23 @@
+# Measuring tool checked (2026-11-16)
+
+Question (Ilja): optimising only pays if the measuring tool is reliable. Results:
+- **Noise was understated.** The ± in report:paths was taken over single fights; fights of one bot (and bots of one lobby) are not independent. The same report on another seed moved a path by up to 5 points. Now the ± comes from blocks of lobbies; `npm run report:selftest` compares two independent runs (root mean square of z 1.1 at quick, 1.4 at normal: honest, at most slightly optimistic). Rule of thumb for one path: ±2 points at precise, ±4 at normal.
+- **Paired comparison.** `--baseline` compares with an earlier run on the same lobbies; a change is then measured to about ±1 point at precise. Example: Gravity Well's Strip 14 → 10 changed no fight at all (enemies rarely hold more than 10 buff stacks), which only a paired run shows for sure.
+- **The tool sees real changes.** Self-test: the hero items of one path 25 % stronger → that path rises by 8 standard errors (normal). But the other paths of the same hero rise as much or more: paths share most of their hero items, so number changes move the whole hero, not one path against the open bot.
+- **Bot ratings** measured again (average of seeds 1 and 2, normal). Two seeds agree with correlation 0.84; the old ratings agreed about as well, so they had drifted little.
+- Lobbies run on all processor cores (same result, 2–4× faster).
+
+Paths at precise accuracy, seed 1, new ratings (wins all rounds / rounds 9–12 / vs open bot):
+
+| Hero (overall) | Path 1 | Path 2 | Path 3 | open |
+|---|---|---|---|---|
+| Venn 48 % | Poison garden 51 / 48 / +3 | Thorn wall 49 / 50 / +2 | Hungry jungle 43 / 39 / −5 | 48 |
+| Rook 52 % | Overclocked guns 50 / 45 / −3 | Shield fortress 49 / 51 / −4 | Workshop 55 / 61 / +2 | 53 |
+| Quill 52 % | Big beasts 52 / 46 / −1 | Swarm 55 / 49 / +3 | Well-fed pack 48 / 40 / −4 | 52 |
+| Ysel 50 % | Burning corona 50 / 55 / −3 | Late ascension 49 / 50 / −4 | Eclipse 47 / 53 / −6 | 53 |
+
+All heroes are within 48–52 %. Still off: Workshop too strong late, Hungry jungle and Well-fed pack weak late, most paths below the open bot. One more number round (Gravity Well, Venn pet cooldowns, Banquet Trough Power) was measured paired and dropped: no effect, or the whole hero moved instead of the path. Paths need items that only pay off for a committed build (see the hero-paths proposal).
+
 # Item sizes follow the thing (2026-11-15)
 
 Decision (Ilja): weapons and pets are larger than fruit and snacks; weapons cover 2 cells or more, one cell is rare. Four weapons and seven pets grew to 2 cells, ten foods shrank to 1 (list in `.claude/skills/item-design/SKILL.md` history / PR #14). Item ratings measured again, full reports in `docs/reports/` (normal accuracy, seed 1).
