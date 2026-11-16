@@ -248,8 +248,8 @@
     "description": "Upright: an hourglass in a metal cage, the sand frozen in mid-fall in the narrow neck, frost on the glass."
   },
   "ancient_monolith": {
-    "brief": "Tall black slab with worn glyph carvings, too old to read. Accent: bone.",
-    "description": "Filling the square box: a tall black slab of stone, the face carved with worn glyphs too old to read, the bottom sunk in rubble. Heavy and quiet."
+    "brief": "Small black standing stone with glowing old marks. Accent: bone.",
+    "description": "A small black standing stone, worn smooth, old marks cut into it glowing faintly bone-white."
   },
   "quantum_dice": {
     "brief": "Pair of dice, each showing several faces at once as overlapping outlines. Accent: mustard.",
@@ -912,8 +912,8 @@
     "description": "Lying across the box: three small watering drones like the botanist's old one, spraying a single leaf, each with a faded stencil patch."
   },
   "world_seed": {
-    "brief": "Large seed split open, a tiny planet growing out of the crack. Accent: moss.",
-    "description": "Filling the square box: a large seed split open, a tiny planet with its own little moss continents growing out of the crack, roots hanging from it."
+    "brief": "Large seed split open, bark and thorns bursting out of the crack. Accent: moss.",
+    "description": "Filling the square box: a large seed split open, rough bark and long thorns bursting out of the crack, a tiny planet of moss caught between them."
   },
   "queen_spore": {
     "brief": "Large seed bulb crowned by a ring of smaller bulbs, pale and swollen. Accent: moss.",
@@ -1060,8 +1060,8 @@
     "description": "Lying across the box: a smooth stone heart wrapped in braided fur, scratched with simple animal outlines."
   },
   "ancient_egg": {
-    "brief": "Large stone egg with old carvings and a crack. Accent: bone.",
-    "description": "Filling the square box: a large stone egg with old carvings spiralling round it and a crack running down its side, something shifting inside."
+    "brief": "Large stone egg with old carvings, tiny creatures hatching from cracks. Accent: bone.",
+    "description": "Filling the square box: a large stone egg with old carvings spiralling round it, many small cracks with tiny creatures pushing out of them."
   },
   "feeding_bowl": {
     "brief": "Hollow half of a big shell, filled with berries and roots. Accent: rust red.",
@@ -1328,8 +1328,8 @@
     "description": "Filling the square box: an iron engine with two half-suns on its sides, the Dawn Chime hanging from it, the Flare Catcher's ring on top."
   },
   "nova_crown": {
-    "brief": "Crown of bent iron rings around a star bursting apart. Accent: mustard.",
-    "description": "Lying across the box: a crown of bent iron rings around a star bursting apart, pieces held in the rings."
+    "brief": "Crown of bent iron rings around a dark, frozen star. Accent: deep teal.",
+    "description": "Lying across the box: a crown of bent iron rings around a dark star gone cold, frost cracks on its surface, pieces held still in the rings."
   },
   "eternal_dawn": {
     "brief": "Small sun rising out of an iron ring, never quite up. Accent: mustard.",
@@ -1594,5 +1594,25 @@
   "graviton_maul": {
     "brief": "Huge maul with orbit rings around its head. Accent: deep teal.",
     "description": "The heavy head fills the upper four cells, the haft drops down the lower left cell; the lower right stays empty. Around the round head two thin teal orbit rings tilt at an angle; small debris pieces hang in the rings."
+  },
+  "ram_plate": {
+    "brief": "Dented hull plate with a riveted ram spike, scavenged from a wreck. Accent: deep teal.",
+    "description": "Lying across the box: a dented hull plate with a short riveted ram spike in the middle, a faint teal ring of force around the spike."
+  },
+  "drone_bay": {
+    "brief": "Open scrap hatch with three tiny welded drones peeking out. Accent: copper.",
+    "description": "Lying across the box: an open hatch built from scrap, three tiny welded drones with copper rotors peeking out, one already lifting off."
+  },
+  "marrow_treat": {
+    "brief": "Thick cracked bone with marrow, tied with a fur cord. Accent: bone.",
+    "description": "A thick cracked bone with soft marrow inside, tied with a fur cord, a few crumbs around it."
+  },
+  "trellis": {
+    "brief": "Small lattice of bent lab rods, thin tendrils climbing it. Accent: moss.",
+    "description": "A small lattice of bent lab rods stuck in a pot, thin moss-green tendrils climbing up it and reaching sideways."
+  },
+  "frost_bell": {
+    "brief": "Small dark bell rimmed with frost, a cold ring hanging below. Accent: deep teal.",
+    "description": "A small dark iron bell rimmed with frost, a ring of teal cold drawn as ink lines below it."
   }
 }

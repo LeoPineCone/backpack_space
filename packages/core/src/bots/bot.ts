@@ -20,7 +20,7 @@ export interface BotOpts {
   randomBuys?: boolean;
   /** never combines */
   noCraft?: boolean;
-  /** hero path the bot commits to ("" = none); default: three of four bots pick one at random */
+  /** hero path the bot commits to ("" = none); default: three of four bots choose one with the hero item after round 4 */
   path?: string;
 }
 export interface BotLog {
@@ -40,7 +40,7 @@ export interface Bot {
   loose: string[];
   /** tags the bot likes a little */
   focus: string[];
-  /** way to win the bot commits to (a path of its hero), "" = none */
+  /** way to win the bot commits to (a path of its hero), "" = none, CHOOSE = takes the path of the hero item it picks after round 4 */
   path: string;
   /** offers frozen for the next shop */
   frozen: (Offer | null)[];
@@ -51,12 +51,19 @@ export function newBot(data: GameData, hero: string, rng: Rng, path?: string): B
   const h = data.heroes.get(hero)!;
   const tags: string[] = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic"];
   const focus = [rng.pick(tags), rng.pick(tags)];
-  const roll = rng.next(), any = h.paths.length ? rng.pick(h.paths).id : "";
-  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), loose: [], focus, path: path ?? (roll < 0.75 ? any : ""), frozen: [], log: [] };
+  const roll = rng.next();
+  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), loose: [], focus, path: path ?? (roll < 0.75 && h.paths.length ? CHOOSE : ""), frozen: [], log: [] };
 }
+/** Bot.path of a bot that has not chosen yet: it commits with the hero item after round 4. */
+export const CHOOSE = "?";
 
-/** Does the item belong to a path focus (tag, status, kind of action or item id)? */
-export function onPath(def: ItemDef, focus: readonly string[]): boolean {
+/**
+ * Does the item belong to a path? Hero items say so themselves (`path`; none = core item of the hero). General items
+ * belong when they match the path's focus (tag, status, kind of action or item id).
+ */
+export function onPath(def: ItemDef, path: { id: string; focus: readonly string[] }): boolean {
+  if (def.hero) return def.path === path.id;
+  const focus = path.focus;
   return focus.some((f) => f === def.id || (def.tags as string[]).includes(f) || def.effects.some((e) => e.gain === f || e.inflict === f || e.do === f || e.per?.buff === f || e.per?.debuff === f));
 }
 const PATH_LIKING = 1.5;
@@ -93,7 +100,7 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
   for (const o of defs) if (refs(o).some((t) => (def.tags as string[]).includes(t))) syn += 0.06;
   v *= 1 + Math.min(0.8, syn);
   const path = data.heroes.get(bot.hero)!.paths.find((p) => p.id === bot.path);
-  if (path) { if (onPath(def, path.focus)) v *= PATH_LIKING; }
+  if (path) { if (onPath(def, path)) v *= PATH_LIKING; }
   else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;
@@ -220,6 +227,9 @@ export function botSpecial(data: GameData, bot: Bot, afterRound: number, rng: Rn
   if (!options) return;
   const pick = opts.randomBuys ? rng.pick(options) : [...options].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts))[0]!;
   bot.loose.push(pick);
+  // a bot that has not chosen a path yet follows the anchor it took
+  const path = data.items.get(pick)!.path;
+  if (bot.path === CHOOSE && path) bot.path = path;
   const log = bot.log[bot.log.length - 1];
   if (log) log.special = pick;
 }

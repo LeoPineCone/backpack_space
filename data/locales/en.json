@@ -86,6 +86,10 @@
   "noun.organic.other": "organic items",
   "noun.crafted.one": "crafted item",
   "noun.crafted.other": "crafted items",
+  "noun.melee.one": "melee weapon",
+  "noun.melee.other": "melee weapons",
+  "noun.ranged.one": "ranged weapon",
+  "noun.ranged.other": "ranged weapons",
   "noun.any.one": "item",
   "noun.any.other": "items",
 

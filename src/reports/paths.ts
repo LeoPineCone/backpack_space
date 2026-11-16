@@ -11,7 +11,7 @@
  * lobbies, so the change is measured much more exactly than two independent runs could.
  */
 import { existsSync, readFileSync } from "node:fs";
-import { aggregatePaths, blockSe, lateRound, measurePathLobby, SOURCES, type Measured } from "../sim/paths";
+import { aggregatePaths, blockSe, lateRound, MECHANIC_TEXT, MECHANICS, measurePathLobby, profileDistance, profileOf, SOURCES, type Measured, type Profile } from "../sim/paths";
 import { jobsFrom, runParallel } from "../sim/parallel";
 import { avg, loadTargets, markOf, pct, pts, startReport, targetRange, type Target } from "./common";
 import type { Mark, ReportPage } from "./html";
@@ -52,6 +52,7 @@ r.value("lobbies", [L]);
 // ---- tables
 const T = loadTargets();
 const tHero = T.pathHeroWinShare!, tPath = T.pathWinShare!, tLate = T.pathLateWinShare!, tOpen = T.pathOverOpen!, tSpread = T.pathSpread!;
+const tMain = T.pathMainShare!, tDistinct = T.pathDistinct!, tCommit = T.pathCommit!;
 const hd = (label: string, t: Target, unit: "%" | "pts" = "%") => `${label} [target ${targetRange(t, unit)}]`;
 const show = (m: Measured) => `${pct(m.p)} ±${Number.isFinite(m.se) ? Math.max(1, Math.round(100 * m.se)) : "-"}`;
 
@@ -98,19 +99,44 @@ for (const h of data.heroList) {
   r.target(named(tLate), shares.map((s) => s.late), true);
   r.target(named(tOpen), shares.map((s) => s.overOpen), true);
   r.target(named(tSpread), [best - worst], true);
+  // ---- path profile: does every path win in its own way?
+  const profs: { name: string; p: Profile }[] = [];
+  const prow: (string | number)[][] = [], pmarks: Mark[][] = [];
+  for (const p of [...h.paths, { id: "", name: "(open, no path)", focus: [] as string[] }]) {
+    const g = groups.get(`${h.id}/${p.id}`);
+    if (!g) continue;
+    const pr = profileOf(g);
+    if (p.id) profs.push({ name: p.name, p: pr });
+    const mix = MECHANICS.filter((m) => pr.mix[m] >= 0.1).sort((x, y) => pr.mix[y] - pr.mix[x]).map((m) => `${m} ${pct(pr.mix[m])}`).join(", ");
+    prow.push([p.name, `${pr.main} ${pct(pr.mix[pr.main])}`, mix, pct(pr.carry), pr.dealers.toFixed(1), pr.attacksPerSec.toFixed(1), pct(pr.late), p.id ? pct(pr.pathDamage) : "-", p.id ? pct(avg(g.commit)) : "-"]);
+    pmarks.push(p.id ? ["", markOf(tMain, pr.mix[pr.main]), "", "", "", "", "", "", markOf(tCommit, avg(g.commit))] : []);
+  }
+  r.log();
+  r.log(`Path profile of ${h.name.split(" ")[0]} (rounds ${late}+):`);
+  r.table(["path", hd("main mechanic", tMain), "damage mix", "best item", "items dealing damage", "attacks / s", "damage from phase 3 on", "damage by path items", hd("path items (cost)", tCommit)], prow, undefined, pmarks);
+  const pairs: { a: string; b: string; d: number }[] = [];
+  for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) pairs.push({ a: profs[i]!.name, b: profs[j]!.name, d: profileDistance(profs[i]!.p, profs[j]!.p) });
+  pairs.sort((x, y) => x.d - y.d);
+  if (pairs.length) r.log(`  How different (1 − cosine of the damage mix, target ≥ ${tDistinct.min}): ${pairs.map((x) => `${x.a} / ${x.b} ${x.d.toFixed(2)}${markOf(tDistinct, x.d) === "ok" ? " ✓" : " ✗"}`).join(", ")}`);
+  for (const pr of profs) r.value(`${h.id}/${pr.name}:mix`, MECHANICS.map((m) => pr.p.mix[m]));
+  r.target(named(tMain), profs.map((x) => x.p.mix[x.p.main]), true);
+  r.target(named(tDistinct), pairs.map((x) => x.d), true);
+  r.target(named(tCommit), h.paths.map((p) => avg(groups.get(`${h.id}/${p.id}`)?.commit ?? [0])), true);
+  const closest = pairs[0];
   const okPaths = shares.filter((s) => markOf(tPath, s.p) === "ok" && markOf(tLate, s.late) === "ok" && markOf(tOpen, s.overOpen) === "ok");
   const misses = [
     markOf(tHero, hero.all.p) === "off" ? `hero ${pct(hero.all.p)}` : "",
     markOf(tSpread, best - worst) === "off" ? `path gap ${pts(best - worst).replace("+", "")}` : "",
     ...shares.filter((s) => !okPaths.includes(s)).map((s) => `${s.name} ${pct(s.p)} (rounds ${late}+ ${pct(s.late)}, vs open ${pts(s.overOpen)})`),
   ].filter(Boolean);
-  verdicts.push(`${h.name}: ${okPaths.length} of ${shares.length} paths on target${misses.length ? `; off: ${misses.join(", ")}` : ", hero on target"}.`);
+  verdicts.push(`${h.name}: ${okPaths.length} of ${shares.length} paths on target${misses.length ? `; off: ${misses.join(", ")}` : ", hero on target"}.${closest ? ` Paths ${markOf(tDistinct, closest.d) === "ok" ? "distinct" : `too alike: ${closest.a} / ${closest.b} ${closest.d.toFixed(2)}`}.` : ""}`);
 }
 r.chart({ type: "bar", title: "Win share of every path (all rounds)", x: bars.map((b) => b.name), unit: "%", ref: 50, band: { min: 100 * tPath.min!, max: 100 * tPath.max! }, series: [{ name: "wins", values: bars.map((b) => b.p) }] });
 r.log();
 r.log("Reading: \"wins\" = share of lobby fights won against other heroes. \"run wins\" and \"survives run\" follow the real rules (4 lives).");
 r.log("\"vs open bot\" = the path's win share minus the hero's open bot (takes the best item of any path); a path below it gives no reason to follow it.");
 r.log("\"path items\" = share of the final build's item cost that belongs to the path. \"healed+shielded\" is per fight, in percent of the hero's health.");
+r.log(`Path profile: damage by mechanic (${MECHANICS.map((m) => `${m} = ${MECHANIC_TEXT[m]}`).join("; ")}). "best item" = share of the damage the single best item dealt; "attacks / s" = weapon and pet attacks per second.`);
 r.log("Targets (data/sim/targets.json) are in the column heads; ✓ = within target, ✗ = outside.");
 r.log("±N is one standard error, measured from how much the share varies between blocks of lobbies; a gap under about 2×N can be chance. npm run report:selftest checks that this ± is honest.");
 if (base) r.log("\"change vs baseline\": * = at least two standard errors, very likely a real change.");

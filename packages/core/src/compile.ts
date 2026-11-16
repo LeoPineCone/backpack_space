@@ -41,7 +41,7 @@ export interface CSide {
   watchers: CEffect[][];
 }
 
-const has = (def: ItemDef, tag: FilterTag | "any" | undefined) => tag === undefined || tag === "any" || def.tags.includes(tag);
+const has = (def: ItemDef, tag: FilterTag | "any" | undefined) => tag === undefined || tag === "any" || (tag === "melee" || tag === "ranged" ? def.range === tag : def.tags.includes(tag));
 
 /** The tags an item's stars look for (per.stars, to: "stars", on: "starUse"); empty when its stars have no effect. */
 export function starTags(def: ItemDef): (FilterTag | "any")[] {

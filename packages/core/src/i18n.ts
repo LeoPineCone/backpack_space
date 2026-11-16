@@ -61,7 +61,7 @@ const placeholders = (s: string) => [...s.matchAll(/\{([a-zA-Z]+)(?:\|[a-zA-Z]+)
 const forms = (s: string) => [...s.matchAll(/\{[a-zA-Z]+\|([a-zA-Z]+)\}/g)].map((m) => m[1]!);
 
 /** Keys for the type words (`noun.<type>.<form>`): every tag plus "crafted" and "any". */
-export const NOUN_TYPES = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic", "crafted", "any"] as const;
+export const NOUN_TYPES = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic", "crafted", "melee", "ranged", "any"] as const;
 
 interface ContentSource {
   rules: Rules;

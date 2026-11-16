@@ -26,13 +26,20 @@ export function tagShares(data: GameData, owned: readonly string[]): Map<string,
   for (const id of owned) for (const t of data.items.get(id)!.tags) if (t !== "crafted" && t !== "bag") out.set(t, (out.get(t) ?? 0) + 1 / owned.length);
   return out;
 }
-/** How often an item is offered compared with the others of its list: its own weight, raised by what the player already owns. */
-export function offerWeight(data: GameData, def: ItemDef, shares: Map<string, number>): number {
-  const fit = Math.max(0, ...def.tags.map((t) => shares.get(t) ?? 0));
-  return (def.weight ?? 1) * (1 + (data.rules.shop.affinityPct / 100) * fit);
+/** The path whose anchor (a hero item with a path, picked after round 4) the player owns, or "". */
+export function anchorPath(data: GameData, owned: readonly string[]): string {
+  for (const id of owned) { const d = data.items.get(id); if (d?.rarity === "artifact" && d.hero && d.path) return d.path; }
+  return "";
 }
-function pickWeighted(data: GameData, list: readonly ItemDef[], shares: Map<string, number>, rng: Rng): ItemDef {
-  const ws = list.map((d) => offerWeight(data, d, shares));
+/** How often an item is offered compared with the others of its list: its own weight, raised by what the player already owns
+ *  (shared types, and the path of an owned anchor). */
+export function offerWeight(data: GameData, def: ItemDef, shares: Map<string, number>, anchor = ""): number {
+  const fit = Math.max(0, ...def.tags.map((t) => shares.get(t) ?? 0));
+  const lean = anchor && def.path === anchor ? data.rules.shop.anchorPathWeight : 1;
+  return (def.weight ?? 1) * (1 + (data.rules.shop.affinityPct / 100) * fit) * lean;
+}
+function pickWeighted(data: GameData, list: readonly ItemDef[], shares: Map<string, number>, rng: Rng, anchor = ""): ItemDef {
+  const ws = list.map((d) => offerWeight(data, d, shares, anchor));
   let roll = rng.next() * ws.reduce((a, b) => a + b, 0);
   for (let i = 0; i < list.length; i++) { roll -= ws[i]!; if (roll < 0) return list[i]!; }
   return list[list.length - 1]!;
@@ -59,7 +66,7 @@ export function rollOffer(data: GameData, hero: string, round: number, rng: Rng,
   }
   const wantPartner = rng.next() * 100 < shop.recipeOfferPct;
   const partners = wantPartner ? recipePartners(data, hero, round, owned) : [];
-  const item = partners.length ? rng.pick(partners) : pickWeighted(data, list, tagShares(data, owned), rng);
+  const item = partners.length ? rng.pick(partners) : pickWeighted(data, list, tagShares(data, owned), rng, anchorPath(data, owned));
   const sale = rng.next() * 100 < shop.salePct;
   return { item: item.id, price: sale ? Math.max(1, Math.ceil(item.cost / 2)) : item.cost, sale };
 }

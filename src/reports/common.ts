@@ -125,7 +125,7 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
 }
 
 /** Report ids in the order the index and report:all list them. */
-export const REPORT_IDS = ["battles", "heroes", "runs", "items", "recipes", "placement", "paths", "synergy", "selftest"] as const;
+export const REPORT_IDS = ["battles", "heroes", "runs", "items", "recipes", "placement", "paths", "picks", "synergy", "selftest"] as const;
 
 /** Writes <name>.html and <name>.json into dir and rebuilds dir/index.html from every report page there. */
 export function writeReportPage(dir: string, name: string, page: ReportPage): void {

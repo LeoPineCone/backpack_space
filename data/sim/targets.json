@@ -1,5 +1,5 @@
 {
-  "$comment": "Balancing targets the reports check (min/max). Shares are fractions (0.45 = 45 %), times are seconds. Proposed 2026-11-15, change them here when the design changes. Path targets (path*) agreed with Ilja 2026-11-16.",
+  "$comment": "Balancing targets the reports check (min/max). Shares are fractions (0.45 = 45 %), times are seconds. Proposed 2026-11-15, change them here when the design changes. Path targets (path*) agreed with Ilja 2026-11-16; path profile (pathMainShare, pathDistinct, pathCommit) and free picks (pick*) agreed 2026-11-16 (PR #16).",
   "fightSeconds": { "min": 18, "max": 25, "what": "average fight length in every round" },
   "longestFight": { "max": 45, "what": "longest fight of a round (one minute of waiting at speed ×1 is too long)" },
   "supernovaReached": { "min": 0.05, "max": 0.2, "what": "share of fights that reach the Supernova, every round" },
@@ -12,7 +12,18 @@
   "pathWinShare": { "min": 0.46, "max": 0.54, "what": "win share of every path, all rounds" },
   "pathLateWinShare": { "min": 0.44, "max": 0.56, "what": "win share of every path in the last third of the run" },
   "pathOverOpen": { "min": 0.02, "unit": "pts", "what": "every path wins at least this much more often than the hero's open bot (no path), so following a path pays" },
+  "pathMainShare": { "min": 0.4, "what": "path profile: the path's main damage mechanic is at least this share of its damage (rounds 9+)" },
+  "pathDistinct": { "min": 0.35, "what": "path profile: every two paths of a hero differ at least this much in their damage mix (1 - cosine similarity; 0 = same mix)" },
+  "pathCommit": { "min": 0.5, "what": "share of the final build's item cost that belongs to the bot's path" },
   "pathSpread": { "max": 0.06, "unit": "pts", "what": "gap between the hero's best and weakest path, all rounds" },
+  "pickGain": { "min": 0.6, "max": 1.6, "what": "general artifact: gain over the rest of the run compared with the median artifact (× median)" },
+  "pickBest": { "max": 0.55, "what": "general artifact: share of its offers (3 shown) in which it is the best choice (fair: 33 %)" },
+  "pickWorst": { "max": 0.55, "what": "general artifact: share of its offers (3 shown) in which it is the worst choice (fair: 33 %)" },
+  "pickFloor": { "min": 0.4, "what": "general artifact: gain for every single hero, compared with the median artifact (no hero gets a useless pick)" },
+  "pickEmpty": { "max": 0.1, "what": "general artifact: share of a hero's offers in which no option reaches the pickFloor" },
+  "pickHeroGain": { "min": 0.7, "max": 1.4, "what": "hero item: gain over the rest of the run compared with the median hero item (× median)" },
+  "pickHeroBest": { "max": 0.65, "what": "hero item: share of its offers (2 shown) in which it is the better choice (fair: 50 %)" },
+  "pickHeroWorst": { "max": 0.65, "what": "hero item: share of its offers (2 shown) in which it is the weaker choice (fair: 50 %)" },
   "selftestNoise": { "min": 0.6, "max": 1.5, "what": "self-test: two independent runs differ by about as much as their ± says (root mean square of z, 1 = honest)" },
   "selftestBoost": { "min": 3, "what": "self-test: a path made 25 % stronger rises by at least this many standard errors" }
 }
