@@ -2,7 +2,7 @@
  * One number at several values: what happens to the paths and heroes when a rule, an item number or a habit of
  * the bots is turned up and down?
  *   npm run balance:sweep -- --knob rule:shop.anchorPathWeight --values 1,2,3,4 [--name main] [--lobbies N]
- *   --knob  rule:<path in rules.json> | item:<id>:<path> | hero:<id>:<path> | bot:pathLiking
+ *   --knob  rule:<path in rules.json> | item:<id>:<path> | hero:<id>:<path> | bot:pathLiking | bot:pathStrict
  *
  * Every value plays the lobbies of the baseline again from scratch (bots shop again), so this also works for
  * numbers the bots read (price, Energy, cooldown, shop rules). One value takes about as long as the baseline.
@@ -28,7 +28,7 @@ const r = startReport({
   presets: { quick: { lobbies: 60 }, normal: { lobbies: 240 }, precise: { lobbies: 480 } },
   explain: { lobbies: "lobbies per seed and value (at most those of the baseline)" },
 });
-if (!r.flags.knob || !r.flags.values) throw new Error("needed: --knob rule:<path> | item:<id>:<path> | hero:<id>:<path> | bot:pathLiking and --values a,b,c");
+if (!r.flags.knob || !r.flags.values) throw new Error("needed: --knob rule:<path> | item:<id>:<path> | hero:<id>:<path> | bot:pathLiking | bot:pathStrict and --values a,b,c");
 const name = r.flags.name ?? "main";
 const bench = new Bench(name, undefined, r.n.lobbies);
 const T = loadTargets();
@@ -46,6 +46,7 @@ else if (kind === "item" || kind === "hero") {
   if (!obj) throw new Error(`--knob: no ${kind} ${id}`);
   base = getPath(obj, path); what = `${obj.name} ${path}`;
   play = (v) => ({ patch: { changes: [{ [kind]: id, set: { [path]: v } }] } as Patch });
+} else if (kind === "bot" && arg === "pathStrict") { base = 0; what = "1 = a bot on a path also values the hero's other paths' items less: what each path can do alone (bots only, not a game number)"; play = (v) => ({ bot: { pathStrict: v > 0 } });
 } else if (kind === "bot" && arg === "pathLiking") { base = PATH_LIKING; what = "how much more a bot on a path values that path's items (bots only, not a game number)"; play = (v) => ({ bot: { pathLiking: v } }); }
 else throw new Error(`--knob: unknown "${r.flags.knob}"`);
 if (typeof base !== "number") throw new Error(`--knob ${r.flags.knob}: no number there`);

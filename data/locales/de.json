@@ -154,6 +154,7 @@
   "rules.mod.ready": "{n} % Startladung",
   "rules.mod.energy": "{n} Energie pro Angriff",
   "rules.mod.energyRegen": "+{n} Energie pro Sekunde",
+  "rules.mod.leech": "heilen dich um {n} % ihres Schadens",
   "rules.mod.overheal": "{n} % der Heilung über volles Leben werden zu Schild",
   "rules.do.gain": "erhalte {what}",
   "rules.do.inflict": "verursache {what}",

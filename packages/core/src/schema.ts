@@ -67,6 +67,8 @@ const Mod = z.object({
   energy: z.number().optional(),
   /** to: "hero": Energy regained per second */
   energyRegen: z.number().optional(),
+  /** weapons and pets: percent of the damage of their attacks and damage effects that heals their owner (fractions add up) */
+  leech: z.number().optional(),
   /** to: "hero": percent of healing above full health that becomes Shield (all items together at most 100) */
   overheal: z.number().optional(),
 }).strict();

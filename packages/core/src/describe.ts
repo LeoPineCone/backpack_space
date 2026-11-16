@@ -17,6 +17,7 @@ function modText(m: Mod, tr: Translator): string {
   if (m.ready) parts.push(tr.t("rules.mod.ready", { n: m.ready }));
   if (m.energy) parts.push(tr.t("rules.mod.energy", { n: tr.signed(m.energy) }));
   if (m.energyRegen) parts.push(tr.t("rules.mod.energyRegen", { n: m.energyRegen }));
+  if (m.leech) parts.push(tr.t("rules.mod.leech", { n: m.leech }));
   if (m.overheal) parts.push(tr.t("rules.mod.overheal", { n: m.overheal }));
   return parts.join(tr.t("list.sep"));
 }

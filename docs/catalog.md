@@ -31,8 +31,7 @@ Mechanical items and crafting. Combining pays gold and crafted items run faster.
 
 Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.
 
-- Your pets: 25 % faster, starts 100 % charged.
-- When one of your pets activates: heal 2.
+- Your pets: 25 % faster, starts 100 % charged and heal you for 25 % of the damage they deal.
 - You: +5 max health per cell your pets cover (max 28×).
 - Starts with: Field Pack, Pet Carrier, Space Pup, Treat Pouch.
 - Signature artifacts (after round 4): Elder Tusk, Herd Heart, Ancient Egg.

@@ -57,6 +57,7 @@ function thenChips(e: Effect): Chip[] {
     if (m.damage) out.push({ icon: "damage", text: `${m.damage > 0 ? "+" : ""}${num(m.damage)}`, kind: "buff" });
     if (m.speed) out.push({ icon: "speed", text: `${m.speed > 0 ? "+" : ""}${num(m.speed)}%`, kind: "buff" });
     if (m.crit) out.push({ icon: "crit", text: `+${num(m.crit)}%`, kind: "buff" });
+    if (m.leech) out.push({ icon: "heal", text: `${num(m.leech)}%`, kind: "buff" });
     if (m.maxHp) out.push({ icon: "maxHp", text: `+${num(m.maxHp)}`, kind: "buff" });
     if (m.ready) out.push({ icon: "ready", text: `${num(m.ready)}%`, kind: "buff" });
     if (m.energy) out.push({ icon: "energy", text: `${m.energy > 0 ? "+" : ""}${num(m.energy)}`, kind: m.energy < 0 ? "buff" : "debuff" });

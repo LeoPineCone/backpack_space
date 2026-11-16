@@ -126,6 +126,7 @@
   "rules.mod.ready": "starts {n} % charged",
   "rules.mod.energy": "{n} Energy per attack",
   "rules.mod.energyRegen": "+{n} Energy per second",
+  "rules.mod.leech": "heal you for {n} % of the damage they deal",
   "rules.mod.overheal": "{n} % of healing above full health becomes Shield",
   "rules.do.gain": "gain {what}",
   "rules.do.inflict": "inflict {what}",
