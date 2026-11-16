@@ -170,7 +170,8 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
    (always when the self-check does not say "exact").
 6. **Designer's OK**, then put the numbers into `data/` by hand (item files keep their one-item-per-line
    format), `npm run ratings -- --only <ids>`, `npm run baseline`, and compare with the proposal.
-7. **Checks:** `npm run validate && npm run typecheck && npm test`, `npm run catalog`; write `docs/findings.md`;
+7. **Checks:** `npm run validate && npm run typecheck && npm test`, `npm run catalog`; after a change to a hero
+   item, to what it counts or to `rules.specials` also `npm run report:picks`; write `docs/findings.md`;
    open a PR with before/after numbers; ask before merging.
 
 ## Procedure: new or changed items
@@ -192,9 +193,18 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
    each other, which should not have moved much.
 4. Coarse: `balance:propose --knobs hero:<new>` until the hero is at 48–52 % overall and 45–55 % per third.
    Hero rule values only with `herorule:<new> --allow-hero-rules` and the designer's OK.
-5. Fine: paths (`--kinds path,late,spread`), `report:picks` for its hero items, `report:recipes`,
-   `report:battles`, `report:selftest` once.
-6. Touch other heroes only when a duel is outside 35–65 %. Confirm with `--full`, findings, PR.
+5. Fine: paths (`--kinds path,late,spread`), `report:recipes`, `report:battles`, `report:selftest` once.
+6. Free picks: `npm run report:picks -- --precise`. The hero's three hero items must be close to each other
+   (0.7–1.4 × the hero's median, none the better choice in more than 65 % of its offers). An anchor that only
+   counts needs a flat base effect; no path may live on its anchor alone (see lessons).
+7. Play it: two runs by hand per path idea that is new (`npm run playtest`, section above), notes into
+   `docs/findings.md`. Look for rounds with nothing to buy for the path and for hopeless matchups.
+8. Touch other heroes only when a duel is outside 35–65 %. Confirm with `--full`, findings, PR.
+
+Rules that hold for every hero (designer's decisions): the same number of personal items as the other heroes (a
+test checks it), hero item after round 2 with two of the three shown, general artifact after round 6. The tools
+have only run with four heroes so far: after adding the fifth, run `npm run report:selftest` and one
+`npm run report:all` first and fix what assumes four.
 
 ## Procedure: a new mechanic (a new status, a rule like Energy)
 
@@ -293,22 +303,19 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
   a star trigger reaches one or two items, a backpack trigger (`shipUse`) scales with the build. That one change
   moved the path by +8 and its late rounds by +16, other paths by +1.
 
-## Still open (2026-11-16)
-Free picks are after rounds 2 and 6 since 2026-11-16 (health curve 100, 150, 300, 350, then +100). Heroes 49–51 % on
-both seeds, all paths in band on seed 1, 36 of 124 targets off. Hero items are equal inside each hero since the pass of 2026-11-16 (Nova Crown slightly weak). Open: late rounds of Overclocked guns, Well-fed pack,
-Late ascension (41–47), Eclipse and Thorn wall (55–58).
+## Still open (2026-11-16, after PR #24)
 
+State: free picks after rounds 2 and 6, health curve 100, 150, 300, 350, then +100 per round. Heroes 49–51 % on both
+seeds; all paths inside 46–54 % except Hungry jungle 45 / 47 and Thorn wall 51 / 55; 34 of 124 targets off. Hero items
+are close inside each hero. The designer paused balancing here ("good enough for now").
 
-After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
-fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and
-Workshop strong late (55–60 %), Late ascension weak late (40 %); Well-fed pack differs between seeds (48 / 43 %);
-paths −6 to +2 against their open bot. After the path split of Quill and Venn (fit bots): heroes 47–52 % on both
-seeds, all paths in band on seed 1; off: Thorn wall late 57 / 58, Late ascension late 39 / 43, Shield fortress 44 on
-seed 2. Play style (`pathStyle`, target ≥ 1 proposed): Quill 0.45–0.9, Venn 0.5–0.9, Shield fortress / Workshop 0.6,
-Burning corona / Late ascension 0.65–0.85; with strict bots Venn reaches 0.85–1.3.
-General artifacts Dyson
-Fragment, Wormhole Generator (and Ancient Monolith) are weak. The path-pull sweep has not been repeated with the
-new items.
-Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.
-Not built yet (see `docs/proposals/balancing-workflow.md`): search for numbers the bots read, and the first
-real pass.
+- Late rounds: Big beasts 58 / 56, Swarm 52 / 58, Eclipse 60 / 56, Thorn wall 56 / 61 strong; Overclocked guns 41,
+  Shield fortress 42, Late ascension 39 / 36 weak. Lower caps on Quill's anchors and Trough Boar did not move it.
+- Nova Crown is Ysel's weaker pick (0.67 × median); a stronger Crown makes Eclipse too strong late.
+- Paths −6 to +2 against their open bot; `pathPays` negative for most paths; play style (`pathStyle`, target ≥ 1
+  proposed, not confirmed by the designer) 0.45–0.75 with the default bots.
+- General artifacts: Star Forge, Time Dilator, Dyson Fragment, Wormhole Generator weak; 12–22 % of the offers
+  after round 6 have no good option.
+- From the hand-played runs, not measured yet: how often a path's items are offered before round 5, swarm builds
+  against Spikes and early Shield, Pack Lizard, a warning in the client before an unwanted merge.
+- Not built (see `docs/proposals/balancing-workflow.md`): search for numbers the bots read.
