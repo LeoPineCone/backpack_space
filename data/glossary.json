@@ -26,7 +26,7 @@
 
     { "id": "backpack", "group": "backpack", "en": "Backpack", "de": "Rucksack", "text": "Where your bags and items lie. Only what is in the backpack fights.", "code": ["ship (in effects: per.ship, to: ship, shipUse)", "Build", "Board"] },
     { "id": "grid", "group": "backpack", "en": "Grid", "de": "Raster", "text": "The largest area the backpack can cover ({grid.w}×{grid.h} cells). It only becomes usable where bags lie.", "code": ["rules.grid"] },
-    { "id": "cell", "group": "backpack", "en": "Cell", "de": "Feld", "text": "One square of the grid or of an item's shape.", "code": ["shape '#'"] },
+    { "id": "cell", "group": "backpack", "en": "Cell", "de": "Feld", "icon": "cell", "text": "One square of the grid or of an item's shape.", "code": ["shape '#'"] },
     { "id": "bag", "group": "backpack", "en": "Bag", "de": "Tasche", "icon": "bag", "text": "Items can only lie in bags. Some bags help what lies inside.", "code": ["bag (tag)", "isBag", "to: inside"] },
     { "id": "loose", "group": "backpack", "en": "Loose items", "de": "Lose Items", "text": "Pieces lying below the backpack. They do nothing in the fight. At most {shop.looseLimit} can be bought without placing them.", "code": ["RunState.loose", "shop.looseLimit"] },
     { "id": "turn", "group": "backpack", "en": "Turn", "de": "Drehen", "text": "Items and bags can be turned in steps of 90°.", "code": ["Placement.rot"] },
@@ -108,6 +108,8 @@
 
     { "id": "damage", "group": "effect", "en": "Damage", "de": "Schaden", "icon": "damage", "text": "Hurts the enemy.", "code": ["damage", "do: damage", "mod.damage"] },
     { "id": "heal", "group": "effect", "en": "Heal", "de": "Heilen", "icon": "heal", "text": "Restores health.", "code": ["do: heal"] },
+    { "id": "leech", "group": "effect", "en": "Lifesteal", "de": "Lebensraub", "icon": "leech", "text": "The hero heals by this share of the damage the item deals.", "code": ["mod.leech"] },
+    { "id": "overheal", "group": "effect", "en": "Overheal", "de": "Überheilung", "icon": "overheal", "text": "This share of the healing above full health becomes Shield.", "code": ["mod.overheal"] },
     { "id": "cleanse", "group": "effect", "en": "Cleanse", "de": "Reinigen", "icon": "cleanse", "text": "Removes your debuffs.", "code": ["do: cleanse"] },
     { "id": "strip", "group": "effect", "en": "Break", "de": "Schild brechen", "icon": "strip", "text": "Destroys enemy Shield.", "code": ["do: strip"] },
     { "id": "speed", "group": "effect", "en": "Speed", "de": "Tempo", "icon": "speed", "text": "Shorter cooldown.", "code": ["mod.speed"] },

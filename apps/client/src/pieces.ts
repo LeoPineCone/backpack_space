@@ -1,6 +1,6 @@
 /** Draws items and bags as placeholder tiles: the shape in cells, a type symbol and the item's initials. */
 import { Container, Graphics } from "pixi.js";
-import { starLinks, type GameData, type Placement, type StarLink } from "@backpack-space/core";
+import { PET_KINDS, starLinks, type GameData, type ItemDef, type Placement, type StarLink } from "@backpack-space/core";
 import { C, RARITY, TAG_FILL } from "./theme";
 import { icon } from "./icons";
 import { at, disc, txt } from "./ui";
@@ -14,6 +14,12 @@ export const initials = (name: string) => {
 };
 
 export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number }
+
+/** The symbol on an item's tile: its first type, but a pet shows its kind (beast or swarm) when it has one. */
+function tileIcon(def: ItemDef): string {
+  if (def.isBag) return "bag";
+  return def.tags.find((t) => (PET_KINDS as readonly string[]).includes(t)) ?? def.tags[0] ?? "any";
+}
 
 /** An item or bag; origin at the top-left corner of its bounding box. */
 export function piece(data: GameData, id: string, rot: number, cell: number, o: PieceOpts = {}): Container {
@@ -50,7 +56,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const cx = mid[0] * cell + cell / 2, cy = mid[1] * cell + cell / 2;
   const label = o.label !== false && cell >= 26;
   if (!def.isBag || o.label !== false) {
-    c.addChild(at(icon(def.isBag ? "bag" : def.tags[0] ?? "any", cell * (label ? 0.42 : 0.55), def.isBag ? C.dim : C.text), cx, cy - (label ? cell * 0.12 : 0)));
+    c.addChild(at(icon(tileIcon(def), cell * (label ? 0.42 : 0.55), def.isBag ? C.dim : C.text), cx, cy - (label ? cell * 0.12 : 0)));
     if (label) c.addChild(at(txt(initials(tr().item(id)), cell * 0.24, { color: def.isBag ? C.dim : C.text, anchor: [0.5, 0.5] }), cx, cy + cell * 0.27));
   }
   if (o.stars) for (const [x, y] of s.stars) c.addChild(at(icon("starFull", cell * 0.45, C.gold), x * cell + cell / 2, y * cell + cell / 2));
@@ -146,7 +152,7 @@ export function itemIcon(data: GameData, id: string, size: number, o: { line?: n
   const c = new Container();
   const fill = def.isBag ? C.bag : TAG_FILL[def.tags[0] ?? "bag"] ?? C.line;
   c.addChild(new Graphics().roundRect(0, 0, size, size, size * 0.2).fill(fill).stroke({ width: Math.max(2, size * 0.05), color: o.line ?? (def.isBag ? C.bagLine : RARITY[def.rarity] ?? C.dim), alignment: 1 }));
-  c.addChild(at(icon(def.isBag ? "bag" : def.tags[0] ?? "any", size * 0.42, C.text), size / 2, size * 0.4));
+  c.addChild(at(icon(tileIcon(def), size * 0.42, C.text), size / 2, size * 0.4));
   c.addChild(at(txt(initials(tr().item(id)), size * 0.22, { anchor: [0.5, 0.5] }), size / 2, size * 0.77));
   return c;
 }

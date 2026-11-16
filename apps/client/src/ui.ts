@@ -128,3 +128,10 @@ export function dimmer(w: number, h: number, onTap?: () => void, alpha = 0.72): 
   if (onTap) g.on("pointertap", (e) => { e.stopPropagation(); onTap(); });
   return g;
 }
+
+/** The hero's round badge (placeholder until there is a portrait): the first letter of the name in a circle. Origin at the centre. */
+export function heroBadge(name: string, r: number, line: number = C.cyan): Container {
+  const c = new Container();
+  c.addChild(disc(r, { fill: C.panel, line, lineW: 2 }), txt(name.replace(/[^\p{L}]/gu, "")[0]!.toLocaleUpperCase(), r * 0.82, { anchor: [0.5, 0.5] }));
+  return c;
+}

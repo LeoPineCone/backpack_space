@@ -57,7 +57,8 @@ function thenChips(e: Effect): Chip[] {
     if (m.damage) out.push({ icon: "damage", text: `${m.damage > 0 ? "+" : ""}${num(m.damage)}`, kind: "buff" });
     if (m.speed) out.push({ icon: "speed", text: `${m.speed > 0 ? "+" : ""}${num(m.speed)}%`, kind: "buff" });
     if (m.crit) out.push({ icon: "crit", text: `+${num(m.crit)}%`, kind: "buff" });
-    if (m.leech) out.push({ icon: "heal", text: `${num(m.leech)}%`, kind: "buff" });
+    if (m.leech) out.push({ icon: "leech", text: `${num(m.leech)}%`, kind: "buff" });
+    if (m.overheal) out.push({ icon: "overheal", text: `${num(m.overheal)}%`, kind: "buff" });
     if (m.maxHp) out.push({ icon: "maxHp", text: `+${num(m.maxHp)}`, kind: "buff" });
     if (m.ready) out.push({ icon: "ready", text: `${num(m.ready)}%`, kind: "buff" });
     if (m.energy) out.push({ icon: "energy", text: `${m.energy > 0 ? "+" : ""}${num(m.energy)}`, kind: m.energy < 0 ? "buff" : "debuff" });
@@ -127,8 +128,8 @@ export const GLOSSARY_GROUPS: { title: string; icons: string[] }[] = [
   { title: "ui.group.types", icons: [...TAGS, "bag", "crafted"] },
   { title: "ui.group.buffs", icons: [...BUFFS] },
   { title: "ui.group.debuffs", icons: [...DEBUFFS] },
-  { title: "ui.group.effects", icons: ["damage", "heal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "energy", "energyRegen", "melee", "ranged"] },
+  { title: "ui.group.effects", icons: ["damage", "heal", "leech", "overheal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "energy", "energyRegen", "melee", "ranged"] },
   { title: "ui.group.when", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
-  { title: "ui.group.who", icons: ["self", "star", "ship", "hero"] },
+  { title: "ui.group.who", icons: ["self", "star", "ship", "hero", "cell"] },
   { title: "ui.group.merge", icons: ["merge", "radar", "lock"] },
 ];

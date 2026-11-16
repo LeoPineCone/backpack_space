@@ -10,7 +10,7 @@ import {
 import type { Game, Scene } from "../game";
 import { C, RARITY, RARITY_PIPS, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, disc, hearts, hudPill, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
+import { at, box, disc, heroBadge, hearts, hudPill, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
 import { outlinePath, piece, pieceFit, starMarks, zap, ZAP } from "../pieces";
 import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { heroPopup, itemPopup } from "./popup";
@@ -91,8 +91,7 @@ export function shopScene(game: Game): Scene {
 
     // top bar: hero, lives, rounds, gold
     const hero = data.heroes.get(r.hero)!;
-    const heroBtn = new Container();
-    heroBtn.addChild(disc(22, { fill: C.panel, line: C.cyan, lineW: 2 }), txt(hero.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase(), 18, { anchor: [0.5, 0.5] }));
+    const heroBtn = heroBadge(hero.name, 22);
     view.addChild(at(tappable(heroBtn, () => game.openOverlay(heroPopup(game, r.hero)), new Rectangle(-24, -24, 48, 48)), 37, 36));
     view.addChild(at(hearts(r.lives, rules.lives, 20), 69, 16));
     const pips = new Graphics();
