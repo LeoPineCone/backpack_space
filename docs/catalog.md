@@ -360,16 +360,16 @@ The star itself. Starts every fight with Power and gains more with every star ph
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Dyson Fragment | artifact | 0 | `*....*/..##../..##../*....*` | accessory, mechanical | When a starred item activates: gain 3 Shield. |  |
-| Wormhole Generator | artifact | 0 | `*..##..*` | accessory, mechanical | Starred items: 25 % faster, starts 100 % charged. |  |
+| Dyson Fragment | artifact | 0 | `*....*/..##../..##../*....*` | accessory, mechanical | Battle start: gain 20 Shield. When a starred item activates: gain 8 Shield. |  |
+| Wormhole Generator | artifact | 0 | `*..##..*` | accessory, mechanical | Starred items: +2 damage, 50 % faster, starts 100 % charged. |  |
 | Time Dilator | artifact | 0 | `*/./#/#/./*` | accessory | Battle start: inflict 6 Cryo. When a starred ranged weapon activates: inflict 1 Cryo. |  |
 | Ancient Monolith | artifact | 0 | `.*.*./*...*/..#../*...*/.*.*.` | accessory | You: +60 max health. When a starred item activates: heal 4 (below 50 % health). |  |
-| Quantum Dice | artifact | 0 | `*.*/.#./*.*` | accessory | When a starred item activates: gain 1 Power (25 % chance). When a starred item activates: gain 1 Overclock (30 % chance). When a starred item activates: gain 6 Shield (35 % chance). |  |
+| Quantum Dice | artifact | 0 | `*.*/.#./*.*` | accessory | When a starred item activates: gain 1 Power (8 % chance). When a starred item activates: gain 1 Overclock (10 % chance). When a starred item activates: gain 5 Shield (15 % chance). |  |
 | Plague Vault | artifact | 0 | `*..*/.##./*..*` | accessory, organic | When a starred food activates: inflict 1 Toxin. When a starred organic item activates: inflict 1 Toxin. Every 2.5 s: inflict 1 Radiation. |  |
-| Titan Core | artifact | 0 | `**..**/..##../..##..` | armor, mechanical | Battle start: gain 30 Shield, +20 per starred armor. When a weapon hits you: gain 1 Spikes (20 % chance). |  |
-| Star Forge | artifact | 0 | `*.##.*` | accessory, mechanical | Starred melee weapons: +5 damage. When a starred melee weapon activates: gain 1 Power. |  |
+| Titan Core | artifact | 0 | `**..**/..##../..##..` | armor, mechanical | Battle start: gain 30 Shield, +20 per starred armor. When a weapon hits you: gain 1 Spikes (6 % chance). |  |
+| Star Forge | artifact | 0 | `*.##.*` | accessory, mechanical | Starred melee weapons: +8 damage. When a starred melee weapon activates: gain 1 Power. |  |
 | Galactic Cookbook | artifact | 0 | `***/*#*/***` | accessory | Starred food: 25 % faster. When a starred food activates: gain 1 Overclock (40 % chance). |  |
-| Zoo Beacon | artifact | 0 | `*...*/..#../*...*` | accessory, mechanical | Starred pets: +30 % crit. When a starred pet activates: heal 2. |  |
+| Zoo Beacon | artifact | 0 | `*...*/..#../*...*` | accessory, mechanical | Starred pets: +3 damage, +30 % crit. When a starred pet activates: heal 3. |  |
 
 ## Hero items
 
@@ -400,9 +400,9 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage every 2.2 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and heal 3. | → Jungle Tyrant |
 | Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. When a weapon hits you: inflict 1 Toxin (30 % chance). |  |
 | Sun Blossom | legendary | 12 | `##/##` | food, organic | Every star phase: heal 40 and gain 3 Regen. Every 2.7 s: inflict 1 Toxin. |  |
-| World Seed | artifact | 0 | `##/##` | accessory, organic | Battle start: gain 3 Spikes. Every star phase: gain 2 Spikes and 2 Regen. |  |
+| World Seed | artifact | 0 | `##/##` | accessory, organic | Battle start: gain 2 Spikes. Every star phase: gain 1 Spikes and 2 Regen. |  |
 | Queen Spore | artifact | 0 | `*#*` | accessory, organic | Battle start: inflict 5 Toxin. Every 3 s: inflict 2 Toxin. When a starred food activates: inflict 2 Toxin. |  |
-| Terrarium Heart | artifact | 0 | `*##*` | accessory, organic | Starred pets: +3 damage, 25 % faster. When a starred pet activates: heal 3. |  |
+| Terrarium Heart | artifact | 0 | `*##*` | accessory, organic | Starred pets: +5 damage, 25 % faster. When a starred pet activates: heal 4. |  |
 | Spore Mine | crafted (step 1) | 5 | `##` | weapon, organic | 2–3 damage every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin (45 % chance). Each attack: heal 1. | = Seed Pod + Mushroom Cluster |
 | Thorn Pod | crafted (step 1) | 5 | `##` | weapon, organic | 2–4 damage every 2 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin. Battle start: gain 1 Spikes. | = Seed Pod + Bramble Seed |
 | Mantrap Pack | crafted (step 1) | 6 | `##` | pet, weapon, organic | 3–4 damage every 0.9 s. Melee, attacks without Energy. On hit: heal 1. | = Snap Sprout + Snap Sprout |
@@ -441,9 +441,9 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage every 3 s. Ranged, 5 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per Overclock you have (max 12×). | → Storm Driver |
 | Bastion Frame | epic | 9 | `##/##` | armor, mechanical | Battle start: gain 70 Shield. When a weapon hits you: deal 1 damage per 8 Shield you have (max 8×) (25 % chance). | → Bulwark Array |
 | Quantum Forge | legendary | 12 | `##/##` | accessory, mechanical | Every star phase: gain 3 Overclock and 26 Shield. Every 3 s: destroy 8 enemy Shield. You: +2 Energy per second. |  |
-| Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 1 damage per crafted item in your backpack (max 8×) and destroy 3 enemy Shield. Your crafted items: 10 % faster. |  |
-| Perpetual Engine | artifact | 0 | `*##*` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and gain 3 Energy. When a starred weapon activates: deal 1 damage per 2 Overclock you have (max 5×). |  |
-| Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every 3 s: deal 1 damage per 4 Shield you have (max 15×). Every star phase: gain 24 Shield and remove 2 of your debuffs. |  |
+| Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 2 damage per crafted item in your backpack (max 6×) and destroy 3 enemy Shield. Your crafted items: 10 % faster. |  |
+| Perpetual Engine | artifact | 0 | `*##*` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and gain 3 Energy. When a starred weapon activates: deal 1 damage per 2 Overclock you have (max 4×). |  |
+| Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: deal 1 damage per 3 Shield you have (max 20×). Every star phase: gain 30 Shield and remove 2 of your debuffs. |  |
 | Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 6–8 damage every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
 | Logic Core | crafted (step 1) | 6 | `*#*` | accessory, mechanical | Every star phase: gain 3 Overclock. Starred mechanical items: 20 % faster. You: +1 Energy per second. | = Circuit Board + Power Cell |
 | Factory Line | crafted (step 1) | 6 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (60 % chance). Every 3.5 s: gain 8 Shield and remove 1 of your debuffs. | = Conveyor Belt + Toolbox |
@@ -483,8 +483,8 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Thunder Ram | epic | 9 | `##/##` | pet, weapon, organic | 13–16 damage every 2.4 s. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
 | Sky Serpent | legendary | 13 | `####` | pet, weapon, organic | 9–13 damage every 1.5 s. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
 | Elder Tusk | artifact | 0 | `*#*` | accessory | Starred pets: +5 damage, 20 % faster. Battle start: gain 24 Shield. |  |
-| Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 1 Power. Every star phase: heal 3 per pet in your backpack (max 10×). |  |
-| Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 2 s: deal 1 damage per pet in your backpack (max 10×). Your pets: 10 % faster. |  |
+| Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 1 Power. Every star phase: heal 4 per pet in your backpack (max 10×). |  |
+| Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 1.5 s: deal 1 damage per pet in your backpack (max 12×). Your pets: 15 % faster. |  |
 | Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
 | Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
 | Cozy Den | crafted (step 1) | 6 | `*##*/*##*` | accessory | Starred pets: 40 % faster. Every 3 s: heal 1 per pet in your backpack (max 8×). | = Pet Bed + Kibble Sack |
@@ -523,9 +523,9 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 5 Energy per attack. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
 | White Dwarf | epic | 9 | `##/##` | armor | Every star phase: gain 14 Shield. When Collapse begins: gain 94 Shield. You: +42 max health. | → Event Horizon |
 | Supernova Seed | legendary | 12 | `##` | accessory | When Supernova begins: deal 110 damage. Every star phase: inflict 5 Burn and gain 1 Power. |  |
-| Nova Crown | artifact | 0 | `##` | accessory | Every star phase: inflict 3 Cryo and 1 Jam. Every 2.5 s: deal 1 damage per Cryo on the enemy (max 10×). When Supernova begins: gain 112 Shield. |  |
-| Eternal Dawn | artifact | 0 | `#` | accessory | Every star phase: gain 1 Power and 3 Overclock. |  |
-| Stellar Lens | artifact | 0 | `.*./*#*/.*.` | accessory | When a starred weapon activates: inflict 1 Burn (60 % chance). Starred weapons: +10 % crit. |  |
+| Nova Crown | artifact | 0 | `##` | accessory | Every 2.5 s: inflict 2 Cryo and deal 1 damage per Cryo on the enemy (max 8×). Every star phase: inflict 1 Jam. When Supernova begins: gain 112 Shield. |  |
+| Eternal Dawn | artifact | 0 | `#` | accessory | Every star phase: gain 1 Power and 2 Overclock. |  |
+| Stellar Lens | artifact | 0 | `.*./*#*/.*.` | accessory | When a starred weapon activates: inflict 1 Burn (80 % chance). Starred weapons: +15 % crit. |  |
 | Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 3–5 damage every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |
 | Chime of Hours | crafted (step 1) | 5 | `##` | accessory | Every star phase: heal 14 and gain 8 Shield. Your items: 20 % faster (during Red Giant/Collapse/Supernova). | = Prayer Bell + Sundial |
 | Twin Suns | crafted (step 1) | 5 | `#/#` | weapon | 2–4 damage every 1.1 s. Melee, 3 Energy per attack. On hit: inflict 1 Burn (50 % chance). On hit: deal 1 damage per 3 Burn on the enemy (max 6×). | = Sun Shard + Solar Dagger |
