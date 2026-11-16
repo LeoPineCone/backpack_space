@@ -11,7 +11,7 @@
  * lobbies, so the change is measured much more exactly than two independent runs could.
  */
 import { existsSync, readFileSync } from "node:fs";
-import { commitPays, aggregatePaths, blockSe, lateRound, MECHANIC_TEXT, MECHANICS, measurePathLobby, profileDistance, profileOf, SOURCES, type Measured, type Profile } from "../sim/paths";
+import { commitPays, aggregatePaths, blockSe, lateRound, MECHANIC_TEXT, MECHANICS, measurePathLobby, profileDistance, profileOf, styleDistance, STYLE_TEXT, SOURCES, type Measured, type Profile } from "../sim/paths";
 import { jobsFrom, runParallel } from "../sim/parallel";
 import { avg, loadTargets, markOf, pct, pts, startReport, targetRange, type Target } from "./common";
 import type { Mark, ReportPage } from "./html";
@@ -52,7 +52,7 @@ r.value("lobbies", [L]);
 // ---- tables
 const T = loadTargets();
 const tHero = T.pathHeroWinShare!, tPath = T.pathWinShare!, tLate = T.pathLateWinShare!, tOpen = T.pathOverOpen!, tSpread = T.pathSpread!;
-const tMain = T.pathMainShare!, tDistinct = T.pathDistinct!, tCommit = T.pathCommit!, tPays = T.pathPays!;
+const tMain = T.pathMainShare!, tDistinct = T.pathDistinct!, tCommit = T.pathCommit!, tPays = T.pathPays!, tStyle = T.pathStyle!;
 const flat = seats.flat();
 const hd = (label: string, t: Target, unit: "%" | "pts" = "%") => `${label} [target ${targetRange(t, unit)}]`;
 const show = (m: Measured) => `${pct(m.p)} ±${Number.isFinite(m.se) ? Math.max(1, Math.round(100 * m.se)) : "-"}`;
@@ -122,6 +122,11 @@ for (const h of data.heroList) {
   for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) pairs.push({ a: profs[i]!.name, b: profs[j]!.name, d: profileDistance(profs[i]!.p, profs[j]!.p) });
   pairs.sort((x, y) => x.d - y.d);
   if (pairs.length) r.log(`  How different (1 − cosine of the damage mix, target ≥ ${tDistinct.min}): ${pairs.map((x) => `${x.a} / ${x.b} ${x.d.toFixed(2)}${markOf(tDistinct, x.d) === "ok" ? " ✓" : " ✗"}`).join(", ")}`);
+  const styles: { a: string; b: string; s: ReturnType<typeof styleDistance> }[] = [];
+  for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) styles.push({ a: profs[i]!.name, b: profs[j]!.name, s: styleDistance(profs[i]!.p, profs[j]!.p) });
+  styles.sort((x, y) => x.s.score - y.s.score);
+  if (styles.length) r.log(`  Play style (largest difference of a pair, 1 = clearly different, target ≥ ${tStyle.min}): ${styles.map((x) => `${x.a} / ${x.b} ${x.s.score.toFixed(2)} by ${STYLE_TEXT[x.s.by]}${markOf(tStyle, x.s.score) === "ok" ? " ✓" : " ✗"}`).join(", ")}`);
+  if (styles.length) r.target(named(tStyle), styles.map((x) => x.s.score), false);
   for (const pr of profs) r.value(`${h.id}/${pr.name}:mix`, MECHANICS.map((m) => pr.p.mix[m]));
   r.target(named(tMain), profs.map((x) => x.p.mix[x.p.main]), true);
   r.target(named(tDistinct), pairs.map((x) => x.d), true);

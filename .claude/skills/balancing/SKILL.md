@@ -258,7 +258,11 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
 fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and
 Workshop strong late (55–60 %), Late ascension weak late (40 %); Well-fed pack differs between seeds (48 / 43 %);
-every path at or below its open bot; no hero reaches the path distinctness target. General artifacts Dyson
+every path at or below its open bot. Path distinctness: by damage mix (`pathDistinct`) no hero reaches the
+target; by play style (`pathStyle`, largest of mix / tempo / damage per attack / protection / late damage / best
+item, 1 = clearly different, proposed target ≥ 1) Rook's paths and Ysel's Eclipse differ clearly, Quill's Big
+beasts and Swarm play the same (0.2), Venn's paths 0.4–1.0 and Burning corona / Late ascension 0.8. That is a
+design question (what a path owns), not a number question; read `pathStyle` on both seeds (Venn moves by 0.5). General artifacts Dyson
 Fragment, Wormhole Generator (and Ancient Monolith) are weak. The path-pull sweep has not been repeated with the
 new items.
 Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.

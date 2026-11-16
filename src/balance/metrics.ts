@@ -3,14 +3,14 @@
  * value per block of lobbies, so that two measurements on the same lobbies can be compared paired.
  */
 import type { GameData } from "@backpack-space/core";
-import { aggregatePaths, blockCount, blockSe, commitPays, profileDistance, profileOf, type Profile } from "../sim/paths";
+import { aggregatePaths, blockCount, blockSe, commitPays, profileDistance, profileOf, styleDistance, type Profile } from "../sim/paths";
 import type { Target } from "../reports/common";
 import type { LobbyStat } from "./panel";
 
 /** metric kinds and the target each is checked against */
 export const KINDS = {
   hero: "pathHeroWinShare", third: "heroWinShare", path: "pathWinShare", late: "pathLateWinShare", open: "pathOverOpen", spread: "pathSpread",
-  duel: "heroDuel", secs: "fightSeconds", nova: "supernovaReached", main: "pathMainShare", distinct: "pathDistinct", pays: "pathPays",
+  duel: "heroDuel", secs: "fightSeconds", nova: "supernovaReached", main: "pathMainShare", distinct: "pathDistinct", pays: "pathPays", style: "pathStyle",
 } as const;
 export type Kind = keyof typeof KINDS;
 /** kinds measured in seconds; all others are shares (shown in points) */
@@ -47,6 +47,9 @@ function compute(data: GameData, stats: readonly LobbyStat[]): Record<string, nu
     let closest = Infinity;
     for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) closest = Math.min(closest, profileDistance(profs[i]!, profs[j]!));
     if (Number.isFinite(closest)) out[`distinct:${h.id}`] = closest;
+    let alike = Infinity;
+    for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) alike = Math.min(alike, styleDistance(profs[i]!, profs[j]!).score);
+    if (Number.isFinite(alike)) out[`style:${h.id}`] = alike;
     for (let t = 0; t < 3; t++) {
       let w = 0, n = 0;
       for (const s of stats) { const x = s.third[h.id]?.[t]; if (x) { w += x[0]; n += x[1]; } }
@@ -83,6 +86,7 @@ function labelOf(data: GameData, key: string): string {
     case "nova": return `Supernova reached round ${rest.slice(1)}`;
     case "main": return `${pathName(rest)}: main mechanic`;
     case "pays": return `${pathName(rest)}: most against least committed third`;
+    case "style": return `${short(data, rest)}: two paths most alike in play style`;
     case "distinct": return `${short(data, rest)}: closest two paths`;
     default: return key;
   }

@@ -1,3 +1,24 @@
+# Path distinctness measured by play style: Rook and Ysel differ, Quill and Venn do not (2026-11-16, nothing changed in the game)
+
+Question (Ilja): "the paths of a hero deal their damage too alike" looks like design; extend the measurement. `pathDistinct` only compares the damage mix (weapon / pet / Burn / …), so two weapon paths count as the same even when one is fast and one is slow. New number **play style** (`pathStyle`, `styleDistance` in `src/sim/paths.ts`): six differences of two paths, each scaled so that 1 is a step a player notices, and the largest one counts: damage mix (0.35 as before), attacks per second and damage per attack (× 1.5), healed + shielded per fight (a quarter of the hero's health), share of damage from phase 3 on (15 points), share of the best item (10 points). Shown in `report:paths` (per pair, with the dimension), `baseline`, `balance:replay`, `balance:sweep` (per hero: the two paths most alike). Proposed target `pathStyle` ≥ 1. Baseline, 2 × 240 lobbies, seed 1 / seed 2:
+
+| Hero | Pair | Play style | Largest difference |
+|---|---|---|---|
+| Rook | Overclocked guns / Shield fortress | 2.28 / 2.38 | protection (tempo 1.8) |
+| Rook | Overclocked guns / Workshop | 1.14 / 1.37 | protection |
+| Rook | Shield fortress / Workshop | 1.14 / 1.01 | protection |
+| Ysel | Late ascension / Eclipse | 2.57 / 2.17 | late damage (tempo 1.6, protection 1.3) |
+| Ysel | Burning corona / Eclipse | 2.10 / 1.76 | late damage |
+| Ysel | Burning corona / Late ascension | 0.79 / 0.81 | tempo |
+| Venn | Thorn wall / Hungry jungle | 0.86 / 1.02 | tempo |
+| Venn | Poison garden / Thorn wall | 0.43 / 0.92 | damage per attack / tempo |
+| Venn | Poison garden / Hungry jungle | 0.53 / 0.44 | best item / protection |
+| Quill | Swarm / Well-fed pack | 0.65 / 0.73 | damage per attack / tempo |
+| Quill | Big beasts / Well-fed pack | 0.57 / 0.57 | damage per attack / tempo |
+| Quill | Big beasts / Swarm | 0.24 / 0.16 | none |
+
+Reading: 5 of 12 pairs are clearly different on both seeds (all of Rook, Eclipse against the other two Ysel paths), although their damage mix is almost the same (0.04–0.25 of 0.35). So the old number was too strict for Rook and Ysel. It was right for Quill and Venn: Big beasts and Swarm play the same in every dimension (same attacks per second, same damage per attack, same share of the best pet), i.e. the bots end up with the same pets whatever the anchor says. Venn's three paths differ a little in tempo only; Poison garden / Thorn wall moves between seeds (0.43 / 0.92), so read both. This is a design question (which pets and plants a path owns, and what its anchor asks for), not a number question. `pathDistinct` stays for now; if `pathStyle` is accepted it can replace it.
+
 # Three paths after the payoff pass: numbers are used up (2026-11-16, nothing changed)
 
 Question (Ilja): tune the numbers of the new items for Shield fortress, Well-fed pack and Late ascension, where the most committed bots still lose. Baseline after the payoff pass, 2 × 240 lobbies. **No number was adopted.**

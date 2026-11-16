@@ -20,6 +20,7 @@ export const PULL_ROWS: PullRow[] = [
   { key: "pays", label: "going deeper pays: most against least committed third, average", unit: "pts", target: "pathPays" },
   { key: "paysMin", label: "going deeper pays, weakest path", unit: "pts", target: "pathPays" },
   { key: "distinctMin", label: "damage mix of the closest two paths (0 = same)", unit: "", target: "pathDistinct" },
+  { key: "styleMin", label: "play style of the two paths most alike (1 = clearly different)", unit: "", target: "pathStyle" },
   { key: "spreadMax", label: "best to weakest path of a hero, largest gap", unit: "pts", target: "pathSpread" },
 ];
 
@@ -69,6 +70,7 @@ export function pullOf(data: GameData, lobbies: readonly PanelLobby[]): Record<s
   const pays = of("pays").map((x) => x.value);
   out.pays = mean(pays); out.paysMin = Math.min(...pays);
   out.distinctMin = Math.min(...of("distinct").map((x) => x.value));
+  out.styleMin = Math.min(...of("style").map((x) => x.value));
   out.spreadMax = Math.max(...of("spread").map((x) => x.value));
   return out;
 }
