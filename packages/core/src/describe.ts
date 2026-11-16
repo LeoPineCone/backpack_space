@@ -43,9 +43,9 @@ function parts(e: Effect, data: GameData, tr: Translator): Part {
   let perText = "";
   if (per) {
     const div = per.div && per.div !== 1 ? per.div : undefined;
-    const key = per.stars ? "rules.per.stars" : per.ship ? "rules.per.ship" : per.buff ? "rules.per.buff" : per.debuff ? "rules.per.debuff" : undefined;
+    const key = per.stars ? "rules.per.stars" : per.ship ? "rules.per.ship" : per.cells ? "rules.per.cells" : per.buff ? "rules.per.buff" : per.debuff ? "rules.per.debuff" : undefined;
     if (key) {
-      perText = ` ${tr.t(div ? `${key}.n` : key, { n: div ?? 1, tag: per.stars ?? per.ship ?? "any", status: STATUS(per.buff ?? per.debuff ?? "") })}`;
+      perText = ` ${tr.t(div ? `${key}.n` : key, { n: div ?? 1, tag: per.stars ?? per.ship ?? per.cells ?? "any", status: STATUS(per.buff ?? per.debuff ?? "") })}`;
       if (per.max) perText += ` ${tr.t("rules.per.max", { n: per.max })}`;
     }
   }

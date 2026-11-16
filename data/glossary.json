@@ -51,6 +51,8 @@
     { "id": "food", "group": "type", "en": "Food", "de": "Essen", "icon": "food", "text": "Item type." },
     { "id": "mechanical", "group": "type", "en": "Mechanical", "de": "Mechanisch", "icon": "mechanical", "text": "Item type." },
     { "id": "organic", "group": "type", "en": "Organic", "de": "Organisch", "icon": "organic", "text": "Item type." },
+    { "id": "beast", "group": "type", "en": "Beast", "de": "Biest", "icon": "beast", "text": "A large pet that covers 4 cells or more." },
+    { "id": "swarm", "group": "type", "en": "Swarm", "de": "Schwarm", "icon": "swarm", "text": "Many small pets or one very small pet." },
     { "id": "crafted", "group": "type", "en": "Crafted", "de": "Verschmolzen", "icon": "crafted", "text": "Made by merging items.", "code": ["crafted (derived tag)"] },
     { "id": "any", "group": "type", "en": "Any item", "de": "Jedes Item", "icon": "any", "text": "Every type counts." },
 

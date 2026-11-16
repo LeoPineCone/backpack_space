@@ -95,7 +95,7 @@ export function energySupply(data: GameData, def: ItemDef): number {
   }
   return v;
 }
-const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
+const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship, e.per?.cells].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
 
 export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned: readonly string[] = bot.inv): number {
   const def = data.items.get(id)!;

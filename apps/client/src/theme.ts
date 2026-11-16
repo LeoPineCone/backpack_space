@@ -26,7 +26,7 @@ export const RARITY_PIPS: Record<string, number> = { common: 1, rare: 2, epic: 3
 
 /** Fill of an item tile by its first type, so types can be told apart without art. */
 export const TAG_FILL: Record<string, number> = {
-  weapon: 0x6b3340, armor: 0x2f4a7a, accessory: 0x56397a, pet: 0x7a5230, food: 0x6a6a2c, mechanical: 0x485468, organic: 0x2f6a45, bag: 0x24305a,
+  weapon: 0x6b3340, armor: 0x2f4a7a, accessory: 0x56397a, pet: 0x7a5230, food: 0x6a6a2c, mechanical: 0x485468, organic: 0x2f6a45, beast: 0x7a5230, swarm: 0x7a5230, bag: 0x24305a,
 };
 
 export const FONT = { display: '"Chakra Petch", "Trebuchet MS", sans-serif', text: 'Inter, system-ui, sans-serif' } as const;

@@ -36,6 +36,23 @@ describe("battle", () => {
     expect(plain.stats[0].shielded).toBe(0);
     expect(over.stats[0].shielded).toBeGreaterThan(0);
   });
+  it("counts the cells pets cover, not the pets (Quill's health)", () => {
+    const none = compile(build(["scrap_metal"], 1, "quill"), data).maxHp;
+    const rat = compile(build(["burrow_rat"], 1, "quill"), data).maxHp, bear = compile(build(["moon_bear"], 1, "quill"), data).maxHp;
+    expect(data.items.get("moon_bear")!.size).toBe(4);
+    expect(bear - data.items.get("moon_bear")!.effects.reduce((n, e) => n + (e.mod?.maxHp ?? 0), 0) - none).toBe(4 * (rat - none));
+  });
+  it("beasts are large pets, swarm pets are pets, none is both", () => {
+    for (const it of data.itemList) {
+      const tags = it.tags as string[];
+      if (tags.includes("beast")) { expect(tags).toContain("pet"); expect(it.size).toBeGreaterThanOrEqual(4); expect(tags).not.toContain("swarm"); }
+      if (tags.includes("swarm")) expect(tags).toContain("pet");
+    }
+  });
+  it("every hero brings the same number of personal items", () => {
+    const counts = data.heroList.map((h) => data.itemList.filter((i) => i.hero === h.id).length);
+    expect(new Set(counts).size).toBe(1);
+  });
   it("Overclock refills Energy faster", () => {
     const rules = (energyPct: number) => ({ ...data.rules, energy: { ...data.rules.energy, regen: 1 }, status: { ...data.rules.status, overclock: { ...data.rules.status.overclock, energyPct } } });
     const a = compile(build(["overclock_chip", "fang_dagger", "fang_dagger", "fang_dagger"], 12), data), b = compile(build(["scrap_metal"], 12, data.heroList[1]!.id), data);

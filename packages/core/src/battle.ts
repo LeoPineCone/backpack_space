@@ -109,7 +109,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     const per = e.per;
     if (per && (per.buff || per.debuff)) {
       let stacks = (per.buff ? me.st[per.buff] : 0) + (per.debuff ? foe.st[per.debuff] : 0);
-      if (per.stars || per.ship) stacks *= ce.mult;
+      if (per.stars || per.ship || per.cells) stacks *= ce.mult;
       k = Math.floor(stacks / (per.div ?? 1));
       if (per.max !== undefined) k = Math.min(k, per.max);
     }

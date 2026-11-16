@@ -21,7 +21,7 @@ export function setKids(el: HTMLElement, ...kids: Kid[]): void {
   el.replaceChildren(...kids.filter((k): k is Node | string | number => k !== null && k !== undefined && k !== false).map((k) => (k instanceof Node ? k : String(k))));
 }
 
-const TAG_ICON: Record<string, string> = { weapon: "⚔️", armor: "🛡️", accessory: "🔧", pet: "🐾", food: "🍎", mechanical: "⚙️", organic: "🌿", bag: "🎒", crafted: "✨" };
+const TAG_ICON: Record<string, string> = { weapon: "⚔️", armor: "🛡️", accessory: "🔧", pet: "🐾", food: "🍎", mechanical: "⚙️", organic: "🌿", beast: "🐗", swarm: "🐝", bag: "🎒", crafted: "✨" };
 export const tagIcon = (tag: string): string => TAG_ICON[tag] ?? "•";
 export const cap = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
 

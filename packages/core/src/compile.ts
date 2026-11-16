@@ -92,10 +92,11 @@ export function compile(build: Build, data: GameData): CSide {
 
   const staticMult = (e: Effect, it: CItem | null): number => {
     const per = e.per;
-    if (!per || (!per.stars && !per.ship)) return 1;
+    if (!per || (!per.stars && !per.ship && !per.cells)) return 1;
     let count = 0;
     if (per.stars && it) count += it.starred.filter((j) => has(items[j]!.def, per.stars)).length;
     if (per.ship) count += items.filter((o) => has(o.def, per.ship)).length;
+    if (per.cells) count += items.reduce((n, o) => n + (has(o.def, per.cells) ? o.def.size : 0), 0);
     // stacks divide at runtime, counts here
     if (!per.buff && !per.debuff) { count = Math.floor(count / (per.div ?? 1)); if (per.max !== undefined) count = Math.min(count, per.max); }
     return count;

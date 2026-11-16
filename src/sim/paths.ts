@@ -25,7 +25,7 @@ export function mechanicOf(def: ItemDef): Mechanic {
   if (def.damage) return (def.tags as string[]).includes("pet") ? "pet" : "weapon";
   const dmg = def.effects.find((e) => e.do === "damage");
   if (dmg?.per?.buff === "shield") return "shield";
-  if (dmg?.per?.ship || dmg?.per?.stars) return "count";
+  if (dmg?.per?.ship || dmg?.per?.stars || dmg?.per?.cells) return "count";
   if (dmg?.per?.debuff) return "debuff";
   return "direct";
 }

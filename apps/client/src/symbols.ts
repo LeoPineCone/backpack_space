@@ -67,6 +67,7 @@ function thenChips(e: Effect): Chip[] {
     const div = per.div && per.div !== 1 ? `/${num(per.div)}` : "×";
     if (per.stars) { out.push({ icon: "star", text: div, kind: "plain" }); if (per.stars !== "any") out.push({ icon: per.stars, kind: "plain" }); }
     else if (per.ship) { out.push({ icon: "ship", text: div, kind: "plain" }, { icon: per.ship, kind: "plain" }); }
+    else if (per.cells) { out.push({ icon: "cell", text: div, kind: "plain" }, { icon: per.cells, kind: "plain" }); }
     else if (per.buff) out.push({ icon: per.buff, text: div, kind: "plain" });
     else if (per.debuff) out.push({ icon: per.debuff, text: div, kind: "plain" });
   }

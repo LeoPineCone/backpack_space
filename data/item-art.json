@@ -1638,5 +1638,21 @@
   "zenith_lance": {
     "brief": "Tall ceremonial lance with a sun disc below a long bright point. Accent: mustard.",
     "description": "Standing tall: a slim ceremonial lance, a small mustard sun disc below a long bright point, prayer cords wound round the shaft."
+  },
+  "pebble_mites": {
+    "brief": "Three tiny rock-shelled mites crawling over a pebble. Accent: bone.",
+    "description": "Three tiny mites with rock-like shells crawling over a single pebble, feelers up."
+  },
+  "needle_wasps": {
+    "brief": "Small swarm of wasps with long needle stingers in tight formation. Accent: mustard.",
+    "description": "A small swarm of five wasps with long needle stingers, flying in a tight arrow formation with thin motion lines behind them."
+  },
+  "thorn_hedge": {
+    "brief": "Dense low hedge of thorny branches grown into a wall. Accent: moss.",
+    "description": "A dense low hedge of thorny branches woven into a short wall, a few torn scraps of cloth caught on the thorns."
+  },
+  "rot_bloom": {
+    "brief": "Wilted dark flower dripping thick sap from its petals. Accent: rust red.",
+    "description": "A wilted dark flower with drooping petals, thick sap dripping from the petal tips into a small puddle below."
   }
 }

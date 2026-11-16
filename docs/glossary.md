@@ -59,6 +59,8 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Food** | Essen | Item type. | `food` |
 | **Mechanical** | Mechanisch | Item type. | `mechanical` |
 | **Organic** | Organisch | Item type. | `organic` |
+| **Beast** | Biest | A large pet that covers 4 cells or more. | `beast` |
+| **Swarm** | Schwarm | Many small pets or one very small pet. | `swarm` |
 | **Crafted** | Verschmolzen | Made by merging items. | `crafted (derived tag)` |
 | **Any item** | Jedes Item | Every type counts. | `any` |
 
