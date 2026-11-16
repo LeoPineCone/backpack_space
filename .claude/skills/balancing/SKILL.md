@@ -197,6 +197,12 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Lessons learned (keep adding)
 
+- 2026-11-16: proposals per hero with `--kinds …,open` (findings.md, not applied). Merging the proposals of all
+  heroes was worse than the baseline (33 → 34 targets off): each search only knows its own hero's knobs and uses
+  nerfs of early items that hurt a third of the run. Pick the changes that lift a weak path or lower a strong one,
+  drop the rest, and measure the merged patch with `--full` before showing it. Number steps closed a third to a
+  half of a path's gap to its open bot, never all of it.
+
 - 2026-11-16: path pull, three sweeps (findings.md). The shop lean (`shop.anchorPathWeight` 1–4) moves almost
   nothing. `shop.heroOfferPct` is a hero-balance lever, not a path lever (Quill 44 → 61 % from 20 to 50). The
   bots' path liking decides how much of a build is on the path (29 → 60 %), and more liking loses against the

@@ -1,3 +1,27 @@
+# Proposal: make the weak paths pay (2026-11-16, not applied)
+
+Question (Ilja, after the path-pull sweeps): let the tools propose numbers that make the weak paths pay. `balance:propose --knobs hero:<id> --kinds …,open --max-knobs 6` for each hero (7–10 min each, search on seed 1, check on seed 2), then full runs (bots shop again). **Nothing in `data/` changed; the core numbers stay frozen until Ilja decides.**
+
+All 16 proposed changes together are not worth taking: targets off 33 → 34, Quill rises to 54 %, Ysel falls to 44 % in rounds 1–4 (Sun Shard Burn 2 → 1), Venn falls in rounds 5–8.
+
+**Core of six changes that holds on both seeds** (full run, 2 × 240 lobbies; targets off on seed 1: 33 → 26, 10 brought on target, 3 pushed off):
+
+| Item | Number | Now | Proposed | Path it serves |
+|---|---|---|---|---|
+| Strangler Fig | Cryo on hit | 2 | 5 | Venn Hungry jungle |
+| Herd Heart | Power per starred use | 1 | 2 | Quill Well-fed pack |
+| Canticle | Power per phase | 1 | 2 | Ysel Late ascension |
+| Solstice Engine | Power per phase | 1 | 2 | Ysel Late ascension |
+| Ram Plate | damage when attacked | 1 | 2 | Rook Shield fortress |
+| Master Blueprint | damage on use | 2 | 1 | Rook Workshop (down) |
+
+Change seed 1 / seed 2, paired: Hungry jungle +4.5 / +2.8 (41 → 45 %), late +9.2 / +6.4 (35 → 44 %); Well-fed pack +4.4 / +2.8 (42 → 47 %); Late ascension +2.1 / +1.8 (45 → 47 %), late +4.6 / +4.2 (37 → 42 %); Workshop −3.8 / −3.9 (57 → 53 %), late −6.0 / −5.3 (64 → 58 %); Venn overall 47 → 49 %, Rook 52 → 50 %, all heroes inside 48–52 %; gap between a hero's paths: Venn 10 → 7, Rook 11 → 8, Quill 13 → 8, Ysel 8 → 5.
+Pushed off: Rook Overclocked guns 47 → 45 % (late 38 → 35 %), Thorn wall late 56 → 58 %, Thorn wall against the open bot +2 → +1.
+
+**What numbers do not fix:** every weak path stays below its open bot (Well-fed pack −13 → −7, Shield fortress −11 → −9, Hungry jungle −8 → −6, Late ascension −7 → −5; Overclocked guns −10 unchanged). Small number steps close a third to a half of the gap. The rest is design: path items must reward being together (as Herd Heart does: its one step gave the largest gain), or the open-bot target is too strict for bots that buy by rating.
+
+Patch: `out/proposals/pay-core.json` (`{"item":"strangler_fig","set":{"effects.0.n":5}}`, `herd_heart effects.0.n 2`, `canticle effects.0.n 2`, `solstice_engine effects.0.n 2`, `ram_plate effects.1.n 2`, `master_blueprint effects.0.n 1`). If adopted: numbers into `data/items/hero_*.json`, `npm run ratings -- --only <ids>`, `npm run catalog`, `npm run baseline`.
+
 # How strongly should a path pull? Three sweeps (2026-11-16)
 
 Question (Ilja, open since the path anchors): how strongly should a path pull the build? New tool `npm run balance:sweep` (one number at several values, every value a full run on the baseline's lobbies, bots shop again; about 3 min per value). No game number changed. Baseline of main, 2 × 240 lobbies, mean of seeds 1 and 2; * = at least two paired standard errors on both seeds.
