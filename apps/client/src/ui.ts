@@ -1,6 +1,6 @@
 /** Small drawing helpers shared by all screens. */
 import { Container, Graphics, Rectangle, Text } from "pixi.js";
-import { C, FONT } from "./theme";
+import { BUTTON, C, FONT } from "./theme";
 import { icon } from "./icons";
 
 export interface TxtOpts { color?: number; font?: "display" | "text"; weight?: "400" | "600" | "700"; spacing?: number; wrap?: number; align?: "left" | "center" | "right"; anchor?: [number, number]; lineHeight?: number }
@@ -52,8 +52,8 @@ export function at<T extends Container>(obj: T, x: number, y: number): T { obj.p
 /** Round button with a symbol; origin at its centre. */
 export function roundButton(name: string, r: number, onTap: () => void, o: { fill?: number; line?: number; tint?: number; iconSize?: number } = {}): Container {
   const c = new Container();
-  c.addChild(disc(r, { fill: o.fill ?? C.panel, line: o.line ?? C.line, lineW: 2 }));
-  c.addChild(icon(name, o.iconSize ?? r * 0.9, o.tint ?? C.text));
+  c.addChild(disc(r, { fill: o.fill ?? BUTTON.icon.fill, line: o.line ?? BUTTON.icon.line, lineW: 2 }));
+  c.addChild(icon(name, o.iconSize ?? r * 0.9, o.tint ?? BUTTON.icon.ink));
   return tappable(c, onTap, new Rectangle(-r - 4, -r - 4, r * 2 + 8, r * 2 + 8));
 }
 
@@ -68,8 +68,8 @@ export function infoButton(r: number, onTap: () => void, active = false): Contai
 /** Wide pill button; origin top-left. */
 export function pillButton(label: string, w: number, h: number, onTap: () => void, o: { fill?: number; ink?: number; iconName?: string; size?: number; disabled?: boolean } = {}): Container {
   const c = new Container();
-  const ink = o.ink ?? C.goldInk;
-  c.addChild(box(w, h, { fill: o.fill ?? C.gold, radius: h / 2 }));
+  const ink = o.ink ?? BUTTON.primary.ink;
+  c.addChild(box(w, h, { fill: o.fill ?? BUTTON.primary.fill, radius: h / 2 }));
   const label_ = txt(label, o.size ?? 24, { color: ink, spacing: 2, anchor: [0.5, 0.5] });
   if (o.iconName) {
     const ic = icon(o.iconName, 26, ink);
@@ -80,7 +80,7 @@ export function pillButton(label: string, w: number, h: number, onTap: () => voi
     c.addChild(ic);
   } else label_.position.set(w / 2, h / 2);
   c.addChild(label_);
-  if (o.disabled) { c.alpha = 0.4; return c; }
+  if (o.disabled) { c.alpha = BUTTON.lockedAlpha; return c; }
   return tappable(c, onTap, new Rectangle(0, 0, w, h));
 }
 

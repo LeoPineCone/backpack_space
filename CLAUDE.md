@@ -6,6 +6,8 @@
 - The core is deterministic: no Math.random, no clock reads. Randomness only via `Rng` with a seed.
 - Game values belong in `data/*.json`, not in code. Item rules text is generated from the effect data (`describe.ts`), never written by hand.
 - Items are maintained directly in `data/items/*.json` (no generator scripts). Before adding or changing an item, follow `.claude/skills/item-design/SKILL.md` (size by type, price, number budget, checks). Every item and bag needs a picture brief in `data/item-art.json` (ends with "Accent: <palette colour>."); write and rewrite those with `.claude/skills/item-art/SKILL.md` (inventive, clearly space-themed, one animal per pet). A new effect idea that the effect schema cannot express needs a schema + battle change first.
+- UI colours, fonts and button kinds come from `data/theme.json` (`docs/theme.md`); never write a colour into client code.
+- Menu backgrounds (turning planets): follow `.claude/skills/planet-art/SKILL.md`.
 - Places of the world (planets, moons, stations, stars) and which items and heroes come from them live in `lore/planets.json`; after changes run `npm run lore` (rewrites `lore/graph.html`).
 - Game words come from `data/glossary.json` (English for game and code, German for design talk); add a term there before using a new word in the game.
 - Every text the player sees goes through the language files (`data/locales/*.json`, see `docs/i18n.md`); the client never shows a hard-coded word. English is the source; new items and texts also need their German translation (`npm run i18n` lists what is missing).

@@ -192,7 +192,7 @@ export function shopScene(game: Game): Scene {
     }
 
     // loose pieces below the backpack
-    view.addChild(at(box(FLOOR.w, FLOOR.h, { fill: 0x101830, radius: 14 }), FLOOR.x, FLOOR.y), at(new Graphics().rect(0, 0, FLOOR.w, 2).fill(C.line), FLOOR.x, FLOOR.y + FLOOR.h - 2));
+    view.addChild(at(box(FLOOR.w, FLOOR.h, { fill: C.floor, radius: 14 }), FLOOR.x, FLOOR.y), at(new Graphics().rect(0, 0, FLOOR.w, 2).fill(C.line), FLOOR.x, FLOOR.y + FLOOR.h - 2));
     const shapes = r.loose.map((id) => data.shape(id, 0));
     const cellsWide = shapes.reduce((a, s) => a + s.w, 0), tallest = Math.max(1, ...shapes.map((s) => s.h));
     const lc = Math.min(26, (FLOOR.w - 24 - r.loose.length * 8) / Math.max(1, cellsWide), (FLOOR.h - 16) / tallest);

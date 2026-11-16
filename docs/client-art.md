@@ -18,6 +18,6 @@ surface map around a sphere in a shader and turns it slowly (one turn in 150 s),
 jumps. Light, the hatched shadow edge and the ink outline come from the shader, so a surface map is
 drawn evenly lit, without a day and night side.
 
-Generating a surface map: ask for a flat equirectangular map that fills the image edge to edge,
+Generating a surface map (full steps and prompt: `.claude/skills/planet-art/SKILL.md`): ask for a flat equirectangular map that fills the image edge to edge,
 evenly lit, seamlessly tileable horizontally, large clear shapes, in the style of `docs/style.md`
 (21:9 works; it is resized to 2:1). Check the seam by putting the right half in front of the left half.
