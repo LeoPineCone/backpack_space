@@ -7,4 +7,6 @@ dist/
 .vscode/
 *.iml
 .DS_Store
-.claude/
+# Claude settings stay local; skills are shared through the repo
+.claude/*
+!.claude/skills/
