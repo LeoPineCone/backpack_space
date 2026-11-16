@@ -1,3 +1,14 @@
+# Three paths after the payoff pass: numbers are used up (2026-11-16, nothing changed)
+
+Question (Ilja): tune the numbers of the new items for Shield fortress, Well-fed pack and Late ascension, where the most committed bots still lose. Baseline after the payoff pass, 2 × 240 lobbies. **No number was adopted.**
+
+- `balance:propose --knobs path:<hero>/<path> --kinds …,open,pays` (one search per path): only small steps on side items; "going deeper pays" for Shield fortress +3.5 on the search seed, +0.5 on the check seed. Well-fed pack: one step (Glutton Toad cooldown).
+- Larger converter steps by hand (Breach Ram per 8 Shield max 10, Siege Ram per 8 max 24, Ram Plate max 8; Glutton Toad 5 damage and cooldown 1.7, Trough Boar max 14; Dawn Needle per Power max 8, Zenith Lance max 16, Flare Catcher 4 Shield per Power), full run: Shield fortress +1.0 / +1.6, Well-fed pack +1.2 / +0.8, Late ascension +3.2 / +2.0 (late 41 → 44 %); Venn falls to 46 %, targets off 34 → 38.
+- Only the pet and Power weapon steps, full run: Well-fed pack +1.8 / +1.4, Late ascension +1.9 / +1.1, Venn 47 %, targets off 34 → 39.
+- "Going deeper pays" did not move beyond its noise in any of them (Well-fed pack +3.5 ±2.6 / +2.3 ±2.7; Shield fortress −2.1 / +4.6, the seeds disagree).
+
+Reading: with all heroes at 48–52 % a step that lifts one path by 1–2 points pushes about as many numbers over a band edge as it brings in. The three paths are inside their win-share bands now; what is left (the deepest third of Shield fortress loses 7–8 points, Well-fed pack and Late ascension 3–6 with ±3) is not a number question. Candidates if it still shows in a playtest: fewer pure sources in these paths (turn one or two into items that also attack), or bots that stop buying sources once the build has enough.
+
 # Path payoff built: converters, bodies, two rule changes (2026-11-16)
 
 Question (Ilja, "all good proposals, go on"): build `docs/proposals/path-payoff.md`. Measured on 2 × 240 lobbies, seeds 1 / 2, with the new number **"going deeper pays"** (`pathPays`: win share of the third of a path's bots with the most of their build on the path, minus the third with the least; in `report:paths`, `baseline`, `balance:replay`, `balance:sweep`).

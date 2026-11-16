@@ -197,6 +197,11 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Lessons learned (keep adding)
 
+- 2026-11-16: when every hero is at 48–52 % and most paths are in their bands, single number steps stop paying:
+  three tries on three paths each lifted the path by 1–3 points and left more targets off than before (34 → 38 /
+  39), because many values sit near a band edge. Stop there; count "targets off" only as a rough guide (± about 5
+  between two full runs of patches that do little). `pathPays` moves less than its noise (±3) for number steps.
+
 - 2026-11-16: path payoff (findings.md). A path needs a **source** (makes its resource), a **converter** (turns the
   resource into damage or survival, scaling) and a **body** (weapons or pets). Paths made only of sources lose
   more the deeper a bot goes; check `pathPays` ("going deeper pays", ±3 points per seed at normal: read both
