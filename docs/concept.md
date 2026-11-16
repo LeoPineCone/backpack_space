@@ -125,7 +125,7 @@ An item is data: shape, optional cooldown, optional weapon damage with range (me
 - Triggers: `start`, `use` (each cooldown), `hit` (weapon hit), `attacked`, `phase` (every phase or a named one), `starUse` (a starred item activates), `lowHp` (once below half health); for heroes also `shipUse` (any own item with a tag activates).
 - Actions: gain a buff, inflict a debuff, deal damage, heal, cleanse own debuffs, strip enemy Shield, gain Energy.
 - Scaling `per`: starred items with a tag, items with a tag in the backpack, own buff stacks, enemy debuff stacks (with divisor and cap).
-- Tag filters (`tag`, `per.stars`, `per.ship`): the item types, `crafted`, and `melee` / `ranged` for weapons by range. Stars (`*` in the shape) may sit further away than the neighbours, with empty cells (`.`) in between.
+- Tag filters (`tag`, `per.stars`, `per.ship`, `per.cells` = cells that items of a type cover): the item types (with the pet kinds `beast` and `swarm`), `crafted`, and `melee` / `ranged` for weapons by range. Stars (`*` in the shape) may sit further away than the neighbours, with empty cells (`.`) in between.
 - Conditions `if`: chance, star phases, health below a share.
 - Passives `to`: self, starred items, all own items with a tag, the hero (health), for bags the items inside. Bonuses: weapon damage, speed, crit, health, starting charged, Energy cost of weapons, Energy refill (hero).
 

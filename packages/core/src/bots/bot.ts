@@ -26,6 +26,8 @@ export interface BotOpts {
   arrange?: { moves?: number; tries?: number };
   /** how much more a bot committed to a path values that path's items (default PATH_LIKING) */
   pathLiking?: number;
+  /** the bot also values hero items of its hero's other paths less (by the same factor): "what can this path do alone" */
+  pathStrict?: boolean;
 }
 export interface BotLog {
   round: number; bought: string[]; sold: string[];
@@ -95,18 +97,36 @@ export function energySupply(data: GameData, def: ItemDef): number {
   }
   return v;
 }
-const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
+const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship, e.per?.cells].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
+
+/** statuses whose stacks an item's effects count (own buffs, debuffs on the enemy) */
+const statusRefs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.per?.buff, e.per?.debuff].filter((t): t is NonNullable<typeof t> => !!t));
+const makes = (effects: readonly { gain?: string; inflict?: string }[], status: string): boolean => effects.some((e) => e.gain === status || e.inflict === status);
+/** fit of an item that counts or needs something: worth this share with nothing of it in the build, FIT_ALL with FIT_FULL or more of each */
+const FIT_NONE = 0.6, FIT_ALL = 1.4, FIT_FULL = 3;
 
 export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned: readonly string[] = bot.inv): number {
   const def = data.items.get(id)!;
   let v = (def.rarity === "artifact" ? ARTIFACT_WORTH : Math.max(1, def.cost)) * (opts.ratings?.[id] ?? 1);
   const defs = owned.map((o) => data.items.get(o)!);
+  // fit: an item that counts or needs something is worth what the build already has of it
+  const needs = [...new Set(refs(def))], stacks = [...new Set(statusRefs(def))];
+  if (needs.length + stacks.length) {
+    const hero = data.heroes.get(bot.hero)!;
+    let have = 0;
+    for (const t of needs) have += Math.min(1, defs.filter((o) => (o.tags as string[]).includes(t)).length / FIT_FULL);
+    for (const s of stacks) have += Math.min(1, (defs.filter((o) => o.id !== id && makes(o.effects, s)).length + (makes(hero.effects, s) ? 1 : 0) + (makes(def.effects, s) ? 1 : 0)) / FIT_FULL);
+    v *= FIT_NONE + (FIT_ALL - FIT_NONE) * (have / (needs.length + stacks.length));
+  }
   let syn = 0;
-  for (const t of refs(def)) syn += Math.min(4, defs.filter((o) => (o.tags as string[]).includes(t)).length) * 0.1;
   for (const o of defs) if (refs(o).some((t) => (def.tags as string[]).includes(t))) syn += 0.06;
-  v *= 1 + Math.min(0.8, syn);
+  v *= 1 + Math.min(0.5, syn);
   const path = data.heroes.get(bot.hero)!.paths.find((p) => p.id === bot.path);
-  if (path) { if (onPath(def, path)) v *= opts.pathLiking ?? PATH_LIKING; }
+  if (path) {
+    const liking = opts.pathLiking ?? PATH_LIKING;
+    if (onPath(def, path)) v *= liking;
+    else if (opts.pathStrict && def.hero && def.path && liking > 0) v /= liking;
+  }
   else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;

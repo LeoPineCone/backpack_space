@@ -17,6 +17,7 @@ function modText(m: Mod, tr: Translator): string {
   if (m.ready) parts.push(tr.t("rules.mod.ready", { n: m.ready }));
   if (m.energy) parts.push(tr.t("rules.mod.energy", { n: tr.signed(m.energy) }));
   if (m.energyRegen) parts.push(tr.t("rules.mod.energyRegen", { n: m.energyRegen }));
+  if (m.leech) parts.push(tr.t("rules.mod.leech", { n: m.leech }));
   if (m.overheal) parts.push(tr.t("rules.mod.overheal", { n: m.overheal }));
   return parts.join(tr.t("list.sep"));
 }
@@ -43,9 +44,9 @@ function parts(e: Effect, data: GameData, tr: Translator): Part {
   let perText = "";
   if (per) {
     const div = per.div && per.div !== 1 ? per.div : undefined;
-    const key = per.stars ? "rules.per.stars" : per.ship ? "rules.per.ship" : per.buff ? "rules.per.buff" : per.debuff ? "rules.per.debuff" : undefined;
+    const key = per.stars ? "rules.per.stars" : per.ship ? "rules.per.ship" : per.cells ? "rules.per.cells" : per.buff ? "rules.per.buff" : per.debuff ? "rules.per.debuff" : undefined;
     if (key) {
-      perText = ` ${tr.t(div ? `${key}.n` : key, { n: div ?? 1, tag: per.stars ?? per.ship ?? "any", status: STATUS(per.buff ?? per.debuff ?? "") })}`;
+      perText = ` ${tr.t(div ? `${key}.n` : key, { n: div ?? 1, tag: per.stars ?? per.ship ?? per.cells ?? "any", status: STATUS(per.buff ?? per.debuff ?? "") })}`;
       if (per.max) perText += ` ${tr.t("rules.per.max", { n: per.max })}`;
     }
   }

@@ -18,6 +18,8 @@ export interface CItem {
   cooldown: number;
   dmg: [number, number] | null;
   crit: number;
+  /** percent of this item's damage that heals its owner */
+  leech: number;
   /** percent */
   speed: number;
   ready: number;
@@ -84,7 +86,7 @@ export function compile(build: Build, data: GameData): CSide {
   const board = boardOf(w, h, build.bags, build.items, data.shape);
   const items: CItem[] = build.items.map((p, idx) => {
     const def = data.items.get(p.item)!;
-    return { def, idx, starred: starred(board, build.items, idx, data.shape), cooldown: def.cooldown ?? 0, dmg: def.damage ? [def.damage[0], def.damage[1]] : null, crit: 0, speed: 0, ready: 0, energy: def.energy ?? 0, range: def.range ?? null, effects: [], dyn: [] };
+    return { def, idx, starred: starred(board, build.items, idx, data.shape), cooldown: def.cooldown ?? 0, dmg: def.damage ? [def.damage[0], def.damage[1]] : null, crit: 0, leech: 0, speed: 0, ready: 0, energy: def.energy ?? 0, range: def.range ?? null, effects: [], dyn: [] };
   });
   const round = Math.min(Math.max(build.round, 1), data.rules.rounds);
   let maxHp = data.rules.heroHp[round - 1]! + hero.hpBonus;
@@ -92,10 +94,11 @@ export function compile(build: Build, data: GameData): CSide {
 
   const staticMult = (e: Effect, it: CItem | null): number => {
     const per = e.per;
-    if (!per || (!per.stars && !per.ship)) return 1;
+    if (!per || (!per.stars && !per.ship && !per.cells)) return 1;
     let count = 0;
     if (per.stars && it) count += it.starred.filter((j) => has(items[j]!.def, per.stars)).length;
     if (per.ship) count += items.filter((o) => has(o.def, per.ship)).length;
+    if (per.cells) count += items.reduce((n, o) => n + (has(o.def, per.cells) ? o.def.size : 0), 0);
     // stacks divide at runtime, counts here
     if (!per.buff && !per.debuff) { count = Math.floor(count / (per.div ?? 1)); if (per.max !== undefined) count = Math.min(count, per.max); }
     return count;
@@ -104,6 +107,7 @@ export function compile(build: Build, data: GameData): CSide {
     if (mod.damage && target.dmg) { target.dmg[0] += mod.damage * k; target.dmg[1] += mod.damage * k; }
     if (mod.speed) target.speed += mod.speed * k;
     if (mod.crit) target.crit += mod.crit * k;
+    if (mod.leech) target.leech += mod.leech * k;
     if (mod.ready) target.ready = Math.min(100, target.ready + mod.ready * k);
     if (mod.energy && target.dmg) target.energy += mod.energy * k;
   };

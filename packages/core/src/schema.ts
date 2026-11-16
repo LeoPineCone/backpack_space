@@ -1,7 +1,11 @@
 /** Data schemas (zod). Everything in data/*.json is parsed through these. */
 import { z } from "zod";
 
-export const TAGS = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic"] as const;
+export const TAGS = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic", "beast", "swarm"] as const;
+/** Kinds of pet: a beast is one large animal (4 cells or more), a swarm is many small animals or a very small one. A pet can be neither. */
+export const PET_KINDS = ["beast", "swarm"] as const;
+/** a beast covers at least this many cells */
+export const BEAST_MIN_CELLS = 4;
 /** Bags are not items in a bag: they are the pockets items lie in. */
 export const BAG = "bag" as const;
 export const BUFFS = ["shield", "regen", "overclock", "power", "spikes"] as const;
@@ -29,6 +33,8 @@ const Per = z.object({
   stars: z.enum([...TAGS, "crafted", ...RANGE_FILTERS, "any"]).optional(),
   /** number of items in the backpack with this tag */
   ship: FilterTag.optional(),
+  /** number of cells that items with this tag cover in the backpack */
+  cells: FilterTag.optional(),
   /** own buff stacks */
   buff: Buff.optional(),
   /** debuff stacks on the enemy */
@@ -61,6 +67,8 @@ const Mod = z.object({
   energy: z.number().optional(),
   /** to: "hero": Energy regained per second */
   energyRegen: z.number().optional(),
+  /** weapons and pets: percent of the damage of their attacks and damage effects that heals their owner (fractions add up) */
+  leech: z.number().optional(),
   /** to: "hero": percent of healing above full health that becomes Shield (all items together at most 100) */
   overheal: z.number().optional(),
 }).strict();

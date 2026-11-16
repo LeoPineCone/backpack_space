@@ -25,7 +25,7 @@ export interface WorkerTask {
   /** number changes to play with (see src/balance/patch.ts) */
   patch?: { changes: { item?: string; hero?: string; rules?: true; set: Record<string, number | string | boolean | number[]> }[] };
   /** "panel": options for every bot of the lobby (a sweep over how bots play) */
-  bot?: { pathLiking?: number };
+  bot?: { pathLiking?: number; pathStrict?: boolean };
   /** bots use these ratings instead of data/sim/ratings.json */
   ratingsFile?: string;
 }

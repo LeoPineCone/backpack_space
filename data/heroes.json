@@ -2,7 +2,7 @@
   {
     "id": "venn", "name": "Venn", "title": "The Thing in the Suit",
     "focus": "Food and organic items. Its garden grows faster than anyone's, heals a lot and poisons slowly: every meal spreads Toxin.",
-    "effects": [{ "on": "shipUse", "tag": "food", "inflict": "toxin", "n": 1 }, { "on": "passive", "to": "ship", "tag": "organic", "mod": { "speed": 20 } }],
+    "effects": [{ "on": "shipUse", "tag": "food", "inflict": "toxin", "n": 1 }, { "on": "passive", "to": "ship", "tag": "organic", "mod": { "speed": 16 } }],
     "bags": [{ "item": "field_pack", "x": 3, "y": 2, "rot": 0 }, { "item": "seed_satchel", "x": 1, "y": 2, "rot": 0 }],
     "start": [{ "item": "seed_pod", "x": 3, "y": 2, "rot": 0 }, { "item": "watering_drone", "x": 4, "y": 2, "rot": 0 }],
     "artifacts": ["world_seed", "queen_spore", "terrarium_heart"],
@@ -12,7 +12,7 @@
     "id": "rook", "name": "RK-7 \"Rook\"", "title": "Salvage Unit",
     "focus": "Mechanical items and crafting. Combining pays gold and crafted items run faster.",
     "craftGold": 3,
-    "effects": [{ "on": "passive", "to": "ship", "tag": "crafted", "mod": { "speed": 25 } }, { "on": "passive", "to": "ship", "tag": "mechanical", "mod": { "speed": 34 } }],
+    "effects": [{ "on": "passive", "to": "ship", "tag": "crafted", "mod": { "speed": 25 } }, { "on": "passive", "to": "ship", "tag": "mechanical", "mod": { "speed": 38 } }],
     "bags": [{ "item": "field_pack", "x": 3, "y": 2, "rot": 0 }, { "item": "tool_roll", "x": 1, "y": 2, "rot": 0 }],
     "start": [{ "item": "welding_arm", "x": 3, "y": 2, "rot": 0 }, { "item": "scrap_metal", "x": 4, "y": 2, "rot": 0 }],
     "artifacts": ["master_blueprint", "perpetual_engine", "nanite_swarm"],
@@ -21,11 +21,11 @@
   {
     "id": "quill", "name": "Quill", "title": "Foundling of the Herd",
     "focus": "Pets. Her herd acts the moment the fight begins and is quicker than anyone else's.",
-    "effects": [{ "on": "passive", "to": "ship", "tag": "pet", "mod": { "ready": 100, "speed": 25 } }, { "on": "shipUse", "tag": "pet", "do": "heal", "n": 2 }, { "on": "passive", "to": "hero", "mod": { "maxHp": 12 }, "per": { "ship": "pet", "max": 12 } }],
+    "effects": [{ "on": "passive", "to": "ship", "tag": "pet", "mod": { "ready": 100, "speed": 25 } }, { "on": "passive", "to": "ship", "tag": "pet", "mod": { "leech": 30 } }, { "on": "passive", "to": "hero", "mod": { "maxHp": 6 }, "per": { "cells": "pet", "max": 24 } }],
     "bags": [{ "item": "field_pack", "x": 3, "y": 2, "rot": 0 }, { "item": "pet_carrier", "x": 1, "y": 2, "rot": 0 }],
     "start": [{ "item": "space_pup", "x": 3, "y": 2, "rot": 0 }, { "item": "treat_pouch", "x": 4, "y": 2, "rot": 0 }],
     "artifacts": ["elder_tusk", "herd_heart", "ancient_egg"],
-    "paths": [{ "id": "beasts", "name": "Big beasts", "focus": ["moon_bear", "tusked_behemoth", "thunder_ram", "armored_bear", "juggernaut", "war_saddle", "sun_eagle", "star_falcon", "pack_lizard", "shell_dragon", "armor"] }, { "id": "swarm", "name": "Swarm", "focus": ["burrow_rat", "rat_pack", "guard_goose", "glow_swarm", "hive_queen", "swarm_cloud", "pack_bond", "grooming_comb", "space_pup", "star_hound", "calling_shell"] }, { "id": "feeders", "name": "Well-fed pack", "focus": ["food", "heal", "pet_bed"] }]
+    "paths": [{ "id": "beasts", "name": "Big beasts", "focus": ["beast", "armor"] }, { "id": "swarm", "name": "Swarm", "focus": ["swarm"] }, { "id": "feeders", "name": "Well-fed pack", "focus": ["food", "heal", "pet_bed"] }]
   },
   {
     "id": "ysel", "name": "Ysel", "title": "Singer of the Corona",

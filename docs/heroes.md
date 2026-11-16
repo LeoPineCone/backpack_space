@@ -45,7 +45,7 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 **Fixed marks:** the huge ears, the oversized fur coat.
 **Skin slot:** the beast she rides (other beasts can carry her).
 
-**Mechanics, as they are:** her pets act at once because the herd reacts to any threat to her; every pet that acts heals her a little (they groom and feed her); more health per pet because the herd shields her.
+**Mechanics, as they are:** her pets act at once because the herd reacts to any threat to her; her pets heal her for a quarter of the damage they deal (they groom and feed her; tied to damage, so one heavy beast heals like several small pets); more health the more room her pets take in the backpack (per cell, so a few large beasts count like many small pets) because the herd shields her.
 
 ## Ysel – Singer of the Corona
 

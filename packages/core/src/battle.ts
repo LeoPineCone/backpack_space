@@ -53,10 +53,12 @@ export interface BattleResult {
 
 interface Side {
   c: CSide; hp: number; energy: number; st:  Record<Status, number>; prog: number[]; low: boolean; stats: SideStats;
+  /** healing from leech not yet paid out (below 1) */
+  leech: number;
 }
 
 const newSide = (c: CSide, rules: Rules): Side => ({
-  c, hp: c.maxHp, energy: Math.min(rules.energy.max, rules.energy.start), low: false,
+  c, hp: c.maxHp, energy: Math.min(rules.energy.max, rules.energy.start), low: false, leech: 0,
   st: Object.fromEntries([...BUFFS, ...DEBUFFS].map((s) => [s, 0])) as Record<Status, number>,
   prog: c.items.map((it) => (it.cooldown * it.ready) / 100),
   stats: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0, nova: 0, healed: 0, shielded: 0, energySpent: 0, energyGained: 0, energyWait: 0, uses: c.items.map(() => 0), itemDamage: c.items.map(() => 0), late: 0, attacks: 0 },
@@ -96,6 +98,14 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     if (over > 0) { me.st.shield += over; me.stats.shielded += over; ev(side, src, "gain", over, "shield"); }
     return v;
   };
+  /** Leech: part of the damage an item deals heals its owner; fractions are kept until they make a whole point. */
+  const leech = (side: number, it: CItem | undefined, dmg: number) => {
+    if (!it || it.leech <= 0 || dmg <= 0) return;
+    const me = S[side]!;
+    me.leech += (dmg * it.leech) / 100;
+    const whole = Math.floor(me.leech);
+    if (whole > 0) { me.leech -= whole; heal(side, Math.round(reduced(me, whole)), it.idx, "leech"); }
+  };
   const reduced = (s: Side, n: number) => n * (1 - Math.min(R.radiation.capPct, s.st.radiation * R.radiation.reducePct) / 100);
 
   const apply = (side: number, ce: CEffect) => {
@@ -109,7 +119,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
     const per = e.per;
     if (per && (per.buff || per.debuff)) {
       let stacks = (per.buff ? me.st[per.buff] : 0) + (per.debuff ? foe.st[per.debuff] : 0);
-      if (per.stars || per.ship) stacks *= ce.mult;
+      if (per.stars || per.ship || per.cells) stacks *= ce.mult;
       k = Math.floor(stacks / (per.div ?? 1));
       if (per.max !== undefined) k = Math.min(k, per.max);
     }
@@ -125,6 +135,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
       ev(side, ce.src, "inflict", n, e.inflict);
     } else if (e.do === "damage") {
       ev(side, ce.src, "damage", hurt(1 - side, n, "direct", false, ce.src), "direct");
+      if (ce.src >= 0) leech(side, me.c.items[ce.src], n);
     } else if (e.do === "heal") {
       heal(side, Math.round(reduced(me, n)), ce.src);
     } else if (e.do === "cleanse") {
@@ -171,6 +182,7 @@ export function simulate(a: CSide, b: CSide, rules: Rules, seed: number, opts: {
         const isCrit = crit > 0 && rng.next() * 100 < crit;
         if (isCrit) dmg *= B.critMult;
         ev(side, it.idx, "attack", hurt(1 - side, dmg, "weapon", false, it.idx), it.range ?? undefined, isCrit);
+        leech(side, it, dmg);
         fire(side, "hit", it);
         if (foe.st.spikes > 0) ev(1 - side, -1, "damage", hurt(side, foe.st.spikes, "spikes", false), "spikes");
         fireAll(1 - side, "attacked");

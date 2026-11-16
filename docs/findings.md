@@ -1,3 +1,75 @@
+# First playtest by hand: Quill's two new paths (2026-11-16)
+
+Two runs played as text with `npm run playtest` (an AI as the player, a goal per run, notes each round). One run each, so these are observations about feel, not balance numbers.
+
+| Run | Goal | Result | Course |
+| --- | --- | --- | --- |
+| beasts1 (seed 11) | Big beasts | 9 wins, 1 life left | W L W W L W W W W L W W |
+| swarm1 (seed 23) | Swarm of small pets | 5 wins, out in round 9 | L L L W W W W W L |
+
+- **Both paths only begin at round 5.** Beasts: one Pack Lizard in the first seven shops; I played small pets and feeders until Thunder Ram showed up. Swarm: rats were there, but the counting items are weak with two or three swarm pets (Glow Swarm: 2 damage per 2.5 s for 5 gold), so rounds 1–3 were lost. The swarm run saw two beasts in its very first shop, so part of this is luck of the seed.
+- **The high points work.** Thunder Ram + Tusked Behemoth = Juggernaut (10 cells become 6, more damage) and Ancient Egg as the free pick for a swarm build both felt like the build "switching on".
+- **Pack Lizard is a tax, not a payoff.** Two lizards cover 8 cells for 72 Shield; a feeder build did about 500 damage on fewer cells. I sold both as soon as real beasts came.
+- **Free picks often fit no build.** After round 4 both runs offered Elder Tusk or Ancient Egg; with the mixed early build of the beast run neither fit. After round 8 all three artifacts in the beast run counted starred items.
+- **Hard counters for many small hits.** Round 3 of the swarm run: 96 attacks, 3 damage to health against a Rook gaining Shield. Round 9: the enemy dealt 1226 damage through Spikes alone against 159 attacks. A beast build with a third of the attacks hardly notices Spikes.
+- **Beasts have one bad matchup:** a Rook with about 2000 Shield over the fight; the Shield breaking on Ram and Juggernaut is too little.
+- **Merges nobody asked for** happened three times (Cosmic Egg + Biogel, Star Chart + Stardust Vial, two Burrow Rats + Kibble Sack; the last one lowered the swarm count). The playtest tool now says so right after the move; the client needs the same warning.
+- **Room:** a 4-cell beast costs about three small items of room, a 6-cell one needs a bag of the right shape. That is the intended trade, and it was an interesting decision each time.
+
+Not changed yet; candidates to measure first: how often a beast is offered in rounds 1–4, swarm win rate against Spikes builds, Pack Lizard's rating.
+
+# Realistic path bots, Quill heals by damage: balance back in the bands, paths moderately apart (2026-11-16)
+
+Follow-up to the entry below, after Ilja's objections: the strict bot rule reads too much into the paths for general balancing (a player on a path still takes another path's item when it fits), and the fix for Quill's heal must not favour small pets even more.
+
+- **Bots value fit instead of obeying the path.** The strict rule (other paths' items at half) is off by default and only an option (`BotOpts.pathStrict`, `npm run balance:sweep -- --knob bot:pathStrict --values 0,1`) for the question "what can a path do alone". New in `worth()`: an item that counts or needs something (a type such as swarm pets or beasts, a status such as Toxin or Spikes) is worth 0.6× with nothing of it in the build and up to 1.4× with three or more sources.
+- **Quill: "Your pets heal you for 30 % of the damage they deal"** (new mod `leech`; fractions add up, health stays whole) instead of 2 health per pet attack. Neutral to pet size and speed; boosts such as Elder Tusk count. Health back to +6 per pet cell (max 24×).
+- **Hero steps (replay first, both seeds, then a full run):** Venn organic 20 → 16 % faster, Rook mechanical 34 → 38 % faster, Quill as above. Full ratings run on both seeds before it, since the bots changed.
+
+Result, 2 × 240 lobbies, seed 1 / seed 2: heroes Venn 50 / 51, Rook 49 / 47, Quill 50 / 49, Ysel 50 / 52 %. All 12 paths inside 46–54 % on seed 1 (seed 2: Overclocked guns 45, Shield fortress 44). Paths against their open bot −6 to +2 (with the strict rule −2 to −14). 31 of 124 target checks off (34 of 120 before the path split). Still off: Thorn wall late 57 / 58, Late ascension late 39 / 43.
+
+Play style with these bots (1 = clearly different; before the split → strict rule → now, seed 1 / seed 2):
+
+| Pair | Before | Strict bots | Now |
+|---|---|---|---|
+| Quill Big beasts / Swarm | 0.24 / 0.16 | 0.54 / 0.56 | 0.55 / 0.47 |
+| Quill Big beasts / Well-fed pack | 0.57 / 0.57 | 0.52 / 0.30 | 0.44 / 0.53 |
+| Quill Swarm / Well-fed pack | 0.65 / 0.73 | 0.82 / 0.73 | 0.81 / 0.89 |
+| Venn Poison garden / Thorn wall | 0.43 / 0.92 | 0.84 / 0.96 | 0.50 / 0.46 |
+| Venn Poison garden / Hungry jungle | 0.53 / 0.44 | 0.89 / 0.88 | 0.75 / 0.86 |
+| Venn Thorn wall / Hungry jungle | 0.86 / 1.02 | 1.28 / 1.26 | 0.92 / 0.82 |
+
+Reading: how different the paths play depends on how strictly a player follows a path; the items now allow clearly different builds (strict column), a bot that takes whatever fits lands in between. Poison garden / Thorn wall stay alike with such bots (both live on Venn's food Toxin and the same generally good items). Side effect of the fit rule: Rook's Shield fortress / Workshop fell from 1.1–1.3 to 0.6. A Big beasts build still holds about 8 pets with a Burrow Rat in most runs; leech removed the bias in the rule, the cheap filler stays a good buy.
+
+# Paths of Quill and Venn pulled apart: pet kinds, counting by cells, path-bound items (2026-11-16)
+
+Question (Ilja, after the play-style measurement): make the paths of Quill and Venn play differently; pets get the kinds beast and swarm; new swarm pets go to the general shop because every hero brings the same number of personal items; rebalance if needed. Four rounds of full runs (2 × 240 lobbies, seeds 1 / 2), full ratings run on both seeds at the start.
+
+**Built**
+- Pet kinds `beast` (one large animal, 4 cells or more) and `swarm` (many small ones or a very small one) as tags next to `pet`; most pets are neither. 21 beasts, 14 swarm pets. New `per.cells` (cells that items of a type cover).
+- Quill: health +5 per cell her pets cover (max 28×) instead of +12 per pet; the feeders' heals count pet cells too. Big beasts: Elder Tusk acts on every beast (+8 damage, 20 % faster), War Saddle on starred beasts (+6), Pack Lizard is a 4-cell beast (Shield per beast), Shell Dragon counts beasts, Moon Bear brings Shield, beasts are offered more often. Swarm: Hive Queen, Glow Swarm, Swarm Cloud, Ancient Egg, Pack Bond, Calling Shell count or boost swarm pets only. Well-fed pack: Glutton Toad and Trough Boar hit weaker themselves and harder when fed. Birds, hounds and the goose are core pets without a path.
+- Venn: Plague Blossom and Pollen Cloud only jam once the enemy carries Toxin (1 Jam per 6 / 8 Toxin); World Seed turns Spikes into Shield every phase; mantraps bite faster and lighter; Trellis gives its starred pets +1 damage.
+- New items: general pets Pebble Mites, Needle Wasps (swarm), Dune Ox, Tundra Yak (beast); Venn's Thorn Hedge (Shield per Spikes) and Rot Bloom (damage per Toxin each phase), which also brings Venn to 38 personal items like the others (test).
+- Bots: a bot committed to a path values hero items of the hero's other paths at half (as it values its own path's at double). Without this the first run showed no change at all: path bots bought the same generally strong items whatever the items said.
+
+**Play style, before → after (seed 1 / seed 2; 1 = clearly different)**
+
+| Pair | Before | After |
+|---|---|---|
+| Quill Big beasts / Swarm | 0.24 / 0.16 | 0.54 / 0.56 (damage per attack) |
+| Quill Big beasts / Well-fed pack | 0.57 / 0.57 | 0.52 / 0.30 |
+| Quill Swarm / Well-fed pack | 0.65 / 0.73 | 0.82 / 0.73 |
+| Venn Poison garden / Thorn wall | 0.43 / 0.92 | 0.84 / 0.96 |
+| Venn Poison garden / Hungry jungle | 0.53 / 0.44 | 0.89 / 0.88 |
+| Venn Thorn wall / Hungry jungle | 0.86 / 1.02 | 1.28 / 1.26 |
+
+**Balance after it:** heroes Venn 53 / 51, Rook 47 / 48, Quill 50 / 52, Ysel 48 / 48 %. Quill's paths 48–52 % on both seeds. Venn: Poison garden 52 / 51, Thorn wall 56 / 52 (late 62 / 58), Hungry jungle 47 / 45. Numbers set on the way: Trellis, Venus Mantrap, Snap Sprout, Mantrap Pack up (Hungry jungle +3 on both seeds in the replay), World Seed's Shield capped at 5 Spikes, Quill's health 6 → 5 per cell. 45 of 124 target checks off (34 of 120 before).
+
+**What it showed, still open**
+- Venn is close to the target; Quill moved half the way. A Big beasts build still ends with 8 pets (Swarm 10), among them a Burrow Rat in most runs: small pets are the better buy for any Quill build (rating 2.3–2.5 against 1.5–2.0 for beasts), because Quill heals 2 on every pet attack and fast pets attack most. That is her hero rule; the next step there is a design decision (heal by pet size, or beasts that heal on hit).
+- The new bot rule also changed Rook and Ysel, whose items were not touched: Eclipse 41 / 40 %, Late ascension 45 / 45, Shield fortress 44 / 41, and every path further below its open bot (−2 to −14). Those paths lived on items of their hero's other paths. It is a statement about the paths, and it depends on the assumption that a committed player leaves other paths' items.
+- Overheal (healing above full health becomes Shield) changed one fight in 2520 when raised: Hungry jungle hardly ever overheals.
+
 # Path distinctness measured by play style: Rook and Ysel differ, Quill and Venn do not (2026-11-16, nothing changed in the game)
 
 Question (Ilja): "the paths of a hero deal their damage too alike" looks like design; extend the measurement. `pathDistinct` only compares the damage mix (weapon / pet / Burn / …), so two weapon paths count as the same even when one is fast and one is slow. New number **play style** (`pathStyle`, `styleDistance` in `src/sim/paths.ts`): six differences of two paths, each scaled so that 1 is a step a player notices, and the largest one counts: damage mix (0.35 as before), attacks per second and damage per attack (× 1.5), healed + shielded per fight (a quarter of the hero's health), share of damage from phase 3 on (15 points), share of the best item (10 points). Shown in `report:paths` (per pair, with the dimension), `baseline`, `balance:replay`, `balance:sweep` (per hero: the two paths most alike). Proposed target `pathStyle` ≥ 1. Baseline, 2 × 240 lobbies, seed 1 / seed 2:

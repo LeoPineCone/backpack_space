@@ -18,8 +18,17 @@ No alcohol.
 - Which hero pool (`hero`) or the general shop? Which **path** of the hero does it serve? A path item should
   pay off mainly for a committed build (it counts or needs other items of that path), otherwise every bot of the
   hero buys it and the paths stay alike (see the balancing skill, lessons learned).
-- Types (`tags`, first tag = main type): weapon, armor, accessory, pet, food, mechanical, organic. Synergies
+- Types (`tags`, first tag = main type): weapon, armor, accessory, pet, food, mechanical, organic, and the pet kinds beast and swarm. Synergies
   refer to these ("starred food", "your pets", "crafted").
+- **Pet kinds** (decided 2026-11-16): a pet can also be a `beast` (one large animal, 4 cells or more: Moon Bear,
+  Juggernaut) or a `swarm` (many small animals or one very small one, usually 1–2 cells: Burrow Rat, Rat Pack),
+  written right after `pet` in `tags`. Name and picture must fit the kind. Most pets are neither; those fit every
+  build. Quill's Big beasts items act on beasts only, her Swarm items count swarm pets only. Effects that should
+  not prefer many small pets over few large ones count cells (`per.cells`), not pets.
+- Healing from damage: `mod.leech` (percent of the damage an item deals heals its owner; Quill's pets have 30).
+- **Every hero brings the same number of personal items** (38 today, start items and artifacts included). An extra
+  item a path needs goes into the general files (as the swarm pets Pebble Mites and Needle Wasps did), or another
+  hero item makes room.
 - Recipe input or result? Results are never sold (`crafted`), cost the sum of their inputs, are stronger and
   usually smaller than the inputs together. A chain has at most 3 steps above a base item (`validate` checks).
 - Words: use terms from `data/glossary.json`; add a term there before using a new word.

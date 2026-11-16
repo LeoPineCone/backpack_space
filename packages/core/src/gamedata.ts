@@ -1,6 +1,6 @@
 /** Builds the validated, indexed game data from raw JSON. Shared by Node and browser loaders. */
 import { z } from "zod";
-import { BUFFS, DEBUFFS, TAGS, Hero, Item, Recipe, Rules, SHOP_RARITIES, type Effect, type HeroData, type ItemData, type Tag } from "./schema.js";
+import { BEAST_MIN_CELLS, BUFFS, DEBUFFS, PET_KINDS, TAGS, Hero, Item, Recipe, Rules, SHOP_RARITIES, type Effect, type HeroData, type ItemData, type Tag } from "./schema.js";
 import { boardOf, parseShape, type Shape } from "./grid.js";
 import { buildGlossary, type Glossary } from "./glossary.js";
 import { buildLocales, type Locales } from "./i18n.js";
@@ -101,6 +101,10 @@ export function buildGameData(raw: RawData): GameData {
     if (it.damage && !it.cooldown) problems.push(`${it.id}: weapon without cooldown`);
     if (it.damage && (it.range === undefined || it.energy === undefined)) problems.push(`${it.id}: weapons need "range" (melee/ranged) and "energy" (cost per attack)`);
     if (it.energy !== undefined && it.energy > rules.energy.max) problems.push(`${it.id}: costs more Energy than the maximum ${rules.energy.max}`);
+    const kinds = PET_KINDS.filter((k) => it.tags.includes(k));
+    if (kinds.length && !it.tags.includes("pet")) problems.push(`${it.id}: only pets are a ${kinds[0]}`);
+    if (kinds.length > 1) problems.push(`${it.id}: a pet is a beast or a swarm, not both`);
+    if (it.tags.includes("beast") && it.size < BEAST_MIN_CELLS) problems.push(`${it.id}: a beast covers at least ${BEAST_MIN_CELLS} cells`);
     if (it.tags.includes("pet") && it.energy) problems.push(`${it.id}: pets attack without Energy ("energy": 0)`);
     if (!it.damage && (it.range !== undefined || it.energy !== undefined)) problems.push(`${it.id}: only weapons have "range" and "energy"`);
     if (!it.cooldown && it.effects.some((e) => e.on === "use" || e.on === "hit")) problems.push(`${it.id}: "use"/"hit" effect without cooldown`);

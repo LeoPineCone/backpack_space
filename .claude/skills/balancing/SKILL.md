@@ -30,7 +30,7 @@ not chance and not a bot quirk.
 | `npm run balance:replay -- --patch p.json` | what a number change does to every fight-level target, paired on the baseline's lobbies; `--full` plays the lobbies again | 5–20 s; `--full` ~4 min |
 | `npm run balance:sense -- --knobs hero:venn` | which number moves which target by how much (one step each); dead numbers, strong levers, side effects | ~1 s per knob |
 | `npm run balance:propose -- --knobs hero:venn` | proposes the fewest, smallest number changes that bring the targets into their bands; writes a patch, changes nothing | 3–10 min |
-| `npm run balance:sweep -- --knob rule:shop.heroOfferPct --values 20,40,50` | one number at several values, every value a full run on the baseline's lobbies (bots shop again): how much of a build is on its path, variety between runs, path against open bot, hero and path win shares, as tables and curves. Knobs: `rule:<path>`, `item:<id>:<path>`, `hero:<id>:<path>`, `bot:pathLiking` | ~3 min per value |
+| `npm run balance:sweep -- --knob rule:shop.heroOfferPct --values 20,40,50` | one number at several values, every value a full run on the baseline's lobbies (bots shop again): how much of a build is on its path, variety between runs, path against open bot, hero and path win shares, as tables and curves. Knobs: `rule:<path>`, `item:<id>:<path>`, `hero:<id>:<path>`, `bot:pathLiking`, `bot:pathStrict` | ~3 min per value |
 | `npm run report:paths` | win share per hero and per path, vs the hero's open bot; targets marked ✓/✗ | quick 10 s, normal 30 s, precise ~1.5 min |
 | `npm run report:strength` | item outliers by three views (add one, remove one, regression); needs the baseline, no bot shops | ~1 min |
 | `npm run report:meta` | path against path (12 × 12), hero against hero, rock-paper-scissors share, meta share per hero (target) and path; needs the baseline | ~45 s |
@@ -144,6 +144,16 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
   design signal, not a number problem.
 - Win shares are **relative**: making several heroes stronger at once cancels out. Change one thing per step.
 
+## Playtest by hand: what the numbers cannot see
+
+`npm run playtest` (see README) lets you play a run yourself as text. Use it after a redesign of a hero or path, not for number tuning: one run is an anecdote about balance, but a reliable witness for feel.
+
+- Pick a goal before the run ("Big beasts") and play towards it like a player would; give up the goal only when it costs lives, and note that moment.
+- Write a `note` each round on what the shop offered for the goal, which choice was hard, what felt unfair or dead. The report keeps actions, build, fight and notes per round.
+- What to look for: rounds in which the goal had nothing to buy, free picks that fit no build, merges nobody wanted, fights that could not be won whatever was bought, room problems of big items.
+- Turn a finding into a measurement before changing a number (how often is a beast offered in rounds 1–4, win rate of swarm builds against Spikes), then follow the tuning pass.
+- Cost: about 15–20 tool calls per run. Two runs per redesigned hero are enough.
+
 ## Procedure: a tuning pass
 
 1. **State the question** and the target it is about (targets.json). If a needed target is missing, propose it
@@ -196,6 +206,17 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 3. Full `npm run ratings -- --seeds 1,2`, `npm run baseline`, then the item procedure for the items that use it.
 
 ## Lessons learned (keep adding)
+
+- 2026-11-16: pulling paths apart (findings.md). Making path items depend on the path (count swarm pets, need
+  Toxin) changed nothing while bots only saw an item's general value. Two bot models were tried: **strict** (other
+  paths' hero items at half; splits builds clearly, but lowers every path that lived on borrowed items by 3–9
+  points and reads too much into the paths: designer's call, off by default, `bot:pathStrict` in the sweep) and
+  **fit** (default: an item that counts or needs a type or status is worth 0.6–1.4× by what the build has). Play
+  style depends on the model; report it with the model named. Before a path redesign, list what each path's bots
+  end with (item frequency per path): the same top items in all three paths is the finding.
+- 2026-11-16: a hero rule can decide a path question. Quill heals on every pet attack, so small fast pets are
+  the best buy for every Quill build and Big beasts keeps filling up with them. Check the hero rule against the
+  path idea first.
 
 - 2026-11-16: when every hero is at 48–52 % and most paths are in their bands, single number steps stop paying:
   three tries on three paths each lifted the path by 1–3 points and left more targets off than before (34 → 38 /
@@ -253,16 +274,18 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 - 2026-11-15: after item size changes run `npm run play:ghosts` (stored opponent builds of the playground).
 - 2026-11-15: hero curves matter: a hero can be even overall but weak early and strong late (check thirds).
 
+- 2026-11-16, first two playtest runs (Quill beasts 9 wins, Quill swarm 5 wins, reports in docs/findings.md): both paths only start at round 5. Before that the goal has little to buy (swarm: counting items like Glow Swarm are weak with 2–3 swarm pets; beasts: few offers, Pack Lizard alone is a tax) and the player falls back on small general pets and feeders. Many small hits are hard-countered by Spikes (1226 Spikes damage in one fight) and by early Shield gain (96 attacks, 3 damage). Not yet measured over many runs.
+
 ## Still open (2026-11-16)
 
 After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
 fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and
 Workshop strong late (55–60 %), Late ascension weak late (40 %); Well-fed pack differs between seeds (48 / 43 %);
-every path at or below its open bot. Path distinctness: by damage mix (`pathDistinct`) no hero reaches the
-target; by play style (`pathStyle`, largest of mix / tempo / damage per attack / protection / late damage / best
-item, 1 = clearly different, proposed target ≥ 1) Rook's paths and Ysel's Eclipse differ clearly, Quill's Big
-beasts and Swarm play the same (0.2), Venn's paths 0.4–1.0 and Burning corona / Late ascension 0.8. That is a
-design question (what a path owns), not a number question; read `pathStyle` on both seeds (Venn moves by 0.5). General artifacts Dyson
+paths −6 to +2 against their open bot. After the path split of Quill and Venn (fit bots): heroes 47–52 % on both
+seeds, all paths in band on seed 1; off: Thorn wall late 57 / 58, Late ascension late 39 / 43, Shield fortress 44 on
+seed 2. Play style (`pathStyle`, target ≥ 1 proposed): Quill 0.45–0.9, Venn 0.5–0.9, Shield fortress / Workshop 0.6,
+Burning corona / Late ascension 0.65–0.85; with strict bots Venn reaches 0.85–1.3.
+General artifacts Dyson
 Fragment, Wormhole Generator (and Ancient Monolith) are weak. The path-pull sweep has not been repeated with the
 new items.
 Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.
