@@ -73,7 +73,10 @@ Rules for the idea:
   rules.
 - A **beast** is one big, heavy animal that fills its whole box.
 - Give every animal a home planet and one alien feature that comes from it (see "Planet of origin"), so it is
-  space fauna and not a zoo animal.
+  space fauna and not a zoo animal. Recolouring or changing the material of a normal animal is not enough
+  (Rock Crab was "too boring"); add something it does or has that no earth animal has.
+- Places live in `lore/planets.json`. Pick the planet there (or add one) and add the item to its `items`, so
+  pictures, backgrounds and lore stay consistent.
 - Recipe results with animals (Dust Storm, Swarm Cloud, Rat Pack) also show one animal, carrying a recognisable
   piece of each ingredient.
 
@@ -107,8 +110,16 @@ Only these two are templates (Ilja, 2026-11-16); the other test pictures are not
 Too boring (first round): a plain pistol with a hose, an ordinary cheese wedge, a normal yak with frost, a
 pickaxe with tape. Correct and readable, but nothing says space.
 
-Animals from different planets were generated on 2026-11-16 for Ilja to choose from (Tundra Yak, Magma Newt,
-Comet Fox, Rock Crab, Moon Moth, Space Hamster); add the ones he picks here as animal examples.
+Animals from different planets (2026-11-16, Ilja's verdict):
+
+- **space_hamster** (1 cell, swarm) – "super": a round hamster from a thin-air desert planet, cheeks stuffed
+  with shiny ore pebbles, frilly breathing gills on its neck, room around it. The best animal so far: a familiar
+  animal, one clear alien feature from its planet, a funny detail that fits the name.
+- **moon_moth** (1 cell, swarm) – "quite good": a pale moth from a planet with two moons, two crescents on each wing.
+- **tundra_yak** (2×2, beast) – "better": yak from a frozen night planet, ice spikes along the back, snowshoe
+  hooves, big pale eyes.
+- **rock_crab** – "too boring": a squat crab with a sandstone shell and a crystal claw still reads as an
+  ordinary crab. A changed material alone is not enough; the animal needs a surprising feature or behaviour.
 
 ## 7. Generating test images (only with Ilja's OK)
 
