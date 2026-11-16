@@ -132,6 +132,13 @@ Image credits are limited. Generate only when Ilja asks, check the balance first
   the picture into its box at 176 px per cell. Then check it at real size: on a phone-sized mock-up of the
   9×7 grid at 40 points per cell (rendered at 3×, opened full screen on a phone). A monitor shows it larger
   than the phone does.
+- **Four small items per image** (tested 2026-11-16, works): for 1-cell items, ask for "a sheet of four separate
+  game item icons arranged in a 2×2 grid, each centred in its own quarter, never touching", then list the four
+  items as "Top left: <name>. <description> Main accent: <colour>." and so on, with the same style, colour,
+  composition and background lines as `art:prompt`. One 1k image gives four quarters of 512 px, plenty for 176 px
+  per cell. Cost per item drops to a quarter and the four come out in exactly the same style. Mix items from
+  different planets and types on one sheet. Single images stay the rule for 2×2 and larger items.
+- Lava, fire and heat tend to come out orange and glowing; keep insisting on flat rust red and ink lines.
 - Judge in this order: does it read as the named thing at real size? Is there a space idea? Does it fit the
   style and palette?
 - Write lessons learned into this skill.
