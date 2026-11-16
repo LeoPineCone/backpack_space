@@ -68,7 +68,8 @@ so the formula is a good start. Then:
 
 1. `data/items/<file>.json`: the item (keep the one-item-per-line format of the file).
 2. `data/item-art.json`: `brief` ending with `Accent: <colour>.` (rust red, deep teal, mustard, moss, copper,
-   bone) and a `description` within the word limit for its size (see `docs/style.md`).
+   bone) and a `description` within the word limit for its size (1 cell 30 words, 2–3 cells 45, 4–5 cells 60;
+   `ART_WORD_LIMITS` in `packages/core/node/load.ts`, checked by validate). Style: `docs/style.md`.
 3. `data/locales/de.json`: German name `item.<id>` (English comes from the item). `npm run i18n` lists gaps.
 4. `data/recipes.json` if it is an input or result.
 5. Size changes: `npm run play:ghosts` (stored opponent builds of the playground).
