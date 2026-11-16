@@ -3,14 +3,14 @@
  * value per block of lobbies, so that two measurements on the same lobbies can be compared paired.
  */
 import type { GameData } from "@backpack-space/core";
-import { aggregatePaths, blockCount, blockSe, profileDistance, profileOf, type Profile } from "../sim/paths";
+import { aggregatePaths, blockCount, blockSe, commitPays, profileDistance, profileOf, type Profile } from "../sim/paths";
 import type { Target } from "../reports/common";
 import type { LobbyStat } from "./panel";
 
 /** metric kinds and the target each is checked against */
 export const KINDS = {
   hero: "pathHeroWinShare", third: "heroWinShare", path: "pathWinShare", late: "pathLateWinShare", open: "pathOverOpen", spread: "pathSpread",
-  duel: "heroDuel", secs: "fightSeconds", nova: "supernovaReached", main: "pathMainShare", distinct: "pathDistinct",
+  duel: "heroDuel", secs: "fightSeconds", nova: "supernovaReached", main: "pathMainShare", distinct: "pathDistinct", pays: "pathPays",
 } as const;
 export type Kind = keyof typeof KINDS;
 /** kinds measured in seconds; all others are shares (shown in points) */
@@ -37,6 +37,8 @@ function compute(data: GameData, stats: readonly LobbyStat[]): Record<string, nu
       out[`path:${h.id}/${p.id}`] = g.all.p;
       out[`late:${h.id}/${p.id}`] = g.late.p;
       if (open) out[`open:${h.id}/${p.id}`] = g.all.p - open.all.p;
+      const pays = commitPays(stats.flatMap((x) => x.seats.filter((q) => q.key === `${h.id}/${p.id}`)));
+      if (pays) out[`pays:${h.id}/${p.id}`] = pays.all;
       const pr = profileOf(g);
       out[`main:${h.id}/${p.id}`] = pr.mix[pr.main];
       shares.push(g.all.p); profs.push(pr);
@@ -80,6 +82,7 @@ function labelOf(data: GameData, key: string): string {
     case "secs": return `fight length round ${rest.slice(1)}`;
     case "nova": return `Supernova reached round ${rest.slice(1)}`;
     case "main": return `${pathName(rest)}: main mechanic`;
+    case "pays": return `${pathName(rest)}: most against least committed third`;
     case "distinct": return `${short(data, rest)}: closest two paths`;
     default: return key;
   }

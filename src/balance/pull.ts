@@ -17,6 +17,8 @@ export const PULL_ROWS: PullRow[] = [
   { key: "heroItems", label: "hero's own items in the final build (share of item cost)", unit: "%" },
   { key: "open", label: "path against the hero's open bot, average", unit: "pts", target: "pathOverOpen" },
   { key: "openMin", label: "path against the hero's open bot, weakest path", unit: "pts", target: "pathOverOpen" },
+  { key: "pays", label: "going deeper pays: most against least committed third, average", unit: "pts", target: "pathPays" },
+  { key: "paysMin", label: "going deeper pays, weakest path", unit: "pts", target: "pathPays" },
   { key: "distinctMin", label: "damage mix of the closest two paths (0 = same)", unit: "", target: "pathDistinct" },
   { key: "spreadMax", label: "best to weakest path of a hero, largest gap", unit: "pts", target: "pathSpread" },
 ];
@@ -64,6 +66,8 @@ export function pullOf(data: GameData, lobbies: readonly PanelLobby[]): Record<s
   for (const x of [...of("hero"), ...of("path"), ...of("open")]) out[x.key] = x.value;
   const open = of("open").map((x) => x.value);
   out.open = mean(open); out.openMin = Math.min(...open);
+  const pays = of("pays").map((x) => x.value);
+  out.pays = mean(pays); out.paysMin = Math.min(...pays);
   out.distinctMin = Math.min(...of("distinct").map((x) => x.value));
   out.spreadMax = Math.max(...of("spread").map((x) => x.value));
   return out;

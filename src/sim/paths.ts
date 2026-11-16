@@ -198,6 +198,23 @@ export function boostPath(data: GameData, key: string, pct: number): string[] {
   return touched;
 }
 
+/**
+ * Does going deeper into a path pay? The path's bots are cut into thirds by how much of their final build is on
+ * the path; the result is the win share of the most committed third minus that of the least committed third
+ * (all rounds, late rounds). undefined with fewer than six bots.
+ */
+export function commitPays(seats: readonly SeatStat[]): { all: number; late: number; low: number; high: number } | undefined {
+  const a = seats.filter((s) => s.commit !== null).sort((x, y) => x.commit! - y.commit!);
+  const t = Math.floor(a.length / 3);
+  if (t < 2) return undefined;
+  const part = (xs: readonly SeatStat[]) => {
+    const sum = (f: (s: SeatStat) => number) => xs.reduce((n, s) => n + f(s), 0);
+    return { all: sum((s) => s.w) / Math.max(1, sum((s) => s.n)), late: sum((s) => s.lw) / Math.max(1, sum((s) => s.ln)), commit: sum((s) => s.commit!) / xs.length };
+  };
+  const lo = part(a.slice(0, t)), hi = part(a.slice(a.length - t));
+  return { all: hi.all - lo.all, late: hi.late - lo.late, low: lo.commit, high: hi.commit };
+}
+
 /** a path's profile from its group: shares of the damage, carry, rhythm */
 export interface Profile { mix: Record<Mechanic, number>; main: Mechanic; carry: number; dealers: number; late: number; attacksPerSec: number; pathDamage: number }
 export function profileOf(g: PathGroup): Profile {

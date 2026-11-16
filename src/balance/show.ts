@@ -3,7 +3,7 @@ import { markOf, pct, pts, type Target } from "../reports/common";
 import type { Mark } from "../reports/html";
 import { isSeconds, KINDS, type Kind, type Metric } from "./metrics";
 
-const isDiff = (kind: Kind) => kind === "open" || kind === "spread";
+const isDiff = (kind: Kind) => kind === "open" || kind === "spread" || kind === "pays";
 export const showValue = (kind: Kind, v: number): string => (isSeconds(kind) ? `${v.toFixed(1)} s` : kind === "distinct" ? v.toFixed(2) : isDiff(kind) ? pts(v) : pct(v));
 export const showSe = (kind: Kind, se: number): string => (!Number.isFinite(se) ? "" : ` ±${isSeconds(kind) ? se.toFixed(1) : kind === "distinct" ? se.toFixed(2) : Math.max(1, Math.round(100 * se))}`);
 export const showMetric = (m: Metric): string => showValue(m.kind, m.value) + showSe(m.kind, m.se);
@@ -24,5 +24,5 @@ export function showTarget(kind: Kind, T: Record<string, Target>): string {
 export const markFor = (kind: Kind, T: Record<string, Target>, v: number): Mark => (T[KINDS[kind]] ? markOf(T[KINDS[kind]]!, v) : "");
 export const KIND_TITLES: Record<Kind, string> = {
   hero: "Heroes overall", third: "Heroes by third of the run", path: "Paths, all rounds", late: "Paths, late rounds", open: "Paths against the hero's open bot", spread: "Best to weakest path",
-  duel: "Hero against hero (attacker first, all rounds)", secs: "Fight length", nova: "Supernova reached", main: "Path profile: main mechanic", distinct: "Path profile: closest two paths",
+  duel: "Hero against hero (attacker first, all rounds)", secs: "Fight length", nova: "Supernova reached", main: "Path profile: main mechanic", distinct: "Path profile: closest two paths", pays: "Does going deeper into the path pay? (most against least committed third of its bots)",
 };

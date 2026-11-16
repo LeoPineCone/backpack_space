@@ -4,7 +4,7 @@ import { changeOf, itemKnobs, valueAt } from "../src/balance/knobs";
 import { loss, metricsOf, outside, paired, DEFAULT_KINDS } from "../src/balance/metrics";
 import { lobbyStat, playPanelLobby, replay, stored, type Panel } from "../src/balance/panel";
 import { mergePatches, patchedData, touchedBy, type Patch } from "../src/balance/patch";
-import { measurePathLobby } from "../src/sim/paths";
+import { commitPays, measurePathLobby, type SeatStat } from "../src/sim/paths";
 import { measureItem } from "../src/sim/items";
 import { cycleShare, metaShares } from "../src/balance/meta";
 import { itemDistance, pullOf } from "../src/balance/pull";
@@ -149,6 +149,12 @@ describe("path pull", () => {
     expect(itemDistance(["a", "b"], ["a", "b", "b"])).toBe(0);
     expect(itemDistance(["a", "b"], ["c"])).toBe(1);
     expect(itemDistance(["a", "b"], ["b", "c"])).toBeCloseTo(2 / 3);
+  });
+  it("says whether the more committed bots of a path win more", () => {
+    const seat = (commit: number, w: number): SeatStat => ({ commit, w, n: 10, lw: w / 2, ln: 5 } as SeatStat);
+    const pays = commitPays([seat(0.2, 3), seat(0.3, 3), seat(0.5, 5), seat(0.5, 5), seat(0.8, 7), seat(0.9, 9)])!;
+    expect(pays.all).toBeCloseTo(0.5); expect(pays.late).toBeCloseTo(0.5); expect(pays.low).toBeCloseTo(0.25);
+    expect(commitPays([seat(0.2, 3)])).toBeUndefined();
   });
   it("bots that like their path more build more of it", () => {
     const at = (pathLiking: number) => pullOf(data, [0, 1].map((i) => playPanelLobby(data, 5, i, false, { pathLiking })));
