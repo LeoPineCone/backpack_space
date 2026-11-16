@@ -48,7 +48,7 @@ export const MetaData = z.object({
     /** leagues you move back at the start of a new season */
     seasonDrop: Int,
   }).strict(),
-  cosmetics: z.array(z.object({ id: z.string(), kind: z.enum(COSMETIC_KINDS), hero: z.string().optional() }).strict()),
+  cosmetics: z.array(z.object({ id: z.string(), kind: z.enum(COSMETIC_KINDS), hero: z.string().optional(), /** backgrounds: the place of lore/planets.json it shows */ planet: z.string().optional() }).strict()),
   seasons: z.array(z.object({
     id: z.number().int().positive(),
     /** first day of the season, YYYY-MM-DD */
@@ -64,7 +64,7 @@ export const MetaData = z.object({
 }).strict();
 export type MetaData = z.infer<typeof MetaData>;
 
-export interface Cosmetic { id: string; kind: CosmeticKind; hero?: string; /** patches: the season and league they stand for */ season?: number; league?: string }
+export interface Cosmetic { id: string; kind: CosmeticKind; hero?: string; /** backgrounds: the place of lore/planets.json it shows */ planet?: string; /** patches: the season and league they stand for */ season?: number; league?: string }
 
 export interface Meta extends MetaData {
   cosmeticById: Map<string, Cosmetic>;
@@ -82,6 +82,7 @@ export function buildMeta(raw: unknown, data: GameData): Meta {
   const cosmeticById = new Map<string, Cosmetic>();
   const add = (c: Cosmetic) => { if (cosmeticById.has(c.id)) problems.push(`cosmetic ${c.id} is listed twice`); cosmeticById.set(c.id, c); };
   for (const c of m.cosmetics) {
+    if (c.planet && c.kind !== "background") problems.push(`cosmetic ${c.id}: only backgrounds show a planet`);
     if (c.kind === "heroCosmetic" || c.kind === "patch") problems.push(`cosmetic ${c.id}: ${c.kind} cosmetics are made from the hero levels and leagues, do not list them`);
     if (c.hero && !data.heroes.has(c.hero)) problems.push(`cosmetic ${c.id}: unknown hero ${c.hero}`);
     add(c);

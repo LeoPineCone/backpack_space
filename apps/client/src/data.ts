@@ -9,7 +9,7 @@ import ghosts from "../../../playground/ghosts.json";
 
 declare global {
   interface ImportMeta {
-    glob<T = unknown>(pattern: string, options: { eager: true; import: "default" }): Record<string, T>;
+    glob<T = unknown>(pattern: string, options: { eager: true; import: "default"; query?: string }): Record<string, T>;
   }
 }
 

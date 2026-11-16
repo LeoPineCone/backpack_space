@@ -1,5 +1,5 @@
 /**
- * The start screen: the equipped menu background fills the screen, the player's picture with a name banner,
+ * The start screen: the equipped menu background (star field and its turning planet) fills the screen, the player's picture with a name banner,
  * league patch and profile level on top, currencies on the right, one big FIGHT button (leads to the hero choice)
  * and four round buttons at the bottom.
  */
@@ -14,6 +14,7 @@ import { settingsOverlay } from "./settings";
 import { heroScene } from "./hero";
 import { progressOverlay, type Tab } from "./progress";
 import { t, upper } from "../i18n";
+import { backdrop, type Backdrop } from "../backdrop";
 
 /** Ribbon under the picture; origin at its top centre. */
 function banner(label: string): Container {
@@ -34,18 +35,26 @@ function banner(label: string): Container {
 export function homeScene(game: Game): Scene {
   const root = new Container();
   const progress = (tab: Tab) => game.openOverlay(progressOverlay(game, tab, render));
+  let back: Backdrop | null = null, shownBg = "";
   const render = () => {
-    root.removeChildren().forEach((c) => c.destroy({ children: true }));
+    root.removeChildren().forEach((c) => { if (c !== back?.view) c.destroy({ children: true }); });
     const p = game.profile, meta = game.meta;
 
-    // the equipped menu background over the whole screen (placeholder until the art exists)
-    root.addChild(box(W, H, { fill: C.backdrop }));
-    root.addChild(at(new Graphics().circle(0, 0, 150).stroke({ width: 1.5, color: C.line }), W - 40, 300));
-    root.addChild(at(new Graphics().circle(0, 0, 70).stroke({ width: 1.5, color: C.line }), 60, 560));
-    root.addChild(at(placeholder(W - 40, 430, ""), 20, 170));
-    root.addChild(at(icon("planet", 40, C.line), W / 2, 365));
-    root.addChild(at(txt(t("ui.placeholder.menuBackground"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), W / 2, 400));
-    root.addChild(at(txt(t(`cosmetic.${p.equipped.background}`), 13, { font: "text", weight: "600", color: C.dim, anchor: [0.5, 0.5] }), W / 2, 420));
+    // the equipped menu background over the whole screen; rebuilt only when another one is equipped
+    if (!back || shownBg !== p.equipped.background) {
+      back?.view.destroy({ children: true });
+      back = backdrop(game);
+      shownBg = p.equipped.background;
+    }
+    root.addChild(back.view);
+    if (!back.hasArt) {
+      root.addChild(at(new Graphics().circle(0, 0, 150).stroke({ width: 1.5, color: C.line }), W - 40, 300));
+      root.addChild(at(new Graphics().circle(0, 0, 70).stroke({ width: 1.5, color: C.line }), 60, 560));
+      root.addChild(at(placeholder(W - 40, 430, ""), 20, 170));
+      root.addChild(at(icon("planet", 40, C.line), W / 2, 365));
+      root.addChild(at(txt(t("ui.placeholder.menuBackground"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), W / 2, 400));
+      root.addChild(at(txt(t(`cosmetic.${p.equipped.background}`), 13, { font: "text", weight: "600", color: C.dim, anchor: [0.5, 0.5] }), W / 2, 420));
+    }
 
     // the player: picture with the profile level, name banner below, league patch beside it
     const me = new Container();
@@ -89,5 +98,5 @@ export function homeScene(game: Game): Scene {
     bottom.forEach(([ic, go], i) => root.addChild(at(roundButton(ic, 26, go, { iconSize: 24 }), 46 + i * gap, 798)));
   };
   render();
-  return { root };
+  return { root, update: (dt) => back?.update(dt) };
 }

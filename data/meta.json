@@ -150,11 +150,13 @@
   "cosmetics": [
     {
       "id": "bg_home",
-      "kind": "background"
+      "kind": "background",
+      "planet": "rime"
     },
     {
       "id": "bg_ice",
-      "kind": "background"
+      "kind": "background",
+      "planet": "rime"
     },
     {
       "id": "bg_gas",
