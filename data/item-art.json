@@ -248,8 +248,8 @@
     "description": "Upright: an hourglass in a metal cage, the sand frozen in mid-fall in the narrow neck, frost on the glass."
   },
   "ancient_monolith": {
-    "brief": "Small black standing stone with glowing old marks. Accent: bone.",
-    "description": "A small black standing stone, worn smooth, old marks cut into it glowing faintly bone-white."
+    "brief": "Small black standing stone with old marks cut into it. Accent: bone.",
+    "description": "A small black standing stone, worn smooth, old marks cut into it and filled with flat bone white."
   },
   "quantum_dice": {
     "brief": "Pair of dice, each showing several faces at once as overlapping outlines. Accent: mustard.",
@@ -520,8 +520,8 @@
     "description": "Lying across the box: the Space Hamster running inside a wheel, the Power Cell strapped to the frame with a cable to the axle."
   },
   "lunar_moth": {
-    "brief": "Big pale moth with moon crescents on its wings, sparkling dust. Accent: bone.",
-    "description": "A big pale moth with moon crescents on its wings, dust falling from its wings as flat bone specks."
+    "brief": "Tiny pale moth with moon crescents on its wings, two smaller moths behind it. Accent: bone.",
+    "description": "A tiny pale moth with moon crescents on its wings, two even smaller moths fluttering behind it, dust falling as flat bone specks."
   },
   "fortress_crab": {
     "brief": "Crab carrying a piece of hull plating as its shell. Accent: copper.",
@@ -769,11 +769,11 @@
   },
   "mushroom_cluster": {
     "brief": "Bunch of three mushrooms with spotted caps. Accent: moss.",
-    "description": "Lying across the box: three mushrooms of different heights growing from one clump, spotted moss caps."
+    "description": "Three small mushrooms of different heights growing from one clump, spotted moss caps."
   },
   "gravity_dumplings": {
     "brief": "Two dumplings that float above their bowl. Accent: bone.",
-    "description": "Lying across the box: two plump dumplings hovering just above their bowl, a short shadow gap between them and the bowl."
+    "description": "Two plump dumplings hovering just above their small bowl, a short shadow gap between them and the bowl."
   },
   "energy_gel": {
     "brief": "Squeeze pouch with a lightning bolt on it. Accent: mustard.",
@@ -805,7 +805,7 @@
   },
   "comet_sorbet": {
     "brief": "Scoop of sorbet with a comet tail of frost. Accent: deep teal.",
-    "description": "Lying across the box: a round scoop of sorbet in a small cup, a trailing comet tail of frost behind it."
+    "description": "A round scoop of sorbet in a small cup, a short comet tail of frost curling off it."
   },
   "asteroid_honey": {
     "brief": "Honey jar shaped like a lumpy asteroid, honey dripping. Accent: mustard.",
@@ -829,7 +829,7 @@
   },
   "medi_moss": {
     "brief": "Clump of soft moss in a petri dish. Accent: moss.",
-    "description": "Lying across the box: a clump of soft moss in a petri dish, the lid tilted to one side."
+    "description": "A clump of soft moss in a small petri dish, the lid tilted to one side."
   },
   "vitamin_pack": {
     "brief": "Blister pack of round pills. Accent: mustard.",
@@ -837,7 +837,7 @@
   },
   "bone_broth": {
     "brief": "Steaming mug of broth with a tiny comet drawn on it. Accent: copper.",
-    "description": "Lying across the box: a steaming mug of broth with a small comet painted on the side, steam drawn as wavy ink lines."
+    "description": "A steaming mug of broth with a small comet painted on the side, steam drawn as wavy ink lines."
   },
   "life_orchid": {
     "brief": "Orchid flower in a pot, petals shaped like hearts. Accent: rust red.",
@@ -848,7 +848,7 @@
     "description": "A hard seed pod split along one seam, spitting small seeds, a paper specimen tag from Venn's lab tied to its stem."
   },
   "watering_drone": {
-    "brief": "Small dented drone with a watering-can spout and a faded VENN stencil, a vine wound round one leg. Accent: deep teal.",
+    "brief": "Small dented drone with a watering-can spout and a faded stencil patch, a vine wound round one leg. Accent: deep teal.",
     "description": "Venn's botanist's old drone, still following the suit: round, dented, spout forward, one vine wound round its single leg. The stencil is a faded patch, no letters."
   },
   "compost_bin": {
@@ -877,7 +877,7 @@
   },
   "healing_moss": {
     "brief": "Pad of moss in a cracked petri dish with a lab label. Accent: moss.",
-    "description": "Lying across the box: a pad of soft moss in a cracked petri dish, a lab label without text."
+    "description": "A pad of soft moss in a cracked petri dish, a lab label without text."
   },
   "root_network": {
     "brief": "Tangle of roots spreading wide through broken station pipes. Accent: copper.",
@@ -908,7 +908,7 @@
     "description": "The three heads fill the upper four cells, the stems drop into the lower left; the lower right stays empty. A plant with three snapping flower heads on long tendril stems, one of them an orchid."
   },
   "irrigation_swarm": {
-    "brief": "Three small watering drones like Venn's, spraying a leaf, all with VENN stencils. Accent: deep teal.",
+    "brief": "Three small watering drones like Venn's, spraying a leaf, each with a faded stencil patch. Accent: deep teal.",
     "description": "Lying across the box: three small watering drones like the botanist's old one, spraying a single leaf, each with a faded stencil patch."
   },
   "world_seed": {
@@ -997,7 +997,7 @@
   },
   "pack_lizard": {
     "brief": "Long low lizard carrying woven bundles on its back. Accent: moss.",
-    "description": "Lying across the box: a long low lizard of the herd walking sideways, woven bundles tied on its back, a calm heavy-lidded eye."
+    "description": "Filling the square box: a big, long, low lizard of the herd walking sideways, woven bundles tied on its back, a calm heavy-lidded eye."
   },
   "kibble_sack": {
     "brief": "Woven sack of dried seeds and roots, a fur tuft on the knot. Accent: copper.",
@@ -1008,8 +1008,8 @@
     "description": "A rat with big front teeth peeking out of a round hole in the ground, only head and paws showing."
   },
   "hatchery": {
-    "brief": "Woven nest full of eggs, kept warm under shed fur. Accent: mustard.",
-    "description": "Filling the square box: a big woven nest seen slightly from above, full of round eggs of different sizes, half covered by a blanket of shed fur. Mustard on the eggs' speckles."
+    "brief": "Salvaged egg incubator, its lid replaced by a woven nest of eggs under shed fur. Accent: mustard.",
+    "description": "Filling the square box: a dented salvaged incubator box with a small heater coil and a dial, its broken lid replaced by a woven nest full of round eggs, half covered by shed fur. Mustard on the eggs' speckles, cords tying the nest to the metal."
   },
   "star_falcon": {
     "brief": "Falcon with star-speckled wing tips, diving. Accent: mustard.",
@@ -1024,8 +1024,8 @@
     "description": "Quill's mount, the same beast as in the hero design. A huge, low, shaggy body filling the box sideways, head to one side with four curved tusks under a heavy brow and tiny eyes. Between its horns an empty woven nest (Quill herself is not in the picture). Matted fur in heavy clumps, two small animals clinging to its flank."
   },
   "hive_queen": {
-    "brief": "Large furry insect queen with a crown-shaped head. Accent: mustard.",
-    "description": "Filling the square box: a large furry insect queen seen from above, her head shaped like a crown, folded wings and a swollen striped body."
+    "brief": "Furry insect queen with a crown-shaped head, tiny workers crawling round her. Accent: mustard.",
+    "description": "Filling the square box: a furry insect queen seen from above, her head shaped like a crown, folded wings and a striped body, a ring of tiny workers crawling round her."
   },
   "star_hound": {
     "brief": "Shaggy hound with star-speckled fur. Accent: deep teal.",
@@ -1040,8 +1040,8 @@
     "description": "Filling the square box: a den dug into a small hill, lined with shed fur, the Pet Bed's nest visible inside and the Kibble Sack leaning at the entrance."
   },
   "shell_dragon": {
-    "brief": "Small dragon with a turtle-like shell, moss on top. Accent: copper.",
-    "description": "Filling the square box: the Pack Lizard grown into a small dragon with the Rock Crab's lumpy shell on its back, moss on top."
+    "brief": "Heavy dragon with a turtle-like shell, moss on top. Accent: copper.",
+    "description": "Filling the square box: the Pack Lizard grown into a big heavy dragon with the Rock Crab's lumpy shell on its back, moss on top, thick legs planted wide."
   },
   "celestial_chimera": {
     "brief": "Beast with a lion head, eagle wings and a star tail, wild-maned. Accent: mustard.",
@@ -1084,7 +1084,7 @@
     "description": "Filling the square box: a big shaggy bear sitting up, a bone-white crescent mark on its chest, small eyes and a heavy brow."
   },
   "glow_swarm": {
-    "brief": "Swarm of fireflies, their lit tails drawn as flat yellow dots. Accent: mustard.",
+    "brief": "Swarm of fireflies, their lit tails drawn as flat mustard dots. Accent: mustard.",
     "description": "Lying across the box: a loose swarm of fireflies, their lit tails drawn as flat mustard dots, bodies as tiny ink shapes."
   },
   "thunder_ram": {
@@ -1092,8 +1092,8 @@
     "description": "Filling the square box: a ram lowering its head, curled horns, flat mustard zig-zag sparks crackling between them, shaggy coat."
   },
   "nursery": {
-    "brief": "Big woven nest with young animals asleep in a heap. Accent: mustard.",
-    "description": "Filling the square box: a big woven nest with young animals of the herd asleep in a heap, one pup's ears sticking out, shed fur as a blanket."
+    "brief": "Old warming cradle machine, padded by the herd, young animals asleep in a heap. Accent: mustard.",
+    "description": "Filling the square box: an old rocking warming cradle of riveted metal with a small heater vent and a crank, padded with woven grass and shed fur by the herd, young animals asleep in a heap inside, one pup's ears sticking out."
   },
   "sky_serpent": {
     "brief": "Long flying serpent with fins and a shaggy mane. Accent: deep teal.",
@@ -1416,7 +1416,7 @@
     "description": "Lying across the box: a crab whose shell is a lumpy chunk of asteroid rock, two small claws raised, legs tucked under."
   },
   "glow_beetle": {
-    "brief": "Beetle with a lamp-like lit abdomen drawn as a flat yellow shape. Accent: mustard.",
+    "brief": "Tiny beetle with a lamp-like rear drawn as a flat mustard shape. Accent: mustard.",
     "description": "A beetle seen from above, its rear end a round lamp drawn as a flat mustard shape, legs and feelers in ink."
   },
   "asteroid_mole": {
@@ -1464,7 +1464,7 @@
     "description": "A chubby, wrinkled tardigrade with eight stubby clawed legs and a round mouth, bone-coloured."
   },
   "shadow_lynx": {
-    "brief": "Lynx made of shadow with two yellow eyes. Accent: bone.",
+    "brief": "Lynx made of shadow with two bone-white eyes. Accent: bone.",
     "description": "The lynx's body fills the top row, its head and front paws drop into the lower left cell; the right lower cell stays empty. A cat shape of pure black shadow with ear tufts and two bone-white eyes."
   },
   "star_whale_calf": {
@@ -1513,7 +1513,7 @@
   },
   "flare_gun": {
     "brief": "Wide-barrelled flare pistol. Accent: rust red.",
-    "description": "A short, wide-mouthed pistol with a fat barrel and a hinge in the middle, a rust-red cartridge rim visible at the back. Scuffed orange paint gone dull."
+    "description": "A short, wide-mouthed pistol with a fat barrel and a hinge in the middle, a rust-red cartridge rim visible at the back. Scuffed rust-red paint gone dull."
   },
   "boomerang_blade": {
     "brief": "Curved boomerang with sharp edges. Accent: copper.",
@@ -1557,7 +1557,7 @@
   },
   "acid_flask": {
     "brief": "Glass flask of bubbling acid to throw. Accent: moss.",
-    "description": "A round-bellied glass flask with a stopper wired on, green acid bubbling inside, one drop eating into the glass rim. Bubbles as simple circles."
+    "description": "A round-bellied glass flask with a stopper wired on, moss-green acid bubbling inside, one drop eating into the glass rim. Bubbles as simple circles."
   },
   "ripper_saw": {
     "brief": "Hand saw with a spinning chain. Accent: rust red.",
@@ -1617,27 +1617,27 @@
   },
   "breach_ram": {
     "brief": "Short hydraulic ram with a blunt riveted head on a welded arm. Accent: deep teal.",
-    "description": "Standing upright: a short hydraulic ram on a welded arm, blunt riveted head scuffed bright, a teal glow where its shield field gathers."
+    "description": "Standing upright: a short hydraulic ram on a welded arm, blunt riveted head scuffed bare, teal force lines drawn as ink arcs where its shield field gathers."
   },
   "siege_ram": {
     "brief": "Long piston ram with a heavy wedge head and shield plates along its flanks. Accent: deep teal.",
     "description": "Lying lengthwise: a long piston ram with a heavy wedge head, salvaged shield plates bolted along both flanks, hoses taped to the piston, teal force lines at the tip."
   },
   "glutton_toad": {
-    "brief": "Fat round toad with a wide grin and a tongue already half out. Accent: moss.",
-    "description": "A fat round moss-green toad sitting upright, wide grin, cheeks bulging, tongue half out toward the cell beside it."
+    "brief": "Fat round toad with a wide grin, tongue out, crumbs on its chin. Accent: moss.",
+    "description": "A fat round moss-green toad sitting upright, wide grin, cheeks bulging with food, tongue half out, a few crumbs on its chin."
   },
   "trough_boar": {
-    "brief": "Stocky bristled boar with small tusks, snout down as if at a trough. Accent: mustard.",
-    "description": "A stocky boar seen from the side, bristled mustard back, small tusks, snout lowered as if feeding, ears flicking toward both neighbours."
+    "brief": "Stocky bristled boar with small tusks, snout deep in a scrap of food. Accent: mustard.",
+    "description": "Lying across the box: a stocky boar seen from the side, bristled mustard back, small tusks, snout down in a half-eaten root, crumbs flying."
   },
   "dawn_needle": {
-    "brief": "Thin gilded needle of light held in a simple copper grip. Accent: copper.",
-    "description": "Standing upright: a thin needle of pale light set in a plain copper grip, a faint dawn glow at its point."
+    "brief": "Thin iron throwing needle with a sun-ray tip and a copper grip. Accent: copper.",
+    "description": "Standing upright: a thin dark iron throwing needle, its tip forged as a small mustard sun ray, the grip wound in copper wire with a rust-red band."
   },
   "zenith_lance": {
-    "brief": "Tall ceremonial lance with a sun disc below a long bright point. Accent: mustard.",
-    "description": "Standing tall: a slim ceremonial lance, a small mustard sun disc below a long bright point, prayer cords wound round the shaft."
+    "brief": "Slim iron lance with a sun disc below its point, a sun ray shooting off the tip. Accent: mustard.",
+    "description": "Standing tall: a slim dark iron lance of the order, a small mustard sun disc below a long point, a rust-red band and prayer cords on the shaft, a short sun ray drawn as one flat stroke leaving the tip."
   },
   "pebble_mites": {
     "brief": "Three tiny rock-shelled mites crawling over a pebble. Accent: bone.",
@@ -1648,19 +1648,19 @@
     "description": "A small swarm of five wasps with long needle stingers, flying in a tight arrow formation with thin motion lines behind them."
   },
   "thorn_hedge": {
-    "brief": "Dense low hedge of thorny branches grown into a wall. Accent: moss.",
-    "description": "A dense low hedge of thorny branches woven into a short wall, a few torn scraps of cloth caught on the thorns."
+    "brief": "Dense low hedge of thorny branches grown out of a cracked lab planter. Accent: moss.",
+    "description": "Lying across the box: a dense low hedge of thorny branches growing out of a cracked lab planter, black hooked thorns, a torn strip of suit fabric caught in them."
   },
   "rot_bloom": {
-    "brief": "Wilted dark flower dripping thick sap from its petals. Accent: rust red.",
-    "description": "A wilted dark flower with drooping petals, thick sap dripping from the petal tips into a small puddle below."
+    "brief": "Wilted dark flower in a specimen jar, thick sap dripping from its petals. Accent: rust red.",
+    "description": "Lying across the box: a wilted dark flower slumped out of a cracked specimen jar, drooping petals with no eyes or face, thick rust-red sap dripping from the tips into a small puddle."
   },
   "dune_ox": {
     "brief": "Shaggy ox with wide curved horns and sand caked on its coat, head lowered. Accent: mustard.",
-    "description": "A shaggy ox with wide curved horns standing with its head lowered, sand caked on its long coat, a short breath cloud at its nostrils and one front hoof scraping the ground."
+    "description": "Filling the square box: a big shaggy ox with wide curved horns, head lowered, sand caked on its long coat, a short breath cloud at its nostrils, one front hoof scraping the ground."
   },
   "tundra_yak": {
     "brief": "Heavy long-haired yak with frost on its coat and short thick horns. Accent: bone.",
-    "description": "A heavy long-haired yak standing square, frost clinging to its coat, short thick horns and a small bell on a rope around its neck."
+    "description": "Filling the square box: a big heavy long-haired yak standing square, frost clinging to its coat, short thick horns and a small bell on a rope around its neck."
   }
 }

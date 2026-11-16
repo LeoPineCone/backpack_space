@@ -39,11 +39,12 @@ Item pictures are described in `data/item-art.json` (list: [item-art.md](item-ar
 
 - **One world.** General items are worn, practical gear of people who live off salvage and long trips: chunky, riveted, patched, taped, stencilled without readable text. Animals are odd space fauna, drawn seriously with dry humour, never cute and glossy. Food is station food: packed, canned, grown in trays, a little strange.
 - **Size decides detail.** One backpack cell is about 44 px on a phone. A one-cell item gets one clear shape and one feature, a big item up to four. The picture fills its box; odd shapes (L, T, gate) leave their empty cells free.
+- **Beasts and swarms read at a glance.** A beast is one single big, heavy animal that fills its box. A swarm pet is many small animals, or one tiny one with room around it.
 - **Crafted items show their parts.** A recipe result keeps something recognisable from each ingredient (the Prism Laser is the Laser Pistol with the Crystal Shard on its muzzle), so players can read where it came from.
 - **Hero items speak the hero's language** ([heroes.md](heroes.md)):
   - *Venn:* the station's botany lab taken over by the plant. Specimen tags, petri dishes, flasks, seed trays, station pipes and crates, the botanist's drone; rust-red tendrils, pale seed bulbs, bark, thorns. Plants never get eyes or faces, only jaws.
   - *Rook:* everything is salvage, welded or tied together from wreck parts: mismatched plates, clamps, wire, pieces of satellite housing, spare tool legs. The mustard lantern eye comes back as a lamp or sticker.
-  - *Quill:* made by the herd, not by people: woven grass and twigs, shed fur, braided cords, tusk tips, bone, shells, berries and roots. No leashes, whistles or cages.
+  - *Quill:* made by the herd, not by people: woven grass and twigs, shed fur, braided cords, tusk tips, bone, shells, berries and roots. No leashes, whistles or cages. Quill's mechanical items are machines the herd found and made their own: dented salvage padded and tied with weaving and fur.
   - *Ysel:* relics of her order: dark iron, bent iron rings like her head cage, cracked sun pieces in flat mustard and rust red, bells, rosary stones, heavy cloth with rust-red bands. Heat is drawn as wavy ink lines, never as glow.
 - Accent colour as in the brief; the heroes' own marks (Venn's rust-red tendrils, Rook's mustard eye, Ysel's rust-red bands) may appear next to it.
 
