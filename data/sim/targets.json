@@ -1,5 +1,5 @@
 {
-  "$comment": "Balancing targets the reports check (min/max). Shares are fractions (0.45 = 45 %), times are seconds. Proposed 2026-11-15, change them here when the design changes.",
+  "$comment": "Balancing targets the reports check (min/max). Shares are fractions (0.45 = 45 %), times are seconds. Proposed 2026-11-15, change them here when the design changes. Path targets (path*) agreed with Ilja 2026-11-16.",
   "fightSeconds": { "min": 18, "max": 25, "what": "average fight length in every round" },
   "longestFight": { "max": 45, "what": "longest fight of a round (one minute of waiting at speed ×1 is too long)" },
   "supernovaReached": { "min": 0.05, "max": 0.2, "what": "share of fights that reach the Supernova, every round" },
@@ -7,5 +7,12 @@
   "heroWinShare": { "min": 0.45, "max": 0.55, "what": "win share of every hero, overall and in each third of the run" },
   "heroDuel": { "min": 0.35, "max": 0.65, "what": "hero against hero" },
   "recipeLift": { "max": 0.12, "what": "how much more often a hero wins while holding a recipe result than the same hero in the same round without it" },
-  "recipeMadeShare": { "max": 0.6, "what": "share of a hero's runs that make the same recipe result (one chain everyone takes)" }
+  "recipeMadeShare": { "max": 0.6, "what": "share of a hero's runs that make the same recipe result (one chain everyone takes)" },
+  "pathHeroWinShare": { "min": 0.48, "max": 0.52, "what": "win share of the hero over all its bots (paths and open) against other heroes" },
+  "pathWinShare": { "min": 0.46, "max": 0.54, "what": "win share of every path, all rounds" },
+  "pathLateWinShare": { "min": 0.44, "max": 0.56, "what": "win share of every path in the last third of the run" },
+  "pathOverOpen": { "min": 0.02, "unit": "pts", "what": "every path wins at least this much more often than the hero's open bot (no path), so following a path pays" },
+  "pathSpread": { "max": 0.06, "unit": "pts", "what": "gap between the hero's best and weakest path, all rounds" },
+  "selftestNoise": { "min": 0.6, "max": 1.5, "what": "self-test: two independent runs differ by about as much as their ± says (root mean square of z, 1 = honest)" },
+  "selftestBoost": { "min": 3, "what": "self-test: a path made 25 % stronger rises by at least this many standard errors" }
 }

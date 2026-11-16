@@ -35,12 +35,15 @@ export interface Chart {
   yMax?: number;
 }
 
+/** A cell checked against a target: "ok" gets a green frame and ✓, "off" a red frame and ✗, "" nothing. */
+export type Mark = "ok" | "off" | "";
+
 export interface TargetResult { ok: boolean; what: string; want: string; got: string }
 
 export type Block =
   | { kind: "h"; text: string }
   | { kind: "p"; text: string }
-  | { kind: "table"; head: string[]; rows: Cell[][]; heat?: Heat }
+  | { kind: "table"; head: string[]; rows: Cell[][]; heat?: Heat; marks?: Mark[][] }
   | { kind: "chart"; chart: Chart }
   | { kind: "target"; target: TargetResult };
 
@@ -59,6 +62,8 @@ export interface ReportPage {
   /** file name of the text version next to the page, if any */
   text?: string;
   blocks: Block[];
+  /** measured numbers by key, for comparing a later run with this one (--baseline) */
+  values?: Record<string, number[]>;
 }
 
 const esc = (s: Cell) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -105,6 +110,11 @@ th { color: var(--ink2); font-weight: 600; position: sticky; top: 0; background:
 th:first-child, td:first-child { text-align: left; }
 tbody tr:hover td { outline: 1px solid var(--axis); outline-offset: -1px; }
 td.heat { border: 2px solid var(--surface); border-radius: 4px; }
+td.mark-ok, td.mark-off { font-weight: 700; }
+td.mark-ok { box-shadow: inset 0 0 0 2px var(--good); color: var(--good-ink); }
+td.mark-off { box-shadow: inset 0 0 0 2px var(--bad); color: var(--bad); }
+td .sym { margin-left: 4px; }
+th small { display: block; font-weight: 400; color: var(--good-ink); }
 .targets { display: grid; gap: 8px; }
 .target { display: flex; gap: 12px; align-items: baseline; }
 .light { flex: none; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 99px; color: #fff; }
@@ -143,10 +153,17 @@ function heatStyle(v: number, h: Heat): string {
   return ` class="heat" style="background: color-mix(in oklab, var(${good ? "--pos" : "--neg"}) ${Math.round(t * 100)}%, var(--mid))"`;
 }
 
-function renderTable(head: string[], rows: Cell[][], heat?: Heat): string {
+/** a header "wins all rounds [target 46–54 %]" shows the bracket as a second, green line */
+const headCell = (x: string) => { const m = /^(.*?)\s*\[(target [^\]]+)\]$/.exec(x); return m ? `${esc(m[1]!)}<small>${esc(m[2]!)}</small>` : esc(x); };
+
+function renderTable(head: string[], rows: Cell[][], heat?: Heat, marks?: Mark[][]): string {
   const cols = heat ? new Set(heat.cols ?? head.map((_, i) => i).slice(1)) : new Set<number>();
-  const th = head.map((x) => `<th>${esc(x)}</th>`).join("");
-  const body = rows.map((r) => `<tr>${r.map((c, i) => `<td${heat && cols.has(i) ? heatStyle(cellNumber(c), heat) : ""}>${esc(c)}</td>`).join("")}</tr>`).join("\n");
+  const th = head.map((x) => `<th>${headCell(x)}</th>`).join("");
+  const td = (c: Cell, i: number, m: Mark | undefined) => {
+    if (m) return `<td class="mark-${m}" title="${m === "ok" ? "within target" : "outside target"}">${esc(c)}<span class="sym">${m === "ok" ? "✓" : "✗"}</span></td>`;
+    return `<td${heat && cols.has(i) ? heatStyle(cellNumber(c), heat) : ""}>${esc(c)}</td>`;
+  };
+  const body = rows.map((r, k) => `<tr>${r.map((c, i) => td(c, i, marks?.[k]?.[i])).join("")}</tr>`).join("\n");
   return `<div class="card scroll"><table><thead><tr>${th}</tr></thead><tbody>\n${body}\n</tbody></table></div>`;
 }
 
@@ -284,7 +301,7 @@ export function renderReport(r: ReportPage): string {
     flush();
     if (b.kind === "h") out.push(`<h2>${esc(b.text)}</h2>`);
     else if (b.kind === "p") out.push(`<p${b.text.startsWith("  ") ? ' class="indent"' : ""}>${esc(b.text.trim())}</p>`);
-    else out.push(renderTable(b.head, b.rows, b.heat));
+    else out.push(renderTable(b.head, b.rows, b.heat, b.marks));
   }
   flush();
   return page(`${r.title} – Backpack Space report`, out.join("\n"));

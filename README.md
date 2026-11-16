@@ -59,7 +59,9 @@ npm run report:recipes    # which recipes get made, how deep chains go
 npm run report:placement  # what the layout is worth
 npm run report:paths      # does every hero have several paths that win (bots commit to one path each)
 npm run report:synergy    # hero against hero and path against path; do items and hero rules interlock more each round
+npm run report:selftest   # checks the measuring tool itself: same result again, honest ±, sees a real change
 npm run report:all        # all of them into out/reports/
+npm run ratings           # measure every item again and store data/sim/ratings.json (after item changes, ~4 min)
 ```
 
 Every report run also writes a static HTML page with tables, heatmaps (hero against hero, path against path), charts per round and a light per target: `out/reports/<report>.html`, or next to the `--out` file. `out/reports/index.html` links all report pages and lists every target that is OFF. Open it straight from disk in a browser (no server needed); `--no-html` skips the page.
@@ -67,7 +69,10 @@ Every report run also writes a static HTML page with tables, heatmaps (hero agai
 Balancing targets (fight length, Supernova, hero win shares, recipe dominance) live in `data/sim/targets.json`; the battles, heroes and recipes reports end with an OK / OFF line per target.
 
 Flags: `--accuracy quick|normal|precise` (or `--quick`, `--precise`), `--sims N` for the main count, `--seed S` for an independent sample, `--out file`.
-`npm run report:items -- --write-ratings` also stores the measured strength per item in `data/sim/ratings.json`; the bots then prefer items that measured strong (run it again after bigger item changes).
+Reports that play whole lobbies (`paths`, `selftest`) use all processor cores (`--jobs N` to limit); the result does not depend on it.
+
+How exact is a number? `±N` in the paths report is one standard error measured from how much a share varies between blocks of lobbies (one bot's fights are not independent, so the error over single fights was far too small). Rule of thumb for one path: about ±2 points at precise, ±4 at normal. To judge a change, measure before and after with the same seed: `npm run report:paths -- --precise --baseline out/reports/paths.json` compares with the previous run on the same lobbies (paired) and marks a change with * when it is at least two standard errors. Re-measure the ratings first when items changed (`npm run ratings`).
+`npm run ratings` (= `report:items -- --write-ratings`) stores the measured strength per item in `data/sim/ratings.json`; the bots then prefer items that measured strong. Two runs with different seeds agree to about ±0.2 per item (correlation 0.84).
 
 `npm run i18n` lists texts that are missing in a language (English stands in for them).
 
