@@ -1,3 +1,32 @@
+# Paths of Quill and Venn pulled apart: pet kinds, counting by cells, path-bound items (2026-11-16)
+
+Question (Ilja, after the play-style measurement): make the paths of Quill and Venn play differently; pets get the kinds beast and swarm; new swarm pets go to the general shop because every hero brings the same number of personal items; rebalance if needed. Four rounds of full runs (2 × 240 lobbies, seeds 1 / 2), full ratings run on both seeds at the start.
+
+**Built**
+- Pet kinds `beast` (one large animal, 4 cells or more) and `swarm` (many small ones or a very small one) as tags next to `pet`; most pets are neither. 21 beasts, 14 swarm pets. New `per.cells` (cells that items of a type cover).
+- Quill: health +5 per cell her pets cover (max 28×) instead of +12 per pet; the feeders' heals count pet cells too. Big beasts: Elder Tusk acts on every beast (+8 damage, 20 % faster), War Saddle on starred beasts (+6), Pack Lizard is a 4-cell beast (Shield per beast), Shell Dragon counts beasts, Moon Bear brings Shield, beasts are offered more often. Swarm: Hive Queen, Glow Swarm, Swarm Cloud, Ancient Egg, Pack Bond, Calling Shell count or boost swarm pets only. Well-fed pack: Glutton Toad and Trough Boar hit weaker themselves and harder when fed. Birds, hounds and the goose are core pets without a path.
+- Venn: Plague Blossom and Pollen Cloud only jam once the enemy carries Toxin (1 Jam per 6 / 8 Toxin); World Seed turns Spikes into Shield every phase; mantraps bite faster and lighter; Trellis gives its starred pets +1 damage.
+- New items: general pets Pebble Mites, Needle Wasps (swarm), Dune Ox, Tundra Yak (beast); Venn's Thorn Hedge (Shield per Spikes) and Rot Bloom (damage per Toxin each phase), which also brings Venn to 38 personal items like the others (test).
+- Bots: a bot committed to a path values hero items of the hero's other paths at half (as it values its own path's at double). Without this the first run showed no change at all: path bots bought the same generally strong items whatever the items said.
+
+**Play style, before → after (seed 1 / seed 2; 1 = clearly different)**
+
+| Pair | Before | After |
+|---|---|---|
+| Quill Big beasts / Swarm | 0.24 / 0.16 | 0.54 / 0.56 (damage per attack) |
+| Quill Big beasts / Well-fed pack | 0.57 / 0.57 | 0.52 / 0.30 |
+| Quill Swarm / Well-fed pack | 0.65 / 0.73 | 0.82 / 0.73 |
+| Venn Poison garden / Thorn wall | 0.43 / 0.92 | 0.84 / 0.96 |
+| Venn Poison garden / Hungry jungle | 0.53 / 0.44 | 0.89 / 0.88 |
+| Venn Thorn wall / Hungry jungle | 0.86 / 1.02 | 1.28 / 1.26 |
+
+**Balance after it:** heroes Venn 53 / 51, Rook 47 / 48, Quill 50 / 52, Ysel 48 / 48 %. Quill's paths 48–52 % on both seeds. Venn: Poison garden 52 / 51, Thorn wall 56 / 52 (late 62 / 58), Hungry jungle 47 / 45. Numbers set on the way: Trellis, Venus Mantrap, Snap Sprout, Mantrap Pack up (Hungry jungle +3 on both seeds in the replay), World Seed's Shield capped at 5 Spikes, Quill's health 6 → 5 per cell. 45 of 124 target checks off (34 of 120 before).
+
+**What it showed, still open**
+- Venn is close to the target; Quill moved half the way. A Big beasts build still ends with 8 pets (Swarm 10), among them a Burrow Rat in most runs: small pets are the better buy for any Quill build (rating 2.3–2.5 against 1.5–2.0 for beasts), because Quill heals 2 on every pet attack and fast pets attack most. That is her hero rule; the next step there is a design decision (heal by pet size, or beasts that heal on hit).
+- The new bot rule also changed Rook and Ysel, whose items were not touched: Eclipse 41 / 40 %, Late ascension 45 / 45, Shield fortress 44 / 41, and every path further below its open bot (−2 to −14). Those paths lived on items of their hero's other paths. It is a statement about the paths, and it depends on the assumption that a committed player leaves other paths' items.
+- Overheal (healing above full health becomes Shield) changed one fight in 2520 when raised: Hungry jungle hardly ever overheals.
+
 # Path distinctness measured by play style: Rook and Ysel differ, Quill and Venn do not (2026-11-16, nothing changed in the game)
 
 Question (Ilja): "the paths of a hero deal their damage too alike" looks like design; extend the measurement. `pathDistinct` only compares the damage mix (weapon / pet / Burn / …), so two weapon paths count as the same even when one is fast and one is slow. New number **play style** (`pathStyle`, `styleDistance` in `src/sim/paths.ts`): six differences of two paths, each scaled so that 1 is a step a player notices, and the largest one counts: damage mix (0.35 as before), attacks per second and damage per attack (× 1.5), healed + shielded per fight (a quarter of the hero's health), share of damage from phase 3 on (15 points), share of the best item (10 points). Shown in `report:paths` (per pair, with the dimension), `baseline`, `balance:replay`, `balance:sweep` (per hero: the two paths most alike). Proposed target `pathStyle` ≥ 1. Baseline, 2 × 240 lobbies, seed 1 / seed 2:

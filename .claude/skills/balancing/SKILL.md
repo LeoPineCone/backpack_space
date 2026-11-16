@@ -197,6 +197,16 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 
 ## Lessons learned (keep adding)
 
+- 2026-11-16: pulling paths apart (findings.md). Making path items depend on the path (count swarm pets, need
+  Toxin) changed **nothing** by itself: path bots kept buying the same generally strong items. Builds only split
+  once the bot also valued the hero's other paths' items at half (`worth()` in `bot.ts`). That rule lowers every
+  path that lived on borrowed items (Eclipse, Late ascension, Shield fortress fell by 3–9 points without a data
+  change): read path numbers together with this assumption. Before a path redesign, list what each path's bots
+  end with (item frequency per path); the same top items in all three paths is the finding.
+- 2026-11-16: a hero rule can decide a path question. Quill heals on every pet attack, so small fast pets are
+  the best buy for every Quill build and Big beasts keeps filling up with them. Check the hero rule against the
+  path idea first.
+
 - 2026-11-16: when every hero is at 48–52 % and most paths are in their bands, single number steps stop paying:
   three tries on three paths each lifted the path by 1–3 points and left more targets off than before (34 → 38 /
   39), because many values sit near a band edge. Stop there; count "targets off" only as a rough guide (± about 5
@@ -258,11 +268,11 @@ boosts of 25 %, replay and full run equal within noise). A fight costs 0.5 ms; s
 After the path payoff pass (findings.md, top): all heroes 48–52 %, 11 of 12 paths 46–54 %. Still off: Shield
 fortress, Well-fed pack and Late ascension cost when a bot goes deep (`pathPays` −3 to −8); Thorn wall and
 Workshop strong late (55–60 %), Late ascension weak late (40 %); Well-fed pack differs between seeds (48 / 43 %);
-every path at or below its open bot. Path distinctness: by damage mix (`pathDistinct`) no hero reaches the
-target; by play style (`pathStyle`, largest of mix / tempo / damage per attack / protection / late damage / best
-item, 1 = clearly different, proposed target ≥ 1) Rook's paths and Ysel's Eclipse differ clearly, Quill's Big
-beasts and Swarm play the same (0.2), Venn's paths 0.4–1.0 and Burning corona / Late ascension 0.8. That is a
-design question (what a path owns), not a number question; read `pathStyle` on both seeds (Venn moves by 0.5). General artifacts Dyson
+every path below its open bot. Play style (`pathStyle`, target ≥ 1 proposed) after the split of Quill's and Venn's
+paths: Venn 0.84–1.28, Quill 0.3–0.8 (Big beasts / Swarm 0.55), Burning corona / Late ascension 0.6, Rook ≥ 1.2.
+Off after the split and the new bot rule: Venn 53 / 51 %, Rook 47 / 48 %, Thorn wall late 62 / 58, Eclipse 41, Late
+ascension 45, Shield fortress 44 / 41. Open design question: Quill's heal per pet attack favours small pets.
+General artifacts Dyson
 Fragment, Wormhole Generator (and Ancient Monolith) are weak. The path-pull sweep has not been repeated with the
 new items.
 Path pull (sweeps done): the shop numbers are not the lever; the weak paths need payoff from their own items.
