@@ -106,7 +106,12 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
   for (const o of defs) if (refs(o).some((t) => (def.tags as string[]).includes(t))) syn += 0.06;
   v *= 1 + Math.min(0.8, syn);
   const path = data.heroes.get(bot.hero)!.paths.find((p) => p.id === bot.path);
-  if (path) { if (onPath(def, path)) v *= opts.pathLiking ?? PATH_LIKING; }
+  if (path) {
+    const liking = opts.pathLiking ?? PATH_LIKING;
+    if (onPath(def, path)) v *= liking;
+    // a committed player leaves the items of the hero's other paths to other builds
+    else if (def.hero && def.path && liking > 0) v /= liking;
+  }
   else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;

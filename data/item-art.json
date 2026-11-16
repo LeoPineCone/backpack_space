@@ -1654,5 +1654,9 @@
   "rot_bloom": {
     "brief": "Wilted dark flower dripping thick sap from its petals. Accent: rust red.",
     "description": "A wilted dark flower with drooping petals, thick sap dripping from the petal tips into a small puddle below."
+  },
+  "dune_ox": {
+    "brief": "Shaggy ox with wide curved horns and sand caked on its coat, head lowered. Accent: mustard.",
+    "description": "A shaggy ox with wide curved horns standing with its head lowered, sand caked on its long coat, a short breath cloud at its nostrils and one front hoof scraping the ground."
   }
 }
