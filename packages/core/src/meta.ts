@@ -25,7 +25,7 @@ export type CosmeticKind = (typeof COSMETIC_KINDS)[number];
 export const MetaData = z.object({
   $comment: z.string().optional(),
   /** what a new profile starts with */
-  start: z.object({ credits: Int, cosmetics: z.array(z.string()), background: z.string() }).strict(),
+  start: z.object({ name: z.string().min(1).max(16), credits: Int, cosmetics: z.array(z.string()), background: z.string() }).strict(),
   /** what a finished run pays */
   run: z.object({
     galaxies: z.object({ perWin: Int, perLifeLeft: Int }).strict(),
@@ -48,7 +48,7 @@ export const MetaData = z.object({
     /** leagues you move back at the start of a new season */
     seasonDrop: Int,
   }).strict(),
-  cosmetics: z.array(z.object({ id: z.string(), kind: z.enum(COSMETIC_KINDS), hero: z.string().optional() }).strict()),
+  cosmetics: z.array(z.object({ id: z.string(), kind: z.enum(COSMETIC_KINDS), hero: z.string().optional(), /** backgrounds: the place of lore/planets.json it shows */ planet: z.string().optional() }).strict()),
   seasons: z.array(z.object({
     id: z.number().int().positive(),
     /** first day of the season, YYYY-MM-DD */
@@ -64,7 +64,7 @@ export const MetaData = z.object({
 }).strict();
 export type MetaData = z.infer<typeof MetaData>;
 
-export interface Cosmetic { id: string; kind: CosmeticKind; hero?: string; /** patches: the season and league they stand for */ season?: number; league?: string }
+export interface Cosmetic { id: string; kind: CosmeticKind; hero?: string; /** backgrounds: the place of lore/planets.json it shows */ planet?: string; /** patches: the season and league they stand for */ season?: number; league?: string }
 
 export interface Meta extends MetaData {
   cosmeticById: Map<string, Cosmetic>;
@@ -82,6 +82,7 @@ export function buildMeta(raw: unknown, data: GameData): Meta {
   const cosmeticById = new Map<string, Cosmetic>();
   const add = (c: Cosmetic) => { if (cosmeticById.has(c.id)) problems.push(`cosmetic ${c.id} is listed twice`); cosmeticById.set(c.id, c); };
   for (const c of m.cosmetics) {
+    if (c.planet && c.kind !== "background") problems.push(`cosmetic ${c.id}: only backgrounds show a planet`);
     if (c.kind === "heroCosmetic" || c.kind === "patch") problems.push(`cosmetic ${c.id}: ${c.kind} cosmetics are made from the hero levels and leagues, do not list them`);
     if (c.hero && !data.heroes.has(c.hero)) problems.push(`cosmetic ${c.id}: unknown hero ${c.hero}`);
     add(c);
@@ -140,6 +141,8 @@ export interface SeasonState {
 }
 
 export interface Profile {
+  /** the name on the player's banner */
+  name: string;
   /** Galaxies earned in total, across seasons: they move the planet track */
   galaxies: number;
   credits: number;
@@ -155,7 +158,7 @@ export interface Profile {
 
 export function newProfile(meta: Meta, seasonId = meta.seasons[0]!.id): Profile {
   const p: Profile = {
-    galaxies: 0, credits: meta.start.credits, heroXp: {}, heroes: [], cosmetics: [...meta.start.cosmetics],
+    name: meta.start.name, galaxies: 0, credits: meta.start.credits, heroXp: {}, heroes: [], cosmetics: [...meta.start.cosmetics],
     equipped: { background: meta.start.background, patch: null },
     season: { id: seasonId, galaxies: 0, premium: false, points: 0, peak: 0 }, runs: 0,
   };
@@ -174,6 +177,11 @@ function grant(p: Profile, rewards: Reward[]): Reward[] {
     else if (!p.heroes.includes(r.hero)) { p.heroes.push(r.hero); out.push(r); }
   }
   return out;
+}
+
+/** The number on the player's picture: the levels of all owned heroes added up. */
+export function profileLevel(meta: Meta, p: Profile): number {
+  return [...meta.startHeroes, ...p.heroes].reduce((sum, h) => sum + heroLevel(meta, p.heroXp[h] ?? 0).level, 0);
 }
 
 export function ownsHero(meta: Meta, p: Profile, hero: string): boolean { return meta.startHeroes.includes(hero) || p.heroes.includes(hero); }
@@ -357,6 +365,7 @@ export function fitProfile(meta: Meta, raw: unknown): Profile | null {
   if (!q.cosmetics.includes(q.equipped?.background)) q.equipped = { background: meta.start.background, patch: q.equipped?.patch ?? null };
   if (q.equipped.patch && !q.cosmetics.includes(q.equipped.patch)) q.equipped.patch = null;
   q.heroXp ??= {};
+  if (typeof q.name !== "string" || !q.name.trim()) q.name = meta.start.name;
   q.heroes = (q.heroes ?? []).filter((h) => meta.seasons.some((s) => s.hero === h));
   return q;
 }

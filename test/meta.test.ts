@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, fitProfile, heroLevel, leagueOf, newProfile, ownsHero, passLevel, patchId, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, fitProfile, heroLevel, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -128,6 +128,19 @@ describe("stored profiles", () => {
     expect(f.cosmetics).not.toContain("bg_gone");
     expect(f.equipped).toEqual({ background: meta.start.background, patch: null });
     expect(fitProfile(meta, { nonsense: true })).toBeNull();
+  });
+  it("keep the player's name and give older profiles the start name", () => {
+    const p = newProfile(meta);
+    expect(p.name).toBe(meta.start.name);
+    const { name: _drop, ...old } = { ...p, name: "Nova" };
+    expect(fitProfile(meta, { ...p, name: "Nova" })!.name).toBe("Nova");
+    expect(fitProfile(meta, old)!.name).toBe(meta.start.name);
+  });
+  it("add up the levels of all owned heroes for the profile number", () => {
+    const p = newProfile(meta);
+    expect(profileLevel(meta, p)).toBe(meta.startHeroes.length);
+    const q = { ...p, heroXp: { [meta.startHeroes[0]!]: meta.heroLevels.xp[1]! } };
+    expect(profileLevel(meta, q)).toBe(meta.startHeroes.length + heroLevel(meta, meta.heroLevels.xp[1]!).level - 1);
   });
   it("equip only owned cosmetics of the right kind", () => {
     const p = newProfile(meta);

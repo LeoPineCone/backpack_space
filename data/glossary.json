@@ -32,6 +32,7 @@
     { "id": "season", "group": "meta", "en": "Season", "de": "Season", "text": "A stretch of time with its own pass and league race. A new season brings a new hero.", "code": ["meta.seasons", "SeasonState"] },
     { "id": "league", "group": "meta", "en": "League", "de": "Liga", "icon": "league", "text": "Your rank. Runs win or lose league points; a league you reached cannot be lost. A new season starts two leagues lower.", "code": ["meta.leagues", "leagueOf"] },
     { "id": "patch", "group": "meta", "en": "League patch", "de": "Liga-Patch", "icon": "patch", "text": "Paid at the end of a season for the league you reached. Wear one on your profile.", "code": ["patchId", "Profile.equipped.patch"] },
+    { "id": "profileLevel", "group": "meta", "en": "Profile level", "de": "Profilstufe", "icon": "xp", "text": "The number on your picture: the levels of all your heroes added up.", "code": ["profileLevel"] },
     { "id": "cosmetic", "group": "meta", "en": "Cosmetic", "de": "Kosmetik", "icon": "skin", "text": "Changes the look only, never the game: skins, backgrounds, grid backgrounds, patches.", "code": ["meta.cosmetics"] },
 
     { "id": "backpack", "group": "backpack", "en": "Backpack", "de": "Rucksack", "text": "Where your bags and items lie. Only what is in the backpack fights.", "code": ["ship (in effects: per.ship, to: ship, shipUse)", "Build", "Board"] },

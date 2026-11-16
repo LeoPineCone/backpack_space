@@ -1,12 +1,12 @@
-/** Choose a hero: heroes on a ring, the start button in the middle, the chosen hero large on top. */
+/** Choose a hero (after FIGHT on the start screen): heroes on a ring, the start button in the middle, the chosen hero large on top. */
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { BUFFS, DEBUFFS, TAGS, heroLevel, leagueOf, newRun, ownsHero } from "@backpack-space/core";
+import { BUFFS, DEBUFFS, TAGS, heroLevel, newRun, ownsHero } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, W } from "../theme";
 import { icon, hasIcon } from "../icons";
 import { at, box, disc, hudPill, infoButton, placeholder, roundButton, tappable, txt } from "../ui";
-import { glossary, heroPopup } from "./popup";
-import { settingsOverlay } from "./settings";
+import { heroPopup } from "./popup";
+import { homeScene } from "./home";
 import { shopScene } from "./shop";
 import { progressOverlay, type Tab } from "./progress";
 import { t, upper } from "../i18n";
@@ -47,15 +47,8 @@ export function heroScene(game: Game): Scene {
     // the equipped menu background (a planet); placeholder until the art exists
     root.addChild(at(icon("planet", 14, C.dim), 21, 406), at(txt(t(`cosmetic.${p.equipped.background}`), 10, { font: "text", color: C.dim }), 34, 400));
 
-    // league and currency
-    const lg = leagueOf(meta, p.season.points);
-    const league = new Container();
-    const lname = txt(upper(t(`league.${meta.leagues.ids[lg]}`)), 13);
-    const lw = Math.max(128, 56 + lname.width);
-    league.addChild(box(lw, 44, { fill: C.panel, line: C.gold, radius: 22 }), at(icon(p.equipped.patch ? "patch" : "league", 28, C.gold), 24, 22));
-    league.addChild(at(lname, 44, 7), at(txt(p.season.points - lg * meta.leagues.pointsPerLeague, 11, { font: "text", color: C.dim }), 44, 24));
-    tappable(league, () => progress("leagues"), new Rectangle(0, 0, lw, 44));
-    root.addChild(at(league, 14, 14));
+    // back to the start screen; currencies stay in view
+    root.addChild(at(roundButton("back", 22, () => game.show(homeScene(game)), { iconSize: 20 }), 36, 36));
     const gal = tappable(hudPill("galaxy", p.galaxies, C.line, C.text), () => progress("planets"));
     root.addChild(at(gal, W - 14 - gal.width, 14));
     const cr = hudPill("credits", p.credits, C.line, C.gold, 36);
@@ -114,10 +107,6 @@ export function heroScene(game: Game): Scene {
     ring.addChild(at(mid, 170, 170));
     root.addChild(at(ring, 25, 446));
 
-    root.addChild(at(roundButton("book", 24, () => game.openOverlay(glossary(game)), { iconSize: 22 }), 38, 806));
-    root.addChild(at(roundButton("settings", 24, () => game.openOverlay(settingsOverlay(game, render)), { iconSize: 22 }), 96, 806));
-    root.addChild(at(roundButton("pass", 24, () => progress("pass"), { iconSize: 22 }), W - 96, 806));
-    root.addChild(at(roundButton("cart", 24, () => game.toast(t("toast.heroShopLater")), { iconSize: 22 }), W - 38, 806));
   };
   render();
   return { root };

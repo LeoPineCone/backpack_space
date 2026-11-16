@@ -1,0 +1,23 @@
+# Pictures in the client
+
+Real pictures live in `apps/client/art/`. The path without the extension is the picture's id
+(`art/planets/rime.jpg` is `planets/rime`). Vite bundles every file there, so the app works offline,
+and `src/art.ts` loads them at start. A picture that does not exist yet is not an error: the screen
+keeps its placeholder symbol, so pictures can be added one by one.
+
+| Folder | What | Size |
+|---|---|---|
+| `art/space.jpg` | star field behind every menu background | 1080×1920, JPEG |
+| `art/planets/<place>.jpg` | surface map of a place in `lore/planets.json` | 2048×1024 (2:1), JPEG, left edge continues the right edge |
+
+## Menu backgrounds
+
+A background cosmetic in `data/meta.json` names its place (`"planet": "rime"`). `src/backdrop.ts`
+draws the star field, a few twinkling stars and the place's planet; `src/planet.ts` wraps the flat
+surface map around a sphere in a shader and turns it slowly (one turn in 150 s), so the loop never
+jumps. Light, the hatched shadow edge and the ink outline come from the shader, so a surface map is
+drawn evenly lit, without a day and night side.
+
+Generating a surface map: ask for a flat equirectangular map that fills the image edge to edge,
+evenly lit, seamlessly tileable horizontally, large clear shapes, in the style of `docs/style.md`
+(21:9 works; it is resized to 2:1). Check the seam by putting the right half in front of the left half.

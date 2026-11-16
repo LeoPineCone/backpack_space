@@ -1,6 +1,7 @@
 {
   "$comment": "Meta progress between runs (docs/retention.md). Every number here is a placeholder until it is tuned.",
   "start": {
+    "name": "Pilot",
     "credits": 0,
     "cosmetics": [
       "bg_home"
@@ -149,11 +150,13 @@
   "cosmetics": [
     {
       "id": "bg_home",
-      "kind": "background"
+      "kind": "background",
+      "planet": "rime"
     },
     {
       "id": "bg_ice",
-      "kind": "background"
+      "kind": "background",
+      "planet": "rime"
     },
     {
       "id": "bg_gas",

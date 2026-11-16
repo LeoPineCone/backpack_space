@@ -39,6 +39,8 @@
   "ui.placeholder.heroArt": "Heldenbild",
   "ui.placeholder.silhouette": "Helden-Silhouette",
   "ui.placeholder.comingSoon": "kommt bald",
+  "ui.placeholder.menuBackground": "Menü-Hintergrund",
+  "ui.placeholder.picture": "Bild",
 
   "ui.group.progress": "FORTSCHRITT",
   "ui.tab.hero": "HELDEN-LEVEL",
@@ -83,6 +85,7 @@
   "term.season.text": "Ein Zeitraum mit eigenem Pass und eigenem Ligarennen. Eine neue Season bringt einen neuen Helden.",
   "term.league.text": "Dein Rang. Läufe bringen oder kosten Liga-Punkte; eine erreichte Liga verlierst du nicht. Eine neue Season beginnt zwei Ligen tiefer.",
   "term.patch.text": "Am Ende einer Season für die erreichte Liga. Einen davon trägst du im Profil.",
+  "term.profileLevel.text": "Die Zahl an deinem Bild: die Stufen all deiner Helden zusammengezählt.",
   "term.cosmetic.text": "Ändert nur das Aussehen, nie das Spiel: Skins, Hintergründe, Raster-Hintergründe, Patches.",
   "toast.heroShopLater": "Der Helden-Shop öffnet später",
   "toast.shareLater": "Teilen kommt später",

@@ -20,6 +20,9 @@ try {
   });
   console.log(`Languages: English (source)${langs.length ? `, ${langs.join(", ")}` : ""}. Details: npm run i18n`);
   const meta = loadMeta(d);
+  const placeIds = new Set(places.map((p) => p.id));
+  const badPlanet = [...meta.cosmeticById.values()].filter((c) => c.planet && !placeIds.has(c.planet));
+  if (badPlanet.length) throw new Error(`Meta problems:\n- ${badPlanet.map((c) => `cosmetic ${c.id}: unknown place ${c.planet} (lore/planets.json)`).join("\n- ")}`);
   const season = meta.seasons[meta.seasons.length - 1]!;
   console.log(`Meta: ${meta.heroLevels.xp.length + 1} hero levels, ${meta.planetTrack.length} planet track steps, ${meta.leagues.ids.length} leagues, ${meta.seasons.length} season(s) (latest: ${season.pass.levels.length} pass levels), ${meta.cosmeticById.size} cosmetics.`);
   const orphans = items.filter((i) => i.crafted && !d.recipes.some((r) => r.out === i.id));
