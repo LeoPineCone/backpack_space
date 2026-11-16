@@ -29,11 +29,20 @@ carry frost, one that gains Energy can carry a battery or solar sail.
 ## 2. Find the space idea (the important part)
 
 Ask: **what would this thing look like if it was made, grown or found out there, not on earth?** Pick one
-strong twist and build the picture around it. A plain earth object with "space" in the name is the failure we
+strong twist and build the picture around it. "Out there" means open space and stations, and just as much the
+**many different planets**: animals, plants, food and materials can come from a specific planet whose
+conditions shape them (Ilja, 2026-11-16). A plain earth object with "space" in the name is the failure we
 want to avoid.
 
 Twists that worked or fit the world:
 
+- **Planet of origin.** Give the thing a home planet with one clear condition and let that condition shape it.
+  Ice or night planet: ice spikes, wide snowshoe feet, big pale eyes. Lava planet: basalt skin with rust-red
+  cracks, volcanic glass. Heavy-gravity planet: squat, flat, thick legs, layered rock. Low-gravity moon or
+  comet: long thin legs, floating hair, dust trails. Thin-air planet: gills, frills, air sacs. Gas giant: floats,
+  balloon bladders. Crystal or desert planets: crystal growths, sand-coloured armour. Planets with several moons
+  or suns: markings and patterns that repeat them. Materials, too: ore, crystal, sand or wood from a named kind
+  of planet. Vary the planets across items so the world feels wide.
 - **Celestial shape.** The object takes the shape of something in the sky: Moon Cheese is a little cratered
   cheese moon with one crumb in orbit around it. Rings like a planet ring, a comet tail, an eclipse, a crescent.
 - **Zero gravity.** Parts or crumbs float and orbit; liquids form balls; things are tethered so they do not
@@ -41,10 +50,9 @@ Twists that worked or fit the world:
 - **Vacuum work gear.** Suction clamps for hull plates, seals, valves, oxygen bottles, tether cords with clips,
   magnet soles, pressure gauges.
 - **Built from ship parts.** Thruster nozzles, hull plating, solar panels, antenna dishes, cargo straps, stencil
-  patches (no readable text). The Rivet Gun is a cut-down thruster nozzle with its rivets riding round the
-  barrel on a wire ring like a planet ring.
+  patches (no readable text).
 - **Space material.** Meteor iron, comet ice, asteroid rock, crystal shards, stardust drawn as flat specks.
-- **Alien anatomy.** Six legs, many small eyes, wings like solar sails, crystal growths, shells like asteroid
+- **Alien anatomy** (best tied to the planet it comes from). Six legs, many small eyes, wings like solar sails, crystal growths, shells like asteroid
   rock. Odd and drawn seriously, never cute or glossy.
 
 Rules for the idea:
@@ -62,10 +70,10 @@ Rules for the idea:
 
 - **Always one single animal.** Also for swarm pets: several animals in one or two cells are too small to read
   (Ilja, 2026-11-16). A swarm pet is one small animal with room around it; the swarm lives in the name and the
-  rules. Needle Wasps = one needle wasp.
+  rules.
 - A **beast** is one big, heavy animal that fills its whole box.
-- Give every animal one alien feature (extra legs, eye cluster, sail wings, ice or rock grown into its body),
-  so it is space fauna and not a zoo animal.
+- Give every animal a home planet and one alien feature that comes from it (see "Planet of origin"), so it is
+  space fauna and not a zoo animal.
 - Recipe results with animals (Dust Storm, Swarm Cloud, Rat Pack) also show one animal, carrying a recognisable
   piece of each ingredient.
 
@@ -88,20 +96,19 @@ Rules for the idea:
 
 ## 6. Examples
 
-Approved direction (round 2, 2026-11-16):
+Only these two are templates (Ilja, 2026-11-16); the other test pictures are not:
 
-- **moon_cheese** (1 cell, 28 words): "A small cheese wheel shaped like a cratered mini moon, one wedge cut out
-  showing the pale inside, a single crumb orbiting it like a tiny moon. Mustard rind." Ilja: name and look fit
-  very well.
-- **rivet_gun** (2 cells): hull-repair gun from a thruster nozzle, rivets on a ring like a planet ring, suction
-  clamp at the muzzle.
-- **needle_wasps** (swarm, 2 cells): one single needle wasp with a syringe stinger and wings like solar sails.
+- **moon_cheese** (1 cell): "A small cheese wheel shaped like a cratered mini moon, one wedge cut out showing the
+  pale inside, a single crumb orbiting it like a tiny moon. Mustard rind." Ilja: name and look fit very well.
+- **mining_pick** (L shape, 3 cells): "The pick head runs along the top two cells, the handle drops down the left
+  cell; the empty corner stays free. Meteor-iron head with a teal crystal tip and a small thruster on its back,
+  taped grip, tether clip."
 
-Too boring (round 1): a plain pistol with a hose, an ordinary cheese wedge, a normal yak with frost, a pickaxe
-with tape. Correct and readable, but nothing says space.
+Too boring (first round): a plain pistol with a hose, an ordinary cheese wedge, a normal yak with frost, a
+pickaxe with tape. Correct and readable, but nothing says space.
 
-Not settled yet: Tundra Yak. Neither the frosty yak nor the six-legged comet yak convinced Ilja; pictures can
-be adjusted later.
+Animals from different planets were generated on 2026-11-16 for Ilja to choose from (Tundra Yak, Magma Newt,
+Comet Fox, Rock Crab, Moon Moth, Space Hamster); add the ones he picks here as animal examples.
 
 ## 7. Generating test images (only with Ilja's OK)
 

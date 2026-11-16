@@ -1400,20 +1400,20 @@
     "description": "Lying across the box: the Star Psalter open, a flare curling up from its pages as a flat mustard ribbon."
   },
   "space_hamster": {
-    "brief": "Hamster in a tiny bubble helmet with full cheeks. Accent: mustard.",
-    "description": "A round hamster with stuffed cheeks inside a small bubble helmet, the helmet drawn as a plain outline with one dent. Mustard fur."
+    "brief": "Hamster from a desert planet, cheeks full of ore pebbles. Accent: mustard.",
+    "description": "A round hamster from a thin-air desert planet, cheeks stuffed with shiny ore pebbles, frilly breathing gills on its neck, small room around it. Mustard fur."
   },
   "moon_moth": {
-    "brief": "Pale moth with crescent marks on its wings. Accent: bone.",
-    "description": "A pale moth seen from above, wings spread, a dark crescent mark on each wing, fuzzy body."
+    "brief": "Moth from a planet with two moons. Accent: bone.",
+    "description": "A pale moth from a planet with two moons, each wing marked with two dark crescents, feathery antennae, fuzzy body, wings spread wide."
   },
   "vacuum_slug": {
     "brief": "Slug with a suction mouth and a slime trail. Accent: moss.",
     "description": "Lying across the box: a fat slug with a round suction mouth at the front, a moss-green slime trail behind it. Dry little eye stalks."
   },
   "rock_crab": {
-    "brief": "Crab with a shell of asteroid rock. Accent: copper.",
-    "description": "Lying across the box: a crab whose shell is a lumpy chunk of asteroid rock, two small claws raised, legs tucked under."
+    "brief": "Squat crab from a heavy desert planet, sandstone shell, crystal claw. Accent: copper.",
+    "description": "A squat flat crab from a heavy-gravity desert planet, its shell a slab of layered red sandstone, short thick legs, one oversized claw of rough pale crystal."
   },
   "glow_beetle": {
     "brief": "Tiny beetle with a lamp-like rear drawn as a flat mustard shape. Accent: mustard.",
@@ -1432,8 +1432,8 @@
     "description": "A small round drone with one big camera eye in deep teal and two little rotor arms."
   },
   "comet_fox": {
-    "brief": "Fox with a comet tail. Accent: rust red.",
-    "description": "Lying across the box: a lean fox mid-leap, its tail a long rust-red comet streak of flat strokes."
+    "brief": "Long-legged fox from an icy comet, tail like a comet tail. Accent: rust red.",
+    "description": "A lean fox from a small icy comet, long thin legs for low gravity, mid-leap across the box. Its tail streams behind it as a long trail of frozen dust like a comet tail. Big ears like tiny antenna dishes."
   },
   "repair_bot": {
     "brief": "Small round robot with a wrench arm. Accent: mustard.",
@@ -1452,8 +1452,8 @@
     "description": "Upright: a hovering drone with a small rust-red gun mounted underneath, two rotor arms on top, one lens eye."
   },
   "magma_newt": {
-    "brief": "Newt with cracked lava skin. Accent: rust red.",
-    "description": "Lying across the box: a newt with black skin cracked into rust-red lava lines, small puffs of smoke from its back."
+    "brief": "Newt from a lava planet with basalt skin. Accent: rust red.",
+    "description": "A newt from a lava planet lying across the box, its skin cracked like cooling black basalt with rust-red heat in the cracks as flat colour, its tail ending in a lump of volcanic glass, steam as wavy ink lines."
   },
   "ice_ferret": {
     "brief": "Ferret with frosty white fur and icy whiskers. Accent: deep teal.",
@@ -1660,7 +1660,7 @@
     "description": "Filling the square box: a big shaggy ox with wide curved horns, head lowered, sand caked on its long coat, a short breath cloud at its nostrils, one front hoof scraping the ground."
   },
   "tundra_yak": {
-    "brief": "Heavy long-haired yak with frost on its coat and short thick horns. Accent: bone.",
-    "description": "Filling the square box: a big heavy long-haired yak standing square, frost clinging to its coat, short thick horns and a small bell on a rope around its neck."
+    "brief": "Yak from a frozen night planet, ice-spiked coat, snowshoe hooves. Accent: bone.",
+    "description": "Filling the square box: a huge yak from a frozen night planet. Its shaggy coat is stiff with blue ice spikes, its hooves are wide and flat like snowshoes for walking on frozen methane seas, and big pale eyes for the long darkness. Short heavy horns, a dented copper bell on a rope."
   }
 }
