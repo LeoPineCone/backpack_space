@@ -2,9 +2,9 @@
 import { Container, Graphics, Rectangle, type Text } from "pixi.js";
 import { BUFFS, DEBUFFS, Replay, buildOf, compile, leagueOf, simulate, type BattleEvent, type Build, type CSide, type Status } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { C, W } from "../theme";
+import { C, H, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, disc, tappable, txt } from "../ui";
+import { at, box, disc, screenFill, tappable, txt } from "../ui";
 import { piece, starMarks } from "../pieces";
 import { resultScene } from "./results";
 import { t, tr, upper } from "../i18n";
@@ -30,11 +30,12 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const replay = new Replay(sides, result, rules);
   let speed = 1, endWait = 0.9, left = false;
 
-  root.addChild(box(W, 844, { fill: C.bg }));
+  root.addChild(screenFill(C.bg));
   const fx = new Container();
 
-  // side 1 (enemy) on top, side 0 (you) below
-  const gridY = [384, 82], barY = [630, 8];
+  // side 1 (enemy) at the top of the safe area, side 0 (you) below; extra height on tall screens goes between them
+  const extra = Math.max(0, H - 750), clockY = 330 + extra / 2;
+  const gridY = [clockY + 36, 74], barY = [clockY + 276, 4];
   const builds = [player, ghost];
   const views: SideView[] = [0, 1].map((i) => {
     const b = builds[i]!, hero = sides[i]!.hero;
@@ -74,8 +75,8 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const sizes = [5, 7, 9, 11, 15];
   const clock = new Graphics();
   const phaseLabel = txt("", 11, { color: C.dim, spacing: 1.5, anchor: [0.5, 0] });
-  const lineL = new Graphics().rect(15, 345, 90, 2).fill(C.line), lineR = new Graphics().rect(W - 105, 345, 90, 2).fill(C.line);
-  root.addChild(lineL, lineR, clock, at(phaseLabel, W / 2, 364));
+  const lineL = new Graphics().rect(15, clockY - 1, 90, 2).fill(C.line), lineR = new Graphics().rect(W - 105, clockY - 1, 90, 2).fill(C.line);
+  root.addChild(lineL, lineR, clock, at(phaseLabel, W / 2, clockY + 18));
   const drawClock = () => {
     clock.clear();
     let x = W / 2 - 62;
@@ -83,8 +84,8 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
       const nova = i === sizes.length - 1, col = nova ? C.bad : C.gold;
       const cx = x + r;
       const p = i < replay.phaseIdx ? 1 : i > replay.phaseIdx ? 0 : nova ? 1 : Math.max(0, Math.min(1, (replay.time - phaseStart[i]!) / B.phases[i]!.seconds));
-      if (p > 0) clock.circle(cx, 346, r * (0.35 + 0.65 * p)).fill({ color: col, alpha: 0.35 + 0.65 * p });
-      clock.circle(cx, 346, r).stroke({ width: 2, color: col });
+      if (p > 0) clock.circle(cx, clockY, r * (0.35 + 0.65 * p)).fill({ color: col, alpha: 0.35 + 0.65 * p });
+      clock.circle(cx, clockY, r).stroke({ width: 2, color: col });
       x += r * 2 + 8;
     });
     phaseLabel.text = upper(tr().term(replay.phaseIdx >= B.phases.length ? B.supernova.id : B.phases[replay.phaseIdx]?.id ?? ""));
@@ -100,10 +101,10 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     };
     paint();
     tappable(b, () => { speed = v; speedBtns.forEach((s) => s.paint()); }, new Rectangle(0, 0, 52, 44));
-    root.addChild(at(b, W - 15 - (3 - i) * 60 + 8, 786));
+    root.addChild(at(b, W - 15 - (3 - i) * 60 + 8, H - 56));
     return { paint };
   });
-  root.addChild(at(txt(t("ui.round", { n: player.round }), 13, { color: C.dim, spacing: 2 }), 15, 800));
+  root.addChild(at(txt(t("ui.round", { n: player.round }), 13, { color: C.dim, spacing: 2 }), 15, H - 42));
   root.addChild(fx);
 
   const paint = () => {

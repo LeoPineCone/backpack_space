@@ -4,7 +4,7 @@
  */
 import { Container, Graphics, Rectangle } from "pixi.js";
 import type { Game, Scene } from "../game";
-import { C, H, W } from "../theme";
+import { C, H, SCREEN, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, roundButton, tappable, txt } from "../ui";
 
@@ -33,11 +33,12 @@ export function introOverlay(game: Game, steps: IntroStep[]): Scene {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
     const st = steps[at_]!, s = st.spot, pad = 6;
     const x0 = Math.max(0, s.x - pad), y0 = Math.max(0, s.y - pad), x1 = Math.min(W, s.x + s.w + pad), y1 = Math.min(H, s.y + s.h + pad);
-    // dark everywhere except the spot; a tap anywhere goes on
+    // dark everywhere except the spot (over the whole display); a tap anywhere goes on
+    const S = SCREEN;
     const dim = new Graphics()
-      .rect(0, 0, W, y0).rect(0, y1, W, H - y1).rect(0, y0, x0, y1 - y0).rect(x1, y0, W - x1, y1 - y0)
+      .rect(S.x, S.y, S.w, y0 - S.y).rect(S.x, y1, S.w, S.y + S.h - y1).rect(S.x, y0, x0 - S.x, y1 - y0).rect(x1, y0, S.x + S.w - x1, y1 - y0)
       .fill({ color: C.bgDeep, alpha: 0.82 });
-    const catcher = new Graphics().rect(0, 0, W, H).fill({ color: 0xffffff, alpha: 0.001 });
+    const catcher = new Graphics().rect(S.x, S.y, S.w, S.h).fill({ color: 0xffffff, alpha: 0.001 });
     tappable(catcher, next);
     ring = new Graphics().roundRect(x0, y0, x1 - x0, y1 - y0, 14).stroke({ width: 3, color: C.gold });
     root.addChild(dim, catcher, ring);
@@ -66,7 +67,7 @@ export function introOverlay(game: Game, steps: IntroStep[]): Scene {
     // leave the introduction at once
     card.addChild(at(roundButton("close", 15, close, { fill: C.bg, iconSize: 16 }), cardW - 24, 24));
     root.addChild(at(card, 20, cy));
-    root.hitArea = new Rectangle(0, 0, W, H);
+    root.hitArea = new Rectangle(SCREEN.x, SCREEN.y, SCREEN.w, SCREEN.h);
   };
   render();
   return {

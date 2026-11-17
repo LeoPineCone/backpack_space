@@ -64,7 +64,7 @@ function stepRow(label: string | number, reached: boolean, tiles: Container[], w
 
 function legend(game: Game): Scene {
   const root = new Container();
-  root.addChild(dimmer(W, H, () => game.closeOverlay(), 0.85));
+  root.addChild(dimmer(() => game.closeOverlay(), 0.85));
   const panel = new Container();
   let y = 16;
   for (const ic of PROGRESS_ICONS) {
@@ -101,7 +101,7 @@ export function progressOverlay(game: Game, first: Tab = "hero", onClose?: () =>
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
     const p = game.profile;
-    root.addChild(dimmer(W, H, undefined, 0.96));
+    root.addChild(dimmer(undefined, 0.96));
     const title = txt(upper(t(`ui.tab.${tab}`, { n: p.season.id })), 24, { spacing: 2 });
     root.addChild(at(title, 20, 30), at(infoButton(16, () => game.openOverlay(legend(game))), 20 + title.width + 24, 44));
     root.addChild(at(roundButton("close", 22, () => { game.closeOverlay(); onClose?.(); }, { iconSize: 18 }), W - 42, 44));

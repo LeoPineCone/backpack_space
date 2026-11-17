@@ -1,8 +1,8 @@
 /** Colours, fonts and the design size. The values live in data/theme.json (docs/theme.md); this file only turns them into numbers. */
 import theme from "../../../data/theme.json";
 
-export const W = 390;
-export const H = 844;
+/** design width and safe-area height (see screen.ts) */
+export { W, H, SCREEN } from "./screen";
 
 type Palette = keyof typeof theme.palette;
 type UiName = keyof typeof theme.ui;

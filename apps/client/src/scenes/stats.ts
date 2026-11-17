@@ -14,7 +14,7 @@ export function statsOverlay(game: Game): Scene {
   const root = new Container();
   const data = game.data;
   const s = buildStats(compile(buildOf(game.run!), data), data.rules);
-  root.addChild(dimmer(W, H, () => game.closeOverlay(), 0.94));
+  root.addChild(dimmer(() => game.closeOverlay(), 0.94));
   root.addChild(at(txt(t("ui.stats.title"), 26, { spacing: 2 }), 20, 28));
   root.addChild(at(roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }), W - 42, 44));
 

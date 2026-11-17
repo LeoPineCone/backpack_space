@@ -20,7 +20,7 @@ export function specialOverlay(game: Game, onDone: () => void): Scene {
 
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
-    root.addChild(dimmer(W, H, undefined, 0.96));
+    root.addChild(dimmer(undefined, 0.96));
     // the hero's badge over a pick from the hero's own items, a star over a general artifact
     if (heroPick) root.addChild(at(heroBadge(data.heroes.get(game.run!.hero)!.name, 26, C.gold), W / 2, 56));
     else root.addChild(at(icon("starFull", 44, C.gold), W / 2, 56));
@@ -44,7 +44,7 @@ export function specialOverlay(game: Game, onDone: () => void): Scene {
       card.addChild(at(infoButton(16, () => game.openOverlay(itemPopup(game, id))), W - 40 - 26, 26));
       root.addChild(at(card, 20, top + i * (cardH + gap)));
     });
-    root.addChild(at(pillButton(t("ui.take"), W - 40, 64, () => { takeSpecial(game.run!, chosen); game.closeOverlay(); onDone(); }), 20, 760));
+    root.addChild(at(pillButton(t("ui.take"), W - 40, 64, () => { takeSpecial(game.run!, chosen); game.closeOverlay(); onDone(); }), 20, H - 84));
   };
   render();
   return { root };
