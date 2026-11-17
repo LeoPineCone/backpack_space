@@ -105,7 +105,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | CORE-04 | The shop of a round follows completely from a seed that the caller passes in. | [client-server.md](client-server.md) | M0 | – | decided |
 | CORE-05 | The core has a plausibility check for a backpack of a given round (items exist, layout valid, rarity and tier possible, value fits the gold earned so far). | [client-server.md](client-server.md) | M2 | – | decided |
 | CORE-06 | The season reset follows the league groups (core, `data/meta.json`, glossary text). | [matchmaking.md](matchmaking.md) | M3 | – | decided |
-| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided, rules open (needs designer) |
+| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided; which rules exist still has to be designed (needs designer) |
 | CORE-08 | The data version (major.minor) is part of the data and decides whether a stored backpack can still be matched. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 
 ## Account and profile
@@ -118,7 +118,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | ACC-04 | Every request carries a session token with a short lifetime. The player id comes from the token only. | [client-server.md](client-server.md) | M1 | ACC-02 | decided, lifetime open (technical) |
 | ACC-05 | The profile (ownership, league, pass, hero levels, Galaxies, equipped things) lives on the server. The app keeps only a copy. | [client-server.md](client-server.md) | M1 | ACC-03 | decided |
 | ACC-06 | Everything a player can customise is in the profile: picture, name, background, hero skins, league patch. | [ux.md](ux.md) | M3 | ACC-05 | decided |
-| ACC-07 | Player names: free text with a filter, or picked from a word list. | review | M3 | – | open (needs designer) |
+| ACC-07 | Player names are free text, limited to a maximum length, with a filter that refuses offensive and political names. | review | M3 | – | decided, length open (technical) |
 | ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
 
 ## Run
@@ -164,15 +164,15 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided, contents open (needs designer) |
 | META-07 | League up after a run is shown as a quiet animation in the screen, hero level up as an animation at the end of the run. | [ux.md](ux.md) | M3 | – | decided |
 | META-08 | All numbers of the meta systems are balanced, not placeholders: XP per level, Galaxies per pass level, league points, free Credits. | [retention.md](retention.md) | M6 | – | open (needs designer) |
-| META-09 | A season hero of an earlier season can be bought for Credits after its season. Whether it can also be earned later is open. | [retention.md](retention.md), review | after version 1 | – | open (needs designer) |
-| META-10 | Season length is fixed. | [retention.md](retention.md) | M3 | – | open (needs designer) |
+| META-09 | A season hero of an earlier season can be bought after its season. It cannot be earned by playing. | [retention.md](retention.md), review | after version 1 | – | decided |
+| META-10 | A season lasts between 3 and 6 months. The exact length is fixed. | [retention.md](retention.md) | M3 | – | decided, exact length open (needs designer) |
 
 ## Store
 
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | STORE-01 | All purchases run through RevenueCat. The player is known there only by our player id. | [store.md](store.md) | M4 | ACC-03 | decided |
-| STORE-02 | Real-money purchases: premium pass of a season and selected skins. | [store.md](store.md) | M4 | – | decided, products open (needs designer) |
+| STORE-02 | Real-money purchases: premium pass of a season, selected skins and heroes. | [store.md](store.md) | M4 | – | decided; whether heroes cost real money, Credits or both is set with the prices (needs designer) |
 | STORE-03 | Ownership is created only by the server, after RevenueCat reported the purchase. Every report is checked for its origin and booked once. | [store.md](store.md) | M4 | ACC-05 | decided |
 | STORE-04 | Ownership is stored with its origin (real money, Credits, pass tier, hero level, planet track). | [store.md](store.md) | M4 | ACC-05 | decided |
 | STORE-05 | Credits exist at launch. The balance lives at RevenueCat only. | [store.md](store.md) | M4 | STORE-01 | decided |
@@ -192,14 +192,14 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | UX-01 | Screens, navigation and actions follow [ux.md](ux.md). A new screen or action goes there first. | `CLAUDE.md` | – | – | decided |
-| UX-02 | The states no network, maintenance, update required, searching for an opponent and confirming purchase are described in [ux.md](ux.md) and built. | [client-server.md](client-server.md) | M2 | – | decided, screens open (needs designer) |
+| UX-02 | The states no network, maintenance, update required, searching for an opponent and confirming purchase are described in [ux.md](ux.md) and built. | [client-server.md](client-server.md) | M2 | – | decided; the screens can be designed without the designer (technical) |
 | UX-03 | The client holds no deciding state. Profile, season date and Credits come from the server. | [client-server.md](client-server.md) | M2 | ACC-05 | decided |
 | UX-04 | Every text goes through the language files. English and German are complete. | [i18n.md](i18n.md) | M6 | – | decided |
 | UX-05 | Fonts are part of the app and are not loaded from another server. | review, [mobile.md](mobile.md) | M0 | – | decided |
 | UX-06 | Development helpers (such as the game handle on `window`) exist only in development builds. | review | M0 | – | decided |
 | UX-07 | Outside the safe area the client draws only backgrounds. | [mobile.md](mobile.md) | – | – | decided |
 | UX-08 | Settings: language, music, sounds, account, privacy, help, glossary. | [ux.md](ux.md) | M3 | WEB-03 | decided |
-| UX-09 | The game has music and sounds, and both can be switched off. | [ux.md](ux.md) | M6 | – | decided, content open (needs designer) |
+| UX-09 | The game has sounds, and they can be switched off. Planned are menu sounds and perhaps nothing more; the sound files are still to be made. | [ux.md](ux.md) | M6 | – | decided, content open (needs designer) |
 | UX-10 | Final art replaces the placeholders: items, bags, heroes, skins, planets, league patches, symbols. | [style.md](style.md), [item-art.md](item-art.md) | M6 | – | decided |
 
 ## Backend and operations
@@ -266,11 +266,9 @@ Requirements in state `open` wait for one of these:
 | --- | --- |
 | Provider: person or company | LB-01, LB-02, WEB-03 |
 | Launch platform: Android first? | LB-04, QA-07 |
-| Player names: free text with a filter or a word list | ACC-07 |
 | Quest contents: which special rules, how many per day and week | META-06, CORE-07 |
 | Season length, pass price, Credit packs, skin and hero prices | META-10, STORE-12 |
 | Season hero of season 1 | META-05 |
-| Can a season hero be earned by everyone after its season | META-09 |
 | Meta numbers | META-08 |
 | How to even out refunded Credits that are spent | STORE-09 |
 | Session lifetime, how long a run may stay paused, request limits | ACC-04, BE-06 |
