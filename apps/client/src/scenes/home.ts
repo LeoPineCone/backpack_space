@@ -1,6 +1,6 @@
 /**
  * The start screen: the equipped menu background (star field and its turning planet) fills the screen, the player's picture with a name banner,
- * league patch and profile level on top, currencies on the right, the shop window with current offers, one big FIGHT
+ * league patch and profile level on top, currencies on the right (Credits open the shop; no offers on the start screen for launch), one big FIGHT
  * button (leads to the hero choice, or back into a paused run) and four round buttons at the bottom: quests, pass, shop, settings.
  */
 import { Container, Graphics, Rectangle } from "pixi.js";
@@ -9,7 +9,7 @@ import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, hudPill, pillButton, placeholder, roundButton, tappable, txt } from "../ui";
-import { offerTile, offers, purchaseOverlay, storeScene } from "./store";
+import { storeScene } from "./store";
 import { questsScene } from "./quests";
 import { shopScene } from "./shop";
 import { settingsOverlay } from "./settings";
@@ -83,17 +83,6 @@ export function homeScene(game: Game): Scene {
     const store = () => game.show(storeScene(game, () => homeScene(game)));
     const cr = tappable(hudPill("credits", p.credits, C.line, C.gold, 40), store);
     root.addChild(at(cr, W - 14 - cr.width, 70));
-
-    // the shop window: a few current offers above FIGHT
-    const shown = offers(game).offers;
-    if (shown.length) {
-      const size = 64, gap = 14, rowW = shown.length * size + (shown.length - 1) * gap, wy = H - 204 - 128;
-      const win = new Container();
-      win.addChild(box(rowW + 64, 118, { fill: C.bgDeep, alpha: 0.8, line: C.line, radius: 18 }));
-      win.addChild(at(tappable(icon("cart", 22, C.gold), store, new Rectangle(-16, -16, 32, 32)), 22, 26));
-      shown.forEach((o, i) => win.addChild(at(offerTile(game, o, size, () => game.openOverlay(purchaseOverlay(game, o))), 44 + i * (size + gap), 14)));
-      root.addChild(at(win, (W - rowW - 64) / 2, wy));
-    }
 
     // FIGHT: to the hero choice; a run left through the run menu continues instead
     const paused = game.run && !game.run.over;

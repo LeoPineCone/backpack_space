@@ -163,7 +163,7 @@ Everything the player customises lives in the profile: player picture, player na
 1. Entries: cart button at the bottom, Credits counter, middle button of a hero not owned.
 2. Contents: skins, backgrounds, grid backgrounds, premium pass, heroes of earlier seasons, Credit packs. **Decided** (`docs/retention.md`)
 3. Every purchase shows a preview and asks for confirmation, for Credits and for real money alike. **Decided** (2026-11-17)
-4. The start screen is the shop window: a bit of everything, with the current offers. **Decided** (2026-11-17)
+4. No offers on the start screen for launch; the shop is reached through the cart button and the Credits counter. **Decided** (2026-11-17, replaces the earlier "start screen as shop window")
 
 **M8 Daily and weekly quests** (structure built with placeholder cards: 3 daily, 1 weekly)
 
@@ -184,7 +184,7 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 
 | ID | Name | Kind | Purpose | Contents | State |
 | --- | --- | --- | --- | --- | --- |
-| V1 | Start screen | screen | hub, shop window | planet background, player picture with level and name, league patch, Galaxies, Credits, current offers, FIGHT; bottom row: quests, pass, shop, settings | built (offers are placeholders without prices) |
+| V1 | Start screen | screen | hub | planet background, player picture with level and name, league patch, Galaxies, Credits, FIGHT; bottom row: quests, pass, shop, settings | built |
 | V2 | Hero choice | screen | choose a hero, start a run | back, Galaxies, Credits, hero picture with level, name, 3 trait symbols + "i", ring of heroes, START or SHOP in the middle | built |
 | V3 | Shop + backpack | screen | buy, pack, prepare | hero, lives, round, gold; 6 offers with pins; backpack grid; loose items; health/Energy row + chart; reroll, FIGHT, bin; run menu button | built |
 | V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (name is a placeholder; the patch shows the player's league) |
@@ -214,7 +214,7 @@ Every action has one gesture and one visible response; what is not possible is e
 | --- | --- | --- | --- | --- |
 | V1 | Fight | tap FIGHT | hero choice | – |
 | V1 | Profile, leagues, planets, pass | tap picture, patch, Galaxies, pass | progress on the matching tab | – |
-| V1 | Shop | tap cart or Credits / tap an offer | Credits shop / purchase | – |
+| V1 | Shop | tap cart or Credits | Credits shop | – |
 | V1 | Quests | tap quests | quests | starting a quest: today a toast |
 | V1 | Settings | tap gear | settings (glossary inside) | – |
 | V2 | Choose a hero | tap on the ring | picture, name, level change | – |
