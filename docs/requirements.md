@@ -8,6 +8,7 @@ This document says what has to hold when version 1 launches. It is the source of
 
 - **One line per requirement.** Each has a fixed id (`RUN-04`). Ids never change and are never reused; a dropped requirement keeps its id and is marked as dropped.
 - **State** says how firm a requirement is: `decided` (decided by the designer), `proposal` (suggested, not confirmed yet), `open` (needs a decision before it can be built).
+- **Open points come in two kinds.** `needs designer` marks a point about the game or about money; only the designer decides it, and its issue starts with getting that decision. `technical` marks a point that the planning of its issue may settle with a proposal. Every launch blocker needs the designer.
 - **Whether something is built is not tracked here.** That changes all the time and lives in the issues.
 - **Issues are cut from this document.** An issue names the ids it covers. Before an issue is written, the code is checked for what already exists, so the issue describes only the difference. Requirements in state `open` do not become issues until they are decided.
 - **A concept changes first, then this document, then the code.** If a concept document and this document disagree, that is a mistake to fix, not a choice.
@@ -88,7 +89,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | DEV-01 | The whole system starts locally with documented commands: client, backend and database. No cloud account is needed for that. | designer, 2026-11-17 | M1 | – | decided |
 | DEV-02 | Locally a small HTTP server wraps the same Lambda handlers that run in the cloud. There is no second implementation for local use. | designer, 2026-11-17 | M1 | BE-01 | decided |
 | DEV-03 | Locally the database runs in a container (the local version of DynamoDB). | designer, 2026-11-17 | M1 | BE-04 | decided |
-| DEV-04 | Purchases can be tried locally without a real store. First choice is RevenueCat's test store; if that does not fit, a stand-in behind the same interface. | designer, 2026-11-17 | M4 | – | open: check what RevenueCat offers |
+| DEV-04 | Purchases can be tried locally without a real store. First choice is RevenueCat's test store; if that does not fit, a stand-in behind the same interface. | designer, 2026-11-17 | M4 | – | open: check what RevenueCat offers (technical) |
 | DEV-05 | Locally and in browser tests a development identity replaces Game Center and Play Games. It exists only in development builds and is refused by the test and production backends. | this document | M1 | ACC-02 | decided |
 | DEV-06 | A command fills a local or test database with bot players and their backpacks. Local and test need only a small set, not the full launch amount. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | decided |
 | DEV-07 | Three environments: local, test (cloud) and production (cloud). Test and production are fully separate (data, keys, RevenueCat project). | designer, 2026-11-17 | M1 | – | decided |
@@ -104,7 +105,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | CORE-04 | The shop of a round follows completely from a seed that the caller passes in. | [client-server.md](client-server.md) | M0 | – | decided |
 | CORE-05 | The core has a plausibility check for a backpack of a given round (items exist, layout valid, rarity and tier possible, value fits the gold earned so far). | [client-server.md](client-server.md) | M2 | – | decided |
 | CORE-06 | The season reset follows the league groups (core, `data/meta.json`, glossary text). | [matchmaking.md](matchmaking.md) | M3 | – | decided |
-| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided, rules open |
+| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided, rules open (needs designer) |
 | CORE-08 | The data version (major.minor) is part of the data and decides whether a stored backpack can still be matched. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 
 ## Account and profile
@@ -114,10 +115,10 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | ACC-01 | Sign-in is silent through Game Center (iOS) or Play Games (Android). There is no own login and no guest account. | [ux.md](ux.md) | M1 | – | decided |
 | ACC-02 | The backend checks the identity with Apple or Google itself. | [client-server.md](client-server.md) | M1 | BE-01 | decided |
 | ACC-03 | The backend gives every player its own random player id. The store identity never leaves the backend. | [client-server.md](client-server.md) | M1 | ACC-02 | decided |
-| ACC-04 | Every request carries a session token with a short lifetime. The player id comes from the token only. | [client-server.md](client-server.md) | M1 | ACC-02 | decided, lifetime open |
+| ACC-04 | Every request carries a session token with a short lifetime. The player id comes from the token only. | [client-server.md](client-server.md) | M1 | ACC-02 | decided, lifetime open (technical) |
 | ACC-05 | The profile (ownership, league, pass, hero levels, Galaxies, equipped things) lives on the server. The app keeps only a copy. | [client-server.md](client-server.md) | M1 | ACC-03 | decided |
 | ACC-06 | Everything a player can customise is in the profile: picture, name, background, hero skins, league patch. | [ux.md](ux.md) | M3 | ACC-05 | decided |
-| ACC-07 | Player names: free text with a filter, or picked from a word list. | review | M3 | – | open |
+| ACC-07 | Player names: free text with a filter, or picked from a word list. | review | M3 | – | open (needs designer) |
 | ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
 
 ## Run
@@ -136,8 +137,8 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | RUN-10 | At the end of the run the server books hero XP, Galaxies and league points exactly once. Giving up books the reward for the standing reached. | [client-server.md](client-server.md), [ux.md](ux.md) | M2 | – | decided |
 | RUN-11 | A run survives a lost connection, a closed app and a reinstall. It continues at the same round. | [client-server.md](client-server.md) | M2 | RUN-03 | decided |
 | RUN-12 | A request with a simulation version the server does not accept is answered with "update required". | [client-server.md](client-server.md) | M2 | CORE-03 | decided |
-| RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | open |
-| RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | open: how long |
+| RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | open (technical) |
+| RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | open: how long (technical) |
 
 ## Matchmaking
 
@@ -145,7 +146,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | --- | --- | --- | --- | --- | --- |
 | MM-01 | An opponent is searched by round, then run standing, then league, relaxing step by step. The round is never relaxed. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-02 | Never the player's own backpack, no opponent twice in a run, only backpacks valid under the player's data version. | [matchmaking.md](matchmaking.md) | M2 | CORE-08 | decided |
-| MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided, number of bot players open |
+| MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided, number of bot players open (technical) |
 | MM-04 | Bot backpacks live in the backend and can be replaced without an app update. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-05 | Player backpacks are stored from the first day but handed out as opponents only after the numbers are evaluated. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-06 | The first 2 to 3 runs of a new player go against easier bot backpacks. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | decided |
@@ -159,29 +160,29 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | META-02 | 10 leagues with league points after every run. A reached league is a floor. New players start in the lowest league with 0 points. | [retention.md](retention.md), [ux.md](ux.md) | M3 | RUN-10 | decided |
 | META-03 | The season follows the server date. At the season change the server hands out the league patch, applies the reset and starts the new pass. | [retention.md](retention.md) | M3 | CORE-06 | decided |
 | META-04 | Season pass with a free and a premium lane. The premium lane gives the season hero from level 1. | [retention.md](retention.md) | M3 | – | decided |
-| META-05 | Version 1 ships with a season hero. | hero design in progress | M3 | – | decided, hero open |
-| META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided, contents open |
+| META-05 | Version 1 ships with a season hero. | hero design in progress | M3 | – | decided, hero open (needs designer) |
+| META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided, contents open (needs designer) |
 | META-07 | League up after a run is shown as a quiet animation in the screen, hero level up as an animation at the end of the run. | [ux.md](ux.md) | M3 | – | decided |
-| META-08 | All numbers of the meta systems are balanced, not placeholders: XP per level, Galaxies per pass level, league points, free Credits. | [retention.md](retention.md) | M6 | – | open |
-| META-09 | A season hero of an earlier season can be bought for Credits after its season. Whether it can also be earned later is open. | [retention.md](retention.md), review | after version 1 | – | open |
-| META-10 | Season length is fixed. | [retention.md](retention.md) | M3 | – | open |
+| META-08 | All numbers of the meta systems are balanced, not placeholders: XP per level, Galaxies per pass level, league points, free Credits. | [retention.md](retention.md) | M6 | – | open (needs designer) |
+| META-09 | A season hero of an earlier season can be bought for Credits after its season. Whether it can also be earned later is open. | [retention.md](retention.md), review | after version 1 | – | open (needs designer) |
+| META-10 | Season length is fixed. | [retention.md](retention.md) | M3 | – | open (needs designer) |
 
 ## Store
 
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | STORE-01 | All purchases run through RevenueCat. The player is known there only by our player id. | [store.md](store.md) | M4 | ACC-03 | decided |
-| STORE-02 | Real-money purchases: premium pass of a season and selected skins. | [store.md](store.md) | M4 | – | decided, products open |
+| STORE-02 | Real-money purchases: premium pass of a season and selected skins. | [store.md](store.md) | M4 | – | decided, products open (needs designer) |
 | STORE-03 | Ownership is created only by the server, after RevenueCat reported the purchase. Every report is checked for its origin and booked once. | [store.md](store.md) | M4 | ACC-05 | decided |
 | STORE-04 | Ownership is stored with its origin (real money, Credits, pass tier, hero level, planet track). | [store.md](store.md) | M4 | ACC-05 | decided |
 | STORE-05 | Credits exist at launch. The balance lives at RevenueCat only. | [store.md](store.md) | M4 | STORE-01 | decided |
 | STORE-06 | Buying with Credits: the server deducts first and unlocks after. A repeated request never deducts twice. | [store.md](store.md) | M4 | STORE-05 | decided |
 | STORE-07 | Earned Credits are credited by the server with a unique id per reward. | [store.md](store.md) | M4 | STORE-05, META-01 | decided |
 | STORE-08 | What is refunded is taken back. Refunds are counted per account. Nobody is banned. | [store.md](store.md) | M4 | STORE-04 | decided |
-| STORE-09 | It is defined how the server evens out refunded Credits that are already spent. | [store.md](store.md) | M4 | STORE-08 | open |
+| STORE-09 | It is defined how the server evens out refunded Credits that are already spent. | [store.md](store.md) | M4 | STORE-08 | open (needs designer) |
 | STORE-10 | Every cosmetic has one price field in `data/meta.json` (store product or Credits). Shop and purchase popup read only that. | [store.md](store.md) | M4 | – | decided |
 | STORE-11 | Dropped (2026-11-17). A thing costs either real money or Credits; no real-money value is shown next to a Credits price. Whether the law asks for it is part of LB-10. | [store.md](store.md) | M4 | STORE-12 | dropped |
-| STORE-12 | Products and prices are fixed for the things version 1 starts with: which cost real money, which cost Credits, Credit packs, pass price, hero price. | [store.md](store.md) | M4 | – | open |
+| STORE-12 | Products and prices are fixed for the things version 1 starts with: which cost real money, which cost Credits, Credit packs, pass price, hero price. | [store.md](store.md) | M4 | – | open (needs designer) |
 | STORE-13 | Every purchase shows a preview and asks for confirmation. The start screen shows no offers. | [ux.md](ux.md) | M4 | – | decided |
 | STORE-14 | No restore button as a convenience. Around purchases and refunds only what the stores require is built. Apple requires a way to restore purchases, so this is needed for the iOS release, not for an Android launch. | [store.md](store.md) | M4 | – | decided, check per store |
 | STORE-15 | RevenueCat's behaviour is confirmed in a sandbox project before building: server-side deduction, error on low balance, request limits, automatic answer to Apple's refund question. | [store.md](store.md) | M4 | – | decided |
@@ -191,14 +192,14 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | UX-01 | Screens, navigation and actions follow [ux.md](ux.md). A new screen or action goes there first. | `CLAUDE.md` | – | – | decided |
-| UX-02 | The states no network, maintenance, update required, searching for an opponent and confirming purchase are described in [ux.md](ux.md) and built. | [client-server.md](client-server.md) | M2 | – | decided, screens open |
+| UX-02 | The states no network, maintenance, update required, searching for an opponent and confirming purchase are described in [ux.md](ux.md) and built. | [client-server.md](client-server.md) | M2 | – | decided, screens open (needs designer) |
 | UX-03 | The client holds no deciding state. Profile, season date and Credits come from the server. | [client-server.md](client-server.md) | M2 | ACC-05 | decided |
 | UX-04 | Every text goes through the language files. English and German are complete. | [i18n.md](i18n.md) | M6 | – | decided |
 | UX-05 | Fonts are part of the app and are not loaded from another server. | review, [mobile.md](mobile.md) | M0 | – | decided |
 | UX-06 | Development helpers (such as the game handle on `window`) exist only in development builds. | review | M0 | – | decided |
 | UX-07 | Outside the safe area the client draws only backgrounds. | [mobile.md](mobile.md) | – | – | decided |
 | UX-08 | Settings: language, music, sounds, account, privacy, help, glossary. | [ux.md](ux.md) | M3 | WEB-03 | decided |
-| UX-09 | The game has music and sounds, and both can be switched off. | [ux.md](ux.md) | M6 | – | decided, content open |
+| UX-09 | The game has music and sounds, and both can be switched off. | [ux.md](ux.md) | M6 | – | decided, content open (needs designer) |
 | UX-10 | Final art replaces the placeholders: items, bags, heroes, skins, planets, league patches, symbols. | [style.md](style.md), [item-art.md](item-art.md) | M6 | – | decided |
 
 ## Backend and operations
@@ -210,7 +211,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | BE-03 | Region and services: one European region; HTTP API in front of the Lambdas. | review | M1 | – | decided (Frankfurt) |
 | BE-04 | Data is stored in DynamoDB. | designer, 2026-11-17 | M1 | – | decided |
 | BE-05 | Every request is checked against a schema before anything else happens: fields, types, size. | review | M1 | QA-08 | decided |
-| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided, numbers open |
+| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided, numbers open (technical) |
 | BE-07 | The configuration request carries minimum version, season, server date and a maintenance switch that can be set without a deployment. | [client-server.md](client-server.md) | M1 | – | decided |
 | BE-08 | Each Lambda may reach only what it needs. Secrets are kept in the AWS Parameter Store (chosen for cost), not in code or settings files. | review | M1 | – | decided |
 | BE-09 | Logs are structured and carry the player id but no names or store identities. | review | M1 | – | decided |
@@ -219,7 +220,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | BE-12 | The database can be restored to a point in time. The table design is made with restoring in mind (what belongs together is restored together). Restoring has been tried once before launch. | review | M6 | – | decided |
 | BE-13 | Merging to the main branch rolls out to test automatically. Production is rolled out by a deliberate step. | this document | M1 | QA-02, BE-02 | decided |
 | BE-14 | Timed jobs exist for the season change and for deleting old shop actions. | [client-server.md](client-server.md) | M3 | – | decided |
-| BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided, service open |
+| BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided, service open (technical) |
 
 ## Website
 
@@ -231,7 +232,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | WEB-04 | It has a support contact and states that an account deletion request can be sent to that address (see ACC-08). | this document | M5 | ACC-08 | decided |
 | WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided |
 | WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided |
-| WEB-07 | A domain is registered and set up. | designer, 2026-11-17 | M5 | – | open |
+| WEB-07 | A domain is registered and set up. | designer, 2026-11-17 | M5 | – | open (needs designer) |
 
 ## Launch blockers
 
