@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, dropBag, dropItem, takeSpecial, findCombos, finishRound, moveBag, newRun, place, recipePartners, mergePartners, rollOffers, validLayout } from "@backpack-space/core";
+import { Rng, starLinks, describeItem, reroll, toggleFreeze, toggleLock, pendingMerges, moveItem, buy, dropBag, dropItem, takeSpecial, findCombos, finishRound, giveUp, moveBag, newRun, place, recipePartners, mergePartners, rollOffers, validLayout } from "@backpack-space/core";
 import { checkItemArt, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { playLobby } from "../src/sim/lobby";
 
@@ -220,5 +220,17 @@ describe("stars and saving", () => {
     a.next(); a.next();
     const b = new Rng(a.state);
     expect([b.next(), b.next()]).toEqual([a.next(), a.next()]);
+  });
+});
+
+describe("giving up", () => {
+  it("ends the run in the shop with the rounds fought so far", () => {
+    const rng = new Rng(3);
+    const s = newRun(data, data.heroList[0]!.id, rng);
+    finishRound(s, data, true, rng);
+    giveUp(s);
+    expect(s.over).toBe(true);
+    expect(s.results).toEqual([true]);
+    expect(s.special).toBeNull();
   });
 });

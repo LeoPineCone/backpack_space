@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, fitProfile, heroLevel, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -126,7 +126,7 @@ describe("stored profiles", () => {
     const stored = { ...p, cosmetics: [...p.cosmetics, "bg_gone"], equipped: { background: "bg_gone", patch: "patch_gone" } } as Profile;
     const f = fitProfile(meta, JSON.parse(JSON.stringify(stored)))!;
     expect(f.cosmetics).not.toContain("bg_gone");
-    expect(f.equipped).toEqual({ background: meta.start.background, patch: null });
+    expect(f.equipped).toEqual({ background: meta.start.background, patch: null, picture: meta.start.picture, skins: {} });
     expect(fitProfile(meta, { nonsense: true })).toBeNull();
   });
   it("keep the player's name and give older profiles the start name", () => {
@@ -147,5 +147,26 @@ describe("stored profiles", () => {
     expect(equip(meta, p, "background", "bg_ice")).toBeNull();
     expect(equip(meta, p, "patch", "bg_home")).toBeNull();
     expect(equip(meta, p, "background", "bg_home")!.equipped.background).toBe("bg_home");
+    expect(equip(meta, p, "picture", meta.start.picture)!.equipped.picture).toBe(meta.start.picture);
+    expect(equip(meta, p, "picture", "bg_home")).toBeNull();
+  });
+  it("put a skin only on its own hero, and only when it is owned", () => {
+    const hero = meta.startHeroes[0]!, other = meta.startHeroes[1]!;
+    const id = `${hero}_lv${meta.heroLevels.cosmeticAt[0]}`;
+    const p = newProfile(meta);
+    expect(equipSkin(meta, p, hero, id)).toBeNull();
+    const q = { ...p, cosmetics: [...p.cosmetics, id] };
+    expect(equipSkin(meta, q, other, id)).toBeNull();
+    const worn = equipSkin(meta, q, hero, id)!;
+    expect(worn.equipped.skins[hero]).toBe(id);
+    expect(equipSkin(meta, worn, hero, null)!.equipped.skins[hero]).toBeUndefined();
+    // a stored skin that is no longer owned comes off
+    expect(fitProfile(meta, { ...worn, cosmetics: p.cosmetics })!.equipped.skins).toEqual({});
+  });
+  it("rename the player with a tidied name of 1 to 16 characters", () => {
+    const p = newProfile(meta);
+    expect(rename(p, "  Star   Rider ")!.name).toBe("Star Rider");
+    expect(rename(p, "   ")).toBeNull();
+    expect(rename(p, "x".repeat(17))).toBeNull();
   });
 });

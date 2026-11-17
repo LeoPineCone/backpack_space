@@ -11,6 +11,9 @@ import { parseOrThrow, type GameData } from "./gamedata.js";
 
 const Int = z.number().int().min(0);
 
+/** the longest player name */
+export const NAME_MAX = 16;
+
 /** What a step of a track gives. One kind per reward. */
 export const Reward = z.union([
   z.object({ credits: z.number().int().positive() }).strict(),
@@ -19,13 +22,13 @@ export const Reward = z.union([
 ]);
 export type Reward = z.infer<typeof Reward>;
 
-export const COSMETIC_KINDS = ["background", "grid", "skin", "heroCosmetic", "patch"] as const;
+export const COSMETIC_KINDS = ["background", "grid", "skin", "heroCosmetic", "patch", "picture"] as const;
 export type CosmeticKind = (typeof COSMETIC_KINDS)[number];
 
 export const MetaData = z.object({
   $comment: z.string().optional(),
   /** what a new profile starts with */
-  start: z.object({ name: z.string().min(1).max(16), credits: Int, cosmetics: z.array(z.string()), background: z.string() }).strict(),
+  start: z.object({ name: z.string().min(1).max(NAME_MAX), credits: Int, cosmetics: z.array(z.string()), background: z.string(), picture: z.string() }).strict(),
   /** what a finished run pays */
   run: z.object({
     galaxies: z.object({ perWin: Int, perLifeLeft: Int }).strict(),
@@ -122,6 +125,7 @@ export function buildMeta(raw: unknown, data: GameData): Meta {
   m.planetTrack.forEach((s, i) => checkReward(s.reward, `planetTrack step ${i + 1}`));
   for (const c of m.start.cosmetics) if (!cosmeticById.has(c)) problems.push(`start: unknown cosmetic ${c}`);
   if (cosmeticById.get(m.start.background)?.kind !== "background" || !m.start.cosmetics.includes(m.start.background)) problems.push("start.background must be a background in start.cosmetics");
+  if (cosmeticById.get(m.start.picture)?.kind !== "picture" || !m.start.cosmetics.includes(m.start.picture)) problems.push("start.picture must be a picture in start.cosmetics");
   if (problems.length) throw new Error(`meta.json:\n- ${problems.join("\n- ")}`);
   return { ...m, cosmeticById, startHeroes: data.heroList.filter((h) => !seasonHeroes.has(h.id)).map((h) => h.id) };
 }
@@ -151,7 +155,8 @@ export interface Profile {
   /** heroes owned on top of the start heroes (season heroes) */
   heroes: string[];
   cosmetics: string[];
-  equipped: { background: string; patch: string | null };
+  /** what is worn: menu background, league patch, player picture, and a skin per hero (none = the hero's own look) */
+  equipped: { background: string; patch: string | null; picture: string; skins: Record<string, string> };
   season: SeasonState;
   runs: number;
 }
@@ -159,7 +164,7 @@ export interface Profile {
 export function newProfile(meta: Meta, seasonId = meta.seasons[0]!.id): Profile {
   const p: Profile = {
     name: meta.start.name, galaxies: 0, credits: meta.start.credits, heroXp: {}, heroes: [], cosmetics: [...meta.start.cosmetics],
-    equipped: { background: meta.start.background, patch: null },
+    equipped: { background: meta.start.background, patch: null, picture: meta.start.picture, skins: {} },
     season: { id: seasonId, galaxies: 0, premium: false, points: 0, peak: 0 }, runs: 0,
   };
   grant(p, passRewardsUpTo(meta, p.season, 1, 0));
@@ -344,13 +349,39 @@ export function bookRun(meta: Meta, p0: Profile, r: RunSummary): RunBooking {
 
 // --- equipping
 
-/** Equips an owned background or patch (`null` takes the patch off). Returns null when it cannot be equipped. */
-export function equip(meta: Meta, p0: Profile, slot: "background" | "patch", id: string | null): Profile | null {
+/** Equips an owned background, patch or player picture (`null` takes the patch off). Returns null when it cannot be equipped. */
+export function equip(meta: Meta, p0: Profile, slot: "background" | "patch" | "picture", id: string | null): Profile | null {
   if (id === null) { if (slot !== "patch") return null; const p = clone(p0); p.equipped.patch = null; return p; }
   const c = meta.cosmeticById.get(id);
   if (!c || c.kind !== slot || !p0.cosmetics.includes(id)) return null;
   const p = clone(p0);
   p.equipped[slot] = id;
+  return p;
+}
+
+/** Puts an owned skin (bought or from a hero level) on its hero; `null` goes back to the hero's own look. Null when it cannot be worn. */
+export function equipSkin(meta: Meta, p0: Profile, hero: string, id: string | null): Profile | null {
+  if (id !== null) {
+    const c = meta.cosmeticById.get(id);
+    if (!c || (c.kind !== "skin" && c.kind !== "heroCosmetic") || c.hero !== hero || !p0.cosmetics.includes(id)) return null;
+  }
+  const p = clone(p0);
+  if (id === null) delete p.equipped.skins[hero]; else p.equipped.skins[hero] = id;
+  return p;
+}
+
+/** A tidied player name, or null when it is empty or too long. */
+export function playerName(raw: string): string | null {
+  const n = raw.replace(/\s+/g, " ").trim();
+  return n.length >= 1 && [...n].length <= NAME_MAX ? n : null;
+}
+
+/** Renames the player; null when the name is not allowed. */
+export function rename(p0: Profile, raw: string): Profile | null {
+  const n = playerName(raw);
+  if (n === null) return null;
+  const p = clone(p0);
+  p.name = n;
   return p;
 }
 
@@ -362,8 +393,11 @@ export function fitProfile(meta: Meta, raw: unknown): Profile | null {
   const q = clone(p);
   q.cosmetics = q.cosmetics.filter((c) => meta.cosmeticById.has(c));
   for (const c of meta.start.cosmetics) if (!q.cosmetics.includes(c)) q.cosmetics.push(c);
-  if (!q.cosmetics.includes(q.equipped?.background)) q.equipped = { background: meta.start.background, patch: q.equipped?.patch ?? null };
+  q.equipped = { background: q.equipped?.background, patch: q.equipped?.patch ?? null, picture: q.equipped?.picture, skins: { ...(q.equipped?.skins ?? {}) } };
+  if (!q.cosmetics.includes(q.equipped.background)) q.equipped.background = meta.start.background;
+  if (!q.cosmetics.includes(q.equipped.picture)) q.equipped.picture = meta.start.picture;
   if (q.equipped.patch && !q.cosmetics.includes(q.equipped.patch)) q.equipped.patch = null;
+  for (const [hero, id] of Object.entries(q.equipped.skins)) if (!q.cosmetics.includes(id) || meta.cosmeticById.get(id)?.hero !== hero) delete q.equipped.skins[hero];
   q.heroXp ??= {};
   if (typeof q.name !== "string" || !q.name.trim()) q.name = meta.start.name;
   q.heroes = (q.heroes ?? []).filter((h) => meta.seasons.some((s) => s.hero === h));

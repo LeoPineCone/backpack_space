@@ -1,7 +1,7 @@
 /**
  * The start screen: the equipped menu background (star field and its turning planet) fills the screen, the player's picture with a name banner,
- * league patch and profile level on top, currencies on the right, one big FIGHT button (leads to the hero choice)
- * and four round buttons at the bottom.
+ * league patch and profile level on top, currencies on the right, the shop window with current offers, one big FIGHT
+ * button (leads to the hero choice, or back into a paused run) and four round buttons at the bottom: quests, pass, shop, settings.
  */
 import { Container, Graphics, Rectangle } from "pixi.js";
 import { profileLevel } from "@backpack-space/core";
@@ -9,7 +9,9 @@ import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, hudPill, pillButton, placeholder, roundButton, tappable, txt } from "../ui";
-import { glossary } from "./popup";
+import { offerTile, offers, purchaseOverlay, storeScene } from "./store";
+import { questsScene } from "./quests";
+import { shopScene } from "./shop";
 import { settingsOverlay } from "./settings";
 import { heroScene } from "./hero";
 import { progressOverlay, type Tab } from "./progress";
@@ -78,23 +80,36 @@ export function homeScene(game: Game): Scene {
     // currencies: earned (Galaxies) and bought or slowly earned (Credits)
     const gal = tappable(hudPill("galaxy", p.galaxies, C.line, C.text, 40), () => progress("planets"));
     root.addChild(at(gal, W - 14 - gal.width, 22));
-    const cr = tappable(hudPill("credits", p.credits, C.line, C.gold, 40), () => game.toast(t("toast.heroShopLater")));
+    const store = () => game.show(storeScene(game, () => homeScene(game)));
+    const cr = tappable(hudPill("credits", p.credits, C.line, C.gold, 40), store);
     root.addChild(at(cr, W - 14 - cr.width, 70));
 
-    // FIGHT: to the hero choice
+    // the shop window: a few current offers above FIGHT
+    const shown = offers(game).offers;
+    if (shown.length) {
+      const size = 64, gap = 14, rowW = shown.length * size + (shown.length - 1) * gap, wy = H - 204 - 128;
+      const win = new Container();
+      win.addChild(box(rowW + 64, 118, { fill: C.bgDeep, alpha: 0.8, line: C.line, radius: 18 }));
+      win.addChild(at(tappable(icon("cart", 22, C.gold), store, new Rectangle(-16, -16, 32, 32)), 22, 26));
+      shown.forEach((o, i) => win.addChild(at(offerTile(game, o, size, () => game.openOverlay(purchaseOverlay(game, o))), 44 + i * (size + gap), 14)));
+      root.addChild(at(win, (W - rowW - 64) / 2, wy));
+    }
+
+    // FIGHT: to the hero choice; a run left through the run menu continues instead
+    const paused = game.run && !game.run.over;
     const fw = 240, fh = 84;
     const fight = new Container();
     fight.addChild(box(fw + 12, fh + 12, { fill: C.gold, radius: (fh + 12) / 2 }));
-    fight.addChild(at(pillButton(t("ui.fight"), fw, fh, () => game.show(heroScene(game)), { iconName: "swords", size: 34 }), 6, 6));
+    fight.addChild(at(pillButton(t(paused ? "ui.continue" : "ui.fight"), fw, fh, () => game.show(paused ? shopScene(game) : heroScene(game)), { iconName: paused ? "play" : "swords", size: paused ? 28 : 34 }), 6, 6));
     fight.children[1]!.addChildAt(box(fw, fh, { line: C.bg, lineW: 4, radius: fh / 2 }), 1);
     root.addChild(at(fight, (W - fw - 12) / 2, H - 204));
 
-    // four round buttons
+    // four round buttons: quests, pass, shop, settings (the glossary lives in the settings)
     const bottom: [string, () => void][] = [
-      ["book", () => game.openOverlay(glossary(game))],
-      ["settings", () => game.openOverlay(settingsOverlay(game, render))],
+      ["quest", () => game.show(questsScene(game, () => homeScene(game)))],
       ["pass", () => progress("pass")],
-      ["cart", () => game.toast(t("toast.heroShopLater"))],
+      ["cart", store],
+      ["settings", () => game.openOverlay(settingsOverlay(game, render))],
     ];
     const gap = (W - 2 * 46) / (bottom.length - 1);
     bottom.forEach(([ic, go], i) => root.addChild(at(roundButton(ic, 26, go, { iconSize: 24 }), 46 + i * gap, H - 46)));

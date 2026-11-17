@@ -4,9 +4,11 @@
     "name": "Pilot",
     "credits": 0,
     "cosmetics": [
-      "bg_home"
+      "bg_home",
+      "pic_pilot"
     ],
-    "background": "bg_home"
+    "background": "bg_home",
+    "picture": "pic_pilot"
   },
   "run": {
     "galaxies": {
@@ -205,6 +207,10 @@
       "id": "skin_s1_ysel",
       "kind": "skin",
       "hero": "ysel"
+    },
+    {
+      "id": "pic_pilot",
+      "kind": "picture"
     }
   ],
   "seasons": [

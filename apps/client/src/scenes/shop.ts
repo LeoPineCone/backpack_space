@@ -13,6 +13,7 @@ import { icon } from "../icons";
 import { at, box, disc, heroBadge, hearts, hudPill, infoButton, pillButton, roundButton, screenFill, tappable, txt } from "../ui";
 import { outlinePath, piece, pieceFit, starMarks, zap, ZAP } from "../pieces";
 import { introOverlay, introSeen, type IntroStep } from "./intro";
+import { runMenuOverlay } from "./runmenu";
 import { heroPopup, itemPopup } from "./popup";
 import { specialOverlay } from "./special";
 import { battleScene } from "./battle";
@@ -111,6 +112,8 @@ export function shopScene(game: Game): Scene {
     const gold = hudPill("coin", r.gold, C.gold, C.gold);
     view.addChild(at(gold, W - 15 - gold.width, 14));
     view.addChild(at(infoButton(15, () => openIntro()), W - 15 - gold.width - 26, 36));
+    // the run menu: settings, home (pauses the run), give up
+    view.addChild(at(roundButton("menu", 15, () => game.openOverlay(runMenuOverlay(game, render)), { iconSize: 16 }), W - 15 - gold.width - 62, 36));
 
 
     // offers
