@@ -12,7 +12,7 @@ Players keep coming back because every run feeds three kinds of progress: hero l
 
 ## Opponents
 
-Battles are asynchronous against saved backpacks of real players. While the database is empty or thin, pre-built configurations are used.
+Battles are asynchronous against saved backpacks of real players. While the database is empty or thin, pre-built configurations are used. How an opponent is chosen: [matchmaking.md](matchmaking.md).
 
 ## Currencies
 
@@ -47,12 +47,11 @@ Example restrictions (not decided): organic items only, the supernova comes earl
 
 After each run you gain or lose league points and move up through the leagues. At the end of the season you get a patch for the league you reached that season. One patch can be equipped on the profile, where it is shown.
 
-Decided: 10 leagues. Each league reached is a floor; you cannot drop below it (points inside a league can be lost). At the start of a new season you move back 2 leagues.
+Decided: 10 leagues. Each league reached is a floor; you cannot drop below it (points inside a league can be lost). At the start of a new season you drop to the highest league of the next lower league group (decided 2026-11-17, see [matchmaking.md](matchmaking.md)); in the lowest group you stay where you are. This replaces the earlier rule "2 leagues down", which is what the core still implements.
 
 Ideas (not decided):
 
 - Points by wins in the run, e.g. plus from 7 wins upwards, minus for few wins.
-- Opponent backpacks preferably from your own league.
 - The equipped patch is also visible on the opponent's backpack in battle.
 - League names, draft only (to be sharpened): Dust, Asteroid, Comet, Moon, Planet, Gas Giant, Star, Nova, Pulsar, Quasar.
 
