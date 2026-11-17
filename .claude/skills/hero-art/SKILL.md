@@ -70,6 +70,11 @@ credits used and left in every result message (`openart_account_get`).
 - **Forbidden body parts drift back in.** Venn got human hands in several scene drafts. Write "NO hands, it
   holds things only with tendrils" and give each held object a holder ("a hose held in its vine whip"). Check
   every picture for it before showing it.
+- **Count the fixed parts.** Rook's first full body came out with seven legs (two wrenches and a loose
+  floating hook). Name the parts with a number ("EXACTLY SIX tool legs: 1) ... 6) ..., each attached to the body")
+  and count them in every result. A fix as image2image edit of the faulty picture keeps the rest.
+- Ideas must have a reason in the hero's life. Ilja rejected scrap circling around Rook ("macht keinen Sinn") and
+  a hatch dragged on a chain ("passt gar nicht"). An older picture Ilja already liked can be the better base.
 - Planets in a scene drift to Earth (blue oceans, white clouds). Ask for "a strange alien planet in muted
   rust red, bone and deep teal bands, no blue oceans, no white clouds".
 - For pictures that get cut out (sheet, full body, head): "Background: flat plain light grey (#c8c8c8),
