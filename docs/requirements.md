@@ -71,13 +71,13 @@ M5 has no technical dependency and can run beside everything else. Art (items, h
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | QA-01 | Code and its tests are written together. A change without tests for its new behaviour is not finished. | designer, 2026-11-17 | M0 | – | decided |
-| QA-02 | Every pull request runs `validate`, `typecheck`, the linter and all tests automatically. It is merged only when everything is green. | review | M0 | – | proposal |
-| QA-03 | The repo has one linter and one formatter setup (ESLint, Prettier) that all packages share. | review | M0 | – | proposal |
+| QA-02 | Every pull request runs `validate`, `typecheck`, the linter and all tests automatically. It is merged only when everything is green. | review | M0 | – | decided |
+| QA-03 | The repo has one linter and one formatter setup (ESLint, Prettier) that all packages share. | review | M0 | – | decided |
 | QA-04 | Three test levels: unit tests for core and backend; interface tests against the locally started backend; a few browser runs of the client. | designer, 2026-11-17 | M0 to M2 | DEV-01 | decided |
 | QA-05 | Browser runs cover only what is necessary: start, one whole round, end of a run, one purchase. They run in Chromium and WebKit. | designer, 2026-11-17 | M2 | QA-04 | decided |
 | QA-06 | Reference fights give exactly the same result in Node, Chromium and WebKit. A difference fails the build. | [client-server.md](client-server.md) | M0 | CORE-03 | decided |
-| QA-07 | Before every release a short written checklist is run by hand on a real phone, for what browser tests cannot show: sign-in, purchase, safe area, performance, app start without network. | this document | M6 | – | proposal |
-| QA-08 | No dependency with a known serious vulnerability. `zod` is updated before the backend uses it for input checks. | review | M0 | – | proposal |
+| QA-07 | Before every release a short written checklist is run by hand on a real phone, for what browser tests cannot show: sign-in, purchase, safe area, performance, app start without network. | this document | M6 | – | decided |
+| QA-08 | No dependency with a known serious vulnerability. `zod` is updated before the backend uses it for input checks. | review | M0 | – | decided |
 
 Browser runs say a lot, but not everything. The client is a web app inside a web view; on Android that web view is Chromium, on iOS it is WebKit. So game logic and screens are tested meaningfully in those two browsers. The native parts are not: sign-in, purchases, the safe area on real devices and speed on weak phones. That is what QA-07 is for.
 
@@ -89,10 +89,10 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | DEV-02 | Locally a small HTTP server wraps the same Lambda handlers that run in the cloud. There is no second implementation for local use. | designer, 2026-11-17 | M1 | BE-01 | decided |
 | DEV-03 | Locally the database runs in a container (the local version of DynamoDB). | designer, 2026-11-17 | M1 | BE-04 | decided |
 | DEV-04 | Purchases can be tried locally without a real store. First choice is RevenueCat's test store; if that does not fit, a stand-in behind the same interface. | designer, 2026-11-17 | M4 | – | open: check what RevenueCat offers |
-| DEV-05 | Locally and in browser tests a development identity replaces Game Center and Play Games. It exists only in development builds and is refused by the test and production backends. | this document | M1 | ACC-02 | proposal |
-| DEV-06 | A command fills a local or test database with bot players and their backpacks. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | proposal |
+| DEV-05 | Locally and in browser tests a development identity replaces Game Center and Play Games. It exists only in development builds and is refused by the test and production backends. | this document | M1 | ACC-02 | decided |
+| DEV-06 | A command fills a local or test database with bot players and their backpacks. Local and test need only a small set, not the full launch amount. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | decided |
 | DEV-07 | Three environments: local, test (cloud) and production (cloud). Test and production are fully separate (data, keys, RevenueCat project). | designer, 2026-11-17 | M1 | – | decided |
-| DEV-08 | No secret is in the repo or in the app. Each environment gets its settings from outside. | review | M1 | – | proposal |
+| DEV-08 | No secret is in the repo or in the app. Each environment gets its settings from outside; in the cloud secrets are kept in the AWS Parameter Store. | review | M1 | – | decided |
 
 ## Core
 
@@ -118,7 +118,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | ACC-05 | The profile (ownership, league, pass, hero levels, Galaxies, equipped things) lives on the server. The app keeps only a copy. | [client-server.md](client-server.md) | M1 | ACC-03 | decided |
 | ACC-06 | Everything a player can customise is in the profile: picture, name, background, hero skins, league patch. | [ux.md](ux.md) | M3 | ACC-05 | decided |
 | ACC-07 | Player names: free text with a filter, or picked from a word list. | review | M3 | – | open |
-| ACC-08 | A player can delete the account and get their data from the settings. Deletion is also reachable from the website. | [client-server.md](client-server.md) | M6 | WEB-01 | proposal |
+| ACC-08 | A player can delete the account and get their data from the settings. There is no deletion through the website; outside the app it is possible only by a request to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
 
 ## Run
 
@@ -148,7 +148,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided, number of bot players open |
 | MM-04 | Bot backpacks live in the backend and can be replaced without an app update. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-05 | Player backpacks are stored from the first day but handed out as opponents only after the numbers are evaluated. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
-| MM-06 | The first 2 to 3 runs of a new player go against easier bot backpacks. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | proposal |
+| MM-06 | The first 2 to 3 runs of a new player go against easier bot backpacks. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | decided |
 | MM-07 | The opponent is shown only in the fight, with name and league patch. | [ux.md](ux.md) | M2 | – | decided |
 
 ## Progress, season and quests
@@ -180,10 +180,10 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | STORE-08 | What is refunded is taken back. Refunds are counted per account. Nobody is banned. | [store.md](store.md) | M4 | STORE-04 | decided |
 | STORE-09 | It is defined how the server evens out refunded Credits that are already spent. | [store.md](store.md) | M4 | STORE-08 | open |
 | STORE-10 | Every cosmetic has one price field in `data/meta.json` (store product or Credits). Shop and purchase popup read only that. | [store.md](store.md) | M4 | – | decided |
-| STORE-11 | Next to every Credits price stands the approximate value in real money. | [store.md](store.md) | M4 | STORE-12 | proposal, check legally |
-| STORE-12 | Products and prices are fixed: Credit packs, pass price, skin prices, hero price. | [store.md](store.md) | M4 | – | open |
+| STORE-11 | Dropped (2026-11-17). A thing costs either real money or Credits; no real-money value is shown next to a Credits price. Whether the law asks for it is part of LB-10. | [store.md](store.md) | M4 | STORE-12 | dropped |
+| STORE-12 | Products and prices are fixed for the things version 1 starts with: which cost real money, which cost Credits, Credit packs, pass price, hero price. | [store.md](store.md) | M4 | – | open |
 | STORE-13 | Every purchase shows a preview and asks for confirmation. The start screen shows no offers. | [ux.md](ux.md) | M4 | – | decided |
-| STORE-14 | The settings have a way to restore purchases (reload the profile from the server). | [store.md](store.md) | M4 | – | proposal |
+| STORE-14 | No restore button as a convenience. Around purchases and refunds only what the stores require is built. Apple requires a way to restore purchases, so this is needed for the iOS release, not for an Android launch. | [store.md](store.md) | M4 | – | decided, check per store |
 | STORE-15 | RevenueCat's behaviour is confirmed in a sandbox project before building: server-side deduction, error on low balance, request limits, automatic answer to Apple's refund question. | [store.md](store.md) | M4 | – | decided |
 
 ## Client and UX
@@ -195,7 +195,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | UX-03 | The client holds no deciding state. Profile, season date and Credits come from the server. | [client-server.md](client-server.md) | M2 | ACC-05 | decided |
 | UX-04 | Every text goes through the language files. English and German are complete. | [i18n.md](i18n.md) | M6 | – | decided |
 | UX-05 | Fonts are part of the app and are not loaded from another server. | review, [mobile.md](mobile.md) | M0 | – | decided |
-| UX-06 | Development helpers (such as the game handle on `window`) exist only in development builds. | review | M0 | – | proposal |
+| UX-06 | Development helpers (such as the game handle on `window`) exist only in development builds. | review | M0 | – | decided |
 | UX-07 | Outside the safe area the client draws only backgrounds. | [mobile.md](mobile.md) | – | – | decided |
 | UX-08 | Settings: language, music, sounds, account, privacy, help, glossary. | [ux.md](ux.md) | M3 | WEB-03 | decided |
 | UX-09 | The game has music and sounds, and both can be switched off. | [ux.md](ux.md) | M6 | – | decided, content open |
@@ -206,19 +206,19 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | BE-01 | The backend is TypeScript and serverless (AWS Lambda). It lives in this repo and uses the core as a package. | designer, 2026-11-17 | M1 | – | decided |
-| BE-02 | The cloud setup is described as code in the repo and can be rolled out to test and production the same way. | review | M1 | – | proposal (AWS CDK) |
-| BE-03 | Region and services: one European region; HTTP API in front of the Lambdas. | review | M1 | – | proposal (Frankfurt) |
+| BE-02 | The cloud setup is described as code in the repo and can be rolled out to test and production the same way. | review | M1 | – | decided (AWS CDK) |
+| BE-03 | Region and services: one European region; HTTP API in front of the Lambdas. | review | M1 | – | decided (Frankfurt) |
 | BE-04 | Data is stored in DynamoDB. | designer, 2026-11-17 | M1 | – | decided |
-| BE-05 | Every request is checked against a schema before anything else happens: fields, types, size. | review | M1 | QA-08 | proposal |
-| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | proposal, numbers open |
+| BE-05 | Every request is checked against a schema before anything else happens: fields, types, size. | review | M1 | QA-08 | decided |
+| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided, numbers open |
 | BE-07 | The configuration request carries minimum version, season, server date and a maintenance switch that can be set without a deployment. | [client-server.md](client-server.md) | M1 | – | decided |
-| BE-08 | Each Lambda may reach only what it needs. Secrets are kept in a secret store, not in code or settings files. | review | M1 | – | proposal |
-| BE-09 | Logs are structured and carry the player id but no names or store identities. | review | M1 | – | proposal |
-| BE-10 | Usage numbers (players per day, runs, purchases) come from our own logs and data. No analytics kit of another company in the app. | designer, 2026-11-17 | M6 | BE-09 | proposal |
-| BE-11 | Alarms report when errors, response times or cost leave their normal range. | review | M6 | – | proposal |
-| BE-12 | The database can be restored to a point in time. Restoring has been tried once before launch. | review | M6 | – | proposal |
-| BE-13 | Merging to the main branch rolls out to test automatically. Production is rolled out by a deliberate step. | this document | M1 | QA-02, BE-02 | proposal |
-| BE-14 | Timed jobs exist for the season change and for deleting old shop actions. | [client-server.md](client-server.md) | M3 | – | proposal |
+| BE-08 | Each Lambda may reach only what it needs. Secrets are kept in the AWS Parameter Store (chosen for cost), not in code or settings files. | review | M1 | – | decided |
+| BE-09 | Logs are structured and carry the player id but no names or store identities. | review | M1 | – | decided |
+| BE-10 | Usage numbers (players per day, runs, purchases) come from our own logs and data. No analytics kit of another company in the app at launch. Numbers the stores provide out of the box may be used in addition. | designer, 2026-11-17 | M6 | BE-09 | decided |
+| BE-11 | Alarms report when errors, response times or cost leave their normal range. | review | M6 | – | decided |
+| BE-12 | The database can be restored to a point in time. The table design is made with restoring in mind (what belongs together is restored together). Restoring has been tried once before launch. | review | M6 | – | decided |
+| BE-13 | Merging to the main branch rolls out to test automatically. Production is rolled out by a deliberate step. | this document | M1 | QA-02, BE-02 | decided |
+| BE-14 | Timed jobs exist for the season change and for deleting old shop actions. | [client-server.md](client-server.md) | M3 | – | decided |
 | BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided, service open |
 
 ## Website
@@ -228,9 +228,9 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | WEB-01 | A static website lives in this repo as its own module and is hosted at AWS. | designer, 2026-11-17 | M5 | – | decided |
 | WEB-02 | It has a landing page that advertises the game with art and links to the stores. | designer, 2026-11-17 | M5 | – | decided |
 | WEB-03 | It has imprint, privacy policy and terms of use. The app links to them from the settings. | designer, 2026-11-17 | M5 | LB-01, LB-02 | decided |
-| WEB-04 | It has a support contact and a page for asking to delete the account. | this document | M5 | ACC-08 | proposal |
-| WEB-05 | English and German. | this document | M5 | – | proposal |
-| WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | proposal |
+| WEB-04 | It has a support contact. Account deletion is not offered on the website (see ACC-08). | this document | M5 | ACC-08 | decided |
+| WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided |
+| WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided |
 | WEB-07 | A domain is registered and set up. | designer, 2026-11-17 | M5 | – | open |
 
 ## Launch blockers
@@ -245,16 +245,16 @@ These are not features. Each of them stops the release until it is done, and mos
 | LB-04 | Store developer account for the launch platform, with tax and payout details. | open |
 | LB-05 | The app id is final. It cannot change after the first upload ([mobile.md](mobile.md)). | open |
 | LB-06 | Signing keys exist and are stored safely outside the repo. | open |
-| LB-07 | Store listing: name, texts in both languages, icon, screenshots, age rating, the store's data safety form. | open |
+| LB-07 | Store listing: name, texts in both languages, icon, screenshots, age rating, the store's data safety form. Check whether the store asks for a web address for account deletion requests; if so, a page that names the support address has to be enough (ACC-08). | open |
 | LB-08 | RevenueCat account and the store products are created; one real test purchase and one refund went through. | open |
 | LB-09 | Contracts for data processing with every service that sees player data (AWS, RevenueCat, crash reports). | open |
-| LB-10 | Legal check of the store concept: right of withdrawal, Credits prices, pass. | open |
-| LB-11 | The name "Backpack Space" is checked for conflicts (trademarks, store search). | proposal |
+| LB-10 | Legal check of the store concept: right of withdrawal, the pass, and whether a real-money value has to be shown next to Credits prices (dropped as a feature, STORE-11). | open |
+| LB-11 | The name "Backpack Space" is checked for conflicts (trademarks, store search). | decided |
 | LB-12 | Google Play may ask new developer accounts for a closed test with a number of testers over some days before a release. Check the current rule and plan the time. | check |
 | LB-13 | App icon and start picture replace the Capacitor defaults. | open |
 | LB-14 | Final art is in (UX-10), music and sounds are in (UX-09). | open |
 | LB-15 | Meta numbers are balanced (META-08). | open |
-| LB-16 | A load test of the fight request and a restore of the database were done (BE-12). | proposal |
+| LB-16 | A load test of the fight request and a restore of the database were done (BE-12). | decided |
 | LB-17 | A support address exists and someone reads it. | open |
 
 ## Open decisions

@@ -56,7 +56,6 @@ Rules for spending:
 - **Order:** always deduct first, then unlock. If unlocking fails, the server repeats it until it works. So there is never a skin without a deduction.
 - **Id per booking:** every booking carries a unique id (for example player + skin, or player + pass tier). A repeated request then does not book twice.
 - **Balance too low:** RevenueCat declines, the server reports that to the app, nothing changes.
-- **Show the price in real money:** next to every Credits price stands the approximate value in real money.
 
 ## Ownership and prices in the data
 
@@ -118,11 +117,12 @@ Checked on 2026-11-17 through web search only. The documentation pages themselve
 These points are a technical assessment and not legal advice. Someone qualified should check them before launch.
 
 - **Right of withdrawal in the EU:** digital content has 14 days of withdrawal. It ends when the buyer agrees to the immediate start. Apple and Google collect that consent as the sellers.
-- **Real-money price next to Credits:** the EU consumer protection authorities published principles on in-game currencies in 2025 that ask for this.
+- **Real-money price next to Credits:** the EU consumer protection authorities published principles on in-game currencies in 2025 that ask for this. Decided 2026-11-17: we do not show it; a thing costs either real money or Credits. Whether that is enough is part of the legal check before launch.
 - **Terms of use:** taking things back after a refund has to be stated there.
 - **Privacy:** RevenueCat goes into the privacy policy as a processor. Only our player id is passed on, no name and no e-mail.
-- **Restore purchases:** Apple asks for a visible way to do that. For us a button in the settings that reloads the profile from the server is enough.
+- **Restore purchases:** around purchases and refunds only what the stores require is built, no conveniences. Apple asks for a visible way to restore purchases, so the iOS release needs one (a button in the settings that reloads the profile from the server is enough). An Android launch does not.
 - **Account deletion:** purchase data is kept separately from the game profile because of legal retention periods.
+- **Prices:** which things cost real money and which cost Credits, and how much, is still to be set for the things version 1 starts with.
 
 ## Open questions
 
