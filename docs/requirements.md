@@ -118,7 +118,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | ACC-05 | The profile (ownership, league, pass, hero levels, Galaxies, equipped things) lives on the server. The app keeps only a copy. | [client-server.md](client-server.md) | M1 | ACC-03 | decided |
 | ACC-06 | Everything a player can customise is in the profile: picture, name, background, hero skins, league patch. | [ux.md](ux.md) | M3 | ACC-05 | decided |
 | ACC-07 | Player names: free text with a filter, or picked from a word list. | review | M3 | – | open |
-| ACC-08 | A player can delete the account and get their data from the settings. There is no deletion through the website; outside the app it is possible only by a request to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
+| ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
 
 ## Run
 
@@ -228,7 +228,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | WEB-01 | A static website lives in this repo as its own module and is hosted at AWS. | designer, 2026-11-17 | M5 | – | decided |
 | WEB-02 | It has a landing page that advertises the game with art and links to the stores. | designer, 2026-11-17 | M5 | – | decided |
 | WEB-03 | It has imprint, privacy policy and terms of use. The app links to them from the settings. | designer, 2026-11-17 | M5 | LB-01, LB-02 | decided |
-| WEB-04 | It has a support contact. Account deletion is not offered on the website (see ACC-08). | this document | M5 | ACC-08 | decided |
+| WEB-04 | It has a support contact and states that an account deletion request can be sent to that address (see ACC-08). | this document | M5 | ACC-08 | decided |
 | WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided |
 | WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided |
 | WEB-07 | A domain is registered and set up. | designer, 2026-11-17 | M5 | – | open |
