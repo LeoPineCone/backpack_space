@@ -15,8 +15,10 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 - An old, patched research suit that does not fit what is inside. One arm is swollen tight; the other sleeve hangs half empty and a vine whip slides out of the cuff. Roots and bark push through seams and patches; it stands a little wrong, like a puppet worked from inside.
 - The helmet visor is cracked and packed with tightly coiled rust-red tendrils pressing against the glass, with a cluster of pale seed bulbs among them. Nothing in there looks back.
 - A specimen clamp with a tag is still bolted to the suit's chest from the experiment.
+- The belly of the suit is torn open; rust-red tendrils and pale seed bulbs bulge out of the tear.
+- From the back tank a long thorny stalk arches over the helmet and dangles one large rust-red and bone **lure flower** in front of the visor, like an anglerfish lure. Its poison pollen turns around it as a small flat spiral galaxy (drawn, never glowing).
 
-**Fixed marks:** the cracked visor full of coiled tendrils (no face), the name patch "VENN".
+**Fixed marks:** the cracked visor full of coiled tendrils (no face), the lure flower with its pollen galaxy (decided 2026-11-17; the name patch is now an ordinary detail of the suit).
 **Skin slot:** the suit.
 
 **Mechanics, as they are:** every meal is a gift from the garden and Toxin is the side effect it does not understand. Thorn wall: the suit turns to bark. Hungry jungle: the plant pets are its offshoots. The Watering Drone belonged to the botanist and still follows the suit.

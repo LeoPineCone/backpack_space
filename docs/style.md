@@ -31,7 +31,7 @@ These values were picked by eye from the reference images and are not final. The
 
 - Every hero has one or two fixed marks that never change (for example a single yellow lantern eye and six tool legs). A skin swaps the rest: shell, outfit, props.
 - Skins come in two flavours: a serious one and a funny one. The funny ones are drawn just as seriously as the rest; the joke is in the idea.
-- Hero pictures are generated one by one today, so body details drift between images. Real skins need a fixed base model per hero first.
+- Every hero has a model sheet (front, three-quarter, back) that all later pictures and skins use as reference. How hero pictures are made: `.claude/skills/hero-art/SKILL.md`.
 
 ## Items
 
