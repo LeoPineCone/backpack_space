@@ -40,6 +40,8 @@ Generate at **21:9, 2k, quality medium** (the model has no 2:1). Use this frame 
 > black, rough ink texture. No glossy highlights, no glow, no 3D rendering. No text, no letters, no logos,
 > no frame.
 
+Cinder (made from the planet in Rook's home scene) used: charcoal and soot-black basalt plates, round craters
+with grey rims, a web of thin mustard lava cracks, a few rust-red lava rivers, plain ash-grey bands at the poles.
 Rime's features were: cracked seas of blue-black methane ice, branching white frost ridges, large bone-white ice
 shelves, dark teal fracture lines, small round frozen craters, one long rust-red mineral streak.
 
@@ -86,4 +88,5 @@ see the loop is seamless.
 
 - Clouds or haze as a second, faster layer; rings (gas giant, ringed planet) need an extra flat ring picture.
 - Other screens than the start screen still use the plain background.
-- `bg_home` shows Rime until it has its own place and map.
+- `bg_home` (the default background) and `bg_lava` both show Cinder (2026-11-17, Ilja liked the lava planet
+  from Rook's home scene); `bg_home` may get its own place later.
