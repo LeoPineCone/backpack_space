@@ -1,6 +1,6 @@
 # Matchmaking
 
-Concept only (decided 2026-11-17). Nothing here is built except the seam in the client, `OpponentSource` with `pick` and `submit` (`apps/client/src/opponents.ts`).
+Concept only (decided 2026-11-17). Nothing here is built except the seam in the client, `OpponentSource` with `pick` and `submit` (`apps/client/src/opponents.ts`). The requests between app and backend are drawn in [client-server.md](client-server.md).
 
 Before every fight the app sends the player's backpack to the backend and gets a fitting opponent backpack back. At launch every opponent is a pre-built bot backpack. Player backpacks are collected from day one but are handed out as opponents only later.
 
@@ -11,7 +11,8 @@ Before every fight the app sends the player's backpack to the backend and gets a
 - A backpack score is postponed.
 - Data version and app version are stored separately.
 - The game only starts with a network connection. League points are booked by the server only.
-- The server recomputes every fight of a run when the run is booked.
+- The server hands out the shop seed of every round, checks the backpack for plausibility, and computes the fight right when matching. This replaces the earlier decision to recompute every fight when the run is booked.
+- The app sends the shop actions of every round from the start. The server stores them; a full replay is a later stage.
 - At launch there are 50 bot backpacks per round and run standing, built by invented bot players that have their own league. In the first weeks players fight bots only.
 - Player backpacks are stored without a cap for now.
 - The 10 leagues form 4 league groups; the season reset follows the groups (see below).
@@ -21,12 +22,12 @@ Before every fight the app sends the player's backpack to the backend and gets a
 There is exactly one request per round, when the player taps "Fight".
 
 1. The player finishes the shop phase and taps "Fight".
-2. The app sends the backpack with its metadata to the backend.
-3. The backend stores the backpack as a possible opponent for others.
-4. The backend looks for a fitting opponent and picks the random seed of the fight.
-5. The app gets the opponent backpack, name, league patch and seed.
-6. The app computes the fight with the core and plays it back.
-7. After the last round the app reports the end of the run. The backend recomputes all fights of the run and books league points, hero XP and Galaxies.
+2. The app sends the backpack and the shop actions of the round to the backend.
+3. The backend checks the backpack for plausibility and commits it. The committed backpack is also a possible opponent for others.
+4. The backend looks for a fitting opponent, picks the random seed of the fight and computes the fight right away.
+5. The app gets the opponent backpack, name, league patch, seed, the result and the shop seed of the next round.
+6. The app computes the same fight with the core and plays it back.
+7. After the last round the app reports the end of the run. The backend books league points, hero XP and Galaxies from the standing it already knows.
 
 If the connection drops in the middle of a run, the run stays paused on the device and the request is repeated. A run can be continued later.
 
@@ -112,13 +113,14 @@ The fight is always computed with the data of the current player, so a stored ba
 
 League points come from the server only and cannot be forged on the device.
 
-- The backend picks opponent and seed. The app computes and shows the fight.
-- At the end of the run the backend recomputes every fight with the same inputs (backpack of the round, opponent, seed). The core is deterministic, so the result has to match.
+- The backend picks opponent and seed and computes the fight inside the same request. The app computes the same fight to show it. The core is deterministic, so the result has to match.
 - The server's result is booked. If the app differs, the server wins.
+- The backend commits the backpack before it picks the opponent, so a backpack cannot be fitted to the opponent.
+- The backend hands out the shop seed of every round and checks every backpack for plausibility. The shop actions are stored from the start, so that runs can be replayed later to find cheated backpacks (see [client-server.md](client-server.md)).
 - The game does not start without a network connection. At launch there is no offline mode and the app ships no bot backpacks.
 - Sign-in runs silently through Game Center or Google Play Games, as decided in [ux.md](ux.md).
 
-Measured on 2026-11-17 with the stored bot builds (`playground/ghosts.json`): one fight takes 0.5 to 0.8 milliseconds to compute, a whole run about 10 milliseconds. 100,000 runs a day cost about 17 minutes of one processor core. If that ever becomes too much, the server can switch to spot checks without any change in the app.
+Measured on 2026-11-17 with the stored bot builds (`playground/ghosts.json`): one fight takes 0.5 to 0.8 milliseconds to compute, a whole run about 10 milliseconds. 100,000 runs a day cost about 17 minutes of one processor core.
 
 ## Phases
 
@@ -144,7 +146,7 @@ Compressed it is about a third of that. A cap only becomes necessary when the nu
 
 - **Backpack score.** Idea: win rate against fixed reference backpacks of the same round. The field is reserved in the stored backpack.
 - **Loading the opponent in the background.** During the shop phase the backend could already prepare candidates, so that there is no wait before the fight. To be added if the request takes noticeably long.
-- **Backend technology.** Hosting, database and interfaces are chosen later.
+- **Full replay of the shop actions.** Switched on if the analysis of the stored actions shows outliers.
 
 ## Open questions
 
