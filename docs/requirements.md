@@ -135,7 +135,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | RUN-08 | The server computes the fight inside the fight request and stores result and standing. The app computes the same fight only to show it. | [client-server.md](client-server.md) | M2 | CORE-03 | decided |
 | RUN-09 | Every request of a run can be repeated and returns the same answer. A round never gets a second opponent. | [client-server.md](client-server.md) | M2 | – | decided |
 | RUN-10 | At the end of the run the server books hero XP, Galaxies and league points exactly once. Giving up books the reward for the standing reached. | [client-server.md](client-server.md), [ux.md](ux.md) | M2 | – | decided |
-| RUN-11 | A run survives a lost connection, a closed app and a reinstall. It continues at the same round, with the gold, loose items and pinned offers the player had. | [client-server.md](client-server.md), [backend.md](backend.md) | M2 | RUN-03 | decided |
+| RUN-11 | A run survives a lost connection and a closed app on the same device. It continues at the same round. Continuing after a reinstall or on another device is not in scope for version 1. | [client-server.md](client-server.md), [backend.md](backend.md) | M2 | RUN-03 | decided |
 | RUN-12 | A request with a simulation version the server does not accept is answered with "update required". | [client-server.md](client-server.md) | M2 | CORE-03 | decided |
 | RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | open (technical) |
 | RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | open: how long (technical) |

@@ -109,8 +109,6 @@ The first three steps happen once per run, everything from the shop phase on rep
 
 **Store the actions from the start.** The server stores the actions of every round but does not check them at launch. After some weeks the stored runs can be replayed offline to find outliers. If there are any, the replay is switched on inside the request. That is then a change on the server only; app and interface stay the same.
 
-**State to carry over.** Because the server does not replay the shop phase at launch, it cannot know the gold that is left, the loose items and the pinned offers. The fight request carries these three things too, and the server stores them with the standing after a plausibility check. Without them a run could not continue on another device. Details in [backend.md](backend.md).
-
 **Commit first, then match.** The server commits the checked backpack before it picks opponent and fight seed. So nobody can fit the backpack to the opponent. The committed backpack is also the possible opponent for others.
 
 **Compute right away.** The server computes the fight inside the request, applies the merges and stores result and new standing. The answer carries opponent, fight seed, the result and the shop seed of the next round. The app computes the same fight with the core to play it back. If it gets a different result, the server's result counts.
@@ -177,7 +175,7 @@ The game runs online only, but a connection may drop at any time without anythin
 
 For this to work, the answer to a fight request is bound to run and round, not to the single call. A second call for the same round never picks a new opponent, not even with a different backpack. That prevents asking again and again until a weak opponent comes.
 
-Because the server knows the standing after every round and the shop seed, a run can also be continued after a reinstall or on another device. Only the actions of the shop phase in progress are lost. It starts again, with the same offers.
+Continuing a run after a reinstall or on another device is not in scope for version 1 (decided 2026-11-17). The gold that is left, the loose items and the pinned offers exist only on the device, because the server does not replay the shop phase at launch. See [backend.md](backend.md).
 
 ## Purchase for real money
 
@@ -258,7 +256,7 @@ All requests except the configuration and the webhook need the session token.
 | `POST /profile/equip` | change the profile | picture, name, background, skin per hero | profile | yes |
 | `GET /runs/current` | app start | nothing | open run with standing and shop seed of the round, or nothing | yes |
 | `POST /runs` | start a run | hero, simulation version | run id, shop seed for round 1 | yes, while a run is open the same one comes back |
-| `POST /runs/{id}/rounds/{n}/fight` | Fight button | backpack, actions of the round, state to carry over (gold, loose items, pinned offers), simulation version | opponent backpack, name, league patch, fight seed, result, shop seed of the next round | yes, same answer per run and round |
+| `POST /runs/{id}/rounds/{n}/fight` | Fight button | backpack, actions of the round, simulation version | opponent backpack, name, league patch, fight seed, result, shop seed of the next round | yes, same answer per run and round |
 | `POST /runs/{id}/finish` | end of the run or giving up | reason (finished, gave up) | rewards, profile | yes, same answer |
 | `POST /shop/buy` | purchase with Credits | thing | profile or "balance too low" | yes, deducts only once |
 | `POST /hooks/revenuecat` | RevenueCat reports a purchase or a refund | event from RevenueCat | confirmation | yes, every event counts once |

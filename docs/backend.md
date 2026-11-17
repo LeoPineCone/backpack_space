@@ -111,7 +111,7 @@ One partition per player. One query for that partition loads everything the game
 | --- | --- | --- |
 | `P#<playerId>` | `PROFILE` | name, Galaxies, hero XP, season state, equipped things, run count, refund count, a version number, created at |
 | `P#<playerId>` | `OWN#<thing>` | one entry per owned thing (cosmetic, hero, premium pass of a season) with its origin and date |
-| `P#<playerId>` | `RUN` | the open run: run id, hero, round, lives, wins, the backpack after the last round, the state to carry over, the shop seed of the current round, the opponents already met |
+| `P#<playerId>` | `RUN` | the open run: run id, hero, round, lives, wins, the backpack after the last round, the shop seed of the current round, the opponents already met |
 | `P#<playerId>` | `ROUND#<runId>#<nn>` | one entry per fought round: the committed backpack, the opponent backpack with name and patch, the fight seed, the result, and the complete answer that was sent |
 | `P#<playerId>` | `DONE#<runId>` | the booked end of a run with the complete answer that was sent |
 | `P#<playerId>` | `EVT#<eventId>` | a handled RevenueCat event, so that a repeated report is not booked twice |
@@ -125,7 +125,7 @@ Notes:
 - **Writes that belong together are one transaction.** A fight writes the round entry (only if it does not exist yet) and moves the open run forward (only if it is still at that round). Finishing a run updates the profile (only if its version number is unchanged), writes `DONE#` and removes `RUN`. Two requests at the same time cannot both win.
 - **Old rounds.** `ROUND#` and `DONE#` entries of finished runs are removed after a set time (proposal: 30 days); the backpacks live on in the pool.
 
-**The state to carry over.** At launch the server checks a backpack for plausibility only and does not replay the shop phase. So it cannot know by itself how much gold is left, which items lie loose and which offers are pinned. For a run to continue on another device (RUN-11), the fight request therefore also carries these three things, and the server stores them in `RUN` after a plausibility check (the gold cannot be more than was earned). When the full replay is switched on later, the server computes them itself and the field is only compared. This is an addition to the fight request in [client-server.md](client-server.md).
+**No move to another device.** At launch the server checks a backpack for plausibility only and does not replay the shop phase. So it does not know how much gold is left, which items lie loose and which offers are pinned. The app keeps these on the device. Continuing a run on another device or after a reinstall is not in scope for version 1 (decided 2026-11-17): if the app has no local copy of the open run, the server ends that run and books it with the standing it knows (proposal). The fight request stays as it is in [client-server.md](client-server.md).
 
 ### Table `backpacks`
 
@@ -162,7 +162,7 @@ This is the heart of the backend, so here is the order inside `game`:
 1. Load the player's partition from `players`.
 2. If a `ROUND#` entry for this run and round exists, return its stored answer. Done.
 3. Check: is there an open run, is it at this round, does the simulation version match.
-4. Check the backpack for plausibility with the core (CORE-05), and the state to carry over.
+4. Check the backpack for plausibility with the core (CORE-05).
 5. Find an opponent in `backpacks` (never the player's own, none met before in this run).
 6. Roll the fight seed and the shop seed of the next round through the random port.
 7. Compute the fight with the core, apply the merges, work out lives and wins.
@@ -177,7 +177,7 @@ The backpack is "committed" by step 8: from then on the round has exactly one ba
 - **Simulation version** (CORE-03): one id made from the core and the data. The backend holds exactly one simulation build. A run request with another version gets `update_required`.
 - **Open runs after a version change** (RUN-13), proposal: a run is not tied to the version it started with. Every fight is computed once, by the server, at the time of the request; the app only has to have the same version at that moment. So after an update an open run simply continues. Only when the data's major version changed (an item was removed or reshaped) the stored backpack may no longer be valid; then the run is ended and booked as it stands.
 - **Rolling out a new version.** App and backend change version at different times: the store needs hours or days to deliver an update, the backend changes in a minute. Proposal: during a rollout the `game` Lambda carries two simulation builds, the previous and the new one, and uses the one the request names. When enough players have updated, the minimum version in the settings is raised and the old build is removed with the next deployment. This needs the build to keep the previous simulation build; the simpler alternative is a short maintenance window at every version change.
-- **Data in the app or from the server**: today the app ships the game data. Then every balance change is an app release. Loading the data from the server at start would allow balance changes without a release. That is a product decision and listed as open.
+- **Data in the app**: the app ships the game data and the pictures (decided 2026-11-17). A balance change or a new item is an app release. The server carries the same data build for its checks and fights.
 
 ## Settings and secrets
 
@@ -246,7 +246,7 @@ Interface tests start the local server against DynamoDB Local and call it over H
 
 | Point | Kind |
 | --- | --- |
-| Game data shipped in the app or loaded from the server (balance changes without a release) | needs designer |
+| What happens to an open run without a local copy (proposal: end it and book the known standing) | needs designer |
 | Two simulation builds during a rollout, or a maintenance window | technical |
 | Test and production in one AWS account or in two | technical |
 | Start without a web firewall | technical |
