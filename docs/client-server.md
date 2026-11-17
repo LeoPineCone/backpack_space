@@ -175,7 +175,7 @@ The game runs online only, but a connection may drop at any time without anythin
 
 For this to work, the answer to a fight request is bound to run and round, not to the single call. A second call for the same round never picks a new opponent, not even with a different backpack. That prevents asking again and again until a weak opponent comes.
 
-Because the server knows the standing after every round and the shop seed, a run can also be continued after a reinstall or on another device. Only the actions of the shop phase in progress are lost. It starts again, with the same offers.
+Continuing a run after a reinstall or on another device is not in scope for version 1 (decided 2026-11-17). The gold that is left, the loose items and the pinned offers exist only on the device, because the server does not replay the shop phase at launch. See [backend.md](backend.md).
 
 ## Purchase for real money
 
