@@ -9,6 +9,7 @@ Design draft of a backpack auto-battler in space: shared battle core, game data,
 - Requirements for version 1 (what has to hold at launch, milestones, dependencies, launch blockers): [docs/requirements.md](docs/requirements.md)
 - Matchmaking (opponent per round, bot backpacks, league groups, versions; concept): [docs/matchmaking.md](docs/matchmaking.md)
 - Client and server (every request between app and backend, flows as diagrams, error cases; concept): [docs/client-server.md](docs/client-server.md)
+- Backend (code layout, Lambdas, tables, session token, local setup, rollout; design draft): [docs/backend.md](docs/backend.md)
 - Store and purchases (RevenueCat, real money and Credits, refunds; concept): [docs/store.md](docs/store.md)
 - Every hero, item, bag and recipe: [docs/catalog.md](docs/catalog.md) (generated)
 - Game terms in English and German: [docs/glossary.md](docs/glossary.md) (generated from `data/glossary.json`)
