@@ -23,6 +23,7 @@
     { "id": "round", "group": "run", "en": "Round", "de": "Runde", "text": "Shop and packing, then one fight.", "code": ["RunState.round"] },
     { "id": "life", "group": "run", "en": "Life", "de": "Leben", "text": "A run starts with {lives}. A lost fight costs one.", "code": ["RunState.lives", "rules.lives"] },
     { "id": "gold", "group": "run", "en": "Gold", "de": "Gold", "text": "Money for the shop, paid every round.", "code": ["RunState.gold", "rules.goldPerRound"] },
+    { "id": "giveUp", "group": "run", "en": "Give up", "de": "Aufgeben", "icon": "flag", "text": "Ends the run in the shop. The reward counts the rounds fought so far.", "code": ["giveUp"] },
     { "id": "galaxies", "group": "meta", "en": "Galaxies", "de": "Galaxien", "icon": "galaxy", "text": "Earned after every run: wins plus lives left. They move the season pass and the planet track.", "code": ["Profile.galaxies", "meta.run.galaxies", "runGalaxies"] },
     { "id": "credits", "group": "meta", "en": "Credits", "de": "Credits", "icon": "credits", "text": "Premium currency for skins and heroes of earlier seasons. Bought, or earned slowly.", "code": ["Profile.credits"] },
     { "id": "heroXp", "group": "meta", "en": "Hero XP", "de": "Helden-XP", "icon": "xp", "text": "Every run gives the hero you played XP. XP raises the hero's level; levels give cosmetics.", "code": ["Profile.heroXp", "meta.heroLevels", "heroLevel"] },
@@ -34,6 +35,10 @@
     { "id": "patch", "group": "meta", "en": "League patch", "de": "Liga-Patch", "icon": "patch", "text": "Paid at the end of a season for the league you reached. Wear one on your profile.", "code": ["patchId", "Profile.equipped.patch"] },
     { "id": "profileLevel", "group": "meta", "en": "Profile level", "de": "Profilstufe", "icon": "xp", "text": "The number on your picture: the levels of all your heroes added up.", "code": ["profileLevel"] },
     { "id": "cosmetic", "group": "meta", "en": "Cosmetic", "de": "Kosmetik", "icon": "skin", "text": "Changes the look only, never the game: skins, backgrounds, grid backgrounds, patches.", "code": ["meta.cosmetics"] },
+    { "id": "skin", "group": "meta", "en": "Skin", "de": "Skin", "text": "Another look for one hero. Worn in the profile.", "code": ["Profile.equipped.skins", "equipSkin"] },
+    { "id": "playerPicture", "group": "meta", "en": "Player picture", "de": "Spielerbild", "text": "Your picture on the start screen. Chosen in the profile.", "code": ["Profile.equipped.picture"] },
+    { "id": "quest", "group": "meta", "en": "Quest", "de": "Aufgabe", "icon": "quest", "text": "A daily or weekly run with special rules that pays Galaxies.", "code": ["questsScene"] },
+    { "id": "creditsShop", "group": "meta", "en": "Shop (Credits)", "de": "Shop (Credits)", "icon": "cart", "text": "Where skins, backgrounds, heroes of earlier seasons and the premium pass are bought. Every purchase shows a preview first.", "code": ["storeScene", "purchaseOverlay"] },
 
     { "id": "backpack", "group": "backpack", "en": "Backpack", "de": "Rucksack", "text": "Where your bags and items lie. Only what is in the backpack fights.", "code": ["ship (in effects: per.ship, to: ship, shipUse)", "Build", "Board"] },
     { "id": "grid", "group": "backpack", "en": "Grid", "de": "Raster", "text": "The largest area the backpack can cover ({grid.w}×{grid.h} cells). It only becomes usable where bags lie.", "code": ["rules.grid"] },

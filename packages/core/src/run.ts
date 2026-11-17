@@ -197,6 +197,13 @@ export function takeSpecial(s: RunState, choice: number): void {
 }
 export function buildOf(s: RunState): Build { return { hero: s.hero, round: s.round, bags: s.bags.map((p) => ({ ...p })), items: s.items.map((p) => ({ ...p })) }; }
 
+/** Gives the run up from the shop: it ends with the rounds fought so far, and the reward is booked as for any finished run. */
+export function giveUp(s: RunState): void {
+  s.special = null;
+  s.merged = [];
+  s.over = true;
+}
+
 /** Books the fight of this round, merges what lies together and opens the next shop (or ends the run). */
 export function finishRound(s: RunState, data: GameData, won: boolean, rng: Rng): void {
   if (won) s.wins++; else s.lives--;

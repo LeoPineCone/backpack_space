@@ -1,6 +1,6 @@
 # UX: flows, navigation, screens and actions
 
-Status: 2026-11-17. Ilja decided all open questions of the first draft on that day. **Decided** marks his decisions; *assumption* marks what the client does today without an explicit decision; **open** marks what is still to settle. Built = in `apps/client` after PR #33.
+Status: 2026-11-17. Ilja decided all open questions of the first draft on that day. **Decided** marks his decisions; *assumption* marks what the client does today without an explicit decision; **open** marks what is still to settle. Built = in `apps/client` (structure of every screen below is built; placeholders are named in the State column).
 
 Related: game rules in `docs/concept.md`, meta progress in `docs/retention.md`, colours and buttons in `docs/theme.md`, safe area in `docs/mobile.md`.
 
@@ -112,7 +112,9 @@ A run is a loop of shop, fight and result: 12 rounds, or until the 4 lives are g
 **F7 Leave and resume**
 
 1. The run is stored on the device. Closing and reopening the app continues in the shop or in the running fight (same outcome).
-2. **Run menu** behind a small button at the top of the shop: settings, home (pauses the run) and give up (ends the run with the current state and books the reward). **Decided** (2026-11-17), not built.
+2. **Run menu** behind a small button at the top of the shop: settings, home (pauses the run) and give up (ends the run with the current state and books the reward). **Decided** (2026-11-17)
+3. A paused run: the big button on the start screen reads CONTINUE and leads back into the shop. *Assumption*
+4. Giving up needs a second tap on the same row (no dialog). *Assumption*
 
 ## Flows: progress and meta
 
@@ -156,21 +158,21 @@ Everything the player customises lives in the profile: player picture, player na
 1. On start the client checks whether a new season has begun.
 2. Then: the patch of the old season is booked, 2 leagues down, a new pass. **Decided** (rules). Shown subtly like a league promotion. *Assumption*
 
-**M7 Credits shop** (not built)
+**M7 Credits shop** (structure built; what is on sale, prices and paying are open, BUY shows a toast)
 
 1. Entries: cart button at the bottom, Credits counter, middle button of a hero not owned.
 2. Contents: skins, backgrounds, grid backgrounds, premium pass, heroes of earlier seasons, Credit packs. **Decided** (`docs/retention.md`)
 3. Every purchase shows a preview and asks for confirmation, for Credits and for real money alike. **Decided** (2026-11-17)
-4. The start screen is the shop window: a bit of everything, with the current offers. **Decided** (2026-11-17)
+4. No offers on the start screen for launch; the shop is reached through the cart button and the Credits counter. **Decided** (2026-11-17, replaces the earlier "start screen as shop window")
 
-**M8 Daily and weekly quests** (not built)
+**M8 Daily and weekly quests** (structure built with placeholder cards: 3 daily, 1 weekly)
 
 1. One entry point for both, a button in the bottom row of the start screen. **Decided** (2026-11-17)
 2. Every quest is a whole run, maybe shorter or longer than a normal one, always with special rules; rewards are Galaxies. **Decided** Which quests and rules: **open**.
 
 **M9 Settings**
 
-The gear button: language, music, sounds, account, privacy, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Today only the language is built.
+The gear button: language, music, sounds, account, privacy, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; account, privacy and help are placeholders.
 
 **M10 Account**
 
@@ -182,14 +184,14 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 
 | ID | Name | Kind | Purpose | Contents | State |
 | --- | --- | --- | --- | --- | --- |
-| V1 | Start screen | screen | hub, shop window | planet background, player picture with level and name, league patch, Galaxies, Credits, current offers, FIGHT; bottom row: quests, pass, shop, settings | built (offers and quests missing) |
+| V1 | Start screen | screen | hub | planet background, player picture with level and name, league patch, Galaxies, Credits, FIGHT; bottom row: quests, pass, shop, settings | built |
 | V2 | Hero choice | screen | choose a hero, start a run | back, Galaxies, Credits, hero picture with level, name, 3 trait symbols + "i", ring of heroes, START or SHOP in the middle | built |
-| V3 | Shop + backpack | screen | buy, pack, prepare | hero, lives, round, gold; 6 offers with pins; backpack grid; loose items; health/Energy row + chart; reroll, FIGHT, bin; run menu button | built (run menu missing) |
-| V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (name and patch missing) |
+| V3 | Shop + backpack | screen | buy, pack, prepare | hero, lives, round, gold; 6 offers with pins; backpack grid; loose items; health/Energy row + chart; reroll, FIGHT, bin; run menu button | built |
+| V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (name is a placeholder; the patch shows the player's league) |
 | V5 | Round result | screen | outcome of the round | victory/defeat, hearts, top 3 items, chart, CONTINUE | built |
-| V6 | Run end | screen | summary and reward | Galaxies, final backpack, XP and level (animated), league points (animated), unlocks, NEW RUN, home, share | built (animations missing) |
-| V7 | Credits shop | screen | buy | sections: offers, skins, heroes, backgrounds, Credits | missing |
-| V8 | Quests | screen | daily and weekly | list with progress and reward; starts a run with special rules | missing |
+| V6 | Run end | screen | summary and reward | Galaxies, final backpack, XP and level (animated), league points (animated), unlocks, NEW RUN, home, share | built |
+| V7 | Credits shop | screen | buy | sections: offers, skins, heroes, backgrounds, Credits | built (prices "?") |
+| V8 | Quests | screen | daily and weekly | list with progress and reward; starts a run with special rules | built (placeholder cards) |
 | P1 | Item popup | popup | what an item does | picture, name, symbol rows, "i", recipe radar; in the backpack: turn, sell, lock | built |
 | P2 | Hero popup | popup | what a hero does | passive as symbol rows, paths, "i" | built |
 | P3 | "i" legend | popup | explain this popup's symbols | symbol + term + sentence, link to the glossary | built |
@@ -198,11 +200,11 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | P6 | Backpack numbers | popup | numbers of the backpack | health, Energy, waiting, damage per second, healing, Shield, melee/ranged | built |
 | P7 | Fight details | popup | damage by source | both sides side by side | built |
 | P8 | Introduction | overlay | first run | spot, symbols, one line, dots, X | built |
-| P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; profile holds everything to customise | built (placeholders; name, picture, skins missing) |
+| P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; profile holds everything to customise | built (placeholder rewards) |
 | P10 | Glossary | popup (from settings and "i") | all terms | groups, scrolls | built |
-| P11 | Settings | popup | options | language, music, sounds, account, privacy, help, glossary | partly (language only) |
-| P12 | Purchase | popup | confirm a purchase | preview, price, BUY | missing |
-| P13 | Run menu | popup | leave a run | settings, home, give up | missing |
+| P11 | Settings | popup | options | language, music, sounds, account, privacy, help, glossary | built (music and sounds without sound; account, privacy, help placeholders) |
+| P12 | Purchase | popup | confirm a purchase | preview, price, BUY | built (BUY shows a toast) |
+| P13 | Run menu | popup | leave a run | settings, home, give up | built |
 
 ## Actions
 
@@ -212,13 +214,13 @@ Every action has one gesture and one visible response; what is not possible is e
 | --- | --- | --- | --- | --- |
 | V1 | Fight | tap FIGHT | hero choice | – |
 | V1 | Profile, leagues, planets, pass | tap picture, patch, Galaxies, pass | progress on the matching tab | – |
-| V1 | Shop | tap cart, Credits or an offer | Credits shop | today a "later" toast |
-| V1 | Quests | tap quests | quests | not built |
+| V1 | Shop | tap cart or Credits | Credits shop | – |
+| V1 | Quests | tap quests | quests | starting a quest: today a toast |
 | V1 | Settings | tap gear | settings (glossary inside) | – |
 | V2 | Choose a hero | tap on the ring | picture, name, level change | – |
 | V2 | Explain the hero | tap "i" | hero popup | – |
 | V2 | Start a run | tap START | shop, round 1 | – |
-| V2 | Buy a hero | tap SHOP (middle) | Credits shop at that hero | today a toast |
+| V2 | Buy a hero | tap SHOP (middle) | Credits shop at the heroes | – |
 | V2 | Back | tap arrow | start screen | – |
 | V3 | Buy and place | drag an offer into a bag | bought, in the backpack | "Not enough gold", "Does not fit" |
 | V3 | Buy loose | drag an offer below the shop | bought, lies loose | "Not enough gold", "Too many loose" (from 6) |
@@ -234,7 +236,7 @@ Every action has one gesture and one visible response; what is not possible is e
 | V3 | Numbers | tap health, Energy, chart | toast or backpack numbers | – |
 | V3 | Look at the hero | tap the hero badge | hero popup | – |
 | V3 | Replay the introduction | tap "i" | introduction | – |
-| V3 | Run menu | tap menu button | run menu | not built |
+| V3 | Run menu | tap menu button | run menu | – |
 | V3 | Fight | tap FIGHT | fight | blocked during a free pick |
 | V4 | Speed | tap ×1, ×2, ×4 | faster playback | – |
 | V5 | Details | tap chart | fight details | – |
@@ -247,9 +249,14 @@ Every action has one gesture and one visible response; what is not possible is e
 | P5 | Choose and take | tap a card, TAKE | the item drops loose, FIGHT is free again | – |
 | P9 | Switch tab | tap a tab symbol | other tab | – |
 | P9 | Wear | tap a patch, background or skin | worn; the start screen changes | – |
-| P9 | Buy premium | tap the premium column | purchase | today a "later" toast |
+| P9 | Buy premium | tap the premium column | purchase | – |
+| P9 | Rename | tap the name in the profile | the phone keyboard opens; the new name shows at once | "A name has 1 to 16 characters" |
+| P9 | Wear a skin | tap a skin beside its hero | worn by that hero | only owned skins |
+| V7 | Buy | tap an offer, then BUY | purchase popup, then the purchase | today a toast |
+| P11 | Music, sounds | tap the row | switch on/off | – |
+| P11 | Account, privacy, help | tap the row | – | today a toast |
 | P11 | Language | tap a row | switched at once | – |
-| P13 | Home / give up | tap | start screen (run paused) / run end with reward | not built |
+| P13 | Home / give up | tap / tap twice | start screen (run paused) / run end with reward | – |
 | all popups | Close | X or tap beside | popup closes | P5 cannot be closed |
 
 ## Still open

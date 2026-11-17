@@ -1,6 +1,6 @@
 /** After a fight: the result of the round, and at the end of a run the summary with its reward. */
 import { Container, Graphics } from "pixi.js";
-import { finishRound, heroLevel, newRun, type BattleResult, type Build, type CSide, type RunBooking } from "@backpack-space/core";
+import { finishRound, heroLevel, type BattleResult, type Build, type CSide, type RunBooking } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
@@ -9,6 +9,7 @@ import { piece, pieceFit, starMarks } from "../pieces";
 import { itemPopup } from "./popup";
 import { shopScene } from "./shop";
 import { homeScene } from "./home";
+import { heroScene } from "./hero";
 import { rewardTile } from "./progress";
 import { t, tr, upper } from "../i18n";
 
@@ -145,24 +146,62 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   for (const p of run.items) root.addChild(at(piece(data, p.item, p.rot, cell), gx + p.x * cell, gy + p.y * cell));
   root.addChild(at(starMarks(data, run.bags, run.items, cell), gx, gy));
 
-  // hero XP and level, league points, what was unlocked
+  // hero XP and level, league points, what was unlocked. Both rows play a short animation (docs/ux.md F6):
+  // the XP bar fills up and a new level pops in gold; league points count up and a new league fades in, without a full-screen moment.
   const meta = game.meta, p = game.profile;
-  const lv = heroLevel(meta, p.heroXp[run.hero] ?? 0);
+  const xp1 = p.heroXp[run.hero] ?? 0, xp0 = Math.max(0, xp1 - b.xp);
   const xpRow = new Container();
   xpRow.addChild(at(heroBadge(data.heroes.get(run.hero)!.name, 18), 18, 18));
-  xpRow.addChild(at(txt(b.level[1] > b.level[0] ? `${t("ui.level")} ${b.level[0]} → ${b.level[1]}` : `${t("ui.level")} ${b.level[1]}`, 15, { color: b.level[1] > b.level[0] ? C.gold : C.text, anchor: [0, 0.5] }), 46, 18));
-  xpRow.addChild(at(box(110, 8, { fill: C.bg, line: C.line, radius: 4 }), 150, 14), at(box(Math.max(8, 110 * (lv.need ? lv.into / lv.need : 1)), 8, { fill: C.cyan, radius: 4 }), 150, 14));
+  const lvText = txt("", 15, { anchor: [0, 0.5] });
+  const lvPop = new Container();
+  lvPop.addChild(lvText);
+  xpRow.addChild(at(lvPop, 46, 18));
+  xpRow.addChild(at(box(110, 8, { fill: C.bg, line: C.line, radius: 4 }), 150, 14));
+  const xpFill = new Graphics();
+  xpRow.addChild(at(xpFill, 150, 14));
   xpRow.addChild(at(txt(`+${b.xp}`, 15, { anchor: [0, 0.5] }), 272, 18), at(icon("xp", 16, C.dim), 334, 18));
   root.addChild(at(xpRow, 20, rowsY));
   const lgRow = new Container();
-  lgRow.addChild(at(icon("league", 26, C.gold), 18, 18), at(txt(upper(t(`league.${meta.leagues.ids[b.league[1]]}`)), 15, { color: b.league[1] > b.league[0] ? C.gold : C.text, anchor: [0, 0.5] }), 46, 18));
-  lgRow.addChild(at(txt(b.points > 0 ? `+${b.points}` : `${b.points}`, 16, { color: b.points > 0 ? C.good : b.points < 0 ? C.bad : C.dim, anchor: [1, 0.5] }), 350, 18));
+  const glow = disc(20, { line: C.gold, lineW: 2 });
+  glow.alpha = 0;
+  lgRow.addChild(at(glow, 18, 18), at(icon("league", 26, C.gold), 18, 18));
+  const lgOld = txt(upper(t(`league.${meta.leagues.ids[b.league[0]]}`)), 15, { anchor: [0, 0.5] });
+  const lgNew = txt(upper(t(`league.${meta.leagues.ids[b.league[1]]}`)), 15, { color: b.league[1] > b.league[0] ? C.gold : C.text, anchor: [0, 0.5] });
+  lgNew.alpha = b.league[1] === b.league[0] ? 1 : 0;
+  lgOld.visible = b.league[1] !== b.league[0];
+  lgRow.addChild(at(lgOld, 46, 18), at(lgNew, 46, 18));
+  const ptsText = txt("0", 16, { color: b.points > 0 ? C.good : b.points < 0 ? C.bad : C.dim, anchor: [1, 0.5] });
+  lgRow.addChild(at(ptsText, 350, 18));
   root.addChild(at(lgRow, 20, rowsY + 42));
+
+  let time = 0;
+  const DELAY = 0.4, FILL = 1.2;
+  const draw = () => {
+    const k = Math.min(1, Math.max(0, (time - DELAY) / FILL)), ease = 1 - (1 - k) ** 3;
+    const lv = heroLevel(meta, xp0 + (xp1 - xp0) * ease);
+    const up = lv.level > b.level[0];
+    lvText.text = `${t("ui.level")} ${lv.level}`;
+    lvText.style.fill = up ? C.gold : C.text;
+    xpFill.clear().roundRect(0, 0, Math.max(8, 110 * (lv.need ? lv.into / lv.need : 1)), 8, 4).fill(C.cyan);
+    // the level pops once when it goes up
+    const popAt = up ? time - (DELAY + FILL * 0.2) : -1;
+    lvPop.scale.set(popAt >= 0 && popAt < 0.5 ? 1 + 0.5 * Math.sin((popAt / 0.5) * Math.PI) : 1);
+    // league: points count up after the XP; a new league fades in with a soft ring
+    const kl = Math.min(1, Math.max(0, (time - DELAY - FILL) / 0.8));
+    ptsText.text = `${b.points > 0 ? "+" : ""}${Math.round(b.points * kl)}`;
+    if (b.league[1] !== b.league[0]) {
+      lgNew.alpha = kl;
+      lgOld.alpha = 1 - kl;
+      glow.alpha = kl > 0 && kl < 1 ? Math.sin(kl * Math.PI) : 0;
+      glow.scale.set(1 + kl * 0.6);
+    }
+  };
+  draw();
   const shown = b.rewards.slice(0, 6);
   shown.forEach((r, i) => root.addChild(at(rewardTile(game, r, 48), (W - (shown.length * 58 - 10)) / 2 + i * 58, rowsY + 88)));
 
   root.addChild(at(roundButton("share", 32, () => game.toast(t("toast.shareLater")), { iconSize: 26 }), 52, H - 52));
-  root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.newSeed(); game.run = newRun(data, run.hero, game.rng); game.show(shopScene(game)); }), 96, H - 84));
+  root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.run = null; game.show(heroScene(game)); }), 96, H - 84));
   root.addChild(at(roundButton("home", 32, () => { game.run = null; game.dropSave(); game.show(homeScene(game)); }, { iconSize: 26 }), W - 52, H - 52));
-  return { root };
+  return { root, update: (dt) => { if (time < 4) { time += dt; draw(); } } };
 }

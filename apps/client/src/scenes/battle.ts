@@ -75,8 +75,13 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const sizes = [5, 7, 9, 11, 15];
   const clock = new Graphics();
   const phaseLabel = txt("", 11, { color: C.dim, spacing: 1.5, anchor: [0.5, 0] });
-  const lineL = new Graphics().rect(15, clockY - 1, 90, 2).fill(C.line), lineR = new Graphics().rect(W - 105, clockY - 1, 90, 2).fill(C.line);
-  root.addChild(lineL, lineR, clock, at(phaseLabel, W / 2, clockY + 18));
+  // the opponent's name and league patch (docs/ux.md F2 step 9) on the left of the clock; the stored bot builds have no
+  // player names yet, so the name is a placeholder and the patch shows the player's own league, where opponents come from
+  const tag = new Container();
+  tag.addChild(at(icon("patch", 18, C.gold), 9, 0), at(txt(t("ui.opponentName"), 12, { font: "text", weight: "600", color: C.dim, anchor: [0, 0.5] }), 22, 0));
+  tag.addChild(at(txt(upper(t(`league.${game.meta.leagues.ids[league]}`)), 9, { color: C.gold, spacing: 1, anchor: [0, 0.5] }), 22, 13));
+  const lineR = new Graphics().rect(W - 105, clockY - 1, 90, 2).fill(C.line);
+  root.addChild(at(tag, 15, clockY - 4), lineR, clock, at(phaseLabel, W / 2, clockY + 18));
   const drawClock = () => {
     clock.clear();
     let x = W / 2 - 62;

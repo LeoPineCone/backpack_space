@@ -4,12 +4,14 @@
  * Rewards are placeholders (a symbol for the kind of cosmetic) until the cosmetics are designed.
  */
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { equip, heroLevel, leagueOf, passLevel, seasonData, type Profile, type Reward } from "@backpack-space/core";
+import { NAME_MAX, equip, equipSkin, heroLevel, rename, leagueOf, passLevel, seasonData, type Profile, type Reward } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, disc, heroBadge, infoButton, roundButton, tappable, txt } from "../ui";
 import { keywordRow } from "./popup";
+import { purchaseOverlay } from "./store";
+import { askText } from "../textInput";
 import { t, upper } from "../i18n";
 
 export const TABS = [
@@ -183,7 +185,7 @@ function passTab(game: Game, p: Profile, add: Add, w: number): void {
   head.addChild(at(txt(t("ui.free"), 12, { color: C.dim, spacing: 2, anchor: [0.5, 0.5] }), 84, 92));
   const prem = new Container();
   prem.addChild(at(icon(p.season.premium ? "premium" : "lock", 16, C.gold), -38, 0), at(txt(t("ui.premium"), 12, { color: C.gold, spacing: 2, anchor: [0, 0.5] }), -26, 0));
-  if (!p.season.premium) tappable(prem, () => game.toast(t("toast.premiumLater")), new Rectangle(-50, -14, 120, 28));
+  if (!p.season.premium) tappable(prem, () => game.openOverlay(purchaseOverlay(game, { key: "premium", premium: true })), new Rectangle(-50, -14, 120, 28));
   head.addChild(at(prem, 160, 92));
   add(head, 112);
   season.pass.levels.forEach((l, i) => {
@@ -218,14 +220,60 @@ function leagueTab(game: Game, p: Profile, add: Add, w: number): void {
 
 function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () => void): void {
   const meta = game.meta;
-  const set = (slot: "background" | "patch", id: string | null) => { const q = equip(meta, p, slot, id); if (q) { game.setProfile(q); rerender(); } };
-  // the worn patch, league and totals
+  const set = (slot: "background" | "patch" | "picture", id: string | null) => { const q = equip(meta, p, slot, id); if (q) { game.setProfile(q); rerender(); } };
+  // the player: picture, name (tap to change), the worn patch and totals
   const head = new Container();
-  head.addChild(box(w, 96, { fill: C.panel, line: C.line, radius: 16 }));
-  head.addChild(at(disc(32, { fill: C.bg, line: p.equipped.patch ? C.gold : C.line, lineW: 2 }), 48, 48), at(icon("patch", 30, p.equipped.patch ? C.gold : C.line), 48, 48));
+  head.addChild(box(w, 100, { fill: C.panel, line: C.line, radius: 16 }));
+  head.addChild(at(disc(32, { fill: C.bg, line: C.gold, lineW: 3 }), 48, 48), at(icon("skin", 28, C.dim), 48, 48));
+  head.addChild(at(disc(14, { fill: C.bg, line: p.equipped.patch ? C.gold : C.line, lineW: 2 }), 74, 74), at(icon("patch", 16, p.equipped.patch ? C.gold : C.line), 74, 74));
+  const name = new Container();
+  const label = txt(upper(p.name), 20, { spacing: 1, anchor: [0, 0.5] });
+  name.addChild(label, at(icon("edit", 18, C.cyan), label.width + 16, 0));
+  tappable(name, () => {
+    void askText(p.name, NAME_MAX, t("ui.playerName")).then((v) => {
+      if (v === null || v.trim() === p.name) return;
+      const q = rename(game.profile, v);
+      if (!q) { game.toast(t("toast.nameInvalid", { n: NAME_MAX })); return; }
+      game.setProfile(q);
+      rerender();
+    });
+  }, new Rectangle(-6, -18, label.width + 40, 36));
+  head.addChild(at(name, 96, 34));
   const stats: [string, number][] = [["swords", p.runs], ["galaxy", p.galaxies], ["credits", p.credits]];
-  stats.forEach(([ic, n], i) => { const x = 110 + i * 78; head.addChild(at(icon(ic, 20, C.dim), x + 10, 34), at(txt(n, 18, { anchor: [0.5, 0.5] }), x + 10, 62)); });
-  add(head, 112);
+  stats.forEach(([ic, n], i) => { const x = 96 + i * 82; head.addChild(at(icon(ic, 18, C.dim), x + 9, 70), at(txt(n, 16, { anchor: [0, 0.5] }), x + 24, 70)); });
+  add(head, 116);
+
+  // player pictures
+  add(at(txt(t("ui.pictures"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);
+  const pics = new Container();
+  p.cosmetics.filter((c) => meta.cosmeticById.get(c)?.kind === "picture").forEach((id, i) => {
+    const on = p.equipped.picture === id;
+    const tl = new Container();
+    tl.addChild(box(64, 64, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 32 }), at(icon("skin", 30, on ? C.text : C.dim), 32, 32));
+    if (on) tl.addChild(at(icon("check", 18, C.cyan), 54, 54));
+    tappable(tl, () => set("picture", id), new Rectangle(0, 0, 64, 64));
+    pics.addChild(at(tl, i * 82, 0));
+  });
+  add(pics, 80);
+
+  // hero skins: per hero its own look and every owned skin (bought or from hero levels)
+  add(at(txt(t("ui.skins"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);
+  for (const hero of game.data.heroList.filter((h) => meta.startHeroes.includes(h.id) || p.heroes.includes(h.id))) {
+    const owned = p.cosmetics.filter((c) => { const k = meta.cosmeticById.get(c); return (k?.kind === "skin" || k?.kind === "heroCosmetic") && k.hero === hero.id; });
+    const row = new Container();
+    row.addChild(at(heroBadge(hero.name, 20), 20, 32));
+    const worn = p.equipped.skins[hero.id] ?? null;
+    [null, ...owned].forEach((id, i) => {
+      const on = worn === id;
+      const tl = new Container();
+      tl.addChild(box(52, 52, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 10 }), at(icon(id === null ? "hero" : "skin", 26, on ? C.text : C.dim), 26, 26));
+      if (on) tl.addChild(at(icon("check", 14, C.cyan), 44, 44));
+      tappable(tl, () => { const q = equipSkin(meta, p, hero.id, id); if (q) { game.setProfile(q); rerender(); } }, new Rectangle(0, 0, 52, 52));
+      row.addChild(at(tl, 52 + (i % 5) * 60, 6 + Math.floor(i / 5) * 60));
+    });
+    if (!owned.length) row.addChild(at(txt(t("ui.noSkin"), 12, { font: "text", color: C.dim, anchor: [0, 0.5] }), 52 + 64, 32));
+    add(row, 10 + Math.ceil((owned.length + 1) / 5) * 60);
+  }
 
   add(at(txt(t("ui.patches"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);
   const patches = p.cosmetics.filter((c) => meta.cosmeticById.get(c)?.kind === "patch");

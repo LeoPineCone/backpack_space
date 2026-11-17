@@ -9,6 +9,7 @@ import { heroPopup } from "./popup";
 import { homeScene } from "./home";
 import { shopScene } from "./shop";
 import { progressOverlay, type Tab } from "./progress";
+import { storeScene } from "./store";
 import { t, upper } from "../i18n";
 
 type Slot = { kind: "own"; id: string; letter: string } | { kind: "locked" } | { kind: "soon" };
@@ -52,7 +53,7 @@ export function heroScene(game: Game): Scene {
     root.addChild(at(roundButton("back", 22, () => game.show(homeScene(game)), { iconSize: 20 }), 36, 36));
     const gal = tappable(hudPill("galaxy", p.galaxies, C.line, C.text), () => progress("planets"));
     root.addChild(at(gal, W - 14 - gal.width, 14));
-    const cr = hudPill("credits", p.credits, C.line, C.gold, 36);
+    const cr = tappable(hudPill("credits", p.credits, C.line, C.gold, 36), () => game.show(storeScene(game, () => heroScene(game))));
     root.addChild(at(cr, W - 14 - cr.width, 64));
 
     // the chosen hero
@@ -103,7 +104,7 @@ export function heroScene(game: Game): Scene {
       tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.rng); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
     } else {
       mid.addChild(disc(69, { fill: C.cyan }), disc(63, { fill: C.cyan, line: C.bg, lineW: 4 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));
-      tappable(mid, () => game.toast(t("toast.heroShopLater")), new Rectangle(-69, -69, 138, 138));
+      tappable(mid, () => game.show(storeScene(game, () => heroScene(game), "heroes")), new Rectangle(-69, -69, 138, 138));
     }
     ring.addChild(at(mid, 170, 170));
     root.addChild(at(ring, 25, ringY));
