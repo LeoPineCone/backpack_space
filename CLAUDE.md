@@ -16,3 +16,4 @@
 - No alcohol in the game.
 - Not a clone: no names, characters or look of Backpack Brawl or other existing games.
 - Tech stack is decided: TypeScript, PixiJS, Capacitor (same as backpack_race). The client lives in `apps/client` (PixiJS, placeholder symbols instead of art); it only shows and replays what the core computes and never decides a rule or a fight. `playground/` is a design tool, not product code.
+- Phone safe area: outside it (status bar, notch, camera island, home indicator) the client draws only backgrounds. Lay screens out between y = 0 and `H` (`apps/client/src/screen.ts`, `docs/mobile.md`).

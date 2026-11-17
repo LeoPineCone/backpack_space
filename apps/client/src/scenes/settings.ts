@@ -10,7 +10,7 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
   const root = new Container();
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
-    root.addChild(dimmer(W, H, undefined, 0.94));
+    root.addChild(dimmer(undefined, 0.94));
     root.addChild(at(txt(t("ui.settings"), 26, { spacing: 2 }), 20, 28));
     root.addChild(at(roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }), W - 42, 44));
     root.addChild(at(txt(t("ui.language"), 14, { color: C.gold, spacing: 2 }), 24, 100));

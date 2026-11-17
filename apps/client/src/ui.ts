@@ -1,6 +1,6 @@
 /** Small drawing helpers shared by all screens. */
 import { Container, Graphics, Rectangle, Text } from "pixi.js";
-import { BUTTON, C, FONT } from "./theme";
+import { BUTTON, C, FONT, SCREEN } from "./theme";
 import { icon } from "./icons";
 
 export interface TxtOpts { color?: number; font?: "display" | "text"; weight?: "400" | "600" | "700"; spacing?: number; wrap?: number; align?: "left" | "center" | "right"; anchor?: [number, number]; lineHeight?: number }
@@ -34,6 +34,11 @@ export function disc(r: number, o: BoxOpts = {}): Graphics {
   if (o.fill !== undefined) g.fill({ color: o.fill, alpha: o.alpha ?? 1 });
   if (o.line !== undefined) g.stroke({ width: o.lineW ?? 1.5, color: o.line, alignment: 1 });
   return g;
+}
+
+/** A screen's background colour over the whole display, behind the status bar and the home indicator too. */
+export function screenFill(color: number): Graphics {
+  return new Graphics().rect(SCREEN.x, SCREEN.y, SCREEN.w, SCREEN.h).fill(color);
 }
 
 /** Makes a display object tappable. */
@@ -121,9 +126,9 @@ export function placeholder(w: number, h: number, label: string, radius = 16): C
   return c;
 }
 
-/** A full-screen dark layer that swallows taps; `onTap` usually closes the popup above it. */
-export function dimmer(w: number, h: number, onTap?: () => void, alpha = 0.72): Graphics {
-  const g = new Graphics().rect(0, 0, w, h).fill({ color: C.bgDeep, alpha });
+/** A dark layer over the whole display (status bar area included) that swallows taps; `onTap` usually closes the popup above it. */
+export function dimmer(onTap?: () => void, alpha = 0.72): Graphics {
+  const g = new Graphics().rect(SCREEN.x, SCREEN.y, SCREEN.w, SCREEN.h).fill({ color: C.bgDeep, alpha });
   g.eventMode = "static";
   if (onTap) g.on("pointertap", (e) => { e.stopPropagation(); onTap(); });
   return g;

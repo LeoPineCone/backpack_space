@@ -1,7 +1,8 @@
 /** The running game: one screen at a time, popups above it, and the state of the current run. */
 import { Application, Container, Graphics, Rectangle } from "pixi.js";
 import { Rng, bookRun, enterSeason, seasonAt, type GameData, type Meta, type Profile, type RunBooking, type RunState, type SeasonChange } from "@backpack-space/core";
-import { C, H, W } from "./theme";
+import { C, H, SCREEN, W } from "./theme";
+import { fitScreen, safeInsets } from "./screen";
 import { at, box, txt } from "./ui";
 import { keywords, type Keyword } from "./symbols";
 import { clearSave, readSave, writeSave, type SavedFight } from "./save";
@@ -16,11 +17,14 @@ export interface Scene {
 }
 
 export class Game {
-  /** everything is laid out in a fixed 390 × 844 design space and scaled to the window */
+  /** everything is laid out in a 390 units wide design space that fills the phone's safe area (screen.ts) */
   readonly stage = new Container();
   private readonly sceneLayer = new Container();
   private readonly overlayLayer = new Container();
   private readonly toastLayer = new Container();
+  /** background and clip over the whole display, behind the status bar and the home indicator too */
+  private readonly frame = new Graphics();
+  private readonly clip = new Graphics();
   private scene: Scene | null = null;
   private overlays: Scene[] = [];
   private toastLeft = 0;
@@ -40,12 +44,9 @@ export class Game {
     this.profile = readProfile(meta);
     this.opponents = new GhostOpponents(data);
     this.hero = data.heroList[0]!.id;
-    const frame = new Graphics().rect(0, 0, W, H).fill(C.bg);
-    const clip = new Graphics().rect(0, 0, W, H).fill(0xffffff);
-    this.stage.addChild(frame, this.sceneLayer, this.overlayLayer, this.toastLayer, clip);
-    this.stage.mask = clip;
+    this.stage.addChild(this.frame, this.sceneLayer, this.overlayLayer, this.toastLayer, this.clip);
+    this.stage.mask = this.clip;
     this.stage.eventMode = "static";
-    this.stage.hitArea = new Rectangle(0, 0, W, H);
     app.stage.addChild(this.stage);
     app.ticker.add((t) => this.tick(t.deltaMS / 1000));
     window.addEventListener("resize", () => this.layout());
@@ -53,9 +54,13 @@ export class Game {
   }
 
   private layout(): void {
-    const s = Math.min(window.innerWidth / W, window.innerHeight / H);
-    this.stage.scale.set(s);
-    this.stage.position.set((window.innerWidth - W * s) / 2, (window.innerHeight - H * s) / 2);
+    const f = fitScreen(window.innerWidth, window.innerHeight, safeInsets());
+    this.stage.scale.set(f.scale);
+    this.stage.position.set(f.x, f.y);
+    const { x, y, w, h } = SCREEN;
+    this.frame.clear().rect(x, y, w, h).fill(C.bg);
+    this.clip.clear().rect(x, y, w, h).fill(0xffffff);
+    this.stage.hitArea = new Rectangle(x, y, w, h);
   }
 
   private tick(dt: number): void {
@@ -91,7 +96,7 @@ export class Game {
     this.toastLayer.removeChildren().forEach((c) => c.destroy({ children: true }));
     const label = txt(message, 14, { font: "text", weight: "600", wrap: W - 80, align: "center", anchor: [0.5, 0.5] });
     const w = label.width + 32, h = label.height + 20;
-    this.toastLayer.addChild(at(box(w, h, { fill: C.bgDeep, alpha: 0.95, line: C.dim, radius: 14 }), (W - w) / 2, 700 - h / 2), at(label, W / 2, 700));
+    this.toastLayer.addChild(at(box(w, h, { fill: C.bgDeep, alpha: 0.95, line: C.dim, radius: 14 }), (W - w) / 2, H - 144 - h / 2), at(label, W / 2, H - 144));
     this.toastLayer.alpha = 1;
     this.toastLeft = 2.2;
   }

@@ -8,9 +8,9 @@ import {
   type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { C, RARITY, RARITY_PIPS, W } from "../theme";
+import { C, H, RARITY, RARITY_PIPS, SCREEN, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, disc, heroBadge, hearts, hudPill, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
+import { at, box, disc, heroBadge, hearts, hudPill, infoButton, pillButton, roundButton, screenFill, tappable, txt } from "../ui";
 import { outlinePath, piece, pieceFit, starMarks, zap, ZAP } from "../pieces";
 import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { heroPopup, itemPopup } from "./popup";
@@ -21,10 +21,13 @@ import { t } from "../i18n";
 
 type Src = { kind: "offer" | "loose" | "item" | "bag"; i: number };
 
-const CELL = 40, GX = 15, GY = 276;
-const OFFER = { x: 15, y: 70, w: 114, h: 92, gap: 9 };
-const FLOOR = { x: 15, y: 566, w: 360, h: 104 };
-const SELL = { x: 343, y: 796, r: 32 };
+const CELL = 40, GX = 15, GY = 264;
+const OFFER = { x: 15, y: 66, w: 114, h: 92, gap: 8 };
+// the floor and the bottom row depend on the height of the safe area; set in `shopScene`
+const FLOOR = { x: 15, y: GY + 7 * CELL + 8, w: 360, h: 104 };
+const FIGHT = { x: 91, y: 0, w: 208, h: 64 };
+const SELL = { x: 343, y: 0, r: 32 };
+const REROLL = { x: 47, y: 0 };
 
 interface Drag {
   src: Src; id: string; rot: number; pointerId: number; touch: boolean;
@@ -40,7 +43,11 @@ export function shopScene(game: Game): Scene {
   const view = new Container(), dragLayer = new Container();
   root.addChild(view, dragLayer);
   root.eventMode = "static";
-  root.hitArea = new Rectangle(0, 0, W, 844);
+  root.hitArea = new Rectangle(SCREEN.x, SCREEN.y, SCREEN.w, SCREEN.h);
+  // bottom row at the bottom of the safe area; the floor for loose items takes what is left above the stats row
+  FIGHT.y = H - 72;
+  SELL.y = REROLL.y = FIGHT.y + FIGHT.h / 2;
+  FLOOR.h = Math.min(104, Math.max(76, FIGHT.y - 48 - FLOOR.y));
   const data = game.data, rules = data.rules;
   const run = (): RunState => game.run!;
   let drag: Drag | null = null;
@@ -82,7 +89,7 @@ export function shopScene(game: Game): Scene {
   const render = () => {
     const r = run();
     view.removeChildren().forEach((c) => c.destroy({ children: true }));
-    view.addChild(box(W, 844, { fill: C.bg }));
+    view.addChild(screenFill(C.bg));
     glows = [];
     const ids = [...r.offers.map((o) => o?.item ?? null), ...r.loose, ...r.items.map((p) => (p.lock ? null : p.item))];
     partners = mergePartners(data, ids);
@@ -224,15 +231,15 @@ export function shopScene(game: Game): Scene {
       tappable(energy, () => game.toast(t(short ? "toast.energyShort" : "toast.energyOk", { need: fmt(st.energy.need), income: fmt(st.energy.income) })), new Rectangle(0, 0, energy.width, 34));
       const more = roundButton("chart", 17, () => game.openOverlay(statsOverlay(game)), { line: C.dim, iconSize: 18 });
       row.addChild(health, at(energy, health.width + 8, 0), at(more, health.width + 8 + energy.width + 8 + 17, 17));
-      view.addChild(at(row, (W - row.width) / 2, FLOOR.y + FLOOR.h + 12));
+      view.addChild(at(row, (W - row.width) / 2, FLOOR.y + FLOOR.h + 8));
     }
 
     // bottom row: reroll, fight, sell
     const rr = roundButton("dice", 32, () => { if (reroll(run(), data, game.rng)) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
     rr.addChild(at(disc(11, { fill: C.gold }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
-    view.addChild(at(rr, 47, 796));
-    view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) game.show(battleScene(game)); }, { iconName: "swords" }), 91, 764));
+    view.addChild(at(rr, REROLL.x, REROLL.y));
+    view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) game.show(battleScene(game)); }, { iconName: "swords" }), FIGHT.x, FIGHT.y));
     const bin = new Container();
     const ring = new Graphics();
     for (let k = 0; k < 16; k++) ring.arc(0, 0, SELL.r, (k * Math.PI) / 8, (k * Math.PI) / 8 + 0.24).stroke({ width: 2, color: C.dim });
@@ -258,7 +265,7 @@ export function shopScene(game: Game): Scene {
       { spot: pack, icons: ["starFull"], line: t("intro.stars") },
       { spot: pack, icons: ["merge", "lock"], line: t("intro.merge") },
       { spot: { x: SELL.x - SELL.r, y: SELL.y - SELL.r, w: SELL.r * 2, h: SELL.r * 2 }, icons: ["arrow", "bin", "coin"], line: t("intro.sell") },
-      { spot: { x: 91, y: 764, w: 208, h: 64 }, icons: ["swords"], line: t("intro.fight") },
+      { spot: FIGHT, icons: ["swords"], line: t("intro.fight") },
     ];
     game.openOverlay(introOverlay(game, steps));
   };

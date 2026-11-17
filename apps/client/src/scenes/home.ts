@@ -49,11 +49,13 @@ export function homeScene(game: Game): Scene {
     root.addChild(back.view);
     if (!back.hasArt) {
       root.addChild(at(new Graphics().circle(0, 0, 150).stroke({ width: 1.5, color: C.line }), W - 40, 300));
-      root.addChild(at(new Graphics().circle(0, 0, 70).stroke({ width: 1.5, color: C.line }), 60, 560));
-      root.addChild(at(placeholder(W - 40, 430, ""), 20, 170));
-      root.addChild(at(icon("planet", 40, C.line), W / 2, 365));
-      root.addChild(at(txt(t("ui.placeholder.menuBackground"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), W / 2, 400));
-      root.addChild(at(txt(t(`cosmetic.${p.equipped.background}`), 13, { font: "text", weight: "600", color: C.dim, anchor: [0.5, 0.5] }), W / 2, 420));
+      // placeholder between the profile at the top and the FIGHT button
+      const ph = H - 204 - 30 - 170, mid = 170 + ph / 2;
+      root.addChild(at(new Graphics().circle(0, 0, 70).stroke({ width: 1.5, color: C.line }), 60, 170 + ph - 40));
+      root.addChild(at(placeholder(W - 40, ph, ""), 20, 170));
+      root.addChild(at(icon("planet", 40, C.line), W / 2, mid - 20));
+      root.addChild(at(txt(t("ui.placeholder.menuBackground"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), W / 2, mid + 15));
+      root.addChild(at(txt(t(`cosmetic.${p.equipped.background}`), 13, { font: "text", weight: "600", color: C.dim, anchor: [0.5, 0.5] }), W / 2, mid + 35));
     }
 
     // the player: picture with the profile level, name banner below, league patch beside it
@@ -85,7 +87,7 @@ export function homeScene(game: Game): Scene {
     fight.addChild(box(fw + 12, fh + 12, { fill: C.gold, radius: (fh + 12) / 2 }));
     fight.addChild(at(pillButton(t("ui.fight"), fw, fh, () => game.show(heroScene(game)), { iconName: "swords", size: 34 }), 6, 6));
     fight.children[1]!.addChildAt(box(fw, fh, { line: C.bg, lineW: 4, radius: fh / 2 }), 1);
-    root.addChild(at(fight, (W - fw - 12) / 2, 640));
+    root.addChild(at(fight, (W - fw - 12) / 2, H - 204));
 
     // four round buttons
     const bottom: [string, () => void][] = [
@@ -95,7 +97,7 @@ export function homeScene(game: Game): Scene {
       ["cart", () => game.toast(t("toast.heroShopLater"))],
     ];
     const gap = (W - 2 * 46) / (bottom.length - 1);
-    bottom.forEach(([ic, go], i) => root.addChild(at(roundButton(ic, 26, go, { iconSize: 24 }), 46 + i * gap, 798)));
+    bottom.forEach(([ic, go], i) => root.addChild(at(roundButton(ic, 26, go, { iconSize: 24 }), 46 + i * gap, H - 46)));
   };
   render();
   return { root, update: (dt) => back?.update(dt) };

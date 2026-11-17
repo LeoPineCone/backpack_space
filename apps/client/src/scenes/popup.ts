@@ -46,7 +46,7 @@ function subjectPopup(game: Game, s: Subject): Scene {
 
   const build = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
-    root.addChild(dimmer(W, H, close));
+    root.addChild(dimmer(close));
     const col = new Container();
     let y = PAD;
     const add = (node: Container, h: number, gap = 14, centerW?: number) => {
@@ -175,7 +175,7 @@ function recipesOf(game: Game, id: string): { in: string[]; out: string }[] {
 export function recipeRadar(game: Game, id: string): Scene {
   const data = game.data;
   const root = new Container();
-  root.addChild(dimmer(W, H, () => game.closeOverlay(), 0.94));
+  root.addChild(dimmer(() => game.closeOverlay(), 0.94));
   const S = 52, PLUS = 18, EQ = 24, ROW = S + 16;
   const list = new Container();
   let y = 0;
@@ -231,7 +231,7 @@ export function recipeRadar(game: Game, id: string): Scene {
 /** All keywords, grouped. Scrolls by dragging. */
 export function glossary(game: Game): Scene {
   const root = new Container();
-  root.addChild(dimmer(W, H, undefined, 0.94));
+  root.addChild(dimmer(undefined, 0.94));
   const list = new Container();
   let y = 0;
   for (const g of GLOSSARY_GROUPS) {
