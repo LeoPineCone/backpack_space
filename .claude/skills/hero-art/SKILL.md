@@ -77,7 +77,7 @@ credits used and left in every result message (`openart_account_get`).
   a hatch dragged on a chain ("passt gar nicht"). An older picture Ilja already liked can be the better base.
 - Planets in a scene drift to Earth (blue oceans, white clouds). Ask for a strange alien planet, no blue
   oceans, no white clouds, and give **every hero its own planet look** (Venn: rust, bone and teal bands; Rook:
-  pale cracked planet with a rust-red ring). Ilja noticed Rook's first scene had the same banded planet as Venn.
+  dark cratered planet with mustard lava cracks and a small moon). Ilja noticed Rook's first scene had the same banded planet as Venn.
   To change only the planet, an image2image edit of the chosen draft that says "ONLY CHANGE THE PLANET" works.
 - For pictures that get cut out (sheet, full body, head): "Background: flat plain light grey (#c8c8c8),
   nothing else, no floor shadow". A black ink outline on a dark background cannot be cut out cleanly.
