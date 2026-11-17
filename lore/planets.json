@@ -122,6 +122,17 @@
       "background": "A huge cracked red-and-mustard star filling the sky, broken pieces circling it, heat as wavy ink lines.",
       "items": ["sun_shard"],
       "heroes": ["ysel"]
+    },
+    {
+      "id": "squall",
+      "name": "Squall",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["gas giant without ground", "endless storm bands", "a calm layer where rafts hang from balloons", "home of the draft hero Marl (docs/heroes.md, not in the game yet)"],
+      "life": "Long thin cloud swimmers and living lightning; the raft folk fish the lightning upwards out of the clouds and keep it in jars.",
+      "background": "Dark storm bands in flat layers with a calm gap between them; small rafts hanging from balloons, kite lines rising into the clouds, lightning as jagged flat mustard shapes.",
+      "items": [],
+      "heroes": []
     }
   ]
 }
