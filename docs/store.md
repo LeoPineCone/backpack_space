@@ -15,17 +15,16 @@ All purchases run through RevenueCat, first for real money, then with Credits. B
 
 ## What is sold
 
-Only a few products are created in the stores. Everything else costs Credits and is an entry in `data/meta.json`.
+Only two kinds of things cost real money: the premium pass and Credit packs (decided 2026-11-17). Everything else costs Credits and is an entry in `data/meta.json`.
 
 | Product | Paid with | Store entry | Stage |
 | --- | --- | --- | --- |
 | Premium pass of a season | real money | one product per season, one-time purchase, no subscription | 1 |
-| Selected skins | real money | one product per skin | 1 |
 | Credit packs | real money | a few packs, created once | 2 |
 | Skins, backgrounds, grid backgrounds | Credits | none | 2 |
 | Heroes of earlier seasons | Credits | none | 2 |
 
-Every real-money product has to be created at Apple and Google one by one, and Apple reviews new products before they can be sold. That is why only a few skins cost real money directly. A skin for Credits needs no store entry and no app update.
+Every real-money product has to be created at Apple and Google one by one, and Apple reviews new products before they can be sold. A skin or a hero for Credits needs no store entry and no app update.
 
 ## Stage 1: purchase for real money
 
@@ -36,7 +35,7 @@ The server unlocks, the app only shows. The app alone cannot create ownership.
 3. RevenueCat checks the receipt with Apple or Google.
 4. RevenueCat reports the purchase to our server by webhook. The webhook carries a secret header.
 5. The server checks whether it has already handled this report. If not, it enters the ownership in the profile.
-6. The app loads the profile again and shows the skin or the pass.
+6. The app loads the profile again and shows the pass.
 
 If the webhook arrives later than the app asks, the app shows "Confirming purchase" for a moment and asks again. If the webhook stays away, the server asks RevenueCat for the purchase itself.
 
@@ -78,10 +77,9 @@ What the server does after a refund:
 
 | Refunded | The server takes back |
 | --- | --- |
-| Skin for real money | the skin. If it was equipped, the default skin is set. |
 | Premium pass | premium for that season and all rewards of the premium lane, including the season hero. Credits from the premium lane are deducted at RevenueCat. |
 | Credit pack, Credits still there | nothing, RevenueCat deducts the Credits itself. |
-| Credit pack, Credits already spent | proposal, not decided: the things bought with Credits most recently, until the missing amount is covered. RevenueCat knows no negative balance, so the server would even it out this way. |
+| Credit pack, Credits already spent | proposal, not decided: the things bought with Credits most recently, until the missing amount is covered. RevenueCat knows no negative balance, so the server would even it out this way. If a skin that is taken back was equipped, the default skin is set. |
 
 At the next start the player sees a short note about what was taken back and why.
 
@@ -122,11 +120,10 @@ These points are a technical assessment and not legal advice. Someone qualified 
 - **Privacy:** RevenueCat goes into the privacy policy as a processor. Only our player id is passed on, no name and no e-mail.
 - **Restore purchases:** around purchases and refunds only what the stores require is built, no conveniences. Apple asks for a visible way to restore purchases, so the iOS release needs one (a button in the settings that reloads the profile from the server is enough). An Android launch does not.
 - **Account deletion:** purchase data is kept separately from the game profile because of legal retention periods.
-- **Prices:** which things cost real money and which cost Credits, and how much, is still to be set for the things version 1 starts with.
+- **Prices:** the price of the pass, the Credit packs and the Credits prices are still to be set for the things version 1 starts with.
 
 ## Open questions
 
-- Which skins are also sold directly for real money?
 - Which Credit packs exist, and what do they cost?
 - What does the premium pass cost, and how long is a season?
 - Can the premium pass also be bought with Credits?

@@ -192,7 +192,7 @@ sequenceDiagram
   R->>B: webhook: purchase
   Note over B: book once, enter ownership
   A->>B: reload profile
-  B-->>A: profile with the new skin or pass
+  B-->>A: profile with the new pass
 ```
 
 The app talks to the store and to RevenueCat during a purchase, but it unlocks nothing itself. Ownership only comes into being when RevenueCat reports the checked purchase to the backend by webhook. The backend checks where the webhook comes from, books every report only once and enters the ownership with its origin.

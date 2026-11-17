@@ -57,7 +57,7 @@ Ideas (not decided):
 
 ## Shop (monetization)
 
-- Skins: for real money or Credits.
+- Skins: for Credits. Only the premium pass and Credit packs cost real money (decided 2026-11-17, see [store.md](store.md)).
 - Backgrounds and grid backgrounds.
 - Premium season pass, once there is enough content for it.
 - Credit packs for real money.

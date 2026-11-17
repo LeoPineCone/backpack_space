@@ -172,7 +172,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
 | STORE-01 | All purchases run through RevenueCat. The player is known there only by our player id. | [store.md](store.md) | M4 | ACC-03 | decided |
-| STORE-02 | Real-money purchases: premium pass of a season, selected skins and heroes. | [store.md](store.md) | M4 | – | decided; whether heroes cost real money, Credits or both is set with the prices (needs designer) |
+| STORE-02 | Only two things cost real money: the premium pass of a season and Credit packs. Everything else (skins, backgrounds, grid backgrounds, heroes of earlier seasons) costs Credits. | [store.md](store.md) | M4 | – | decided |
 | STORE-03 | Ownership is created only by the server, after RevenueCat reported the purchase. Every report is checked for its origin and booked once. | [store.md](store.md) | M4 | ACC-05 | decided |
 | STORE-04 | Ownership is stored with its origin (real money, Credits, pass tier, hero level, planet track). | [store.md](store.md) | M4 | ACC-05 | decided |
 | STORE-05 | Credits exist at launch. The balance lives at RevenueCat only. | [store.md](store.md) | M4 | STORE-01 | decided |
@@ -180,9 +180,9 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | STORE-07 | Earned Credits are credited by the server with a unique id per reward. | [store.md](store.md) | M4 | STORE-05, META-01 | decided |
 | STORE-08 | What is refunded is taken back. Refunds are counted per account. Nobody is banned. | [store.md](store.md) | M4 | STORE-04 | decided |
 | STORE-09 | It is defined how the server evens out refunded Credits that are already spent. | [store.md](store.md) | M4 | STORE-08 | open (needs designer) |
-| STORE-10 | Every cosmetic has one price field in `data/meta.json` (store product or Credits). Shop and purchase popup read only that. | [store.md](store.md) | M4 | – | decided |
+| STORE-10 | Every cosmetic and every hero for sale has one price field in `data/meta.json`. Shop and purchase popup read only that. | [store.md](store.md) | M4 | – | decided |
 | STORE-11 | Dropped (2026-11-17). A thing costs either real money or Credits; no real-money value is shown next to a Credits price. Whether the law asks for it is part of LB-10. | [store.md](store.md) | M4 | STORE-12 | dropped |
-| STORE-12 | Products and prices are fixed for the things version 1 starts with: which cost real money, which cost Credits, Credit packs, pass price, hero price. | [store.md](store.md) | M4 | – | open (needs designer) |
+| STORE-12 | Prices are fixed for the things version 1 starts with: Credit packs, pass price, and the Credits prices of skins, backgrounds and heroes. | [store.md](store.md) | M4 | – | open (needs designer) |
 | STORE-13 | Every purchase shows a preview and asks for confirmation. The start screen shows no offers. | [ux.md](ux.md) | M4 | – | decided |
 | STORE-14 | No restore button as a convenience. Around purchases and refunds only what the stores require is built. Apple requires a way to restore purchases, so this is needed for the iOS release, not for an Android launch. | [store.md](store.md) | M4 | – | decided, check per store |
 | STORE-15 | RevenueCat's behaviour is confirmed in a sandbox project before building: server-side deduction, error on low balance, request limits, automatic answer to Apple's refund question. | [store.md](store.md) | M4 | – | decided |
@@ -267,7 +267,7 @@ Requirements in state `open` wait for one of these:
 | Provider: person or company | LB-01, LB-02, WEB-03 |
 | Launch platform: Android first? | LB-04, QA-07 |
 | Quest contents: which special rules, how many per day and week | META-06, CORE-07 |
-| Season length, pass price, Credit packs, skin and hero prices | META-10, STORE-12 |
+| Exact season length, pass price, Credit packs, Credits prices of skins and heroes | META-10, STORE-12 |
 | Season hero of season 1 | META-05 |
 | Meta numbers | META-08 |
 | How to even out refunded Credits that are spent | STORE-09 |
