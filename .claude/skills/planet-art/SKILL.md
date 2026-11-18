@@ -35,14 +35,17 @@ Generate at **21:9, 2k, quality medium** (the model has no 2:1). Use this frame 
 > The surface of <Name>, <one line from traits>: <3 to 5 large features with colours>, <one accent feature>.
 > Evenly lit, no shading from a light source, no day/night side, no cast shadows. Seamlessly tileable
 > horizontally: the left edge continues the right edge. Large clear shapes that still read when the map is
-> small and wrapped around a sphere; little fine texture. Style: dark ink comic illustration. Heavy black ink
-> outlines around the shapes, flat matte colours with no gradients, a small muted palette of <colours>, and
-> black, rough ink texture. No glossy highlights, no glow, no 3D rendering. No text, no letters, no logos,
-> no frame.
+> small and wrapped around a sphere. Style: clean hand-inked comic illustration, bold black ink outlines around
+> the shapes, bright warm flat colours with no gradients, a small palette of <colours>. Inside the flat areas
+> hand-inked texture: fine hatching and cross-hatching, stippled dots, small cracks and pocks, flow lines,
+> drawn with black and darker tones of the same colours, never photographic. No glossy highlights, no glow,
+> no 3D rendering. No text, no letters, no logos, no frame.
 
-Cinder (made from the planet in Rook's home scene) used: charcoal and soot-black basalt plates, round craters
-with grey rims, a web of thin mustard lava cracks, a few rust-red lava rivers, plain ash-grey bands at the poles.
-Rime's features were: cracked seas of blue-black methane ice, branching white frost ridges, large bone-white ice
+Cinder (made from the planet in Rook's home scene, bright style 2026-11-18) uses: warm grey basalt plates, round
+craters with light grey rims, a web of sunny mustard lava cracks, a few coral red lava rivers, light ash-grey
+bands at the poles, plus ink hatching on the plates and flow lines in the lava. Ilja on the textured version:
+"besser" than the smooth one; planets are big on screen and may carry more texture than items.
+Rime's features (dark style, being redrawn) were: cracked seas of blue-black methane ice, branching white frost ridges, large bone-white ice
 shelves, dark teal fracture lines, small round frozen craters, one long rust-red mineral streak.
 
 What matters most:

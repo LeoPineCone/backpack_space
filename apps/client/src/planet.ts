@@ -2,7 +2,7 @@
  * A turning planet for menu backgrounds, drawn from one flat surface map (2:1, left edge continues the right edge).
  * A shader wraps the map around a sphere and moves it slowly, so the loop never jumps. Light comes from the upper
  * left; the night side is ink black with a hatched band at the edge, and a black outline closes the disc
- * (dark ink comic, no glow).
+ * (ink comic, no glow).
  */
 import { Container, Geometry, GlProgram, Mesh, Shader, Texture, UniformGroup } from "pixi.js";
 

@@ -84,9 +84,16 @@ credits used and left in every result message (`openart_account_get`).
   nothing else, no floor shadow". A black ink outline on a dark background cannot be cut out cleanly.
 - Composition of the home scene: hero in the upper two thirds; the bottom third calmer, because the hero ring
   covers it on the hero choice screen.
-- Always end with the style part: dark ink comic, heavy solid black shadows, bold angular shapes, flat matte
-  colours, no gradients, no glow, no glossy highlights, no 3D, no text, no letters, no frame. No alcohol
-  (no bottles or glasses in food scenes).
+- Always end with the style part from `docs/style.md` (bright ink comic since 2026-11-18): clean hand-inked
+  comic, bold black outlines, bright warm colours (cream, coral red, sunny mustard, clear teal, copper), small
+  solid black shadows only, clean surfaces with almost no grime, flat colours, no gradients, no glow, no glossy
+  highlights, no 3D, no text, no letters, no frame. Scenes are bigger pictures and may carry more ink texture
+  (hatching, stippling). Skies are deep navy with stars, not pure black. No alcohol (no bottles or glasses in
+  food scenes).
+- **Moving a finished picture to a new style:** an image2image edit of the old final with "Redraw this exact
+  picture with the same composition, character and objects ... change only the look to ..." keeps the design.
+  This is how Venn and Rook moved from the dark to the bright style (2026-11-18); check the fixed marks and
+  counted parts again afterwards.
 
 ## Cut out and preview
 

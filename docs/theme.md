@@ -5,8 +5,8 @@ selection and info. All values live in [`data/theme.json`](../data/theme.json); 
 `apps/client/src/theme.ts`. Change a colour there, never in code.
 
 This is the theme of the **interface** (buttons, panels, text). The **art** (items, heroes, planets) has its
-own muted ink palette in [style.md](style.md); the two meet in the yellow (UI `sun` / art `mustard`) and the
-night blue.
+own bright ink palette in [style.md](style.md); the two meet in the yellow (UI `sun` / art `mustard`) and the
+night blue (art `navy`).
 
 ## Structure
 
