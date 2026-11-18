@@ -41,6 +41,9 @@ const probe = (page: Page) =>
 /** Waits until a button with this name shows, then taps it where it is on the page. */
 async function tap(page: Page, name: string, timeout = 30_000): Promise<void> {
   await shows(page, name, timeout);
+  // Pixi hit-tests with the transforms of the last drawn frame: a button that just appeared is tappable once a frame
+  // has been drawn with it (a finger is never that fast; a slow engine in CI is)
+  await page.evaluate(() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))));
   const found = (await targets(page)).find((t) => t.name === name)!;
   (requests.get(page) ?? []).push(`tap ${name} at ${Math.round(found.x)},${Math.round(found.y)}`);
   await page.mouse.click(found.x, found.y);
