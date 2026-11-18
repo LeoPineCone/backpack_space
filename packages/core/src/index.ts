@@ -8,6 +8,7 @@ export * from "./battle.js";
 export * from "./replay.js";
 export * from "./shop.js";
 export * from "./run.js";
+export * from "./actions.js";
 export * from "./describe.js";
 export * from "./glossary.js";
 export * from "./i18n.js";

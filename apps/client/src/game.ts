@@ -1,6 +1,7 @@
 /** The running game: one screen at a time, popups above it, and the state of the current run. */
 import { Application, Container, Graphics, Rectangle } from "pixi.js";
 import {
+  applyAction,
   bookRun,
   enterSeason,
   seasonAt,
@@ -8,6 +9,7 @@ import {
   type Meta,
   type Profile,
   type RunBooking,
+  type Action,
   type RunState,
   type SeasonChange,
 } from "@backpack-space/core";
@@ -131,6 +133,14 @@ export class Game {
   /** Makes the seed for a new run. It only drives the shops and free picks; battles carry their own seed. */
   newSeed(): void {
     this.seed = (Date.now() ^ (Math.random() * 0x7fffffff)) >>> 0;
+  }
+
+  /**
+   * The only way the client changes the run in the shop: one action line, checked and applied by the core and
+   * recorded in the run's log (the server will get that log). Returns whether it was applied.
+   */
+  act(action: Action): boolean {
+    return !!this.run && applyAction(this.run, this.data, action);
   }
 
   /** Stores the run on this device; `fight` while a fight of this round is running or shown. */

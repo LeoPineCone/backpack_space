@@ -4,7 +4,7 @@
  * Giving up asks for a second tap instead of a dialog.
  */
 import { Container, Rectangle } from "pixi.js";
-import { giveUp } from "@backpack-space/core";
+import { act } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
@@ -45,7 +45,7 @@ export function runMenuOverlay(game: Game, onChange: () => void): Scene {
             return;
           }
           const run = game.run!;
-          giveUp(run);
+          game.act(act.giveUp());
           // the stored run ends before the reward is booked, so a reload cannot book it twice
           game.dropSave();
           game.show(runEndScene(game, game.bookRun(run)));

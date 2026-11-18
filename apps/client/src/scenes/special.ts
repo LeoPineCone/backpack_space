@@ -1,6 +1,6 @@
 /** The free pick after certain rounds (rules.specials): one of the hero's own items, or a general artifact. */
 import { Container, Rectangle } from "pixi.js";
-import { takeSpecial } from "@backpack-space/core";
+import { act } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, RARITY, W } from "../theme";
 import { icon } from "../icons";
@@ -65,7 +65,7 @@ export function specialOverlay(game: Game, onDone: () => void): Scene {
     root.addChild(
       at(
         pillButton(t("ui.take"), W - 40, 64, () => {
-          takeSpecial(game.run!, chosen);
+          game.act(act.pick(chosen));
           game.closeOverlay();
           onDone();
         }),
