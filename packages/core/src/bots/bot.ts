@@ -30,12 +30,16 @@ export interface BotOpts {
   pathStrict?: boolean;
 }
 export interface BotLog {
-  round: number; bought: string[]; sold: string[];
+  round: number;
+  bought: string[];
+  sold: string[];
   /** results merged after this round's fight */
   crafted: string[];
   /** recipes the bot owned all inputs of but could not lay together before this round's fight */
   missed: number;
-  rerolls: number; goldLeft: number; special?: string;
+  rerolls: number;
+  goldLeft: number;
+  special?: string;
 }
 export interface Bot {
   hero: string;
@@ -58,7 +62,18 @@ export function newBot(data: GameData, hero: string, rng: Rng, path?: string): B
   const tags: string[] = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic"];
   const focus = [rng.pick(tags), rng.pick(tags)];
   const roll = rng.next();
-  return { hero, gold: 0, inv: h.start.map((p) => p.item), bags: h.bags.map((p) => ({ ...p })), layout: h.start.map((p) => ({ ...p })), loose: [], focus, path: path ?? (roll < 0.75 && h.paths.length ? CHOOSE : ""), frozen: [], log: [] };
+  return {
+    hero,
+    gold: 0,
+    inv: h.start.map((p) => p.item),
+    bags: h.bags.map((p) => ({ ...p })),
+    layout: h.start.map((p) => ({ ...p })),
+    loose: [],
+    focus,
+    path: path ?? (roll < 0.75 && h.paths.length ? CHOOSE : ""),
+    frozen: [],
+    log: [],
+  };
 }
 /** Bot.path of a bot that has not chosen yet: it commits with the hero item after round 2. */
 export const CHOOSE = "?";
@@ -70,7 +85,12 @@ export const CHOOSE = "?";
 export function onPath(def: ItemDef, path: { id: string; focus: readonly string[] }): boolean {
   if (def.hero) return def.path === path.id;
   const focus = path.focus;
-  return focus.some((f) => f === def.id || (def.tags as string[]).includes(f) || def.effects.some((e) => e.gain === f || e.inflict === f || e.do === f || e.per?.buff === f || e.per?.debuff === f));
+  return focus.some(
+    (f) =>
+      f === def.id ||
+      (def.tags as string[]).includes(f) ||
+      def.effects.some((e) => e.gain === f || e.inflict === f || e.do === f || e.per?.buff === f || e.per?.debuff === f),
+  );
 }
 /** how much more a bot committed to a path values that path's items (a committed player builds around them);
  *  a measurement can try other values with BotOpts.pathLiking (npm run balance:sweep -- --knob bot:pathLiking) */
@@ -92,30 +112,39 @@ export function energySupply(data: GameData, def: ItemDef): number {
     if (e.mod?.energyRegen) v += e.mod.energyRegen;
     if (e.mod?.energy && e.mod.energy < 0) v += 0.5 * -e.mod.energy;
     if (e.do !== "energy") continue;
-    const n = (e.n ?? 0) * (e.if?.chance ?? 100) / 100;
+    const n = ((e.n ?? 0) * (e.if?.chance ?? 100)) / 100;
     v += e.on === "use" || e.on === "hit" ? n / (def.cooldown ?? 4) : e.on === "phase" ? n / phase : e.on === "start" ? 0 : n / 2;
   }
   return v;
 }
-const refs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship, e.per?.cells].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
+const refs = (def: ItemDef): string[] =>
+  def.effects.flatMap((e) => [e.tag, e.per?.stars, e.per?.ship, e.per?.cells].filter((t): t is NonNullable<typeof t> => !!t && t !== "any"));
 
 /** statuses whose stacks an item's effects count (own buffs, debuffs on the enemy) */
 const statusRefs = (def: ItemDef): string[] => def.effects.flatMap((e) => [e.per?.buff, e.per?.debuff].filter((t): t is NonNullable<typeof t> => !!t));
-const makes = (effects: readonly { gain?: string; inflict?: string }[], status: string): boolean => effects.some((e) => e.gain === status || e.inflict === status);
+const makes = (effects: readonly { gain?: string; inflict?: string }[], status: string): boolean =>
+  effects.some((e) => e.gain === status || e.inflict === status);
 /** fit of an item that counts or needs something: worth this share with nothing of it in the build, FIT_ALL with FIT_FULL or more of each */
-const FIT_NONE = 0.6, FIT_ALL = 1.4, FIT_FULL = 3;
+const FIT_NONE = 0.6,
+  FIT_ALL = 1.4,
+  FIT_FULL = 3;
 
 export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned: readonly string[] = bot.inv): number {
   const def = data.items.get(id)!;
   let v = (def.rarity === "artifact" ? ARTIFACT_WORTH : Math.max(1, def.cost)) * (opts.ratings?.[id] ?? 1);
   const defs = owned.map((o) => data.items.get(o)!);
   // fit: an item that counts or needs something is worth what the build already has of it
-  const needs = [...new Set(refs(def))], stacks = [...new Set(statusRefs(def))];
+  const needs = [...new Set(refs(def))],
+    stacks = [...new Set(statusRefs(def))];
   if (needs.length + stacks.length) {
     const hero = data.heroes.get(bot.hero)!;
     let have = 0;
     for (const t of needs) have += Math.min(1, defs.filter((o) => (o.tags as string[]).includes(t)).length / FIT_FULL);
-    for (const s of stacks) have += Math.min(1, (defs.filter((o) => o.id !== id && makes(o.effects, s)).length + (makes(hero.effects, s) ? 1 : 0) + (makes(def.effects, s) ? 1 : 0)) / FIT_FULL);
+    for (const s of stacks)
+      have += Math.min(
+        1,
+        (defs.filter((o) => o.id !== id && makes(o.effects, s)).length + (makes(hero.effects, s) ? 1 : 0) + (makes(def.effects, s) ? 1 : 0)) / FIT_FULL,
+      );
     v *= FIT_NONE + (FIT_ALL - FIT_NONE) * (have / (needs.length + stacks.length));
   }
   let syn = 0;
@@ -126,26 +155,35 @@ export function worth(data: GameData, bot: Bot, id: string, opts: BotOpts, owned
     const liking = opts.pathLiking ?? PATH_LIKING;
     if (onPath(def, path)) v *= liking;
     else if (opts.pathStrict && def.hero && def.path && liking > 0) v /= liking;
-  }
-  else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
+  } else if (def.tags.some((t) => bot.focus.includes(t))) v *= 1.25;
   if (def.hero) v *= 1.1;
   if (def.damage && !defs.some((o) => o.damage)) v *= 1.5;
   // Energy: another weapon is worth less when the weapons already use more Energy than comes in; Energy is worth more then
-  const supply = data.rules.energy.regen + defs.reduce((s, o) => s + energySupply(data, o), 0), need = energyNeed(defs);
-  if (def.damage) { const after = need + energyNeed([def]); if (after > supply * ENERGY_SLACK) v *= Math.max(0.4, (supply * ENERGY_SLACK) / after); }
+  const supply = data.rules.energy.regen + defs.reduce((s, o) => s + energySupply(data, o), 0),
+    need = energyNeed(defs);
+  if (def.damage) {
+    const after = need + energyNeed([def]);
+    if (after > supply * ENERGY_SLACK) v *= Math.max(0.4, (supply * ENERGY_SLACK) / after);
+  }
   const gives = energySupply(data, def);
   if (gives > 0) v *= need > supply ? 1 + Math.min(1.5, (need - supply) / Math.max(1, gives * 2)) : 0.8;
   const copies = owned.filter((o) => o === id).length;
   if (copies >= 2) v *= 0.6;
-  if (!opts.noCraft) for (const r of data.recipesWith.get(id) ?? []) {
-    const need = [...r.in]; need.splice(need.indexOf(id), 1);
-    const have = [...owned];
-    let missing = 0;
-    for (const n of need) { const k = have.indexOf(n); if (k >= 0) have.splice(k, 1); else missing++; }
-    const out = data.items.get(r.out)!;
-    const outWorth = Math.max(1, out.cost) * (opts.ratings?.[r.out] ?? 1);
-    v += missing === 0 ? 0.5 * outWorth : missing === 1 && need.length > 1 ? 0.15 * outWorth : 0.04 * outWorth;
-  }
+  if (!opts.noCraft)
+    for (const r of data.recipesWith.get(id) ?? []) {
+      const need = [...r.in];
+      need.splice(need.indexOf(id), 1);
+      const have = [...owned];
+      let missing = 0;
+      for (const n of need) {
+        const k = have.indexOf(n);
+        if (k >= 0) have.splice(k, 1);
+        else missing++;
+      }
+      const out = data.items.get(r.out)!;
+      const outWorth = Math.max(1, out.cost) * (opts.ratings?.[r.out] ?? 1);
+      v += missing === 0 ? 0.5 * outWorth : missing === 1 && need.length > 1 ? 0.15 * outWorth : 0.04 * outWorth;
+    }
   return v;
 }
 
@@ -155,7 +193,8 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
   const room = () => bot.bags.reduce((n, p) => n + data.items.get(p.item)!.size, 0);
   const log: BotLog = { round, bought: [], sold: [], crafted: [], missed: 0, rerolls: 0, goldLeft: 0 };
   bot.log.push(log);
-  bot.inv = [...bot.inv, ...bot.loose]; bot.loose = [];
+  bot.inv = [...bot.inv, ...bot.loose];
+  bot.loose = [];
   bot.gold += rules.goldPerRound[round - 1]!;
   const size = (ids: readonly string[]) => ids.reduce((s, id) => s + data.items.get(id)!.size, 0);
   let offers: (Offer | null)[] = rollOffers(data, bot.hero, round, rng, bot.inv, bot.frozen);
@@ -180,8 +219,16 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
       let drop = -1;
       if (size(bot.inv) + def.size > room()) {
         // full: replace the weakest item if the new one is clearly better
-        let weakest = -1, wv = Infinity;
-        bot.inv.forEach((id, k) => { const rest = bot.inv.filter((_, q) => q !== k); const x = worth(data, bot, id, opts, rest) / data.items.get(id)!.size; if (x < wv && data.items.get(id)!.size >= def.size) { wv = x; weakest = k; } });
+        let weakest = -1,
+          wv = Infinity;
+        bot.inv.forEach((id, k) => {
+          const rest = bot.inv.filter((_, q) => q !== k);
+          const x = worth(data, bot, id, opts, rest) / data.items.get(id)!.size;
+          if (x < wv && data.items.get(id)!.size >= def.size) {
+            wv = x;
+            weakest = k;
+          }
+        });
         if (weakest < 0 || v / def.size < wv * 1.4) return;
         drop = weakest;
       }
@@ -191,16 +238,26 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
     if (best) {
       const b = best as { slot: number; ratio: number; drop: number };
       const o = offers[b.slot]!;
-      if (b.drop >= 0) { const id = bot.inv[b.drop]!; bot.gold += sellPrice(data, id); bot.inv.splice(b.drop, 1); log.sold.push(id); }
-      bot.gold -= o.price; log.bought.push(o.item); offers[b.slot] = null;
-      if (data.items.get(o.item)!.isBag) bot.bags.push(placeBag(data, bot.bags, o.item)!); else bot.inv.push(o.item);
+      if (b.drop >= 0) {
+        const id = bot.inv[b.drop]!;
+        bot.gold += sellPrice(data, id);
+        bot.inv.splice(b.drop, 1);
+        log.sold.push(id);
+      }
+      bot.gold -= o.price;
+      log.bought.push(o.item);
+      offers[b.slot] = null;
+      if (data.items.get(o.item)!.isBag) bot.bags.push(placeBag(data, bot.bags, o.item)!);
+      else bot.inv.push(o.item);
     } else if (bot.gold >= rules.shop.rerollCost + 3 && log.rerolls < maxRerolls) {
-      bot.gold -= rules.shop.rerollCost; log.rerolls++;
+      bot.gold -= rules.shop.rerollCost;
+      log.rerolls++;
       offers = rollOffers(data, bot.hero, round, rng, bot.inv);
     } else break;
   }
   // pin what it wanted but could not pay
-  const wanted = offers.map((o, slot) => ({ o, slot, v: o && !data.items.get(o.item)!.isBag && !opts.randomBuys ? worth(data, bot, o.item, opts) / Math.max(1, o.price) : 0 }))
+  const wanted = offers
+    .map((o, slot) => ({ o, slot, v: o && !data.items.get(o.item)!.isBag && !opts.randomBuys ? worth(data, bot, o.item, opts) / Math.max(1, o.price) : 0 }))
     .filter((x) => x.o && x.o.price > bot.gold && x.v >= 1.1);
   bot.frozen = offers.map((o, slot) => (o && wanted.some((x) => x.slot === slot) ? { ...o, frozen: true } : null));
   layoutBot(data, bot, rng, opts, log);
@@ -210,11 +267,20 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
 /** Recipes whose inputs are all among `ids` (counting copies). */
 export function ownedRecipes(data: GameData, ids: readonly string[]): Recipe[] {
   const seen = new Set<Recipe>();
-  for (const id of ids) for (const r of data.recipesWith.get(id) ?? []) {
-    if (seen.has(r)) continue;
-    const have = [...ids];
-    if (r.in.every((n) => { const k = have.indexOf(n); if (k < 0) return false; have.splice(k, 1); return true; })) seen.add(r);
-  }
+  for (const id of ids)
+    for (const r of data.recipesWith.get(id) ?? []) {
+      if (seen.has(r)) continue;
+      const have = [...ids];
+      if (
+        r.in.every((n) => {
+          const k = have.indexOf(n);
+          if (k < 0) return false;
+          have.splice(k, 1);
+          return true;
+        })
+      )
+        seen.add(r);
+    }
   return [...seen];
 }
 
@@ -225,12 +291,21 @@ function layoutBot(data: GameData, bot: Bot, rng: Rng, opts: BotOpts, log: BotLo
   if (recipes.length) {
     const due = pendingMerges(data, bot.bags, bot.layout, recipes).length;
     // every owned recipe that could merge but does not lie together (an item can only serve one merge per round)
-    const could = Math.min(recipes.length, ownedRecipes(data, a.items.map((p) => p.item)).length);
+    const could = Math.min(
+      recipes.length,
+      ownedRecipes(
+        data,
+        a.items.map((p) => p.item),
+      ).length,
+    );
     log.missed = Math.max(0, could - due);
   }
   const left = [...a.left].sort((x, y) => worth(data, bot, y, opts) - worth(data, bot, x, opts));
   bot.loose = left.slice(0, data.rules.shop.looseLimit);
-  for (const id of left.slice(data.rules.shop.looseLimit)) { bot.gold += sellPrice(data, id); log.sold.push(id); }
+  for (const id of left.slice(data.rules.shop.looseLimit)) {
+    bot.gold += sellPrice(data, id);
+    log.sold.push(id);
+  }
   bot.inv = a.items.map((p) => p.item);
 }
 
@@ -262,4 +337,6 @@ export function botSpecial(data: GameData, bot: Bot, afterRound: number, rng: Rn
   if (log) log.special = pick;
 }
 
-export function botBuild(bot: Bot, round: number): Build { return { hero: bot.hero, round, bags: bot.bags.map((p) => ({ ...p })), items: bot.layout.map((p) => ({ ...p })) }; }
+export function botBuild(bot: Bot, round: number): Build {
+  return { hero: bot.hero, round, bags: bot.bags.map((p) => ({ ...p })), items: bot.layout.map((p) => ({ ...p })) };
+}

@@ -15,7 +15,10 @@ export interface OpponentSource {
 
 /** Stored bot builds of this round (or the nearest round that has one); the league is not used yet. */
 export class GhostOpponents implements OpponentSource {
-  constructor(private readonly data: GameData, private readonly ghosts: Build[][] = GHOSTS) {}
+  constructor(
+    private readonly data: GameData,
+    private readonly ghosts: Build[][] = GHOSTS,
+  ) {}
 
   pick(player: Build): Build {
     const order: number[] = [];
@@ -25,11 +28,18 @@ export class GhostOpponents implements OpponentSource {
       const pool = [...(this.ghosts[r] ?? [])];
       while (pool.length) {
         const g = pool.splice(Math.floor(Math.random() * pool.length), 1)[0]!;
-        try { compile(g, this.data); return g; } catch { /* stale ghost: the data changed since it was stored */ }
+        try {
+          compile(g, this.data);
+          return g;
+        } catch {
+          /* stale ghost: the data changed since it was stored */
+        }
       }
     }
     return { ...player };
   }
 
-  submit(): void { /* no server yet */ }
+  submit(): void {
+    /* no server yet */
+  }
 }

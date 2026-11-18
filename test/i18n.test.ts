@@ -8,7 +8,10 @@ const data = loadGameData();
 const en = JSON.parse(readFileSync(join(ROOT, "data", "locales", "en.json"), "utf8")) as Record<string, string>;
 
 function files(dir: string): string[] {
-  return readdirSync(dir).flatMap((f) => { const p = join(dir, f); return statSync(p).isDirectory() ? files(p) : p.endsWith(".ts") ? [p] : []; });
+  return readdirSync(dir).flatMap((f) => {
+    const p = join(dir, f);
+    return statSync(p).isDirectory() ? files(p) : p.endsWith(".ts") ? [p] : [];
+  });
 }
 
 describe("languages", () => {
@@ -52,7 +55,11 @@ describe("languages", () => {
 
   it("rejects a translation whose placeholders differ from English", () => {
     const problems: string[] = [];
-    buildLocales({ "en.json": en, "fr.json": { "language.name": "Français", "ui.round": "MANCHE" } }, { rules: data.rules, heroList: data.heroList, itemList: data.itemList, glossary: data.glossary }, problems);
+    buildLocales(
+      { "en.json": en, "fr.json": { "language.name": "Français", "ui.round": "MANCHE" } },
+      { rules: data.rules, heroList: data.heroList, itemList: data.itemList, glossary: data.glossary },
+      problems,
+    );
     expect(problems.join("\n")).toMatch(/fr\.json ui\.round: placeholders/);
   });
 

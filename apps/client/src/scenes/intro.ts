@@ -18,8 +18,20 @@ export interface IntroStep {
   line: string;
 }
 
-export function introSeen(): boolean { try { return localStorage.getItem(SEEN_KEY) === "1"; } catch { return true; } }
-function markSeen(): void { try { localStorage.setItem(SEEN_KEY, "1"); } catch { /* shown again next time */ } }
+export function introSeen(): boolean {
+  try {
+    return localStorage.getItem(SEEN_KEY) === "1";
+  } catch {
+    return true;
+  }
+}
+function markSeen(): void {
+  try {
+    localStorage.setItem(SEEN_KEY, "1");
+  } catch {
+    /* shown again next time */
+  }
+}
 
 export function introOverlay(game: Game, steps: IntroStep[]): Scene {
   const root = new Container();
@@ -27,16 +39,30 @@ export function introOverlay(game: Game, steps: IntroStep[]): Scene {
   let pulse = 0;
   let ring: Graphics | null = null;
 
-  const close = () => { markSeen(); game.closeOverlay(); };
-  const next = () => { if (++at_ >= steps.length) close(); else render(); };
+  const close = () => {
+    markSeen();
+    game.closeOverlay();
+  };
+  const next = () => {
+    if (++at_ >= steps.length) close();
+    else render();
+  };
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
-    const st = steps[at_]!, s = st.spot, pad = 6;
-    const x0 = Math.max(0, s.x - pad), y0 = Math.max(0, s.y - pad), x1 = Math.min(W, s.x + s.w + pad), y1 = Math.min(H, s.y + s.h + pad);
+    const st = steps[at_]!,
+      s = st.spot,
+      pad = 6;
+    const x0 = Math.max(0, s.x - pad),
+      y0 = Math.max(0, s.y - pad),
+      x1 = Math.min(W, s.x + s.w + pad),
+      y1 = Math.min(H, s.y + s.h + pad);
     // dark everywhere except the spot (over the whole display); a tap anywhere goes on
     const S = SCREEN;
     const dim = new Graphics()
-      .rect(S.x, S.y, S.w, y0 - S.y).rect(S.x, y1, S.w, S.y + S.h - y1).rect(S.x, y0, x0 - S.x, y1 - y0).rect(x1, y0, S.x + S.w - x1, y1 - y0)
+      .rect(S.x, S.y, S.w, y0 - S.y)
+      .rect(S.x, y1, S.w, S.y + S.h - y1)
+      .rect(S.x, y0, x0 - S.x, y1 - y0)
+      .rect(x1, y0, S.x + S.w - x1, y1 - y0)
       .fill({ color: C.bgDeep, alpha: 0.82 });
     const catcher = new Graphics().rect(S.x, S.y, S.w, S.h).fill({ color: 0xffffff, alpha: 0.001 });
     tappable(catcher, next);
@@ -48,8 +74,15 @@ export function introOverlay(game: Game, steps: IntroStep[]): Scene {
     const iconRow = new Container();
     let ix = 0;
     for (const name of st.icons) {
-      if (name === "arrow") { iconRow.addChild(at(icon("arrow", 18, C.dim), ix + 9, 22)); ix += 26; continue; }
-      iconRow.addChild(at(disc(22, { fill: C.bg, line: C.line, lineW: 2 }), ix + 22, 22), at(icon(name, 26, name === "starFull" || name === "merge" ? C.gold : C.text), ix + 22, 22));
+      if (name === "arrow") {
+        iconRow.addChild(at(icon("arrow", 18, C.dim), ix + 9, 22));
+        ix += 26;
+        continue;
+      }
+      iconRow.addChild(
+        at(disc(22, { fill: C.bg, line: C.line, lineW: 2 }), ix + 22, 22),
+        at(icon(name, 26, name === "starFull" || name === "merge" ? C.gold : C.text), ix + 22, 22),
+      );
       ix += 52;
     }
     const line = txt(st.line, 17, { font: "text", weight: "600", wrap: cardW - 40, align: "center", anchor: [0.5, 0] });

@@ -1,0 +1,47 @@
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      # Own step, so a new advisory does not hide a code failure (QA-08). Only what ships in the app or the
+      # backend counts; dev-tool findings are listed in docs/testing.md.
+      - name: Audit dependencies
+        run: npm audit --omit=dev --audit-level=high
+      # Same script as locally, so local and CI never differ.
+      - name: Check (validate, typecheck, lint, test)
+        run: npm run check
+
+  # Level 4 in the browser engines (docs/testing.md): own job, so a failure says which level broke.
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium webkit
+      - name: Reference fights in Chromium and WebKit
+        run: npm run test:e2e

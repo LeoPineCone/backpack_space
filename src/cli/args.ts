@@ -6,7 +6,10 @@ export function parseArgs(argv = process.argv.slice(2)): { flags: Record<string,
     const a = argv[i]!;
     if (a.startsWith("--")) {
       const next = argv[i + 1];
-      if (next !== undefined && !next.startsWith("--")) { flags[a.slice(2)] = next; i++; } else flags[a.slice(2)] = "true";
+      if (next !== undefined && !next.startsWith("--")) {
+        flags[a.slice(2)] = next;
+        i++;
+      } else flags[a.slice(2)] = "true";
     } else rest.push(a);
   }
   return { flags, rest };

@@ -101,7 +101,7 @@ export function heroScene(game: Game): Scene {
     const mid = new Container();
     if (sel.kind === "own") {
       mid.addChild(disc(69, { fill: C.gold }), disc(63, { fill: C.gold, line: C.bg, lineW: 4 }), txt(t("ui.start"), 26, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
-      tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.rng); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
+      tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.seed); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
     } else {
       mid.addChild(disc(69, { fill: C.cyan }), disc(63, { fill: C.cyan, line: C.bg, lineW: 4 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));
       tappable(mid, () => game.show(storeScene(game, () => heroScene(game), "heroes")), new Rectangle(-69, -69, 138, 138));

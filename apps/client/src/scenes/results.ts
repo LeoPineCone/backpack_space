@@ -92,7 +92,7 @@ export function resultScene(game: Game, f: Fought): Scene {
 
   root.addChild(at(roundButton("chart", 32, () => game.openOverlay(details(game, f)), { iconSize: 26 }), 52, H - 52));
   root.addChild(at(pillButton(t("ui.continue"), W - 116, 64, () => {
-    finishRound(run, data, won, game.rng);
+    finishRound(run, data, won);
     // the stored run ends before the reward is booked, so a reload cannot book it twice
     if (run.over) { game.dropSave(); game.show(runEndScene(game, game.bookRun(run))); }
     else {

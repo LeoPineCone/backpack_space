@@ -10,7 +10,10 @@ export interface CEffect {
   /** static multiplier from per.stars / per.ship (1 when there is none) */
   mult: number;
 }
-export interface DynMod { phases: string[]; mod: Mod }
+export interface DynMod {
+  phases: string[];
+  mod: Mod;
+}
 export interface CItem {
   def: ItemDef;
   idx: number;
@@ -45,7 +48,8 @@ export interface CSide {
   watchers: CEffect[][];
 }
 
-const has = (def: ItemDef, tag: FilterTag | "any" | undefined) => tag === undefined || tag === "any" || (tag === "melee" || tag === "ranged" ? def.range === tag : def.tags.includes(tag));
+const has = (def: ItemDef, tag: FilterTag | "any" | undefined) =>
+  tag === undefined || tag === "any" || (tag === "melee" || tag === "ranged" ? def.range === tag : def.tags.includes(tag));
 
 /** The tags an item's stars look for (per.stars, to: "stars", on: "starUse"); empty when its stars have no effect. */
 export function starTags(def: ItemDef): (FilterTag | "any")[] {
@@ -58,7 +62,12 @@ export function starTags(def: ItemDef): (FilterTag | "any")[] {
 }
 
 /** A star of item `from` that has item `to` lying on it; `active` when `to` is something the star looks for. */
-export interface StarLink { from: number; to: number; star: [number, number]; active: boolean }
+export interface StarLink {
+  from: number;
+  to: number;
+  star: [number, number];
+  active: boolean;
+}
 
 /** Every occupied star in a backpack, so a screen can show which items work together. */
 export function starLinks(data: GameData, bags: readonly Placement[], items: readonly Placement[]): StarLink[] {
@@ -68,7 +77,8 @@ export function starLinks(data: GameData, bags: readonly Placement[], items: rea
   items.forEach((p, from) => {
     const tags = starTags(data.items.get(p.item)!);
     for (const [sx, sy] of data.shape(p.item, p.rot).stars) {
-      const x = p.x + sx, y = p.y + sy;
+      const x = p.x + sx,
+        y = p.y + sy;
       if (x < 0 || y < 0 || x >= w || y >= h) continue;
       const to = board.occ[y * w + x]!;
       if (to < 0 || to === from) continue;
@@ -86,11 +96,26 @@ export function compile(build: Build, data: GameData): CSide {
   const board = boardOf(w, h, build.bags, build.items, data.shape);
   const items: CItem[] = build.items.map((p, idx) => {
     const def = data.items.get(p.item)!;
-    return { def, idx, starred: starred(board, build.items, idx, data.shape), cooldown: def.cooldown ?? 0, dmg: def.damage ? [def.damage[0], def.damage[1]] : null, crit: 0, leech: 0, speed: 0, ready: 0, energy: def.energy ?? 0, range: def.range ?? null, effects: [], dyn: [] };
+    return {
+      def,
+      idx,
+      starred: starred(board, build.items, idx, data.shape),
+      cooldown: def.cooldown ?? 0,
+      dmg: def.damage ? [def.damage[0], def.damage[1]] : null,
+      crit: 0,
+      leech: 0,
+      speed: 0,
+      ready: 0,
+      energy: def.energy ?? 0,
+      range: def.range ?? null,
+      effects: [],
+      dyn: [],
+    };
   });
   const round = Math.min(Math.max(build.round, 1), data.rules.rounds);
   let maxHp = data.rules.heroHp[round - 1]! + hero.hpBonus;
-  let energyBonus = 0, overheal = 0;
+  let energyBonus = 0,
+    overheal = 0;
 
   const staticMult = (e: Effect, it: CItem | null): number => {
     const per = e.per;
@@ -100,11 +125,17 @@ export function compile(build: Build, data: GameData): CSide {
     if (per.ship) count += items.filter((o) => has(o.def, per.ship)).length;
     if (per.cells) count += items.reduce((n, o) => n + (has(o.def, per.cells) ? o.def.size : 0), 0);
     // stacks divide at runtime, counts here
-    if (!per.buff && !per.debuff) { count = Math.floor(count / (per.div ?? 1)); if (per.max !== undefined) count = Math.min(count, per.max); }
+    if (!per.buff && !per.debuff) {
+      count = Math.floor(count / (per.div ?? 1));
+      if (per.max !== undefined) count = Math.min(count, per.max);
+    }
     return count;
   };
   const applyMod = (target: CItem, mod: Mod, k: number) => {
-    if (mod.damage && target.dmg) { target.dmg[0] += mod.damage * k; target.dmg[1] += mod.damage * k; }
+    if (mod.damage && target.dmg) {
+      target.dmg[0] += mod.damage * k;
+      target.dmg[1] += mod.damage * k;
+    }
     if (mod.speed) target.speed += mod.speed * k;
     if (mod.crit) target.crit += mod.crit * k;
     if (mod.leech) target.leech += mod.leech * k;
@@ -119,8 +150,20 @@ export function compile(build: Build, data: GameData): CSide {
     const mult = staticMult(e, it);
     if (e.on === "passive") {
       if (mult === 0) return;
-      if (e.to === "hero") { maxHp += (e.mod!.maxHp ?? 0) * mult; energyBonus += (e.mod!.energyRegen ?? 0) * mult; overheal += (e.mod!.overheal ?? 0) * mult; return; }
-      const targets = e.to === "self" ? (it ? [it] : []) : e.to === "stars" ? it!.starred.map((j) => items[j]!).filter((t) => has(t.def, e.tag)) : items.filter((t) => has(t.def, e.tag));
+      if (e.to === "hero") {
+        maxHp += (e.mod!.maxHp ?? 0) * mult;
+        energyBonus += (e.mod!.energyRegen ?? 0) * mult;
+        overheal += (e.mod!.overheal ?? 0) * mult;
+        return;
+      }
+      const targets =
+        e.to === "self"
+          ? it
+            ? [it]
+            : []
+          : e.to === "stars"
+            ? it!.starred.map((j) => items[j]!).filter((t) => has(t.def, e.tag))
+            : items.filter((t) => has(t.def, e.tag));
       for (const t of targets) {
         if (e.if?.phase) t.dyn.push({ phases: e.if.phase, mod: scale(e.mod!, mult) });
         else applyMod(t, e.mod!, mult);
@@ -129,9 +172,11 @@ export function compile(build: Build, data: GameData): CSide {
       return;
     }
     const ce: CEffect = { e, src: it ? it.idx : -1, mult };
-    if (e.on === "starUse") { for (const j of it!.starred) if (has(items[j]!.def, e.tag)) watchers[j]!.push(ce); }
-    else if (e.on === "shipUse") { for (const t of items) if (has(t.def, e.tag)) watchers[t.idx]!.push(ce); }
-    else if (it) it.effects.push(ce);
+    if (e.on === "starUse") {
+      for (const j of it!.starred) if (has(items[j]!.def, e.tag)) watchers[j]!.push(ce);
+    } else if (e.on === "shipUse") {
+      for (const t of items) if (has(t.def, e.tag)) watchers[t.idx]!.push(ce);
+    } else if (it) it.effects.push(ce);
     else heroEffects.push(ce);
   };
   for (const it of items) for (const e of it.def.effects) handle(e, it);
@@ -140,10 +185,17 @@ export function compile(build: Build, data: GameData): CSide {
   const under = build.items.map((_, i) => bagsUnder(board, build.items, i, data.shape));
   build.bags.forEach((bp, bi) => {
     for (const e of data.items.get(bp.item)!.effects) {
-      if (e.to === "hero") { maxHp += e.mod!.maxHp ?? 0; energyBonus += e.mod!.energyRegen ?? 0; }
-      else for (const t of items) if (under[t.idx]!.includes(bi) && has(t.def, e.tag)) applyMod(t, e.mod!, 1);
+      if (e.to === "hero") {
+        maxHp += e.mod!.maxHp ?? 0;
+        energyBonus += e.mod!.energyRegen ?? 0;
+      } else for (const t of items) if (under[t.idx]!.includes(bi) && has(t.def, e.tag)) applyMod(t, e.mod!, 1);
     }
   });
-  for (const it of items) if (it.dmg) { it.dmg[0] = Math.max(0, it.dmg[0]); it.dmg[1] = Math.max(it.dmg[0], it.dmg[1]); it.energy = Math.max(0, it.energy); }
+  for (const it of items)
+    if (it.dmg) {
+      it.dmg[0] = Math.max(0, it.dmg[0]);
+      it.dmg[1] = Math.max(it.dmg[0], it.dmg[1]);
+      it.energy = Math.max(0, it.energy);
+    }
   return { hero, round, maxHp: Math.round(maxHp), energyBonus, overheal: Math.min(100, overheal), items, heroEffects, watchers };
 }

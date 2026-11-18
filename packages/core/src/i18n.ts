@@ -39,7 +39,10 @@ export interface Translator {
   termText(id: string): string;
 }
 
-export interface Language { id: string; name: string }
+export interface Language {
+  id: string;
+  name: string;
+}
 
 export interface Locales {
   /** every shipped language, English first */
@@ -61,7 +64,21 @@ const placeholders = (s: string) => [...s.matchAll(/\{([a-zA-Z]+)(?:\|[a-zA-Z]+)
 const forms = (s: string) => [...s.matchAll(/\{[a-zA-Z]+\|([a-zA-Z]+)\}/g)].map((m) => m[1]!);
 
 /** Keys for the type words (`noun.<type>.<form>`): every tag plus "crafted" and "any". */
-export const NOUN_TYPES = ["weapon", "armor", "accessory", "pet", "food", "mechanical", "organic", "beast", "swarm", "crafted", "melee", "ranged", "any"] as const;
+export const NOUN_TYPES = [
+  "weapon",
+  "armor",
+  "accessory",
+  "pet",
+  "food",
+  "mechanical",
+  "organic",
+  "beast",
+  "swarm",
+  "crafted",
+  "melee",
+  "ranged",
+  "any",
+] as const;
 
 interface ContentSource {
   rules: Rules;
@@ -80,9 +97,16 @@ function rulesValue(rules: Rules, path: string): unknown {
 function contentTexts(src: ContentSource): Record<string, string> {
   const out: Record<string, string> = {};
   for (const it of src.itemList) out[`item.${it.id}`] = it.name;
-  for (const h of src.heroList) { out[`hero.${h.id}.name`] = h.name; out[`hero.${h.id}.title`] = h.title; out[`hero.${h.id}.focus`] = h.focus; }
+  for (const h of src.heroList) {
+    out[`hero.${h.id}.name`] = h.name;
+    out[`hero.${h.id}.title`] = h.title;
+    out[`hero.${h.id}.focus`] = h.focus;
+  }
   for (const g of src.glossary.groups) out[`group.${g.id}`] = g.title;
-  for (const t of src.glossary.terms) { out[`term.${t.id}`] = t.en; out[`term.${t.id}.text`] = t.source; }
+  for (const t of src.glossary.terms) {
+    out[`term.${t.id}`] = t.en;
+    out[`term.${t.id}.text`] = t.source;
+  }
   return out;
 }
 
@@ -96,11 +120,17 @@ export function buildLocales(files: Record<string, unknown>, src: ContentSource,
   for (const [file, raw] of Object.entries(files)) {
     const lang = file.replace(/^.*\//, "").replace(/\.json$/, "");
     const r = LocaleFile.safeParse(raw);
-    if (!r.success) { problems.push(`locales/${file}: expected an object of texts`); continue; }
+    if (!r.success) {
+      problems.push(`locales/${file}: expected an object of texts`);
+      continue;
+    }
     tables.set(lang, { ...r.data });
   }
   const en = tables.get(SOURCE_LANG);
-  if (!en) { problems.push(`locales: ${SOURCE_LANG}.json is missing`); tables.set(SOURCE_LANG, {}); }
+  if (!en) {
+    problems.push(`locales: ${SOURCE_LANG}.json is missing`);
+    tables.set(SOURCE_LANG, {});
+  }
   const content = contentTexts(src);
   for (const k of Object.keys(content)) if (en && k in en) problems.push(`locales/en.json: ${k} comes from the data files, remove it here`);
   Object.assign(tables.get(SOURCE_LANG)!, content);
@@ -109,7 +139,8 @@ export function buildLocales(files: Record<string, unknown>, src: ContentSource,
   if (de) for (const t of src.glossary.terms) de[`term.${t.id}`] ??= t.de;
 
   const source = tables.get(SOURCE_LANG)!;
-  const missing: Record<string, string[]> = {}, unused: Record<string, string[]> = {};
+  const missing: Record<string, string[]> = {},
+    unused: Record<string, string[]> = {};
   for (const [lang, table] of tables) {
     if (!table["language.name"]) problems.push(`locales/${lang}.json: "language.name" is missing`);
     if (lang === SOURCE_LANG) continue;
@@ -119,34 +150,43 @@ export function buildLocales(files: Record<string, unknown>, src: ContentSource,
     for (const [k, v] of Object.entries(table)) {
       const want = source[k];
       if (want === undefined) continue;
-      if (placeholders(v).join() !== placeholders(want).join()) problems.push(`locales/${lang}.json ${k}: placeholders {${placeholders(v).join("}, {")}} but English has {${placeholders(want).join("}, {")}}`);
+      if (placeholders(v).join() !== placeholders(want).join())
+        problems.push(`locales/${lang}.json ${k}: placeholders {${placeholders(v).join("}, {")}} but English has {${placeholders(want).join("}, {")}}`);
     }
   }
   // every word form a language's sentences ask for must exist for every type
   for (const [lang, table] of tables) {
     const used = new Set<string>();
     for (const k of Object.keys(source)) for (const f of forms(table[k] ?? source[k]!)) used.add(f);
-    for (const f of used) for (const n of NOUN_TYPES) {
-      if (table[`noun.${n}.${f}`] === undefined) problems.push(`locales/${lang}.json: noun.${n}.${f} is missing (used by a sentence)`);
-    }
+    for (const f of used)
+      for (const n of NOUN_TYPES) {
+        if (table[`noun.${n}.${f}`] === undefined) problems.push(`locales/${lang}.json: noun.${n}.${f} is missing (used by a sentence)`);
+      }
   }
 
   const cache = new Map<string, Translator>();
   const make = (lang: string): Translator => {
     const table = tables.get(lang) ?? source;
     const decimal = table["number.decimal"] ?? source["number.decimal"] ?? ".";
-    const num = (n: number) => { const s = String(n); return decimal === "." ? s : s.replace(".", decimal); };
+    const num = (n: number) => {
+      const s = String(n);
+      return decimal === "." ? s : s.replace(".", decimal);
+    };
     const raw = (key: string) => table[key] ?? source[key];
-    const fill = (text: string, params: Params = {}) => text.replace(/\{([a-zA-Z]+)(?:\|([a-zA-Z]+))?\}/g, (whole, name: string, form?: string) => {
-      const v = params[name];
-      if (v === undefined) return whole;
-      if (form) return table[`noun.${v}.${form}`] ?? table[`noun.${v}.one`] ?? source[`noun.${v}.${form}`] ?? String(v);
-      return typeof v === "number" ? num(v) : v;
-    });
+    const fill = (text: string, params: Params = {}) =>
+      text.replace(/\{([a-zA-Z]+)(?:\|([a-zA-Z]+))?\}/g, (whole, name: string, form?: string) => {
+        const v = params[name];
+        if (v === undefined) return whole;
+        if (form) return table[`noun.${v}.${form}`] ?? table[`noun.${v}.one`] ?? source[`noun.${v}.${form}`] ?? String(v);
+        return typeof v === "number" ? num(v) : v;
+      });
     const tr: Translator = {
       lang,
       name: raw("language.name") ?? lang,
-      t: (key, params) => { const s = raw(key); return s === undefined ? key : fill(s, params); },
+      t: (key, params) => {
+        const s = raw(key);
+        return s === undefined ? key : fill(s, params);
+      },
       has: (key) => raw(key) !== undefined,
       num,
       signed: (n) => `${n > 0 ? "+" : ""}${num(n)}`,
@@ -166,14 +206,27 @@ export function buildLocales(files: Record<string, unknown>, src: ContentSource,
     };
     return tr;
   };
-  const languages = [...tables.keys()].sort((a, b) => (a === SOURCE_LANG ? -1 : b === SOURCE_LANG ? 1 : a.localeCompare(b))).map((id) => ({ id, name: tables.get(id)!["language.name"] ?? id }));
+  const languages = [...tables.keys()]
+    .sort((a, b) => (a === SOURCE_LANG ? -1 : b === SOURCE_LANG ? 1 : a.localeCompare(b)))
+    .map((id) => ({ id, name: tables.get(id)!["language.name"] ?? id }));
   return {
     languages,
-    get: (lang) => { let t = cache.get(lang); if (!t) { t = make(tables.has(lang) ? lang : SOURCE_LANG); cache.set(lang, t); } return t; },
+    get: (lang) => {
+      let t = cache.get(lang);
+      if (!t) {
+        t = make(tables.has(lang) ? lang : SOURCE_LANG);
+        cache.set(lang, t);
+      }
+      return t;
+    },
     match: (preferred) => {
-      for (const p of preferred) { const base = p.toLowerCase().split(/[-_]/)[0]!; if (tables.has(base)) return base; }
+      for (const p of preferred) {
+        const base = p.toLowerCase().split(/[-_]/)[0]!;
+        if (tables.has(base)) return base;
+      }
       return SOURCE_LANG;
     },
-    missing, unused,
+    missing,
+    unused,
   };
 }

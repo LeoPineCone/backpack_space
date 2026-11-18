@@ -3,15 +3,30 @@ import { Container, Graphics, Rectangle, Text } from "pixi.js";
 import { BUTTON, C, FONT, SCREEN } from "./theme";
 import { icon } from "./icons";
 
-export interface TxtOpts { color?: number; font?: "display" | "text"; weight?: "400" | "600" | "700"; spacing?: number; wrap?: number; align?: "left" | "center" | "right"; anchor?: [number, number]; lineHeight?: number }
+export interface TxtOpts {
+  color?: number;
+  font?: "display" | "text";
+  weight?: "400" | "600" | "700";
+  spacing?: number;
+  wrap?: number;
+  align?: "left" | "center" | "right";
+  anchor?: [number, number];
+  lineHeight?: number;
+}
 
 export function txt(text: string | number, size: number, o: TxtOpts = {}): Text {
   const font = o.font ?? "display";
   const t = new Text({
     text: String(text),
     style: {
-      fontFamily: FONT[font], fontSize: size, fontWeight: o.weight ?? (font === "display" ? "700" : "400"), fill: o.color ?? C.text,
-      letterSpacing: o.spacing ?? 0, align: o.align ?? "left", wordWrap: o.wrap !== undefined, wordWrapWidth: o.wrap ?? 100,
+      fontFamily: FONT[font],
+      fontSize: size,
+      fontWeight: o.weight ?? (font === "display" ? "700" : "400"),
+      fill: o.color ?? C.text,
+      letterSpacing: o.spacing ?? 0,
+      align: o.align ?? "left",
+      wordWrap: o.wrap !== undefined,
+      wordWrapWidth: o.wrap ?? 100,
       ...(o.lineHeight ? { lineHeight: o.lineHeight } : {}),
     },
   });
@@ -20,7 +35,13 @@ export function txt(text: string | number, size: number, o: TxtOpts = {}): Text 
   return t;
 }
 
-export interface BoxOpts { fill?: number; alpha?: number; line?: number; lineW?: number; radius?: number }
+export interface BoxOpts {
+  fill?: number;
+  alpha?: number;
+  line?: number;
+  lineW?: number;
+  radius?: number;
+}
 
 export function box(w: number, h: number, o: BoxOpts = {}): Graphics {
   const g = new Graphics().roundRect(0, 0, w, h, o.radius ?? 0);
@@ -48,11 +69,17 @@ export function tappable<T extends Container>(obj: T, onTap: () => void, hit?: R
   if (hit) obj.hitArea = hit;
   // keep the press away from a draggable parent
   obj.on("pointerdown", (e) => e.stopPropagation());
-  obj.on("pointertap", (e) => { e.stopPropagation(); onTap(); });
+  obj.on("pointertap", (e) => {
+    e.stopPropagation();
+    onTap();
+  });
   return obj;
 }
 
-export function at<T extends Container>(obj: T, x: number, y: number): T { obj.position.set(x, y); return obj; }
+export function at<T extends Container>(obj: T, x: number, y: number): T {
+  obj.position.set(x, y);
+  return obj;
+}
 
 /** Round button with a symbol; origin at its centre. */
 export function roundButton(name: string, r: number, onTap: () => void, o: { fill?: number; line?: number; tint?: number; iconSize?: number } = {}): Container {
@@ -71,7 +98,13 @@ export function infoButton(r: number, onTap: () => void, active = false): Contai
 }
 
 /** Wide pill button; origin top-left. */
-export function pillButton(label: string, w: number, h: number, onTap: () => void, o: { fill?: number; ink?: number; iconName?: string; size?: number; disabled?: boolean } = {}): Container {
+export function pillButton(
+  label: string,
+  w: number,
+  h: number,
+  onTap: () => void,
+  o: { fill?: number; ink?: number; iconName?: string; size?: number; disabled?: boolean } = {},
+): Container {
   const c = new Container();
   const ink = o.ink ?? BUTTON.primary.ink;
   c.addChild(box(w, h, { fill: o.fill ?? BUTTON.primary.fill, radius: h / 2 }));
@@ -85,7 +118,10 @@ export function pillButton(label: string, w: number, h: number, onTap: () => voi
     c.addChild(ic);
   } else label_.position.set(w / 2, h / 2);
   c.addChild(label_);
-  if (o.disabled) { c.alpha = BUTTON.lockedAlpha; return c; }
+  if (o.disabled) {
+    c.alpha = BUTTON.lockedAlpha;
+    return c;
+  }
   return tappable(c, onTap, new Rectangle(0, 0, w, h));
 }
 
@@ -103,7 +139,8 @@ export function hudPill(name: string, value: string | number, line: number, tint
 /** Row of hearts: full for lives left, empty for lost ones. Origin top-left. */
 export function hearts(lives: number, max: number, size: number, gap = 4): Container {
   const c = new Container();
-  for (let i = 0; i < max; i++) c.addChild(at(icon(i < lives ? "heartFull" : "heart", size, i < lives ? C.text : C.line), i * (size + gap) + size / 2, size / 2));
+  for (let i = 0; i < max; i++)
+    c.addChild(at(icon(i < lives ? "heartFull" : "heart", size, i < lives ? C.text : C.line), i * (size + gap) + size / 2, size / 2));
   return c;
 }
 
@@ -111,15 +148,21 @@ export function hearts(lives: number, max: number, size: number, gap = 4): Conta
 export function placeholder(w: number, h: number, label: string, radius = 16): Container {
   const c = new Container();
   const g = new Graphics();
-  const dash = 7, gap = 6;
+  const dash = 7,
+    gap = 6;
   const seg = (x1: number, y1: number, x2: number, y2: number) => {
-    const len = Math.hypot(x2 - x1, y2 - y1), n = Math.floor(len / (dash + gap));
+    const len = Math.hypot(x2 - x1, y2 - y1),
+      n = Math.floor(len / (dash + gap));
     for (let i = 0; i <= n; i++) {
-      const a = (i * (dash + gap)) / len, b = Math.min(1, (i * (dash + gap) + dash) / len);
+      const a = (i * (dash + gap)) / len,
+        b = Math.min(1, (i * (dash + gap) + dash) / len);
       g.moveTo(x1 + (x2 - x1) * a, y1 + (y2 - y1) * a).lineTo(x1 + (x2 - x1) * b, y1 + (y2 - y1) * b);
     }
   };
-  seg(radius, 0, w - radius, 0); seg(w, radius, w, h - radius); seg(w - radius, h, radius, h); seg(0, h - radius, 0, radius);
+  seg(radius, 0, w - radius, 0);
+  seg(w, radius, w, h - radius);
+  seg(w - radius, h, radius, h);
+  seg(0, h - radius, 0, radius);
   g.stroke({ width: 2, color: C.dim, alpha: 0.7 });
   c.addChild(g);
   if (label) c.addChild(at(txt(label, 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), w / 2, h / 2));
@@ -130,7 +173,11 @@ export function placeholder(w: number, h: number, label: string, radius = 16): C
 export function dimmer(onTap?: () => void, alpha = 0.72): Graphics {
   const g = new Graphics().rect(SCREEN.x, SCREEN.y, SCREEN.w, SCREEN.h).fill({ color: C.bgDeep, alpha });
   g.eventMode = "static";
-  if (onTap) g.on("pointertap", (e) => { e.stopPropagation(); onTap(); });
+  if (onTap)
+    g.on("pointertap", (e) => {
+      e.stopPropagation();
+      onTap();
+    });
   return g;
 }
 

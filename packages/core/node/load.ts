@@ -25,8 +25,18 @@ export function loadRawData(dataDir = DATA_DIR): RawData {
     heroes: readJson(join(dataDir, "heroes.json")),
     recipes: readJson(join(dataDir, "recipes.json")),
     glossary: readJson(join(dataDir, "glossary.json")),
-    locales: Object.fromEntries(readdirSync(join(dataDir, "locales")).filter((f) => f.endsWith(".json")).sort().map((f) => [f, readJson(join(dataDir, "locales", f))])),
-    itemFiles: Object.fromEntries(readdirSync(itemDir).filter((f) => f.endsWith(".json")).sort().map((f) => [f, readJson(join(itemDir, f))])),
+    locales: Object.fromEntries(
+      readdirSync(join(dataDir, "locales"))
+        .filter((f) => f.endsWith(".json"))
+        .sort()
+        .map((f) => [f, readJson(join(dataDir, "locales", f))]),
+    ),
+    itemFiles: Object.fromEntries(
+      readdirSync(itemDir)
+        .filter((f) => f.endsWith(".json"))
+        .sort()
+        .map((f) => [f, readJson(join(itemDir, f))]),
+    ),
   };
 }
 
@@ -41,7 +51,11 @@ export function loadMeta(data: GameData = loadGameData(), dataDir = DATA_DIR): M
 
 /** Optional bot ratings (data/sim/ratings.json), written by `npm run report:items -- --write-ratings`. */
 export function loadRatings(dataDir = DATA_DIR): Record<string, number> {
-  try { return JSON.parse(readFileSync(join(dataDir, "sim", "ratings.json"), "utf8")) as Record<string, number>; } catch { return {}; }
+  try {
+    return JSON.parse(readFileSync(join(dataDir, "sim", "ratings.json"), "utf8")) as Record<string, number>;
+  } catch {
+    return {};
+  }
 }
 
 /** Accent colours of the palette in docs/style.md. */
@@ -60,7 +74,11 @@ export function loadItemArt(dataDir = DATA_DIR): Record<string, ItemArt> {
 }
 
 /** Number of backpack cells an item covers. */
-export const cellCount = (shape: readonly string[]) => shape.join("").split("").filter((c) => c === "#").length;
+export const cellCount = (shape: readonly string[]) =>
+  shape
+    .join("")
+    .split("")
+    .filter((c) => c === "#").length;
 
 /**
  * Word limit of a picture description by item size: an item drawn at 44 px per cell can only carry a few details.
@@ -80,8 +98,12 @@ export function checkItemArt(data: GameData, art: Record<string, ItemArt>, accen
   for (const it of data.itemList) {
     const a = art[it.id];
     if (!a?.brief?.trim()) problems.push(`item-art.json: no picture brief for ${it.id}`);
-    if (!a?.description?.trim()) { problems.push(`item-art.json: no picture description for ${it.id}`); continue; }
-    const words = a.description.trim().split(/\s+/).length, limit = artWordLimit(cellCount(it.shape));
+    if (!a?.description?.trim()) {
+      problems.push(`item-art.json: no picture description for ${it.id}`);
+      continue;
+    }
+    const words = a.description.trim().split(/\s+/).length,
+      limit = artWordLimit(cellCount(it.shape));
     if (words > limit) problems.push(`item-art.json ${it.id}: description has ${words} words, ${cellCount(it.shape)} cell(s) allow ${limit}`);
     if (/Accent:/.test(a.description)) problems.push(`item-art.json ${it.id}: the accent colour belongs in the brief, not in the description`);
   }

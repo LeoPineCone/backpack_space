@@ -24,7 +24,12 @@ npm install
 npm run validate     # checks data/*.json and prints the size of the catalogue
 npm run typecheck
 npm test
+npm run lint         # ESLint and the Prettier check, one setup for all packages
+npm run format       # format the code with Prettier and fix what ESLint can fix
+npm run check        # validate, typecheck, lint, test in order: the same as the pull request check
 ```
+
+Every pull request and every push to `main` runs `npm run check` on GitHub Actions (`.github/workflows/check.yml`). `main` is protected: merge only when the check is green. The branch protection itself is set by the owner in the GitHub settings (Settings → Branches → require the `check` status). How tests are written: [docs/testing.md](docs/testing.md).
 
 ## The game client
 
@@ -35,6 +40,7 @@ Hosted build (private link, state of 2026-11-15): https://claude.ai/artifact/ENE
 ```
 npm run client        # dev server
 npm run client:build  # static build in out/client
+npm run client:build:dev  # the same with the development helpers (window.__game, ?safe=) for checks, in out/client-dev
 npm run app:ios       # build, copy into the iOS project, open Xcode
 npm run app:android   # build, copy into the Android project, open Android Studio
 ```

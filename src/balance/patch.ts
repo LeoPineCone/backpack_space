@@ -15,22 +15,41 @@ import { buildGameData, type GameData, type RawData } from "@backpack-space/core
 import { loadRawData } from "@backpack-space/core/node";
 
 export type Value = number | string | boolean | number[];
-export interface Change { item?: string; hero?: string; rules?: true; set: Record<string, Value> }
-export interface Patch { name?: string; changes: Change[] }
+export interface Change {
+  item?: string;
+  hero?: string;
+  rules?: true;
+  set: Record<string, Value>;
+}
+export interface Patch {
+  name?: string;
+  changes: Change[];
+}
 export const EMPTY: Patch = { changes: [] };
 
 /** what a patch touches: fights without any of it keep their stored result */
-export interface Touched { items: Set<string>; heroes: Set<string>; all: boolean }
+export interface Touched {
+  items: Set<string>;
+  heroes: Set<string>;
+  all: boolean;
+}
 export function touchedBy(patch: Patch): Touched {
   const t: Touched = { items: new Set(), heroes: new Set(), all: false };
-  for (const c of patch.changes) { if (c.item) t.items.add(c.item); else if (c.hero) t.heroes.add(c.hero); else t.all = true; }
+  for (const c of patch.changes) {
+    if (c.item) t.items.add(c.item);
+    else if (c.hero) t.heroes.add(c.hero);
+    else t.all = true;
+  }
   return t;
 }
 
 type Obj = Record<string, unknown>;
 export function getPath(obj: unknown, path: string): unknown {
   let o = obj;
-  for (const k of path.split(".")) { if (o === null || typeof o !== "object") return undefined; o = (o as Obj)[k]; }
+  for (const k of path.split(".")) {
+    if (o === null || typeof o !== "object") return undefined;
+    o = (o as Obj)[k];
+  }
   return o;
 }
 function setPath(obj: unknown, path: string, value: Value, where: string): void {
@@ -45,7 +64,10 @@ function setPath(obj: unknown, path: string, value: Value, where: string): void 
 
 /** the raw item object in the item files */
 export function rawItem(raw: RawData, id: string): Obj | undefined {
-  for (const list of Object.values(raw.itemFiles)) { const it = (list as Obj[]).find((x) => x.id === id); if (it) return it; }
+  for (const list of Object.values(raw.itemFiles)) {
+    const it = (list as Obj[]).find((x) => x.id === id);
+    if (it) return it;
+  }
   return undefined;
 }
 export const rawHero = (raw: RawData, id: string): Obj | undefined => (raw.heroes as Obj[]).find((h) => h.id === id);
@@ -61,7 +83,8 @@ export function targetOf(raw: RawData, c: Change): Obj {
 export function patchRaw(raw: RawData, patch: Patch): RawData {
   const out = structuredClone(raw);
   for (const c of patch.changes) {
-    const o = targetOf(out, c), where = c.item ?? c.hero ?? "rules";
+    const o = targetOf(out, c),
+      where = c.item ?? c.hero ?? "rules";
     for (const [path, value] of Object.entries(c.set)) setPath(o, path, value, where);
   }
   return out;
@@ -82,11 +105,13 @@ export function readPatch(file: string): Patch {
 /** Two patches in one; later values win. */
 export function mergePatches(...patches: Patch[]): Patch {
   const byKey = new Map<string, Change>();
-  for (const p of patches) for (const c of p.changes) {
-    const key = c.item ? `i:${c.item}` : c.hero ? `h:${c.hero}` : "rules";
-    const have = byKey.get(key);
-    if (have) Object.assign(have.set, c.set); else byKey.set(key, { ...c, set: { ...c.set } });
-  }
+  for (const p of patches)
+    for (const c of p.changes) {
+      const key = c.item ? `i:${c.item}` : c.hero ? `h:${c.hero}` : "rules";
+      const have = byKey.get(key);
+      if (have) Object.assign(have.set, c.set);
+      else byKey.set(key, { ...c, set: { ...c.set } });
+    }
   return { changes: [...byKey.values()] };
 }
 
@@ -96,7 +121,8 @@ export function describePatch(patch: Patch, raw: RawData = (rawCache ??= loadRaw
   const show = (v: unknown) => (Array.isArray(v) ? v.join("–") : String(v));
   for (const c of patch.changes) {
     const o = targetOf(raw, c);
-    for (const [path, value] of Object.entries(c.set)) out.push(`${c.item ?? (c.hero ? `hero ${c.hero}` : "rules")} ${path}: ${show(getPath(o, path))} → ${show(value)}`);
+    for (const [path, value] of Object.entries(c.set))
+      out.push(`${c.item ?? (c.hero ? `hero ${c.hero}` : "rules")} ${path}: ${show(getPath(o, path))} → ${show(value)}`);
   }
   return out;
 }

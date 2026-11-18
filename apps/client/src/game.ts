@@ -1,6 +1,18 @@
 /** The running game: one screen at a time, popups above it, and the state of the current run. */
 import { Application, Container, Graphics, Rectangle } from "pixi.js";
-import { Rng, bookRun, enterSeason, seasonAt, type GameData, type Meta, type Profile, type RunBooking, type RunState, type SeasonChange } from "@backpack-space/core";
+import {
+  applyAction,
+  bookRun,
+  enterSeason,
+  seasonAt,
+  type GameData,
+  type Meta,
+  type Profile,
+  type RunBooking,
+  type Action,
+  type RunState,
+  type SeasonChange,
+} from "@backpack-space/core";
 import { C, H, SCREEN, W } from "./theme";
 import { fitScreen, safeInsets } from "./screen";
 import { at, box, txt } from "./ui";
@@ -32,14 +44,18 @@ export class Game {
   keywords: Map<string, Keyword>;
 
   run: RunState | null = null;
-  rng = new Rng(1);
+  /** seed of the next or current run; the core derives every shop from it (later the server hands it out) */
   seed = 1;
   hero: string;
   /** progress between runs (stored on this device) */
   profile: Profile;
   readonly opponents: OpponentSource;
 
-  constructor(readonly app: Application, readonly data: GameData, readonly meta: Meta) {
+  constructor(
+    readonly app: Application,
+    readonly data: GameData,
+    readonly meta: Meta,
+  ) {
     this.keywords = keywords(data);
     this.profile = readProfile(meta);
     this.opponents = new GhostOpponents(data);
@@ -77,12 +93,19 @@ export class Game {
   /** Replaces the current screen (and closes all popups). */
   show(scene: Scene): void {
     while (this.overlays.length) this.closeOverlay();
-    if (this.scene) { this.scene.destroy?.(); this.sceneLayer.removeChild(this.scene.root); this.scene.root.destroy({ children: true }); }
+    if (this.scene) {
+      this.scene.destroy?.();
+      this.sceneLayer.removeChild(this.scene.root);
+      this.scene.root.destroy({ children: true });
+    }
     this.scene = scene;
     this.sceneLayer.addChild(scene.root);
   }
 
-  openOverlay(scene: Scene): void { this.overlays.push(scene); this.overlayLayer.addChild(scene.root); }
+  openOverlay(scene: Scene): void {
+    this.overlays.push(scene);
+    this.overlayLayer.addChild(scene.root);
+  }
 
   closeOverlay(): void {
     const o = this.overlays.pop();
@@ -95,29 +118,41 @@ export class Game {
   toast(message: string): void {
     this.toastLayer.removeChildren().forEach((c) => c.destroy({ children: true }));
     const label = txt(message, 14, { font: "text", weight: "600", wrap: W - 80, align: "center", anchor: [0.5, 0.5] });
-    const w = label.width + 32, h = label.height + 20;
+    const w = label.width + 32,
+      h = label.height + 20;
     this.toastLayer.addChild(at(box(w, h, { fill: C.bgDeep, alpha: 0.95, line: C.dim, radius: 14 }), (W - w) / 2, H - 144 - h / 2), at(label, W / 2, H - 144));
     this.toastLayer.alpha = 1;
     this.toastLeft = 2.2;
   }
 
   /** Call after switching the language: rebuilds the texts that are cached here. */
-  languageChanged(): void { this.keywords = keywords(this.data); }
+  languageChanged(): void {
+    this.keywords = keywords(this.data);
+  }
 
-  /** Starts a new run with the chosen hero. The seed only drives the shop; battles carry their own seed. */
+  /** Makes the seed for a new run. It only drives the shops and free picks; battles carry their own seed. */
   newSeed(): void {
     this.seed = (Date.now() ^ (Math.random() * 0x7fffffff)) >>> 0;
-    this.rng = new Rng(this.seed);
+  }
+
+  /**
+   * The only way the client changes the run in the shop: one action line, checked and applied by the core and
+   * recorded in the run's log (the server will get that log). Returns whether it was applied.
+   */
+  act(action: Action): boolean {
+    return !!this.run && applyAction(this.run, this.data, action);
   }
 
   /** Stores the run on this device; `fight` while a fight of this round is running or shown. */
   save(fight: SavedFight | null = null): void {
-    if (this.run && !this.run.over) writeSave({ run: this.run, rng: this.rng.state, seed: this.seed, fight });
+    if (this.run && !this.run.over) writeSave({ run: this.run, seed: this.seed, fight });
     else clearSave();
   }
 
   /** Ends the stored run (finished or left). */
-  dropSave(): void { clearSave(); }
+  dropSave(): void {
+    clearSave();
+  }
 
   /** Takes up a stored run; returns its running fight, or undefined when there is no run to continue. */
   resume(): { fight: SavedFight | null } | undefined {
@@ -125,13 +160,15 @@ export class Game {
     if (!s) return undefined;
     this.run = s.run;
     this.seed = s.seed;
-    this.rng = new Rng(s.rng);
     this.hero = s.run.hero;
     return { fight: s.fight };
   }
 
   /** Stores a changed profile. */
-  setProfile(p: Profile): void { this.profile = p; writeProfile(p); }
+  setProfile(p: Profile): void {
+    this.profile = p;
+    writeProfile(p);
+  }
 
   /** Books a finished run into the profile: hero XP, Galaxies, league points and what they unlock. */
   bookRun(run: RunState): RunBooking {

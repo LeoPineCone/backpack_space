@@ -34,12 +34,27 @@ describe("melee / ranged filters", () => {
   it("Star Forge buffs only melee weapons on its stars", () => {
     const hero = data.heroList[0]!;
     // Star Forge `*.##.*`: stars two cells left and right of its two cells
-    const at = (melee: string, x: number): Build => ({ hero: hero.id, round: 9, bags: [{ item: "field_pack", x: 0, y: 0, rot: 0 }, { item: "field_pack", x: 3, y: 0, rot: 0 }, { item: "field_pack", x: 6, y: 0, rot: 0 }], items: [{ item: "star_forge", x: 2, y: 0, rot: 0 }, { item: melee, x, y: 0, rot: 0 }] });
+    const at = (melee: string, x: number): Build => ({
+      hero: hero.id,
+      round: 9,
+      bags: [
+        { item: "field_pack", x: 0, y: 0, rot: 0 },
+        { item: "field_pack", x: 3, y: 0, rot: 0 },
+        { item: "field_pack", x: 6, y: 0, rot: 0 },
+      ],
+      items: [
+        { item: "star_forge", x: 2, y: 0, rot: 0 },
+        { item: melee, x, y: 0, rot: 0 },
+      ],
+    });
     const def = data.items.get("star_forge")!;
     expect(def.shape).toEqual(["*.##.*"]);
     const melee = data.itemList.find((i) => i.range === "melee" && i.shape.length === 2 && i.shape.every((r) => r === "#") && !i.hero)!;
     const ranged = data.itemList.find((i) => i.range === "ranged" && i.shape.length === 2 && i.shape.every((r) => r === "#") && !i.hero)!;
-    const dmg = (id: string) => { const c = compile(at(id, 0), data); return c.items.find((x) => x.def.id === id)!.dmg![0]; };
+    const dmg = (id: string) => {
+      const c = compile(at(id, 0), data);
+      return c.items.find((x) => x.def.id === id)!.dmg![0];
+    };
     expect(dmg(melee.id)).toBe(melee.damage![0] + 3);
     expect(dmg(ranged.id)).toBe(ranged.damage![0]);
   });

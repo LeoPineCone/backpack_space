@@ -15,12 +15,18 @@ export function readProfile(meta: Meta): Profile {
       const p = s?.v === VERSION ? fitProfile(meta, s.profile) : null;
       if (p) return p;
     }
-  } catch { /* unreadable: start fresh */ }
+  } catch {
+    /* unreadable: start fresh */
+  }
   return newProfile(meta);
 }
 
 export function writeProfile(p: Profile): void {
-  try { localStorage.setItem(KEY, JSON.stringify({ v: VERSION, profile: p })); } catch { /* storage unavailable: progress only lasts this session */ }
+  try {
+    localStorage.setItem(KEY, JSON.stringify({ v: VERSION, profile: p }));
+  } catch {
+    /* storage unavailable: progress only lasts this session */
+  }
 }
 
 /** Today on this device as YYYY-MM-DD (the core never reads the clock). */

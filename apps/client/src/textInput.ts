@@ -33,7 +33,9 @@ export function askText(initial: string, maxLength: number, label: string): Prom
       else if (e.key === "Escape") finish(null);
     });
     input.addEventListener("blur", () => finish(input.value));
-    shade.addEventListener("pointerdown", (e) => { if (e.target === shade) finish(input.value); });
+    shade.addEventListener("pointerdown", (e) => {
+      if (e.target === shade) finish(input.value);
+    });
     input.focus();
     input.select();
   });

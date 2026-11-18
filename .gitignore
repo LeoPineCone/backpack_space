@@ -10,3 +10,5 @@ dist/
 # Claude settings stay local; skills are shared through the repo
 .claude/*
 !.claude/skills/
+test-results/
+playwright-report/
