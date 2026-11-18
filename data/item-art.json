@@ -348,8 +348,8 @@
     "description": "Lying across the box: the stubby thruster-nozzle rivet gun, a fat copper wire spool bolted on top feeding a belt of rivets into it."
   },
   "flamethrower": {
-    "brief": "Plasma cutter with a fuel can underneath and a flat flame tongue. Accent: coral red.",
-    "description": "Along the long box: the welding-torch plasma cutter, a red rocket-fuel jerrycan strapped underneath with a pressure gauge, a flat coral red flame tongue leaving the nozzle, drawn with ink lines, no glow."
+    "brief": "Plasma cutter with a fuel can underneath, no flame. Accent: coral red.",
+    "description": "Along the long box: the welding-torch plasma cutter, a red rocket-fuel jerrycan strapped underneath with a pressure gauge, the nozzle rim painted coral red, no flame."
   },
   "slag_mace": {
     "brief": "Little asteroid fused onto a bent hull-plate pole. Accent: coral red.",
@@ -624,8 +624,8 @@
     "description": "Filling the square box: four laser pistol barrels with teal lens rings bundled in a ring like a gatling, a copper-coiled star battery behind them, one double grip."
   },
   "dragon_engine": {
-    "brief": "Flamethrower with a dragon-head nozzle and thruster fins. Accent: coral red.",
-    "description": "Along the long box: the plasma cutter flamethrower stretched long, its nozzle forged as a dragon head with open jaws, thruster fins along the back, a flat coral red flame tongue from the mouth."
+    "brief": "Long plasma cutter with a dragon-head nozzle and thruster fins. Accent: coral red.",
+    "description": "Along the long box: the plasma cutter stretched long, its nozzle forged as a dragon head with closed jaws and coral red eyes, thruster fins along the back, no flame."
   },
   "neutron_hammer": {
     "brief": "Huge hammer: asteroid slag head around a dense mustard core. Accent: mustard.",
