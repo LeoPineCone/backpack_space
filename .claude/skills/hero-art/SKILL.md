@@ -30,6 +30,10 @@ they move there, add a row to `docs/client-art.md`.
 
 Ilja decides every look; never jump ahead to the final picture.
 
+**Collect changes first.** When Ilja comments on a picture, do not start an edit after each remark. Collect
+all his changes in a short list, show it, wait for his OK, then make one edit with everything (Ilja 2026-11-18:
+"generiere nicht einfach so schnell").
+
 1. **Describe first.** Give the hero description in German and, when the look is open, a few short idea
    directions (text only). Ilja wanted ideas that are *creative and clearly space*, not "a plant in a suit":
    the winning Venn idea was a lure flower whose poison pollen turns as a small spiral galaxy. Tie ideas to the
