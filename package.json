@@ -43,6 +43,7 @@
     "play:ghosts": "tsx playground/make-ghosts.ts",
     "client": "vite apps/client",
     "client:build": "vite build apps/client --outDir ../../out/client --emptyOutDir",
+    "client:build:dev": "vite build apps/client --mode devtools --outDir ../../out/client-dev --emptyOutDir",
     "app:sync": "npm run cap:sync -w @backpack-space/client",
     "app:ios": "npm run cap:ios -w @backpack-space/client",
     "app:android": "npm run cap:android -w @backpack-space/client",

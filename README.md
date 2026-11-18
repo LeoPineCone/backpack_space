@@ -40,6 +40,7 @@ Hosted build (private link, state of 2026-11-15): https://claude.ai/artifact/ENE
 ```
 npm run client        # dev server
 npm run client:build  # static build in out/client
+npm run client:build:dev  # the same with the development helpers (window.__game, ?safe=) for checks, in out/client-dev
 npm run app:ios       # build, copy into the iOS project, open Xcode
 npm run app:android   # build, copy into the Android project, open Android Studio
 ```
