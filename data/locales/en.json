@@ -212,6 +212,11 @@
   "status.noNetwork.text": "The game needs the internet. Check your connection and try again.",
   "status.signInFailed.title": "NOT SIGNED IN",
   "status.signInFailed.text": "The game keeps your progress with Game Center or Google Play Games. Please sign in there and try again.",
+  "status.searching.title": "SEARCHING",
+  "status.searching.text": "Looking for an opponent for this round.",
+  "toast.noConnection": "No connection. The run waits here; try again.",
+  "toast.backpackRejected": "The server did not accept this backpack.",
+  "toast.runBooked": "Your last run was finished and booked: {wins} wins.",
 
   "ui.music": "Music",
   "ui.sounds": "Sounds",

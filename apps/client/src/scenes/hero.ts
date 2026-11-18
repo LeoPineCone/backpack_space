@@ -12,6 +12,7 @@ import { shopScene } from "./shop";
 import { progressOverlay, type Tab } from "./progress";
 import { storeScene } from "./store";
 import { t, upper } from "../i18n";
+import { onRunFailure } from "./online-flow";
 
 type Slot = { kind: "own"; id: string; letter: string } | { kind: "locked" } | { kind: "soon" };
 
@@ -29,6 +30,8 @@ function traits(game: Game, heroId: string): string[] {
 export function heroScene(game: Game): Scene {
   const root = new Container();
   const data = game.data;
+  /** a start request is on its way (online) */
+  let busy = false;
   const slots: Slot[] = [
     ...data.heroList.filter((h) => ownsHero(game.meta, game.profile, h.id)).map((h): Slot => ({ kind: "own", id: h.id, letter: h.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase() })),
     { kind: "locked" }, { kind: "locked" }, { kind: "soon" }, { kind: "soon" },
@@ -115,7 +118,20 @@ export function heroScene(game: Game): Scene {
       face.addChild(disc(66, { fill: C.gold, framed: true }), at(inkShade(132, 132, C.gold, (g) => g.circle(66, 66, 64)), -66, -66), disc(58, { line: C.ink, lineW: 2 }), txt(t("ui.start"), 28, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
       mid.addChild(face);
       pressable(mid, face);
-      tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.seed); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
+      tappable(mid, () => {
+        if (game.isOnline) {
+          // online the server starts the run and hands out the seed of the first shop
+          if (busy) return;
+          busy = true;
+          void game.startRun(sel.id).then((res) => {
+            busy = false;
+            if (res.ok) game.show(shopScene(game));
+            else onRunFailure(game, res, () => {});
+          });
+          return;
+        }
+        game.newSeed(); game.run = newRun(data, sel.id, game.seed); game.show(shopScene(game));
+      }, new Rectangle(-69, -69, 138, 138));
     } else {
       const face = new Container();
       face.addChild(disc(66, { fill: C.cyan, framed: true }), at(inkShade(132, 132, C.cyan, (g) => g.circle(66, 66, 64)), -66, -66), disc(58, { line: C.ink, lineW: 2 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));

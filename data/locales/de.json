@@ -798,6 +798,11 @@
   "status.noNetwork.text": "Das Spiel braucht das Internet. Prüfe deine Verbindung und versuche es noch einmal.",
   "status.signInFailed.title": "NICHT ANGEMELDET",
   "status.signInFailed.text": "Das Spiel speichert deinen Fortschritt über Game Center oder Google Play Spiele. Bitte melde dich dort an und versuche es noch einmal.",
+  "status.searching.title": "SUCHE",
+  "status.searching.text": "Ein Gegner für diese Runde wird gesucht.",
+  "toast.noConnection": "Keine Verbindung. Der Lauf wartet hier; versuche es noch einmal.",
+  "toast.backpackRejected": "Der Server hat diesen Rucksack nicht angenommen.",
+  "toast.runBooked": "Dein letzter Lauf wurde beendet und gebucht: {wins} Siege.",
 
   "ui.music": "Musik",
   "ui.sounds": "Geräusche",

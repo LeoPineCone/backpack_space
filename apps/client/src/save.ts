@@ -1,4 +1,5 @@
 /** Keeps the running game on this device, so a reload or a closed app continues where the player was. */
+import type { RunBody } from "@backpack-space/api";
 import { boardOf, type Build, type GameData, type RunState } from "@backpack-space/core";
 
 const KEY = "backpack-space.run";
@@ -9,12 +10,16 @@ const VERSION = 3;
 export interface SavedFight {
   ghost: Build;
   seed: number;
+  /** online: what the server decided for this round (it counts, not the replay), and the run after it */
+  server?: { name: string; patch: string | null; won: boolean; run: RunBody };
 }
 export interface Saved {
   v: number;
   run: RunState;
   seed: number;
   fight: SavedFight | null;
+  /** online: the server's id of the run this copy belongs to */
+  runId?: string;
 }
 
 export function writeSave(s: Omit<Saved, "v">): void {

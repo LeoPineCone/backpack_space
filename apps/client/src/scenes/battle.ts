@@ -9,6 +9,7 @@ import { piece, starMarks } from "../pieces";
 import { resultScene } from "./results";
 import { t, tr, upper } from "../i18n";
 import type { SavedFight } from "../save";
+import { patchLeague } from "../server-run";
 
 const CELL = 34,
   BX = 42;
@@ -36,6 +37,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const player = buildOf(game.run!);
   const league = leagueOf(game.meta, game.profile.season.points);
   if (!saved) game.opponents.submit(player, league);
+  // online the server picked the opponent (its name and patch come along); offline a stored bot build
   const fight: SavedFight = saved ?? { ghost: game.opponents.pick(player, league), seed: (Math.random() * 0x7fffffff) | 0 };
   game.save(fight);
   const ghost = fight.ghost;
@@ -105,8 +107,13 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   // the opponent's name and league patch (docs/ux.md F2 step 9) on the left of the clock; the stored bot builds have no
   // player names yet, so the name is a placeholder and the patch shows the player's own league, where opponents come from
   const tag = new Container();
-  tag.addChild(at(icon("patch", 18, C.gold), 9, 0), at(txt(t("ui.opponentName"), 12, { font: "text", weight: "600", color: C.dim, anchor: [0, 0.5] }), 22, 0));
-  tag.addChild(at(txt(upper(t(`league.${game.meta.leagues.ids[league]}`)), 9, { color: C.gold, spacing: 1, anchor: [0, 0.5] }), 22, 13));
+  const server = fight.server;
+  const oppLeague = server ? patchLeague(server.patch) : game.meta.leagues.ids[league]!;
+  tag.addChild(
+    at(icon("patch", 18, C.gold), 9, 0),
+    at(txt(server ? server.name : t("ui.opponentName"), 12, { font: "text", weight: "600", color: C.dim, anchor: [0, 0.5] }), 22, 0),
+  );
+  if (oppLeague) tag.addChild(at(txt(upper(t(`league.${oppLeague}`)), 9, { color: C.gold, spacing: 1, anchor: [0, 0.5] }), 22, 13));
   const lineR = new Graphics().rect(W - 105, clockY - 1, 90, 2).fill(C.line);
   root.addChild(at(tag, 15, clockY - 4), lineR, clock, at(phaseLabel, W / 2, clockY + 18));
   const drawClock = () => {
@@ -260,7 +267,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
         endWait -= dt;
         if (endWait <= 0) {
           left = true;
-          game.show(resultScene(game, { result, sides, player }));
+          game.show(resultScene(game, { result, sides, player, ...(server ? { server } : {}) }));
         }
       }
     },

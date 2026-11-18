@@ -1,8 +1,11 @@
 /** The running game: one screen at a time, popups above it, and the state of the current run. */
 import { Application, Container, Graphics, Rectangle } from "pixi.js";
+import { ROUTES, type RequestOf, type ResponseOf, type RouteName } from "@backpack-space/api";
 import {
   applyAction,
   bookRun,
+  buildOf,
+  newRun,
   enterSeason,
   seasonAt,
   type GameData,
@@ -21,6 +24,8 @@ import { clearSave, readSave, writeSave, type SavedFight } from "./save";
 import { readProfile, today, writeProfile } from "./profile";
 import { GhostOpponents, type OpponentSource } from "./opponents";
 import type { OnlineState } from "./online";
+import type { Api, ApiResult } from "./api";
+import { bookingFromServer, decideEntry, roundActions, type RunEntry } from "./server-run";
 
 export interface Scene {
   root: Container;
@@ -52,6 +57,14 @@ export class Game {
   profile: Profile;
   /** how the start against the backend went (connect.ts) */
   online: OnlineState = { kind: "offline" };
+  /** the backend, when the build has an address (connect.ts) */
+  api: Api | null = null;
+  /** signs in again when the session token expired */
+  signIn: (() => Promise<OnlineState>) | null = null;
+  /** online: the server's id of the current run */
+  runId: string | null = null;
+  /** starts the app's entry again: configuration, sign-in, open run (main.ts) */
+  reenter: () => void = () => {};
   readonly opponents: OpponentSource;
 
   constructor(
@@ -148,7 +161,7 @@ export class Game {
 
   /** Stores the run on this device; `fight` while a fight of this round is running or shown. */
   save(fight: SavedFight | null = null): void {
-    if (this.run && !this.run.over) writeSave({ run: this.run, seed: this.seed, fight });
+    if (this.run && !this.run.over) writeSave({ run: this.run, seed: this.seed, fight, ...(this.runId ? { runId: this.runId } : {}) });
     else clearSave();
   }
 
@@ -164,7 +177,108 @@ export class Game {
     this.run = s.run;
     this.seed = s.seed;
     this.hero = s.run.hero;
+    this.runId = s.runId ?? null;
     return { fight: s.fight };
+  }
+
+  // ---------- the run against the backend (server-run.ts)
+
+  /** Online: the server decides the run; offline (no backend address) the device plays alone as before. */
+  get isOnline(): boolean {
+    return this.online.kind === "ready" && this.api !== null;
+  }
+
+  /** One request with the session token; an expired token signs in again silently and repeats once. */
+  async call<N extends RouteName>(name: N, body: RequestOf<N>): Promise<ApiResult<ResponseOf<N>>> {
+    const token = () => (this.online.kind === "ready" ? this.online.token : undefined);
+    let res = await this.api!.call(name, body, ROUTES[name].auth ? token() : undefined);
+    if (!res.ok && res.error === "unauthorized" && this.signIn) {
+      this.online = await this.signIn();
+      if (this.online.kind === "ready") res = await this.api!.call(name, body, token());
+    }
+    return res;
+  }
+
+  /** Starts a run on the server: the run id and the shop seed of round 1 come from there (RUN-03). */
+  async startRun(hero: string): Promise<ApiResult<null>> {
+    const res = await this.call("runStart", { hero, simVersion: this.data.simVersion });
+    if (!res.ok) return res;
+    const r = res.value.run;
+    if (r.round !== 1 || r.hero !== hero) {
+      // an open run this device has no copy of: the server books it, then the new run starts
+      const ended = await this.call("runFinish", { runId: r.runId, reason: "no_local_copy" });
+      if (!ended.ok) return ended;
+      this.setProfile(bookingFromServer(ended.value, this.profile).profile);
+      return this.startRun(hero);
+    }
+    this.run = newRun(this.data, hero, r.shopSeed);
+    this.seed = r.shopSeed;
+    this.runId = r.runId;
+    this.save();
+    return { ok: true, value: null };
+  }
+
+  /** The fight request of the round: backpack and shop actions go to the server, opponent, seed and result come back. */
+  async requestFight(): Promise<ApiResult<SavedFight>> {
+    const run = this.run!;
+    const res = await this.call("runFight", {
+      runId: this.runId!,
+      round: run.round,
+      backpack: buildOf(run),
+      actions: roundActions(run.log),
+      simVersion: this.data.simVersion,
+    });
+    if (!res.ok) return res;
+    const a = res.value;
+    const fight: SavedFight = {
+      ghost: a.opponent.backpack,
+      seed: a.fightSeed,
+      server: { name: a.opponent.name, patch: a.opponent.patch, won: a.result === "win", run: a.run },
+    };
+    this.save(fight);
+    return { ok: true, value: fight };
+  }
+
+  /** Reports the end of the run (over, or given up); the server books it once and sends the new profile. */
+  async finishOnline(reason: "finished" | "gave_up"): Promise<ApiResult<RunBooking>> {
+    const res = await this.call("runFinish", { runId: this.runId!, reason });
+    if (!res.ok) return res;
+    const b = bookingFromServer(res.value, this.profile);
+    this.setProfile(b.profile);
+    this.runId = null;
+    this.dropSave();
+    return { ok: true, value: b };
+  }
+
+  /**
+   * At start: asks the server for the open run and lines the local copy up with it. A copy of another run, or of a
+   * run the server no longer has, is dropped; an open run without a copy is reported and booked by the server.
+   */
+  async enterRun(): Promise<ApiResult<{ entry: RunEntry; booked?: { booking: RunBooking; wins: number }; fight: SavedFight | null }>> {
+    const res = await this.call("runCurrent", {});
+    if (!res.ok) return res;
+    const saved = this.resume();
+    const local = saved && this.run ? { runId: this.runId ?? undefined, round: this.run.round, answered: !!saved.fight?.server } : null;
+    const entry = decideEntry(res.value, local);
+    const keep = entry.kind === "resume";
+    if (!keep) {
+      this.run = null;
+      this.runId = null;
+      this.dropSave();
+    }
+    if (entry.kind === "booked") {
+      const booking = bookingFromServer(entry.finished, this.profile);
+      this.setProfile(booking.profile);
+      return { ok: true, value: { entry, booked: { booking, wins: entry.finished.result.wins }, fight: null } };
+    }
+    if (entry.kind === "noCopy") {
+      const ended = await this.call("runFinish", { runId: entry.runId, reason: "no_local_copy" });
+      if (!ended.ok) return ended;
+      const booking = bookingFromServer(ended.value, this.profile);
+      this.setProfile(booking.profile);
+      return { ok: true, value: { entry, booked: { booking, wins: ended.value.result.wins }, fight: null } };
+    }
+    return { ok: true, value: { entry, fight: keep ? (saved?.fight ?? null) : null } };
   }
 
   /** Stores a changed profile. */

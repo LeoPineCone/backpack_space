@@ -32,6 +32,8 @@ export async function connect(game: Game): Promise<OnlineState> {
   const state = await startOnline(api, APP_VERSION, identity);
   if (state.kind === "ready") game.setProfile(profileFromServer(state.profile, game.profile));
   game.online = state;
+  game.api = api;
+  game.signIn = () => startOnline(api, APP_VERSION, identity);
   return state;
 }
 
