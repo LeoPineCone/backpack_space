@@ -1,7 +1,6 @@
 /** The running game: one screen at a time, popups above it, and the state of the current run. */
 import { Application, Container, Graphics, Rectangle } from "pixi.js";
 import {
-  Rng,
   bookRun,
   enterSeason,
   seasonAt,
@@ -43,7 +42,7 @@ export class Game {
   keywords: Map<string, Keyword>;
 
   run: RunState | null = null;
-  rng = new Rng(1);
+  /** seed of the next or current run; the core derives every shop from it (later the server hands it out) */
   seed = 1;
   hero: string;
   /** progress between runs (stored on this device) */
@@ -129,15 +128,14 @@ export class Game {
     this.keywords = keywords(this.data);
   }
 
-  /** Starts a new run with the chosen hero. The seed only drives the shop; battles carry their own seed. */
+  /** Makes the seed for a new run. It only drives the shops and free picks; battles carry their own seed. */
   newSeed(): void {
     this.seed = (Date.now() ^ (Math.random() * 0x7fffffff)) >>> 0;
-    this.rng = new Rng(this.seed);
   }
 
   /** Stores the run on this device; `fight` while a fight of this round is running or shown. */
   save(fight: SavedFight | null = null): void {
-    if (this.run && !this.run.over) writeSave({ run: this.run, rng: this.rng.state, seed: this.seed, fight });
+    if (this.run && !this.run.over) writeSave({ run: this.run, seed: this.seed, fight });
     else clearSave();
   }
 
@@ -152,7 +150,6 @@ export class Game {
     if (!s) return undefined;
     this.run = s.run;
     this.seed = s.seed;
-    this.rng = new Rng(s.rng);
     this.hero = s.run.hero;
     return { fight: s.fight };
   }

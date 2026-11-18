@@ -1,12 +1,16 @@
 /** One run as the player plays it: rounds, gold, shop, bags, backpack, loose items, merging, lives. Used by the browser preview; the bots follow the same rules. */
 import type { GameData } from "./gamedata.js";
 import { bagsUnder, boardOf, neighbours } from "./grid.js";
-import type { Rng } from "./rng.js";
+import { Rng } from "./rng.js";
 import type { Build, Placement, Recipe } from "./schema.js";
 import { rollOffers, sellPrice, specialOptions, type Offer } from "./shop.js";
 
 export interface RunState {
   hero: string;
+  /** the run seed: with the round and the reroll count it decides every shop and every free pick (CORE-04) */
+  seed: number;
+  /** rerolls bought in this round */
+  rerolls: number;
   /** 1-based round about to be fought */
   round: number;
   lives: number;
@@ -39,11 +43,37 @@ export interface Spot {
   rot: number;
 }
 
-export function newRun(data: GameData, hero: string, rng: Rng): RunState {
+/** Mixes integers into one 32-bit seed (murmur3 finalizer per step); only integer math, equal in every engine. */
+function mixSeed(...parts: number[]): number {
+  let h = 0x9e3779b9;
+  for (const p of parts) {
+    h = Math.imul(h ^ (p >>> 0), 0x85ebca6b);
+    h ^= h >>> 13;
+    h = Math.imul(h, 0xc2b2ae35);
+    h ^= h >>> 16;
+  }
+  return h >>> 0;
+}
+/** What a draw is for; part of the seed, so the shop and the free pick of a round never share numbers. */
+const DRAW_SHOP = 1;
+const DRAW_SPECIAL = 2;
+
+/** The `Rng` of the shop of `round` after `rerolls` rerolls (0 = the shop the round opens with). Anybody with the run seed rebuilds the same shop. */
+export function shopRng(seed: number, round: number, rerolls: number): Rng {
+  return new Rng(mixSeed(seed, DRAW_SHOP, round, rerolls));
+}
+/** The `Rng` of the free pick offered after `afterRound`. */
+export function specialRng(seed: number, afterRound: number): Rng {
+  return new Rng(mixSeed(seed, DRAW_SPECIAL, afterRound));
+}
+
+export function newRun(data: GameData, hero: string, seed: number): RunState {
   const h = data.heroes.get(hero);
   if (!h) throw new Error(`unknown hero ${hero}`);
   const s: RunState = {
     hero,
+    seed: seed >>> 0,
+    rerolls: 0,
     round: 1,
     lives: data.rules.lives,
     wins: 0,
@@ -57,17 +87,20 @@ export function newRun(data: GameData, hero: string, rng: Rng): RunState {
     merged: [],
     over: false,
   };
-  startRound(s, data, rng);
+  startRound(s, data);
   return s;
 }
-export function startRound(s: RunState, data: GameData, rng: Rng): void {
+/** Opens the shop of the current round: its gold, and offers that follow from the seed, the round and what is owned. */
+export function startRound(s: RunState, data: GameData): void {
   s.gold += data.rules.goldPerRound[s.round - 1]!;
-  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.loose], s.offers);
+  s.rerolls = 0;
+  s.offers = rollOffers(data, s.hero, s.round, shopRng(s.seed, s.round, 0), [...s.items.map((p) => p.item), ...s.loose], s.offers);
 }
-export function reroll(s: RunState, data: GameData, rng: Rng): boolean {
+export function reroll(s: RunState, data: GameData): boolean {
   if (s.gold < data.rules.shop.rerollCost) return false;
   s.gold -= data.rules.shop.rerollCost;
-  s.offers = rollOffers(data, s.hero, s.round, rng, [...s.items.map((p) => p.item), ...s.loose], s.offers);
+  s.rerolls++;
+  s.offers = rollOffers(data, s.hero, s.round, shopRng(s.seed, s.round, s.rerolls), [...s.items.map((p) => p.item), ...s.loose], s.offers);
   return true;
 }
 /** Pins an offer (it stays through rerolls and into the next round) or releases it. Any number of offers can be pinned. */
@@ -279,7 +312,7 @@ export function giveUp(s: RunState): void {
 }
 
 /** Books the fight of this round, merges what lies together and opens the next shop (or ends the run). */
-export function finishRound(s: RunState, data: GameData, won: boolean, rng: Rng): void {
+export function finishRound(s: RunState, data: GameData, won: boolean): void {
   if (won) s.wins++;
   else s.lives--;
   s.results.push(won);
@@ -291,6 +324,6 @@ export function finishRound(s: RunState, data: GameData, won: boolean, rng: Rng)
   }
   s.merged = mergeAll(s, data);
   s.round++;
-  s.special = specialOptions(data, s.hero, fought, rng);
-  startRound(s, data, rng);
+  s.special = specialOptions(data, s.hero, fought, specialRng(s.seed, fought));
+  startRound(s, data);
 }

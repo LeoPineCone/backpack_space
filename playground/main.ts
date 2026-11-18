@@ -146,7 +146,7 @@ function startRun(hero: string): void {
   const fromHash = /seed=(\d+)/.exec(location.hash);
   seed = fromHash ? Number(fromHash[1]) >>> 0 : Math.floor(Math.random() * 2 ** 31);
   rng = new Rng(seed);
-  run = newRun(data, hero, rng);
+  run = newRun(data, hero, seed);
   sel = null;
   hover = null;
   bagMode = false;
@@ -243,7 +243,7 @@ function startFight(): void {
   window.scrollTo(0, 0);
   stopFight = mountFight(app, data, { player, ghost, seed: rng.int(2 ** 31), note }, (won) => {
     stopFight = null;
-    finishRound(r, data, won, rng);
+    finishRound(r, data, won);
     screen = r.over ? "end" : "shop";
     window.scrollTo(0, 0);
     render();
@@ -389,7 +389,7 @@ function renderShop(): void {
           id: "reroll",
           disabled: r.gold < rules.shop.rerollCost,
           onclick: () => {
-            if (reroll(r, data, rng)) {
+            if (reroll(r, data)) {
               if (sel?.kind === "offer") sel = null;
               render();
             }
