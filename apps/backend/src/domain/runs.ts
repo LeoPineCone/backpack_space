@@ -19,7 +19,8 @@ import type {
 } from "@backpack-space/api";
 import { bookRun } from "@backpack-space/core";
 import type { Item, Write } from "../ports/index.js";
-import { ApiError, type DomainContext } from "./context.js";
+import { ApiError, type DomainContext, type Game } from "./context.js";
+import { dataMajor } from "./matching.js";
 import { logEvent, type EventFields } from "./log.js";
 import { loadProfile, playerKey, profileWrites } from "./players.js";
 
@@ -40,6 +41,8 @@ export interface StoredRun {
   /** owners of the opponents met so far (nobody twice in a run) */
   met: string[];
   simVersion: string;
+  /** the data version the run started with (missing on runs from before it was stored: counts as current) */
+  dataVersion?: string;
   /** milliseconds since 1970 */
   startedAt: number;
   version: number;
@@ -59,15 +62,31 @@ export async function readRun(ctx: DomainContext, playerId: string): Promise<Sto
   return (await ctx.ports.players.get(playerKey(playerId), RUN)) as unknown as StoredRun | null;
 }
 
-/** App and server must compute with the same core and data (CORE-03). */
-export function checkSimVersion(ctx: DomainContext, simVersion: string): void {
-  if (simVersion !== ctx.ports.game.data.simVersion) throw new ApiError("update_required");
+/**
+ * The simulation build the request names (CORE-03): the current one, or during a rollout the previous one. App and
+ * server must compute with the same core and data, so any other version gets `update_required`.
+ */
+export function gameFor(ctx: DomainContext, simVersion: string): Game {
+  const { game, previousGame } = ctx.ports;
+  if (simVersion === game.data.simVersion) return game;
+  if (previousGame && simVersion === previousGame.data.simVersion) return previousGame;
+  throw new ApiError("update_required");
 }
 
-/** GET /runs/current: the open run, or null; a run that is over is booked now (the app never reported its end). */
+/**
+ * RUN-13: a run is not tied to the version it started with; every fight is computed with the build the request
+ * names. Only when the data's major version changed (an item removed or reshaped) the stored standing no longer
+ * fits, and the run is ended and booked as it stands.
+ */
+export function majorChanged(run: StoredRun, game: Game): boolean {
+  return dataMajor(run.dataVersion ?? game.data.dataVersion) !== dataMajor(game.data.dataVersion);
+}
+
+/** GET /runs/current: the open run, or null. A run that is over, or whose data major is gone, is booked now. */
 export async function runCurrent(ctx: DomainContext): Promise<RunCurrentResponse> {
   const run = await readRun(ctx, ctx.playerId!);
   if (run?.over) return { run: null, finished: await finishRun(ctx, run.runId, "finished") };
+  if (run && majorChanged(run, ctx.ports.game)) return { run: null, finished: await finishRun(ctx, run.runId, "data_major") };
   return { run: run ? toBody(run) : null };
 }
 
@@ -75,11 +94,14 @@ export async function runCurrent(ctx: DomainContext): Promise<RunCurrentResponse
 export async function runStart(ctx: DomainContext, body: unknown): Promise<RunStartResponse> {
   const { hero, simVersion } = body as RunStartRequest;
   const playerId = ctx.playerId!;
-  checkSimVersion(ctx, simVersion);
+  const game = gameFor(ctx, simVersion);
   const open = await readRun(ctx, playerId);
-  if (open) return { run: toBody(open) };
+  if (open && !open.over && !majorChanged(open, game)) return { run: toBody(open) };
+  // an open run that is over or of an old data major is booked first, then the new run starts
+  if (open) await finishRun(ctx, open.runId, open.over ? "finished" : "data_major");
 
-  const { data, meta } = ctx.ports.game;
+  const { data } = game;
+  const { meta } = ctx.ports.game;
   const stored = await loadProfile(ctx, playerId);
   if (!stored) throw new Error("signed-in player without profile");
   const playable = data.heroes.has(hero) && (meta.startHeroes.includes(hero) || stored.profile.heroes.includes(hero));
@@ -96,6 +118,7 @@ export async function runStart(ctx: DomainContext, body: unknown): Promise<RunSt
     over: false,
     met: [],
     simVersion,
+    dataVersion: data.dataVersion,
     startedAt: clock.now(),
     version: 1,
   };
@@ -109,7 +132,14 @@ export async function runStart(ctx: DomainContext, body: unknown): Promise<RunSt
   return { run: toBody(run) };
 }
 
-const EVENT_REASON: Record<FinishReason, EventFields["run_finished"]["reason"]> = { finished: "finished", gave_up: "gave_up", no_local_copy: "abandoned" };
+/** Why a run ends, as the app names it, or "data_major": the server ended it after a data major change (RUN-13). */
+type EndReason = FinishReason | "data_major";
+const EVENT_REASON: Record<EndReason, EventFields["run_finished"]["reason"]> = {
+  finished: "finished",
+  gave_up: "gave_up",
+  no_local_copy: "abandoned",
+  data_major: "data_major",
+};
 
 /** How long `ROUND#` and `DONE#` entries are kept for repeats (proposal in docs/backend.md); DynamoDB removes them after. */
 export const ROUNDS_KEEP_DAYS = 30;
@@ -125,7 +155,7 @@ export async function runFinish(ctx: DomainContext, body: unknown): Promise<RunF
   return finishRun(ctx, runId, reason);
 }
 
-async function finishRun(ctx: DomainContext, runId: string, asked: FinishReason): Promise<RunFinishResponse> {
+async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): Promise<RunFinishResponse> {
   const playerId = ctx.playerId!;
   const pk = playerKey(playerId);
   const { players, game, clock } = ctx.ports;
@@ -137,7 +167,7 @@ async function finishRun(ctx: DomainContext, runId: string, asked: FinishReason)
     const stored = await loadProfile(ctx, playerId);
     if (!stored) throw new Error("signed-in player without profile");
     // the app may only call a run finished that is over; otherwise it gave up
-    const reason: FinishReason = asked === "finished" && !run.over ? "gave_up" : asked;
+    const reason: EndReason = asked === "finished" && !run.over ? "gave_up" : asked;
 
     const summary = { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.over ? run.round : run.round - 1 };
     // the core's profile carries Credits; on the server they live at RevenueCat (earned Credits: STORE issues)

@@ -263,3 +263,59 @@ describe("finishing a run (booking exactly once)", () => {
     expect(items.find((i) => i.sk === "PROFILE")).not.toHaveProperty("expiresAt");
   });
 });
+
+describe("versions (RUN-12, RUN-13)", () => {
+  /** the same data under another simulation version and data version: what a new deployment brings */
+  const build = (f: Awaited<ReturnType<typeof setup>>, simVersion: string, dataVersion: string) => ({
+    data: { ...f.data, simVersion, dataVersion },
+    meta: f.meta,
+  });
+  const major = (v: string) => Number(v.split(".")[0]);
+
+  it("accepts the previous build during a rollout and refuses any other version", async () => {
+    const f = await setup();
+    const current = f.ports.game;
+    f.ports.previousGame = current;
+    f.ports.game = build(f, "new-sim", current.data.dataVersion);
+    // the open run was started with the previous build and goes on with it
+    expect((await f.fight(1)).status).toBe(200);
+    // and with the new one, as soon as the app is updated
+    const state = RunFightResponse.parse((await f.fight(1)).body).run;
+    expect((await f.fight(state.round, { simVersion: "new-sim" })).status).toBe(200);
+    expect(await f.fight(state.round + 1, { simVersion: "very-old" })).toEqual({ status: 426, body: { error: "update_required" } });
+    // after the next deployment the previous build is gone
+    delete f.ports.previousGame;
+    expect((await f.call("/runs", { hero: f.hero.id, simVersion: current.data.simVersion })).status).toBe(426);
+  });
+
+  it("keeps an open run across a minor data change", async () => {
+    const f = await setup();
+    const v = f.data.dataVersion;
+    f.ports.game = build(f, "minor-sim", `${major(v)}.${Number(v.split(".")[1]) + 1}`);
+    const res = await f.fight(1, { simVersion: "minor-sim" });
+    expect(res.status).toBe(200);
+  });
+
+  it("ends and books an open run after a major data change", async () => {
+    const f = await setup();
+    await f.fight(1);
+    f.ports.game = build(f, "major-sim", `${major(f.data.dataVersion) + 1}.0`);
+    expect((await f.fight(2, { simVersion: "major-sim" })).status).toBe(409);
+    const cur = RunCurrentResponse.parse(
+      JSON.parse(
+        (await f.app({ method: "GET", path: "/runs/current", headers: { "x-app-version": "1.0.0", authorization: `Bearer ${f.token}` }, body: null })).body,
+      ),
+    );
+    expect(cur.run).toBeNull();
+    expect(cur.finished?.result).toMatchObject({ runId: f.run.runId, roundsPlayed: 1 });
+    expect(f.events("run_finished")).toEqual([expect.objectContaining({ reason: "data_major" })]);
+  });
+
+  it("books an old-major run when a new run starts, then starts the new one", async () => {
+    const f = await setup();
+    f.ports.game = build(f, "major-sim", `${major(f.data.dataVersion) + 1}.0`);
+    const res = RunStartResponse.parse((await f.call("/runs", { hero: f.hero.id, simVersion: "major-sim" })).body);
+    expect(res.run.runId).not.toBe(f.run.runId);
+    expect(f.events("run_finished")).toEqual([expect.objectContaining({ runId: f.run.runId, reason: "data_major" })]);
+  });
+});

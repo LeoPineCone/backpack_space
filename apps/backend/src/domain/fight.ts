@@ -13,11 +13,11 @@
  */
 import type { RunFightRequest, RunFightResponse } from "@backpack-space/api";
 import { checkBackpack, compile, leagueOf, simulate, type Build } from "@backpack-space/core";
-import { ApiError, type DomainContext } from "./context.js";
+import { ApiError, type DomainContext, type Game } from "./context.js";
 import { logEvent } from "./log.js";
 import { findOpponent, poolKeys, type PoolEntry } from "./matching.js";
 import { loadProfile, playerKey } from "./players.js";
-import { checkSimVersion, expiresIn, readRun, roundKey, ROUNDS_KEEP_DAYS, RUN, toBody, type StoredRun } from "./runs.js";
+import { expiresIn, gameFor, majorChanged, readRun, roundKey, ROUNDS_KEEP_DAYS, RUN, toBody, type StoredRun } from "./runs.js";
 import { isoDay } from "./config.js";
 
 /** How long recorded actions are kept (RUN-14, proposal): long enough for the planned analysis after some weeks. */
@@ -27,17 +27,20 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
   const req = body as RunFightRequest;
   const playerId = ctx.playerId!;
   const pk = playerKey(playerId);
-  const { players, game, random, clock } = ctx.ports;
-  const { data, meta } = game;
+  const { players, random, clock } = ctx.ports;
+  const { meta } = ctx.ports.game;
 
   for (let attempt = 0; attempt < 5; attempt++) {
     // 1., 2.
     const stored = await players.get(pk, roundKey(req.runId, req.round));
     if (stored) return stored.answer as RunFightResponse;
     // 3.
-    checkSimVersion(ctx, req.simVersion);
+    const game = gameFor(ctx, req.simVersion);
+    const { data } = game;
     const run = await readRun(ctx, playerId);
     if (!run || run.runId !== req.runId || run.round !== req.round || run.over) throw new ApiError("run_conflict");
+    // the run's data major is gone: it is booked at the next GET /runs/current (RUN-13)
+    if (majorChanged(run, game)) throw new ApiError("run_conflict");
     // 4.
     const build = req.backpack as Build;
     const plausible = build.hero === run.hero ? checkBackpack(data, build, run.round) : ({ ok: false, reason: "other_hero" } as const);
@@ -49,14 +52,18 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
     const profile = await loadProfile(ctx, playerId);
     if (!profile) throw new Error("signed-in player without profile");
     const league = leagueOf(meta, profile.profile.season.points);
-    const match = await findOpponent(ctx, {
-      playerId,
-      round: run.round,
-      lives: run.lives,
-      league,
-      met: run.met,
-      newPlayer: profile.profile.runs < meta.matching.easyRuns,
-    });
+    const match = await findOpponent(
+      ctx,
+      {
+        playerId,
+        round: run.round,
+        lives: run.lives,
+        league,
+        met: run.met,
+        newPlayer: profile.profile.runs < meta.matching.easyRuns,
+      },
+      game,
+    );
     if (!match) throw new Error(`no opponent for round ${run.round} with ${run.lives} lives`);
     const opp = match.entry;
     // 6.
@@ -108,7 +115,7 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
     if (!committed) continue;
     logEvent(ctx, "fight", { runId: run.runId, round: run.round, result, simVersion: req.simVersion });
     // 9.
-    await afterCommit(ctx, {
+    await afterCommit(ctx, game, {
       playerId,
       run,
       build,
@@ -128,9 +135,10 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
 /** Pool and actions are written after the commit; the fight counts even when they fail (the failure is logged). */
 async function afterCommit(
   ctx: DomainContext,
+  game: Game,
   o: { playerId: string; run: StoredRun; build: Build; league: number; name: string; patch: string | null; actions: string[]; shopSeed: number; now: number },
 ): Promise<void> {
-  const { data } = ctx.ports.game;
+  const { data } = game;
   const id = `${o.run.runId}-${String(o.run.round).padStart(2, "0")}`;
   const entry: PoolEntry = {
     ...poolKeys({ origin: "player", round: o.run.round, lives: o.run.lives, league: o.league, dataVersion: data.dataVersion, id }, ctx.ports.random.uint32()),

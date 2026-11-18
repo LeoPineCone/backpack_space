@@ -30,7 +30,13 @@ export interface Ports {
   actions: ActionStore;
   identity: IdentityCheck;
   tokens: SessionTokens;
+  /** the simulation build of this backend */
   game: Game;
+  /**
+   * During a rollout: the previous simulation build, for apps that are not updated yet (docs/backend.md "Versions").
+   * Removed with the next deployment after the minimum app version was raised.
+   */
+  previousGame?: Game;
   revenuecat: RevenueCat;
   log: LogSink;
 }

@@ -13,7 +13,7 @@ type Id = string;
 export interface EventFields {
   run_started: { runId: Id; hero: Id; simVersion: string };
   fight: { runId: Id; round: number; result: "win" | "loss" | "draw"; simVersion: string };
-  run_finished: { runId: Id; reason: "finished" | "gave_up" | "abandoned"; wins: number; livesLeft: number };
+  run_finished: { runId: Id; reason: "finished" | "gave_up" | "abandoned" | "data_major"; wins: number; livesLeft: number };
   /** a real-money purchase reported by RevenueCat; `ref` is RevenueCat's event id */
   purchase: { ref: Id; product: Id };
   credits_spent: { ref: Id; amount: number; thing: Id };
