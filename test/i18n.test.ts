@@ -36,7 +36,8 @@ describe("languages", () => {
   it("uses the language's decimal mark and its words", () => {
     const de = data.locales.get("de");
     const it = data.itemList.find((i) => i.cooldown !== undefined && !Number.isInteger(i.cooldown) && i.damage)!;
-    expect(describeItem(it, data, de)[0]).toContain(String(it.cooldown).replace(".", ","));
+    expect(describeItem(it, data, de).join(" ")).toContain(`alle ${String(it.cooldown).replace(".", ",")} s`);
+    expect(describeItem(data.items.get("mining_pick")!, data, de)[0]).toBe("1,5–2,3 Schaden pro Sekunde.");
     expect(describeItem(data.items.get("scrap_metal")!, data, de).join(" ")).toMatch(/^Kampfbeginn: erhalte \d+ Schild\.$/);
   });
 

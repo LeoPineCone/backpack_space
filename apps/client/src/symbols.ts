@@ -2,7 +2,7 @@
  * Turns effect data into rows of symbols ("clock 4.5 -> heal 8, regen 1") and the keywords that explain them.
  * Like the generated rules text, the symbols come from the effect data, so they cannot disagree with the battle.
  */
-import { BUFFS, DEBUFFS, TAGS, type Effect, type GameData, type HeroData, type ItemDef } from "@backpack-space/core";
+import { BUFFS, DEBUFFS, TAGS, damagePerSecond, type Effect, type GameData, type HeroData, type ItemDef } from "@backpack-space/core";
 import { tr } from "./i18n";
 
 export interface Chip {
@@ -128,10 +128,12 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
   let first: Row | undefined;
   if (def.cooldown !== undefined) {
     first = { when: [{ icon: "clock", text: num(def.cooldown), kind: "trigger" }], then: [] };
-    if (def.damage)
+    // damage per second, so weapons with different cooldowns compare at a glance; the hit itself is in the rules text
+    const dps = damagePerSecond(def);
+    if (dps)
       first.then.push({
         icon: "damage",
-        text: def.damage[0] === def.damage[1] ? num(def.damage[0]) : `${num(def.damage[0])}–${num(def.damage[1])}`,
+        text: tr().t("symbol.dps", { n: dps[0] === dps[1] ? tr().num(dps[0]) : `${tr().num(dps[0])}–${tr().num(dps[1])}` }),
         kind: "debuff",
       });
     if (def.range) first.then.push({ icon: def.range, kind: "plain" });

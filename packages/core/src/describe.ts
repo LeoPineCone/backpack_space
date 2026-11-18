@@ -140,11 +140,27 @@ function describeEffects(effects: readonly Effect[], data: GameData, tr: Transla
   return groups.map((g) => tr.t("rules.sentence", { when: g.when, what: tr.list(g.actions), cond: g.condText }));
 }
 
+/**
+ * A weapon's base damage per second (min and max, one decimal), so weapons with different cooldowns can be compared.
+ * Display only: the battle still deals the whole hit (`damage`) once per cooldown.
+ */
+export function damagePerSecond(it: Pick<ItemDef, "damage" | "cooldown">): [number, number] | undefined {
+  if (!it.damage || !it.cooldown) return undefined;
+  const r = (n: number) => Math.round((n / it.cooldown!) * 10) / 10;
+  return [r(it.damage[0]), r(it.damage[1])];
+}
+
 export function describeItem(it: ItemDef, data: GameData, tr: Translator = english(data)): string[] {
   const lines: string[] = [];
   const hasUse = it.effects.some((e) => e.on === "use");
   if (it.damage) {
-    lines.push(tr.t("rules.item.damage", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }));
+    const [min, max] = damagePerSecond(it)!;
+    lines.push(min === max ? tr.t("rules.item.dps", { n: min }) : tr.t("rules.item.dpsRange", { min, max }));
+    lines.push(
+      it.damage[0] === it.damage[1]
+        ? tr.t("rules.item.hit", { n: it.damage[0], s: it.cooldown ?? 0 })
+        : tr.t("rules.item.hitRange", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }),
+    );
     if (it.range)
       lines.push(
         it.energy ? tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy }) : tr.t("rules.item.weaponFree", { range: tr.term(it.range) }),

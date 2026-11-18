@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   Rng,
   starLinks,
+  damagePerSecond,
   describeItem,
   reroll,
   toggleFreeze,
@@ -48,6 +49,19 @@ describe("data", () => {
     );
     // items with a cooldown say "Every 3 s: ..." instead of "Activates every 3 s. On use: ..."
     for (const it of data.itemList) if (it.cooldown && !it.damage) expect(describeItem(it, data).join(" ")).toMatch(/Every [\d.]+ s: /);
+  });
+
+  it("shows weapon damage per second first, then the hit and its cooldown", () => {
+    // Laser Pistol: 3–4 every 2 s, Rivet Gun: 2 every 1.5 s, Mining Pick: 4–6 every 2.6 s
+    expect(damagePerSecond({ damage: [3, 4], cooldown: 2 })).toEqual([1.5, 2]);
+    expect(damagePerSecond({ damage: [2, 2], cooldown: 1.5 })).toEqual([1.3, 1.3]);
+    expect(damagePerSecond({ damage: [4, 6], cooldown: 2.6 })).toEqual([1.5, 2.3]);
+    expect(damagePerSecond({ cooldown: 2 })).toBeUndefined();
+    const pick = describeItem(data.items.get("mining_pick")!, data);
+    expect(pick[0]).toBe("1.5–2.3 damage per second.");
+    expect(pick[1]).toBe("Hits for 4–6 every 2.6 s.");
+    expect(describeItem(data.items.get("rivet_gun")!, data)[0]).toMatch(/^[\d.]+ damage per second\.$/);
+    for (const it of data.itemList) if (it.damage) expect(describeItem(it, data)[0]).toMatch(/ damage per second\.$/);
   });
   it("keeps one-cell weapons rare among the shop weapons (sizes follow the thing: .claude/skills/item-design)", () => {
     const weapons = data.itemList.filter((i) => i.tags[0] === "weapon" && !i.crafted && i.rarity !== "artifact");
