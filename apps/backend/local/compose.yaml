@@ -1,0 +1,16 @@
+# DynamoDB Local for development (DEV-03). Started by `npm run db`, stopped by `npm run db:stop`.
+# Data is kept in a named volume; `npm run db:reset` removes it.
+name: backpack-space
+services:
+  dynamodb:
+    image: amazon/dynamodb-local:3.3.2
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodblocal/data"]
+    # the image's own user cannot write into a fresh named volume
+    user: root
+    working_dir: /home/dynamodblocal
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - dynamodb-data:/home/dynamodblocal/data
+volumes:
+  dynamodb-data:

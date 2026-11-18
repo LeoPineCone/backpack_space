@@ -1,0 +1,10 @@
+{
+  "port": 3000,
+  "dynamodb": { "endpoint": "http://localhost:8000", "region": "local" },
+  "maintenance": { "on": false },
+  "minAppVersion": "0.1.0",
+  "devIdentity": true,
+  "tokenKeys": [{ "id": "local-1", "secret": "local-only-not-a-secret-change-me-in-settings-json" }],
+  "tokenLifetime": 3600,
+  "tables": { "players": "local-players", "backpacks": "local-backpacks", "actions": "local-actions" }
+}

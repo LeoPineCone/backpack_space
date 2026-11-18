@@ -48,3 +48,18 @@ jobs:
         run: npm ci
       - name: Reference fights in Chromium and WebKit
         run: npm run test:e2e
+
+  # Level 2 (docs/testing.md): interface tests over HTTP against the local backend and DynamoDB Local (Docker).
+  api:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Interface tests
+        run: npm run test:api

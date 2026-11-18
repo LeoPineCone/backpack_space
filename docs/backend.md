@@ -210,7 +210,7 @@ A Lambda reads its parameters at start and again at most once a minute, so a cha
 | RevenueCat | a fake in memory behind the same port, or RevenueCat's test store (DEV-04, to be checked) | RevenueCat |
 | Timed jobs | a command that runs a job once | schedule |
 
-Commands (names are proposals): `npm run db` starts the container and creates the tables, `npm run backend` starts the local server, `npm run seed` fills in bot players, `npm run dev` starts database, backend and client together. The client learns the address of the backend from a build setting.
+Commands: `npm run db` starts the container and creates the tables (`db:stop` stops it, `db:reset` also removes the data), `npm run backend` starts the local server, `npm run dev` starts database, backend and client together; `npm run seed` (fills in bot players) comes with DEV-06. The table definitions are in `apps/backend/src/tables.ts`, the container in `apps/backend/local/compose.yaml`, the settings in `apps/backend/local/settings.json` (copy `settings.example.json`; without it the example is used). The client learns the address of the backend from a build setting.
 
 Interface tests start the local server against DynamoDB Local and call it over HTTP, exactly as the app does. The same tests can be pointed at the test environment after a deployment.
 
