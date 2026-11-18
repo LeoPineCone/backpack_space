@@ -6,7 +6,6 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import type { TestProject } from "vitest/node";
-import { loadLocalSettings } from "../../local/settings.js";
 import { startServer } from "../../local/server.js";
 import { createTables, localClient, waitForDb } from "../../local/tables.js";
 
@@ -39,11 +38,10 @@ export default async function setup(project: TestProject) {
     const port = docker("port", container, "8000").split("\n")[0]?.split(":").pop();
     const endpoint = `http://127.0.0.1:${port}`;
     const tables = { players: "test-players", backpacks: "test-backpacks", actions: "test-actions" };
-    const { values } = loadLocalSettings({ port: 0, dynamodb: { endpoint, region: "local" }, tables });
     const client = localClient(endpoint);
     await waitForDb(client);
     await createTables(client, tables);
-    const server = await startServer(values, { write: () => {} });
+    const server = await startServer({ port: 0, dynamodb: { endpoint, region: "local" }, tables }, { write: () => {} });
     project.provide("apiUrl", server.url);
     project.provide("dbEndpoint", endpoint);
     return async () => {

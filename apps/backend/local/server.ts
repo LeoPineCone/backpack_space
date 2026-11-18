@@ -13,7 +13,7 @@ import { cryptoRandom, stdoutLog, systemClock } from "../src/adapters/system.js"
 import type { Ports } from "../src/domain/context.js";
 import type { HttpRequest, HttpResponse } from "../src/http/types.js";
 import type { LogSink } from "../src/ports/index.js";
-import { fixedSettings, loadLocalSettings, type LocalSettings } from "./settings.js";
+import { loadLocalSettings, localSettingsPort, type LocalSettings } from "./settings.js";
 
 /** Reads at most one byte more than allowed, so the router can refuse an oversized body without us holding it. */
 async function readBody(req: IncomingMessage): Promise<string | null> {
@@ -37,8 +37,8 @@ const CORS = {
   "access-control-allow-methods": "GET, POST, OPTIONS",
 };
 
-export function localPorts(values: LocalSettings, log: LogSink = stdoutLog): Ports {
-  const settings = fixedSettings(values);
+export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog): Ports {
+  const settings = localSettingsPort(systemClock, overrides);
   const doc = documentClient(values.dynamodb);
   return {
     clock: systemClock,
@@ -61,8 +61,10 @@ export interface RunningServer {
   close(): Promise<void>;
 }
 
-export async function startServer(values: LocalSettings, log?: LogSink): Promise<RunningServer> {
-  const route = createApp(localPorts(values, log));
+/** Starts the local backend; `overrides` replace values of the settings file (tests: ports, tables). */
+export async function startServer(overrides: Partial<LocalSettings> = {}, log?: LogSink): Promise<RunningServer> {
+  const { values } = loadLocalSettings(overrides);
+  const route = createApp(localPorts(values, overrides, log));
   const server = createServer((req, res) => {
     void (async () => {
       let out: HttpResponse;
@@ -93,6 +95,6 @@ export async function startServer(values: LocalSettings, log?: LogSink): Promise
 const isMain = process.argv[1] !== undefined && fileURLToPath(import.meta.url) === process.argv[1];
 if (isMain) {
   const { values, file } = loadLocalSettings();
-  const { url } = await startServer(values);
+  const { url } = await startServer();
   console.log(`Backend at ${url} (settings: ${file}, database: ${values.dynamodb.endpoint})`);
 }

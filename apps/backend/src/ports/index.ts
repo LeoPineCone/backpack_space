@@ -22,6 +22,8 @@ export interface Random {
 export interface SettingsValues {
   maintenance: { on: boolean; textKey?: string };
   minAppVersion: string;
+  /** the current season with its dates ("YYYY-MM-DD"); a setting, so a season can start without a deployment */
+  season: { id: number; start: string; end: string };
   /** present only locally: the development identity is accepted (DEV-05) */
   devIdentity?: boolean;
   /** signing keys for session tokens, newest first; two are accepted at once */

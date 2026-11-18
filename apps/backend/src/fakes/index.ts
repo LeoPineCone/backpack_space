@@ -40,6 +40,7 @@ export class FakeRandom implements Random {
 export const defaultSettings = (): SettingsValues => ({
   maintenance: { on: false },
   minAppVersion: "0.1.0",
+  season: { id: 1, start: "2026-11-01", end: "2027-01-31" },
   devIdentity: true,
   tokenKeys: [{ id: "k1", secret: "test-secret-1" }],
   tokenLifetime: 3600,
@@ -117,4 +118,25 @@ export class MemoryLog implements LogSink {
   write(line: Record<string, unknown>): void {
     this.lines.push(line);
   }
+}
+
+/** All ports as fakes, for domain and router tests. */
+export function fakePorts() {
+  const clock = new FakeClock();
+  const settings = new FakeSettings();
+  const players = new FakePlayerStore();
+  const log = new MemoryLog();
+  const identity = new FakeIdentityCheck();
+  const ports = {
+    clock,
+    random: new FakeRandom(),
+    settings,
+    players,
+    backpacks: new FakeBackpackPool(),
+    actions: new FakeActionStore(),
+    identity,
+    revenuecat: new FakeRevenueCat(),
+    log,
+  };
+  return { ports, clock, settings, players, log, identity };
 }

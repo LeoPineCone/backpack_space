@@ -3,6 +3,7 @@
   "dynamodb": { "endpoint": "http://localhost:8000", "region": "local" },
   "maintenance": { "on": false },
   "minAppVersion": "0.1.0",
+  "season": { "id": 1, "start": "2026-11-01", "end": "2027-01-31" },
   "devIdentity": true,
   "tokenKeys": [{ "id": "local-1", "secret": "local-only-not-a-secret-change-me-in-settings-json" }],
   "tokenLifetime": 3600,

@@ -6,8 +6,9 @@
 import type { Ports } from "./domain/context.js";
 import { createRouter, type DomainFn, type TokenCheck } from "./http/router.js";
 import type { RouteName } from "@backpack-space/api";
+import { config } from "./domain/config.js";
 
-export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {};
+export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = { config };
 
 /** Until session tokens exist (sign-in issue), every token is refused. */
 export const checkToken: TokenCheck = async () => null;
