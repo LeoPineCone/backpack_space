@@ -48,7 +48,10 @@ export interface Item {
   [field: string]: unknown;
 }
 /** A write that only succeeds if its condition holds; all writes of one `transact` succeed or none does. */
-export type Write = { put: Item; ifNotExists?: boolean; ifVersion?: number } | { delete: { pk: string; sk: string }; ifExists?: boolean };
+export type Write =
+  | { put: Item; ifNotExists?: boolean; ifVersion?: number }
+  /** `ifVersion`: delete only an existing item with this version number */
+  | { delete: { pk: string; sk: string }; ifExists?: boolean; ifVersion?: number };
 
 /** The table `players` (one partition per player). */
 export interface PlayerStore {

@@ -27,20 +27,20 @@ The app has four partners, but only one of them decides about the game. Game Cen
 
 ## Decisions
 
-| Topic | State | Source |
-| --- | --- | --- |
-| The game only starts with a network connection | decided | [matchmaking.md](matchmaking.md) |
-| One request per round, right before the fight | decided | [matchmaking.md](matchmaking.md) |
-| The server picks opponent and fight seed, the app computes and plays back | decided | [matchmaking.md](matchmaking.md) |
-| Silent sign-in through Game Center and Play Games, no guest account | decided | [ux.md](ux.md), 2026-11-17 |
-| Purchases through RevenueCat, Credits balance there | decided | [store.md](store.md) |
-| Refunded things are taken back, no ban at launch | decided | [store.md](store.md) |
-| The server hands out the shop seed per round | decided 2026-11-17 | this document |
-| At launch the server checks the backpack for plausibility only | decided 2026-11-17 | this document |
-| The app sends the shop actions from the start, the server stores them | decided 2026-11-17 | this document |
-| Full replay of the actions on the server | later stage, if the analysis shows outliers | this document |
-| The server computes the fight right when matching | decided 2026-11-17 | this document, replaces recomputing at the end of the run |
-| Every run request carries the simulation version | decided 2026-11-17 | this document |
+| Topic                                                                     | State                                       | Source                                                    |
+| ------------------------------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------- |
+| The game only starts with a network connection                            | decided                                     | [matchmaking.md](matchmaking.md)                          |
+| One request per round, right before the fight                             | decided                                     | [matchmaking.md](matchmaking.md)                          |
+| The server picks opponent and fight seed, the app computes and plays back | decided                                     | [matchmaking.md](matchmaking.md)                          |
+| Silent sign-in through Game Center and Play Games, no guest account       | decided                                     | [ux.md](ux.md), 2026-11-17                                |
+| Purchases through RevenueCat, Credits balance there                       | decided                                     | [store.md](store.md)                                      |
+| Refunded things are taken back, no ban at launch                          | decided                                     | [store.md](store.md)                                      |
+| The server hands out the shop seed per round                              | decided 2026-11-17                          | this document                                             |
+| At launch the server checks the backpack for plausibility only            | decided 2026-11-17                          | this document                                             |
+| The app sends the shop actions from the start, the server stores them     | decided 2026-11-17                          | this document                                             |
+| Full replay of the actions on the server                                  | later stage, if the analysis shows outliers | this document                                             |
+| The server computes the fight right when matching                         | decided 2026-11-17                          | this document, replaces recomputing at the end of the run |
+| Every run request carries the simulation version                          | decided 2026-11-17                          | this document                                             |
 
 ## Rules for every request
 
@@ -103,7 +103,7 @@ sequenceDiagram
 
 The first three steps happen once per run, everything from the shop phase on repeats in each of the up to twelve rounds. The app needs no network during the shop phase. Only the Fight button triggers the one request of the round.
 
-**Shop seed from the server.** The app does not roll the offers on its own. The seed for the shop of the round comes from the server, for round 1 with the start of the run and after that with every fight answer. All offers and every reroll of the round follow from the seed. The app records every action of the shop phase.
+**Shop seed from the server.** The app does not roll the offers on its own. The seed for the shop of the round comes from the server, for round 1 with the start of the run and after that with every fight answer. All offers and every reroll of the round follow from the seed. The app records every action of the shop phase. In the core the round's seed becomes the run's seed when the round opens (`finishRound` with the next seed); the fight line of the log carries it (`won 123456`), so a replay follows the same seeds.
 
 **Check at launch: plausibility.** The fight request carries the finished backpack and the actions of the round. The server checks the backpack against rules that hold without the history: the items and bags exist, everything lies validly and without overlap, rarity and tier are possible in this round, and the total value fits the gold that can have been earned by then. If something does not fit, it rejects with `invalid_backpack`. The app no longer sends round, wins and lives; the server knows them.
 
@@ -123,20 +123,20 @@ The core still lacks three things for this: a type for actions with a function t
 
 Every action is one short line of a code and numbers. That stays readable and is small, because items are addressed by their place in the state and not by their name.
 
-| Action | Line | Example |
-| --- | --- | --- |
-| Reroll | `rr` | `rr` |
-| Pin or unpin an offer | `fz` offer | `fz 2` |
-| Buy and place | `by` offer x y rotation | `by 3 4 2 1` |
-| Buy and drop as a loose item | `by` offer | `by 3` |
-| Move an item | `mi` item x y rotation | `mi 5 1 0 0` |
-| Move a bag | `mb` bag x y rotation | `mb 1 0 3 0` |
-| Place a loose item | `pl` loose x y rotation | `pl 0 2 3 0` |
-| Take an item out of the backpack | `di` item | `di 5` |
-| Take a bag out | `db` bag | `db 1` |
-| Lock or unlock an item | `lk` item | `lk 5` |
-| Sell (item, bag, loose item) | `si`, `sb`, `sl` and the place | `si 5` |
-| Take the free artifact | `ts` choice | `ts 1` |
+| Action                           | Line                           | Example      |
+| -------------------------------- | ------------------------------ | ------------ |
+| Reroll                           | `rr`                           | `rr`         |
+| Pin or unpin an offer            | `fz` offer                     | `fz 2`       |
+| Buy and place                    | `by` offer x y rotation        | `by 3 4 2 1` |
+| Buy and drop as a loose item     | `by` offer                     | `by 3`       |
+| Move an item                     | `mi` item x y rotation         | `mi 5 1 0 0` |
+| Move a bag                       | `mb` bag x y rotation          | `mb 1 0 3 0` |
+| Place a loose item               | `pl` loose x y rotation        | `pl 0 2 3 0` |
+| Take an item out of the backpack | `di` item                      | `di 5`       |
+| Take a bag out                   | `db` bag                       | `db 1`       |
+| Lock or unlock an item           | `lk` item                      | `lk 5`       |
+| Sell (item, bag, loose item)     | `si`, `sb`, `sl` and the place | `si 5`       |
+| Take the free artifact           | `ts` choice                    | `ts 1`       |
 
 A round is a list of such lines in the order they happened, for example `by 3 4 2 1`, `rr`, `by 0`, `pl 0 2 3 0`, `si 5`. A line has about 5 to 12 characters, so a round with 50 actions is about 0.5 KB. The server accepts only a fixed maximum number of actions per round.
 
@@ -165,13 +165,13 @@ If the app reports an end the server does not know (the run still has lives and 
 
 The game runs online only, but a connection may drop at any time without anything being lost or counted twice. The run then stands still and continues at the same place.
 
-| The connection drops | What the server has | What the app does after reconnecting |
-| --- | --- | --- |
-| during the shop phase | the standing after the last round and the shop seed of the current one | nothing special, the actions of the current round are local |
-| after Fight, before the answer | maybe already opponent, seed and result | send the same request again; it gets the same answer |
-| while the fight is played back | the result and the new standing | finish the fight locally, no network needed |
-| while reporting the end of the run | maybe already booked | report the end again; the answer is the same |
-| the app was closed | the open run with standing and shop seed | ask for the open run at start and continue |
+| The connection drops               | What the server has                                                    | What the app does after reconnecting                        |
+| ---------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------- |
+| during the shop phase              | the standing after the last round and the shop seed of the current one | nothing special, the actions of the current round are local |
+| after Fight, before the answer     | maybe already opponent, seed and result                                | send the same request again; it gets the same answer        |
+| while the fight is played back     | the result and the new standing                                        | finish the fight locally, no network needed                 |
+| while reporting the end of the run | maybe already booked                                                   | report the end again; the answer is the same                |
+| the app was closed                 | the open run with standing and shop seed                               | ask for the open run at start and continue                  |
 
 For this to work, the answer to a fight request is bound to run and round, not to the single call. A second call for the same round never picks a new opponent, not even with a different backpack. That prevents asking again and again until a weak opponent comes.
 
@@ -248,19 +248,19 @@ For refunded Credit packs RevenueCat deducts the Credits itself, but never below
 
 All requests except the configuration and the webhook need the session token.
 
-| Request | When | Sends | Gets | Repeatable |
-| --- | --- | --- | --- | --- |
-| `GET /config` | app start, before sign-in | app version | minimum version, season, server date, maintenance | yes |
-| `POST /session` | app start, token expired | signed identity from Game Center or Play Games | session token, profile | yes |
-| `GET /profile` | after a purchase, after returning to the app | nothing | profile (ownership, league, pass, quests) | yes |
-| `POST /profile/equip` | change the profile | picture, name, background, skin per hero | profile | yes |
-| `GET /runs/current` | app start | nothing | open run with standing and shop seed of the round, or nothing | yes |
-| `POST /runs` | start a run | hero, simulation version | run id, shop seed for round 1 | yes, while a run is open the same one comes back |
-| `POST /runs/{id}/rounds/{n}/fight` | Fight button | backpack, actions of the round, simulation version | opponent backpack, name, league patch, fight seed, result, shop seed of the next round | yes, same answer per run and round |
-| `POST /runs/{id}/finish` | end of the run or giving up | reason (finished, gave up) | rewards, profile | yes, same answer |
-| `POST /shop/buy` | purchase with Credits | thing | profile or "balance too low" | yes, deducts only once |
-| `POST /hooks/revenuecat` | RevenueCat reports a purchase or a refund | event from RevenueCat | confirmation | yes, every event counts once |
-| `GET /account/export`, `DELETE /account` | settings | nothing | the player's data, or confirmation of the deletion | yes |
+| Request                                  | When                                                        | Sends                                              | Gets                                                                                   | Repeatable                                       |
+| ---------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `GET /config`                            | app start, before sign-in                                   | app version                                        | minimum version, season, server date, maintenance                                      | yes                                              |
+| `POST /session`                          | app start, token expired                                    | signed identity from Game Center or Play Games     | session token, profile                                                                 | yes                                              |
+| `GET /profile`                           | after a purchase, after returning to the app                | nothing                                            | profile (ownership, league, pass, quests)                                              | yes                                              |
+| `POST /profile/equip`                    | change the profile                                          | picture, name, background, skin per hero           | profile                                                                                | yes                                              |
+| `GET /runs/current`                      | app start                                                   | nothing                                            | open run with standing and shop seed of the round, or nothing                          | yes                                              |
+| `POST /runs`                             | start a run                                                 | hero, simulation version                           | run id, shop seed for round 1                                                          | yes, while a run is open the same one comes back |
+| `POST /runs/{id}/rounds/{n}/fight`       | Fight button                                                | backpack, actions of the round, simulation version | opponent backpack, name, league patch, fight seed, result, shop seed of the next round | yes, same answer per run and round               |
+| `POST /runs/finish`                      | end of the run, giving up, or no local copy of the open run | run id, reason (finished, gave up, no local copy)  | rewards, profile                                                                       | yes, same answer                                 |
+| `POST /shop/buy`                         | purchase with Credits                                       | thing                                              | profile or "balance too low"                                                           | yes, deducts only once                           |
+| `POST /hooks/revenuecat`                 | RevenueCat reports a purchase or a refund                   | event from RevenueCat                              | confirmation                                                                           | yes, every event counts once                     |
+| `GET /account/export`, `DELETE /account` | settings                                                    | nothing                                            | the player's data, or confirmation of the deletion                                     | yes                                              |
 
 Three things do not run through the backend: the silent sign-in at Game Center or Play Games, the real-money purchase in the store with its report to RevenueCat, and reading the Credits balance at RevenueCat.
 
@@ -268,18 +268,18 @@ Three things do not run through the backend: the silent sign-in at Game Center o
 
 Every error answer carries a fixed code by which the app decides what to show. The text for the player comes from the app's language files and never from the server.
 
-| Case | How the app sees it | What the app does |
-| --- | --- | --- |
-| no network | the request does not get through | show a note, the run stays paused, retry on its own |
-| maintenance | configuration or code `maintenance` | maintenance screen, no run can be started |
-| app too old | minimum version in the configuration or code `update_required` | update screen with a way to the store |
-| not signed in | Game Center or Play Games give no identity | note that the game needs the sign-in |
-| token expired | code `unauthorized` | sign in again silently and repeat the request |
-| run or round does not fit | code `run_conflict` | get the open run from the server and show its state |
-| backpack is rejected | code `invalid_backpack` | error note, the run stays paused before the fight |
-| balance too low | code `insufficient_credits` | read the balance again, show the way to the Credit packs |
-| purchase not confirmed yet | the profile does not hold the ownership yet | show "Confirming purchase", load the profile again |
-| too many requests | code `rate_limited` | wait and repeat, without a message to the player |
+| Case                       | How the app sees it                                            | What the app does                                        |
+| -------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
+| no network                 | the request does not get through                               | show a note, the run stays paused, retry on its own      |
+| maintenance                | configuration or code `maintenance`                            | maintenance screen, no run can be started                |
+| app too old                | minimum version in the configuration or code `update_required` | update screen with a way to the store                    |
+| not signed in              | Game Center or Play Games give no identity                     | note that the game needs the sign-in                     |
+| token expired              | code `unauthorized`                                            | sign in again silently and repeat the request            |
+| run or round does not fit  | code `run_conflict`                                            | get the open run from the server and show its state      |
+| backpack is rejected       | code `invalid_backpack`                                        | error note, the run stays paused before the fight        |
+| balance too low            | code `insufficient_credits`                                    | read the balance again, show the way to the Credit packs |
+| purchase not confirmed yet | the profile does not hold the ownership yet                    | show "Confirming purchase", load the profile again       |
+| too many requests          | code `rate_limited`                                            | wait and repeat, without a message to the player         |
 
 The screens for no network, maintenance and update are still missing in [ux.md](ux.md) and have to be described there first.
 

@@ -31,27 +31,27 @@ Five Lambdas behind one HTTP API, three DynamoDB tables, settings and secrets in
 
 ## Where the code lives
 
-| Path | Content |
-| --- | --- |
-| `packages/core` | the deterministic core, unchanged in its role |
-| `packages/api` | new: the contract between app and backend. Request and response shapes as schemas, error codes, paths. Client and backend both import it, so they cannot drift apart. |
-| `apps/backend` | new: the backend |
-| `apps/client` | the app; gets a small API client that uses `packages/api` and replaces today's local profile and `GhostOpponents` |
-| `apps/web` | new: the website |
-| `infra` | new: the cloud setup as CDK code |
+| Path            | Content                                                                                                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/core` | the deterministic core, unchanged in its role                                                                                                                         |
+| `packages/api`  | new: the contract between app and backend. Request and response shapes as schemas, error codes, paths. Client and backend both import it, so they cannot drift apart. |
+| `apps/backend`  | new: the backend                                                                                                                                                      |
+| `apps/client`   | the app; gets a small API client that uses `packages/api` and replaces today's local profile and `GhostOpponents`                                                     |
+| `apps/web`      | new: the website                                                                                                                                                      |
+| `infra`         | new: the cloud setup as CDK code                                                                                                                                      |
 
 Inside `apps/backend`:
 
-| Folder | Content | May import |
-| --- | --- | --- |
-| `src/handlers` | one entry per Lambda; reads the request, calls the domain, writes the answer | everything below |
-| `src/http` | router, schema check of every request, token check, error answers, request log | `packages/api` |
-| `src/domain` | the rules of the backend: session, run, matching, booking, shop, refunds, account. Pure TypeScript. | `packages/core`, `packages/api`, `src/ports` |
-| `src/ports` | interfaces to the outside: player store, backpack pool, action store, identity check, RevenueCat, settings, clock, random | nothing |
-| `src/adapters` | the real implementations: DynamoDB, RevenueCat API, Apple and Google, Parameter Store | AWS and other libraries |
-| `src/fakes` | implementations in memory for tests and for local use where a real service is not available | nothing outside |
-| `local` | the local HTTP server and the script that creates local tables | everything |
-| `test` | unit tests of the domain, interface tests against the local server | everything |
+| Folder         | Content                                                                                                                   | May import                                   |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `src/handlers` | one entry per Lambda; reads the request, calls the domain, writes the answer                                              | everything below                             |
+| `src/http`     | router, schema check of every request, token check, error answers, request log                                            | `packages/api`                               |
+| `src/domain`   | the rules of the backend: session, run, matching, booking, shop, refunds, account. Pure TypeScript.                       | `packages/core`, `packages/api`, `src/ports` |
+| `src/ports`    | interfaces to the outside: player store, backpack pool, action store, identity check, RevenueCat, settings, clock, random | nothing                                      |
+| `src/adapters` | the real implementations: DynamoDB, RevenueCat API, Apple and Google, Parameter Store                                     | AWS and other libraries                      |
+| `src/fakes`    | implementations in memory for tests and for local use where a real service is not available                               | nothing outside                              |
+| `local`        | the local HTTP server and the script that creates local tables                                                            | everything                                   |
+| `test`         | unit tests of the domain, interface tests against the local server                                                        | everything                                   |
 
 The one rule that keeps this testable: **`src/domain` never imports an AWS library, never reads the clock and never rolls a random number itself.** Time and randomness come through ports, as in the core. So every rule of the backend can be tested without a database and without a network.
 
@@ -59,13 +59,13 @@ The one rule that keeps this testable: **`src/domain` never imports an AWS libra
 
 Few Lambdas grouped by what they need, not one per request. That keeps deployments simple and cold starts rare.
 
-| Lambda | Requests | Loads the core | Why its own |
-| --- | --- | --- | --- |
-| `config` | `GET /config` | no | must answer even when everything else is broken or in maintenance; tiny and fast |
-| `session` | `POST /session` | no | the only one that talks to Apple and Google |
-| `game` | profile, runs, fight, finish, buying with Credits, account export and deletion | yes | everything a signed-in player does |
-| `webhook` | `POST /hooks/revenuecat` | no | called by RevenueCat, not by players; own secret, own limits |
-| `jobs` | none (timed) | yes | season change, clean-up, later the replay analysis |
+| Lambda    | Requests                                                                       | Loads the core | Why its own                                                                      |
+| --------- | ------------------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------- |
+| `config`  | `GET /config`                                                                  | no             | must answer even when everything else is broken or in maintenance; tiny and fast |
+| `session` | `POST /session`                                                                | no             | the only one that talks to Apple and Google                                      |
+| `game`    | profile, runs, fight, finish, buying with Credits, account export and deletion | yes            | everything a signed-in player does                                               |
+| `webhook` | `POST /hooks/revenuecat`                                                       | no             | called by RevenueCat, not by players; own secret, own limits                     |
+| `jobs`    | none (timed)                                                                   | yes            | season change, clean-up, later the replay analysis                               |
 
 Each Lambda gets only the rights it needs: `config` reads settings and nothing else, `webhook` may write to `players` but not read backpacks, and so on.
 
@@ -94,11 +94,11 @@ Inside a Lambda a small router maps path and method to a function. The local ser
 
 Three tables, cut by one question: **what has to be restored together?**
 
-| Table | Holds | Restore to a point in time | Deleted on its own |
-| --- | --- | --- | --- |
-| `players` | everything about a player that must stay consistent: profile, ownership, the open run and its rounds, handled purchase events | yes | no |
-| `backpacks` | the opponent pool: bot backpacks and collected player backpacks | yes, but independent of `players` | entries age out |
-| `actions` | the recorded shop actions of every round | no | yes, after a set time |
+| Table       | Holds                                                                                                                         | Restore to a point in time        | Deleted on its own    |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | --------------------- |
+| `players`   | everything about a player that must stay consistent: profile, ownership, the open run and its rounds, handled purchase events | yes                               | no                    |
+| `backpacks` | the opponent pool: bot backpacks and collected player backpacks                                                               | yes, but independent of `players` | entries age out       |
+| `actions`   | the recorded shop actions of every round                                                                                      | no                                | yes, after a set time |
 
 A restore of `players` does not need the other two to be restored, because nothing in `players` points at an entry in them that could be missing: a round stores the opponent backpack it fought, not a reference to it.
 
@@ -108,15 +108,15 @@ All tables are billed per request (no capacity to plan at launch) and have delet
 
 One partition per player. One query for that partition loads everything the game needs for a request.
 
-| Partition key | Sort key | Content |
-| --- | --- | --- |
-| `P#<playerId>` | `PROFILE` | name, Galaxies, hero XP, season state, equipped things, run count, refund count, a version number, created at |
-| `P#<playerId>` | `OWN#<thing>` | one entry per owned thing (cosmetic, hero, premium pass of a season) with its origin and date |
-| `P#<playerId>` | `RUN` | the open run: run id, hero, round, lives, wins, the backpack after the last round, the shop seed of the current round, the opponents already met |
-| `P#<playerId>` | `ROUND#<runId>#<nn>` | one entry per fought round: the committed backpack, the opponent backpack with name and patch, the fight seed, the result, and the complete answer that was sent |
-| `P#<playerId>` | `DONE#<runId>` | the booked end of a run with the complete answer that was sent |
-| `P#<playerId>` | `EVT#<eventId>` | a handled RevenueCat event, so that a repeated report is not booked twice |
-| `ID#<platform>#<storeId>` | `PLAYER` | the lookup from store identity to player id |
+| Partition key             | Sort key             | Content                                                                                                                                                          |
+| ------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `P#<playerId>`            | `PROFILE`            | name, Galaxies, hero XP, season state, equipped things, run count, refund count, a version number, created at                                                    |
+| `P#<playerId>`            | `OWN#<thing>`        | one entry per owned thing (cosmetic, hero, premium pass of a season) with its origin and date                                                                    |
+| `P#<playerId>`            | `RUN`                | the open run: run id, hero, round, lives, wins, the backpack after the last round, the shop seed of the current round, the opponents already met                 |
+| `P#<playerId>`            | `ROUND#<runId>#<nn>` | one entry per fought round: the committed backpack, the opponent backpack with name and patch, the fight seed, the result, and the complete answer that was sent |
+| `P#<playerId>`            | `DONE#<runId>`       | the booked end of a run with the complete answer that was sent                                                                                                   |
+| `P#<playerId>`            | `EVT#<eventId>`      | a handled RevenueCat event, so that a repeated report is not booked twice                                                                                        |
+| `ID#<platform>#<storeId>` | `PLAYER`             | the lookup from store identity to player id                                                                                                                      |
 
 Notes:
 
@@ -126,12 +126,12 @@ Notes:
 - **Writes that belong together are one transaction.** A fight writes the round entry (only if it does not exist yet) and moves the open run forward (only if it is still at that round). Finishing a run updates the profile (only if its version number is unchanged), writes `DONE#` and removes `RUN`. Two requests at the same time cannot both win.
 - **Old rounds.** `ROUND#` and `DONE#` entries of finished runs are removed after a set time (proposal: 30 days); the backpacks live on in the pool.
 
-**No move to another device.** At launch the server checks a backpack for plausibility only and does not replay the shop phase. So it does not know how much gold is left, which items lie loose and which offers are pinned. The app keeps these on the device. Continuing a run on another device or after a reinstall is not in scope for version 1 (decided 2026-11-17): if the app has no local copy of the open run, the server ends that run and books it with the standing it knows (proposal). The fight request stays as it is in [client-server.md](client-server.md).
+**No move to another device.** At launch the server checks a backpack for plausibility only and does not replay the shop phase. So it does not know how much gold is left, which items lie loose and which offers are pinned. The app keeps these on the device. Continuing a run on another device or after a reinstall is not in scope for version 1 (decided 2026-11-17): if the app has no local copy of the open run, it reports that (`POST /runs/finish` with reason `no_local_copy`) and the server ends that run and books it with the standing it knows (built in M2, logged as `run_finished` with reason `abandoned`). The fight request stays as it is in [client-server.md](client-server.md).
 
 ### Table `backpacks`
 
-| Partition key | Sort key | Content |
-| --- | --- | --- |
+| Partition key                            | Sort key             | Content                                                                        |
+| ---------------------------------------- | -------------------- | ------------------------------------------------------------------------------ |
 | `<origin>#<dataMajor>#R<round>#L<lives>` | `G<league>#<random>` | the backpack, name, league patch, player id (players only), data version, date |
 
 - The partition is the bucket of the matching rules: round and run standing (with a fixed round the lives left say everything about the standing). There are 42 buckets per origin and data version.
@@ -142,9 +142,9 @@ Notes:
 
 ### Table `actions`
 
-| Partition key | Sort key | Content |
-| --- | --- | --- |
-| `RUN#<runId>` | `R<nn>` | the action lines of the round, the shop seed, the backpack before and after, simulation version, player id, expiry date |
+| Partition key | Sort key | Content                                                                                                                 |
+| ------------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `RUN#<runId>` | `R<nn>`  | the action lines of the round, the shop seed, the backpack before and after, simulation version, player id, expiry date |
 
 Written after the fight is committed, outside the transaction: if this write fails, the fight still counts and the failure is logged. Entries expire on their own (how long is open, RUN-14). The later analysis reads this table with a job and replays the runs with the core.
 
@@ -184,32 +184,32 @@ The backpack is "committed" by step 8: from then on the round has exactly one ba
 
 Everything that differs between environments or must change without a deployment is a parameter under `/backpack-space/<environment>/`:
 
-| Parameter | Kind | Read by |
-| --- | --- | --- |
-| `maintenance` | on or off, with an optional text key | all |
-| `min-app-version` | version | `config`, `game` |
-| `season` | current season and its dates, if not taken from the data | `config`, `game`, `jobs` |
-| `players-table`, `backpacks-table`, `actions-table` | names | those that use them |
-| `matching-phase` | 1, 2 or 3 | `game` |
-| `token-keys` | secure string | `session`, `game` |
-| `revenuecat-api-key` | secure string | `game`, `webhook` |
-| `revenuecat-webhook-secret` | secure string | `webhook` |
-| `dev-identity` | exists only locally | `session` |
+| Parameter                                           | Kind                                                     | Read by                  |
+| --------------------------------------------------- | -------------------------------------------------------- | ------------------------ |
+| `maintenance`                                       | on or off, with an optional text key                     | all                      |
+| `min-app-version`                                   | version                                                  | `config`, `game`         |
+| `season`                                            | current season and its dates, if not taken from the data | `config`, `game`, `jobs` |
+| `players-table`, `backpacks-table`, `actions-table` | names                                                    | those that use them      |
+| `matching-phase`                                    | 1, 2 or 3                                                | `game`                   |
+| `token-keys`                                        | secure string                                            | `session`, `game`        |
+| `revenuecat-api-key`                                | secure string                                            | `game`, `webhook`        |
+| `revenuecat-webhook-secret`                         | secure string                                            | `webhook`                |
+| `dev-identity`                                      | exists only locally                                      | `session`                |
 
 A Lambda reads its parameters at start and again at most once a minute, so a change such as the maintenance switch takes effect within a minute without a deployment. Standard parameters cost nothing.
 
 ## Local setup
 
-| Piece | Local | Cloud |
-| --- | --- | --- |
-| HTTP | a small Node server in `apps/backend/local` that calls the router | HTTP API and Lambda |
-| Handlers and domain | the same code | the same code |
-| Database | DynamoDB Local in a container, tables created by a script | DynamoDB |
-| Table definitions | one file in `apps/backend` that both the local script and the CDK code read | the same file |
-| Settings | a local file that is not committed, with an example file beside it | Parameter Store |
-| Sign-in | development identity | Game Center, Play Games |
-| RevenueCat | a fake in memory behind the same port, or RevenueCat's test store (DEV-04, to be checked) | RevenueCat |
-| Timed jobs | a command that runs a job once | schedule |
+| Piece               | Local                                                                                     | Cloud                   |
+| ------------------- | ----------------------------------------------------------------------------------------- | ----------------------- |
+| HTTP                | a small Node server in `apps/backend/local` that calls the router                         | HTTP API and Lambda     |
+| Handlers and domain | the same code                                                                             | the same code           |
+| Database            | DynamoDB Local in a container, tables created by a script                                 | DynamoDB                |
+| Table definitions   | one file in `apps/backend` that both the local script and the CDK code read               | the same file           |
+| Settings            | a local file that is not committed, with an example file beside it                        | Parameter Store         |
+| Sign-in             | development identity                                                                      | Game Center, Play Games |
+| RevenueCat          | a fake in memory behind the same port, or RevenueCat's test store (DEV-04, to be checked) | RevenueCat              |
+| Timed jobs          | a command that runs a job once                                                            | schedule                |
 
 Commands: `npm run db` starts the container and creates the tables (`db:stop` stops it, `db:reset` also removes the data), `npm run backend` starts the local server, `npm run dev` starts database, backend and client together; `npm run seed` (fills in bot players) comes with DEV-06. The table definitions are in `apps/backend/src/tables.ts`, the container in `apps/backend/local/compose.yaml`, the settings in `apps/backend/local/settings.json` (copy `settings.example.json`; without it the example is used). The client learns the address of the backend from a build setting.
 
@@ -245,14 +245,14 @@ Interface tests start the local server against DynamoDB Local and call it over H
 
 ## Open
 
-| Point | Kind |
-| --- | --- |
-| What happens to an open run without a local copy (proposal: end it and book the known standing) | needs designer |
-| Two simulation builds during a rollout, or a maintenance window | technical |
-| Test and production in one AWS account or in two | technical |
-| Start without a web firewall | technical |
-| Token lifetime (proposal 1 hour) | technical |
-| How long `ROUND#`, `DONE#` and `actions` entries are kept | technical |
-| Which Capacitor plugins for Game Center and Play Games sign-in | technical |
+| Point                                                                                                      | Kind                |
+| ---------------------------------------------------------------------------------------------------------- | ------------------- |
+| What happens to an open run without a local copy (proposal: end it and book the known standing)            | needs designer      |
+| Two simulation builds during a rollout, or a maintenance window                                            | technical           |
+| Test and production in one AWS account or in two                                                           | technical           |
+| Start without a web firewall                                                                               | technical           |
+| Token lifetime (proposal 1 hour)                                                                           | technical           |
+| How long `ROUND#`, `DONE#` and `actions` entries are kept                                                  | technical           |
+| Which Capacitor plugins for Game Center and Play Games sign-in                                             | technical           |
 | Whether RevenueCat can list a customer's Credits bookings (would make reconciling after a restore simpler) | technical, to check |
-| Whether `actions` should be a table or files in S3, if the analysis turns out to be easier there | technical |
+| Whether `actions` should be a table or files in S3, if the analysis turns out to be easier there           | technical           |

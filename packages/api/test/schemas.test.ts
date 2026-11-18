@@ -21,6 +21,31 @@ const samples: Record<RouteName, { request: unknown; response: unknown }> = {
     response: { token: "abc.def", expiresAt: 1_800_000_000, profile },
   },
   profile: { request: {}, response: { profile } },
+  runCurrent: { request: {}, response: { run: null } },
+  runStart: {
+    request: { hero: "venn", simVersion: "2.157d28e9292bed" },
+    response: { run: { runId: "r1", hero: "venn", round: 1, lives: 4, wins: 0, shopSeed: 123 } },
+  },
+  runFinish: {
+    request: { runId: "r1", reason: "gave_up" },
+    response: {
+      result: {
+        runId: "r1",
+        hero: "venn",
+        wins: 3,
+        livesLeft: 0,
+        roundsPlayed: 7,
+        galaxies: 3,
+        xp: 100,
+        level: [1, 2],
+        points: -5,
+        league: [0, 0],
+        pass: [1, 1],
+        rewards: [{ cosmetic: "bg_x" }, { credits: 10 }],
+      },
+      profile,
+    },
+  },
 };
 
 describe("API contract", () => {
@@ -65,6 +90,16 @@ describe("API contract", () => {
     expect(s.safeParse({ platform: "facebook", token: "x" }).success).toBe(false);
     expect(s.safeParse({ platform: "dev" }).success).toBe(false);
     expect(s.safeParse({ platform: "dev", player: 7 }).success).toBe(false);
+  });
+
+  it("takes a seed only as an unsigned 32-bit integer and a finish only for a known reason", () => {
+    const run = { runId: "r1", hero: "venn", round: 1, lives: 4, wins: 0 };
+    expect(ROUTES.runCurrent.response.safeParse({ run: { ...run, shopSeed: 0xffffffff } }).success).toBe(true);
+    expect(ROUTES.runCurrent.response.safeParse({ run: { ...run, shopSeed: -1 } }).success).toBe(false);
+    expect(ROUTES.runCurrent.response.safeParse({ run: { ...run, shopSeed: 1.5 } }).success).toBe(false);
+    expect(ROUTES.runFinish.request.safeParse({ runId: "r1", reason: "no_local_copy" }).success).toBe(true);
+    expect(ROUTES.runFinish.request.safeParse({ runId: "r1", reason: "won" }).success).toBe(false);
+    expect(ROUTES.runStart.request.safeParse({ hero: "venn" }).success).toBe(false);
   });
 
   it("refuses oversized input", () => {

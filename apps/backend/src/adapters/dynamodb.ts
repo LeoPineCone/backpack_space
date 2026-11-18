@@ -40,6 +40,16 @@ function transactItem(table: string, w: Write) {
     }
     return { Put: { TableName: table, Item: w.put } };
   }
+  if (w.ifVersion !== undefined)
+    return {
+      Delete: {
+        TableName: table,
+        Key: w.delete,
+        ConditionExpression: "#v = :v",
+        ExpressionAttributeNames: { "#v": "version" },
+        ExpressionAttributeValues: { ":v": w.ifVersion },
+      },
+    };
   return { Delete: { TableName: table, Key: w.delete, ...(w.ifExists ? { ConditionExpression: "attribute_exists(pk)" } : {}) } };
 }
 

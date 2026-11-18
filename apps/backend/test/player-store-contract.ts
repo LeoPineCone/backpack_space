@@ -52,4 +52,14 @@ export function playerStoreContract(make: () => Promise<PlayerStore>) {
     expect(await s.get(p, "RUN")).toBeNull();
     expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifExists: true }])).toBe(false);
   });
+
+  it("deletes on a version number only when it matches", async () => {
+    const s = await make();
+    const p = pk();
+    await s.transact([{ put: { pk: p, sk: "RUN", version: 3 } }]);
+    expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 2 }])).toBe(false);
+    expect(await s.get(p, "RUN")).not.toBeNull();
+    expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 3 }])).toBe(true);
+    expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 3 }])).toBe(false);
+  });
 }
