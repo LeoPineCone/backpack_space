@@ -336,416 +336,416 @@
     "description": "Seen flat from above: thick riveted walls as the rim, a frost-covered lock dial on the front wall. The inside is one plain dark field."
   },
   "prism_laser": {
-    "brief": "Laser pistol with a crystal prism bolted over the muzzle. Accent: teal.",
-    "description": "The same chunky body as the Laser Pistol, barrel pointing along the long side, with the jagged Crystal Shard clamped over the muzzle by two bent brackets. The shot leaves the crystal as three flat teal strokes."
+    "brief": "Laser pistol with a Facet crystal prism clamped over its lens rings. Accent: teal.",
+    "description": "Upright, barrel up: the chunky Laser Pistol with its three teal lens rings, a jagged Facet crystal clamped on top as a prism, its shot leaving as one flat teal stripe."
   },
   "twin_lasers": {
-    "brief": "Two laser pistols welded side by side with one shared grip. Accent: coral red.",
-    "description": "Filling the square box: two Laser Pistols welded side by side onto one shared grip, a crude weld seam between them, both barrels pointing the same way, coral red emitter tips."
+    "brief": "Two laser pistols welded side by side on one shared grip. Accent: coral red.",
+    "description": "Filling the square box: two chunky laser pistols welded side by side, barrels up, their teal lens-ring barrels parallel, both solar fins joined into one wide fin, one shared taped double grip below."
   },
   "nail_storm": {
-    "brief": "Rivet gun with a drum magazine and nails spraying out. Accent: copper.",
-    "description": "Lying across the box: the Rivet Gun with a fat drum magazine wound with copper wire, a spray of nails flying out of the nozzle as short black strokes."
+    "brief": "Rivet gun fed by a copper wire spool, one rivet in flight. Accent: copper.",
+    "description": "Lying across the box: the stubby thruster-nozzle rivet gun, a fat copper wire spool bolted on top feeding a belt of rivets into it, one single rivet flying from the muzzle."
   },
   "flamethrower": {
-    "brief": "Cutter with a fuel can strapped underneath and a flame tongue at the nozzle. Accent: coral red.",
-    "description": "Along the long box: the Plasma Cutter's body with the Fuel Canister strapped under it by belts, a hose between them, a coral red flame tongue licking from the nozzle."
+    "brief": "Plasma cutter with a fuel can underneath and a flat flame tongue. Accent: coral red.",
+    "description": "Along the long box: the welding-torch plasma cutter, a red rocket-fuel jerrycan strapped underneath with a pressure gauge, a flat coral red flame tongue leaving the nozzle, drawn with ink lines, no glow."
   },
   "slag_mace": {
-    "brief": "Asteroid lump fused onto a scrap pole, hot seams drawn as flat cracks. Accent: coral red.",
-    "description": "Upright: an Asteroid Chunk fused onto a pole of bent scrap metal, the seams between rock and metal drawn as flat coral red cracks."
+    "brief": "Little asteroid fused onto a bent hull-plate pole. Accent: coral red.",
+    "description": "Upright: the lumpy grey-brown little asteroid fused onto a pole of bent riveted hull plate, the weld seams drawn as flat coral red cracks, its pebble moon still circling close."
   },
   "glacier_cannon": {
-    "brief": "Short fat cannon caked in ice, a coolant tank on its back. Accent: teal.",
-    "description": "Filling the square box: a short fat cannon caked in ice, the Coolant Tank strapped on its back with a hose to the breech, icicles hanging from the muzzle."
+    "brief": "Cryo sprayer grown into a fat ice-caked cannon with a coolant tank. Accent: teal.",
+    "description": "Filling the square box: a short fat cannon caked in flat teal hexagon ice, the dented coolant tank with its comet-ice porthole strapped on its back, frost crust round the muzzle."
   },
   "fungal_mortar": {
-    "brief": "Stubby mortar tube with mushrooms growing out of the barrel. Accent: sage.",
-    "description": "Filling the square box: a stubby mortar tube standing at an angle, a cluster of moss-capped mushrooms growing out of the barrel, spore pods in a sling on its side."
+    "brief": "Puffball mortar tube with Murk mushrooms sprouting from the barrel. Accent: sage.",
+    "description": "Filling the square box: a stubby mortar tube grown from a giant Murk puffball fungus, three dish-capped sage mushrooms sprouting from its rim, one round spore pod sitting in the mouth."
   },
   "emp_cannon": {
-    "brief": "Cannon with a coil ring at the muzzle and zig-zag sparks. Accent: mustard.",
-    "description": "Filling the square box: the Ion Blaster grown into a cannon, a big coil ring at the muzzle and the Jammer Beacon bolted on top, flat mustard zig-zag sparks around the ring."
+    "brief": "Ion blaster rings around a jammer dish, one zig-zag spark. Accent: mustard.",
+    "description": "Filling the square box: a squat cannon whose barrel is three floating teal rings like the Ion Blaster, a jammer dish on top, a flat mustard zig-zag spark jumping between the rings."
   },
   "plasma_katana": {
-    "brief": "Slim curved energy blade with a wrapped hilt and a crystal in the guard. Accent: coral red.",
-    "description": "Upright through the tall box: a slim, slightly curved blade of coral red plasma, a wrapped hilt below, the Crystal Shard set into the round guard."
+    "brief": "Slim curved plasma blade with a Facet crystal in the guard. Accent: coral red.",
+    "description": "Upright through the tall box: a slim curved flat coral red plasma blade with a black core line, a docking-clamp hilt wrapped in tape, a teal Facet crystal set into the guard."
   },
   "winch_harpoon": {
-    "brief": "Harpoon gun with a big winch drum and coiled cable. Accent: copper.",
-    "description": "Along the long box: the Harpoon Launcher with a big winch drum bolted underneath, copper cable wound on it and running to the barbed head."
+    "brief": "Harpoon launcher with a big copper winch drum of cable. Accent: copper.",
+    "description": "Along the long box: the crane-arm harpoon launcher with its barbed magnet head, a big copper winch drum under the barrel wound with cable, a crank handle on its side."
   },
   "venom_fang": {
-    "brief": "Fang dagger with a venom sac tied to the hilt, dripping. Accent: sage.",
-    "description": "The Fang Dagger with the Venom Sac tied to its hilt by cord, a sage drop running down the fang."
+    "brief": "Crystal fang dagger with a venom sac lashed to its hilt. Accent: sage.",
+    "description": "The curved cream Facet fang dagger with its teal crystal tip, a swollen sage venom sac lashed to the hilt, one drop hanging from the point."
   },
   "cryo_baton": {
-    "brief": "Stun baton with a frosty tip and ice crystals on the shaft. Accent: teal.",
-    "description": "Upright: the Stun Baton with its prongs iced over, a Frost Gem fitted between them, frost crystals on the shaft."
+    "brief": "Antenna-mast baton with a frost gem between its prongs. Accent: teal.",
+    "description": "Upright: the broken antenna-mast baton, a six-sided teal frost gem clamped between its two prongs, ice spikes up the shaft, coiled tether cord with a clip at the grip."
   },
   "burst_rifle": {
-    "brief": "Long rifle with a scope and a three-shot burst mark at the muzzle. Accent: mustard.",
-    "description": "Along the long box: the Needle Rifle with the Targeting Lens mounted as a scope, three short muzzle marks at the barrel's end showing a three-shot burst."
+    "brief": "Needle rifle with a targeting lens scope, one needle in flight. Accent: mustard.",
+    "description": "Along the long box: the thin needle rifle, its crystal needle drum under the middle, a round riveted targeting lens with crosshair as its scope, one single needle leaving the muzzle."
   },
   "laser_turret": {
-    "brief": "Tiny tripod turret made from scrap, a crystal for an eye. Accent: teal.",
-    "description": "Lying across the box: a tiny tripod turret built from bent scrap metal and wire, the Crystal Shard set in its head as an eye, teal."
+    "brief": "Scrap tripod turret with a crystal eye and copper wire. Accent: teal.",
+    "description": "Lying across the box: a tiny tripod turret welded from scrap hull plate, a teal Facet crystal as its single eye and barrel, copper wire wrapped round its legs."
   },
   "buzz_blade": {
-    "brief": "Spinning saw disc with a boomerang-shaped handle. Accent: copper.",
-    "description": "The round saw disc sits in the upper left cell, the boomerang-shaped handle bends across the top and down the left; the lower right cell stays empty. Teeth as sharp black triangles."
+    "brief": "Saw-toothed disc on a boomerang handle with thrusters. Accent: copper.",
+    "description": "The round saw disc with black triangle teeth fills the top left cells, the boomerang wing handle bends down the left cell with a tiny thruster at its tip; the lower right cell stays empty."
   },
   "acid_sprayer": {
-    "brief": "Spray gun with a bubbling acid flask and a frosty nozzle. Accent: sage.",
-    "description": "The spray gun runs along the top row, the Acid Flask hangs below it in the lower left cell; the lower right stays empty. A frosty nozzle and sage acid bubbling in the flask."
+    "brief": "Cryo sprayer whose tank is now an acid flask, sage spray. Accent: sage.",
+    "description": "The spray gun body runs along the top cells, the grip drops down the left cell; on top a round flask of sage acid with a valve, frosty nozzle; the lower right cell stays empty."
   },
   "reinforced_bulkhead": {
-    "brief": "Thick door-like plate with cross bracing and big bolts. Accent: copper.",
-    "description": "Along the long box: a thick door-like plate with cross bracing in an X and big bolts at each corner, Hull Plating patched with scrap."
+    "brief": "Hull plate doubled with scrap, cross braces and big bolts. Accent: copper.",
+    "description": "Along the long box: a thick slab of ship hull like a short bulkhead door, scrap plates welded in an X brace across it, big copper bolts, the round porthole now riveted shut."
   },
   "spiked_bulkhead": {
-    "brief": "Bulkhead plate with sharp spikes along the edge. Accent: coral red.",
-    "description": "Filling the square box: a heavy bulkhead plate with coral red spikes along all edges and small blown-open charges from the Reactive Armor on its face."
+    "brief": "Hull plate studded with reactive charges and spikes on the rim. Accent: coral red.",
+    "description": "Filling the square box: a heavy hull-plate panel, its middle a grid of round coral red reactive charges, short sharp spikes along the rim, rivets at the corners."
   },
   "exo_suit": {
-    "brief": "Space suit with a metal frame around the limbs and a helmet with visor. Accent: mustard.",
-    "description": "Upright through the tall box: the patched Space Suit standing stiff inside a metal frame along arms and legs, the Visor Helmet on top with its mustard visor."
+    "brief": "Space suit inside an iron frame, big visor helmet on top. Accent: mustard.",
+    "description": "Upright through the tall box: the limp space suit now standing in a riveted iron exoskeleton frame, pistons at knees and elbows, the round mustard-tinted visor helmet on top."
   },
   "aegis_projector": {
-    "brief": "Dish shield with a battery strapped on, projecting a flat hexagon of force. Accent: teal.",
-    "description": "Filling the square box: the Deflector Dish with the Power Cell strapped to its back, projecting a flat teal hexagon of force in front of it."
+    "brief": "Satellite dish shield powered by a star cell, hexagon of force. Accent: teal.",
+    "description": "Filling the square box: the old satellite dish seen from the front, the star-window power cell strapped to its arm, a flat teal hexagon of force hovering in front of the bowl."
   },
   "thorn_plate": {
-    "brief": "Metal chest plate wrapped in thorny vines. Accent: sage.",
-    "description": "Filling the square box: a metal chest plate from Hull Plating wrapped tightly in thorny sage vines, thorns poking through the rivet holes."
+    "brief": "Hull-plate chest armour wrapped in Murk thorn vines. Accent: sage.",
+    "description": "Filling the square box: a curved hull-plate chest piece with rivets, wrapped in thick black Murk thorn vines with hooked thorns, a few sage leaves curling at the edges."
   },
   "hazmat_suit": {
-    "brief": "Bulky hazard suit with a lead-lined collar and a trefoil patch. Accent: mustard.",
-    "description": "Filling the square box: a bulky hazard suit laid flat, a thick lead-lined collar, a mustard trefoil patch on the chest, heavy gloves."
+    "brief": "Bulky space suit with lead-band collar and trefoil patch. Accent: mustard.",
+    "description": "Filling the square box: a bulky puffed space suit, the overlapping grey lead bands of the vest as a collar and chest, a mustard radiation trefoil patch, a round helmet hanging at its side."
   },
   "glacier_mail": {
-    "brief": "Armour of ice plates, frost gems set in the chest. Accent: teal.",
-    "description": "Filling the square box: a suit of armour made of overlapping ice plates, Frost Gems set into the chest in a row, icicles at the hem."
+    "brief": "Yak-fur coat armoured with frost gem plates. Accent: teal.",
+    "description": "Filling the square box: the shaggy Rime yak-fur coat, its chest covered in six-sided teal frost gem plates like scales, ice spikes on the shoulders."
   },
   "ghost_shroud": {
-    "brief": "Torn cloak drifting in dashes, an empty hood with two faint eyes. Accent: cream.",
-    "description": "The hood fills the upper left cell, the cloak spreads across the top and down the left, breaking into dashes; the lower right stays empty. An empty dark hood with two faint cream eyes."
+    "brief": "Phase cloak hood with a holo projector puck, dashes below. Accent: cream.",
+    "description": "The empty starry hood fills the top left cell, the cloak spreads across the top right and down the left, breaking into rows of cream dashes; a small holo puck hangs at the collar; lower right cell empty."
   },
   "sniper_scope": {
-    "brief": "Long scope with a crystal lens and crosshair. Accent: teal.",
-    "description": "A long scope seen slightly from the side, a crystal lens at the front and a crosshair at the back. Teal on the lens."
+    "brief": "Targeting lens extended into a long scope with a crystal lens. Accent: teal.",
+    "description": "A short fat scope tube seen at an angle, the riveted targeting-lens ring at its front holding a teal Facet crystal as the lens, crosshair on the glass."
   },
   "fusion_battery": {
-    "brief": "Battery wrapped in copper coil with a hot core window. Accent: mustard.",
-    "description": "The Power Cell wound in copper coil, a small round window in the middle showing a hot mustard core."
+    "brief": "Star-window power cell wrapped in copper wire coil. Accent: mustard.",
+    "description": "An upright battery cell wrapped tightly in copper wire coil, its round window showing the tiny caught star as a flat mustard shape."
   },
   "afterburner": {
-    "brief": "Thruster with a fuel can strapped on, long flame out the back. Accent: coral red.",
-    "description": "Lying across the box: the Thruster with the Fuel Canister strapped on top, a long coral red flame shooting out of the back."
+    "brief": "Thruster nozzle with a fuel can strapped on, flat flame. Accent: coral red.",
+    "description": "Lying across the box: the stubby strap-on thruster nozzle with its coral red rim, a red fuel jerrycan strapped on its side, a short flat flame shape leaving the nozzle."
   },
   "nano_medkit": {
-    "brief": "Medkit with a gel-filled window and tiny crawling robots on the lid. Accent: sage.",
-    "description": "Lying across the box: the Repair Kit's tin box with a window of sage gel in the lid and a few tiny robots crawling out of it."
+    "brief": "Repair tin with a biogel window and tiny bots on the lid. Accent: sage.",
+    "description": "Lying across the box: the rounded repair tin on magnet feet, a round window of sage gel in its lid, two tiny six-legged repair bots crawling over it."
   },
   "solar_array": {
-    "brief": "Three folding solar plates on a mast with an antenna on top. Accent: teal.",
-    "description": "Along the long box: three folding solar plates on a mast, the Antenna on top with a crackle mark. Teal cells."
+    "brief": "Three hinged solar wings on a mast with an antenna dish. Accent: teal.",
+    "description": "Along the long box: three hinged satellite solar wings with flat teal cells, joined on one mast, the small antenna dish with signal arcs on its end."
   },
   "astrolabe": {
-    "brief": "Brass astrolabe of nested rings with a star at the centre. Accent: mustard.",
-    "description": "Lying across the box: a brass astrolabe of nested rings, a small mustard star at the centre, a few dotted lines on the plate."
+    "brief": "Brass rings of the star chart around a stardust vial. Accent: mustard.",
+    "description": "Lying across the box: nested brass rings tilted at angles like an orrery, the stardust vial with its tiny spiral galaxy held in the middle, small planets on two rings."
   },
   "shock_trap": {
-    "brief": "Spring trap with a decoy projector and crackling jaws. Accent: mustard.",
-    "description": "Lying across the box: a spring-jaw trap with the Holo Decoy's projector puck sitting in the middle as bait, mustard sparks crackling between the jaws."
+    "brief": "Spring jaw trap with a holo decoy puck as bait. Accent: mustard.",
+    "description": "Lying across the box: a flat spring jaw trap of salvaged metal, the holo puck in its middle casting a small teal dashed astronaut, a mustard zig-zag spark across the jaws."
   },
   "fallout_beacon": {
-    "brief": "Beacon with a radiation trefoil and a rock base. Accent: mustard.",
-    "description": "The Geiger Counter fitted onto a base of Lodestone rock, a mustard radiation trefoil on its top."
+    "brief": "Lodestone base with a geiger dial and a trefoil lamp. Accent: mustard.",
+    "description": "A lumpy dark lodestone with bolts stuck to it as the base, a geiger counter dial set into it, a small lamp on top with a mustard trefoil."
   },
   "war_banner": {
-    "brief": "Tattered banner on a pole with a horn hung from it. Accent: coral red.",
-    "description": "Lying across the box: a tattered coral red banner on a short pole, the War Horn hung from the pole by a cord, the Lucky Comet tied to the tip."
+    "brief": "Tattered banner on a pole with the yak horn and a lucky comet. Accent: coral red.",
+    "description": "Lying across the box: a pole with a tattered coral red banner showing a comet shape, the ridged Rime yak horn tied at the top, a little comet charm swinging from it."
   },
   "crit_array": {
-    "brief": "Ring of small lenses around a central crosshair. Accent: teal.",
-    "description": "A ring of small lenses around a central crosshair lens, held together in a teal frame."
+    "brief": "Brass star compass with small targeting lenses around it. Accent: teal.",
+    "description": "Seen from above: the old brass star compass with its comet needle, a ring of four small riveted targeting lenses around its rim, crosshairs on each."
   },
   "overdrive_core": {
-    "brief": "Chip on a thruster block with exhaust vents and speed stripes. Accent: coral red.",
-    "description": "Lying across the box: the Overclock Chip bolted onto a Thruster block, exhaust vents and coral red speed stripes along its side."
+    "brief": "Running microchip bolted on a thruster block. Accent: coral red.",
+    "description": "Lying across the box: a thruster block with exhaust vents at the back, the square microchip with its mustard arrow bolted on top, flat coral red speed stripes on the housing."
   },
   "life_tank": {
-    "brief": "Tank with a gauge and a red cross, a tube coiled around it. Accent: coral red.",
-    "description": "Filling the square box: the Oxygen Tank laid sideways with the Repair Kit strapped against it, a coral red cross on the tank and a tube coiled round both."
+    "brief": "Oxygen bottle on a repair tin with a red cross and hose. Accent: coral red.",
+    "description": "Filling the square box: the tall teal oxygen bottle standing in the rounded repair tin, a coral red cross on the tin, the breathing mask hose looped round both."
   },
   "inferno_canister": {
-    "brief": "Two fuel cans welded together, flames licking out. Accent: coral red.",
-    "description": "Upright: two Fuel Canisters welded together, coral red flames licking from their caps."
+    "brief": "Two fuel jerrycans welded together with one shared gauge. Accent: coral red.",
+    "description": "Upright: two red rocket-fuel jerrycans welded on top of each other, flame stencils on both, one shared pressure gauge, a flat coral red flame tongue at the spout."
   },
   "toxic_gland": {
-    "brief": "Two venom sacs grown together, oozing. Accent: sage.",
-    "description": "Upright: two Venom Sacs grown together into one, veins crossing between them, sage ooze dripping."
+    "brief": "Two venom sacs grown into one, sealed by valve clips. Accent: sage.",
+    "description": "Upright: two swollen sage venom sacs grown together into one long gland, dark veins, a valve clip at each end, one drop hanging below."
   },
   "blizzard_gem": {
-    "brief": "Two frost gems grown together into a cluster with snow swirling. Accent: teal.",
-    "description": "Upright: two Frost Gems grown together into one cluster, a swirl of snow around them drawn as flat flecks."
+    "brief": "Two frost gems grown together into a crowned cluster. Accent: teal.",
+    "description": "Upright: two six-sided teal methane-ice gems grown into one cluster, frozen bubbles inside, frost spikes crowning the top, a few flat snowflakes circling."
   },
   "prism_cluster": {
-    "brief": "Cluster of crystal shards growing out of one base. Accent: teal.",
-    "description": "Several teal Crystal Shards growing out of one base in a fan, hard flat facets."
+    "brief": "Several Facet crystal spikes grown from one base. Accent: teal.",
+    "description": "A cluster of three jagged teal Facet crystal spikes growing from one rock base, hard flat facets, two tiny splinters orbiting."
   },
   "reactor_heart": {
-    "brief": "Round reactor core with copper coils and a hot window, like a heart. Accent: coral red.",
-    "description": "Lying across the box: a round reactor core shaped like a heart, copper coils wrapped round it, a coral red window in the middle and two small exhaust vents."
+    "brief": "Round reactor core in copper coils, shaped like a heart. Accent: coral red.",
+    "description": "Lying across the box: a heart-shaped reactor core in an iron cage, wrapped in copper coils, a coral red window in its middle, small thruster vents on both sides."
   },
   "fire_drakeling": {
-    "brief": "Small dragon hatchling with ember spots, smoke from its nose. Accent: coral red.",
-    "description": "Lying across the box: a small dragon hatchling curled half out of its Cosmic Egg shell, ember spots on its skin, smoke curling from its nose."
+    "brief": "Dragon hatchling with basalt skin, still half in a cosmic egg. Accent: coral red.",
+    "description": "Lying across the box: a small dragon hatchling with cracked black basalt skin and coral red heat in the cracks, stubby wings, its tail still in the cream constellation eggshell. One single animal."
   },
   "frost_hatchling": {
-    "brief": "Small dragon hatchling with icy scales and a frosty breath. Accent: teal.",
-    "description": "Lying across the box: a small dragon hatchling with icy teal scales sitting in its broken Cosmic Egg shell, a puff of frost breath."
+    "brief": "Dragon hatchling with comet-ice scales, frosty breath. Accent: teal.",
+    "description": "Lying across the box: a small dragon hatchling with pale teal comet-ice scales, a frost crest, a small puff of flat frost breath, cream constellation eggshell on its head. One single animal."
   },
   "slime_pup": {
-    "brief": "Blob of slime shaped like a puppy, one floppy ear. Accent: sage.",
-    "description": "A blob of sage slime shaped like a puppy, one floppy ear, a bit of egg shell stuck to its back."
+    "brief": "Puppy made of biogel with one living cell inside. Accent: sage.",
+    "description": "Upright: a wobbly puppy made of see-through sage biogel, one floppy ear, a round living cell with two tails visible inside its belly, eggshell crumb on its head. One single animal."
   },
   "clockwork_chick": {
-    "brief": "Wind-up chick with a key on its back and copper feathers. Accent: copper.",
-    "description": "A wind-up chick with copper wire feathers, a key on its back, half an egg shell on its head."
+    "brief": "Wind-up chick with copper wire feathers and a key. Accent: copper.",
+    "description": "A small round wind-up chick with feathers of coiled copper wire, a winding key on its back, cream eggshell cap. One single animal."
   },
   "hamster_wheel": {
-    "brief": "Hamster running in a wheel with a battery attached. Accent: mustard.",
-    "description": "Lying across the box: the Space Hamster running inside a wheel, the Power Cell strapped to the frame with a cable to the axle."
+    "brief": "Space hamster running in a wheel with a power cell. Accent: mustard.",
+    "description": "Lying across the box: a copper exercise wheel with the round mustard space hamster running inside, cheeks full of ore, a star-window power cell wired to the axle. One single animal."
   },
   "lunar_moth": {
-    "brief": "Tiny pale moth with moon crescents on its wings, two smaller moths behind it. Accent: cream.",
-    "description": "A tiny pale moth with moon crescents on its wings, two even smaller moths fluttering behind it, dust falling as flat bone specks."
+    "brief": "Large pale moth with full moons and stardust on its wings. Accent: cream.",
+    "description": "A pale moth from a two-moon planet, wings spread, each wing marked with a full cream moon and a crescent, stardust specks drifting off the wing tips."
   },
   "fortress_crab": {
-    "brief": "Crab carrying a piece of hull plating as its shell. Accent: copper.",
-    "description": "Filling the square box: the Rock Crab carrying a curved piece of Hull Plating as its shell, rivets showing, claws raised."
+    "brief": "Sandstone crab carrying a hull plate as its shell. Accent: copper.",
+    "description": "Filling the square box: the squat Ochre rock crab with periscope eyes, carrying a riveted hull plate with a porthole as its shell, one thick crystal claw. One single animal."
   },
   "plague_slug": {
-    "brief": "Fat slug with mushrooms on its back, slime trail. Accent: sage.",
-    "description": "Filling the square box: a fat slug with moss-capped mushrooms growing out of its back, a slime trail behind it."
+    "brief": "Vacuum slug with Murk mushrooms growing on its back. Accent: sage.",
+    "description": "Filling the square box: the fat hull slug with its round suction mouth and dome shell, dish-capped sage mushrooms sprouting from its back, a slime trail. One single animal."
   },
   "welder_bot": {
-    "brief": "Small robot with a welding torch arm and a scrap shield. Accent: mustard.",
-    "description": "Lying across the box: the Repair Bot with a welding torch for one arm and a scrap shield on the other, a mustard eye."
+    "brief": "Repair bot with a welding torch arm and scrap shield. Accent: mustard.",
+    "description": "Lying across the box: the small round repair bot with one mustard eye, one arm now a welding torch, a bent scrap plate held as a shield on the other."
   },
   "gunship_drone": {
-    "brief": "Hovering drone with a laser pistol under its belly. Accent: coral red.",
-    "description": "Filling the square box: the Sentry Drone grown bigger, the Laser Pistol mounted under its belly, coral red emitter tip, four rotor arms."
+    "brief": "Sentry drone with a laser pistol slung under its belly. Accent: coral red.",
+    "description": "Filling the square box: the hovering sentry drone with two rotor arms and one lens eye, a chunky laser pistol with teal lens rings slung under its belly."
   },
   "drill_mole": {
-    "brief": "Mole wearing a mining pick on its snout like a drill. Accent: copper.",
-    "description": "Filling the square box: the Asteroid Mole with the Mining Pick's head strapped to its snout like a drill, digging claws forward."
+    "brief": "Asteroid mole wearing the mining pick as a drill helmet. Accent: copper.",
+    "description": "Filling the square box: the stubby asteroid mole with huge diamond claws, the meteor-iron mining pick mounted on its snout as a drill with a teal crystal tip, tail jet. One single animal."
   },
   "medic_drone": {
-    "brief": "Round drone with a red cross and a little arm holding a wrench. Accent: coral red.",
-    "description": "Lying across the box: the Scout Drone with a coral red cross on its top and a little arm holding a wrench."
+    "brief": "Scout drone with a red cross and a wrench arm. Accent: coral red.",
+    "description": "Lying across the box: the small round scout drone with its big camera eye, two rotor arms, a coral red cross on its side and a little arm holding a wrench."
   },
   "magma_hound": {
-    "brief": "Hound with cracked lava skin and a fiery tail. Accent: coral red.",
-    "description": "Filling the square box: a hound with cracked lava skin like the Magma Newt and the Comet Fox's long coral red tail streaming behind it."
+    "brief": "Comet fox grown big with magma newt basalt skin. Accent: coral red.",
+    "description": "Filling the square box: a lean long-legged hound mid-stride, cracked black basalt skin with coral red heat in the cracks, antenna-dish ears, a long tail of drifting ash. One single animal."
   },
   "snow_lynx": {
-    "brief": "Lynx with frosted fur and icy ear tufts. Accent: teal.",
-    "description": "Filling the square box: the Shadow Lynx's shape covered in frosty teal fur, icicle ear tufts and two pale eyes."
+    "brief": "Shadow lynx with frosted fur and ice crystal crest. Accent: teal.",
+    "description": "Filling the square box: a crouching lynx with frosted white fur, a crest of teal ice crystals along its spine like the ice ferret, icy ear tufts, pale eyes. One single animal."
   },
   "hawk_eye_parrot": {
-    "brief": "Parrot with a targeting monocle over one eye. Accent: coral red.",
-    "description": "The Laser Parrot with the Targeting Lens worn as a monocle over one eye, coral red feathers."
+    "brief": "Lens-beak parrot with a targeting monocle. Accent: coral red.",
+    "description": "The plump Gemell parrot with its coral red lens beak and dish crest, a riveted targeting lens with crosshair worn as a monocle over one eye. One single animal."
   },
   "jelly_swarm": {
-    "brief": "Cluster of small floating jellyfish trailing tentacles. Accent: sage.",
-    "description": "Filling the square box: a cluster of small floating jellyfish trailing tentacles, a slug-like trail of slime between them."
+    "brief": "One big nebula jellyfish with a vacuum slug shell on top. Accent: sage.",
+    "description": "Filling the square box: one big drifting jellyfish, its see-through bell topped by a small dome shell like the hull slug's, a sage nebula swirl inside, long trailing tentacles. One single animal."
   },
   "beetle_lantern": {
-    "brief": "Beetle with a crystal on its back used as a lamp. Accent: mustard.",
-    "description": "The Glow Beetle with a Crystal Shard on its back used as a lamp, the lit abdomen a flat mustard shape."
+    "brief": "Glow beetle carrying a Facet crystal as a lamp. Accent: mustard.",
+    "description": "One beetle seen from above, its ringed planet shell, a teal Facet crystal mounted on its back as a lamp, its rear a flat mustard lamp shape. One single animal."
   },
   "dust_storm": {
-    "brief": "Swirl of dust bunnies and moths whirling together. Accent: cream.",
-    "description": "Lying across the box: a swirl of Dust Bunnies and Moon Moths whirling together, drawn as a spiral of fluff and wings."
+    "brief": "Dust bunny spinning in a dust devil with moth wings. Accent: cream.",
+    "description": "Lying across the box: one grey fluff dust bunny with long ears, now with pale moth wings, spinning inside a sideways dust devil of flat swirl lines. One single animal."
   },
   "star_hatchling": {
-    "brief": "Hatchling bursting out of a star-speckled egg, wings of light drawn flat. Accent: mustard.",
-    "description": "Lying across the box: a hatchling bursting out of a star-speckled egg, wings of flat mustard light, a drop of Royal Jelly on its beak."
+    "brief": "Hatchling bursting from a star-speckled egg in royal jelly. Accent: mustard.",
+    "description": "Lying across the box: a small round hatchling breaking out of the cream constellation egg, mustard royal jelly dripping, its wings two flat star shapes, stardust specks around. One single animal."
   },
   "astronaut_ration": {
-    "brief": "Vacuum-sealed meal tray with cheese cube and bar. Accent: cream.",
-    "description": "Lying across the box: a vacuum-sealed meal tray with compartments, a Moon Cheese cube and a Protein Bar inside."
+    "brief": "Vacuum tray with a moon cheese wedge and a rocket bar. Accent: cream.",
+    "description": "Lying across the box: a vacuum-sealed meal tray with three compartments, a cratered moon cheese wedge, the rocket-shaped protein bar and a bean paste, foil peeled back at one corner."
   },
   "fire_jerky": {
-    "brief": "Strip of jerky with a red chili tied on, smoking. Accent: coral red.",
-    "description": "Lying across the box: a strip of jerky with a Rocket Chili tied on by string, smoke rising in wavy lines."
+    "brief": "Jerky strip tied round a basalt rocket chili. Accent: coral red.",
+    "description": "Lying across the box: a strip of dark jerky tied in a knot around the cracked basalt rocket chili with coral red heat in its cracks, a tiny fin sticking out."
   },
   "garden_bowl": {
-    "brief": "Bowl of lettuce and algae with a drink straw. Accent: sage.",
-    "description": "Lying across the box: a bowl of Hydro Lettuce leaves and algae with a straw stuck in, sage."
+    "brief": "Hydro lettuce in a bowl with an algae ball floating above. Accent: sage.",
+    "description": "Lying across the box: a shallow bowl of hydroponic lettuce leaves, a wobbly sage algae ball floating above it, the bent straw stuck in."
   },
   "space_burger": {
-    "brief": "Stacked burger with dumpling bun, cheese and lettuce, a flag pick on top. Accent: mustard.",
-    "description": "Lying across the box: a stacked burger with two Gravity Dumplings as the bun, cheese and lettuce in between, a small flag pick on top."
+    "brief": "Burger with dumpling buns, moon cheese and lettuce. Accent: mustard.",
+    "description": "Lying across the box: a fat burger whose buns are two plump gravity dumplings, a cratered moon cheese slice and lettuce between, the top bun hovering slightly above."
   },
   "chili_noodles": {
-    "brief": "Steaming noodle box with chilies sticking out and chopsticks. Accent: coral red.",
-    "description": "Lying across the box: a steaming noodle box with Rocket Chilies sticking out and chopsticks."
+    "brief": "Noodle cup with a rocket chili and noodle planet ring. Accent: coral red.",
+    "description": "Lying across the box: the noodle cup with noodles floating up in curls, one forming a planet ring, a basalt rocket chili stuck in beside the chopsticks."
   },
   "honey_cake": {
-    "brief": "Round cake dripping honey, crystal candy on top. Accent: mustard.",
-    "description": "Lying across the box: a round cake dripping Asteroid Honey down its side, Crystal Candy pieces on top."
+    "brief": "Asteroid-shaped cake dripping honey, crystal candy on top. Accent: mustard.",
+    "description": "Lying across the box: a round cake shaped like a cratered asteroid, mustard honey drifting off it in floating drops, a teal crystal candy stuck on top."
   },
   "sundae": {
-    "brief": "Tall sundae glass with a frozen comet scoop and a cherry star. Accent: teal.",
-    "description": "Lying across the box: a tall sundae glass on its side, a frozen comet scoop and a star-shaped cherry on top."
+    "brief": "Ration cup tower of ice cream brick and comet sorbet. Accent: teal.",
+    "description": "Lying across the box: a tall dented ration cup on its side, a three-layer freeze-dried ice cream brick and a scoop of comet ice inside, the scoop trailing a short frozen dust tail."
   },
   "turbo_cola": {
-    "brief": "Fizzing cola can with a lightning bolt label and a gel pack taped on. Accent: coral red.",
-    "description": "Upright: a cola can with a lightning bolt label without text, an Energy Gel pack taped to its side, fizz rising."
+    "brief": "Cola squeeze bottle with an energy gel taped on. Accent: coral red.",
+    "description": "Upright: the cola squeeze bottle with a coral red starburst label, a mustard lightning-bolt gel pouch taped to its side, fizz bubbles floating up as round outlines."
   },
   "spore_stew": {
-    "brief": "Pot of stew with mushrooms floating and spores puffing up. Accent: sage.",
-    "description": "Lying across the box: a small pot of stew with mushrooms and dumplings floating in it, spores puffing up as flat moss dots."
+    "brief": "Pot of stew with mushrooms and dumplings floating above it. Accent: sage.",
+    "description": "Lying across the box: a small pot with a lid hovering above, dish-capped sage mushrooms and two plump dumplings floating out of it, spores as small round dots."
   },
   "candied_fruit": {
-    "brief": "Star-shaped fruit coated in crystal sugar on a stick. Accent: mustard.",
-    "description": "Lying across the box: a Star Fruit coated in crystal sugar on a stick, the sugar drawn as flat facets."
+    "brief": "Star fruit on a stick coated in crystal sugar. Accent: mustard.",
+    "description": "Lying across the box: a five-pointed mustard star fruit on a stick, coated in hard teal crystal sugar facets, one point bitten off."
   },
   "void_beam": {
-    "brief": "Long emitter gun firing a black beam with a cream edge. Accent: cream.",
-    "description": "Upright through the tall box: the Prism Laser grown long into an emitter gun, the crystal replaced by a black Dark Matter sphere; the beam is black with a cream edge."
+    "brief": "Prism laser grown long, a black void in its crystal. Accent: cream.",
+    "description": "Upright through the tall box: a long emitter with three teal lens rings, the Facet crystal at its tip turned to a flat black void with a crisp cream outline, a short black beam with cream edge above."
   },
   "gatling_laser": {
-    "brief": "Rotating barrel laser with a battery pack. Accent: coral red.",
-    "description": "Filling the square box: a rotating cluster of laser barrels from the Twin Lasers, the Fusion Battery strapped at the back with a cable to the barrels."
+    "brief": "Ring of laser barrels around a copper coil battery. Accent: coral red.",
+    "description": "Filling the square box: four laser pistol barrels with teal lens rings bundled in a ring like a gatling, a copper-coiled star battery behind them, one double grip."
   },
   "dragon_engine": {
-    "brief": "Flamethrower shaped like a dragon head with thruster fins. Accent: coral red.",
-    "description": "Along the long box: the Flamethrower's barrel shaped like a dragon head at the front, the Thruster's fins and nozzle at the back, flame from the mouth."
+    "brief": "Flamethrower with a dragon-head nozzle and thruster fins. Accent: coral red.",
+    "description": "Along the long box: the plasma cutter flamethrower stretched long, its nozzle forged as a dragon head with open jaws, thruster fins along the back, a flat coral red flame tongue from the mouth."
   },
   "neutron_hammer": {
-    "brief": "Huge two-handed hammer with a heavy dense core set in the head. Accent: mustard.",
-    "description": "The heavy head fills the upper four cells, the haft drops down the lower left; the lower right stays empty. The Slag Mace's rock head bound into an iron frame, a dense mustard core set in the middle."
+    "brief": "Huge hammer: asteroid slag head around a dense mustard core. Accent: mustard.",
+    "description": "The huge hammer head fills the top four cells: meteor iron and fused asteroid around a small mustard core window, coral red crack shapes; the haft drops down the lower left cell; lower right empty."
   },
   "absolute_zero": {
-    "brief": "Ice-crusted cannon with a snowflake on the barrel, frozen mist around it. Accent: teal.",
-    "description": "Filling the tall box: the Glacier Cannon standing upright, encrusted in thick ice, a snowflake on the barrel and frozen mist curling round its base. Comet Sorbet frost trails across the ice."
+    "brief": "Giant ice cannon crusted with comet ice, snowflake on the barrel. Accent: teal.",
+    "description": "Upright through the tall box: a massive cannon caked in flat teal hexagon ice, a big snowflake emblem on the barrel, the coolant tank on its back, a comet-ice chunk loaded in the muzzle."
   },
   "bloom_artillery": {
-    "brief": "Big gun barrel overgrown with blossoms and spore pods. Accent: sage.",
-    "description": "Filling the wide box: a big gun barrel lying sideways, overgrown with blossoms and spore pods, the Plague Slug curled round the breech, mushrooms on the muzzle."
+    "brief": "Fungal mortar grown into a cannon covered in blossoms. Accent: sage.",
+    "description": "Filling the wide box: a big puffball cannon barrel lying across, overgrown with sage mushrooms and pale Murk blossoms, the plague slug curled on top as a living loader. One single animal."
   },
   "storm_coil": {
-    "brief": "Cannon wrapped in a tesla coil with lightning arcs. Accent: mustard.",
-    "description": "Filling the square box: the EMP Cannon wrapped in a tall tesla coil, flat mustard lightning arcs jumping round it, the Overclock Chip on the side."
+    "brief": "EMP cannon wrapped in a tesla coil, one zig-zag arc. Accent: mustard.",
+    "description": "Filling the square box: the ring-barrel EMP cannon wrapped in a tall copper tesla coil, the running microchip on its side, one flat mustard zig-zag arc jumping to the jammer dish."
   },
   "citadel_plating": {
-    "brief": "Wall of overlapping armour plates with a small dish on top. Accent: copper.",
-    "description": "Filling the wide box: a wall of overlapping armour plates from the Reinforced Bulkhead, a small Deflector Dish on top like a watchtower."
+    "brief": "Wall of riveted bulkhead plates with a dish on top. Accent: copper.",
+    "description": "Filling the wide box: a short wall of overlapping riveted bulkhead plates with X braces, the old satellite dish mounted on top as a shield turret, copper bolts."
   },
   "life_support_suit": {
-    "brief": "Space suit with a backpack of tubes and a heartbeat display on the chest. Accent: sage.",
-    "description": "The suit fills the upper four cells, its backpack of tubes hangs into the lower left cell; the lower right stays empty. The Exo Suit with a sage heartbeat display on the chest and medkit pouches on the belt."
+    "brief": "Exo suit with a tube backpack and a heartbeat screen. Accent: sage.",
+    "description": "The suit fills the left column and top right: the iron-framed exo suit, a medkit backpack with sage tubes on the top right cell, a heartbeat screen on the chest; lower right cell empty."
   },
   "star_piercer": {
-    "brief": "Very long rail rifle with a scope and a star-shaped muzzle flash. Accent: mustard.",
-    "description": "Along the long box: a very long rail rifle like the Railgun with the Sniper Scope on top, a star-shaped muzzle flash in flat mustard."
+    "brief": "Railgun rails stretched long with a crystal sniper scope. Accent: mustard.",
+    "description": "Along the long box: the two parallel teal docking rails stretched long, a crystal sniper scope on top, a fat capacitor at the back, one small slug with a star-shaped mustard tip between the rails."
   },
   "captains_dinner": {
-    "brief": "Tray with a covered dish, ration and jerky, a napkin folded like a star. Accent: cream.",
-    "description": "Filling the square box: a tray with a covered dish, the Astronaut Ration and Fire Jerky beside it, a napkin folded like a star."
+    "brief": "Tray with a domed dish, ration and jerky, star napkin. Accent: cream.",
+    "description": "Filling the square box: an oval tray with a half-lifted dome lid, the ration pack and a knot of jerky beside it, a napkin folded like a star, straps holding it all down."
   },
   "solar_drake": {
-    "brief": "Winged drake with sun-flare frills around its neck. Accent: mustard.",
-    "description": "Filling the square box: a winged drake with sun-flare frills around its neck, a pot of Magma Curry steaming at its feet, mustard frills."
+    "brief": "Winged drake with a sun-flare frill, basalt and gold. Accent: mustard.",
+    "description": "Filling the square box: a winged drake with cracked basalt skin, a big mustard frill around its neck shaped like flat sun flares, curry-red belly. One single animal."
   },
   "titan_crab": {
-    "brief": "Giant crab with a mirror shield as its shell and spikes. Accent: copper.",
-    "description": "Filling the wide box: a giant crab with the Mirror Shield as its shell, heavy spikes on the rim, two huge claws raised, copper-coloured plated legs."
+    "brief": "Giant crab with a telescope mirror shield as its shell. Accent: copper.",
+    "description": "Filling the wide box: a giant squat sandstone crab, the round telescope mirror shield with a reflected ringed planet as its shell, periscope eyes, two crystal claws. One single animal."
   },
   "glacier_drake": {
-    "brief": "Long drake with ice-plated back and frosty breath. Accent: teal.",
-    "description": "Filling the square box: a long drake with ice-plated back, Ice Ferret fur at its neck, a puff of frosty breath."
+    "brief": "Long drake with ice-plated back and ferret crystal crest. Accent: teal.",
+    "description": "Filling the square box: a long coiled drake with teal comet-ice plates down its back, a crest of ice crystals, frost breath as a small flat cloud. One single animal."
   },
   "command_drone": {
-    "brief": "Big drone with antennas, a gun and a medic cross on top. Accent: coral red.",
-    "description": "Filling the wide box: a big drone with antennas, the Gunship Drone's gun underneath and the Medic Drone's cross on its top, four rotor arms."
+    "brief": "Big drone with antennas, a laser gun and a medic cross. Accent: coral red.",
+    "description": "Filling the wide box: a big hovering drone with four rotor arms, a tall antenna mast, a laser pistol slung below, a coral red medic cross on its side, one big lens eye."
   },
   "grand_buffet": {
-    "brief": "Long table piled with cake, noodles and bowls. Accent: mustard.",
-    "description": "Filling the wide box: a long table piled with Honey Cake, Chili Noodles and bowls, a mustard tablecloth hanging over the edge."
+    "brief": "Long strapped table with honey cake and chili noodles. Accent: mustard.",
+    "description": "Filling the wide box: a long table with magnet feet, the asteroid honey cake and chili noodle cup on it, bowls and fruit, all held down by straps so nothing floats away."
   },
   "aegis_fortress": {
-    "brief": "Small fortress made of shield plates with a dish tower. Accent: teal.",
-    "description": "Filling the tall box: a small fortress made of shield plates stacked upwards, the Aegis Projector's dish on a tower at the top, the Force Bubble's half-dome over its gate."
+    "brief": "Tiny fortress of shield plates with a dish tower and force dome. Accent: teal.",
+    "description": "Upright through the tall box: a small stacked fortress of shield plates, a satellite dish tower on top, a flat teal force dome arching over it with one crack."
   },
   "plague_hydra": {
-    "brief": "Three-headed snake with dripping venom fangs. Accent: sage.",
-    "description": "The three heads fill the upper four cells, the body coils down into the lower left; the lower right stays empty. A three-headed snake with dripping Venom Fangs, small jellyfish clinging to its neck."
+    "brief": "Three-headed serpent with crystal fangs and jelly frills. Accent: sage.",
+    "description": "The body coils in the lower left, three necks rise into the top cells, each head with crystal fangs dripping sage venom, see-through jelly frills; lower right cell empty. One single animal."
   },
   "inferno_blade": {
-    "brief": "Long burning sword with fuel canisters on the guard. Accent: coral red.",
-    "description": "Upright through the tall box: the Plasma Katana burning with coral red flames, the Inferno Canister fixed to the guard as a fuel tank."
+    "brief": "Plasma katana with twin fuel cans on its guard. Accent: coral red.",
+    "description": "Upright through the tall box: the slim curved coral red plasma blade grown longer, flat flame shapes licking along its edge, the two welded fuel cans mounted as its guard."
   },
   "worldbreaker": {
-    "brief": "Gigantic hammer with a small black planet as the head. Accent: coral red.",
-    "description": "Filling the tall box: a gigantic hammer, the Neutron Hammer's haft at the bottom, its head replaced by a small black planet with a cream rim, cracks in the rock around it."
+    "brief": "Hammer whose head is a small dark planet with a ring. Accent: coral red.",
+    "description": "Upright through the tall box: a giant hammer whose head is a small dark planet with a coral red cracked crust and one ring, debris orbiting, the heavy haft wrapped in leather."
   },
   "death_blossom": {
-    "brief": "Flower made of many gun barrels arranged as petals. Accent: coral red.",
-    "description": "Filling the wide box: a flower made of many gun barrels arranged as petals, the Void Beam's black barrel at the centre, the Gatling Laser's barrels around it."
+    "brief": "Gun barrels arranged like flower petals around a void. Accent: coral red.",
+    "description": "Filling the wide box: many laser barrels with teal lens rings arranged in a ring like flower petals, a flat black void with cream outline at the centre, a short stem grip below."
   },
   "phoenix": {
-    "brief": "Bird of fire rising, wings spread, ash feathers falling. Accent: coral red.",
-    "description": "Filling the square box: a bird of fire rising, wings spread wide, flames drawn as flat coral red tongues with black edges, ash feathers falling below. A Star Fruit clutched in its talons."
+    "brief": "Fire bird rising from a star fruit, star-dust tail. Accent: coral red.",
+    "description": "Filling the square box: a bird of flat coral red and mustard flame shapes rising with wings spread, a five-pointed star crest, a long tail of stardust specks. No glow. One single animal."
   },
   "entropy_engine": {
-    "brief": "Machine half frozen and half rotting, a cannon barrel in the middle. Accent: sage.",
-    "description": "Filling the box, the lower right cell empty: a machine half frozen and half rotting. Left side Absolute Zero's ice and snowflake, right side Bloom Artillery's blossoms and spores, a cannon barrel through the middle."
+    "brief": "Machine half frozen and half overgrown, a cannon in the middle. Accent: sage.",
+    "description": "The machine fills all but the lower right cell: left half crusted in teal ice like Absolute Zero, right half overgrown with sage mushrooms and blossoms, one big cannon barrel through the middle."
   },
   "dyson_bastion": {
-    "brief": "Fortress wall built from curved panels around a small star. Accent: mustard.",
-    "description": "Filling the whole box: a fortress wall built from curved Dyson-like panels around a small mustard star at its centre, the Citadel Plating's plates as outer walls, the Aegis Fortress's dish tower on top."
+    "brief": "Fortress wall of curved panels around a tiny star. Accent: mustard.",
+    "description": "Filling the square box: a ring fortress of curved armour panels with mustard panel grids on the inside, a tiny star in its middle as a flat mustard shape, a dish turret on top."
   },
   "leviathan": {
-    "brief": "Huge sea-beast of space, armoured head with tentacles coiling out. Accent: teal.",
-    "description": "Filling the whole box: a huge sea-beast of space, its head armoured with the Titan Crab's mirror shell, the Void Kraken's tentacles coiling out below it. One great teal eye."
+    "brief": "Huge space beast: crab-armoured head, kraken tentacles. Accent: teal.",
+    "description": "Filling the square box: a huge beast, its head armoured with a cracked sandstone crab shell and mirror plate, one big teal eye, thick tentacles with cream suckers coiling out below. One single animal."
   },
   "med_bay": {
-    "brief": "Small medical cabinet with an IV bag and filter fan. Accent: coral red.",
-    "description": "The cabinet fills the top row, the IV bag hangs into the lower left cell; the lower right stays empty. A small medical cabinet with a filter fan from the Scrubber Unit and the Saline Drip's bag."
+    "brief": "Small medical cabinet with an IV bag and a scrubber fan. Accent: coral red.",
+    "description": "The cabinet fills the top cells, the scrubber unit drops down the left cell: a floating IV bag on a tether on top, a coral red cross on the door, a fan grille below; lower right cell empty."
   },
   "shield_capacitor": {
-    "brief": "Shield battery with an extra cell clipped on and a spark. Accent: teal.",
-    "description": "Upright: the Shield Battery with an extra Power Cell clipped on, a small flat teal spark jumping between them."
+    "brief": "Shield battery with a star power cell clipped on. Accent: teal.",
+    "description": "Upright: the fat shield battery with its hexagon dome top and charge bars, a star-window power cell clipped to its side, all three bars filled teal."
   },
   "trauma_kit": {
-    "brief": "Big red bag with a cross, an oxygen bottle strapped on. Accent: coral red.",
-    "description": "Upright: a big coral red bag with a cross patch, the Oxygen Tank strapped to its side, a First Aid Patch on the flap."
+    "brief": "Red medical bag with a cross, an oxygen bottle strapped on. Accent: coral red.",
+    "description": "Upright: a soft coral red medical bag with a cream cross patch, the teal oxygen bottle with its round gauge strapped to its side, a mask hanging off the strap."
   },
   "panacea": {
-    "brief": "Small bottle with moss growing in the cork, thick green liquid. Accent: sage.",
-    "description": "Lying across the box: a small bottle with Medi Moss growing out of its cork, thick sage liquid inside, the Antitoxin pen lying beside it."
+    "brief": "Antitoxin pen in a moss-filled bottle. Accent: sage.",
+    "description": "Lying across the box: a small round bottle of thick sage liquid, medi moss with tiny star flowers growing from its cork, the antitoxin pen clipped to its neck."
   },
   "caretaker_bot": {
-    "brief": "Small robot with a towel arm and a filter mask face, kind look. Accent: cream.",
-    "description": "Lying across the box: a small robot with a towel over one arm and a filter mask face, a kind round eye, the Repair Bot's wrench in the other hand."
+    "brief": "Repair bot with a filter mask face and a towel arm. Accent: cream.",
+    "description": "Lying across the box: a small round robot with a sage air-filter mask as its face, one wrench arm and one arm holding a folded towel, a kind tilt of the head."
   },
   "survival_suit": {
-    "brief": "Space suit wrapped in a foil blanket. Accent: mustard.",
-    "description": "Filling the square box: the Space Suit wrapped in a crinkled foil Thermal Blanket like a cape, the helmet sticking out at the top."
+    "brief": "Space suit wrapped in a crinkled mustard foil blanket. Accent: mustard.",
+    "description": "Filling the square box: the empty space suit wrapped in the crinkled foil rescue blanket like a cape, hard mustard and cream foil facets, helmet hanging at its side."
   },
   "power_meal": {
-    "brief": "Lunch box with a protein bar and vitamin pills. Accent: mustard.",
-    "description": "Lying across the box: a lunch box with a Protein Bar and a blister of vitamin pills inside, lid open."
+    "brief": "Lunch box with a rocket protein bar and planet pills. Accent: mustard.",
+    "description": "Lying across the box: an open dented lunch box, the rocket-shaped protein bar in one half, a blister strip of tiny ringed-planet pills in the other."
   },
   "sanctuary": {
-    "brief": "Small domed shrine with a fountain and a red cross on the door. Accent: teal.",
-    "description": "Filling the tall box: a small domed shrine of stone with a painted cross on its door, the Healing Spring's fountain bubbling in front of it in flat teal shapes."
+    "brief": "Small domed shrine with a moon-rock spring inside. Accent: teal.",
+    "description": "Upright through the tall box: a small domed shrine of pale moon rock, the healing spring inside rising as floating teal balls, a coral red cross over the round door, sage moss on its base."
   },
   "protein_bar": {
     "brief": "Ration bar shaped like a rocket, nose bitten off. Accent: copper.",
