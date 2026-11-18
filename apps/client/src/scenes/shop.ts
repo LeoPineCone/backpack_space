@@ -238,7 +238,7 @@ export function shopScene(game: Game): Scene {
     }
 
     // bottom row: reroll, fight, sell
-    const rr = roundButton("dice", 32, () => { if (reroll(run(), data, game.rng)) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
+    const rr = roundButton("dice", 32, () => { if (reroll(run(), data)) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
     rr.addChild(at(disc(11, { fill: C.gold }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
     view.addChild(at(rr, REROLL.x, REROLL.y));

@@ -202,7 +202,7 @@ function fight(s: Save, rng: Rng, log: RoundLog): void {
   log.fight = text;
   log.won = won;
   log.build = mine.items.map((p) => def(p.item).name);
-  finishRound(r, data, won, rng);
+  finishRound(r, data, won);
   if (r.over) say(`RUN OVER: ${r.wins} wins, ${r.lives} lives left.`);
   else {
     s.log.push({ round: r.round, actions: [], notes: [] });
@@ -215,6 +215,9 @@ function run(s: Save, cmd: string): void {
   const [op, ...a] = cmd.trim().split(/\s+/);
   const r = s.run,
     rng = new Rng(s.rng);
+  // saves from before the shop followed from the run seed
+  r.seed ??= s.seed;
+  r.rerolls ??= 0;
   const log = s.log[s.log.length - 1]!;
   const spot = (i: number) => ({ x: num(a[i], "x"), y: num(a[i + 1], "y"), rot: num(a[i + 2] ?? "0", "rot") });
   const done = (ok: boolean, what: string) => {
@@ -288,7 +291,7 @@ function run(s: Save, cmd: string): void {
       p = r.bags[i];
     if (!p) throw new Error("sellbag: no such bag");
     done(sellBag(r, data, i), `sold bag ${def(p.item).name}`);
-  } else if (op === "reroll") done(reroll(r, data, rng), "rerolled the shop");
+  } else if (op === "reroll") done(reroll(r, data), "rerolled the shop");
   else if (op === "freeze") done(toggleFreeze(r, num(a[0], "slot")), `froze or released offer ${a[0]}`);
   else if (op === "lock") done(toggleLock(r, num(a[0], "item n")), `locked or unlocked item ${a[0]}`);
   else if (op === "tidy") {
@@ -338,7 +341,7 @@ try {
     if (!name || !hero) throw new Error("usage: playtest new <name> --hero <id> [--seed n] [--goal text]");
     const seed = Number(flags.seed ?? 1),
       rng = new Rng(seed);
-    const s: Save = { name, hero, seed, goal: flags.goal ?? "", rng: 0, run: newRun(data, hero, rng), log: [{ round: 1, actions: [], notes: [] }] };
+    const s: Save = { name, hero, seed, goal: flags.goal ?? "", rng: 0, run: newRun(data, hero, seed), log: [{ round: 1, actions: [], notes: [] }] };
     s.rng = rng.state;
     writeFileSync(file(name), JSON.stringify(s));
     show(s);

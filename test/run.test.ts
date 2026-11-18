@@ -71,7 +71,7 @@ describe("shop and run", () => {
     }
   });
   it("buys onto a bag cell, refuses cells without a bag", () => {
-    const s = newRun(data, "rook", new Rng(1));
+    const s = newRun(data, "rook", 1);
     s.gold = 99;
     s.offers = [
       { item: "fang_dagger", price: 2, sale: false },
@@ -82,7 +82,7 @@ describe("shop and run", () => {
     expect(s.gold).toBe(97);
   });
   it("merges adjacent inputs after the fight, for good, and pays the salvage unit", () => {
-    const s = newRun(data, "rook", new Rng(1));
+    const s = newRun(data, "rook", 1);
     // start: welding arm at 3,2 (two cells down) and scrap metal at 5,2: apart, so nothing merges on its own
     expect(findCombos(data, s.bags, s.items)).toHaveLength(0);
     // moved next to the welding arm: due after the fight
@@ -90,17 +90,17 @@ describe("shop and run", () => {
     expect(pendingMerges(data, s.bags, s.items).map((c) => c.recipe.out)).toEqual(["plasma_welder"]);
     expect(s.items.map((p) => p.item)).not.toContain("plasma_welder");
     const gold = s.gold;
-    finishRound(s, data, true, new Rng(2));
+    finishRound(s, data, true);
     expect(s.items.map((p) => p.item)).toEqual(["plasma_welder"]);
     expect(s.merged).toEqual([{ out: "plasma_welder", in: data.recipes.find((r) => r.out === "plasma_welder")!.in }]);
     expect(s.gold).toBe(gold + data.heroes.get("rook")!.craftGold + data.rules.goldPerRound[1]!);
   });
   it("does not merge a locked item, and keeps the lock when the item moves", () => {
-    const s = newRun(data, "rook", new Rng(1));
+    const s = newRun(data, "rook", 1);
     expect(moveItem(s, data, 1, { x: 4, y: 2, rot: 0 })).toBe(true);
     expect(toggleLock(s, 0)).toBe(true);
     expect(pendingMerges(data, s.bags, s.items)).toHaveLength(0);
-    finishRound(s, data, false, new Rng(2));
+    finishRound(s, data, false);
     expect(s.items).toHaveLength(2);
     expect(s.merged).toEqual([]);
     const p = s.items[0]!;
@@ -110,7 +110,7 @@ describe("shop and run", () => {
     expect(pendingMerges(data, s.bags, s.items)).toHaveLength(1);
   });
   it("moves a bag together with the items in it", () => {
-    const s = newRun(data, "quill", new Rng(1));
+    const s = newRun(data, "quill", 1);
     expect(place(s, data, "pouch", { x: 0, y: 0, rot: 0 })).toBe(true);
     expect(place(s, data, "fang_dagger", { x: 0, y: 0, rot: 0 })).toBe(true);
     expect(moveBag(s, data, s.bags.length - 1, { x: 8, y: 6, rot: 0 })).toBe(true);
@@ -118,12 +118,12 @@ describe("shop and run", () => {
     expect(validLayout(data, s.bags, s.items)).toBe(true);
   });
   it("ends the run when the lives are gone and hands out the special picks", () => {
-    const s = newRun(data, "ysel", new Rng(2));
+    const s = newRun(data, "ysel", 2);
     const first = data.rules.specials[0]!.afterRound;
-    for (let i = 0; i < first; i++) finishRound(s, data, true, new Rng(i));
+    for (let i = 0; i < first; i++) finishRound(s, data, true);
     expect(s.round).toBe(first + 1);
     expect(s.special).toHaveLength(data.rules.specials[0]!.show);
-    for (let i = 0; i < data.rules.lives; i++) finishRound(s, data, false, new Rng(i));
+    for (let i = 0; i < data.rules.lives; i++) finishRound(s, data, false);
     expect(s.over).toBe(true);
   });
 });
@@ -151,13 +151,13 @@ describe("recipe partners", () => {
   });
   it("keeps frozen offers through a reroll and into the next round, and never shows more bags than allowed", () => {
     const rng = new Rng(4);
-    const s = newRun(data, "quill", rng);
+    const s = newRun(data, "quill", rng.int(2 ** 31));
     s.gold = 50;
     const kept = s.offers[2]!.item;
     expect(toggleFreeze(s, 2)).toBe(true);
-    reroll(s, data, rng);
+    reroll(s, data);
     expect(s.offers[2]!.item).toBe(kept);
-    finishRound(s, data, true, rng);
+    finishRound(s, data, true);
     expect(s.offers[2]!.item).toBe(kept);
     expect(s.offers.length).toBe(data.rules.shop.slots);
     for (let i = 0; i < s.offers.length; i++) if (!s.offers[i]!.frozen) toggleFreeze(s, i);
@@ -193,7 +193,7 @@ describe("merge partners", () => {
 
 describe("loose items", () => {
   it("stops loose buying at the limit, but never gifts, take-outs or the fight", () => {
-    const s = newRun(data, "rook", new Rng(3));
+    const s = newRun(data, "rook", 3);
     s.gold = 999;
     const limit = data.rules.shop.looseLimit;
     s.loose = Array.from({ length: limit }, () => "space_pup");
@@ -209,7 +209,7 @@ describe("loose items", () => {
     expect(buy(s, data, slot)).toBe(true);
   });
   it("drops the items of a bag that is taken out", () => {
-    const s = newRun(data, "venn", new Rng(3));
+    const s = newRun(data, "venn", 3);
     const before = s.items.length + s.bags.length;
     dropBag(s, data, 0);
     expect(s.loose.length).toBeGreaterThan(1);
@@ -218,9 +218,9 @@ describe("loose items", () => {
   });
   it("keeps the results and lives that the run reward is paid from (test/meta.test.ts)", () => {
     const rng = new Rng(5);
-    const s = newRun(data, "ysel", rng);
-    finishRound(s, data, true, rng);
-    finishRound(s, data, false, rng);
+    const s = newRun(data, "ysel", rng.int(2 ** 31));
+    finishRound(s, data, true);
+    finishRound(s, data, false);
     expect(s.results).toEqual([true, false]);
     expect(s.wins).toBe(1);
     expect(s.lives).toBe(data.rules.lives - 1);
@@ -275,8 +275,8 @@ describe("stars and saving", () => {
 describe("giving up", () => {
   it("ends the run in the shop with the rounds fought so far", () => {
     const rng = new Rng(3);
-    const s = newRun(data, data.heroList[0]!.id, rng);
-    finishRound(s, data, true, rng);
+    const s = newRun(data, data.heroList[0]!.id, rng.int(2 ** 31));
+    finishRound(s, data, true);
     giveUp(s);
     expect(s.over).toBe(true);
     expect(s.results).toEqual([true]);
