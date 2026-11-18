@@ -822,7 +822,9 @@
   "toast.accountLater": "Game Center und Google Play Spiele kommen später",
   "toast.privacyLater": "Datenschutz-Einstellungen kommen später",
   "toast.helpLater": "Hilfe kommt später",
-  "toast.nameInvalid": "Ein Name hat 1 bis {n} Zeichen",
+  "toast.noConnectionShort": "Keine Verbindung. Versuche es noch einmal.",
+  "toast.notOwned": "Das besitzt du nicht.",
+  "toast.nameInvalid": "Ein Name hat 1 bis {n} Zeichen und keine beleidigenden oder politischen Wörter",
   "cosmetic.pic_pilot": "Pilot",
 
   "term.giveUp.text": "Beendet den Lauf im Shop. Die Belohnung zählt die bisher gekämpften Runden.",

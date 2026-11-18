@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, heroCosmeticId, leagueGroup, rewardTrack, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, playerName, heroLevel, heroCosmeticId, leagueGroup, rewardTrack, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -161,7 +161,7 @@ describe("stored profiles", () => {
     const stored = { ...p, cosmetics: [...p.cosmetics, "bg_gone"], equipped: { background: "bg_gone", patch: "patch_gone" } } as Profile;
     const f = fitProfile(meta, JSON.parse(JSON.stringify(stored)))!;
     expect(f.cosmetics).not.toContain("bg_gone");
-    expect(f.equipped).toEqual({ background: meta.start.background, patch: null, picture: meta.start.picture, skins: {} });
+    expect(f.equipped).toEqual({ background: meta.start.background, patch: null, picture: meta.start.picture, grid: null, skins: {} });
     expect(fitProfile(meta, { nonsense: true })).toBeNull();
   });
   it("keep the player's name and give older profiles the start name", () => {
@@ -184,6 +184,14 @@ describe("stored profiles", () => {
     expect(equip(meta, p, "background", "bg_home")!.equipped.background).toBe("bg_home");
     expect(equip(meta, p, "picture", meta.start.picture)!.equipped.picture).toBe(meta.start.picture);
     expect(equip(meta, p, "picture", "bg_home")).toBeNull();
+    // a grid background: only an owned one, and it can be taken off again
+    const grid = meta.cosmetics.find((c) => c.kind === "grid")!.id;
+    expect(equip(meta, p, "grid", grid)).toBeNull();
+    const withGrid = equip(meta, { ...p, cosmetics: [...p.cosmetics, grid] }, "grid", grid)!;
+    expect(withGrid.equipped.grid).toBe(grid);
+    expect(equip(meta, withGrid, "grid", null)!.equipped.grid).toBeNull();
+    expect(equip(meta, p, "background", null)).toBeNull();
+    expect(fitProfile(meta, { ...withGrid, cosmetics: p.cosmetics })!.equipped.grid).toBeNull();
   });
   it("put a skin only on its own hero, and only when it is owned", () => {
     const hero = meta.startHeroes[0]!, other = meta.startHeroes[1]!;
@@ -200,8 +208,19 @@ describe("stored profiles", () => {
   });
   it("rename the player with a tidied name of 1 to 16 characters", () => {
     const p = newProfile(meta);
-    expect(rename(p, "  Star   Rider ")!.name).toBe("Star Rider");
-    expect(rename(p, "   ")).toBeNull();
-    expect(rename(p, "x".repeat(17))).toBeNull();
+    expect(rename(meta, p, "  Star   Rider ")!.name).toBe("Star Rider");
+    expect(rename(meta, p, "   ")).toBeNull();
+    expect(rename(meta, p, "x".repeat(17))).toBeNull();
+    expect(rename(meta, p, "Ä".repeat(16))!.name).toBe("Ä".repeat(16));
+  });
+  it("refuse offensive and political names in English and German, also disguised", () => {
+    const refused = [
+      "fuck you", "F.U.C.K", "fuuuck", "sh1t head", "Bitch", "Hurensohn", "Scheiße", "SCHEISSE", "Arschl0ch", "Fotze 99",
+      "Wichser", "Hitler", "H1tl3r", "Nazi Pilot", "1488", "Sieg Heil", "KKK", "Trump 2028", "Putin", "AfD", "ss trooper", "cunt", "Hure",
+    ];
+    for (const n of refused) expect(playerName(meta, n), n).toBeNull();
+    // the same letters inside harmless words stay allowed
+    const fine = ["Scunthorpe", "Grape Ape", "Dickens", "Peacock", "Heilig", "Classic", "Sassy Star", "Cocktail Moth", "Hureka", "Afdal", "Pilot"];
+    for (const n of fine) expect(playerName(meta, n), n).toBe(n);
   });
 });

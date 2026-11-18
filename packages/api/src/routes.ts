@@ -6,7 +6,10 @@
 import { z } from "zod";
 import {
   ConfigResponse,
+  ProfileEquipRequest,
+  ProfileNameRequest,
   ProfileResponse,
+  ProfileSkinRequest,
   RunCurrentResponse,
   RunFightRequest,
   RunFightResponse,
@@ -34,6 +37,9 @@ export const ROUTES = {
   config: { method: "GET", path: "/config", auth: false, request: NoBody, response: ConfigResponse },
   session: { method: "POST", path: "/session", auth: false, request: SessionRequest, response: SessionResponse },
   profile: { method: "GET", path: "/profile", auth: true, request: NoBody, response: ProfileResponse },
+  profileEquip: { method: "POST", path: "/profile/equip", auth: true, request: ProfileEquipRequest, response: ProfileResponse },
+  profileSkin: { method: "POST", path: "/profile/skin", auth: true, request: ProfileSkinRequest, response: ProfileResponse },
+  profileName: { method: "POST", path: "/profile/name", auth: true, request: ProfileNameRequest, response: ProfileResponse },
   runCurrent: { method: "GET", path: "/runs/current", auth: true, request: NoBody, response: RunCurrentResponse },
   runStart: { method: "POST", path: "/runs", auth: true, request: RunStartRequest, response: RunStartResponse },
   runFight: { method: "POST", path: "/runs/fight", auth: true, request: RunFightRequest, response: RunFightResponse },

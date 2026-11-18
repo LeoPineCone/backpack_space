@@ -94,7 +94,7 @@ export function makeBotPlayers(meta: Meta, names: BotNames, perGroup: number, se
       const league = from + rng.int(to - from + 1);
       out.push({
         id: `bot-${group}-${String(i).padStart(3, "0")}`,
-        name: uniqueName(names, rng, used),
+        name: uniqueName(meta, names, rng, used),
         group,
         league,
         patch: patchId(season, meta.leagues.ids[league]!),
@@ -111,7 +111,7 @@ function easyPlayers(meta: Meta, names: BotNames, count: number, season: number,
     const league = from + rng.int(to - from + 1);
     return {
       id: `bot-easy-${String(i).padStart(3, "0")}`,
-      name: uniqueName(names, rng, used),
+      name: uniqueName(meta, names, rng, used),
       group: 0,
       league,
       patch: patchId(season, meta.leagues.ids[league]!),
@@ -122,10 +122,10 @@ function easyPlayers(meta: Meta, names: BotNames, count: number, season: number,
 
 const from0 = (meta: Meta, group: number) => meta.leagues.groups.slice(0, group).reduce((a, b) => a + b, 0);
 
-function uniqueName(names: BotNames, rng: Rng, used: Set<string>): string {
+function uniqueName(meta: Meta, names: BotNames, rng: Rng, used: Set<string>): string {
   for (let tries = 0; tries < 200; tries++) {
     const raw = `${rng.pick(names.first)} ${rng.pick(names.second)}${tries >= 50 ? ` ${2 + rng.int(98)}` : ""}`;
-    const n = playerName(raw);
+    const n = playerName(meta, raw);
     if (n && !used.has(n)) {
       used.add(n);
       return n;

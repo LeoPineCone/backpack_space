@@ -31,6 +31,15 @@ export const MetaData = z.object({
   start: z.object({ name: z.string().min(1).max(NAME_MAX), credits: Int, cosmetics: z.array(z.string()), background: z.string(), picture: z.string() }).strict(),
   /** opponents: a new player meets the easier bot backpacks in this many first runs (docs/matchmaking.md) */
   matching: z.object({ easyRuns: Int }).strict(),
+  /**
+   * Player names (ACC-07): a name is refused when, written in plain letters (lower case, umlauts spelled out, digits
+   * read as letters, everything else dropped), it contains a `blocked` part or one of its words is a `blockedWord`.
+   * Offensive and political words in English and German; short or ambiguous ones only as whole words.
+   */
+  names: z.object({
+    blocked: z.array(z.string().regex(/^[a-z0-9]{3,}$/)),
+    blockedWords: z.array(z.string().regex(/^[a-z]{2,}$/)),
+  }).strict(),
   /** what a finished run pays */
   run: z.object({
     galaxies: z.object({ perWin: Int, perLifeLeft: Int }).strict(),
@@ -163,7 +172,8 @@ export interface Profile {
   heroes: string[];
   cosmetics: string[];
   /** what is worn: menu background, league patch, player picture, and a skin per hero (none = the hero's own look) */
-  equipped: { background: string; patch: string | null; picture: string; skins: Record<string, string> };
+  /** grid: the backpack grid background (null = the plain grid) */
+  equipped: { background: string; patch: string | null; picture: string; grid: string | null; skins: Record<string, string> };
   season: SeasonState;
   runs: number;
 }
@@ -171,7 +181,7 @@ export interface Profile {
 export function newProfile(meta: Meta, seasonId = meta.seasons[0]!.id): Profile {
   const p: Profile = {
     name: meta.start.name, galaxies: 0, credits: meta.start.credits, heroXp: {}, heroes: [], cosmetics: [...meta.start.cosmetics],
-    equipped: { background: meta.start.background, patch: null, picture: meta.start.picture, skins: {} },
+    equipped: { background: meta.start.background, patch: null, picture: meta.start.picture, grid: null, skins: {} },
     season: { id: seasonId, galaxies: 0, premium: false, points: 0, peak: 0 }, runs: 0,
   };
   grant(p, passRewardsUpTo(meta, p.season, 1, 0));
@@ -379,9 +389,20 @@ export function bookRun(meta: Meta, p0: Profile, r: RunSummary): RunBooking {
 
 // --- equipping
 
-/** Equips an owned background, patch or player picture (`null` takes the patch off). Returns null when it cannot be equipped. */
-export function equip(meta: Meta, p0: Profile, slot: "background" | "patch" | "picture", id: string | null): Profile | null {
-  if (id === null) { if (slot !== "patch") return null; const p = clone(p0); p.equipped.patch = null; return p; }
+export const EQUIP_SLOTS = ["background", "patch", "picture", "grid"] as const;
+export type EquipSlot = (typeof EQUIP_SLOTS)[number];
+
+/**
+ * Equips an owned background, patch, player picture or grid background (`null` takes the patch or the grid off).
+ * Returns null when it cannot be equipped.
+ */
+export function equip(meta: Meta, p0: Profile, slot: EquipSlot, id: string | null): Profile | null {
+  if (id === null) {
+    if (slot !== "patch" && slot !== "grid") return null;
+    const p = clone(p0);
+    p.equipped[slot] = null;
+    return p;
+  }
   const c = meta.cosmeticById.get(id);
   if (!c || c.kind !== slot || !p0.cosmetics.includes(id)) return null;
   const p = clone(p0);
@@ -400,15 +421,33 @@ export function equipSkin(meta: Meta, p0: Profile, hero: string, id: string | nu
   return p;
 }
 
-/** A tidied player name, or null when it is empty or too long. */
-export function playerName(raw: string): string | null {
+const SPELLED: Record<string, string> = { ä: "ae", ö: "oe", ü: "ue", ß: "ss" };
+const LEET: Record<string, string> = { "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "8": "b", "@": "a", $: "s", "!": "i", "|": "i" };
+/** Each run of the same letter as one letter, so stretched words ("fuuuck") are found too. */
+const squeeze = (s: string) => s.replace(/(.)\1+/g, "$1");
+
+/** Whether a name passes the filter of `meta.names` (it says nothing about the length). */
+export function nameAllowed(meta: Meta, name: string): boolean {
+  const lower = name.toLowerCase().replace(/[äöüß]/g, (c) => SPELLED[c]!).normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+  const plain = lower.replace(/[0-9@$!|]/g, (c) => LEET[c]!);
+  const words = plain.split(/[^a-z]+/).filter(Boolean);
+  const joined = words.join("");
+  const digits = lower.replace(/[^a-z0-9]/g, "");
+  const blockedPart = (f: string) =>
+    joined.includes(f) || digits.includes(f) || (squeeze(f).length >= 4 && squeeze(joined).includes(squeeze(f)));
+  if (meta.names.blocked.some(blockedPart)) return false;
+  return !words.some((w) => meta.names.blockedWords.includes(w) || meta.names.blockedWords.includes(squeeze(w)));
+}
+
+/** A tidied player name, or null when it is empty, too long or refused by the filter. */
+export function playerName(meta: Meta, raw: string): string | null {
   const n = raw.replace(/\s+/g, " ").trim();
-  return n.length >= 1 && [...n].length <= NAME_MAX ? n : null;
+  return n.length >= 1 && [...n].length <= NAME_MAX && nameAllowed(meta, n) ? n : null;
 }
 
 /** Renames the player; null when the name is not allowed. */
-export function rename(p0: Profile, raw: string): Profile | null {
-  const n = playerName(raw);
+export function rename(meta: Meta, p0: Profile, raw: string): Profile | null {
+  const n = playerName(meta, raw);
   if (n === null) return null;
   const p = clone(p0);
   p.name = n;
@@ -423,10 +462,11 @@ export function fitProfile(meta: Meta, raw: unknown): Profile | null {
   const q = clone(p);
   q.cosmetics = q.cosmetics.filter((c) => meta.cosmeticById.has(c));
   for (const c of meta.start.cosmetics) if (!q.cosmetics.includes(c)) q.cosmetics.push(c);
-  q.equipped = { background: q.equipped?.background, patch: q.equipped?.patch ?? null, picture: q.equipped?.picture, skins: { ...(q.equipped?.skins ?? {}) } };
+  q.equipped = { background: q.equipped?.background, patch: q.equipped?.patch ?? null, picture: q.equipped?.picture, grid: q.equipped?.grid ?? null, skins: { ...(q.equipped?.skins ?? {}) } };
   if (!q.cosmetics.includes(q.equipped.background)) q.equipped.background = meta.start.background;
   if (!q.cosmetics.includes(q.equipped.picture)) q.equipped.picture = meta.start.picture;
   if (q.equipped.patch && !q.cosmetics.includes(q.equipped.patch)) q.equipped.patch = null;
+  if (q.equipped.grid && !q.cosmetics.includes(q.equipped.grid)) q.equipped.grid = null;
   for (const [hero, id] of Object.entries(q.equipped.skins)) if (!q.cosmetics.includes(id) || meta.cosmeticById.get(id)?.hero !== hero) delete q.equipped.skins[hero];
   q.heroXp ??= {};
   if (typeof q.name !== "string" || !q.name.trim()) q.name = meta.start.name;

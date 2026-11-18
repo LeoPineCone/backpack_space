@@ -23,8 +23,8 @@ import { keywords, type Keyword } from "./symbols";
 import { clearSave, readSave, writeSave, type SavedFight } from "./save";
 import { readProfile, today, writeProfile } from "./profile";
 import { GhostOpponents, type OpponentSource } from "./opponents";
-import type { OnlineState } from "./online";
-import type { Api, ApiResult } from "./api";
+import { profileFromServer, type OnlineState } from "./online";
+import type { Api, ApiFailure, ApiResult } from "./api";
 import { bookingFromServer, decideEntry, roundActions, type RunEntry } from "./server-run";
 
 export interface Scene {
@@ -279,6 +279,22 @@ export class Game {
       return { ok: true, value: { entry, booked: { booking, wins: ended.value.result.wins }, fight: null } };
     }
     return { ok: true, value: { entry, fight: keep ? (saved?.fight ?? null) : null } };
+  }
+
+  /**
+   * A change the player makes to the profile (equip, skin, name), already checked on the device as `local`. Online
+   * the server applies it and its profile is kept; offline the device's is. Returns why the server refused it or
+   * did not answer (the profile stays as it was), or null.
+   */
+  async changeProfile<N extends "profileEquip" | "profileSkin" | "profileName">(local: Profile, name: N, body: RequestOf<N>): Promise<ApiFailure | null> {
+    if (!this.isOnline) {
+      this.setProfile(local);
+      return null;
+    }
+    const res = await this.call(name, body);
+    if (!res.ok) return res.error;
+    this.setProfile(profileFromServer((res.value as { profile: Parameters<typeof profileFromServer>[0] }).profile, this.profile));
+    return null;
   }
 
   /** Stores a changed profile. */

@@ -236,7 +236,9 @@
   "toast.accountLater": "Game Center and Google Play Games come later",
   "toast.privacyLater": "Privacy settings come later",
   "toast.helpLater": "Help comes later",
-  "toast.nameInvalid": "A name has 1 to {n} characters",
+  "toast.noConnectionShort": "No connection. Try again.",
+  "toast.notOwned": "You do not own that.",
+  "toast.nameInvalid": "A name has 1 to {n} characters and no offensive or political words",
   "cosmetic.pic_pilot": "Pilot",
   "ui.glossaryRow": "Glossary"
 }
