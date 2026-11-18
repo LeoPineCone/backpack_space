@@ -3,7 +3,7 @@ import { Container, Graphics, Rectangle, type Text } from "pixi.js";
 import { BUFFS, DEBUFFS, Replay, buildOf, compile, leagueOf, simulate, type BattleEvent, type CSide, type Status } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
-import { icon } from "../icons";
+import { hasArt, icon } from "../icons";
 import { at, box, disc, screenFill, tappable, txt } from "../ui";
 import { piece, starMarks } from "../pieces";
 import { resultScene } from "./results";
@@ -177,11 +177,14 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
         for (const k of STATUSES) {
           if (s.st[k] <= 0) continue;
           const buff = (BUFFS as readonly string[]).includes(k);
-          const n = txt(s.st[k], 13, { color: buff ? C.bg : C.text, anchor: [0, 0.5] });
+          // coloured pictures sit on a dark chip framed green (buff) or red (debuff); line symbols keep the inverted chip
+          const art = hasArt(k);
+          const light = buff && !art;
+          const n = txt(s.st[k], 13, { color: light ? C.bg : C.text, anchor: [0, 0.5] });
           const w = 4 + 15 + 3 + n.width + 6;
           v.chips.addChild(
-            at(box(w, 24, { fill: buff ? C.text : C.bg, line: C.text, radius: 7 }), x, 0),
-            at(icon(k, 15, buff ? C.bg : C.text), x + 11.5, 12),
+            at(box(w, 24, { fill: light ? C.text : C.bg, line: art ? (buff ? C.good : C.bad) : C.text, radius: 7 }), x, 0),
+            at(icon(k, art ? 17 : 15, light ? C.bg : C.text), x + 11.5, 12),
             at(n, x + 22, 12),
           );
           x += w + 5;

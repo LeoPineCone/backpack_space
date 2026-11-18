@@ -89,9 +89,11 @@ sharp on every phone and follows this theme. Sizes live in `comic`.
   `shield` strip on top, Energy in `gold`. Lost health stays a moment as a light chunk.
 - **Bags:** a stitched seam inside the outline, like sewn cloth; the cell grid inside is faint.
 - **Shop cards:** rarity is a coloured corner with one pip per rarity step; the price is the coin symbol; the item's types sit small in the lower right corner (up to three), because an item picture shows no type. A weapon shows melee or ranged, never "weapon" (`typeIcons` in `src/pieces.ts`, also in the item popup).
-- **Main symbols are pictures:** gold, Credits, Galaxies, league patch, full and empty heart, Energy, level,
-  dice, bin, pin, settings and the item types are coloured ink pictures in `apps/client/art/ui/` (docs/client-art.md). They keep
-  their colours; all other symbols stay tinted line symbols.
+- **Symbols are pictures:** almost every symbol (gold, Credits, Galaxies, hearts, Energy, item types, statuses,
+  effects, triggers, glossary terms, menu entries) is a coloured ink picture in `apps/client/art/ui/` (docs/client-art.md).
+  A picture keeps its colours: where a screen asks for the `dim` or `line` colour (inactive, not reached) it fades to
+  45 % instead. Buff and debuff chips (item rules, fight statuses) are dark with a `good` or `bad` frame, because a
+  picture cannot be inverted. Symbols without a picture stay tinted line symbols.
 
 ## Rarity
 
