@@ -649,7 +649,7 @@
   },
   "life_support_suit": {
     "brief": "Exo torso with a tube backpack and a heartbeat screen. Accent: sage.",
-    "description": "Only the upper body of a suit in a riveted exo frame fills the top left; a medkit backpack with sage tubes fills the top right cell; a hose runs down the lower left cell; a heartbeat screen on the chest; lower right cell empty."
+    "description": "The upper body of a suit in a riveted exo frame sits high, filling the top left cells right up to the top edge; a medkit backpack with sage tubes fills the top right cell; a thick hose hangs down the whole lower left cell to the bottom edge; a heartbeat screen on the chest; lower right cell empty."
   },
   "star_piercer": {
     "brief": "Railgun rails stretched long with a crystal sniper scope. Accent: mustard.",
