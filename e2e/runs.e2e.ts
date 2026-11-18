@@ -47,12 +47,23 @@ async function shows(page: Page, name: string, timeout = 30_000): Promise<void> 
     )
     .toBe(true)
     .catch(async (e: Error) => {
-      throw new Error(`${e.message}\non screen: ${JSON.stringify(seen)}\nstate: ${JSON.stringify(await probe(page))}`);
+      throw new Error(
+        `${e.message}\non screen: ${JSON.stringify(seen)}\nstate: ${JSON.stringify(await probe(page))}\nrequests: ${JSON.stringify(requests.get(page) ?? [])}`,
+      );
     });
 }
 
+/** The backend requests of each page with their outcome, for the failure message. */
+const requests = new WeakMap<Page, string[]>();
+
 /** Opens the app as a fresh development player, without the first-run introduction. */
 async function open(page: Page, player: string): Promise<void> {
+  const log: string[] = [];
+  requests.set(page, log);
+  page.on("response", (r) => {
+    if (r.url().includes(":3100/")) log.push(`${r.request().method()} ${new URL(r.url()).pathname} ${r.status()}`);
+  });
+  page.on("requestfailed", (r) => log.push(`${r.method()} ${r.url()} failed: ${r.failure()?.errorText ?? "?"}`));
   await page.addInitScript(() => {
     if (!sessionStorage.getItem("e2e.started")) {
       localStorage.clear();
