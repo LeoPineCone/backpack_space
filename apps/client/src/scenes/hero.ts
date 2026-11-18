@@ -3,9 +3,9 @@ import { Container, Graphics, Rectangle, Sprite } from "pixi.js";
 import { artTexture } from "../art";
 import { BUFFS, DEBUFFS, TAGS, heroLevel, newRun, ownsHero } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { C, COMIC, H, SCREEN, W } from "../theme";
+import { C, H, SCREEN, W } from "../theme";
 import { icon, hasIcon } from "../icons";
-import { at, box, disc, heroHead, hudPill, infoButton, placeholder, pressable, roundButton, shadowDisc, tappable, txt } from "../ui";
+import { at, box, disc, heroHead, hudPill, infoButton, inkShade, placeholder, pressable, roundButton, tappable, txt } from "../ui";
 import { heroPopup } from "./popup";
 import { homeScene } from "./home";
 import { shopScene } from "./shop";
@@ -73,7 +73,7 @@ export function heroScene(game: Game): Scene {
         art.addChild(at(txt(sel.letter, 96, { color: C.line, anchor: [0.5, 0.5] }), 100, 110));
       }
       const lvl = new Container();
-      lvl.addChild(at(shadowDisc(28, 3), 0, 0), disc(28, { fill: C.bg, line: C.cyan, lineW: 2, ink: true }), at(txt(t("ui.level"), 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 0, -11), at(txt(heroLevel(meta, p.heroXp[sel.id] ?? 0).level, 22, { anchor: [0.5, 0.5] }), 0, 5));
+      lvl.addChild(disc(28, { fill: C.bg, line: C.cyan, lineW: 2, framed: true }), at(txt(t("ui.level"), 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 0, -11), at(txt(heroLevel(meta, p.heroXp[sel.id] ?? 0).level, 22, { anchor: [0.5, 0.5] }), 0, 5));
       tappable(lvl, () => progress("hero"), new Rectangle(-32, -32, 64, 64));
       art.addChild(at(lvl, 3, 44));
     } else {
@@ -86,7 +86,7 @@ export function heroScene(game: Game): Scene {
     const row = new Container();
     let x = 0;
     if (hero) {
-      for (const t of traits(game, hero.id)) { row.addChild(at(disc(16, { fill: C.bg, line: C.line, ink: true }), x + 16, 16), at(icon(t, 18, C.text), x + 16, 16)); x += 40; }
+      for (const t of traits(game, hero.id)) { row.addChild(at(disc(16, { fill: C.bg, line: C.line, framed: true }), x + 16, 16), at(icon(t, 18, C.text), x + 16, 16)); x += 40; }
       row.addChild(at(infoButton(16, () => game.openOverlay(heroPopup(game, hero.id))), x + 16, 16)); x += 32;
     } else if (sel.kind === "locked") {
       const tag = txt(t("ui.season", { n: 2 }), 13, { color: C.bg, anchor: [0.5, 0.5] });
@@ -101,7 +101,7 @@ export function heroScene(game: Game): Scene {
       const a = ((-90 + (i * 360) / slots.length) * Math.PI) / 180;
       const r = i === selected ? 40 : 30;
       const b = new Container();
-      b.addChild(shadowDisc(r, 3), disc(r, { fill: s.kind === "own" ? C.panel : C.bg, line: i === selected ? C.cyan : s.kind === "own" ? C.dim : C.line, lineW: i === selected ? 3 : 2, ink: true }));
+      b.addChild(disc(r, { fill: s.kind === "own" ? C.panel : C.bg, line: i === selected ? C.cyan : s.kind === "own" ? C.dim : C.line, lineW: i === selected ? 3 : 2, framed: true }));
       if (s.kind === "own") b.addChild(heroHead(s.id, r - (i === selected ? 3 : 2)) ?? txt(s.letter, 22, { anchor: [0.5, 0.5] }));
       else if (s.kind === "locked") b.addChild(icon("lock", 22, C.dim));
       else b.addChild(txt("?", 20, { color: C.line, anchor: [0.5, 0.5] }));
@@ -112,14 +112,14 @@ export function heroScene(game: Game): Scene {
     const mid = new Container();
     if (sel.kind === "own") {
       const face = new Container();
-      face.addChild(disc(66, { fill: C.gold, ink: true }), disc(58, { line: C.ink, lineW: 2 }), txt(t("ui.start"), 28, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
-      mid.addChild(shadowDisc(66, COMIC.shadow + 1), face);
+      face.addChild(disc(66, { fill: C.gold, framed: true }), at(inkShade(132, 132, C.gold, (g) => g.circle(66, 66, 64)), -66, -66), disc(58, { line: C.ink, lineW: 2 }), txt(t("ui.start"), 28, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
+      mid.addChild(face);
       pressable(mid, face);
       tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.seed); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
     } else {
       const face = new Container();
-      face.addChild(disc(66, { fill: C.cyan, ink: true }), disc(58, { line: C.ink, lineW: 2 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));
-      mid.addChild(shadowDisc(66, COMIC.shadow + 1), face);
+      face.addChild(disc(66, { fill: C.cyan, framed: true }), at(inkShade(132, 132, C.cyan, (g) => g.circle(66, 66, 64)), -66, -66), disc(58, { line: C.ink, lineW: 2 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));
+      mid.addChild(face);
       pressable(mid, face);
       tappable(mid, () => game.show(storeScene(game, () => heroScene(game), "heroes")), new Rectangle(-69, -69, 138, 138));
     }

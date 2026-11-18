@@ -4,7 +4,7 @@ import { BUFFS, DEBUFFS, Replay, buildOf, compile, leagueOf, simulate, type Batt
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, disc, screenFill, shadowBox, shadowDisc, tappable, txt } from "../ui";
+import { at, box, disc, screenFill, tappable, txt } from "../ui";
 import { piece, starMarks } from "../pieces";
 import { resultScene } from "./results";
 import { t, tr, upper } from "../i18n";
@@ -60,16 +60,15 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
       hero = sides[i]!.hero;
     const bar = new Container();
     bar.addChild(
-      at(shadowDisc(28, 3), 28, 28),
-      at(disc(28, { fill: C.panel, line: i === 0 ? C.cyan : C.dim, lineW: 2, ink: true }), 28, 28),
+      at(disc(28, { fill: C.panel, line: i === 0 ? C.cyan : C.dim, lineW: 2, framed: true }), 28, 28),
       at(txt(hero.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase(), 22, { anchor: [0.5, 0.5] }), 28, 28),
     );
-    bar.addChild(at(shadowBox(250, 22, 11, 3), 66, 6), at(box(250, 22, { fill: C.bgDeep, radius: 11, ink: true }), 66, 6));
+    bar.addChild(at(box(250, 22, { fill: C.bgDeep, radius: 11, framed: true }), 66, 6));
     const hpFill = new Graphics();
     const hpText = txt("", 15, { anchor: [0, 0.5] });
     const chips = new Container();
     // Energy: a thin bar under the health bar
-    bar.addChild(at(box(250, 9, { fill: C.bgDeep, radius: 4.5, ink: true }), 66, 32), at(icon("energy", 16, C.gold), 330, 36));
+    bar.addChild(at(box(250, 9, { fill: C.bgDeep, radius: 4.5, framed: true }), 66, 32), at(icon("energy", 16, C.gold), 330, 36));
     const enFill = new Graphics();
     const hpLost = new Graphics();
     // notches every quarter, drawn over the fill

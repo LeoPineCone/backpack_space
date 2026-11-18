@@ -56,11 +56,14 @@
     "lockedAlpha": 0.4
   },
   "comic": {
-    "$comment": "The ink comic look of the UI (docs/theme.md): a black ink outline around every element, a hard flat shadow below buttons and cards (no blur), a press that moves the button into its shadow. Sizes in points.",
-    "outline": 2.5,
-    "shadow": 4,
-    "press": 3,
-    "rivet": 2.2
+    "$comment": "The hand-inked look of the UI (docs/theme.md): a plain frame in a darker tone of the surface, and ink hatching low on buttons, cards and popups that rises from left to right. hatchSlant: strokes x per y (1 = 45 degrees); hatchTilt: how much the shading edge rises to the right. press: scale while a button is held. Sizes in points.",
+    "frame": 2,
+    "press": 0.95,
+    "rivet": 2.2,
+    "hatchStep": 4.5,
+    "hatchWidth": 1.1,
+    "hatchSlant": 1,
+    "hatchTilt": 1
   },
   "rarity": { "$comment": "Mapped onto the art palette (docs/style.md); epic is the one colour the art palette does not have.", "common": "#8d8478", "rare": "#2f9a9a", "epic": "#8a6bc8", "legendary": "#f2b632", "artifact": "#e0563f" },
   "tagFill": {

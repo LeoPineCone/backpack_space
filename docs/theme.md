@@ -68,23 +68,26 @@ night blue (art `navy`).
 `pillButton` uses `primary` and `roundButton` uses `icon` by default (`src/ui.ts`), so every screen follows the
 theme.
 
-## Ink comic look
+## Hand-inked look
 
-The UI speaks the same hand-inked language as the art (`docs/style.md`), decided by Ilja on 2026-11-18. It is drawn
-in code, not with pictures, so it stays sharp on every phone and follows this theme. Sizes live in `comic`.
+The UI speaks the same hand-inked language as the art (`docs/style.md`), decided by Ilja on 2026-11-18 after
+trying black ink outlines with hard shadows, a coloured base and a light sticker rim: on the dark blue none of them
+read well. What stays is a plain frame and ink on the surfaces. It is drawn in code, not with pictures, so it stays
+sharp on every phone and follows this theme. Sizes live in `comic`.
 
-- **Ink outline:** buttons, cards, popups, bars, badges and bags get a black `ink` outline (`comic.outline`, 2.5 pt).
-  A coloured line (`line`) then becomes a thin inner edge. `box`/`disc` with `ink: true`.
-- **Hard shadow:** buttons and cards sit on a flat ink shadow `comic.shadow` points below them, never blurred
-  (`shadowBox`, `shadowDisc`).
-- **Press:** while the finger is down, a button moves `comic.press` points into its shadow (`pressable`). No vibration.
-- **Plates:** popups and shop cards are riveted ship plates (`plate`): outline, a thin inner line, rivets in the
-  corners. Big panels also get a little ink hatching in one corner (the bigger on screen, the more ink texture).
+- **Frame:** a plain frame, `comic.frame` points wide, in a darker tone of the surface (yellow gets dark mustard) or
+  in `line` on dark surfaces. `box`/`disc` with `framed: true`; a given `line` replaces it. No black outline, no shadow.
+- **Ink shading:** buttons, cards, popups and HUD pills get diagonal ink strokes low on the surface, in a darker
+  tone of the surface colour (`inkShade` in `src/ui.ts`). The shading edge rises from left to right, from a sliver
+  on the left to about a third of the height on the right, so the light comes from the upper left. A strip of
+  cross-hatching sits in the darkest corner. Keep it subtle: Ilja asked twice for less, not more.
+- **Press:** while the finger is down, a button shrinks to `comic.press` (`pressable`). No vibration.
+- **Plates:** popups and shop cards are ship plates (`plate`): frame, a thin inner line, rivets in the corners.
 - **Inked titles:** titles and big numbers (hero name, item name, gold) get an ink outline around the letters and a
   hard shadow (`txt(..., { inked: true })`). Sentences stay plain.
-- **Bars:** dark track with outline and notches every quarter; own health in `health`, the opponent's in `dim`,
-  Shield as a `shield` strip on top, Energy in `gold`. Lost health stays a moment as a light chunk.
-- **Bags:** ink outline and a stitched seam inside, like sewn cloth; the cell grid inside is faint.
+- **Bars:** dark track with notches every quarter; own health in `health`, the opponent's in `dim`, Shield as a
+  `shield` strip on top, Energy in `gold`. Lost health stays a moment as a light chunk.
+- **Bags:** a stitched seam inside the outline, like sewn cloth; the cell grid inside is faint.
 - **Shop cards:** rarity is a coloured corner with one pip per rarity step; the price is the coin symbol.
 - **Main symbols are pictures:** gold, Credits, Galaxies, league patch, full and empty heart, Energy, level,
   dice, bin, pin and settings are coloured ink pictures in `apps/client/art/ui/` (docs/client-art.md). They keep

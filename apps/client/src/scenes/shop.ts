@@ -8,7 +8,7 @@ import {
   type Action, type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { C, COMIC, H, RARITY, RARITY_PIPS, SCREEN, W } from "../theme";
+import { C, H, RARITY, RARITY_PIPS, SCREEN, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, heroBadge, hearts, hudPill, infoButton, pillButton, plate, roundButton, screenFill, tappable, txt } from "../ui";
 import { outlinePath, piece, pieceFit, starMarks, zap, ZAP } from "../pieces";
@@ -126,7 +126,7 @@ export function shopScene(game: Game): Scene {
       const tile = new Container();
       tile.addChild(plate(OFFER.w, OFFER.h, { fill: C.bag, line: C.bagLine, radius: 12, rivets: false }));
       // rarity: a coloured corner with one pip per rarity step
-      if (!def.isBag) tile.addChild(new Graphics().moveTo(0, 12).arcTo(0, 0, 12, 0, 12).lineTo(34, 0).lineTo(0, 30).closePath().fill(frame).stroke({ width: COMIC.outline, color: C.ink, alignment: 0 }));
+      if (!def.isBag) tile.addChild(new Graphics().moveTo(0, 12).arcTo(0, 0, 12, 0, 12).lineTo(34, 0).lineTo(0, 30).closePath().fill(frame));
       // the item at its backpack size (one cell = CELL), only shrunk when it does not fit the card
       tile.addChild(at(pieceFit(data, o.item, OFFER.w - 8, OFFER.h - 8, CELL, { label: true, bare: true }), 4, 4));
       if (!def.isBag) for (let p = 0; p < (RARITY_PIPS[def.rarity] ?? 1); p++) tile.addChild(at(disc(1.8, { fill: C.ink }), 6 + p * 5, 7));
@@ -137,7 +137,7 @@ export function shopScene(game: Game): Scene {
       tile.eventMode = "static"; tile.cursor = "grab"; tile.hitArea = new Rectangle(0, 0, OFFER.w, OFFER.h);
       tile.on("pointerdown", (e) => press({ kind: "offer", i }, e));
       const pin = new Container();
-      pin.addChild(disc(15, { fill: o.frozen ? C.cyan : C.bg, ink: true }), icon("pin", 18, o.frozen ? C.cyanInk : C.dim));
+      pin.addChild(disc(15, { fill: o.frozen ? C.cyan : C.bg, framed: true }), icon("pin", 18, o.frozen ? C.cyanInk : C.dim));
       tile.addChild(at(tappable(pin, () => { game.act(act.freeze(i)); render(); }, new Rectangle(-20, -20, 40, 40)), OFFER.w - 9, 9));
       view.addChild(at(tile, x, y));
     });
@@ -243,7 +243,7 @@ export function shopScene(game: Game): Scene {
 
     // bottom row: reroll, fight, sell
     const rr = roundButton("dice", 32, () => { if (game.act(act.reroll())) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
-    rr.addChild(at(disc(11, { fill: C.gold, ink: true }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
+    rr.addChild(at(disc(11, { fill: C.gold, framed: true }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
     view.addChild(at(rr, REROLL.x, REROLL.y));
     view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) game.show(battleScene(game)); }, { iconName: "swords" }), FIGHT.x, FIGHT.y));

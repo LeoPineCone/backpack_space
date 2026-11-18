@@ -85,7 +85,7 @@ function subjectPopup(game: Game, s: Subject): Scene {
       if (s.tags.length) {
         const tags = new Container();
         s.tags.forEach((t, i) =>
-          tags.addChild(at(disc(18, { fill: C.bg, line: C.line, ink: true }), i * 44 + 18, 18), at(icon(t, 18, C.text), i * 44 + 18, 18)),
+          tags.addChild(at(disc(18, { fill: C.bg, line: C.line, framed: true }), i * 44 + 18, 18), at(icon(t, 18, C.text), i * 44 + 18, 18)),
         );
         add(tags, 36, 14, s.tags.length * 44 - 8);
       }

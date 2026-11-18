@@ -50,13 +50,28 @@ export interface BoxOpts {
   line?: number;
   lineW?: number;
   radius?: number;
-  /** black ink outline outside the shape; a `line` then becomes a thin inner edge */
-  ink?: boolean;
+  /** a frame in a darker tone of the fill (or the theme line on dark fills) when no `line` is given */
+  framed?: boolean;
+}
+
+/** Direction of the ink strokes (x per y; 1 = 45°, smaller = steeper) and how much the shading edge rises to the right. */
+const HATCH = { slant: COMIC.hatchSlant, tilt: COMIC.hatchTilt };
+
+/** A darker tone of a colour (k < 1). */
+function shade(c: number, k: number): number {
+  return (Math.round(((c >> 16) & 255) * k) << 16) | (Math.round(((c >> 8) & 255) * k) << 8) | Math.round((c & 255) * k);
+}
+
+const luma = (c: number): number => 0.299 * ((c >> 16) & 255) + 0.587 * ((c >> 8) & 255) + 0.114 * (c & 255);
+
+/** The frame colour of a surface: a darker tone on a light fill, the theme's line colour on a dark one. */
+function frameOf(fill: number): number {
+  return luma(fill) > 110 ? shade(fill, 0.62) : C.line;
 }
 
 function outline(g: Graphics, o: BoxOpts): Graphics {
-  if (o.ink) g.stroke({ width: COMIC.outline, color: C.ink, alignment: 0 });
-  if (o.line !== undefined) g.stroke({ width: o.lineW ?? 1.5, color: o.line, alignment: o.ink ? 1 : 0 });
+  if (o.framed && o.line === undefined) g.stroke({ width: COMIC.frame, color: frameOf(o.fill ?? C.panel), alignment: 0 });
+  if (o.line !== undefined) g.stroke({ width: o.lineW ?? 1.5, color: o.line, alignment: 0 });
   return g;
 }
 
@@ -72,55 +87,70 @@ export function disc(r: number, o: BoxOpts = {}): Graphics {
   return outline(g, o);
 }
 
-/** The hard flat ink shadow under a button or card: the same shape, moved down, no blur. */
-export function shadowBox(w: number, h: number, radius = 0, dy: number = COMIC.shadow): Graphics {
-  return new Graphics().roundRect(-COMIC.outline, dy - COMIC.outline, w + COMIC.outline * 2, h + COMIC.outline * 2, radius + COMIC.outline).fill(C.ink);
-}
-export function shadowDisc(r: number, dy: number = COMIC.shadow): Graphics {
-  return new Graphics().circle(0, dy, r + COMIC.outline).fill(C.ink);
+/**
+ * Hand-inked shading on a surface (docs/theme.md): diagonal ink strokes over the lower part of the shape, in a darker
+ * tone of the surface colour, like comic shading. `shape` draws the outline the strokes are cut to. Origin top-left.
+ */
+export function inkShade(w: number, h: number, fill: number, shape: (g: Graphics) => Graphics, share = 0.3): Container {
+  const c = new Container();
+  const g = new Graphics();
+  const step = COMIC.hatchStep;
+  const slant = HATCH.slant,
+    tilt = HATCH.tilt;
+  // the shading edge rises to the right, away from the light: a sliver on the left, share * (0.3 + tilt) of the
+  // height on the right, with a little jitter for uneven pen ends
+  const edge = (x: number) => h - share * h * (0.3 + tilt * (x / w)) + (((Math.round(x) * 37) % 9) - 4) * 0.6;
+  // strokes x = k + slant * y, from the shading edge down to the bottom
+  for (let k = -h * slant; k < w; k += step) {
+    const yb = Math.min(h, (w - k) / slant);
+    const ya = Math.max(0, -k / slant, edge(Math.min(w, Math.max(0, k + slant * h * (1 - share)))));
+    if (yb - ya > 2) g.moveTo(k + slant * ya, ya).lineTo(k + slant * yb, yb);
+  }
+  // cross-hatching in the darkest strip at the bottom: x = k - slant * y
+  const deep = (x: number) => h - share * h * 0.45 * tilt * (x / w);
+  for (let k = 0; k < w + h * slant; k += step * 1.5) {
+    const ya = Math.max(deep(Math.min(w, Math.max(0, k - slant * h))) + (((Math.round(k) * 53) % 7) - 3) * 0.7, (k - w) / slant),
+      yb = Math.min(h, k / slant);
+    if (yb - ya > 2) g.moveTo(k - slant * ya, ya).lineTo(k - slant * yb, yb);
+  }
+  const lum = luma(fill);
+  g.stroke({ width: COMIC.hatchWidth, color: lum > 110 ? shade(fill, 0.72) : C.ink, alpha: lum > 110 ? 0.8 : 0.5, cap: "round" });
+  const mask = shape(new Graphics()).fill(0xffffff);
+  g.mask = mask;
+  c.addChild(mask, g);
+  return c;
 }
 
-/** Moves `face` into its shadow while the finger is down (no vibration, docs/ux.md). */
+/** Shrinks `face` a little around its centre while the finger is down (no vibration, docs/ux.md). */
 export function pressable(btn: Container, face: Container): void {
-  const y0 = face.y;
-  btn.on("pointerdown", () => (face.y = y0 + COMIC.press));
-  for (const ev of ["pointerup", "pointerupoutside", "pointerleave", "pointercancel"] as const) btn.on(ev, () => (face.y = y0));
+  const x0 = face.x,
+    y0 = face.y;
+  const b = face.getLocalBounds(),
+    cx = b.x + b.width / 2,
+    cy = b.y + b.height / 2;
+  const set = (k: number) => {
+    face.scale.set(k);
+    face.position.set(x0 + cx * (1 - k), y0 + cy * (1 - k));
+  };
+  btn.on("pointerdown", () => set(COMIC.press));
+  for (const ev of ["pointerup", "pointerupoutside", "pointerleave", "pointercancel"] as const) btn.on(ev, () => set(1));
 }
 
 /**
- * A comic panel like a riveted ship plate: hard shadow, ink outline, a thin inner line in `line`, rivets in the
- * corners and, on big panels, a little hand-inked hatching in the lower right corner (docs/theme.md). Origin top-left.
+ * A comic panel like a riveted ship plate: a frame, a thin inner line in `line`, rivets in the corners and hand-inked
+ * shading low on the surface (docs/theme.md). `hatch` marks a big panel, which gets a smaller share of shading. Origin top-left.
  */
-export function plate(
-  w: number,
-  h: number,
-  o: { fill?: number; line?: number; radius?: number; rivets?: boolean; hatch?: boolean; shadow?: boolean } = {},
-): Container {
+export function plate(w: number, h: number, o: { fill?: number; line?: number; radius?: number; rivets?: boolean; hatch?: boolean } = {}): Container {
   const c = new Container();
   const r = o.radius ?? 16,
     fill = o.fill ?? C.panel,
     line = o.line ?? C.line;
-  if (o.shadow !== false) c.addChild(shadowBox(w, h, r));
-  c.addChild(box(w, h, { fill, radius: r, ink: true }));
+  c.addChild(box(w, h, { fill, radius: r, framed: true }));
   const inset = 5;
   c.addChild(
     at(new Graphics().roundRect(0, 0, w - inset * 2, h - inset * 2, Math.max(2, r - inset)).stroke({ width: 1.5, color: line, alpha: 0.75 }), inset, inset),
   );
-  if (o.hatch) {
-    const g = new Graphics();
-    const n = 7,
-      step = 6,
-      x1 = w - inset - 4,
-      y1 = h - inset - 4;
-    for (let i = 0; i < n; i++) {
-      const d = 18 + i * step;
-      g.moveTo(x1 - d, y1).lineTo(x1, y1 - d);
-    }
-    g.stroke({ width: 1.2, color: C.ink, alpha: 0.55, cap: "round" });
-    const mask = new Graphics().roundRect(inset + 2, inset + 2, w - inset * 2 - 4, h - inset * 2 - 4, Math.max(2, r - inset - 2)).fill(0xffffff);
-    g.mask = mask;
-    c.addChild(mask, g);
-  }
+  c.addChild(inkShade(w, h, fill, (g) => g.roundRect(3, 3, w - 6, h - 6, Math.max(2, r - 3)), o.hatch ? 0.16 : 0.28));
   if (o.rivets !== false) {
     const k = inset + 6;
     for (const [x, y] of [
@@ -130,7 +160,7 @@ export function plate(
       [w - k, h - k],
     ] as const)
       c.addChild(
-        at(disc(COMIC.rivet, { fill: line, ink: false }), x, y),
+        at(disc(COMIC.rivet, { fill: line, framed: false }), x, y),
         at(new Graphics().circle(0, 0, COMIC.rivet).stroke({ width: 1, color: C.ink }), x, y),
       );
   }
@@ -165,8 +195,15 @@ export function at<T extends Container>(obj: T, x: number, y: number): T {
 export function roundButton(name: string, r: number, onTap: () => void, o: { fill?: number; line?: number; tint?: number; iconSize?: number } = {}): Container {
   const c = new Container();
   const face = new Container();
-  c.addChild(shadowDisc(r, COMIC.shadow - 1), face);
-  face.addChild(disc(r, { fill: o.fill ?? BUTTON.icon.fill, line: o.line ?? BUTTON.icon.line, lineW: 2, ink: true }));
+  c.addChild(face);
+  face.addChild(disc(r, { fill: o.fill ?? BUTTON.icon.fill, line: o.line ?? BUTTON.icon.line, lineW: 2, framed: true }));
+  face.addChild(
+    at(
+      inkShade(r * 2, r * 2, o.fill ?? BUTTON.icon.fill, (g) => g.circle(r, r, r - 2)),
+      -r,
+      -r,
+    ),
+  );
   face.addChild(icon(name, o.iconSize ?? r * 0.9, o.tint ?? BUTTON.icon.ink));
   pressable(c, face);
   return tappable(c, onTap, new Rectangle(-r - 4, -r - 4, r * 2 + 8, r * 2 + 8));
@@ -175,7 +212,7 @@ export function roundButton(name: string, r: number, onTap: () => void, o: { fil
 /** The round "i" button; origin at its centre. */
 export function infoButton(r: number, onTap: () => void, active = false): Container {
   const c = new Container();
-  c.addChild(disc(r, { fill: active ? C.cyan : C.panel, line: C.cyan, lineW: 2, ink: true }));
+  c.addChild(disc(r, { fill: active ? C.cyan : C.panel, line: C.cyan, lineW: 2, framed: true }));
   c.addChild(txt("i", r * 0.95, { color: active ? C.cyanInk : C.cyan, anchor: [0.5, 0.5] }));
   return tappable(c, onTap, new Rectangle(-r - 4, -r - 4, r * 2 + 8, r * 2 + 8));
 }
@@ -191,8 +228,9 @@ export function pillButton(
   const c = new Container();
   const ink = o.ink ?? BUTTON.primary.ink;
   const face = new Container();
-  c.addChild(shadowBox(w, h, h / 2), face);
-  face.addChild(box(w, h, { fill: o.fill ?? BUTTON.primary.fill, radius: h / 2, ink: true }));
+  c.addChild(face);
+  face.addChild(box(w, h, { fill: o.fill ?? BUTTON.primary.fill, radius: h / 2, framed: true }));
+  face.addChild(inkShade(w, h, o.fill ?? BUTTON.primary.fill, (g) => g.roundRect(2, 2, w - 4, h - 4, h / 2 - 2)));
   const label_ = txt(label, o.size ?? 24, { color: ink, spacing: 2, anchor: [0.5, 0.5] });
   if (o.iconName) {
     const ic = icon(o.iconName, 26, ink);
@@ -216,7 +254,10 @@ export function hudPill(name: string, value: string | number, line: number, tint
   const c = new Container();
   const label = txt(value, h * 0.42, { anchor: [0, 0.5], inked: true });
   const w = 14 + 22 + 6 + label.width + 14;
-  c.addChild(shadowBox(w, h, h / 2, COMIC.shadow - 1), box(w, h, { fill: C.panel, line, radius: h / 2, ink: true }));
+  c.addChild(
+    box(w, h, { fill: C.panel, line, radius: h / 2, framed: true }),
+    inkShade(w, h, C.panel, (g) => g.roundRect(2, 2, w - 4, h - 4, h / 2 - 2), 0.3),
+  );
   c.addChild(at(icon(name, 24, tint), 25, h / 2));
   c.addChild(at(label, 40, h / 2));
   return c;

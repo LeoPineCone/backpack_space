@@ -45,5 +45,5 @@ export const TAG_FILL: Record<string, number> = table(theme.tagFill);
 
 export const FONT = theme.fonts;
 
-/** The ink comic look of the UI: outline width, hard shadow offset, press depth, rivet size (docs/theme.md). */
+/** The hand-inked look of the UI: frame width, press scale, rivet size, ink shading (docs/theme.md). */
 export const COMIC = theme.comic;

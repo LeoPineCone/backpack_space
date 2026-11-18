@@ -38,7 +38,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const g = new Graphics();
   const pad = def.isBag ? 0 : Math.max(1.5, cell * 0.06);
   const fill = def.isBag ? C.bag : TAG_FILL[def.tags[0] ?? "bag"] ?? C.line;
-  const line = o.line ?? (def.isBag ? C.ink : RARITY[def.rarity] ?? C.dim);
+  const line = o.line ?? (def.isBag ? C.bagLine : RARITY[def.rarity] ?? C.dim);
   const has = new Set(s.cells.map(([x, y]) => `${x},${y}`));
   // one rectangle per cell, grown over the seam towards neighbouring cells so the shape reads as one piece
   for (const [x, y] of s.cells) {
@@ -50,7 +50,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const tint = !def.isBag && artTexture(`items/${id}`) ? 0.22 : 1;
   g.fill({ color: fill, alpha: (o.alpha ?? 1) * tint });
   // outline: every cell edge that has no neighbour
-  const lw = def.isBag ? (cell >= 26 ? COMIC.outline : 1.5) : Math.max(1.5, cell * 0.05);
+  const lw = def.isBag ? (cell >= 26 ? COMIC.frame : 1) : Math.max(1.5, cell * 0.05);
   for (const [x, y] of s.cells) {
     const x0 = x * cell + pad, y0 = y * cell + pad, x1 = (x + 1) * cell - pad, y1 = (y + 1) * cell - pad;
     if (!has.has(`${x},${y - 1}`)) g.moveTo(x0, y0).lineTo(x1, y0);
