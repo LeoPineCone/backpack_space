@@ -165,7 +165,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | META-07 | League up after a run is shown as a quiet animation in the screen, hero level up as an animation at the end of the run. | [ux.md](ux.md) | M3 | – | decided |
 | META-08 | All numbers of the meta systems are balanced, not placeholders: XP per level, Galaxies per pass level, league points, free Credits. | [retention.md](retention.md) | M6 | – | open (needs designer) |
 | META-09 | A season hero of an earlier season can be bought after its season. It cannot be earned by playing. | [retention.md](retention.md), review | after version 1 | – | decided |
-| META-10 | A season lasts between 3 and 6 months. The exact length is fixed. | [retention.md](retention.md) | M3 | – | decided, exact length open (needs designer) |
+| META-10 | A season lasts 3 months (decided 2026-11-18). | [retention.md](retention.md) | M3 | – | decided |
 
 ## Store
 
@@ -267,7 +267,7 @@ Requirements in state `open` wait for one of these:
 | Provider: person or company | LB-01, LB-02, WEB-03 |
 | Launch platform: Android first? | LB-04, QA-07 |
 | Quest contents: which special rules, how many per day and week | META-06, CORE-07 |
-| Exact season length, pass price, Credit packs, Credits prices of skins and heroes | META-10, STORE-12 |
+| Pass price, Credit packs, Credits prices of skins and heroes (season length decided: 3 months) | STORE-12 |
 | Season hero of season 1 | META-05 |
 | Meta numbers | META-08 |
 | How to even out refunded Credits that are spent | STORE-09 |
