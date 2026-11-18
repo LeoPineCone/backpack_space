@@ -20,10 +20,16 @@ export const initials = (name: string) => {
 /** bare: an item with a picture is drawn as the picture alone, without tile and frame (shop offers). */
 export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number; bare?: boolean }
 
+/** An item's types as the player sees them: a weapon shows melee or ranged instead of "weapon" (Ilja, 2026-11-18). */
+export function typeIcons(def: ItemDef): string[] {
+  if (def.isBag) return ["bag"];
+  return def.tags.filter((t) => t !== "bag").map((t) => (t === "weapon" ? (def.range ?? "weapon") : t));
+}
+
 /** The symbol on an item's tile: its first type, but a pet shows its kind (beast or swarm) when it has one. */
 function tileIcon(def: ItemDef): string {
   if (def.isBag) return "bag";
-  return def.tags.find((t) => (PET_KINDS as readonly string[]).includes(t)) ?? def.tags[0] ?? "any";
+  return def.tags.find((t) => (PET_KINDS as readonly string[]).includes(t)) ?? typeIcons(def)[0] ?? "any";
 }
 
 /** An item or bag; origin at the top-left corner of its bounding box. */

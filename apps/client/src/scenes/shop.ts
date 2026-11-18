@@ -11,7 +11,7 @@ import type { Game, Scene } from "../game";
 import { C, H, RARITY, RARITY_PIPS, SCREEN, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, disc, heroBadge, hearts, hudPill, infoButton, pillButton, plate, roundButton, screenFill, tappable, txt } from "../ui";
-import { outlinePath, piece, pieceFit, starMarks, zap, ZAP } from "../pieces";
+import { outlinePath, piece, pieceFit, starMarks, typeIcons, zap, ZAP } from "../pieces";
 import { introOverlay, introSeen, type IntroStep } from "./intro";
 import { runMenuOverlay } from "./runmenu";
 import { heroPopup, itemPopup } from "./popup";
@@ -130,6 +130,9 @@ export function shopScene(game: Game): Scene {
       // the item at its backpack size (one cell = CELL), only shrunk when it does not fit the card
       tile.addChild(at(pieceFit(data, o.item, OFFER.w - 8, OFFER.h - 8, CELL, { label: true, bare: true }), 4, 4));
       if (!def.isBag) for (let p = 0; p < (RARITY_PIPS[def.rarity] ?? 1); p++) tile.addChild(at(disc(1.8, { fill: C.ink }), 6 + p * 5, 7));
+      // the item's types, small in the lower right corner, so they can be read before buying (the item picture shows none)
+      const types = typeIcons(def).slice(0, 3);
+      types.forEach((t, k) => tile.addChild(at(icon(t, 18, C.text), OFFER.w - 15 - (types.length - 1 - k) * 20, OFFER.h - 14)));
       tile.addChild(at(icon("coin", 20, C.gold), 15, OFFER.h - 14));
       tile.addChild(at(txt(o.price, 16, { color: r.gold < o.price ? C.dim : o.sale ? C.good : C.text, anchor: [0, 0.5], inked: true }), 28, OFFER.h - 14));
       centers[i] = { x: x + OFFER.w / 2, y: y + OFFER.h / 2 };

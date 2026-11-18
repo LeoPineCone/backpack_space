@@ -5,7 +5,7 @@ import type { Game, Scene } from "../game";
 import { C, H, RARITY, RARITY_PIPS, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, disc, infoButton, pillButton, plate, roundButton, tappable, txt } from "../ui";
-import { itemIcon, pieceFit, symbolRow, ZAP } from "../pieces";
+import { itemIcon, pieceFit, symbolRow, typeIcons, ZAP } from "../pieces";
 import { GLOSSARY_GROUPS, heroRows, itemRows, keywordsIn, type Keyword, type Row } from "../symbols";
 import { t, tr, upper } from "../i18n";
 
@@ -175,7 +175,7 @@ export interface ItemPopupOpts {
 export function itemPopup(game: Game, id: string, o: ItemPopupOpts = {}): Scene {
   const data = game.data,
     def = data.items.get(id)!;
-  const tags = def.isBag ? ["bag"] : def.tags.filter((t) => t !== "bag");
+  const tags = typeIcons(def);
   return subjectPopup(game, {
     name: tr().item(id),
     line: def.isBag ? C.cyan : (RARITY[def.rarity] ?? C.cyan),
