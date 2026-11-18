@@ -1,6 +1,25 @@
 /** What every domain function gets: the ports, the settings of this request and, when signed in, the player. */
 import type { ErrorCode } from "@backpack-space/api";
-import type { ActionStore, BackpackPool, Clock, IdentityCheck, LogSink, PlayerStore, Random, RevenueCat, Settings, SettingsValues } from "../ports/index.js";
+import type { GameData, Meta } from "@backpack-space/core";
+import type {
+  ActionStore,
+  BackpackPool,
+  Clock,
+  IdentityCheck,
+  LogSink,
+  PlayerStore,
+  Random,
+  RevenueCat,
+  SessionTokens,
+  Settings,
+  SettingsValues,
+} from "../ports/index.js";
+
+/** The game data the backend was built with (bundled into each Lambda; locally read from /data). */
+export interface Game {
+  data: GameData;
+  meta: Meta;
+}
 
 export interface Ports {
   clock: Clock;
@@ -10,6 +29,8 @@ export interface Ports {
   backpacks: BackpackPool;
   actions: ActionStore;
   identity: IdentityCheck;
+  tokens: SessionTokens;
+  game: Game;
   revenuecat: RevenueCat;
   log: LogSink;
 }

@@ -7,11 +7,12 @@ import type { Ports } from "./domain/context.js";
 import { createRouter, type DomainFn, type TokenCheck } from "./http/router.js";
 import type { RouteName } from "@backpack-space/api";
 import { config } from "./domain/config.js";
+import { session } from "./domain/session.js";
 
-export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = { config };
+export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = { config, session };
 
-/** Until session tokens exist (sign-in issue), every token is refused. */
-export const checkToken: TokenCheck = async () => null;
+/** The player id comes from the session token only (ACC-04). */
+export const checkToken: TokenCheck = async (token, ctx) => ctx.ports.tokens.check(token, ctx.settings, ctx.ports.clock.now())?.playerId ?? null;
 
 export function createApp(ports: Ports) {
   return createRouter({ ports, routes: DOMAIN_ROUTES, tokens: checkToken });

@@ -3,34 +3,12 @@ import { z } from "zod";
 import { ESLint } from "eslint";
 import type { Route } from "@backpack-space/api";
 import { createRouter, type DomainFn, type TokenCheck } from "../src/http/router.js";
-import { ApiError, type Ports } from "../src/domain/context.js";
+import { ApiError } from "../src/domain/context.js";
 import { lambdaHandler } from "../src/handlers/lambda.js";
-import {
-  FakeActionStore,
-  FakeBackpackPool,
-  FakeClock,
-  FakeIdentityCheck,
-  FakePlayerStore,
-  FakeRandom,
-  FakeRevenueCat,
-  FakeSettings,
-  MemoryLog,
-} from "../src/fakes/index.js";
+import { fakePorts } from "../src/fakes/index.js";
 
-const fakePorts = () => {
-  const log = new MemoryLog();
-  const settings = new FakeSettings();
-  const ports: Ports = {
-    clock: new FakeClock(),
-    random: new FakeRandom(),
-    settings,
-    players: new FakePlayerStore(),
-    backpacks: new FakeBackpackPool(),
-    actions: new FakeActionStore(),
-    identity: new FakeIdentityCheck(),
-    revenuecat: new FakeRevenueCat(),
-    log,
-  };
+const ports3 = () => {
+  const { ports, log, settings } = fakePorts();
   return { ports, log, settings };
 };
 
@@ -61,7 +39,7 @@ const routes: Record<string, DomainFn> = {
 };
 
 function setup() {
-  const f = fakePorts();
+  const f = ports3();
   const router = createRouter({ ports: f.ports, routes: routes as never, tokens, table });
   const call = (method: string, path: string, body?: unknown, headers: Record<string, string> = {}) =>
     router({
@@ -137,7 +115,7 @@ describe("router", () => {
   });
 
   it("serves the same router from a Lambda event", async () => {
-    const f = fakePorts();
+    const f = ports3();
     const handler = lambdaHandler(createRouter({ ports: f.ports, routes: routes as never, tokens, table }));
     const res = await handler({
       rawPath: "/echo",

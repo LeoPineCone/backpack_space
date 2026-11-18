@@ -12,8 +12,12 @@ import type {
   RevenueCat,
   Settings,
   SettingsValues,
+  StoreSignIn,
   Write,
 } from "../ports/index.js";
+import { loadGameData, loadMeta } from "@backpack-space/core/node";
+import type { Game, Ports } from "../domain/context.js";
+import { hmacTokens } from "../http/token.js";
 
 /** A clock that only moves when told to. */
 export class FakeClock implements Clock {
@@ -100,8 +104,8 @@ export class FakeActionStore implements ActionStore {
 
 /** Accepts a fixed list of identities: request JSON string -> identity. */
 export class FakeIdentityCheck implements IdentityCheck {
-  constructor(private readonly accept: (request: unknown) => CheckedIdentity | null = () => null) {}
-  async check(request: unknown): Promise<CheckedIdentity | null> {
+  constructor(public accept: (request: StoreSignIn) => CheckedIdentity | null = () => null) {}
+  async check(request: StoreSignIn): Promise<CheckedIdentity | null> {
     return this.accept(request);
   }
 }
@@ -127,7 +131,7 @@ export function fakePorts() {
   const players = new FakePlayerStore();
   const log = new MemoryLog();
   const identity = new FakeIdentityCheck();
-  const ports = {
+  const ports: Ports = {
     clock,
     random: new FakeRandom(),
     settings,
@@ -135,8 +139,20 @@ export function fakePorts() {
     backpacks: new FakeBackpackPool(),
     actions: new FakeActionStore(),
     identity,
+    tokens: hmacTokens,
+    game: testGame(),
     revenuecat: new FakeRevenueCat(),
     log,
   };
   return { ports, clock, settings, players, log, identity };
+}
+
+let game: Game | undefined;
+/** The game data of /data, read once per test file. */
+export function testGame(): Game {
+  if (!game) {
+    const data = loadGameData();
+    game = { data, meta: loadMeta(data) };
+  }
+  return game;
 }
