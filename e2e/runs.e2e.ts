@@ -34,24 +34,29 @@ async function tap(page: Page, name: string, timeout = 30_000): Promise<void> {
   await page.mouse.click(found.x, found.y);
 }
 
-async function shows(page: Page, name: string, timeout = 30_000): Promise<void> {
-  // the message lists what is on screen instead, so a failure says where the run stood
+/** Waits until `check` holds; a failure lists what is on screen, the run state and the backend requests. */
+async function until(page: Page, what: string, check: (seen: string[], state: Probe) => boolean, timeout = 30_000): Promise<void> {
   let seen: string[] = [];
+  let state: Probe | null = null;
   await expect
     .poll(
       async () => {
         seen = (await targets(page)).map((t) => t.name);
-        return seen.includes(name);
+        state = await probe(page);
+        return check(seen, state);
       },
-      { timeout, message: `button "${name}"` },
+      { timeout, message: what },
     )
     .toBe(true)
-    .catch(async (e: Error) => {
+    .catch((e: Error) => {
       throw new Error(
-        `${e.message}\non screen: ${JSON.stringify(seen)}\nstate: ${JSON.stringify(await probe(page))}\nrequests: ${JSON.stringify(requests.get(page) ?? [])}`,
+        `${e.message}\non screen: ${JSON.stringify(seen)}\nstate: ${JSON.stringify(state)}\nrequests: ${JSON.stringify(requests.get(page) ?? [])}`,
       );
     });
 }
+
+const shows = (page: Page, name: string, timeout?: number) => until(page, `button "${name}"`, (seen) => seen.includes(name), timeout);
+const inRound = (page: Page, round: number, timeout?: number) => until(page, `round ${round}`, (_, s) => s.round === round, timeout);
 
 /** The backend requests of each page with their outcome, for the failure message. */
 const requests = new WeakMap<Page, string[]>();
@@ -80,7 +85,7 @@ async function open(page: Page, player: string): Promise<void> {
 async function startRun(page: Page): Promise<void> {
   await tap(page, "FIGHT");
   await tap(page, "START");
-  await expect.poll(async () => (await probe(page)).round).toBe(1);
+  await inRound(page, 1);
   expect((await probe(page)).runId).toBeTruthy();
 }
 
@@ -99,12 +104,12 @@ test("2: one whole round: shop, fight from the server, result, next shop", async
   await tap(page, "FIGHT");
   await tap(page, "×4", 30_000);
   await tap(page, "CONTINUE", 120_000);
-  await expect.poll(async () => (await probe(page)).round).toBe(2);
+  await inRound(page, 2);
   expect(await probe(page)).toMatchObject({ runId, fought: 1 });
   await shows(page, "FIGHT");
   // the server holds the same run: after a reload the copy on this device continues in round 2
   await page.reload();
-  await expect.poll(async () => (await probe(page)).round, { timeout: 60_000 }).toBe(2);
+  await inRound(page, 2, 60_000);
   expect((await probe(page)).runId).toBe(runId);
 });
 
