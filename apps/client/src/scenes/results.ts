@@ -17,6 +17,7 @@ import { runEndFrame, RUN_END_SECONDS } from "../run-end";
 import type { SavedFight } from "../save";
 import { onRunFailure } from "./online-flow";
 import { statusScene } from "./status";
+import { playSound } from "../sound";
 
 const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
 const SOURCE_ICON: Record<string, string> = { weapon: "weapon", direct: "damage", burn: "burn", toxin: "toxin", spikes: "spikes" };
@@ -58,6 +59,7 @@ export function resultScene(game: Game, f: Fought): Scene {
   const root = new Container();
   const data = game.data, run = game.run!, st = f.result.stats;
   const won = f.server ? f.server.won : f.result.winner === 0;
+  playSound(won ? "win" : "lose");
   const livesAfter = run.lives - (won ? 0 : 1);
   const col = won ? C.gold : C.dim;
 

@@ -135,6 +135,25 @@ describe("run lifecycle on the server", () => {
     expect(events("run_finished")).toHaveLength(1);
   });
 
+  it("gives the booked answer to a finish whose first look came just before the other one booked", async () => {
+    const { start, finish, players } = await setup();
+    const run = RunStartResponse.parse((await start()).body).run;
+    // the first look for DONE# of request B finds nothing, then request A books the run before B reads RUN
+    const get = players.get.bind(players);
+    let first: Promise<unknown> | null = null;
+    players.get = async (pk, sk) => {
+      const item = await get(pk, sk);
+      if (sk.startsWith("DONE#") && !first) {
+        first = finish(run.runId);
+        await first;
+      }
+      return item;
+    };
+    const b = await finish(run.runId);
+    expect(b.status).toBe(200);
+    expect(b).toEqual(await first);
+  });
+
   it("answers run_conflict for a run that is not the open one", async () => {
     const { start, finish } = await setup();
     expect(await finish("not-a-run")).toEqual({ status: 409, body: { error: "run_conflict" } });

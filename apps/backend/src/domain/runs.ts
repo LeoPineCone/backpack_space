@@ -193,7 +193,12 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
     const done = await players.get(pk, doneKey(runId));
     if (done) return done.answer as RunFinishResponse;
     const run = await readRun(ctx, playerId);
-    if (!run || run.runId !== runId) throw new ApiError("run_conflict");
+    if (!run || run.runId !== runId) {
+      // a request at the same time may have booked it between the two reads: its answer is the answer
+      const booked = await players.get(pk, doneKey(runId));
+      if (booked) return booked.answer as RunFinishResponse;
+      throw new ApiError("run_conflict");
+    }
     const stored = await loadProfile(ctx, playerId);
     if (!stored) throw new Error("signed-in player without profile");
     // the app may only call a run finished that is over; otherwise it gave up

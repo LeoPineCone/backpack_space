@@ -199,7 +199,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | UX-06 | Development helpers (such as the game handle on `window`) exist only in development builds. | review | M0 | – | decided |
 | UX-07 | Outside the safe area the client draws only backgrounds. | [mobile.md](mobile.md) | – | – | decided |
 | UX-08 | Settings: language, music, sounds, account, privacy, help, glossary. | [ux.md](ux.md) | M3 | WEB-03 | decided |
-| UX-09 | The game has sounds, and they can be switched off. Planned are menu sounds and perhaps nothing more; the sound files are still to be made. | [ux.md](ux.md) | M6 | – | decided, content open (needs designer) |
+| UX-09 | The game has sounds, and they can be switched off. Planned are menu sounds and perhaps nothing more; the sound files are still to be made. | [ux.md](ux.md) | M6 | – | decided; module and switches built (2026-11-18, silent stand-in files), the sound files are open (needs designer, #104) |
 | UX-10 | Final art replaces the placeholders: items, bags, heroes, skins, planets, league patches, symbols. | [style.md](style.md), [item-art.md](item-art.md) | M6 | – | decided |
 
 ## Backend and operations
