@@ -16,6 +16,7 @@ night blue.
 - `buttons`: the kinds of buttons (below).
 - `rarity`, `tagFill`: rarity colours and the tile colour per item type (while items have no pictures).
 - `fonts`: display font for titles, numbers and buttons; text font for sentences.
+  The font files ship inside the app (`apps/client/src/fonts/`, loaded by `apps/client/src/fonts.css`): Chakra Petch 600/700 and Inter 400/600, Latin subset. Both are under the SIL Open Font License 1.1, which allows bundling them in an app, also a paid one, as long as the licence text goes along (it does: `fonts/*-OFL.txt`) and the fonts are not sold on their own. A new font or weight needs its file and licence there too; the client loads nothing from another server.
 
 ## Colours
 
