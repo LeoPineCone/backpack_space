@@ -54,6 +54,7 @@
     "backend:test": "tsx apps/backend/local/test-server.ts",
     "dev": "tsx apps/backend/local/dev.ts",
     "seed": "tsx apps/backend/local/seed.ts",
+    "job": "tsx apps/backend/local/job.ts",
     "app:sync": "npm run cap:sync -w @backpack-space/client",
     "app:ios": "npm run cap:ios -w @backpack-space/client",
     "app:android": "npm run cap:android -w @backpack-space/client",

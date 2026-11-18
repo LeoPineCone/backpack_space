@@ -64,11 +64,19 @@ export type Write =
   /** `ifVersion`: delete only an existing item with this version number */
   | { delete: { pk: string; sk: string }; ifExists?: boolean; ifVersion?: number };
 
+/** One page of a read over a whole table (timed jobs only); `next` continues it, missing at the end. */
+export interface Page {
+  items: Item[];
+  next?: string;
+}
+
 /** The table `players` (one partition per player). */
 export interface PlayerStore {
   get(pk: string, sk: string): Promise<Item | null>;
   /** every item of a partition, sorted by sort key */
   query(pk: string): Promise<Item[]>;
+  /** one page of the items with this sort key over all partitions, in no fixed order (timed jobs only) */
+  scan(sk: string, next?: string): Promise<Page>;
   /** writes together; false when a condition failed (then nothing was written) */
   transact(writes: Write[]): Promise<boolean>;
 }
@@ -81,9 +89,12 @@ export interface BackpackPool {
   remove(pk: string, sk: string): Promise<void>;
 }
 
-/** The table `actions` (recorded shop actions). Methods come with the run issues (M2). */
+/** The table `actions` (recorded shop actions). */
 export interface ActionStore {
   put(item: Item): Promise<void>;
+  /** one page of the keys of items whose `expiresAt` (seconds since 1970) lies before `nowSec` (timed jobs only) */
+  expired(nowSec: number, next?: string): Promise<Page>;
+  remove(pk: string, sk: string): Promise<void>;
 }
 
 /** What Apple or Google confirm about a sign-in (ACC-02). */

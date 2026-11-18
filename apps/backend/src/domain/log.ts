@@ -20,6 +20,8 @@ export interface EventFields {
   credits_earned: { ref: Id; amount: number; source: Id };
   refund: { ref: Id; product: Id; removed: Id[] };
   account_deleted: Record<string, never>;
+  /** the profile moved into a later season: league patch of the season `from`, league before and after the drop */
+  season_changed: { from: number; to: number; patch: Id | null; league: [number, number] };
   plausibility_rejected: { runId: Id; round: number; reason: Id };
   result_mismatch: { runId: Id; round: number; simVersion: string };
   /** an unexpected failure inside a request (the request line says `internal`) */
@@ -36,6 +38,7 @@ export const EVENT_TYPES = [
   "credits_earned",
   "refund",
   "account_deleted",
+  "season_changed",
   "plausibility_rejected",
   "result_mismatch",
   "error",
