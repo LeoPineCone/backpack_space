@@ -26,6 +26,8 @@ const samples: Record<RouteName, { request: unknown; response: unknown }> = {
   profileSkin: { request: { hero: "venn", id: "venn_lv3" }, response: { profile } },
   profileName: { request: { name: "Star Rider" }, response: { profile } },
   quests: { request: {}, response: { quests: [{ id: "d2026-11-18:goldRain", kind: "daily", rule: "goldRain", period: "2026-11-18", played: false }] } },
+  accountExport: { request: {}, response: { playerId: "p1", player: [{ pk: "P#p1", sk: "PROFILE" }], actions: [] } },
+  accountDelete: { request: {}, response: { deleted: true } },
   clientError: { request: { kind: "error", message: "boom", stack: "Error: boom\n    at x (app.js:1:2)", simVersion: "3.abc" }, response: { received: true } },
   runCurrent: { request: {}, response: { run: null } },
   runStart: {

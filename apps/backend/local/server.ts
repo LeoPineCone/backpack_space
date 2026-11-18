@@ -39,7 +39,7 @@ async function readBody(req: IncomingMessage): Promise<string | null> {
 const CORS = {
   "access-control-allow-origin": "*",
   "access-control-allow-headers": "authorization, content-type, x-app-version",
-  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
   "access-control-expose-headers": "x-request-id",
 };
 
@@ -66,7 +66,8 @@ export function localPorts(values: LocalSettings, overrides: Partial<LocalSettin
     tokens: hmacTokens,
     ...builds,
     // RevenueCat comes in M4
-    revenuecat: { balance: async () => 0 },
+    // the stand-in until M4 (#77): no balances, nothing to delete
+    revenuecat: { balance: async () => 0, deleteCustomer: async () => undefined },
     log,
   };
 }

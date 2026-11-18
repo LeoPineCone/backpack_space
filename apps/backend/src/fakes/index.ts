@@ -120,6 +120,9 @@ export class FakeBackpackPool implements BackpackPool {
       .slice(0, limit)
       .map((i) => structuredClone(i));
   }
+  async byPlayer(playerId: string): Promise<Item[]> {
+    return [...this.items.values()].filter((i) => i.playerId === playerId).map((i) => structuredClone(i));
+  }
 }
 
 export class FakeActionStore implements ActionStore {
@@ -137,6 +140,9 @@ export class FakeActionStore implements ActionStore {
   async remove(pk: string, sk: string): Promise<void> {
     const at = this.items.findIndex((i) => i.pk === pk && i.sk === sk);
     if (at >= 0) this.items.splice(at, 1);
+  }
+  async byPlayer(playerId: string): Promise<Item[]> {
+    return this.items.filter((i) => i.playerId === playerId).map((i) => structuredClone(i));
   }
 }
 
@@ -157,8 +163,13 @@ export class FakeIdentityCheck implements IdentityCheck {
 
 export class FakeRevenueCat implements RevenueCat {
   readonly balances = new Map<string, number>();
+  readonly deleted: string[] = [];
   async balance(playerId: string): Promise<number> {
     return this.balances.get(playerId) ?? 0;
+  }
+  async deleteCustomer(playerId: string): Promise<void> {
+    this.balances.delete(playerId);
+    this.deleted.push(playerId);
   }
 }
 

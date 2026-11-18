@@ -5,14 +5,17 @@
  *             overlapping run changes nothing. Players the job does not reach get the change when they next appear.
  *   actions   deletes recorded shop actions after their expiry. DynamoDB does that on its own within about two days;
  *             this is the safety net, and locally (DynamoDB Local has no expiry) the only way.
+ *   deleted   deletes every account on the list of deleted accounts again (ACC-08): after a restore of `players`, or
+ *             when a deletion stopped half-way. Part of the reconcile after a restore (BE-12); nothing to do otherwise.
  * A job writes one line when it ends, plus the event lines of what it changed.
  */
 import type { Ports } from "../domain/context.js";
 import type { DomainContext } from "../domain/context.js";
 import { loadProfile } from "../domain/players.js";
 import { seasonNow } from "../domain/season.js";
+import { deleteAgain } from "../domain/account.js";
 
-export const JOB_NAMES = ["season", "actions"] as const;
+export const JOB_NAMES = ["season", "actions", "deleted"] as const;
 export type JobName = (typeof JOB_NAMES)[number];
 
 export interface JobResult {
@@ -25,7 +28,7 @@ export interface JobResult {
 
 export async function runJob(ports: Ports, job: JobName): Promise<JobResult> {
   const started = ports.clock.now();
-  const result = job === "season" ? await seasonJob(ports) : await actionsJob(ports);
+  const result = job === "season" ? await seasonJob(ports) : job === "actions" ? await actionsJob(ports) : { job, ...(await deleteAgain(ports)) };
   ports.log.write({ type: "job", time: new Date(ports.clock.now()).toISOString(), ...result, ms: ports.clock.now() - started });
   return result;
 }

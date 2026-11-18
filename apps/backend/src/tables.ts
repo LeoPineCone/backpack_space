@@ -41,7 +41,8 @@ export const TABLES: Record<TableName, TableDefinition> = {
   },
   actions: {
     purpose: "the recorded shop actions of every round",
-    indexes: [],
+    // all entries of one player: account export and deletion (ACC-08)
+    indexes: [{ name: "byPlayer", partitionKey: "playerId", sortKey: "pk" }],
     expiresField: "expiresAt",
     pointInTimeRestore: false,
   },

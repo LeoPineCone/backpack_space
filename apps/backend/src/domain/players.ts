@@ -3,6 +3,7 @@
  *   ID#<platform>#<storeId> / PLAYER   the lookup from store identity to player id (ACC-03)
  *   P#<playerId> / PROFILE             name, Galaxies, hero XP, equipped things, season state, runs, version
  *   P#<playerId> / OWN#<thing>         one entry per owned cosmetic or hero, with origin and date
+ *   P#<playerId> / IDENTITY            the key of the lookup above, so that deleting the account removes it (ACC-08)
  * The profile the app gets is put together from PROFILE and the OWN# entries. No Credits: they live at RevenueCat.
  */
 import type { ProfileBody } from "@backpack-space/api";
@@ -33,17 +34,25 @@ export interface StoredProfile {
   createdAt: number;
 }
 
-/** The player id of a store identity, made (with a new profile) at the first sign-in. */
+/** The partition item that names the store lookup of a player. */
+export const IDENTITY = "IDENTITY";
+
+/**
+ * The player id of a store identity, made (with a new profile) at the first sign-in. A lookup whose player is gone (a
+ * deleted account the lookup of which survived, ACC-08) counts as none: the identity gets a new player.
+ */
 export async function findOrCreatePlayer(ctx: DomainContext, identity: CheckedIdentity): Promise<{ playerId: string; created: boolean }> {
   const { players, random, clock } = ctx.ports;
   const lookup = await players.get(identityKey(identity), "PLAYER");
-  if (lookup) return { playerId: String(lookup.playerId), created: false };
+  if (lookup && (await players.get(playerKey(String(lookup.playerId)), "PROFILE"))) return { playerId: String(lookup.playerId), created: false };
 
   const playerId = random.id();
   const now = clock.now();
   const profile = startProfile(ctx);
   const writes: Write[] = [
-    { put: { pk: identityKey(identity), sk: "PLAYER", playerId, createdAt: now }, ifNotExists: true },
+    // a lookup of a gone player is replaced; otherwise only the first of two sign-ins at the same time writes one
+    { put: { pk: identityKey(identity), sk: "PLAYER", playerId, createdAt: now }, ...(lookup ? {} : { ifNotExists: true }) },
+    { put: { pk: playerKey(playerId), sk: IDENTITY, lookup: identityKey(identity) }, ifNotExists: true },
     ...profileWrites(playerId, profile, { version: 0, createdAt: now }, now, "start"),
   ];
   if (await players.transact(writes)) return { playerId, created: true };

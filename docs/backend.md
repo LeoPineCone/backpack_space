@@ -116,6 +116,7 @@ One partition per player. One query for that partition loads everything the game
 | `P#<playerId>`            | `ROUND#<runId>#<nn>` | one entry per fought round: the committed backpack, the opponent backpack with name and patch, the fight seed, the result, and the complete answer that was sent |
 | `P#<playerId>`            | `DONE#<runId>`       | the booked end of a run with the complete answer that was sent                                                                                                   |
 | `P#<playerId>`            | `QUEST#<questId>`    | a quest the player played, with the run id; expires 14 days after it was written                                                                                 |
+| `P#<playerId>`            | `IDENTITY`           | the key of the store lookup below, so that deleting the account can remove it                                                                                    |
 | `P#<playerId>`            | `EVT#<eventId>`      | a handled RevenueCat event, so that a repeated report is not booked twice                                                                                        |
 | `ID#<platform>#<storeId>` | `PLAYER`             | the lookup from store identity to player id                                                                                                                      |
 
@@ -137,6 +138,7 @@ Notes:
 | Partition key                            | Sort key             | Content                                                                        |
 | ---------------------------------------- | -------------------- | ------------------------------------------------------------------------------ |
 | `<origin>#<dataMajor>#R<round>#L<lives>` | `G<league>#<random>` | the backpack, name, league patch, player id (players only), data version, date |
+| `DELETED`                                | `<playerId>`         | the list of deleted accounts (ACC-08): time of the deletion                    |
 
 - The partition is the bucket of the matching rules: round and run standing (with a fixed round the lives left say everything about the standing). There are 42 buckets per origin and data version.
 - `origin` is `bot` or `player`. In phase 1 the matching reads only `bot` partitions, while player backpacks are already collected in theirs.
@@ -149,6 +151,8 @@ Notes:
 | Partition key | Sort key | Content                                                                                                                 |
 | ------------- | -------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `RUN#<runId>` | `R<nn>`  | the action lines of the round, the shop seed, the backpack before and after, simulation version, player id, expiry date |
+
+The index `byPlayer` (player id, partition key) finds all entries of one player for the account export and deletion.
 
 Written after the fight is committed, outside the transaction: if this write fails, the fight still counts and the failure is logged. Entries expire on their own (how long is open, RUN-14). The later analysis reads this table with a job and replays the runs with the core.
 
@@ -237,8 +241,14 @@ Interface tests start the local server against DynamoDB Local and call it over H
 
 ## Account deletion and export
 
-- **Export** returns the player's partition from `players` as a file, plus their entries in `actions`.
-- **Deletion** removes the player's partition and lookup entry, deletes the customer at RevenueCat, and writes the id to the list of deleted accounts. The player's backpacks in the pool stay as opponents but lose player id, name and patch (they get a generated name), so nothing in them points to a person any more. Their `actions` entries expire on their own, or are deleted at once (open).
+Built in M6 (`src/domain/account.ts`, settings → account in the app).
+
+- **Export** (`GET /account/export`) returns the player's partition from `players` plus their entries in `actions` (index `byPlayer`), as they are stored. The app hands it over as a JSON file (share sheet where there is one, else a download).
+- **Deletion** (`DELETE /account`, after a confirmation in the app) first writes the id to the list of deleted accounts, then removes the store lookup (found through the partition's `IDENTITY` entry), the partition (in steps of 25, a transaction holds at most 100 items), the player's `actions` entries at once (decided as a proposal: they hold backpacks and the player id, and waiting for their expiry gains nothing), and the customer at RevenueCat (M4 fills in the real call; locally a stand-in). The player's backpacks in the pool stay as opponents but lose player id, owner, name and patch (they get a generated name like "Pilot 417"), so nothing in them points to a person any more. Event `account_deleted`. The app then forgets run and profile and starts again; the same store identity becomes a new player with a new profile.
+- **The list of deleted accounts** lives in the table `backpacks` (partition `DELETED`): outside `players`, so a restore of `players` does not roll it back, and with point-in-time restore of its own. Every step of a deletion can run again, so the timed job `deleted` (`npm run job -- deleted`) deletes every listed account again after a restore of `players`, or finishes a deletion that stopped half-way. It is part of the reconcile after a restore (BE-12).
+- A session token stays valid until it expires (ACC-04); the app drops it after the deletion. A sign-in of the deleted identity finds no profile behind its lookup and starts a new player.
+- The cloud HTTP API has to allow the method `DELETE` in its CORS setting (#56), as the local server does.
+- **Store rules (LB-07):** Apple asks apps that create accounts to let players start the deletion inside the app (App Review Guideline 5.1.1(v)); Google Play asks for deletion inside the app and, in the data safety form, a web address where a deletion can be requested without the app. The in-app deletion covers both; the web address is the website's support page (WEB-04), which names the support address. Check again when the store listing is prepared (LB-07, from memory of the rules, not checked against the current store pages).
 - What has to be kept by law about purchases is held by the stores and RevenueCat, not by us.
 
 ## What this means for the app
