@@ -53,7 +53,7 @@ jobs:
       - name: Reference fights in Chromium and WebKit
         run: npm run test:e2e
       - name: Browser runs against the local backend in Chromium and WebKit
-        run: npm run test:e2e:runs
+        run: npm run test:e2e:runs -- --project webkit --repeat-each 4 -g "end of a run"
         env:
           TEST_DB_ENDPOINT: http://dynamodb:8000
 
