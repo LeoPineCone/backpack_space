@@ -107,7 +107,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Season pass** | Season-Pass | Track of one season, moved by Galaxies. Free rewards for everyone, premium rewards with the premium pass. | `meta.seasons.pass`, `passLevel` |
 | **Premium pass** | Premium-Pass | The paid side of the season pass: the season's new hero from level 1, skins, grid backgrounds. | `SeasonState.premium`, `unlockPremium` |
 | **Season** | Season | A stretch of time with its own pass and league race. A new season brings a new hero. | `meta.seasons`, `SeasonState` |
-| **League** | Liga | Your rank. Runs win or lose league points; a league you reached cannot be lost. A new season starts two leagues lower. | `meta.leagues`, `leagueOf` |
+| **League** | Liga | Your rank. Runs win or lose league points; a league you reached cannot be lost. A new season starts in the highest league of the next lower league group; Amateur leagues stay. | `meta.leagues`, `leagueOf` |
 | **League patch** | Liga-Patch | Paid at the end of a season for the league you reached. Wear one on your profile. | `patchId`, `Profile.equipped.patch` |
 | **Profile level** | Profilstufe | The number on your picture: the levels of all your heroes added up. | `profileLevel` |
 | **Cosmetic** | Kosmetik | Changes the look only, never the game: skins, backgrounds, grid backgrounds, patches. | `meta.cosmetics` |

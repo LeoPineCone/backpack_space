@@ -49,14 +49,13 @@ export const MetaData = z.object({
     ids: z.array(z.string()).min(2),
     /**
      * league groups from the lowest up, as the number of leagues in each (docs/matchmaking.md "League groups"):
-     * Amateur, Intermediate, Pro, Elite. Bot players belong to a group, not to a single league.
+     * Amateur, Intermediate, Pro, Elite. Bot players belong to a group, not to a single league. A new season starts in the
+     * highest league of the next lower group; the lowest group keeps its league.
      */
     groups: z.array(z.number().int().positive()).min(1),
     pointsPerLeague: z.number().int().positive(),
     /** league points for a run by its wins: index = wins (0 ... rounds) */
     pointsByWins: z.array(z.number().int()),
-    /** leagues you move back at the start of a new season */
-    seasonDrop: Int,
   }).strict(),
   cosmetics: z.array(z.object({ id: z.string(), kind: z.enum(COSMETIC_KINDS), hero: z.string().optional(), /** backgrounds: the place of lore/planets.json it shows */ planet: z.string().optional() }).strict()),
   seasons: z.array(z.object({
@@ -295,9 +294,15 @@ export interface SeasonChange {
   rewards: Reward[];
 }
 
+/** The league a new season starts in: the highest league of the next lower group; in the lowest group the same one. */
+export function seasonStartLeague(meta: Meta, league: number): number {
+  const { group, from } = leagueGroup(meta, league);
+  return group === 0 ? league : from - 1;
+}
+
 /**
- * Moves the profile into a later season: the ended season pays its league patch, the league drops by
- * `seasonDrop` (that league is the new floor), the pass starts again. Nothing happens for the same or an earlier season.
+ * Moves the profile into a later season: the ended season pays its league patch, the league drops to
+ * `seasonStartLeague` (that league is the new floor), the pass starts again. Nothing happens for the same or an earlier season.
  */
 export function enterSeason(meta: Meta, p0: Profile, seasonId: number): SeasonChange | null {
   if (seasonId <= p0.season.id) return null;
@@ -305,7 +310,7 @@ export function enterSeason(meta: Meta, p0: Profile, seasonId: number): SeasonCh
   const before = p.season.peak;
   const patch = patchId(p.season.id, meta.leagues.ids[before]!);
   const rewards = grant(p, [{ cosmetic: patch }]);
-  const after = Math.max(0, before - meta.leagues.seasonDrop);
+  const after = seasonStartLeague(meta, before);
   p.season = { id: seasonId, galaxies: 0, premium: false, points: after * meta.leagues.pointsPerLeague, peak: after };
   rewards.push(...grant(p, passRewardsUpTo(meta, p.season, 1, 0)));
   return { profile: p, patch, league: [before, after], rewards };
