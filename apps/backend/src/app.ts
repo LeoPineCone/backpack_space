@@ -8,10 +8,11 @@ import { createRouter, type DomainFn, type TokenCheck } from "./http/router.js";
 import type { RouteName } from "@backpack-space/api";
 import { config } from "./domain/config.js";
 import { profile } from "./domain/profile.js";
+import { runFight } from "./domain/fight.js";
 import { runCurrent, runFinish, runStart } from "./domain/runs.js";
 import { session } from "./domain/session.js";
 
-export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = { config, session, profile, runCurrent, runStart, runFinish };
+export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = { config, session, profile, runCurrent, runStart, runFight, runFinish };
 
 /** The player id comes from the session token only (ACC-04). */
 export const checkToken: TokenCheck = async (token, ctx) => ctx.ports.tokens.check(token, ctx.settings, ctx.ports.clock.now())?.playerId ?? null;
