@@ -95,7 +95,7 @@ Rules for the idea:
 ## 5. Hero items and crafted items
 
 - Hero items speak their hero's language (docs/style.md, "Hero items"): Venn's lab plant, Rook's salvage, Quill's
-  herd-made things, Ysel's iron relics. The space twist comes on top of that language, not instead of it.
+  herd-made things, Ysel's solar-moth relics. The space twist comes on top of that language, not instead of it.
 - A crafted item keeps something recognisable from each ingredient (Prism Laser = Laser Pistol with the Crystal
   Shard on its muzzle).
 

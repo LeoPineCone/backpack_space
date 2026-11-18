@@ -844,560 +844,560 @@
     "description": "Upright: an orchid in a small pot under a clear pressure dome, its petals shaped like hearts in coral red."
   },
   "seed_pod": {
-    "brief": "Hard seed pod with a split seam spitting seeds, a paper specimen tag tied to its stem. Accent: sage.",
-    "description": "A hard seed pod split along one seam, spitting small seeds, a paper specimen tag from Venn's lab tied to its stem."
+    "brief": "Hard seed pod split along a seam with a specimen tag. Accent: sage.",
+    "description": "A hard ridged seed pod from the fog planet Murk, split open along one seam like a small hatch, a paper specimen tag from Venn's lab tied to its stem."
   },
   "watering_drone": {
-    "brief": "Small dented drone with a watering-can spout and a faded stencil patch, a vine wound round one leg. Accent: teal.",
-    "description": "Venn's botanist's old drone, still following the suit: round, dented, spout forward, one vine wound round its single leg. The stencil is a faded patch, no letters."
+    "brief": "The botanist's old round drone, spout forward. Accent: teal.",
+    "description": "Lying across the box: the station botanist's old watering drone, round and dented, a long spout forward, a tiny thruster puff behind, one green vine wound round its single landing leg."
   },
   "compost_bin": {
-    "brief": "Station lab bin, lid forced open by tendrils, peels and leaves spilling out. Accent: sage.",
-    "description": "A station lab bin, its lid forced open by tendrils, peels and leaves spilling out over the rim."
+    "brief": "Zero-g lab bin, peels floating out round it. Accent: sage.",
+    "description": "A sealed station lab bin, its lid forced open by tendrils, peels and leaves drifting out in zero gravity and circling the rim."
   },
   "thornvine": {
-    "brief": "Long vine with hooked thorns, a torn strip of suit fabric caught on it. Accent: sage.",
-    "description": "Along the long box: a long vine with hooked black thorns, a torn strip of Venn's suit fabric caught on one thorn."
+    "brief": "Long hooked vine with a strip of suit fabric. Accent: sage.",
+    "description": "Along the long box: a long vine with hooked black thorns, coiled loosely like a floating cable, a torn strip of Venn's suit fabric caught on one thorn."
   },
   "pollen_cloud": {
-    "brief": "Puffy cloud of pale pollen grains drifting from a cracked seed bulb. Accent: mustard.",
-    "description": "A cracked pale seed bulb like those in Venn's visor, a puffy cloud of mustard pollen grains drifting from it."
+    "brief": "Cracked seed bulb leaking a pollen galaxy. Accent: mustard.",
+    "description": "A cracked pale seed bulb like those in Venn's visor, mustard pollen grains drifting out and swirling round it in a small spiral like a galaxy."
   },
   "grow_lamp": {
-    "brief": "Bent lab grow lamp on an arm, tendrils curling up towards it. Accent: mustard.",
-    "description": "A bent lab grow lamp on a jointed arm, coral red tendrils curling up towards it."
+    "brief": "Folding solar-panel grow lamp with a tendril. Accent: mustard.",
+    "description": "A small grow lamp made from a folded satellite solar panel on a jointed arm, flat mustard light lines below, one coral red tendril curling up towards it."
   },
   "venus_mantrap": {
-    "brief": "Snapping offshoot with toothy jaws on a tendril stem, no eyes. Accent: coral red.",
-    "description": "Lying across the box: a snapping offshoot of Venn, toothy jaws on a tendril stem, no eyes, coral red inside the jaws."
+    "brief": "Snapping offshoot of Venn, jaws on a stem. Accent: coral red.",
+    "description": "Lying across the box: a snapping offshoot of Venn, wide toothy jaws on a green tendril stem, coral red inside the jaws, no eyes, a specimen tag on the stem."
   },
   "moon_melon": {
-    "brief": "Big pale melon with crater spots, coral red tendrils creeping over it. Accent: sage.",
-    "description": "Filling the square box: a big pale melon with crater spots, coral red tendrils from Venn creeping over it and a specimen tag tied to the stalk."
+    "brief": "Pale cratered melon like a little moon. Accent: sage.",
+    "description": "Filling the square box: a big pale melon shaped like a cratered moon, one slice cut out showing pink flesh, a slice-crumb orbiting it, coral red tendrils and a specimen tag on the stalk."
   },
   "healing_moss": {
-    "brief": "Pad of moss in a cracked petri dish with a lab label. Accent: sage.",
-    "description": "A pad of soft moss in a cracked petri dish, a lab label without text."
+    "brief": "Soft moss in a floating petri dish. Accent: sage.",
+    "description": "A pad of soft sage moss with tiny star-shaped flowers in a cracked petri dish, a small water ball floating above it."
   },
   "root_network": {
-    "brief": "Tangle of roots spreading wide through broken station pipes. Accent: copper.",
-    "description": "Along the long box: a tangle of roots spreading through broken station pipes, pipe joints cracked open by the roots."
+    "brief": "Roots cracking through station pipes. Accent: copper.",
+    "description": "Along the long box: a tangle of roots spreading through a broken copper station pipe, joints burst open, small pale root tips reaching out of every crack."
   },
   "carnivorous_orchid": {
-    "brief": "Orchid with a toothed mouth among its petals, no eyes. Accent: coral red.",
-    "description": "Lying across the box: an orchid with a toothed mouth among its petals, no eyes, coral red throat."
+    "brief": "Orchid with a toothed mouth among petals. Accent: coral red.",
+    "description": "Lying across the box: a pink alien orchid from Murk, petals like a lure, a toothed mouth with a coral red throat in the middle, no eyes, hanging from a bent lab clamp."
   },
   "spore_mine": {
-    "brief": "Round spore pod with spikes, about to burst. Accent: sage.",
-    "description": "Lying across the box: a round spore pod with spikes, about to burst, made from a Seed Pod with mushroom caps growing out of it."
+    "brief": "Seed Pod sprouting mushroom caps, about to burst. Accent: sage.",
+    "description": "Lying across the box: the split Seed Pod swollen round and spiked like a sea mine, dish-capped mushrooms growing out of its seam, a specimen tag fluttering."
   },
   "giant_mantrap": {
-    "brief": "Huge offshoot with several snapping jaws on coiled tendrils. Accent: coral red.",
-    "description": "The jaws fill the top row, the coiled tendrils drop into the lower left cell; the lower right stays empty. A huge offshoot with several snapping jaws, no eyes."
+    "brief": "Huge offshoot with several snapping jaws. Accent: coral red.",
+    "description": "The jaws fill the top row, the coiled tendrils drop into the lower left cell; the lower right stays empty. A huge offshoot with three snapping jaws, wet biogel glistening on its stems as flat drops, no eyes."
   },
   "harvest_crate": {
-    "brief": "Station supply crate overflowing with odd vegetables, roots growing through the slats. Accent: copper.",
-    "description": "Filling the square box: a station supply crate overflowing with odd vegetables and a Moon Melon, roots growing through the slats."
+    "brief": "Station crate overflowing with odd vegetables. Accent: copper.",
+    "description": "Filling the square box: a riveted station supply crate with magnet corners, overflowing with alien vegetables and the cratered Moon Melon, the compost bin's tendrils pushing through the slats."
   },
   "briar_fortress": {
-    "brief": "Wall of thick thorny branches grown around a station door frame. Accent: sage.",
-    "description": "An arch of thick thorny branches: the top row is the lintel, the two lower corners are the posts, the gap between them stays empty like a doorway. The bent frame of a station door shows through the branches; a torn strip of suit fabric and pale seed bulbs hang in the thorns. Thorns as hard black hooks."
+    "brief": "Thorny arch around a bent station door frame. Accent: sage.",
+    "description": "An arch of thick thorny branches: the top row is the lintel, the two lower corners are the posts, the gap between them stays empty like a doorway. The bent frame of a station airlock door shows through the branches; thick roots grip it; pale seed bulbs hang in the thorns."
   },
   "hydra_bloom": {
-    "brief": "Plant with three snapping flower heads on long tendril stems. Accent: coral red.",
-    "description": "The three heads fill the upper four cells, the stems drop into the lower left; the lower right stays empty. A plant with three snapping flower heads on long tendril stems, one of them an orchid."
+    "brief": "Three snapping flower heads on tendril stems. Accent: coral red.",
+    "description": "The three heads fill the upper four cells, the stems drop into the lower left; the lower right stays empty. A plant with three snapping flower heads on long tendril stems, one of them the pink orchid, coral red jaws, no eyes."
   },
   "irrigation_swarm": {
-    "brief": "Three small watering drones like Venn's, spraying a leaf, each with a faded stencil patch. Accent: teal.",
-    "description": "Lying across the box: three small watering drones like the botanist's old one, spraying a single leaf, each with a faded stencil patch."
+    "brief": "One sprinkler drone with a lamp and pollen. Accent: teal.",
+    "description": "Lying across the box: one long watering drone with a row of spray nozzles under its belly, the folded solar-panel grow lamp on its back, mustard pollen drifting from a little cracked bulb it carries."
   },
   "world_seed": {
-    "brief": "Large seed split open, bark and thorns bursting out of the crack. Accent: sage.",
-    "description": "Filling the square box: a large seed split open, rough bark and long thorns bursting out of the crack, a tiny planet of moss caught between them."
+    "brief": "Split seed with a tiny moss planet inside. Accent: sage.",
+    "description": "Filling the square box: a large seed split open, rough bark and long thorns bursting out of the crack, a tiny moss-green planet with one ring floating between them."
   },
   "queen_spore": {
-    "brief": "Large seed bulb crowned by a ring of smaller bulbs, pale and swollen. Accent: sage.",
-    "description": "A large pale seed bulb like those in Venn's visor, crowned by a ring of smaller swollen bulbs."
+    "brief": "Big seed bulb crowned by small bulbs. Accent: sage.",
+    "description": "A large pale seed bulb like those in Venn's visor, crowned by a ring of smaller swollen bulbs, a few round spores floating round it like moons."
   },
   "terrarium_heart": {
-    "brief": "Heart-shaped lab terrarium, glass cracked by the plants pushing out. Accent: sage.",
-    "description": "Lying across the box: a heart-shaped lab terrarium, its glass cracked by moss and tendrils pushing out."
+    "brief": "Heart-shaped terrarium cracked by tendrils. Accent: sage.",
+    "description": "Lying across the box: a heart-shaped lab terrarium with a riveted metal frame and air valve, its glass cracked by moss and pink-tipped tendrils pushing out."
   },
   "bramble_seed": {
-    "brief": "Small spiky seed in a specimen vial. Accent: sage.",
-    "description": "A small spiky seed in a specimen vial from Venn's lab, the cork pushed half out."
+    "brief": "Spiky seed in a specimen vial. Accent: sage.",
+    "description": "A small spiky seed in a specimen vial from Venn's lab, black thorns pushing the cork half out."
   },
   "sap_tap": {
-    "brief": "Lab tap driven into a piece of bark, sap dripping into a beaker. Accent: mustard.",
-    "description": "A lab tap driven into a piece of bark, mustard sap dripping into a small beaker."
+    "brief": "Lab tap in bark, sap floating as balls. Accent: mustard.",
+    "description": "A lab tap driven into a piece of bark, mustard sap leaving it as floating round balls in zero gravity, one caught in a small beaker."
   },
   "snap_sprout": {
-    "brief": "Tiny sprout with a biting mouth, poking out of a seed tray. Accent: sage.",
-    "description": "A tiny sprout with a biting mouth poking out of a seed tray, no eyes."
+    "brief": "Tiny biting sprout in a seed tray cell. Accent: sage.",
+    "description": "A tiny sprout with a biting mouth poking out of one cell of a seed tray, two small leaves like arms, no eyes."
   },
   "bark_shield": {
-    "brief": "Shield of thick bark with a suit patch grown into the middle. Accent: copper.",
-    "description": "Lying across the box: a shield of thick bark, a patch from Venn's suit grown into the middle."
+    "brief": "Bark shield with a suit patch grown in. Accent: copper.",
+    "description": "Lying across the box: a shield of thick bark grown round a round hull plate, a patch from Venn's suit grown into the middle, small shoots at the rim."
   },
   "nectar_flask": {
-    "brief": "Lab flask with golden nectar, a leaf pushed in as the cork. Accent: mustard.",
-    "description": "Upright: a lab flask with golden nectar, a leaf pushed into the neck as a cork."
+    "brief": "Lab flask of nectar with a leaf cork. Accent: mustard.",
+    "description": "Upright: a round-bottomed lab flask of golden nectar, a leaf pushed into the neck as a cork, one nectar drop floating up as a ball."
   },
   "blight_bomb": {
-    "brief": "Rotten swollen fruit used as a bomb, fumes rising. Accent: sage.",
-    "description": "A rotten swollen fruit used as a bomb, a fuse made of a dried stem, sage fumes rising."
+    "brief": "Rotten fruit bomb with a stem fuse. Accent: sage.",
+    "description": "A rotten swollen alien fruit with dark spots, a dried stem as a fuse, sage fumes curling off it as flat wavy shapes."
   },
   "strangler_fig": {
-    "brief": "Fig vines strangling a station pipe until it bends. Accent: sage.",
-    "description": "Along the long box: fig vines strangling a station pipe until it bends, roots coiling round the pipe joints."
+    "brief": "Fig vines strangling a bent station pipe. Accent: sage.",
+    "description": "Along the long box: fig vines strangling a station coolant pipe until it bends, frost crust where the pipe has burst, roots coiling round the pipe joints."
   },
   "ironbark_golem": {
-    "brief": "Small hulking golem of bark and stones, a seed bulb where a head should be. Accent: copper.",
-    "description": "Filling the square box: a small hulking golem of bark and stones, a pale seed bulb where a head should be, no face."
+    "brief": "Hulking golem of bark and asteroid stones. Accent: copper.",
+    "description": "Filling the square box: a small hulking golem of bark and asteroid stones, a pale seed bulb where a head should be, no face, moss on its shoulders."
   },
   "sun_blossom": {
-    "brief": "Big flower whose centre is a cluster of pale seed bulbs, petals like a sun. Accent: mustard.",
-    "description": "Filling the square box: a big flower whose centre is a cluster of pale seed bulbs like those in Venn's visor, petals arranged like a sun in mustard."
+    "brief": "Big flower with petals like a sun corona. Accent: mustard.",
+    "description": "Filling the square box: a big flower whose petals form a sun corona in mustard and coral red, its centre a cluster of pale seed bulbs like those in Venn's visor."
   },
   "thorn_pod": {
-    "brief": "Seed pod covered in hooked thorns. Accent: sage.",
-    "description": "Lying across the box: the Seed Pod covered in hooked thorns from the Bramble Seed."
+    "brief": "Seed Pod covered in hooked thorns. Accent: sage.",
+    "description": "Lying across the box: the split Murk Seed Pod covered in hooked black thorns from the Bramble Seed, the cracked vial still stuck on one thorn."
   },
   "mantrap_pack": {
-    "brief": "Two little snapping offshoots sharing one cracked lab pot. Accent: sage.",
-    "description": "Lying across the box: two little snapping offshoots sharing one cracked lab pot."
+    "brief": "One snapping offshoot with two jaws in one pot. Accent: sage.",
+    "description": "Lying across the box: one snapping offshoot growing two toothy heads from a single stem in one cracked lab pot, no eyes, coral red inside the jaws."
   },
   "living_armor": {
-    "brief": "Suit chest plate overgrown with bark and vines, seams split. Accent: sage.",
-    "description": "The plate fills the top row, the overgrown sleeve drops into the lower left; the lower right cells stay empty. A suit chest plate overgrown with bark and vines, seams split."
+    "brief": "Suit chest plate overgrown with bark. Accent: sage.",
+    "description": "The plate fills the top row, the overgrown sleeve drops into the lower left; the lower right cells stay empty. A space-suit chest plate overgrown with bark and thorny vines, seams split open."
   },
   "jungle_tyrant": {
-    "brief": "Monstrous plant beast of jaws and vine arms, a torn suit glove stuck on one vine. Accent: sage.",
-    "description": "Filling the wide box: a monstrous plant beast of jaws and vine arms, the Strangler Fig's roots as legs, a torn suit glove stuck on one vine."
+    "brief": "Huge plant beast of jaws and vine arms. Accent: sage.",
+    "description": "Filling the wide box: a monstrous plant beast of jaws and vine arms, the Strangler Fig's roots as legs gripping a bent station pipe, three coral red jaws, no eyes, a torn suit glove stuck on one vine."
   },
   "ambrosia": {
-    "brief": "Lab bowl of golden nectar with moss leaves floating in it. Accent: mustard.",
-    "description": "Filling the square box: a lab bowl of golden nectar with moss leaves floating in it, a few drops running down the side."
+    "brief": "Bowl of nectar with floating moss leaves. Accent: mustard.",
+    "description": "Filling the square box: a lab bowl of golden nectar, the liquid rising off it as floating balls, moss leaves with tiny star flowers drifting inside."
   },
   "plague_blossom": {
-    "brief": "Sickly flower puffing toxic pollen, kindly offered on a long stem. Accent: sage.",
-    "description": "Lying across the box: a sickly flower on a long stem, held out like a gift, puffing sage toxic pollen."
+    "brief": "Sickly flower held out like a gift. Accent: sage.",
+    "description": "Lying across the box: a sickly flower on a long stem tied to a rotten fruit bulb, sage toxic pollen puffing from it as flat wavy clouds."
   },
   "space_pup": {
-    "brief": "Shaggy herd pup with big paws, a soft horn stub and a comet-like tail. Accent: mustard.",
-    "description": "A young pup of Quill's herd: shaggy mustard fur, oversized paws, a soft stubby horn on its forehead like a young behemoth, and a bushy tail that streams behind it like a small comet."
+    "brief": "Shaggy herd pup with a comet tail. Accent: mustard.",
+    "description": "Upright: a young pup of Quill's herd, shaggy mustard fur, oversized paws, a soft stubby horn on its forehead like a young behemoth, its bushy tail streaming behind it like a small comet."
   },
   "treat_pouch": {
-    "brief": "Woven pouch of dried berries and roots the herd gathers. Accent: copper.",
-    "description": "A small pouch woven from grass by the herd, open at the top, dried berries and roots spilling out, a tuft of shed fur on the knot."
+    "brief": "Woven grass pouch spilling berries. Accent: copper.",
+    "description": "A small pouch woven from grass by the herd, open at the top, round alien berries floating out of it, a tuft of shed fur on the knot."
   },
   "pet_bed": {
     "brief": "Round woven nest padded with shed fur. Accent: coral red.",
-    "description": "Lying across the box: a round low nest woven from twigs and padded with shed fur, a dent in the middle where an animal slept. Rust-red woven band."
+    "description": "Lying across the box: a round low nest woven from twigs and padded with shed fur, a dent in the middle where an animal slept, a coral red woven band round the rim."
   },
   "pack_lizard": {
-    "brief": "Long low lizard carrying woven bundles on its back. Accent: sage.",
-    "description": "Filling the square box: a big, long, low lizard of the herd walking sideways, woven bundles tied on its back, a calm heavy-lidded eye."
+    "brief": "Long low herd lizard with bundles on its back. Accent: sage.",
+    "description": "Filling the square box: a big long low lizard from a heavy-gravity planet, six thick legs, flat layered rock scales, woven bundles tied on its back, a calm heavy-lidded eye."
   },
   "kibble_sack": {
-    "brief": "Woven sack of dried seeds and roots, a fur tuft on the knot. Accent: copper.",
-    "description": "Upright: a woven sack of dried seeds and roots, tied with cord, a tuft of fur on the knot, a few seeds spilt at the bottom."
+    "brief": "Woven sack of dried seeds and roots. Accent: copper.",
+    "description": "Upright: a woven sack of dried star-shaped seeds and roots, tied with a braided cord, a tuft of fur on the knot, a few seeds floating out of the top."
   },
   "burrow_rat": {
-    "brief": "Rat with an asteroid-rock armoured back and two teal crystal front teeth. Accent: copper.",
-    "description": "A rat peeking out of a round hole in the ground, its back armoured with small grey asteroid-rock plates, strong digging claws and two big teal crystal front teeth."
+    "brief": "Rat with asteroid-plate armour and crystal teeth. Accent: copper.",
+    "description": "A rat peeking out of a round hole in a small asteroid, its back armoured with grey rock plates, strong digging claws and two big teal crystal front teeth."
   },
   "hatchery": {
-    "brief": "Salvaged egg incubator, its lid replaced by a woven nest of eggs under shed fur. Accent: mustard.",
-    "description": "Filling the square box: a dented salvaged incubator box with a small heater coil and a dial, its broken lid replaced by a woven nest full of round eggs, half covered by shed fur. Mustard on the eggs' speckles, cords tying the nest to the metal."
+    "brief": "Salvaged incubator with a woven nest of eggs. Accent: mustard.",
+    "description": "Filling the square box: a dented salvaged incubator box with a heater coil and a dial, its broken lid replaced by a woven nest of round speckled eggs, half covered by shed fur, cords tying the nest to the metal."
   },
   "star_falcon": {
-    "brief": "Falcon with star-speckled wing tips, diving. Accent: mustard.",
-    "description": "Upright: a falcon diving head-first, wings folded back, wing tips speckled with small mustard stars."
+    "brief": "Falcon diving with star-speckled wings. Accent: mustard.",
+    "description": "Upright: a falcon diving head-first, wings folded back like a comet, wing tips speckled with small mustard stars, a faint dust trail behind it."
   },
   "calling_shell": {
-    "brief": "Spiral sea shell on a cord, its mouth worn smooth from humming into it. Accent: copper.",
-    "description": "A spiral sea shell on a braided cord, its mouth worn smooth from humming into it. Quill calls the herd with it; no whistle."
+    "brief": "Spiral shell on a braided cord. Accent: copper.",
+    "description": "A spiral shell from a tide planet on a braided cord, its spiral shaped like a small galaxy, its mouth worn smooth from humming into it."
   },
   "tusked_behemoth": {
-    "brief": "Huge shaggy beast with four tusks, low and heavy, a small woven nest between its horns. Accent: copper.",
-    "description": "Quill's mount, the same beast as in the hero design. A huge, low, shaggy body filling the box sideways, head to one side with four curved tusks under a heavy brow and tiny eyes. Between its horns an empty woven nest (Quill herself is not in the picture). Matted fur in heavy clumps, two small animals clinging to its flank."
+    "brief": "Quill's huge shaggy mount with four tusks. Accent: copper.",
+    "description": "Quill's mount, the same beast as in the hero design. A huge low shaggy body filling the box sideways, four curved tusks under a heavy brow, tiny eyes, an empty woven nest between its horns, matted fur in heavy clumps, moss and small stones caught in it."
   },
   "hive_queen": {
-    "brief": "Furry insect queen with a crown-shaped head, tiny workers crawling round her. Accent: mustard.",
-    "description": "Filling the square box: a furry insect queen seen from above, her head shaped like a crown, folded wings and a striped body, a ring of tiny workers crawling round her."
+    "brief": "One furry insect queen with a crown head. Accent: mustard.",
+    "description": "Filling the square box: one big furry insect queen seen from above, her head shaped like a crown, folded wings like solar sails, a striped body, alone."
   },
   "star_hound": {
-    "brief": "Shaggy hound with star-speckled fur. Accent: teal.",
-    "description": "Lying across the box: the Space Pup grown into a shaggy hound with the Burrow Rat's long front teeth, star-speckled teal fur."
+    "brief": "Space Pup grown into a star-speckled hound. Accent: teal.",
+    "description": "Lying across the box: the Space Pup grown into a shaggy hound with the Burrow Rat's long teal crystal teeth and rock plates on its back, star-speckled teal fur."
   },
   "sun_eagle": {
-    "brief": "Eagle with a sun-ray crest of stiff feathers. Accent: mustard.",
-    "description": "The spread wings fill the top row, the body and talons drop into the lower left; the lower right stays empty. The Star Falcon grown into an eagle with a crest of stiff feathers like sun rays."
+    "brief": "Star Falcon grown into a sun-crested eagle. Accent: mustard.",
+    "description": "The spread wings fill the top row, the body and talons drop into the lower left; the lower right stays empty. The Star Falcon grown into an eagle with a crest of stiff feathers like sun rays, a targeting lens worn over one eye."
   },
   "cozy_den": {
-    "brief": "Den dug into a hill, lined with shed fur and a woven nest inside. Accent: coral red.",
-    "description": "Filling the square box: a den dug into a small hill, lined with shed fur, the Pet Bed's nest visible inside and the Kibble Sack leaning at the entrance."
+    "brief": "Den dug into a small asteroid, lined with fur. Accent: coral red.",
+    "description": "Filling the square box: a den dug into a small round asteroid, lined with shed fur, the woven Pet Bed visible inside and the Kibble Sack leaning at the entrance."
   },
   "shell_dragon": {
-    "brief": "Heavy dragon with a turtle-like shell, moss on top. Accent: copper.",
-    "description": "Filling the square box: the Pack Lizard grown into a big heavy dragon with the Rock Crab's lumpy shell on its back, moss on top, thick legs planted wide."
+    "brief": "Pack Lizard grown big with a crab shell. Accent: copper.",
+    "description": "Filling the square box: the Pack Lizard grown into a big heavy dragon with the Rock Crab's lumpy asteroid shell on its back, moss on top, six thick legs planted wide."
   },
   "celestial_chimera": {
-    "brief": "Beast with a lion head, eagle wings and a star tail, wild-maned. Accent: mustard.",
-    "description": "The body fills the upper four cells, the star tail drops into the lower left; the lower right stays empty. A beast with the Star Hound's wild mane and the Sun Eagle's wings, its tail ending in a small star."
+    "brief": "Beast with a hound mane, eagle wings and star tail. Accent: mustard.",
+    "description": "The body fills the upper four cells, the star tail drops into the lower left; the lower right stays empty. A beast with the Star Hound's wild mane and the Sun Eagle's wings, its tail ending in a small flat star."
   },
   "rat_pack": {
-    "brief": "Three rats sitting on top of each other. Accent: copper.",
-    "description": "The rats fill the top row and the lower left cell, the lower right stays empty. Three Burrow Rats sitting on top of each other, the top one holding a seed from the Kibble Sack."
+    "brief": "One fat burrow rat hugging a big seed. Accent: copper.",
+    "description": "The rat fills the top row and the lower left cell, the lower right stays empty. One fat Burrow Rat with rock plates and crystal teeth, curled round a big seed from the Kibble Sack, cheeks stuffed."
   },
   "elder_tusk": {
-    "brief": "Old cracked tusk tip on a braided cord, scratched with herd marks. Accent: coral red.",
-    "description": "The cracked tip of an old herd tusk on a braided cord, scratched with herd marks. A coral red bead on the cord."
+    "brief": "Cracked old tusk tip on a braided cord. Accent: coral red.",
+    "description": "The cracked tip of an old herd tusk on a braided cord, scratched with herd marks and a small star map, a coral red bead on the cord."
   },
   "herd_heart": {
-    "brief": "Smooth stone heart wrapped in braided fur, scratched with animal outlines. Accent: mustard.",
-    "description": "Lying across the box: a smooth stone heart wrapped in braided fur, scratched with simple animal outlines."
+    "brief": "Stone heart wrapped in braided fur. Accent: mustard.",
+    "description": "Lying across the box: a smooth meteorite stone shaped like a heart, wrapped in braided fur, scratched with simple animal outlines."
   },
   "ancient_egg": {
-    "brief": "Large stone egg with old carvings, tiny creatures hatching from cracks. Accent: cream.",
-    "description": "Filling the square box: a large stone egg with old carvings spiralling round it, many small cracks with tiny creatures pushing out of them."
+    "brief": "Huge carved stone egg, one claw breaking out. Accent: cream.",
+    "description": "Filling the square box: a large stone egg with old carvings spiralling round it like orbits, cracked open at the top where one small claw pushes out."
   },
   "feeding_bowl": {
-    "brief": "Hollow half of a big shell, filled with berries and roots. Accent: coral red.",
-    "description": "The hollow half of a big shell used as a bowl, filled with berries and roots. Rust-red berries."
+    "brief": "Half shell used as a bowl of berries. Accent: coral red.",
+    "description": "The hollow half of a big alien shell used as a bowl, filled with coral red berries and roots, one berry floating above it."
   },
   "guard_goose": {
-    "brief": "Angry space goose, wings spread, hissing. Accent: cream.",
-    "description": "An angry space goose, wings spread wide, neck stretched forward, beak open in a hiss."
+    "brief": "Angry goose with frost-feather wings. Accent: cream.",
+    "description": "An angry goose from an ice planet, wings spread wide with frosted feather tips, neck stretched forward, beak open in a hiss, wide snowshoe feet."
   },
   "grooming_comb": {
-    "brief": "Wide bone comb with tufts of fur caught in its teeth. Accent: coral red.",
+    "brief": "Wide bone comb with shed fur. Accent: coral red.",
     "description": "A wide bone comb with tufts of shed fur caught in its teeth, a coral red cord on its handle."
   },
   "war_saddle": {
-    "brief": "Woven saddle pad padded with fur, tusk-tip studs on the edge. Accent: copper.",
-    "description": "A woven saddle pad padded with fur, tusk tips as studs along the edge."
+    "brief": "Woven saddle pad with tusk-tip studs. Accent: copper.",
+    "description": "A woven saddle pad padded with fur, tusk tips as studs along the edge, braided straps hanging down."
   },
   "moon_bear": {
-    "brief": "Big shaggy bear with a crescent mark on its chest. Accent: cream.",
-    "description": "Filling the square box: a big shaggy bear sitting up, a cream crescent mark on its chest, small eyes and a heavy brow."
+    "brief": "Big shaggy bear with a crescent mark. Accent: cream.",
+    "description": "Filling the square box: a big shaggy bear from a moon with long nights, sitting up, a cream crescent mark on its chest, huge pale night eyes, a heavy brow."
   },
   "glow_swarm": {
-    "brief": "Swarm of fireflies, their lit tails drawn as flat mustard dots. Accent: mustard.",
-    "description": "Lying across the box: a loose swarm of fireflies, their lit tails drawn as flat mustard dots, bodies as tiny ink shapes."
+    "brief": "One firefly with a big lit tail. Accent: mustard.",
+    "description": "Lying across the box: one big furry firefly from a dark planet, its tail a round flat mustard lamp, wings like small solar sails, room around it."
   },
   "thunder_ram": {
-    "brief": "Ram with curled horns, ink zig-zag sparks between them. Accent: mustard.",
-    "description": "Filling the square box: a ram lowering its head, curled horns, flat mustard zig-zag sparks crackling between them, shaggy coat."
+    "brief": "Ram with sparks crackling between horns. Accent: mustard.",
+    "description": "Filling the square box: a ram from a storm planet lowering its head, curled horns, flat mustard zig-zag sparks between them, a shaggy coat standing on end."
   },
   "nursery": {
-    "brief": "Old warming cradle machine, padded by the herd, young animals asleep in a heap. Accent: mustard.",
-    "description": "Filling the square box: an old rocking warming cradle of riveted metal with a small heater vent and a crank, padded with woven grass and shed fur by the herd, young animals asleep in a heap inside, one pup's ears sticking out."
+    "brief": "Salvaged warming cradle with one sleeping pup. Accent: mustard.",
+    "description": "Filling the square box: an old rocking warming cradle of riveted metal with a heater vent and a crank, padded with woven grass and shed fur by the herd, one young pup asleep inside, ears sticking out."
   },
   "sky_serpent": {
-    "brief": "Long flying serpent with fins and a shaggy mane. Accent: teal.",
-    "description": "Along the long box: a long flying serpent with fins along its back and a shaggy mane, its body in one smooth wave, teal scales."
+    "brief": "Long flying serpent with a mane, like a comet. Accent: teal.",
+    "description": "Along the long box: a long serpent swimming through space, fins along its back like solar sails, a shaggy mane, teal scales, its tail fading into a comet's dust trail."
   },
   "guard_hound": {
-    "brief": "Shaggy hound standing guard, teeth bared. Accent: coral red.",
-    "description": "Lying across the box: the Space Pup grown into a hound standing guard, teeth bared, the Guard Goose's feathers tucked in its collar of fur."
+    "brief": "Space Pup grown into a hound standing guard. Accent: coral red.",
+    "description": "Lying across the box: the Space Pup grown into a hound standing guard, teeth bared, the Guard Goose's frosted feathers tucked in its collar of fur."
   },
   "armored_bear": {
-    "brief": "Bear wearing a woven saddle and plates of bark and bone. Accent: copper.",
-    "description": "Filling the square box: the Moon Bear wearing the War Saddle, plates of bark and bone strapped round its chest, crescent mark still showing."
+    "brief": "Moon Bear wearing the War Saddle and plates. Accent: copper.",
+    "description": "Filling the square box: the Moon Bear wearing the woven War Saddle, plates of bark and bone strapped round its chest, the crescent mark still showing."
   },
   "juggernaut": {
-    "brief": "Massive horned beast charging, small animals clinging to its fur. Accent: coral red.",
-    "description": "Filling the wide box: the Tusked Behemoth charging with the Thunder Ram's curled horns, small animals clinging to its fur, dust kicked up as flat strokes."
+    "brief": "Tusked Behemoth charging with ram horns. Accent: coral red.",
+    "description": "Filling the wide box: the Tusked Behemoth charging with the Thunder Ram's curled horns, flat mustard sparks between them, dust kicked up as flat strokes."
   },
   "banquet_trough": {
-    "brief": "Long hollow log filled with berries, roots and seeds. Accent: copper.",
-    "description": "Lying across the box: a long hollow log filled with berries, roots and seeds, the Feeding Bowl's shell at one end."
+    "brief": "Long hollow log full of berries and seeds. Accent: copper.",
+    "description": "Lying across the box: a long hollow log filled with berries, roots and star-shaped seeds, the alien Feeding Bowl's shell at one end."
   },
   "swarm_cloud": {
-    "brief": "Cloud of furry insects with a queen in the middle. Accent: mustard.",
-    "description": "Filling the square box: a cloud of furry insects swirling, the Hive Queen in the middle with her crown-shaped head, lit tails as mustard dots."
+    "brief": "Hive Queen in a swirl of dust and dots. Accent: mustard.",
+    "description": "Filling the square box: the Hive Queen with her crown-shaped head flying in the middle of a spiral of flat mustard dots like a small galaxy, alone."
   },
   "pack_bond": {
-    "brief": "Two braided fur cords knotted together with a bead. Accent: coral red.",
-    "description": "Two braided fur cords knotted together, the Calling Shell on one end and a coral red bead on the other."
+    "brief": "Two braided fur cords knotted together. Accent: coral red.",
+    "description": "Two braided fur cords knotted together, the spiral Calling Shell on one end and a coral red bead on the other."
   },
   "welding_arm": {
-    "brief": "Rook's tool leg with a welding torch at the end, scorched and patched. Accent: mustard.",
-    "description": "One of Rook's six tool legs as a spare part: a jointed metal limb standing upright in the box, torch at the top end with a short flat flame. Mismatched patch plates, scorch marks round the tip, a loose cable along the joint."
+    "brief": "One of Rook's tool legs as a welding arm. Accent: mustard.",
+    "description": "Upright: one of Rook's six tool legs as a spare part, a jointed metal limb with a welding torch at the top end, its tip hot coral red, mismatched patch plates, a loose cable along the joint, a magnet foot at the bottom."
   },
   "spare_parts": {
-    "brief": "Little hoard of gears, bolts and a spring, kept \"for later\". Accent: copper.",
-    "description": "A little hoard of gears, bolts and a spring, kept for later, a bit of wire tying them together."
+    "brief": "Little hoard of floating gears and bolts. Accent: copper.",
+    "description": "A little hoard of gears, bolts and a spring held together by one twist of wire, a few loose bolts floating round it in zero gravity."
   },
   "circuit_board": {
-    "brief": "Salvaged circuit board with chips and traces, one corner burnt. Accent: sage.",
-    "description": "A salvaged circuit board with chips and traces in sage, one corner burnt black."
+    "brief": "Satellite circuit board, one corner burnt. Accent: sage.",
+    "description": "A circuit board pulled out of a satellite, chips and traces in sage, one corner burnt black, a tiny solar cell still stuck on it."
   },
   "conveyor_belt": {
-    "brief": "Short conveyor belt pieced together from wreck parts, a bolt riding on it. Accent: copper.",
-    "description": "Lying across the box: a short conveyor belt pieced together from wreck parts, one bolt riding on it, rollers of different sizes."
+    "brief": "Short conveyor belt pieced from wreck parts. Accent: copper.",
+    "description": "Lying across the box: a short conveyor belt pieced together from wreck parts, rollers of different sizes, magnet strips holding one bolt on the belt."
   },
   "toolbox": {
-    "brief": "Dented metal toolbox, one hinge replaced with wire. Accent: coral red.",
-    "description": "Lying across the box: a dented metal toolbox, coral red paint chipped, one hinge replaced with a twist of wire."
+    "brief": "Dented toolbox with magnet feet. Accent: coral red.",
+    "description": "Lying across the box: a dented coral red toolbox on magnet feet, one hinge replaced with a twist of wire, a tether clip on the handle so it cannot drift away."
   },
   "magnet_crane": {
-    "brief": "Crane hook with a big horseshoe magnet, scrap hanging off it. Accent: coral red.",
-    "description": "Lying across the box: a short crane arm with a big coral red horseshoe magnet on its hook, a scrap plate and two bolts hanging off it."
+    "brief": "Crane arm with a big horseshoe magnet. Accent: coral red.",
+    "description": "Lying across the box: a short crane arm from a station dock with a big coral red horseshoe magnet on its hook, a scrap hull plate and two bolts stuck to it."
   },
   "junk_cannon": {
-    "brief": "Cannon built from pipes and a bucket, held with clamps. Accent: copper.",
-    "description": "Lying across the box: a cannon built from pipes and an old bucket, held with clamps, a fuse of copper wire."
+    "brief": "Cannon built from pipes and a fuel tank. Accent: copper.",
+    "description": "Lying across the box: a cannon built from station pipes and an empty fuel tank, held with clamps, a copper wire coil at the breech."
   },
   "recycler": {
-    "brief": "Boxy scrap machine with a hopper and a little mustard lamp like an eye. Accent: sage.",
-    "description": "Lying across the box: a boxy scrap machine with a hopper on top, a small mustard lamp on the front like Rook's lantern eye, a chute below."
+    "brief": "Boxy scrap machine with a lamp eye. Accent: sage.",
+    "description": "Lying across the box: a boxy scrap machine with a hopper on top, a small mustard lamp on the front like Rook's lantern eye, neat cubes of pressed scrap falling out of a chute."
   },
   "tesla_coil": {
-    "brief": "Coil tower made of salvaged wire with a ball on top and ink zig-zag sparks. Accent: mustard.",
-    "description": "Upright: a tower of salvaged wire coils with a metal ball on top, flat mustard zig-zag sparks around the ball."
+    "brief": "Tower of salvaged wire coils with a ball on top. Accent: mustard.",
+    "description": "Upright: a tower of salvaged copper wire coils on a satellite base, a metal ball on top, flat mustard zig-zag sparks around the ball."
   },
   "assembly_core": {
-    "brief": "Cube core with small tool arms folding around it. Accent: mustard.",
-    "description": "A cube core with small tool arms folding round it, like Rook's legs, a mustard light on top."
+    "brief": "Cube core with tool arms folded round it. Accent: mustard.",
+    "description": "A cube core with small tool arms folding round it like Rook's legs, a claw, a drill and a wrench, a mustard lamp on top."
   },
   "plasma_welder": {
-    "brief": "Welding gun with a plasma tip and a scrap guard. Accent: teal.",
-    "description": "Upright: Rook's Welding Arm rebuilt into a welding gun, a teal plasma tip and a guard of scrap metal at the grip."
+    "brief": "Welding Arm rebuilt into a welding gun. Accent: teal.",
+    "description": "Upright: Rook's Welding Arm rebuilt into a welding gun, the torch tip hot teal, a guard bent from a scrap hull plate at the grip."
   },
   "scrap_howitzer": {
-    "brief": "Big gun of welded scrap with a funnel barrel, bolted to a piece of satellite housing. Accent: copper.",
+    "brief": "Big welded scrap gun on a satellite housing. Accent: copper.",
     "description": "Filling the square box: a big gun of welded scrap with a funnel barrel, bolted to a curved piece of satellite housing like Rook's shell, copper wire around the breech."
   },
   "logic_core": {
-    "brief": "Salvaged chip with a battery taped on and a lantern-eye sticker. Accent: teal.",
-    "description": "A salvaged chip with the Power Cell taped on, a round sticker shaped like Rook's lantern eye. Teal traces."
+    "brief": "Salvaged chip with a power cell taped on. Accent: teal.",
+    "description": "A salvaged chip with a star-window power cell taped on, a round sticker shaped like Rook's lantern eye, teal traces."
   },
   "salvage_rig": {
-    "brief": "Magnet crane on a recycler base, both welded together. Accent: coral red.",
+    "brief": "Magnet Crane welded on top of the Recycler. Accent: coral red.",
     "description": "Filling the square box: the Magnet Crane welded on top of the Recycler, a scrap plate hanging from the magnet, the mustard lamp-eye still on the front."
   },
   "arc_forge": {
-    "brief": "Welding gun wrapped in a coil, sparks drawn as ink zig-zags. Accent: mustard.",
-    "description": "Filling the square box: the Plasma Welder wrapped in the Tesla Coil's wire, a short flame at its tip, flat mustard sparks as ink zig-zags."
+    "brief": "Plasma Welder wrapped in Tesla Coil wire. Accent: mustard.",
+    "description": "Filling the square box: the Plasma Welder wrapped in the Tesla Coil's copper wire, its tip hot teal, flat mustard sparks as ink zig-zags between the coils."
   },
   "factory_line": {
-    "brief": "Conveyor belt with tool arms and a toolbox at the end. Accent: copper.",
-    "description": "Lying across the box: the Conveyor Belt with two of Rook's spare tool arms bolted above it and the Toolbox at the end."
+    "brief": "Conveyor belt with tool arms and a toolbox. Accent: copper.",
+    "description": "Lying across the box: the Conveyor Belt with two of Rook's spare tool arms bolted above it and the coral red Toolbox at the end."
   },
   "master_blueprint": {
-    "brief": "Rolled blueprint of a satellite shell with a pencil tucked in. Accent: teal.",
-    "description": "A rolled blueprint half open, showing the outline of a satellite shell like Rook's, a pencil tucked into the roll. Teal paper."
+    "brief": "Rolled blueprint showing a satellite shell. Accent: teal.",
+    "description": "A rolled teal blueprint half open, showing the outline of a satellite shell like Rook's, a pencil tucked into the roll, a magnet holding the corner."
   },
   "perpetual_engine": {
-    "brief": "Small engine with a flywheel, patched from three different wrecks. Accent: copper.",
-    "description": "Lying across the box: a small engine with a big flywheel, patched together from three different wrecks, each part a different metal."
+    "brief": "Engine with a flywheel from three wrecks. Accent: copper.",
+    "description": "Lying across the box: a small engine with a big flywheel, patched together from three different wrecks, each part a different metal, a tiny star in a glass jar as its fuel."
   },
   "nanite_swarm": {
-    "brief": "Cloud of tiny robots, each a minute copy of Rook, forming a cube. Accent: teal.",
-    "description": "Lying across the box: a cloud of tiny robots, each a minute copy of Rook with a satellite shell, forming a rough cube."
+    "brief": "Cube built of tiny bolt-sized robots. Accent: teal.",
+    "description": "Lying across the box: a rough cube built of tiny bolt-sized robots, each with a little round satellite shell, a few breaking off at one corner like crumbs."
   },
   "capacitor_bank": {
-    "brief": "Row of three fat salvaged capacitors on a scrap board. Accent: mustard.",
-    "description": "Lying across the box: three fat salvaged capacitors in a row on a scrap board, mustard bands round each."
+    "brief": "Three fat capacitors on a scrap board. Accent: mustard.",
+    "description": "Lying across the box: three fat salvaged capacitors in a row on a scrap board, mustard bands round each, a flat zig-zag spark jumping between two."
   },
   "bolt_thrower": {
-    "brief": "Small crossbow built from a tool leg, firing bolts. Accent: copper.",
-    "description": "Upright: a small crossbow built from one of Rook's tool legs, a bolt loaded, the string made of copper wire."
+    "brief": "Small crossbow built from a tool leg. Accent: copper.",
+    "description": "Upright: a small crossbow built from one of Rook's tool legs, the bow arms cut from a satellite antenna, the string made of copper wire, nothing loaded."
   },
   "grav_clamp": {
-    "brief": "Heavy clamp with a gravity ring symbol, taken from a docking arm. Accent: teal.",
-    "description": "A heavy clamp taken from a docking arm, a teal gravity ring symbol on its jaw."
+    "brief": "Heavy clamp from a docking arm. Accent: teal.",
+    "description": "A heavy clamp taken from a station docking arm, teal gravity rings drawn round its jaws."
   },
   "shield_emitter": {
-    "brief": "Small dish emitter cut from a satellite antenna. Accent: teal.",
-    "description": "A small dish emitter cut from a satellite antenna like the ones on Rook's shell, a teal ring of force in front."
+    "brief": "Small dish emitter with a ring of force. Accent: teal.",
+    "description": "A small emitter cut from a satellite antenna like the ones on Rook's shell, a flat teal ring of force in front of it."
   },
   "turbo_fan": {
-    "brief": "Cooling fan from a wreck with bent blades. Accent: copper.",
-    "description": "A cooling fan from a wreck with bent copper blades in a square frame."
+    "brief": "Wreck cooling fan with bent copper blades. Accent: copper.",
+    "description": "A cooling fan from a ship wreck with bent copper blades in a square frame, one blade replaced by a piece of solar panel."
   },
   "scrap_golem": {
-    "brief": "Walking robot of scrap with a single mustard lantern eye. Accent: copper.",
-    "description": "Lying across the box: a walking robot of scrap, a single mustard lantern eye like Rook's, mismatched legs."
+    "brief": "Walking scrap robot with a lantern eye. Accent: copper.",
+    "description": "Lying across the box: a walking robot of scrap and a fuel tank body, a single mustard lantern eye like Rook's, mismatched magnet-foot legs."
   },
   "rail_driver": {
-    "brief": "Long rail gun made from two salvaged copper rails. Accent: copper.",
-    "description": "Along the long box: a long rail gun made from two salvaged copper rails, bound together with wire and clamps."
+    "brief": "Long rail gun from two salvaged rails. Accent: copper.",
+    "description": "Along the long box: a long rail gun made from two salvaged copper docking rails, bound together with wire and clamps, a fat capacitor at the back."
   },
   "bastion_frame": {
-    "brief": "Heavy armour frame of hull plates, like a bigger shell. Accent: copper.",
-    "description": "Filling the square box: a heavy armour frame of hull plates shaped like a bigger satellite shell for Rook, a hatch in the middle."
+    "brief": "Heavy hull-plate armour like a big shell. Accent: copper.",
+    "description": "Filling the square box: a heavy armour frame of hull plates and heat-shield tiles, shaped like a bigger satellite shell for Rook, a porthole in the middle."
   },
   "quantum_forge": {
-    "brief": "Anvil inside an atom-shaped cage of bent rails. Accent: mustard.",
-    "description": "Filling the square box: an anvil inside an atom-shaped cage of bent rails, mustard sparks where the rails cross."
+    "brief": "Anvil inside an atom-shaped cage of rails. Accent: mustard.",
+    "description": "Filling the square box: an anvil cut from a hull block inside an atom-shaped cage of bent docking rails, a tiny mustard star as the nucleus above the anvil."
   },
   "rivet_cannon": {
-    "brief": "Big rivet gun on a three-legged stand. Accent: copper.",
-    "description": "Upright through the tall box: a big rivet gun on a three-legged stand, the legs taken from the Bolt Thrower and the Welding Arm."
+    "brief": "Rivet gun on a three-legged stand. Accent: copper.",
+    "description": "Upright through the tall box: a big rivet gun on a three-legged stand, the legs taken from the Bolt Thrower and the Welding Arm, a belt of rivets hanging from the side."
   },
   "dynamo": {
-    "brief": "Generator with a spinning drum and loose wires. Accent: mustard.",
-    "description": "Lying across the box: a generator with a spinning drum, the Turbo Fan on one side, loose wires to the Capacitor Bank."
+    "brief": "Generator drum with the Turbo Fan on its side. Accent: mustard.",
+    "description": "Lying across the box: a generator with a big drum, the Turbo Fan on one side, loose wires running to the Capacitor Bank."
   },
   "bulwark_array": {
-    "brief": "Row of dish emitters on a scrap frame. Accent: teal.",
-    "description": "Filling the square box: a row of dish emitters on the Bastion Frame, each a Shield Emitter, teal rings of force overlapping."
+    "brief": "Row of dish emitters on the Bastion Frame. Accent: teal.",
+    "description": "Filling the square box: three dish emitters on the hull-plate Bastion Frame, flat teal rings of force overlapping in front."
   },
   "storm_driver": {
-    "brief": "Rail gun with ink storm lines and zig-zag sparks around the barrel. Accent: mustard.",
-    "description": "The rail gun runs along the top row, a battery box hangs in the lower left; the lower right cells stay empty. The Rail Driver with the Dynamo strapped under it, flat mustard sparks around the barrel."
+    "brief": "Rail Driver with the Dynamo strapped under it. Accent: mustard.",
+    "description": "The rail gun runs along the top row, a battery box hangs in the lower left; the lower right cells stay empty. The Rail Driver with the Dynamo strapped under it, flat mustard sparks round the rails."
   },
   "junk_titan": {
-    "brief": "Huge robot made of scrap with a satellite housing on its back. Accent: copper.",
-    "description": "Filling the square box: a huge robot made of scrap, a curved satellite housing on its back like Rook's shell, Spare Parts sticking out of every joint."
+    "brief": "Huge scrap robot with a satellite shell. Accent: copper.",
+    "description": "Filling the square box: a huge robot made of scrap, a curved satellite housing on its back like Rook's shell, spare parts sticking out of every joint, one mustard lamp eye."
   },
   "gravity_well": {
-    "brief": "Ring machine pulling small bolts into its middle. Accent: teal.",
-    "description": "Lying across the box: a ring machine on the Magnet Crane's arm, small bolts being pulled into its middle, teal rings."
+    "brief": "Ring machine pulling bolts into its middle. Accent: teal.",
+    "description": "Lying across the box: a ring machine on the Magnet Crane's arm, small bolts spiralling into its dark middle like into a tiny black hole, teal rings."
   },
   "sun_shard": {
-    "brief": "Broken piece of a dying sun, cracked flat mustard and rust, wavy heat lines. Accent: mustard.",
-    "description": "A broken piece of a dying sun, cracked flat mustard and rust, wavy heat lines rising, no glow."
+    "brief": "Shard of a dying star wrapped in moth silk. Accent: mustard.",
+    "description": "A broken shard of a dying star, flat mustard and coral red with black cracks, one end wrapped in pale moth silk as a grip, wavy heat lines rising."
   },
   "prayer_bell": {
-    "brief": "Small iron bell on a wrist cord, like the one Ysel wears. Accent: mustard.",
-    "description": "A small iron bell on a wrist cord, the same as the one Ysel wears, a mustard clapper."
+    "brief": "Bronze bell like the one Ysel holds. Accent: mustard.",
+    "description": "A small bronze bell like the one Ysel holds in her lower hand, a star-shard bead as its clapper, hanging from a cord of moth silk."
   },
   "eclipse_veil": {
-    "brief": "Heavy dark veil cloth with a coral red band and a black disc stitched on. Accent: cream.",
-    "description": "Lying across the box: a heavy dark veil cloth of Ysel's order with a coral red band, a black disc stitched on, folded once."
+    "brief": "Folded night-blue veil with an eclipse ring. Accent: cream.",
+    "description": "Lying across the box: a folded veil of night-blue cloth from Ysel's order, a gold band of sun and moon phases along its edge, an eclipse ring stitched in the middle."
   },
   "sundial": {
-    "brief": "Iron sundial whose shadow points at a cracked star. Accent: copper.",
-    "description": "A small iron sundial whose shadow points at a cracked star cut into the plate."
+    "brief": "Moth-wing sundial casting a star shadow. Accent: copper.",
+    "description": "A small bronze sundial shaped like an open moth wing, its pointer a feathered antenna, its shadow falling on a cracked star mark."
   },
   "flare_catcher": {
-    "brief": "Bent iron ring on a pole catching a curling flare. Accent: mustard.",
-    "description": "Lying across the box: a bent iron ring on a pole catching a curling flare, the flare drawn as a flat mustard ribbon."
+    "brief": "Wing-shaped hoop catching a flare ribbon. Accent: mustard.",
+    "description": "Lying across the box: a bronze hoop strung like a moth wing on a pole, catching a curling solar flare drawn as a flat mustard ribbon."
   },
   "ember_censer": {
-    "brief": "Hanging iron censer with embers and wavy heat lines. Accent: coral red.",
-    "description": "Upright: a hanging iron censer on chains with embers inside, wavy heat lines rising from its lid."
+    "brief": "Hanging censer shaped like a cocoon. Accent: coral red.",
+    "description": "Upright: a hanging bronze censer shaped like a moth cocoon on chains, embers inside, wavy heat lines rising from its lid."
   },
   "corona_staff": {
-    "brief": "Staff topped by an open iron cage holding a cracked sun fragment. Accent: mustard.",
-    "description": "Upright staff of Ysel's order: a plain dark iron shaft with a coral red band, crowned by an open cage of bent iron rings like her own reliquary. Inside floats a cracked sun piece, flat mustard with black cracks and wavy heat lines."
+    "brief": "Staff crowned by eclipse rings around a sun piece. Accent: mustard.",
+    "description": "Upright through the tall box: a staff of Ysel's order, dark shaft with a coral red band, crowned by nested eclipse rings, a cracked sun piece floating inside, flat mustard with black cracks."
   },
   "comet_rosary": {
-    "brief": "Rosary of small stones with one comet-shaped bead. Accent: cream.",
-    "description": "Along the long box: a rosary of small round stones like the ones on Ysel's belt, one bead shaped like a comet."
+    "brief": "String of star-shard beads, one a comet. Accent: cream.",
+    "description": "Along the long box: a string of star-shard beads like the one in Ysel's hand, one bead shaped like a comet with a short tail, a small bronze bell at the end."
   },
   "dawn_chime": {
-    "brief": "Iron chime of hanging tubes cut with sun rays. Accent: mustard.",
-    "description": "An iron chime of hanging tubes, each tube cut with small sun rays."
+    "brief": "Chime of bronze tubes with sun rays. Accent: mustard.",
+    "description": "A bronze chime of hanging tubes under a small moth-wing roof, each tube cut with small sun rays."
   },
   "red_giant_heart": {
-    "brief": "Swollen red star in a cage of bent iron rings, cracks widening. Accent: coral red.",
-    "description": "Filling the square box: a swollen coral red star in a cage of bent iron rings like a reliquary, its cracks widening, heat drawn as wavy lines."
+    "brief": "Swollen red star held by eclipse rings. Accent: coral red.",
+    "description": "Filling the square box: a swollen coral red star held in nested bronze eclipse rings like a reliquary, its cracks widening, a singed moth wing scale stuck to one ring, heat as wavy lines."
   },
   "collapse_engine": {
-    "brief": "Iron machine with a cracked star collapsing into its core. Accent: coral red.",
-    "description": "Lying across the box: an iron machine with a cracked star collapsing into its core, pieces falling inward."
+    "brief": "Machine with a star collapsing into its core. Accent: coral red.",
+    "description": "Lying across the box: a bronze machine of the order with moth-wing vents, a cracked star collapsing into its round core, pieces falling inward in a spiral."
   },
   "sunblade": {
-    "brief": "Short iron sword with a sun shard set in the hilt. Accent: mustard.",
-    "description": "Upright: a short iron sword of the order, the Sun Shard set in the hilt, the Crystal Shard ground into its edge."
+    "brief": "Short sword with the Sun Shard in its hilt. Accent: mustard.",
+    "description": "Upright: a short sword of the order, the Sun Shard set in the hilt with moth silk, the Crystal Shard ground into its edge."
   },
   "chime_of_hours": {
-    "brief": "Iron bell with a sundial on top. Accent: mustard.",
-    "description": "Lying across the box: the Prayer Bell with the Sundial fixed on top as its crown."
+    "brief": "Prayer Bell crowned by the wing sundial. Accent: mustard.",
+    "description": "Lying across the box: the bronze Prayer Bell with the moth-wing Sundial fixed on top as its crown."
   },
   "helios_rod": {
-    "brief": "Long iron rod topped by a small burning sun in rings. Accent: mustard.",
-    "description": "Upright through the tall box: the Corona Staff grown longer, the Ember Censer hanging from its top cage, a small burning sun inside."
+    "brief": "Corona Staff with the censer hanging from it. Accent: mustard.",
+    "description": "Upright through the tall box: the Corona Staff grown longer, the cocoon Ember Censer hanging from its ring crown, a small sun burning inside."
   },
   "umbral_mantle": {
-    "brief": "Heavy dark robe of the order with coral red bands, its shadow longer than it should be. Accent: cream.",
-    "description": "Filling the square box: the heavy dark robe of Ysel's order with coral red bands, laid flat, its shadow longer than it should be."
+    "brief": "Night-blue robe with a shadow too long. Accent: cream.",
+    "description": "Filling the square box: the heavy night-blue robe of Ysel's order with gold bands of sun and moon phases, laid flat, its shadow longer than it should be, a faint bubble ring round it."
   },
   "dying_star_scepter": {
-    "brief": "Sceptre with a red dying star trapped in a cage of bent iron rings. Accent: coral red.",
-    "description": "The cage fills the upper four cells, the shaft drops into the lower left; the lower right stays empty. A sceptre with the Red Giant Heart trapped in a cage of bent iron rings."
+    "brief": "Sceptre with the Red Giant Heart in its rings. Accent: coral red.",
+    "description": "The ring cage fills the upper four cells, the shaft drops into the lower left; the lower right stays empty. A sceptre with the Red Giant Heart held in its eclipse rings, the cocoon censer hanging below."
   },
   "solstice_engine": {
-    "brief": "Iron engine with two half-suns on its sides. Accent: mustard.",
-    "description": "Filling the square box: an iron engine with two half-suns on its sides, the Dawn Chime hanging from it, the Flare Catcher's ring on top."
+    "brief": "Engine with two half-suns, chime and flare ring. Accent: mustard.",
+    "description": "Filling the square box: a bronze engine with two half-suns on its sides, the Dawn Chime hanging from it, the wing hoop of the Flare Catcher on top."
   },
   "nova_crown": {
-    "brief": "Crown of bent iron rings around a dark, frozen star. Accent: teal.",
-    "description": "Lying across the box: a crown of bent iron rings around a dark star gone cold, frost cracks on its surface, pieces held still in the rings."
+    "brief": "Crown of rings round a star gone cold. Accent: teal.",
+    "description": "Lying across the box: a crown of bent bronze eclipse rings around a dark star gone cold, frost cracks on its surface, pieces held still in the rings."
   },
   "eternal_dawn": {
-    "brief": "Small sun rising out of an iron ring, never quite up. Accent: mustard.",
-    "description": "A small sun rising out of an iron ring, never quite up, half hidden behind the ring."
+    "brief": "Small sun rising out of a ring, never up. Accent: mustard.",
+    "description": "A small sun rising out of a bronze eclipse ring, never quite up, half hidden behind the ring, two feathered antennae framing it."
   },
   "stellar_lens": {
-    "brief": "Large lens in an iron frame focusing a star into a beam. Accent: teal.",
-    "description": "A large lens in an iron frame focusing a star into a single teal beam."
+    "brief": "Lens in a wing-shaped frame with a star inside. Accent: teal.",
+    "description": "A large lens in a bronze frame shaped like spread moth wings, a tiny star caught sharp in the middle of the glass."
   },
   "votive_candle": {
-    "brief": "Candle in a small stone cup, a star pressed into the wax. Accent: mustard.",
-    "description": "A candle in a small stone cup, a star pressed into the wax, a flat mustard flame."
+    "brief": "Candle in a stone cup with a moth on its rim. Accent: mustard.",
+    "description": "A candle in a small moon-rock cup, a star pressed into the wax, a flat mustard flame, a tiny pale moth resting on the rim."
   },
   "hymn_scroll": {
-    "brief": "Open prayer scroll covered in star-phase symbols. Accent: cream.",
-    "description": "Lying across the box: an open prayer scroll of the solar moths, covered in small star-phase symbols instead of letters."
+    "brief": "Open scroll with star-phase symbols. Accent: cream.",
+    "description": "Lying across the box: an open prayer scroll of the solar moths, covered in small star-phase symbols instead of letters, a singed edge."
   },
   "solar_dagger": {
-    "brief": "Iron dagger with a sun etched on the blade. Accent: mustard.",
-    "description": "A small iron dagger with a mustard sun etched on the blade."
+    "brief": "Small dagger with a sun etched on the blade. Accent: mustard.",
+    "description": "A small dark dagger with a mustard sun etched on the blade, its guard shaped like two folded moth wings."
   },
   "mirror_of_dusk": {
-    "brief": "Iron hand mirror showing a setting red sun. Accent: coral red.",
-    "description": "Upright: an iron hand mirror showing a setting coral red sun."
+    "brief": "Hand mirror showing a setting red sun. Accent: coral red.",
+    "description": "Upright: a bronze hand mirror with a moth-wing frame, the glass showing a setting coral red sun over a dark horizon."
   },
   "star_psalter": {
-    "brief": "Thick hymn book with an iron star clasp. Accent: mustard.",
-    "description": "Lying across the box: a thick hymn book of the order with an iron star clasp."
+    "brief": "Thick hymn book with a star clasp. Accent: mustard.",
+    "description": "Lying across the box: a thick hymn book of the order bound in night-blue cloth with a gold band, a bronze star clasp, a moth-wing bookmark."
   },
   "pyre_lantern": {
-    "brief": "Iron lantern with a small fire inside, heat lines above. Accent: coral red.",
-    "description": "An iron lantern with a small fire inside, wavy heat lines rising from the top."
+    "brief": "Lantern with a fire and a moth circling it. Accent: coral red.",
+    "description": "A bronze lantern with a small fire inside, wavy heat lines rising, one tiny pale moth circling it."
   },
   "eclipse_orb": {
-    "brief": "Stone orb with a black disc crossing a sun. Accent: cream.",
-    "description": "Lying across the box: a stone orb with a black disc crossing a sun, held in a small iron stand."
+    "brief": "Stone orb with a dark disc crossing a sun. Accent: cream.",
+    "description": "Lying across the box: a moon-stone orb with a black disc crossing a sun on its face, held in a small bronze stand of folded wings."
   },
   "white_dwarf": {
-    "brief": "Small, very dense white star held in a heavy iron ring. Accent: cream.",
-    "description": "Filling the square box: a small, very dense cream star held in a heavy iron ring, the ring bending under its weight."
+    "brief": "Tiny dense star bending its heavy ring. Accent: cream.",
+    "description": "Filling the square box: a small very dense cream star held in a heavy bronze ring, the ring bending under its weight, singed moth scales stuck to it."
   },
   "supernova_seed": {
-    "brief": "Seed-shaped iron cage with a star about to burst inside. Accent: coral red.",
-    "description": "Lying across the box: a seed-shaped iron cage with a star about to burst inside, its cracks coral red."
+    "brief": "Cocoon-shaped cage with a star about to burst. Accent: coral red.",
+    "description": "Lying across the box: a cocoon-shaped bronze cage with a star about to burst inside, its cracks coral red."
   },
   "twin_suns": {
-    "brief": "Two sun daggers crossed. Accent: mustard.",
-    "description": "Upright: the Sun Shard and the Solar Dagger crossed, both with sun marks in mustard."
+    "brief": "Sun Shard and Solar Dagger crossed. Accent: mustard.",
+    "description": "Upright: the silk-wrapped Sun Shard and the Solar Dagger crossed and tied together, both with sun marks in mustard."
   },
   "sacred_flame": {
-    "brief": "Flame in a stone bowl, wavy heat lines rising. Accent: coral red.",
-    "description": "A flame in a stone bowl like the Votive Candle's cup, the Pyre Lantern's iron frame around it, wavy heat lines."
+    "brief": "Flame in a stone bowl inside a lantern frame. Accent: coral red.",
+    "description": "A flame in a moon-rock bowl like the Votive Candle's cup, the Pyre Lantern's bronze frame around it, wavy heat lines."
   },
   "litany": {
-    "brief": "Long scroll wrapped around an iron bell. Accent: cream.",
-    "description": "Along the long box: the Prayer Scroll wrapped around an iron bell, the Comet Rosary hanging from it."
+    "brief": "Prayer Scroll wrapped round a bell with beads. Accent: cream.",
+    "description": "Along the long box: the Prayer Scroll wrapped around a bronze bell, the comet bead string hanging from it."
   },
   "total_eclipse": {
-    "brief": "Round iron shield painted with a total eclipse. Accent: cream.",
-    "description": "The shield fills the top row and the lower left cell; the lower right stays empty. A round iron shield painted with a total eclipse, the Mirror of Dusk set in its centre."
+    "brief": "Round shield painted with a total eclipse. Accent: cream.",
+    "description": "The shield fills the top row and the lower left cell; the lower right stays empty. A round shield painted with a total eclipse and moth wings, the Mirror of Dusk set in its centre."
   },
   "event_horizon": {
-    "brief": "Black ring shield with stars bending around its edge. Accent: teal.",
-    "description": "Filling the tall box: a black ring shield with stars bending round its edge, the White Dwarf at its centre, the Umbral Mantle hanging behind it."
+    "brief": "Black ring shield with stars bending round it. Accent: teal.",
+    "description": "Filling the tall box: a black ring shield with stars bending round its edge, the White Dwarf at its centre, the night-blue Umbral Mantle hanging behind it."
   },
   "canticle": {
-    "brief": "Open book of last light with a flare curling up from its pages. Accent: mustard.",
-    "description": "Lying across the box: the Star Psalter open as a book of last light, a flare curling up from its pages as a flat mustard ribbon."
+    "brief": "Book of last light with a flare rising. Accent: mustard.",
+    "description": "Lying across the box: the Star Psalter open as a book of last light, a flare curling up from its pages as a flat mustard ribbon, singed moth scales on the pages."
   },
   "space_hamster": {
     "brief": "Round hamster with ore-stuffed cheeks and breathing gills. Accent: mustard.",
@@ -1596,48 +1596,48 @@
     "description": "The heavy head fills the upper four cells, the haft drops down the lower left cell; the lower right stays empty. Around the round head two thin teal orbit rings tilt at an angle; small debris pieces hang in the rings."
   },
   "ram_plate": {
-    "brief": "Dented hull plate with a riveted ram spike, scavenged from a wreck. Accent: teal.",
-    "description": "Lying across the box: a dented hull plate with a short riveted ram spike in the middle, a faint teal ring of force around the spike."
+    "brief": "Hull plate with a short ram spike. Accent: teal.",
+    "description": "Lying across the box: a dented hull plate with a short riveted ram spike in the middle, a flat teal ring of force around the spike."
   },
   "drone_bay": {
-    "brief": "Open scrap hatch with three tiny welded drones peeking out. Accent: copper.",
-    "description": "Lying across the box: an open hatch built from scrap, three tiny welded drones with copper rotors peeking out, one already lifting off."
+    "brief": "Scrap hatch with one drone lifting off. Accent: copper.",
+    "description": "Lying across the box: an open hatch built from scrap, one tiny welded drone with copper rotors lifting off it, a second one peeking out."
   },
   "marrow_treat": {
-    "brief": "Thick cracked bone with marrow, tied with a fur cord. Accent: cream.",
-    "description": "A thick cracked bone with soft marrow inside, tied with a fur cord, a few crumbs around it."
+    "brief": "Cracked bone with marrow, tied with fur cord. Accent: cream.",
+    "description": "A thick cracked bone of some huge space beast, soft marrow inside, tied with a fur cord, a few crumbs floating round it."
   },
   "trellis": {
-    "brief": "Small lattice of bent lab rods, thin tendrils climbing it. Accent: sage.",
-    "description": "A small lattice of bent lab rods stuck in a pot, thin sage tendrils climbing up it and reaching sideways."
+    "brief": "Lattice of lab rods with climbing tendrils. Accent: sage.",
+    "description": "A small lattice of bent lab rods stuck in a magnetic pot, thin sage tendrils climbing up it and reaching sideways."
   },
   "frost_bell": {
-    "brief": "Small dark bell rimmed with frost, a cold ring hanging below. Accent: teal.",
-    "description": "A small dark iron bell rimmed with frost, a ring of teal cold drawn as ink lines below it."
+    "brief": "Bronze bell rimmed with frost. Accent: teal.",
+    "description": "A small dark bronze bell rimmed with frost, its clapper a teal ice bead, a ring of cold drawn as ink lines below it."
   },
   "breach_ram": {
-    "brief": "Short hydraulic ram with a blunt riveted head on a welded arm. Accent: teal.",
-    "description": "Standing upright: a short hydraulic ram on a welded arm, blunt riveted head scuffed bare, teal force lines drawn as ink arcs where its shield field gathers."
+    "brief": "Short hydraulic ram on a welded arm. Accent: teal.",
+    "description": "Upright: a short hydraulic ram on a welded arm, blunt riveted head scuffed bare, teal force lines drawn as ink arcs round the head."
   },
   "siege_ram": {
-    "brief": "Long piston ram with a heavy wedge head and shield plates along its flanks. Accent: teal.",
-    "description": "Lying lengthwise: a long piston ram with a heavy wedge head, salvaged shield plates bolted along both flanks, hoses taped to the piston, teal force lines at the tip."
+    "brief": "Long piston ram with a wedge head. Accent: teal.",
+    "description": "Along the long box: a long piston ram with a heavy wedge head, salvaged shield plates bolted along both flanks, hoses taped to the piston, teal force lines at the tip."
   },
   "glutton_toad": {
-    "brief": "Fat grinning toad with three stalk eyes and a cratered belly. Accent: sage.",
-    "description": "A fat round sage toad sitting upright, wide grin, three eyes on short stalks, crater-like spots on its round belly, cheeks bulging with food, a few crumbs on its chin."
+    "brief": "Fat three-eyed toad with stuffed cheeks. Accent: sage.",
+    "description": "A fat round sage toad sitting upright, wide grin, three eyes on short stalks, crater-like spots on its round belly, cheeks bulging with food, a crumb floating by its chin."
   },
   "trough_boar": {
-    "brief": "Stocky bristled boar with small tusks, snout deep in a scrap of food. Accent: mustard.",
-    "description": "Lying across the box: a stocky boar seen from the side, bristled mustard back, small tusks, snout down in a half-eaten root, crumbs flying."
+    "brief": "Stocky boar with its snout in a root. Accent: mustard.",
+    "description": "Lying across the box: a stocky boar from a dust moon, bristled mustard back, crystal tusks, long thin legs, snout down in a half-eaten root, crumbs floating up."
   },
   "dawn_needle": {
-    "brief": "Thin iron throwing needle with a sun-ray tip and a copper grip. Accent: copper.",
-    "description": "Standing upright: a thin dark iron throwing needle, its tip forged as a small mustard sun ray, the grip wound in copper wire with a coral red band."
+    "brief": "Thin throwing needle with a sun-ray tip. Accent: copper.",
+    "description": "Upright: a thin dark throwing needle of the order, its tip forged as a small mustard sun ray, the grip wound in moth silk with a coral red band."
   },
   "zenith_lance": {
-    "brief": "Slim iron lance with a sun disc below its point, a sun ray shooting off the tip. Accent: mustard.",
-    "description": "Standing tall: a slim dark iron lance of the order, a small mustard sun disc below a long point, a coral red band and prayer cords on the shaft."
+    "brief": "Slim lance with a sun disc below the point. Accent: mustard.",
+    "description": "Upright through the tall box: a slim dark lance of the order, a small mustard sun disc below a long point, a coral red band and a string of star-shard beads on the shaft."
   },
   "pebble_mites": {
     "brief": "One tiny mite whose shell is a round ore pebble. Accent: mustard.",
@@ -1648,12 +1648,12 @@
     "description": "One single needle wasp in side view: lean striped body, a long hollow stinger like a syringe needle, stiff ribbed wings like small solar sails, a cluster of small eyes."
   },
   "thorn_hedge": {
-    "brief": "Dense low hedge of thorny branches grown out of a cracked lab planter. Accent: sage.",
-    "description": "Lying across the box: a dense low hedge of thorny branches growing out of a cracked lab planter, black hooked thorns, a torn strip of suit fabric caught in them."
+    "brief": "Low thorn hedge in a cracked planter. Accent: sage.",
+    "description": "Lying across the box: a dense low hedge of thorny branches growing out of a cracked magnetic lab planter, black hooked thorns, a torn strip of suit fabric caught in them."
   },
   "rot_bloom": {
-    "brief": "Wilted dark flower in a specimen jar, thick sap dripping from its petals. Accent: coral red.",
-    "description": "Lying across the box: a wilted dark flower slumped out of a cracked specimen jar, drooping petals with no eyes or face, thick coral red sap dripping from the tips into a small puddle."
+    "brief": "Wilted dark flower slumped out of a jar. Accent: coral red.",
+    "description": "Lying across the box: a wilted dark flower slumped out of a cracked specimen jar, drooping petals with no face, thick coral red sap floating off the tips as balls."
   },
   "dune_ox": {
     "brief": "Shaggy ox with dish-shaped horns and a mossy saddle back. Accent: copper.",
