@@ -43,7 +43,8 @@ File names: `<subject>.test.ts` for unit, `<subject>.api.test.ts` for interface,
 | --- | --- |
 | `npm test` | Level 1 only. Fast, needs nothing running. This is what a developer runs all the time. |
 | `npm run test:api` | Level 2. Starts its own DynamoDB Local (in memory, Docker) and the local backend on free ports, runs the interface tests over HTTP, stops both (`vitest.api.config.ts`). With `API_URL=<address>` it tests that backend instead and starts nothing. Needs Docker. |
-| `npm run test:e2e` | Level 3 and 4 in Chromium and WebKit (Playwright, `playwright.config.ts`). Today: the reference fights (`e2e/reference-fights.e2e.ts`); client runs come in M2. Needs the browsers once: `npx playwright install chromium webkit`. In CI it runs in the Playwright image of the same version (`mcr.microsoft.com/playwright`); a Playwright update also changes that tag in `.github/workflows/check.yml`. |
+| `npm run test:e2e` | Level 3 and 4 in Chromium and WebKit (Playwright, `playwright.config.ts`). The reference fights (`e2e/reference-fights.e2e.ts`). Needs the browsers once: `npx playwright install chromium webkit`. In CI it runs in the Playwright image of the same version (`mcr.microsoft.com/playwright`); a Playwright update also changes that tag in `.github/workflows/check.yml`. |
+| `npm run test:e2e:runs` | Browser runs 1 to 3 (`e2e/runs.e2e.ts`, `playwright.runs.config.ts`) in Chromium and WebKit. Starts the local backend on port 3100 with its own DynamoDB Local in memory (Docker, `npm run backend:test`) and the client on port 5181 against it. In CI the database runs as a service of the browser job (`TEST_DB_ENDPOINT`). |
 | `npm run sim:reference` | Regenerates `data/sim/reference-fights.json` on purpose, after a change that alters fight results. |
 | `npm run check` | `validate`, `typecheck`, lint, `npm test`. The same as the automatic pull request check. |
 
@@ -86,6 +87,8 @@ Four runs at most, all against the local backend with the development identity:
 4. One purchase with the stand-in for the store (DEV-04).
 
 Runs never wait for a fixed time; they wait for a visible state. They never depend on the balance: the fight outcome is set by a fixed seed from the backend's test mode, or the run accepts both outcomes. A run that fails twice for no code reason is a bug in the test and is fixed first, not retried forever. The browser runs are not proof for native parts (QA-07).
+
+How they are built: every run signs in as its own development player (`?player=`), so engines and runs never share a server run. The client's dev tools list the visible buttons with their place on the page (`window.__tapTargets()`, named by their words or, for round buttons, their symbol); the run taps them with the mouse, so the tap goes through the same event path as a finger. Run 2 accepts a won and a lost fight. Run 3 ends the run by giving up, so it does not have to play twelve rounds; the run end of a finished run goes through the same request. Run 4 comes with the store stand-in (M4).
 
 ## Phone checklist (QA-07)
 

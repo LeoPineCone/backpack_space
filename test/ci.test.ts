@@ -9,4 +9,12 @@ describe("CI workflow", () => {
     expect(installed).toBeDefined();
     expect(workflow).toContain(`mcr.microsoft.com/playwright:v${installed}-noble`);
   });
+
+  it("gives the browser runs the same database image as `npm run db`", () => {
+    const workflow = readFileSync(".github/workflows/check.yml", "utf8");
+    const compose = readFileSync("apps/backend/local/compose.yaml", "utf8");
+    const image = /image:\s*(\S+)/.exec(compose)?.[1];
+    expect(image).toBeDefined();
+    expect(workflow).toContain(`image: ${image}`);
+  });
 });

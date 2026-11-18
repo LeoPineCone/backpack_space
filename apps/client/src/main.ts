@@ -11,7 +11,7 @@ import { homeScene } from "./scenes/home";
 import { shopScene } from "./scenes/shop";
 import { battleScene } from "./scenes/battle";
 import { t } from "./i18n";
-import { DEV_TOOLS } from "./devtools";
+import { DEV_TOOLS, tapTargets } from "./devtools";
 import { blocking, connect } from "./connect";
 import { statusScene } from "./scenes/status";
 import { stateOfFailure } from "./online";
@@ -28,7 +28,7 @@ async function boot(): Promise<void> {
   await enter(game);
   if (DEV_TOOLS) {
     // for automated checks
-    (window as unknown as { __game: Game }).__game = game;
+    Object.assign(window, { __game: game, __tapTargets: () => tapTargets(game.stage) });
     // the version of the rules this build computes with (CORE-03); a future server compares it
     console.info(`simVersion ${DATA.simVersion}`);
   }
