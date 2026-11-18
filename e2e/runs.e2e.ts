@@ -29,21 +29,26 @@ const probe = (page: Page) =>
 
 /** Waits until a button with this name shows, then taps it where it is on the page. */
 async function tap(page: Page, name: string, timeout = 30_000): Promise<void> {
-  let found: Target | undefined;
-  await expect
-    .poll(
-      async () => {
-        found = (await targets(page)).find((t) => t.name === name);
-        return !!found;
-      },
-      { timeout, message: `button "${name}"` },
-    )
-    .toBe(true);
-  await page.mouse.click(found!.x, found!.y);
+  await shows(page, name, timeout);
+  const found = (await targets(page)).find((t) => t.name === name)!;
+  await page.mouse.click(found.x, found.y);
 }
 
 async function shows(page: Page, name: string, timeout = 30_000): Promise<void> {
-  await expect.poll(async () => (await targets(page)).some((t) => t.name === name), { timeout, message: `button "${name}"` }).toBe(true);
+  // the message lists what is on screen instead, so a failure says where the run stood
+  let seen: string[] = [];
+  await expect
+    .poll(
+      async () => {
+        seen = (await targets(page)).map((t) => t.name);
+        return seen.includes(name);
+      },
+      { timeout, message: `button "${name}"` },
+    )
+    .toBe(true)
+    .catch(async (e: Error) => {
+      throw new Error(`${e.message}\non screen: ${JSON.stringify(seen)}\nstate: ${JSON.stringify(await probe(page))}`);
+    });
 }
 
 /** Opens the app as a fresh development player, without the first-run introduction. */
