@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, leagueGroup, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -23,6 +23,14 @@ describe("meta data", () => {
   });
   it("makes the 4 heroes without a season playable from the start", () => {
     expect(meta.startHeroes).toEqual(data.heroList.map((h) => h.id));
+  });
+  it("puts the 10 leagues into 4 groups (docs/matchmaking.md): Amateur 2, Intermediate 3, Pro 3, Elite 2", () => {
+    expect(meta.leagues.ids.map((_, l) => leagueGroup(meta, l).group)).toEqual([0, 0, 1, 1, 1, 2, 2, 2, 3, 3]);
+    expect(leagueGroup(meta, 6)).toEqual({ group: 2, from: 5, to: 7 });
+    expect(() => leagueGroup(meta, 10)).toThrow();
+    const raw = JSON.parse(JSON.stringify({ ...meta, cosmeticById: undefined, startHeroes: undefined })) as MetaData;
+    raw.leagues.groups = [5, 4];
+    expect(() => buildMeta(raw, data)).toThrow(/groups must add up/);
   });
   it("rejects a season hero the premium pass does not give at level 1", () => {
     const raw = JSON.parse(JSON.stringify({ ...meta, cosmeticById: undefined, startHeroes: undefined })) as MetaData;

@@ -95,7 +95,9 @@ The 10 leagues are put into 4 groups. League 1 is the highest here (in `data/met
 
 At the start of a season you drop to the highest league of the next lower group. Examples: from league 1 to league 3, from league 6 to league 9. This replaces the earlier rule "2 leagues down". The core and `data/meta.json` still implement the earlier rule.
 
-Bot players are assigned to a group, not to a single league. For bots, "league plus/minus 1" in the matching rules therefore means "same group".
+Bot players are assigned to a group, not to a single league. For bots, "league plus/minus 1" in the matching rules therefore means "same group". The groups are `leagues.groups` in `data/meta.json` (sizes from the lowest group up); `leagueGroup` in the core reads them.
+
+The matching itself is built in `apps/backend/src/domain/matching.ts` (M2): the steps above, the rules that always hold, and the phase setting `matchingPhase` (1 = bots only, 3 = players first; phase 2 waits for its threshold).
 
 ## Versions
 

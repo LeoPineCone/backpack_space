@@ -93,9 +93,19 @@ export class FakePlayerStore implements PlayerStore {
 }
 
 export class FakeBackpackPool implements BackpackPool {
-  readonly items: Item[] = [];
+  readonly items = new Map<string, Item>();
+  /** how many reads were made (the matching must stay cheap) */
+  reads = 0;
   async put(item: Item): Promise<void> {
-    this.items.push(structuredClone(item));
+    this.items.set(key(item.pk, item.sk), structuredClone(item));
+  }
+  async range(pk: string, from: string, to: string, limit: number): Promise<Item[]> {
+    this.reads++;
+    return [...this.items.values()]
+      .filter((i) => i.pk === pk && i.sk >= from && i.sk <= to)
+      .sort((a, b) => (a.sk < b.sk ? -1 : a.sk > b.sk ? 1 : 0))
+      .slice(0, limit)
+      .map((i) => structuredClone(i));
   }
 }
 

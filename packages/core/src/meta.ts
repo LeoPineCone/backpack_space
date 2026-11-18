@@ -45,6 +45,11 @@ export const MetaData = z.object({
   leagues: z.object({
     /** ids from the lowest to the highest league; the names are drafts (locales `league.<id>`) */
     ids: z.array(z.string()).min(2),
+    /**
+     * league groups from the lowest up, as the number of leagues in each (docs/matchmaking.md "League groups"):
+     * Amateur, Intermediate, Pro, Elite. Bot players belong to a group, not to a single league.
+     */
+    groups: z.array(z.number().int().positive()).min(1),
     pointsPerLeague: z.number().int().positive(),
     /** league points for a run by its wins: index = wins (0 ... rounds) */
     pointsByWins: z.array(z.number().int()),
@@ -100,6 +105,7 @@ export function buildMeta(raw: unknown, data: GameData): Meta {
   if (!rising(m.planetTrack.map((s) => s.galaxies))) problems.push("planetTrack: the Galaxies of the steps must rise");
   if (m.leagues.pointsByWins.length !== data.rules.rounds + 1) problems.push(`leagues.pointsByWins needs ${data.rules.rounds + 1} entries (0 to ${data.rules.rounds} wins)`);
   if (new Set(m.leagues.ids).size !== m.leagues.ids.length) problems.push("leagues.ids: duplicate id");
+  if (m.leagues.groups.reduce((a, b) => a + b, 0) !== m.leagues.ids.length) problems.push("leagues.groups must add up to the number of leagues");
   if (!rising(m.seasons.map((s) => s.id))) problems.push("seasons: ids must rise");
   if (!m.seasons.every((s, i) => i === 0 || s.start > m.seasons[i - 1]!.start)) problems.push("seasons: start dates must rise");
 
@@ -251,6 +257,16 @@ export function unlockPremium(meta: Meta, p0: Profile): { profile: Profile; rewa
 
 export function leagueOf(meta: Meta, points: number): number {
   return Math.min(meta.leagues.ids.length - 1, Math.floor(Math.max(0, points) / meta.leagues.pointsPerLeague));
+}
+
+/** The league group of a league (0 = the lowest group) and the leagues it spans, lowest and highest. */
+export function leagueGroup(meta: Meta, league: number): { group: number; from: number; to: number } {
+  let from = 0;
+  for (const [group, size] of meta.leagues.groups.entries()) {
+    if (league < from + size) return { group, from, to: from + size - 1 };
+    from += size;
+  }
+  throw new Error(`league ${league} is in no group`);
 }
 
 /** Points after a run: never below the start of the highest league reached this season. */
