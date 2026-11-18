@@ -5,6 +5,7 @@
  */
 import type { Ports } from "./domain/context.js";
 import { createRouter, type DomainFn, type TokenCheck } from "./http/router.js";
+import type { TokenBuckets } from "./http/throttle.js";
 import type { RouteName } from "@backpack-space/api";
 import { config } from "./domain/config.js";
 import { profile } from "./domain/profile.js";
@@ -17,6 +18,7 @@ export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = { config, ses
 /** The player id comes from the session token only (ACC-04). */
 export const checkToken: TokenCheck = async (token, ctx) => ctx.ports.tokens.check(token, ctx.settings, ctx.ports.clock.now())?.playerId ?? null;
 
-export function createApp(ports: Ports) {
-  return createRouter({ ports, routes: DOMAIN_ROUTES, tokens: checkToken });
+/** `throttle`: the local server applies the request limits itself (in the cloud the HTTP API does). */
+export function createApp(ports: Ports, opts: { throttle?: TokenBuckets } = {}) {
+  return createRouter({ ports, routes: DOMAIN_ROUTES, tokens: checkToken, ...opts });
 }
