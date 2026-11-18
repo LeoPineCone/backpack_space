@@ -224,7 +224,7 @@ Interface tests start the local server against DynamoDB Local and call it over H
 
 ## Logs and numbers
 
-- **One line per request**, as JSON: time, route, player id, status, error code, duration, app version, simulation version. No names, no store identities, no backpacks.
+- **One line per request**, as JSON: time, request id (also sent back as `x-request-id`), route, player id, status, error code, duration, app version, simulation version. No names, no store identities, no backpacks, not the path of an unknown route. Event lines carry the same request id. Code: `apps/backend/src/http/router.ts` (request line), `apps/backend/src/domain/log.ts` (events and their fields).
 - **One line per event that counts**: `run_started`, `fight`, `run_finished`, `purchase`, `credits_spent`, `credits_earned`, `refund`, `account_deleted`, `plausibility_rejected`, `result_mismatch`. These lines are the source of the usage numbers (BE-10) and of the reconcile command after a restore.
 - **Alarms** (BE-11): error rate and response time of the API, failed Lambda runs, rejected webhooks, throttled database requests, and a cost alarm.
 - Logs are kept for a set time (proposal: 90 days for request lines; the event lines needed for reconciling at least as long as the restore window).

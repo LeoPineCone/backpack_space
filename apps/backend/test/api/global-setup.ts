@@ -4,7 +4,9 @@
  * With API_URL set (for example the test environment after a deployment) nothing is started.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { appendFileSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { TestProject } from "vitest/node";
 import { startServer } from "../../local/server.js";
 import { createTables, localClient, waitForDb } from "../../local/tables.js";
@@ -14,6 +16,8 @@ declare module "vitest" {
     apiUrl: string;
     /** empty when the tests run against an external backend */
     dbEndpoint: string;
+    /** the local server's log, one JSON line each; empty when the tests run against an external backend */
+    logFile: string;
   }
 }
 
@@ -30,6 +34,7 @@ export default async function setup(project: TestProject) {
   if (external) {
     project.provide("apiUrl", external.replace(/\/$/, ""));
     project.provide("dbEndpoint", "");
+    project.provide("logFile", "");
     return;
   }
   const docker = (...args: string[]) => execFileSync("docker", args, { encoding: "utf8" }).trim();
@@ -41,15 +46,35 @@ export default async function setup(project: TestProject) {
     const client = localClient(endpoint);
     await waitForDb(client);
     await createTables(client, tables);
-    const server = await startServer({ port: 0, dynamodb: { endpoint, region: "local" }, tables }, { write: () => {} });
+    const logFile = join(mkdtempSync(join(tmpdir(), "backpack-space-api-")), "log.jsonl");
+    writeFileSync(logFile, "");
+    const server = await startServer(
+      { port: 0, dynamodb: { endpoint, region: "local" }, tables },
+      { write: (l) => appendFileSync(logFile, JSON.stringify(l) + "\n") },
+    );
     project.provide("apiUrl", server.url);
     project.provide("dbEndpoint", endpoint);
+    project.provide("logFile", logFile);
     return async () => {
       await server.close();
       docker("stop", container);
+      checkOneLinePerRequest(logFile);
     };
   } catch (e) {
     docker("stop", container);
     throw e;
   }
+}
+
+/** BE-09: every request of the interface tests wrote exactly one request line. */
+function checkOneLinePerRequest(logFile: string) {
+  const lines = readFileSync(logFile, "utf8")
+    .trim()
+    .split("\n")
+    .filter(Boolean)
+    .map((l) => JSON.parse(l) as { type: string; requestId?: string });
+  const count = new Map<string, number>();
+  for (const l of lines) if (l.type === "request") count.set(l.requestId ?? "none", (count.get(l.requestId ?? "none") ?? 0) + 1);
+  const wrong = [...count].filter(([id, n]) => id === "none" || n !== 1);
+  if (wrong.length > 0) throw new Error(`requests without exactly one log line: ${JSON.stringify(wrong)}`);
 }

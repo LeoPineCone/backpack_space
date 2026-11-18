@@ -22,6 +22,7 @@ import {
   type RouteName,
 } from "@backpack-space/api";
 import { ApiError, type DomainContext, type Ports } from "../domain/context.js";
+import { logEvent } from "../domain/log.js";
 import type { HttpRequest, HttpResponse } from "./types.js";
 import { compareVersions } from "./version.js";
 
@@ -56,31 +57,44 @@ export function createRouter(opts: RouterOptions): (req: HttpRequest) => Promise
 
   return async (req) => {
     const started = opts.ports.clock.now();
-    const ctx: DomainContext = { ports: opts.ports, settings: await opts.ports.settings.get(), events: [] };
     const found = byKey.get(`${req.method.toUpperCase()} ${req.path}`);
+    // settings are read first thing inside the try, so a failing read still answers and logs
+    const ctx: DomainContext = { ports: opts.ports, settings: undefined as never, events: [] };
     let res: HttpResponse;
     try {
+      ctx.settings = await opts.ports.settings.get();
       res = await run(found, req, ctx);
     } catch (e) {
       res = e instanceof ApiError ? fail(e.code, e.textKey) : fail("internal");
-      if (!(e instanceof ApiError)) ctx.events.push({ event: "error", message: (e as Error).message?.slice(0, 200) });
+      if (!(e instanceof ApiError)) logEvent(ctx, "error", { message: String((e as Error)?.message ?? e).slice(0, 200) });
     }
-    // step 6: one line per request (log.ts adds the event lines after it)
+    if (req.requestId) res.headers["x-request-id"] = req.requestId;
+    writeLines(req, res, ctx, found?.name, started);
+    return res;
+  };
+
+  /**
+   * Step 6 (BE-09): exactly one request line, then the event lines of the request. Only fixed fields: no names,
+   * no store identities, no backpacks, and not the path of an unknown route (it is whatever the caller sent).
+   */
+  function writeLines(req: HttpRequest, res: HttpResponse, ctx: DomainContext, route: string | undefined, started: number) {
+    const now = opts.ports.clock.now();
     const errorCode = res.status >= 400 ? (JSON.parse(res.body) as { error?: string }).error : undefined;
+    const player = ctx.playerId ?? null;
     opts.ports.log.write({
       type: "request",
       time: new Date(started).toISOString(),
-      route: found ? found.name : `${req.method} ${req.path}`,
-      player: ctx.playerId ?? null,
+      requestId: req.requestId ?? null,
+      route: route ?? "unknown",
+      player,
       status: res.status,
       error: errorCode ?? null,
-      ms: opts.ports.clock.now() - started,
+      ms: now - started,
       appVersion: ctx.appVersion ?? null,
+      simVersion: ctx.simVersion ?? null,
     });
-    for (const e of ctx.events)
-      opts.ports.log.write({ type: "event", time: new Date(opts.ports.clock.now()).toISOString(), player: ctx.playerId ?? null, ...e });
-    return res;
-  };
+    for (const e of ctx.events) opts.ports.log.write({ type: "event", time: new Date(now).toISOString(), requestId: req.requestId ?? null, player, ...e });
+  }
 
   async function run(found: { name: string; route: Route } | undefined, req: HttpRequest, ctx: DomainContext): Promise<HttpResponse> {
     const fn = found && opts.routes[found.name as RouteName];
@@ -102,6 +116,8 @@ export function createRouter(opts: RouterOptions): (req: HttpRequest) => Promise
     const version = req.headers[APP_VERSION_HEADER];
     if (version !== undefined && !AppVersion.safeParse(version).success) return fail("bad_request");
     ctx.appVersion = version;
+    const sim = (parsed.data as { simVersion?: unknown } | undefined)?.simVersion;
+    if (typeof sim === "string") ctx.simVersion = sim;
 
     // 2. token check
     if (route.auth) {
