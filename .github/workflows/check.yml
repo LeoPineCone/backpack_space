@@ -21,6 +21,10 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
+      # Own step, so a new advisory does not hide a code failure (QA-08). Only what ships in the app or the
+      # backend counts; dev-tool findings are listed in docs/testing.md.
+      - name: Audit dependencies
+        run: npm audit --omit=dev --audit-level=high
       # Same script as locally, so local and CI never differ.
-      - name: Check (validate, typecheck, test)
+      - name: Check (validate, typecheck, lint, test)
         run: npm run check

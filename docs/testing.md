@@ -94,5 +94,13 @@ Before every release the checklist in `docs/release-checklist.md` is run by hand
 
 - Test runner: Vitest (existing). Browser runs: Playwright, with Chromium and WebKit.
 - Linter and formatter: ESLint and Prettier, one setup for all packages (QA-03).
-- `npm audit` for serious findings runs in the pull request check (QA-08).
+- `npm audit` for serious findings runs in the pull request check (QA-08): `npm audit --omit=dev --audit-level=high`, as its own step. It covers what ships (app, later the backend). Findings in dev tools are checked by hand with `npm audit` and listed here with the reason they are accepted.
+
+### Known findings in dev tools (state of 2026-11-18)
+
+| Package | Advisory | Why accepted |
+| --- | --- | --- |
+| `picomatch` (all versions, through `vite`, `vitest`, `tinyglobby`, `typescript-eslint`) | GHSA-fc5q-39xc-vjpf, ReDoS through repeated extglobs | No fixed version exists. Only dev tools use it, and they match glob patterns written in this repo, never input from players or the network. Nothing of it ships in the app. Check again when a fix is released. |
+
+Updated on 2026-11-18: `zod` 3 → 4 (GHSA-mrhx-c7xc-m3w5), `vitest` 2 → 5 (critical `tinypool` advisory), `vite` 6 → 8.
 - A test tool is a dev dependency only. Nothing of it ships in the app.
