@@ -21,6 +21,10 @@ export const ERROR_CODES = [
   "invalid_backpack",
   /** the Credits balance at RevenueCat is too low */
   "insufficient_credits",
+  /** the thing to equip is not owned, or does not fit that slot or hero */
+  "not_owned",
+  /** the player name is empty, too long or refused by the name filter */
+  "name_rejected",
   /** too many requests: wait and repeat */
   "rate_limited",
   /** something broke on the server */
@@ -39,6 +43,8 @@ export const ERROR_STATUS: Record<ErrorCode, number> = {
   run_conflict: 409,
   invalid_backpack: 422,
   insufficient_credits: 402,
+  not_owned: 409,
+  name_rejected: 422,
   rate_limited: 429,
   internal: 500,
 };

@@ -41,7 +41,7 @@ describe("bot pool generation", () => {
   it("makes bot players with valid, distinct names, a league inside their group and a real patch", () => {
     const seen = new Set<string>();
     for (const p of gen.players) {
-      expect(playerName(p.name)).toBe(p.name);
+      expect(playerName(meta, p.name)).toBe(p.name);
       expect(seen.has(p.name)).toBe(false);
       seen.add(p.name);
       expect(meta.cosmeticById.get(p.patch)?.kind).toBe("patch");

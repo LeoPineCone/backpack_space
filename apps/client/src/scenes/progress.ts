@@ -5,6 +5,7 @@
  */
 import { Container, Graphics, Rectangle } from "pixi.js";
 import { NAME_MAX, equip, equipSkin, heroLevel, rename, leagueOf, passLevel, seasonData, type Profile, type Reward } from "@backpack-space/core";
+import type { ApiFailure } from "../api";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
@@ -299,12 +300,17 @@ function leagueTab(game: Game, p: Profile, add: Add, w: number): void {
 
 function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () => void): void {
   const meta = game.meta;
+  /** a change checked on the device; online the server applies it (Game.changeProfile) */
+  const apply = (done: Promise<ApiFailure | null>) =>
+    void done.then((failed) => {
+      if (failed === "name_rejected") game.toast(t("toast.nameInvalid", { n: NAME_MAX }));
+      else if (failed === "not_owned") game.toast(t("toast.notOwned"));
+      else if (failed) game.toast(t("toast.noConnectionShort"));
+      rerender();
+    });
   const set = (slot: "background" | "patch" | "picture", id: string | null) => {
     const q = equip(meta, p, slot, id);
-    if (q) {
-      game.setProfile(q);
-      rerender();
-    }
+    if (q) apply(game.changeProfile(q, "profileEquip", { slot, id }));
   };
   // the player: picture, name (tap to change), the worn patch and totals
   const head = new Container();
@@ -322,13 +328,12 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
     () => {
       void askText(p.name, NAME_MAX, t("ui.playerName")).then((v) => {
         if (v === null || v.trim() === p.name) return;
-        const q = rename(game.profile, v);
+        const q = rename(game.meta, game.profile, v);
         if (!q) {
           game.toast(t("toast.nameInvalid", { n: NAME_MAX }));
           return;
         }
-        game.setProfile(q);
-        rerender();
+        apply(game.changeProfile(q, "profileName", { name: v }));
       });
     },
     new Rectangle(-6, -18, label.width + 40, 36),
@@ -382,10 +387,7 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
         tl,
         () => {
           const q = equipSkin(meta, p, hero.id, id);
-          if (q) {
-            game.setProfile(q);
-            rerender();
-          }
+          if (q) apply(game.changeProfile(q, "profileSkin", { hero: hero.id, id }));
         },
         new Rectangle(0, 0, 52, 52),
       );

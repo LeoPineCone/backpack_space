@@ -22,6 +22,9 @@ const samples: Record<RouteName, { request: unknown; response: unknown }> = {
     response: { token: "abc.def", expiresAt: 1_800_000_000, profile },
   },
   profile: { request: {}, response: { profile } },
+  profileEquip: { request: { slot: "grid", id: null }, response: { profile } },
+  profileSkin: { request: { hero: "venn", id: "venn_lv3" }, response: { profile } },
+  profileName: { request: { name: "Star Rider" }, response: { profile } },
   runCurrent: { request: {}, response: { run: null } },
   runStart: {
     request: { hero: "venn", simVersion: "2.157d28e9292bed" },

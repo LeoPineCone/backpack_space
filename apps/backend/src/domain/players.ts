@@ -77,7 +77,8 @@ export function assemble(items: Item[]): StoredProfile | null {
       heroXp: p.heroXp,
       heroes: owned.filter((o) => o.kind === "hero").map((o) => o.sk.slice(OWN.length)),
       cosmetics: owned.filter((o) => o.kind === "cosmetic").map((o) => o.sk.slice(OWN.length)),
-      equipped: p.equipped,
+      // profiles stored before the grid slot existed wear the plain grid
+      equipped: { ...p.equipped, grid: (p.equipped as { grid?: string | null }).grid ?? null },
       season: p.season,
       runs: p.runs,
     },
