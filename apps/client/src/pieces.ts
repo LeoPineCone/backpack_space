@@ -17,7 +17,8 @@ export const initials = (name: string) => {
   return (words.length === 1 ? words[0]!.slice(0, 2) : words.map((w) => w[0]!).slice(0, 3).join("")).toLocaleUpperCase();
 };
 
-export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number }
+/** bare: an item with a picture is drawn as the picture alone, without tile and frame (shop offers). */
+export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number; bare?: boolean }
 
 /** The symbol on an item's tile: its first type, but a pet shows its kind (beast or swarm) when it has one. */
 function tileIcon(def: ItemDef): string {
@@ -30,6 +31,10 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const def = data.items.get(id)!;
   const s = data.shape(id, rot);
   const c = new Container();
+  if (o.bare && !def.isBag) {
+    const pic = itemArt(data, id, rot, cell);
+    if (pic) { pic.alpha = o.alpha ?? 1; c.addChild(pic); return c; }
+  }
   const g = new Graphics();
   const pad = def.isBag ? 0 : Math.max(1.5, cell * 0.06);
   const fill = def.isBag ? C.bag : TAG_FILL[def.tags[0] ?? "bag"] ?? C.line;

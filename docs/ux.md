@@ -76,6 +76,7 @@ A run is a loop of shop, fight and result: 12 rounds, or until the 4 lives are g
 
 1. The shop opens with a note on this round's health.
 2. Buying = dragging an offer: into a bag (placed) or anywhere else (it drops loose below the backpack). **Decided**
+   - An offer shows the item at its backpack size (one cell as in the grid), only shrunk when it does not fit its card; an item with a picture shows the picture alone, without a tile or frame around it. **Decided** (2026-11-18)
 3. Rebuild: drag items and bags in the backpack, turn with a second finger; a bag takes its contents along.
 4. Sell: drag onto the bin (the price shows while dragging) or use the item popup.
 5. Reroll (1 gold) for new offers; pinned offers stay, also into the next round.

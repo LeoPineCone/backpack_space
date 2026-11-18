@@ -124,7 +124,8 @@ export function shopScene(game: Game): Scene {
       const frame = def.isBag ? C.bagLine : RARITY[def.rarity] ?? C.dim;
       const tile = new Container();
       tile.addChild(box(OFFER.w, OFFER.h, { fill: C.panel, line: frame, lineW: 2, radius: 12 }));
-      tile.addChild(at(pieceFit(data, o.item, 90, 46, 24, { label: true }), 12, 16));
+      // the item at its backpack size (one cell = CELL), only shrunk when it does not fit the card
+      tile.addChild(at(pieceFit(data, o.item, OFFER.w - 8, OFFER.h - 8, CELL, { label: true, bare: true }), 4, 4));
       if (!def.isBag) for (let p = 0; p < (RARITY_PIPS[def.rarity] ?? 1); p++) tile.addChild(at(disc(2.5, { fill: frame }), 10 + p * 8, 9));
       tile.addChild(at(icon("coin", 14, C.gold), 14, OFFER.h - 13));
       tile.addChild(at(txt(o.price, 15, { color: r.gold < o.price ? C.line : o.sale ? C.good : C.text, anchor: [0, 0.5] }), 24, OFFER.h - 13));
