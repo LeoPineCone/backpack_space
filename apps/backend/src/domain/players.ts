@@ -16,10 +16,10 @@ export const identityKey = (id: CheckedIdentity) => `ID#${id.platform}#${id.stor
 const OWN = "OWN#";
 
 /**
- * Where an owned thing came from (STORE-04); more origins come with the store and the pass. "run": unlocked by a
- * booked run (hero level, planet track or pass); the booking issue splits it by track (META-01).
+ * Where an owned thing came from (STORE-04): a booked run unlocks it by a hero level, the planet track or the season
+ * pass (META-01); the store adds Credits and purchases. A refund removes exactly the entries of its origin.
  */
-export type Origin = "start" | "pass" | "level" | "planet" | "credits" | "purchase" | "run";
+export type Origin = "start" | "pass" | "level" | "planet" | "credits" | "purchase";
 
 /** The stored profile: the PROFILE item and the owned things, with its version number. */
 export interface StoredProfile {
@@ -94,14 +94,16 @@ export function profileWrites(
   next: ProfileBody,
   stored: { version: number; createdAt: number },
   now: number,
-  origin: Origin,
+  origin: Origin | ((id: string) => Origin),
   before?: ProfileBody,
 ): Write[] {
   const pk = playerKey(playerId);
   const { cosmetics, heroes, ...rest } = next;
   const had = new Set([...(before?.cosmetics ?? []), ...(before?.heroes ?? [])]);
   const own = (kind: "cosmetic" | "hero", ids: string[]): Write[] =>
-    ids.filter((id) => !had.has(id)).map((id) => ({ put: { pk, sk: `${OWN}${id}`, kind, origin, at: isoDay(now) }, ifNotExists: true }));
+    ids
+      .filter((id) => !had.has(id))
+      .map((id) => ({ put: { pk, sk: `${OWN}${id}`, kind, origin: typeof origin === "function" ? origin(id) : origin, at: isoDay(now) }, ifNotExists: true }));
   return [
     { put: { pk, sk: "PROFILE", ...rest, version: stored.version + 1, createdAt: stored.createdAt }, ifVersion: stored.version },
     ...own("cosmetic", cosmetics),

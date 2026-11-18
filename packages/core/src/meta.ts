@@ -217,6 +217,13 @@ export function heroLevelRewards(meta: Meta, hero: string, from: number, to: num
 
 // --- planet track and pass
 
+/** Which track a reward of a booked run comes from: a hero level, the planet track or the season pass. */
+export function rewardTrack(meta: Meta, r: Reward): "level" | "planet" | "pass" {
+  if ("cosmetic" in r && meta.cosmeticById.get(r.cosmetic)?.kind === "heroCosmetic") return "level";
+  if (meta.planetTrack.some((s) => JSON.stringify(s.reward) === JSON.stringify(r))) return "planet";
+  return "pass";
+}
+
 export function planetRewards(meta: Meta, from: number, to: number): Reward[] {
   return meta.planetTrack.filter((s) => s.galaxies > from && s.galaxies <= to).map((s) => s.reward);
 }

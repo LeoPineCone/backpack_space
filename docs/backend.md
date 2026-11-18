@@ -121,7 +121,7 @@ One partition per player. One query for that partition loads everything the game
 Notes:
 
 - **The Credits balance is not here.** It lives at RevenueCat only ([store.md](store.md)). The profile the app gets has no Credits field from us; the app reads the balance from RevenueCat.
-- **Ownership entries are the truth for what a player owns.** The profile sent to the app is put together from `PROFILE` and the `OWN#` entries. A refund removes exactly the entries of that origin.
+- **Ownership entries are the truth for what a player owns.** The profile sent to the app is put together from `PROFILE` and the `OWN#` entries. A refund removes exactly the entries of that origin. Origins: `start`, `level`, `planet` and `pass` (what a booked run unlocked, by its track), later `credits` and `purchase` (M4).
 - **Repeatable answers.** `ROUND#` and `DONE#` store the answer that was sent. A repeated request finds the entry and returns the same answer without computing anything.
 - **Writes that belong together are one transaction.** A fight writes the round entry (only if it does not exist yet) and moves the open run forward (only if it is still at that round). Finishing a run updates the profile (only if its version number is unchanged), writes `DONE#` and removes `RUN`. Two requests at the same time cannot both win.
 - **Old rounds.** `ROUND#` and `DONE#` entries carry an expiry 7 days after they are written (decided 2026-11-18: they only serve repeated requests of a run), and DynamoDB removes them on its own (`expiresAt`, as in the other tables); the backpacks live on in the pool. The recorded actions expire after 180 days (RUN-14, decided 2026-11-18).
