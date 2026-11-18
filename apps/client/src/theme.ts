@@ -44,3 +44,6 @@ export const RARITY_PIPS: Record<string, number> = { common: 1, rare: 2, epic: 3
 export const TAG_FILL: Record<string, number> = table(theme.tagFill);
 
 export const FONT = theme.fonts;
+
+/** The hand-inked look of the UI: frame width, press scale, rivet size, ink shading (docs/theme.md). */
+export const COMIC = theme.comic;

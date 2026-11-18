@@ -16,6 +16,9 @@ const STATUSES: Status[] = [...BUFFS, ...DEBUFFS];
 
 interface SideView {
   hpFill: Graphics;
+  /** the health just lost: a light chunk that shrinks after the bar */
+  hpLost: Graphics;
+  lost: number;
   enFill: Graphics;
   hpText: Text;
   chips: Container;
@@ -57,17 +60,22 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
       hero = sides[i]!.hero;
     const bar = new Container();
     bar.addChild(
-      at(disc(28, { fill: C.panel, line: i === 0 ? C.cyan : C.dim, lineW: 2 }), 28, 28),
+      at(disc(28, { fill: C.panel, line: i === 0 ? C.cyan : C.dim, lineW: 2, framed: true }), 28, 28),
       at(txt(hero.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase(), 22, { anchor: [0.5, 0.5] }), 28, 28),
     );
-    bar.addChild(at(box(250, 22, { fill: C.panel, line: C.dim, radius: 11 }), 66, 6));
+    bar.addChild(at(box(250, 22, { fill: C.bgDeep, radius: 11, framed: true }), 66, 6));
     const hpFill = new Graphics();
     const hpText = txt("", 15, { anchor: [0, 0.5] });
     const chips = new Container();
     // Energy: a thin bar under the health bar
-    bar.addChild(at(box(250, 8, { fill: C.panel, line: C.dim, lineW: 1, radius: 4 }), 66, 31), at(icon("energy", 12, C.gold), 330, 35));
+    bar.addChild(at(box(250, 9, { fill: C.bgDeep, radius: 4.5, framed: true }), 66, 32), at(icon("energy", 16, C.gold), 330, 36));
     const enFill = new Graphics();
-    bar.addChild(at(hpFill, 66, 6), at(enFill, 66, 31), at(hpText, 324, 17), at(chips, 66, 42));
+    const hpLost = new Graphics();
+    // notches every quarter, drawn over the fill
+    const notches = new Graphics();
+    for (const q of [0.25, 0.5, 0.75]) notches.moveTo(250 * q, 4).lineTo(250 * q, 18);
+    notches.stroke({ width: 2, color: C.ink, alpha: 0.6 });
+    bar.addChild(at(hpLost, 66, 6), at(hpFill, 66, 6), at(notches, 66, 6), at(enFill, 66, 32), at(hpText, 324, 17), at(chips, 66, 44));
     root.addChild(at(bar, 15, barY[i]!));
     // the backpack
     const g = new Graphics();
@@ -85,7 +93,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
       return f;
     });
     root.addChild(at(starMarks(data, b.bags, b.items, CELL), BX, gridY[i]!));
-    return { hpFill, enFill, hpText, chips, chipKey: "?", flashes, barY: barY[i]! };
+    return { hpFill, hpLost, lost: 1, enFill, hpText, chips, chipKey: "?", flashes, barY: barY[i]! };
   });
 
   // the star clock
@@ -148,13 +156,17 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
         s = replay.sides[i],
         max = result.maxHp[i],
         hp = Math.max(0, Math.round(s.hp));
-      v.hpFill
-        .clear()
-        .roundRect(2, 2, Math.max(0, (250 - 4) * Math.min(1, hp / max)), 18, 9)
-        .fill(i === 0 ? C.text : C.dim);
+      const share = Math.min(1, hp / max);
+      v.lost = Math.max(share, v.lost - 0.006);
+      v.hpLost.clear();
+      if (v.lost > share) v.hpLost.roundRect(1, 1, (250 - 2) * v.lost, 20, 10).fill(C.flash);
+      v.hpFill.clear();
+      if (share > 0) v.hpFill.roundRect(1, 1, Math.max(4, (250 - 2) * share), 20, 10).fill(i === 0 ? C.health : C.dim);
+      const sh = Math.min(1, s.st.shield / max);
+      if (sh > 0) v.hpFill.roundRect(1, 13, Math.max(4, (250 - 2) * sh), 8, 4).fill(C.shield);
       const en = Math.max(0, Math.min(1, s.energy / rules.energy.max));
       v.enFill.clear();
-      if (en > 0) v.enFill.roundRect(1, 1, Math.max(2, (250 - 2) * en), 6, 3).fill(C.gold);
+      if (en > 0) v.enFill.roundRect(1, 1, Math.max(2, (250 - 2) * en), 7, 3.5).fill(C.gold);
       const label = String(hp);
       if (v.hpText.text !== label) v.hpText.text = label;
       const key = STATUSES.map((k) => s.st[k]).join(",");

@@ -19,7 +19,10 @@
     "spark": "#8ff3ff",
     "mint": "#6fe3a1",
     "flare": "#ff7a59",
-    "white": "#ffffff"
+    "white": "#ffffff",
+    "ink": "#14161f",
+    "cream": "#f1e6cc",
+    "teal": "#2f9a9a"
   },
   "ui": {
     "bgDeep": "space",
@@ -40,7 +43,10 @@
     "zap": "spark",
     "flash": "white",
     "good": "mint",
-    "bad": "flare"
+    "bad": "flare",
+    "ink": "ink",
+    "health": "cream",
+    "shield": "teal"
   },
   "buttons": {
     "$comment": "Kinds of buttons. primary: the one main action per screen (FIGHT, START, TAKE). icon: round symbol buttons. secondary: outline only. Locked buttons use 'lockedAlpha'.",
@@ -49,7 +55,17 @@
     "secondary": { "fill": "bg", "line": "gold", "ink": "gold" },
     "lockedAlpha": 0.4
   },
-  "rarity": { "common": "#8892b0", "rare": "#5cc8ff", "epic": "#c9a0ff", "legendary": "#f5b942", "artifact": "#ff7a59" },
+  "comic": {
+    "$comment": "The hand-inked look of the UI (docs/theme.md): a plain frame in a darker tone of the surface, and ink hatching low on buttons, cards and popups that rises from left to right. hatchSlant: strokes x per y (1 = 45 degrees); hatchTilt: how much the shading edge rises to the right. press: scale while a button is held. Sizes in points.",
+    "frame": 2,
+    "press": 0.95,
+    "rivet": 2.2,
+    "hatchStep": 4.5,
+    "hatchWidth": 1.1,
+    "hatchSlant": 1,
+    "hatchTilt": 1
+  },
+  "rarity": { "$comment": "Mapped onto the art palette (docs/style.md); epic is the one colour the art palette does not have.", "common": "#8d8478", "rare": "#2f9a9a", "epic": "#8a6bc8", "legendary": "#f2b632", "artifact": "#e0563f" },
   "tagFill": {
     "$comment": "Fill of an item tile by its first type, so types can be told apart while items have no pictures.",
     "weapon": "#6b3340", "armor": "#2f4a7a", "accessory": "#56397a", "pet": "#7a5230", "food": "#6a6a2c", "mechanical": "#485468", "organic": "#2f6a45", "beast": "#7a5230", "swarm": "#7a5230", "bag": "#24305a"

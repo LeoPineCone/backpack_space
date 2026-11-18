@@ -41,6 +41,9 @@ night blue (art `navy`).
 | `flash` | `white` | `#ffffff` | hit flash in fights |
 | `good` | `mint` | `#6fe3a1` | healing, buffs, wins |
 | `bad` | `flare` | `#ff7a59` | damage, debuffs, losses |
+| `ink` | `ink` | `#14161f` | ink outline and hard shadow of every UI element (same as the art's Ink) |
+| `health` | `cream` | `#f1e6cc` | own health bar in fights |
+| `shield` | `teal` | `#2f9a9a` | Shield on top of the health bar |
 
 ## Rules
 
@@ -63,4 +66,34 @@ night blue (art `navy`).
 | locked | any kind at 0.4 opacity, with a lock symbol | not available yet |
 
 `pillButton` uses `primary` and `roundButton` uses `icon` by default (`src/ui.ts`), so every screen follows the
-theme. How buttons get their final comic look (ink outline, hard shadow, press effect) is still open.
+theme.
+
+## Hand-inked look
+
+The UI speaks the same hand-inked language as the art (`docs/style.md`), decided by Ilja on 2026-11-18 after
+trying black ink outlines with hard shadows, a coloured base and a light sticker rim: on the dark blue none of them
+read well. What stays is a plain frame and ink on the surfaces. It is drawn in code, not with pictures, so it stays
+sharp on every phone and follows this theme. Sizes live in `comic`.
+
+- **Frame:** a plain frame, `comic.frame` points wide, in a darker tone of the surface (yellow gets dark mustard) or
+  in `line` on dark surfaces. `box`/`disc` with `framed: true`; a given `line` replaces it. No black outline, no shadow.
+- **Ink shading:** buttons, cards, popups and HUD pills get diagonal ink strokes low on the surface, in a darker
+  tone of the surface colour (`inkShade` in `src/ui.ts`). The shading edge rises from left to right, from a sliver
+  on the left to about a third of the height on the right, so the light comes from the upper left. A strip of
+  cross-hatching sits in the darkest corner. Keep it subtle: Ilja asked twice for less, not more.
+- **Press:** while the finger is down, a button shrinks to `comic.press` (`pressable`). No vibration.
+- **Plates:** popups and shop cards are ship plates (`plate`): frame, a thin inner line, rivets in the corners.
+- **Inked titles:** titles and big numbers (hero name, item name, gold) get an ink outline around the letters and a
+  hard shadow (`txt(..., { inked: true })`). Sentences stay plain.
+- **Bars:** dark track with notches every quarter; own health in `health`, the opponent's in `dim`, Shield as a
+  `shield` strip on top, Energy in `gold`. Lost health stays a moment as a light chunk.
+- **Bags:** a stitched seam inside the outline, like sewn cloth; the cell grid inside is faint.
+- **Shop cards:** rarity is a coloured corner with one pip per rarity step; the price is the coin symbol; the item's types sit small in the lower right corner (up to three), because an item picture shows no type. A weapon shows melee or ranged, never "weapon" (`typeIcons` in `src/pieces.ts`, also in the item popup).
+- **Main symbols are pictures:** gold, Credits, Galaxies, league patch, full and empty heart, Energy, level,
+  dice, bin, pin, settings and the item types are coloured ink pictures in `apps/client/art/ui/` (docs/client-art.md). They keep
+  their colours; all other symbols stay tinted line symbols.
+
+## Rarity
+
+Rarity colours come from the art palette: common warm grey, rare teal, epic violet (the only colour the art palette
+does not have), legendary mustard, artifact coral red.

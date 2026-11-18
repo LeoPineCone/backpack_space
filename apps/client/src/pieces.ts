@@ -5,7 +5,7 @@
 import { Container, Graphics, Sprite } from "pixi.js";
 import { artTexture } from "./art";
 import { PET_KINDS, starLinks, type GameData, type ItemDef, type Placement, type StarLink } from "@backpack-space/core";
-import { C, RARITY, TAG_FILL } from "./theme";
+import { C, COMIC, RARITY, TAG_FILL } from "./theme";
 import { icon } from "./icons";
 import { at, disc, txt } from "./ui";
 import type { Chip, Row } from "./symbols";
@@ -20,10 +20,16 @@ export const initials = (name: string) => {
 /** bare: an item with a picture is drawn as the picture alone, without tile and frame (shop offers). */
 export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number; bare?: boolean }
 
+/** An item's types as the player sees them: a weapon shows melee or ranged instead of "weapon" (Ilja, 2026-11-18). */
+export function typeIcons(def: ItemDef): string[] {
+  if (def.isBag) return ["bag"];
+  return def.tags.filter((t) => t !== "bag").map((t) => (t === "weapon" ? (def.range ?? "weapon") : t));
+}
+
 /** The symbol on an item's tile: its first type, but a pet shows its kind (beast or swarm) when it has one. */
 function tileIcon(def: ItemDef): string {
   if (def.isBag) return "bag";
-  return def.tags.find((t) => (PET_KINDS as readonly string[]).includes(t)) ?? def.tags[0] ?? "any";
+  return def.tags.find((t) => (PET_KINDS as readonly string[]).includes(t)) ?? typeIcons(def)[0] ?? "any";
 }
 
 /** An item or bag; origin at the top-left corner of its bounding box. */
@@ -50,7 +56,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const tint = !def.isBag && artTexture(`items/${id}`) ? 0.22 : 1;
   g.fill({ color: fill, alpha: (o.alpha ?? 1) * tint });
   // outline: every cell edge that has no neighbour
-  const lw = def.isBag ? 1 : Math.max(1.5, cell * 0.05);
+  const lw = def.isBag ? (cell >= 26 ? COMIC.frame : 1) : Math.max(1.5, cell * 0.05);
   for (const [x, y] of s.cells) {
     const x0 = x * cell + pad, y0 = y * cell + pad, x1 = (x + 1) * cell - pad, y1 = (y + 1) * cell - pad;
     if (!has.has(`${x},${y - 1}`)) g.moveTo(x0, y0).lineTo(x1, y0);
@@ -59,7 +65,29 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
     if (!has.has(`${x + 1},${y}`)) g.moveTo(x1, y0).lineTo(x1, y1);
   }
   g.stroke({ width: lw, color: line, cap: "square" });
-  if (def.isBag) for (const [x, y] of s.cells) g.rect(x * cell, y * cell, cell, cell).stroke({ width: 1, color: C.bagLine, alpha: 0.5 });
+  if (def.isBag) {
+    for (const [x, y] of s.cells) g.rect(x * cell, y * cell, cell, cell).stroke({ width: 1, color: C.bagLine, alpha: 0.35 });
+    // a stitched seam just inside the outline, like sewn cloth
+    if (cell >= 26) {
+      const k = 4.5, dash = 4, gap = 3.5;
+      const run = (x0: number, y0: number, x1: number, y1: number) => {
+        const len = Math.hypot(x1 - x0, y1 - y0);
+        for (let a = 0; a < len; a += dash + gap) {
+          const b = Math.min(len, a + dash);
+          g.moveTo(x0 + ((x1 - x0) * a) / len, y0 + ((y1 - y0) * a) / len).lineTo(x0 + ((x1 - x0) * b) / len, y0 + ((y1 - y0) * b) / len);
+        }
+      };
+      for (const [x, y] of s.cells) {
+        const x0 = x * cell, y0 = y * cell, x1 = x0 + cell, y1 = y0 + cell;
+        const l = !has.has(`${x - 1},${y}`), r = !has.has(`${x + 1},${y}`), t = !has.has(`${x},${y - 1}`), b = !has.has(`${x},${y + 1}`);
+        if (t) run(x0 + (l ? k : 0), y0 + k, x1 - (r ? k : 0), y0 + k);
+        if (b) run(x0 + (l ? k : 0), y1 - k, x1 - (r ? k : 0), y1 - k);
+        if (l) run(x0 + k, y0 + (t ? k : 0), x0 + k, y1 - (b ? k : 0));
+        if (r) run(x1 - k, y0 + (t ? k : 0), x1 - k, y1 - (b ? k : 0));
+      }
+      g.stroke({ width: 1.2, color: C.bagLine, cap: "round" });
+    }
+  }
   c.addChild(g);
   // symbol + initials in the cell closest to the middle
   const mx = (s.w - 1) / 2, my = (s.h - 1) / 2;

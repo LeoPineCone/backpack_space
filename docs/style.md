@@ -66,8 +66,8 @@ ink comic rules, with more ink texture than items); the app adds light, the hatc
 ## Open
 
 - Some swarm and crafted descriptions in `data/item-art.json` still show several animals and need rewriting to one animal.
-- Rarity and item-type colours have to be mapped onto the palette.
-- The game's UI elements (buttons, frames, cards, bars) still need a look that matches this style.
+- Item-type colours have to be mapped onto the palette (rarity is done, see [theme.md](theme.md)).
+- UI elements follow the hand-inked look in [theme.md](theme.md#hand-inked-look) since 2026-11-18; more symbols can get pictures the same way.
 
 ## Prompt base for image generation
 
