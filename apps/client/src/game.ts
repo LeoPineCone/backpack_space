@@ -20,6 +20,7 @@ import { keywords, type Keyword } from "./symbols";
 import { clearSave, readSave, writeSave, type SavedFight } from "./save";
 import { readProfile, today, writeProfile } from "./profile";
 import { GhostOpponents, type OpponentSource } from "./opponents";
+import type { OnlineState } from "./online";
 
 export interface Scene {
   root: Container;
@@ -47,8 +48,10 @@ export class Game {
   /** seed of the next or current run; the core derives every shop from it (later the server hands it out) */
   seed = 1;
   hero: string;
-  /** progress between runs (stored on this device) */
+  /** progress between runs: the server's when online, a copy is kept on this device */
   profile: Profile;
+  /** how the start against the backend went (connect.ts) */
+  online: OnlineState = { kind: "offline" };
   readonly opponents: OpponentSource;
 
   constructor(
@@ -177,9 +180,9 @@ export class Game {
     return b;
   }
 
-  /** Moves the profile into the season that runs today, if a new one has started. */
-  checkSeason(): SeasonChange | null {
-    const c = enterSeason(this.meta, this.profile, seasonAt(this.meta, today()));
+  /** Moves the profile into the season that runs on `date` (the server's date when online), if a new one has started. */
+  checkSeason(date: string = today()): SeasonChange | null {
+    const c = enterSeason(this.meta, this.profile, seasonAt(this.meta, date));
     if (c) this.setProfile(c.profile);
     return c;
   }

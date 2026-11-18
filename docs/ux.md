@@ -179,6 +179,13 @@ The gear button: language, music, sounds, account, privacy, help and the glossar
 
 No sign-in screen. Progress is bound silently to Game Center (iOS) or Google Play Games (Android). There is no own login, so progress does not move between iOS and Android. **Decided** (2026-11-17)
 
+**M11 Start and connection**
+
+1. On start the app asks the server for its configuration, signs in silently and loads the profile from the server (backend.md). While that runs, the screen stays dark; it takes a moment only.
+2. If something keeps the player out, one screen (V9) says what and why, with one button TRY AGAIN: maintenance (with the server's text if it names one), update needed (old app), no connection, not signed in (Game Center / Play Games refused or not signed in). **Assumption** (2026-11-18) A store link for "update needed" comes when the store entries exist.
+3. Otherwise the start screen opens as before; the season date comes from the server.
+4. Development builds sign in as a development player (`?player=player-2` picks another one). Without a backend address the app plays offline with the profile on the device (hosted preview).
+
 ## Screens and popups
 
 A screen replaces the previous one. A popup lies on top; X or a tap beside it closes it.
@@ -193,6 +200,7 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | V6 | Run end | screen | summary and reward | Galaxies, final backpack, XP and level (animated), league points (animated), unlocks, NEW RUN, home, share | built |
 | V7 | Credits shop | screen | buy | sections: offers, skins, heroes, backgrounds, Credits | built (prices "?") |
 | V8 | Quests | screen | daily and weekly | list with progress and reward; starts a run with special rules | built (placeholder cards) |
+| V9 | Status | screen | maintenance, update needed, no connection, not signed in (M11) | symbol, title, one sentence, TRY AGAIN | built (no store link yet) |
 | P1 | Item popup | popup | what an item does | picture, name, symbol rows, "i", recipe radar; in the backpack: turn, sell, lock | built |
 | P2 | Hero popup | popup | what a hero does | passive as symbol rows, paths, "i" | built |
 | P3 | "i" legend | popup | explain this popup's symbols | symbol + term + sentence, link to the glossary | built |
