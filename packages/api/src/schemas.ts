@@ -263,3 +263,18 @@ export const QuestBody = z.strictObject({
 export type QuestBody = z.infer<typeof QuestBody>;
 export const QuestsResponse = z.strictObject({ quests: z.array(QuestBody).max(20) });
 export type QuestsResponse = z.infer<typeof QuestsResponse>;
+
+/**
+ * POST /reports/error (BE-15): an unhandled error or crash of the app. Only code text and versions leave the device:
+ * no player id, no name, no backpack. The app version comes from the request header.
+ */
+export const ClientErrorRequest = z.strictObject({
+  /** an uncaught error, or a promise that failed with nobody waiting for it */
+  kind: z.enum(["error", "rejection"]),
+  message: z.string().max(300),
+  stack: z.string().max(2000).optional(),
+  simVersion: SimVersion,
+});
+export type ClientErrorRequest = z.infer<typeof ClientErrorRequest>;
+export const ClientErrorResponse = z.strictObject({ received: z.literal(true) });
+export type ClientErrorResponse = z.infer<typeof ClientErrorResponse>;
