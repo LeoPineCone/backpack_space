@@ -196,8 +196,8 @@
     "description": "Lying across the box: a chest plate covered in a grid of small round charges like bubble wrap, coral red caps, two of them already blown open and blackened."
   },
   "deflector_dish": {
-    "brief": "Old satellite dish used as a shield with a ring of force in front. Accent: teal.",
-    "description": "Filling the square box: an old satellite dish turned into a shield, a grip strap on the back, a flat teal ring of force hovering just in front of the bowl. Bent rim, one missing panel."
+    "brief": "Satellite dish used as a shield, a ring of force in front of the bowl. Accent: teal.",
+    "description": "Filling the square box: an old satellite dish seen from the front, bowl facing the viewer, the small receiver arm in its centre, used as a shield; a flat teal ring of force hovers just in front of the bowl. Bent rim, one missing panel."
   },
   "cryo_coat": {
     "brief": "Long coat of ice-spiked Rime fur with snowshoe flaps. Accent: teal.",
@@ -1496,12 +1496,12 @@
     "description": "Lying across the box: a wreck-salvage cutter built from a welding torch and a ship's fuel valve, a short flat coral red blade of plasma at the nozzle, a magnet clamp on the housing so it sticks to hulls in zero gravity."
   },
   "asteroid_chunk": {
-    "brief": "A throwable little asteroid with its own pebble moon and a strap. Accent: copper.",
-    "description": "Lying across the box: a lumpy grey-brown little asteroid with a carry strap bolted on so it can be thrown, a tiny pebble moon orbiting it on a dashed line."
+    "brief": "A throwable little asteroid with a carry strap and a pebble moon beside it. Accent: copper.",
+    "description": "Lying across the box: a lumpy grey-brown little asteroid with a carry strap bolted on so it can be thrown, a tiny pebble moon floating close beside it."
   },
   "stun_baton": {
     "brief": "Baton from a broken antenna mast, spark between two prongs. Accent: mustard.",
-    "description": "Upright, prongs at the top: a baton made from a broken antenna mast, two bent prongs with a flat mustard zig-zag spark between them, a tether loop at the bottom so it never drifts away."
+    "description": "Upright, prongs at the top: a baton made from a broken antenna mast, two bent prongs with a flat mustard zig-zag spark between them, a short coiled tether cord with a clip at the grip end."
   },
   "mining_pick": {
     "brief": "L-shaped meteor-iron pick with a crystal tip and a small thruster. Accent: teal.",
@@ -1541,7 +1541,7 @@
   },
   "meteor_hammer": {
     "brief": "Hammer whose head is a whole little meteor with a re-entry scorch. Accent: coral red.",
-    "description": "Filling the square box diagonally: a short iron haft with a lumpy meteor fused on as the head, the meteor's underside scorched and cracked in coral red from re-entry. Leather wrap on the grip."
+    "description": "Filling the square box diagonally: a short iron haft with a lumpy dark meteor fused on as the head, its front scorched from re-entry with flat coral red crack shapes, no glow. Leather wrap on the grip."
   },
   "tentacle_whip": {
     "brief": "Whip of a nebula squid tentacle, tip curled like a galaxy. Accent: cream.",
@@ -1572,8 +1572,8 @@
     "description": "Along the long box: a long pole lance, its tip a heavy reactor rod in a small cage marked with three flat mustard radiation wedges, a cable spiralling down the shaft to a battery at the butt."
   },
   "swarm_missiles": {
-    "brief": "Honeycomb rack of small rockets hung like a beehive. Accent: coral red.",
-    "description": "A square honeycomb rack seen from the front, hung on a tether like a beehive in zero gravity, every cell holding a small coral red rocket nose; two cells are empty and scorched."
+    "brief": "Honeycomb rack of small rockets with a tether clip. Accent: coral red.",
+    "description": "A square honeycomb rack seen from the front, every cell holding a small coral red rocket nose, two cells empty and scorched, a short tether clip on the top edge. The whole rack fits inside the frame."
   },
   "antimatter_dagger": {
     "brief": "Dagger with a blade of black void, debris falling into it. Accent: cream.",
@@ -1656,8 +1656,8 @@
     "description": "Lying across the box: a wilted dark flower slumped out of a cracked specimen jar, drooping petals with no eyes or face, thick coral red sap dripping from the tips into a small puddle."
   },
   "dune_ox": {
-    "brief": "Shaggy ox with balloon-like air sacs and a mossy saddle back. Accent: copper.",
-    "description": "Filling the square box: one big shaggy ox of the Herdworld plains, head lowered, wide curved horns, puffed air sacs at its throat like small balloons, its broad back a flat saddle of moss. One hoof scraping the ground."
+    "brief": "Shaggy ox with dish-shaped horns and a mossy saddle back. Accent: copper.",
+    "description": "Filling the square box: one big shaggy ox of the Herdworld plains in side view, all four legs clearly visible, head lowered, its two horns shaped like small satellite dishes, its broad back a flat saddle of moss. One front hoof scraping the ground."
   },
   "tundra_yak": {
     "brief": "Ice-spiked yak with snowshoe hooves and big pale eyes. Accent: teal.",
