@@ -141,8 +141,8 @@ const EVENT_REASON: Record<EndReason, EventFields["run_finished"]["reason"]> = {
   data_major: "data_major",
 };
 
-/** How long `ROUND#` and `DONE#` entries are kept for repeats (proposal in docs/backend.md); DynamoDB removes them after. */
-export const ROUNDS_KEEP_DAYS = 30;
+/** How long `ROUND#` and `DONE#` entries are kept: they only serve repeated requests of a run (decided 2026-11-18); DynamoDB removes them after. */
+export const ROUNDS_KEEP_DAYS = 7;
 export const expiresIn = (nowMs: number, days: number) => Math.floor(nowMs / 1000) + days * 86400;
 
 /**

@@ -253,7 +253,7 @@ describe("finishing a run (booking exactly once)", () => {
     expect((await f.call("/runs/finish", { runId: f.run.runId, reason: "finished" })).body).toEqual(first.finished);
   });
 
-  it("lets ROUND# and DONE# entries expire after 30 days", async () => {
+  it("lets ROUND# and DONE# entries expire after 7 days", async () => {
     const f = await setup();
     await f.fight(1);
     await f.call("/runs/finish", { runId: f.run.runId, reason: "gave_up" });
