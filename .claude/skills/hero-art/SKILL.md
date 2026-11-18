@@ -75,11 +75,11 @@ credits used and left in every result message (`openart_account_get`).
   and count them in every result. A fix as image2image edit of the faulty picture keeps the rest.
 - Ideas must have a reason in the hero's life. Ilja rejected scrap circling around Rook ("macht keinen Sinn") and
   a hatch dragged on a chain ("passt gar nicht"). An older picture Ilja already liked can be the better base.
-- **No big planet in the background of a home scene** (Ilja 2026-11-18: the planet goes out of every scene;
-  the turning planet belongs to the menu background). Say "NO planet in the sky, only space with stars".
-  Removing it from a finished scene works as an image2image edit ("REMOVE THE BIG PLANET ... only space with
-  stars there now"). If a planet is ever wanted again, it drifts to Earth looks (ask for an alien one) and must
-  differ per hero.
+- **A planet in the background is fine, but it must not take over.** Venn's planet filled a third of the sky
+  and drew the eye away from Venn (Ilja 2026-11-18); keep it smaller or partly cut off, and give every hero a
+  different planet (Rook's first scene repeated Venn's banded planet). Planets drift to Earth looks; ask for "a
+  strange alien planet ..., no blue oceans, no white clouds". To change only the planet, an image2image edit of
+  the chosen picture that says "ONLY CHANGE THE PLANET" works; removing it can leave the sky empty.
 - For pictures that get cut out (sheet, full body, head): "Background: flat plain light grey (#c8c8c8),
   nothing else, no floor shadow". A black ink outline on a dark background cannot be cut out cleanly.
 - Composition of the home scene: hero in the upper two thirds; the bottom third calmer, because the hero ring
