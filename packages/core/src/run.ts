@@ -28,6 +28,8 @@ export interface RunState {
   /** what merged after the last fight */
   merged: Merge[];
   over: boolean;
+  /** every applied shop action and every fight result in order (actions.ts); with the seed it rebuilds the run */
+  log: string[];
 }
 export interface Combo {
   recipe: Recipe;
@@ -86,6 +88,7 @@ export function newRun(data: GameData, hero: string, seed: number): RunState {
     special: null,
     merged: [],
     over: false,
+    log: [],
   };
   startRound(s, data);
   return s;
@@ -315,6 +318,7 @@ export function giveUp(s: RunState): void {
 export function finishRound(s: RunState, data: GameData, won: boolean): void {
   if (won) s.wins++;
   else s.lives--;
+  s.log.push(won ? "won" : "lost");
   s.results.push(won);
   const fought = s.round;
   s.merged = [];

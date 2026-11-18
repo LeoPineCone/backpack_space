@@ -4,8 +4,8 @@
  */
 import { Container, Graphics, Rectangle, type FederatedPointerEvent } from "pixi.js";
 import {
-  boardOf, buildOf, buildStats, buy, compile, dropBag, dropItem, mergePartners, moveBag, moveItem, pendingMerges, placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, toggleFreeze, toggleLock,
-  type RunState, type Spot,
+  act, applyAction, boardOf, buildOf, buildStats, compile, mergePartners, pendingMerges, sellPrice,
+  type Action, type RunState, type Spot,
 } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, RARITY, RARITY_PIPS, SCREEN, W } from "../theme";
@@ -76,15 +76,16 @@ export function shopScene(game: Game): Scene {
   };
 
   const srcItem = (s: Src): string => { const r = run(); return s.kind === "offer" ? r.offers[s.i]!.item : s.kind === "loose" ? r.loose[s.i]! : s.kind === "item" ? r.items[s.i]!.item : r.bags[s.i]!.item; };
-  const applyTo = (r: RunState, s: Src, spot: Spot): boolean => {
+  // the run changes only through actions (core actions.ts); the game records them in the run's log
+  const placeAction = (s: Src, spot: Spot): Action => {
     switch (s.kind) {
-      case "offer": return buy(r, data, s.i, spot);
-      case "loose": return placeLoose(r, data, s.i, spot);
-      case "item": return moveItem(r, data, s.i, spot);
-      case "bag": return moveBag(r, data, s.i, spot);
+      case "offer": return act.buy(s.i, spot);
+      case "loose": return act.placeLoose(s.i, spot);
+      case "item": return act.moveItem(s.i, spot);
+      case "bag": return act.moveBag(s.i, spot);
     }
   };
-  const canPlace = (s: Src, spot: Spot) => applyTo(structuredClone(run()), s, spot);
+  const canPlace = (s: Src, spot: Spot) => applyAction(structuredClone(run()), data, placeAction(s, spot));
 
   // ---------- drawing ----------
   const render = () => {
@@ -134,7 +135,7 @@ export function shopScene(game: Game): Scene {
       tile.on("pointerdown", (e) => press({ kind: "offer", i }, e));
       const pin = new Container();
       pin.addChild(disc(15, { fill: o.frozen ? C.cyan : C.bg, line: o.frozen ? C.cyan : C.line, lineW: 2 }), icon("pin", 14, o.frozen ? C.cyanInk : C.dim));
-      tile.addChild(at(tappable(pin, () => { toggleFreeze(r, i); render(); }, new Rectangle(-20, -20, 40, 40)), OFFER.w - 9, 9));
+      tile.addChild(at(tappable(pin, () => { game.act(act.freeze(i)); render(); }, new Rectangle(-20, -20, 40, 40)), OFFER.w - 9, 9));
       view.addChild(at(tile, x, y));
     });
 
@@ -238,7 +239,7 @@ export function shopScene(game: Game): Scene {
     }
 
     // bottom row: reroll, fight, sell
-    const rr = roundButton("dice", 32, () => { if (reroll(run(), data)) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
+    const rr = roundButton("dice", 32, () => { if (game.act(act.reroll())) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
     rr.addChild(at(disc(11, { fill: C.gold }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
     view.addChild(at(rr, REROLL.x, REROLL.y));
@@ -358,10 +359,10 @@ export function shopScene(game: Game): Scene {
     if (src.kind === "item") {
       const p = r.items[src.i]!;
       const turn = () => {
-        for (let k = 1; k < 4; k++) if (moveItem(run(), data, src.i, { x: p.x, y: p.y, rot: (p.rot + k) & 3 })) { game.closeOverlay(); render(); return; }
+        for (let k = 1; k < 4; k++) if (game.act(act.moveItem(src.i, { x: p.x, y: p.y, rot: (p.rot + k) & 3 }))) { game.closeOverlay(); render(); return; }
         game.toast(t("toast.noRoomToTurn"));
       };
-      const lock = data.recipesWith.has(id) ? { label: t(p.lock ? "ui.unlock" : "ui.lock"), onTap: () => { toggleLock(run(), src.i); game.closeOverlay(); render(); } } : undefined;
+      const lock = data.recipesWith.has(id) ? { label: t(p.lock ? "ui.unlock" : "ui.lock"), onTap: () => { game.act(act.lock(src.i)); game.closeOverlay(); render(); } } : undefined;
       game.openOverlay(itemPopup(game, id, { sell: true, onRotate: data.shape(id, 0).cells.length > 1 ? turn : undefined, action: lock }));
       return;
     }
@@ -376,17 +377,17 @@ export function shopScene(game: Game): Scene {
     const { spot, ok } = d;
     endDrag();
     if (spot) {
-      if (ok) applyTo(r, src, spot);
+      if (ok) game.act(placeAction(src, spot));
       else game.toast(t(src.kind === "offer" && r.gold < r.offers[src.i]!.price ? "toast.notEnoughGold" : src.kind === "bag" ? "toast.bagNeedsRoom" : "toast.doesNotFit"));
     } else if (overSell(pos.x, pos.y)) {
-      if (src.kind === "item") sellItem(r, data, src.i);
-      else if (src.kind === "loose") sellLoose(r, data, src.i);
-      else if (src.kind === "bag" && !sellBag(r, data, src.i)) game.toast(t("toast.onlyEmptyBag"));
+      if (src.kind === "item") game.act(act.sellItem(src.i));
+      else if (src.kind === "loose") game.act(act.sellLoose(src.i));
+      else if (src.kind === "bag" && !game.act(act.sellBag(src.i))) game.toast(t("toast.onlyEmptyBag"));
     } else if (src.kind === "offer") {
       // let go below the shop: bought, and it drops below the backpack
-      if (pos.y > GY - 8 && !buy(r, data, src.i)) game.toast(t(r.gold < r.offers[src.i]!.price ? "toast.notEnoughGold" : "toast.tooManyLoose"));
-    } else if (src.kind === "item") dropItem(r, src.i);
-    else if (src.kind === "bag") dropBag(r, data, src.i);
+      if (pos.y > GY - 8 && !game.act(act.buy(src.i))) game.toast(t(r.gold < r.offers[src.i]!.price ? "toast.notEnoughGold" : "toast.tooManyLoose"));
+    } else if (src.kind === "item") game.act(act.dropItem(src.i));
+    else if (src.kind === "bag") game.act(act.dropBag(src.i));
     render();
   };
   root.on("pointermove", onMove);

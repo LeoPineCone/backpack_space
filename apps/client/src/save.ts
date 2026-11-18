@@ -2,8 +2,8 @@
 import { boardOf, type Build, type GameData, type RunState } from "@backpack-space/core";
 
 const KEY = "backpack-space.run";
-/** 2: the run carries its seed and reroll count; the shop follows from them (runs of version 1 are dropped) */
-const VERSION = 2;
+/** 3: the run carries its seed, reroll count and action log; the shop follows from them (older runs are dropped) */
+const VERSION = 3;
 
 /** A fight that was started: the same opponent and seed replay the same fight after a reload. */
 export interface SavedFight {
@@ -50,7 +50,15 @@ export function readSave(data: GameData): Saved | null {
 
 function fits(s: Saved, data: GameData): boolean {
   try {
-    if (s?.v !== VERSION || !s.run || s.run.over || !data.heroes.has(s.run.hero) || typeof s.run.seed !== "number" || typeof s.run.rerolls !== "number")
+    if (
+      s?.v !== VERSION ||
+      !s.run ||
+      s.run.over ||
+      !data.heroes.has(s.run.hero) ||
+      typeof s.run.seed !== "number" ||
+      typeof s.run.rerolls !== "number" ||
+      !Array.isArray(s.run.log)
+    )
       return false;
     const r = s.run;
     const ids = [...r.bags, ...r.items]
