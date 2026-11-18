@@ -10,6 +10,10 @@ import { join } from "node:path";
 import type { TestProject } from "vitest/node";
 import { startServer } from "../../local/server.js";
 import { createTables, localClient, waitForDb } from "../../local/tables.js";
+import { loadGameData, loadMeta } from "@backpack-space/core/node";
+import { DynamoBackpackPool, documentClient } from "../../src/adapters/dynamodb.js";
+import { defaultSettings } from "../../src/fakes/index.js";
+import { BotNames, replaceBotPool, seedPool } from "../../src/seed/bot-pool.js";
 
 declare module "vitest" {
   export interface ProvidedContext {
@@ -46,6 +50,7 @@ export default async function setup(project: TestProject) {
     const client = localClient(endpoint);
     await waitForDb(client);
     await createTables(client, tables);
+    await seedSmallPool(endpoint, tables);
     const logFile = join(mkdtempSync(join(tmpdir(), "backpack-space-api-")), "log.jsonl");
     writeFileSync(logFile, "");
     const server = await startServer(
@@ -77,4 +82,14 @@ function checkOneLinePerRequest(logFile: string) {
   for (const l of lines) if (l.type === "request") count.set(l.requestId ?? "none", (count.get(l.requestId ?? "none") ?? 0) + 1);
   const wrong = [...count].filter(([id, n]) => id === "none" || n !== 1);
   if (wrong.length > 0) throw new Error(`requests without exactly one log line: ${JSON.stringify(wrong)}`);
+}
+
+/** A small bot pool (one backpack per bucket and tier), so runs can be played over HTTP (`npm run seed` in miniature). */
+async function seedSmallPool(endpoint: string, tables: { players: string; backpacks: string; actions: string }) {
+  const data = loadGameData();
+  const names = BotNames.parse(JSON.parse(readFileSync(new URL("../../../../data/bot-names.json", import.meta.url), "utf8")));
+  const { entries } = seedPool(data, loadMeta(data), names, { seed: 1, perBucket: 1, perEasyBucket: 1, playersPerGroup: 4, season: 1, maxLobbies: 4 });
+  const values = { ...defaultSettings(), tables };
+  const pool = new DynamoBackpackPool(documentClient({ endpoint, region: "local" }), { get: async () => values });
+  await replaceBotPool(pool, data, entries, { today: "2026-11-18", seed: 1 });
 }

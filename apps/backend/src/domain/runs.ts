@@ -25,6 +25,7 @@ import { loadProfile, playerKey, profileWrites } from "./players.js";
 
 export const RUN = "RUN";
 export const doneKey = (runId: string) => `DONE#${runId}`;
+export const roundKey = (runId: string, round: number) => `ROUND#${runId}#${String(round).padStart(2, "0")}`;
 
 /** The RUN item. `version` counts every write; a write only succeeds on the version it read. */
 export interface StoredRun {
@@ -34,13 +35,25 @@ export interface StoredRun {
   lives: number;
   wins: number;
   shopSeed: number;
+  /** the last round is fought or the lives are gone */
+  over: boolean;
+  /** owners of the opponents met so far (nobody twice in a run) */
+  met: string[];
   simVersion: string;
   /** milliseconds since 1970 */
   startedAt: number;
   version: number;
 }
 
-const toBody = (r: StoredRun): RunBody => ({ runId: r.runId, hero: r.hero, round: r.round, lives: r.lives, wins: r.wins, shopSeed: r.shopSeed });
+export const toBody = (r: StoredRun): RunBody => ({
+  runId: r.runId,
+  hero: r.hero,
+  round: r.round,
+  lives: r.lives,
+  wins: r.wins,
+  shopSeed: r.shopSeed,
+  over: r.over,
+});
 
 export async function readRun(ctx: DomainContext, playerId: string): Promise<StoredRun | null> {
   return (await ctx.ports.players.get(playerKey(playerId), RUN)) as unknown as StoredRun | null;
@@ -79,6 +92,8 @@ export async function runStart(ctx: DomainContext, body: unknown): Promise<RunSt
     lives: data.rules.lives,
     wins: 0,
     shopSeed: random.uint32(),
+    over: false,
+    met: [],
     simVersion,
     startedAt: clock.now(),
     version: 1,
@@ -113,7 +128,7 @@ export async function runFinish(ctx: DomainContext, body: unknown): Promise<RunF
     const stored = await loadProfile(ctx, playerId);
     if (!stored) throw new Error("signed-in player without profile");
 
-    const summary = { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.round - 1 };
+    const summary = { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.over ? run.round : run.round - 1 };
     // the core's profile carries Credits; on the server they live at RevenueCat (earned Credits: STORE issues)
     const booking = bookRun(game.meta, { ...stored.profile, credits: 0 }, summary);
     const { credits: _credits, ...profile } = booking.profile;

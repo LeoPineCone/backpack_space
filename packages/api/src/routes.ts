@@ -8,6 +8,8 @@ import {
   ConfigResponse,
   ProfileResponse,
   RunCurrentResponse,
+  RunFightRequest,
+  RunFightResponse,
   RunFinishRequest,
   RunFinishResponse,
   RunStartRequest,
@@ -34,6 +36,7 @@ export const ROUTES = {
   profile: { method: "GET", path: "/profile", auth: true, request: NoBody, response: ProfileResponse },
   runCurrent: { method: "GET", path: "/runs/current", auth: true, request: NoBody, response: RunCurrentResponse },
   runStart: { method: "POST", path: "/runs", auth: true, request: RunStartRequest, response: RunStartResponse },
+  runFight: { method: "POST", path: "/runs/fight", auth: true, request: RunFightRequest, response: RunFightResponse },
   runFinish: { method: "POST", path: "/runs/finish", auth: true, request: RunFinishRequest, response: RunFinishResponse },
 } as const satisfies Record<string, Route>;
 export type RouteName = keyof typeof ROUTES;

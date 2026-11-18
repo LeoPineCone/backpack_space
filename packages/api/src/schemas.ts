@@ -131,6 +131,8 @@ export const RunBody = z.strictObject({
   wins: z.number().int().min(0).max(100),
   /** the seed of this round's shop; every offer and reroll of the round follows from it (RUN-03) */
   shopSeed: Seed,
+  /** the last round is fought or the lives are gone: the run only waits for its finish */
+  over: z.boolean(),
 });
 export type RunBody = z.infer<typeof RunBody>;
 
@@ -143,6 +145,53 @@ export const RunStartRequest = z.strictObject({ hero: Id, simVersion: SimVersion
 export type RunStartRequest = z.infer<typeof RunStartRequest>;
 export const RunStartResponse = z.strictObject({ run: RunBody });
 export type RunStartResponse = z.infer<typeof RunStartResponse>;
+
+// ---------- POST /runs/fight (RUN-04, RUN-05, RUN-07, RUN-08, RUN-09, RUN-12)
+
+/** One item or bag in the backpack, as `Placement` in the core. */
+export const PlacementBody = z.strictObject({
+  item: Id,
+  x: z.number().int().min(-1).max(31),
+  y: z.number().int().min(-1).max(31),
+  rot: z.number().int().min(0).max(3),
+  lock: z.boolean().optional(),
+});
+/** A backpack, as `Build` in the core (about 1.3 KB as JSON). */
+export const BuildBody = z.strictObject({
+  hero: Id,
+  round: z.number().int().min(1).max(100),
+  bags: z.array(PlacementBody).max(16),
+  items: z.array(PlacementBody).max(64),
+});
+export type BuildBody = z.infer<typeof BuildBody>;
+
+/** Most shop actions one round may carry (docs/client-server.md "Shop actions"). */
+export const MAX_ACTIONS = 300;
+/** One action line ("by 3 4 2 1"), as `Action` in the core. */
+export const ActionLine = z.string().min(1).max(32);
+
+export const RunFightRequest = z.strictObject({
+  runId: Id,
+  /** the round the app is about to fight; must be the open run's round */
+  round: z.number().int().min(1).max(100),
+  backpack: BuildBody,
+  /** the shop actions of this round, in order; stored, not checked at launch */
+  actions: z.array(ActionLine).max(MAX_ACTIONS),
+  simVersion: SimVersion,
+});
+export type RunFightRequest = z.infer<typeof RunFightRequest>;
+
+export const FIGHT_RESULTS = ["win", "loss", "draw"] as const;
+export const RunFightResponse = z.strictObject({
+  opponent: z.strictObject({ backpack: BuildBody, name: z.string().min(1).max(32), patch: Id.nullable() }),
+  /** the app computes the same fight with this seed to play it back */
+  fightSeed: Seed,
+  /** the server's result counts; a draw costs a life like a loss */
+  result: z.enum(FIGHT_RESULTS),
+  /** the run after this fight: the next round with its shop seed, or over */
+  run: RunBody,
+});
+export type RunFightResponse = z.infer<typeof RunFightResponse>;
 
 /**
  * Why a run ends early: the player gave up, or the app has no local copy of the open run (reinstall, other device;

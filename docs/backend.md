@@ -166,9 +166,9 @@ This is the heart of the backend, so here is the order inside `game`:
 4. Check the backpack for plausibility with the core (CORE-05).
 5. Find an opponent in `backpacks` (never the player's own, none met before in this run).
 6. Roll the fight seed and the shop seed of the next round through the random port.
-7. Compute the fight with the core, apply the merges, work out lives and wins.
+7. Compute the fight with the core and work out lives and wins (a draw costs a life, as in the app). The server does not merge: gold, loose items and pins live on the device.
 8. Write in one transaction: the `ROUND#` entry and the moved-on `RUN`. If the transaction fails because another request was faster, start again at step 1, which then ends at step 2.
-9. After the transaction, without waiting on success: put the player's backpack into the pool, write the actions.
+9. After the transaction: put the player's backpack into the pool, write the actions (kept 180 days, proposal for RUN-14). A failure here is logged; the fight still counts.
 10. Send the answer.
 
 The backpack is "committed" by step 8: from then on the round has exactly one backpack and one opponent, whatever is sent afterwards.

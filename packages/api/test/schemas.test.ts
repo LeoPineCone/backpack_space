@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { newProfile } from "@backpack-space/core";
 import { loadMeta } from "@backpack-space/core/node";
-import { ERROR_CODES, ERROR_STATUS, ErrorBody, MAX_BODY_BYTES, ROUTES, type RouteName } from "@backpack-space/api";
+import { ERROR_CODES, ERROR_STATUS, ErrorBody, MAX_ACTIONS, MAX_BODY_BYTES, ROUTES, type RouteName } from "@backpack-space/api";
 
 const { credits: _credits, ...profile } = newProfile(loadMeta());
+const build = { hero: "venn", round: 1, bags: [{ item: "pouch", x: 0, y: 0, rot: 0 }], items: [{ item: "pick", x: 1, y: 0, rot: 1, lock: true }] };
 
 /** One valid sample per route: request and response. */
 const samples: Record<RouteName, { request: unknown; response: unknown }> = {
@@ -24,7 +25,16 @@ const samples: Record<RouteName, { request: unknown; response: unknown }> = {
   runCurrent: { request: {}, response: { run: null } },
   runStart: {
     request: { hero: "venn", simVersion: "2.157d28e9292bed" },
-    response: { run: { runId: "r1", hero: "venn", round: 1, lives: 4, wins: 0, shopSeed: 123 } },
+    response: { run: { runId: "r1", hero: "venn", round: 1, lives: 4, wins: 0, shopSeed: 123, over: false } },
+  },
+  runFight: {
+    request: { runId: "r1", round: 1, backpack: build, actions: ["by 3 4 2 1", "rr"], simVersion: "2.157d28e9292bed" },
+    response: {
+      opponent: { backpack: build, name: "Nova Pilot", patch: null },
+      fightSeed: 42,
+      result: "draw",
+      run: { runId: "r1", hero: "venn", round: 2, lives: 3, wins: 0, shopSeed: 7, over: false },
+    },
   },
   runFinish: {
     request: { runId: "r1", reason: "gave_up" },
@@ -93,13 +103,23 @@ describe("API contract", () => {
   });
 
   it("takes a seed only as an unsigned 32-bit integer and a finish only for a known reason", () => {
-    const run = { runId: "r1", hero: "venn", round: 1, lives: 4, wins: 0 };
+    const run = { runId: "r1", hero: "venn", round: 1, lives: 4, wins: 0, over: false };
     expect(ROUTES.runCurrent.response.safeParse({ run: { ...run, shopSeed: 0xffffffff } }).success).toBe(true);
     expect(ROUTES.runCurrent.response.safeParse({ run: { ...run, shopSeed: -1 } }).success).toBe(false);
     expect(ROUTES.runCurrent.response.safeParse({ run: { ...run, shopSeed: 1.5 } }).success).toBe(false);
     expect(ROUTES.runFinish.request.safeParse({ runId: "r1", reason: "no_local_copy" }).success).toBe(true);
     expect(ROUTES.runFinish.request.safeParse({ runId: "r1", reason: "won" }).success).toBe(false);
     expect(ROUTES.runStart.request.safeParse({ hero: "venn" }).success).toBe(false);
+  });
+
+  it("caps the actions of a round and the size of a backpack", () => {
+    const fight = { runId: "r1", round: 1, backpack: build, actions: [] as string[], simVersion: "2.1" };
+    expect(ROUTES.runFight.request.safeParse({ ...fight, actions: Array(MAX_ACTIONS).fill("rr") }).success).toBe(true);
+    expect(ROUTES.runFight.request.safeParse({ ...fight, actions: Array(MAX_ACTIONS + 1).fill("rr") }).success).toBe(false);
+    expect(ROUTES.runFight.request.safeParse({ ...fight, actions: ["x".repeat(33)] }).success).toBe(false);
+    const items = Array.from({ length: 65 }, () => build.items[0]);
+    expect(ROUTES.runFight.request.safeParse({ ...fight, backpack: { ...build, items } }).success).toBe(false);
+    expect(ROUTES.runFight.request.safeParse({ ...fight, backpack: { ...build, items: [{ ...build.items[0], rot: 4 }] } }).success).toBe(false);
   });
 
   it("refuses oversized input", () => {
