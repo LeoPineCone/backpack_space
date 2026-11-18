@@ -10,7 +10,10 @@ import { fileURLToPath } from "node:url";
 import { MAX_BODY_BYTES } from "@backpack-space/api";
 import { createApp } from "../src/app.js";
 import { DynamoActionStore, DynamoBackpackPool, DynamoPlayerStore, documentClient } from "../src/adapters/dynamodb.js";
+import { storeIdentity } from "../src/adapters/store-identity.js";
 import { cryptoRandom, stdoutLog, systemClock } from "../src/adapters/system.js";
+import { hmacTokens } from "../src/http/token.js";
+import { loadGameData, loadMeta } from "@backpack-space/core/node";
 import type { Ports } from "../src/domain/context.js";
 import type { HttpRequest, HttpResponse } from "../src/http/types.js";
 import type { LogSink } from "../src/ports/index.js";
@@ -39,6 +42,9 @@ const CORS = {
   "access-control-expose-headers": "x-request-id",
 };
 
+const data = loadGameData();
+const game = { data, meta: loadMeta(data) };
+
 export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog): Ports {
   const settings = localSettingsPort(systemClock, overrides);
   const doc = documentClient(values.dynamodb);
@@ -49,8 +55,9 @@ export function localPorts(values: LocalSettings, overrides: Partial<LocalSettin
     players: new DynamoPlayerStore(doc, settings),
     backpacks: new DynamoBackpackPool(doc, settings),
     actions: new DynamoActionStore(doc, settings),
-    // sign-in checks come with the sign-in issue; until then nobody is accepted
-    identity: { check: async () => null },
+    identity: storeIdentity(fetch, systemClock),
+    tokens: hmacTokens,
+    game,
     // RevenueCat comes in M4
     revenuecat: { balance: async () => 0 },
     log,

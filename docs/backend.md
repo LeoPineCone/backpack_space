@@ -88,6 +88,7 @@ Inside a Lambda a small router maps path and method to a function. The local ser
 - **Lifetime.** Short, proposal: 1 hour. There is no refresh token: when the token has expired, the app signs in silently again, which costs the player nothing.
 - **Where it is checked.** Inside the handler, in `src/http`, not in a separate authorizer Lambda. That is one call less per request and works the same locally.
 - **Local and browser tests.** A development identity ("player 1", "player 2") replaces Game Center and Play Games. The backend accepts it only when a setting says so, and that setting does not exist in test and production.
+- **Code.** Token: `apps/backend/src/http/token.ts` (`v1.<claims>.<signature>`, HMAC-SHA256, claims: player id, platform, issue time, expiry, key id). Identity checks: `apps/backend/src/adapters/store-identity.ts`; they need the settings `gameCenter.bundleIds` and `playGames.clientId`/`clientSecret` (an OAuth client of type "web", Play Console credential "Game server"). The Play Games steps were checked against developer.android.com on 2026-11-18. Apple's page could not be read automatically then: the Game Center steps follow the known procedure (player id + bundle id + timestamp as 64-bit big-endian + salt, RSA SHA-256, certificate from apple.com) and must be checked against Apple's documentation before launch.
 
 ## Data
 

@@ -31,6 +31,10 @@ export interface SettingsValues {
   /** seconds a session token stays valid */
   tokenLifetime: number;
   tables: { players: string; backpacks: string; actions: string };
+  /** Game Center: the bundle ids of our app (iOS) */
+  gameCenter?: { bundleIds: string[] };
+  /** Play Games: the OAuth client of type "web" (Play Console credential "Game server") */
+  playGames?: { clientId: string; clientSecret: string };
 }
 export interface Settings {
   /** the current values; implementations refresh them at most once a minute */
@@ -72,8 +76,25 @@ export interface CheckedIdentity {
   storeId: string;
 }
 export interface IdentityCheck {
-  /** null when the identity is not accepted */
-  check(request: unknown): Promise<CheckedIdentity | null>;
+  /** asks Apple or Google; null when the identity is not accepted */
+  check(request: StoreSignIn, settings: SettingsValues): Promise<CheckedIdentity | null>;
+}
+/** What the app hands in from Game Center or Play Games (the schema is in packages/api). */
+export type StoreSignIn =
+  | { platform: "gamecenter"; playerId: string; bundleId: string; publicKeyUrl: string; signature: string; salt: string; timestamp: number }
+  | { platform: "playgames"; serverAuthCode: string };
+
+/** What a session token says (ACC-04). */
+export interface SessionClaims {
+  playerId: string;
+  platform: CheckedIdentity["platform"];
+}
+/** Issues and checks session tokens with the signing keys of the settings (newest first, two accepted). */
+export interface SessionTokens {
+  /** a token valid for `settings.tokenLifetime` seconds from `nowMs`; `expiresAt` in seconds since 1970 */
+  issue(claims: SessionClaims, settings: SettingsValues, nowMs: number): { token: string; expiresAt: number };
+  /** null when the token is malformed, forged, signed with an unknown key or expired */
+  check(token: string, settings: SettingsValues, nowMs: number): SessionClaims | null;
 }
 
 /** RevenueCat (M4). */
