@@ -4,6 +4,15 @@ Who the four heroes are, how they look and what never changes about them. Their 
 
 Every hero has **fixed marks** that stay the same in every picture, and one **skin slot**: the part a skin swaps. Skins themselves are not designed yet.
 
+**Hero colours.** All heroes share the palette in [style.md](style.md), but each one has its own main colour so they do not look alike on the hero choice (decided 2026-11-18). The main colour covers a large part of the figure, cream is the common thread, the other palette colours are small accents. A hero is never drawn in a single colour. A skin keeps the hero's main colour.
+
+| Hero | Main colour | With |
+|---|---|---|
+| Venn | leaf green tendrils (dark teal shadows) | pink/magenta lure flower, gold pollen, cream suit |
+| Rook | clean rust orange shell tiles | steel grey body and legs, some cream tiles, cream dish |
+| Quill | cream and coral red striped fur | teal ears, copper |
+| Ysel | muted deep violet and night blue robe and wings | soft gold corona pattern and bell, white/cream fur and face |
+
 ## Venn – The Thing in the Suit
 
 *Food, organic items, Toxin.*
@@ -13,10 +22,10 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 **Look.** The human part is only the suit. The plant has no human features at all: no eyes, no face, no hands of its own.
 
 - An old, patched research suit that does not fit what is inside. One arm is swollen tight; the other sleeve hangs half empty and a vine whip slides out of the cuff. Roots and bark push through seams and patches; it stands a little wrong, like a puppet worked from inside.
-- The helmet visor is cracked and packed with tightly coiled rust-red tendrils pressing against the glass, with a cluster of pale seed bulbs among them. Nothing in there looks back.
+- The helmet visor is cracked and packed with tightly coiled green tendrils pressing against the glass, with a cluster of pale seed bulbs among them. Nothing in there looks back.
 - A specimen clamp with a tag is still bolted to the suit's chest from the experiment.
-- The belly of the suit is torn open; rust-red tendrils and pale seed bulbs bulge out of the tear.
-- From the back tank a long thorny stalk arches over the helmet and dangles one large rust-red and bone **lure flower** in front of the visor, like an anglerfish lure. Its poison pollen turns around it as a small flat spiral galaxy (drawn, never glowing).
+- The belly of the suit is torn open; green tendrils and pale seed bulbs bulge out of the tear.
+- From the back tank a long thorny stalk arches over the helmet and dangles one large pink/magenta and cream **lure flower** in front of the visor, like an anglerfish lure. Its poison pollen turns around it as a small flat spiral galaxy (drawn, never glowing).
 
 **Fixed marks:** the cracked visor full of coiled tendrils (no face), the lure flower with its pollen galaxy (decided 2026-11-17; the name patch is now an ordinary detail of the suit).
 **Skin slot:** the suit.
@@ -59,7 +68,7 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 
 - Round fluffy cream moth face with two very large dark compound eyes, no beak; two large feathered mustard antennae.
 - A thick cream fur ruff. Her huge wings fold down around her like a long ceremonial robe that reaches the ground, so no feet show. The wing pattern is a sun corona with eclipse rings in mustard, coral red, navy and cream; the cream wing edges have small singed spots.
-- Under the wings a dark teal robe with a mustard and coral band showing sun and moon phases.
+- Under the wings a night-blue robe with a gold band showing sun and moon phases.
 - Four thin grey insect arms: the upper pair folded in prayer, the lower pair holds a bronze bell and a string of star-shard beads.
 - Star phases can be shown by the wings opening wider (useful for the fight view).
 

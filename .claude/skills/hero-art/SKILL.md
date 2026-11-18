@@ -16,7 +16,7 @@ Read first: the hero in `docs/heroes.md` (story, look, **fixed marks**, skin slo
 |---|---|---|---|
 | Model sheet | Not in the app. The fixed reference for every later picture and for skins. | 16:9, front + three-quarter + back, same scale and baseline | flat light grey `#c8c8c8` |
 | Full body | Hero choice (shown at 200×240 pt), hero popup, Credits shop | 4:5, three-quarter view, whole figure with margin | flat light grey, cut out afterwards |
-| Head picture | Hero ring (r 30/40 pt), hero badges (r 18–30 pt: shop, free pick, run end, progress, fight bar) | 1:1, head and shoulders, fixed marks centred so they fit in a circle | flat light grey, cut out, put on a disc |
+| Head picture | Hero ring (r 30/40 pt), hero badges (r 18–30 pt: shop, free pick, run end, progress, fight bar) | 1:1, head and shoulders, same three-quarter view and head turn as the full body (not looking straight into the camera, Ilja 2026-11-18), fixed marks centred so they fit in a circle | flat light grey, cut out, put on a disc |
 | Home scene | Behind the hero choice, shop offer, website/store (crop to landscape) | 9:16 | painted scene |
 
 Locked and silhouette states are drawn by code; skins and hero level rewards come later (a skin swaps only the
@@ -84,6 +84,12 @@ credits used and left in every result message (`openart_account_get`).
   different planet (Rook's first scene repeated Venn's banded planet). Planets drift to Earth looks; ask for "a
   strange alien planet ..., no blue oceans, no white clouds". To change only the planet, an image2image edit of
   the chosen picture that says "ONLY CHANGE THE PLANET" works; removing it can leave the sky empty.
+- **Every hero has its own main colour** (table in `docs/heroes.md`, Ilja 2026-11-18: with the shared palette
+  all four looked alike on the hero choice). Name it in every prompt, keep cream as the common thread, and add
+  "same moderate saturation, cream highlights, clean, very little grime" so the heroes still look like one set.
+  A hero in a single colour looked flat ("Venn wirkt einfach grün"); give the main colour one or two contrasting
+  accents. Recolouring a finished picture works as image2image ("Recolor this exact character ... only change the
+  colours"); try it cheaply at 1k first.
 - For pictures that get cut out (sheet, full body, head): "Background: flat plain light grey (#c8c8c8),
   nothing else, no floor shadow". A black ink outline on a dark background cannot be cut out cleanly.
 - Composition of the home scene: hero in the upper two thirds; the bottom third calmer, because the hero ring
