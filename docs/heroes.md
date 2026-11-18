@@ -64,6 +64,41 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 
 **Mechanics, as they are:** she enters every fight already singing (1 Power), and every phase her hymn grows louder (1 Power more); half Supernova damage because she belongs to the star.
 
+## Draft: Marl – Storm Fisher (season hero, not decided)
+
+*Energy.* **Status: draft, 2026-11-17. Nothing here is decided and nothing is built:** no data, no rules, no items. Names are proposals. Chosen as the direction to work out from three (the others: the shipyard mind, a radiation prospector).
+
+**Story.** Marl comes from **Squall**, a gas giant without ground. Between two storm bands lies a calm layer where rafts hang from balloons. The raft folk live off lightning: they fish upwards, into the clouds, pull living lightning down and keep it in jars. Marl is the last who still fishes by hand. Once she had the biggest bolt of Squall on the line; it broke her rod and got away, and it grows a little every time she tells the story. When she heard that a dying star throws the biggest bolt there is, she cut her raft loose. Ysel waits for the Supernova; Marl wants to land it. Gruff, patient, stubborn, full of fisher's tales; she talks to her catch, not to people.
+
+**Look.** The first hero with a real face and a broad, clear silhouette.
+
+- A squat old amphibian with a wide flat head, eyes far apart and a wide, grumpy mouth.
+- Feathery gill fronds on both sides of the head that stand on end from static charge.
+- A heavy rubber apron and far too large rubber boots as insulation, patched gloves.
+- A very long copper rod. The line carries no hook but a small kite that climbs into the clouds.
+- Jars with the catch on her belt: caught lightning, drawn as jagged flat mustard shapes in black ink, never as glow.
+- Useful for the fight view: the fronds rise the fuller the Energy bar is; a discharge strikes out of the rod.
+
+**Fixed marks (proposal):** the static-raised gill fronds, the apron-and-boots silhouette.
+**Skin slot (proposal):** the tackle: rod, kite and the jars with the catch.
+
+**Mechanics, as proposed:** the only hero who plays with the Energy bar itself. She wants more Energy than she spends.
+
+- **Big store:** her Energy bar is larger than everyone else's.
+- **Discharge:** Energy from items that no longer fits into the bar strikes the enemy as lightning (direct damage, stopped by Shield). The normal refill does not count, so the damage has to be built; every weapon that spends Energy makes room in the bar and takes away from the lightning.
+
+| Path | Main source / rhythm | Anchor | Weak against |
+|---|---|---|---|
+| **Thunderhead** | discharges; hardly any weapons, many Energy items, the bar keeps overflowing | Storm Jar: collects discharges and releases every third as a much stronger bolt, stronger per Energy item on its stars | Shield |
+| **Heavy tackle** | one or two huge ranged weapons that cost a lot of Energy at once and hit harder the more they spent | Leviathan Harpoon: fires when the bar is full, spends all of it, damage per Energy spent | Jam (a miss costs the whole charge), Cryo |
+| **Short circuit** | quick melee hits that drain the enemy's Energy; the drained Energy flows into her bar and overflows there | Ground Wire: Shield per Energy drained; when an enemy weapon has to wait for Energy, the enemy takes a shock | builds without weapons (the drain still feeds her, but nothing waits) |
+
+Pool as for every hero: 38 own items (2 start items, 3 hero items, 33 for shop and recipes). Start: Field Pack plus a Tackle Box (Energy items inside give a little more), Copper Rod (small ranged weapon) and Eel Jar (gives Energy regularly). The lightning eels are accessories, not pets: pets attack without Energy and belong to Quill.
+
+**What the core lacks for her:** a bar size per hero and changeable by items; overflow counting with a trigger "on discharge"; weapons that spend everything and damage per Energy spent; draining the enemy's Energy; a trigger "an enemy weapon has to wait for Energy".
+
+**Open:** the names Marl and Squall; the figure; the skin slot (tackle or clothing); whether only item Energy counts for the discharge; whether Short circuit stays as a soft counter to weapon builds; how she fits Season 1, which `docs/retention.md` describes as started without a season hero.
+
 ## Ideas kept for later heroes
 
 - **The shipyard mind** (rough, needs work): the operating system of an abandoned shipyard that builds itself a body from whatever is at hand and books every part. Polite, cold, bureaucratic, speaks in work orders. Floating mechanical spine with cable tentacles and an old tube monitor as a head.
