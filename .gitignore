@@ -12,3 +12,5 @@ dist/
 !.claude/skills/
 test-results/
 playwright-report/
+# local backend settings (the example file beside it is committed)
+apps/backend/local/settings.json

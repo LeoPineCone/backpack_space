@@ -49,6 +49,20 @@ How to get it onto a phone: [docs/mobile.md](docs/mobile.md).
 
 Drag a piece to place it; while dragging, a second finger, the mouse wheel or R turns it. Tap a piece to see what it does.
 
+## The backend locally
+
+`apps/backend` is the game server: the same handlers that run as AWS Lambdas, served locally by a small Node server, with DynamoDB Local in a container. No cloud account is needed; you need Docker.
+
+```
+npm run db            # start DynamoDB Local (Docker) and create the tables; data is kept between starts
+npm run backend       # start the local backend at http://127.0.0.1:3000
+npm run dev           # database, backend and client together
+npm run db:stop       # stop the database (keeps the data); db:reset also removes the data
+npm run test:api      # interface tests over HTTP against a fresh database and backend
+```
+
+Settings: copy `apps/backend/local/settings.example.json` to `settings.json` (not committed) to change ports, table names or the maintenance switch; without it the example is used. Design: [docs/backend.md](docs/backend.md).
+
 ## Play it in the browser (design tool)
 
 Hosted build of the preview (private link, state of 2026-11-15): https://claude.ai/artifact/7Sn3PH5UH19ZMAp7bmgFsP
