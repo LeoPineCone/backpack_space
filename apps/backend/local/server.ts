@@ -14,7 +14,7 @@ import { storeIdentity } from "../src/adapters/store-identity.js";
 import { cryptoRandom, stdoutLog, systemClock } from "../src/adapters/system.js";
 import { hmacTokens } from "../src/http/token.js";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
-import type { Ports } from "../src/domain/context.js";
+import type { Game, Ports } from "../src/domain/context.js";
 import type { HttpRequest, HttpResponse } from "../src/http/types.js";
 import type { LogSink } from "../src/ports/index.js";
 import { loadLocalSettings, localSettingsPort, type LocalSettings } from "./settings.js";
@@ -45,7 +45,13 @@ const CORS = {
 const data = loadGameData();
 const game = { data, meta: loadMeta(data) };
 
-export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog): Ports {
+/** The simulation builds a server carries: by default the current data only (tests may stand in for a rollout). */
+export interface Builds {
+  game: Game;
+  previousGame?: Game;
+}
+
+export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog, builds: Builds = { game }): Ports {
   const settings = localSettingsPort(systemClock, overrides);
   const doc = documentClient(values.dynamodb);
   return {
@@ -57,7 +63,7 @@ export function localPorts(values: LocalSettings, overrides: Partial<LocalSettin
     actions: new DynamoActionStore(doc, settings),
     identity: storeIdentity(fetch, systemClock),
     tokens: hmacTokens,
-    game,
+    ...builds,
     // RevenueCat comes in M4
     revenuecat: { balance: async () => 0 },
     log,
@@ -71,9 +77,9 @@ export interface RunningServer {
 }
 
 /** Starts the local backend; `overrides` replace values of the settings file (tests: ports, tables). */
-export async function startServer(overrides: Partial<LocalSettings> = {}, log?: LogSink): Promise<RunningServer> {
+export async function startServer(overrides: Partial<LocalSettings> = {}, log?: LogSink, builds?: Builds): Promise<RunningServer> {
   const { values } = loadLocalSettings(overrides);
-  const route = createApp(localPorts(values, overrides, log));
+  const route = createApp(localPorts(values, overrides, log, builds));
   const server = createServer((req, res) => {
     void (async () => {
       let out: HttpResponse;

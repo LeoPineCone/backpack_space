@@ -18,7 +18,7 @@
  */
 import { canMatch, leagueGroup, parseDataVersion, type Build } from "@backpack-space/core";
 import type { Item } from "../ports/index.js";
-import type { DomainContext } from "./context.js";
+import type { DomainContext, Game } from "./context.js";
 
 /** "easy": the easier bot backpacks for the first runs of a new player (MM-06). */
 export type PoolOrigin = "bot" | "easy" | "player";
@@ -82,8 +82,10 @@ export interface Match {
 /** Entries read per range read; a bucket holds about 50 bot backpacks per league group. */
 const READ = 20;
 
-export async function findOpponent(ctx: DomainContext, req: MatchRequest): Promise<Match | null> {
-  const { data, meta } = ctx.ports.game;
+/** `game`: the simulation build of the request (its data major and data version decide what can be matched). */
+export async function findOpponent(ctx: DomainContext, req: MatchRequest, game: Game = ctx.ports.game): Promise<Match | null> {
+  const { data } = game;
+  const { meta } = ctx.ports.game;
   const major = dataMajor(data.dataVersion);
   const maxLives = data.rules.lives;
   const lowest = Math.max(1, maxLives - (req.round - 1));
