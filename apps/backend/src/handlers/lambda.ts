@@ -6,7 +6,7 @@ import type { HttpRequest, HttpResponse } from "../http/types.js";
 
 export interface HttpApiEvent {
   rawPath: string;
-  requestContext: { http: { method: string } };
+  requestContext: { requestId?: string; http: { method: string } };
   headers?: Record<string, string | undefined>;
   body?: string;
   isBase64Encoded?: boolean;
@@ -21,7 +21,13 @@ export function toRequest(e: HttpApiEvent): HttpRequest {
   const headers: Record<string, string | undefined> = {};
   for (const [k, v] of Object.entries(e.headers ?? {})) headers[k.toLowerCase()] = v;
   const body = e.body === undefined ? null : e.isBase64Encoded ? Buffer.from(e.body, "base64").toString("utf8") : e.body;
-  return { method: e.requestContext.http.method, path: e.rawPath, headers, body };
+  return {
+    method: e.requestContext.http.method,
+    path: e.rawPath,
+    headers,
+    body,
+    ...(e.requestContext.requestId ? { requestId: e.requestContext.requestId } : {}),
+  };
 }
 
 export function lambdaHandler(router: (req: HttpRequest) => Promise<HttpResponse>): (e: HttpApiEvent) => Promise<HttpApiResult> {

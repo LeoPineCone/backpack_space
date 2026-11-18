@@ -21,6 +21,8 @@ export interface DomainContext {
   playerId?: string;
   /** the version the app named on the request */
   appVersion?: string;
+  /** the simulation version the app named on the request, if any (request line) */
+  simVersion?: string;
   /** event lines of this request (see log.ts); written after the request line */
   events: Record<string, unknown>[];
 }

@@ -3,6 +3,7 @@
  * implementation: it only turns Node's request into the router's request and back.
  * `npm run backend` starts it with the local settings against DynamoDB Local (`npm run db` first).
  */
+import { randomUUID } from "node:crypto";
 import { createServer, type IncomingMessage, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import { fileURLToPath } from "node:url";
@@ -35,6 +36,7 @@ const CORS = {
   "access-control-allow-origin": "*",
   "access-control-allow-headers": "authorization, content-type, x-app-version",
   "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-expose-headers": "x-request-id",
 };
 
 export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog): Ports {
@@ -73,7 +75,7 @@ export async function startServer(overrides: Partial<LocalSettings> = {}, log?: 
         const headers: HttpRequest["headers"] = {};
         for (const [k, v] of Object.entries(req.headers)) headers[k] = Array.isArray(v) ? v.join(", ") : v;
         const path = new URL(req.url ?? "/", "http://local").pathname;
-        out = await route({ method: req.method ?? "GET", path, headers, body: await readBody(req) });
+        out = await route({ method: req.method ?? "GET", path, headers, body: await readBody(req), requestId: randomUUID() });
       }
       res.writeHead(out.status, { ...out.headers, ...CORS });
       res.end(out.body);

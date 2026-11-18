@@ -5,6 +5,8 @@ export interface HttpRequest {
   /** header names in lower case */
   headers: Record<string, string | undefined>;
   body: string | null;
+  /** the id the platform gave the request (API Gateway, local server); written into the log line and sent back */
+  requestId?: string;
 }
 export interface HttpResponse {
   status: number;
