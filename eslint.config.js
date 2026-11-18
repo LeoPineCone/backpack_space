@@ -22,7 +22,7 @@ export default tseslint.config(
   {
     // The core is deterministic and runs in the client and on the server (CLAUDE.md):
     // no Math.random, no clock reads, no Node APIs.
-    files: ["packages/core/src/**/*.ts"],
+    files: ["packages/core/src/**/*.ts", "packages/api/src/**/*.ts"],
     languageOptions: { globals: {} },
     rules: {
       "no-restricted-properties": [
