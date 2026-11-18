@@ -1,0 +1,16 @@
+{
+  "$comment": "The website build: runs in Node (tsx), writes static files. No DOM: the pages are plain HTML strings.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "lib": ["ES2022"],
+    "noEmit": true
+  },
+  "include": ["src"]
+}

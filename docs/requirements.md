@@ -226,12 +226,12 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
-| WEB-01 | A static website lives in this repo as its own module and is hosted at AWS. | designer, 2026-11-17 | M5 | – | decided |
-| WEB-02 | It has a landing page that advertises the game with art and links to the stores. | designer, 2026-11-17 | M5 | – | decided |
-| WEB-03 | It has imprint, privacy policy and terms of use. The app links to them from the settings. | designer, 2026-11-17 | M5 | LB-01, LB-02 | decided |
-| WEB-04 | It has a support contact and states that an account deletion request can be sent to that address (see ACC-08). | this document | M5 | ACC-08 | decided |
-| WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided |
-| WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided |
+| WEB-01 | A static website lives in this repo as its own module and is hosted at AWS. | designer, 2026-11-17 | M5 | – | decided; built 2026-11-18 (apps/web, docs/website.md); hosting with #56 |
+| WEB-02 | It has a landing page that advertises the game with art and links to the stores. | designer, 2026-11-17 | M5 | – | decided; built 2026-11-18 with placeholder store links |
+| WEB-03 | It has imprint, privacy policy and terms of use. The app links to them from the settings. | designer, 2026-11-17 | M5 | LB-01, LB-02 | decided; pages built 2026-11-18 with marked placeholders; texts open (LB-01, LB-02) |
+| WEB-04 | It has a support contact and states that an account deletion request can be sent to that address (see ACC-08). | this document | M5 | ACC-08 | decided; page built 2026-11-18; support address open (#93) |
+| WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided; built 2026-11-18 |
+| WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided; built 2026-11-18, checked by a test |
 | WEB-07 | A domain is registered and set up. | designer, 2026-11-17 | M5 | – | open (needs designer) |
 
 ## Launch blockers
