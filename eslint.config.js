@@ -45,5 +45,35 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    // The backend's domain rules are pure (docs/backend.md): no AWS library, no Node APIs, no clock, no random.
+    // Time and randomness come through the ports.
+    files: ["apps/backend/src/domain/**/*.ts"],
+    rules: {
+      "no-restricted-properties": [
+        "error",
+        { object: "Math", property: "random", message: "The domain rolls no random number: use the Random port." },
+        { object: "Date", property: "now", message: "The domain reads no clock: use the Clock port." },
+        { object: "performance", property: "now", message: "The domain reads no clock: use the Clock port." },
+      ],
+      "no-restricted-syntax": [
+        "error",
+        { selector: "NewExpression[callee.name='Date'][arguments.length=0]", message: "The domain reads no clock: use the Clock port." },
+        { selector: "Identifier[name='process']", message: "The domain reads no environment: settings come through the Settings port." },
+        { selector: "MemberExpression[object.name='crypto']", message: "The domain rolls no random number: use the Random port." },
+      ],
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            { group: ["node:*"], message: "The domain uses no Node APIs: go through a port." },
+            { group: ["@aws-sdk/*", "aws-sdk", "aws-cdk-lib", "aws-cdk-lib/*"], message: "The domain imports no AWS library: adapters do." },
+            { group: ["**/adapters/**", "**/fakes/**", "**/handlers/**", "**/http/**"], message: "The domain imports only core, api and ports." },
+          ],
+          paths: nodeModules.map((name) => ({ name, message: "The domain uses no Node APIs: go through a port." })),
+        },
+      ],
+    },
+  },
   prettier,
 );

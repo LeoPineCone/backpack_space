@@ -1,0 +1,14 @@
+{
+  "name": "@backpack-space/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Backpack Space backend: Lambda handlers, domain rules, ports and adapters; runs locally behind a small HTTP server",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@backpack-space/api": "*",
+    "@backpack-space/core": "*"
+  }
+}
