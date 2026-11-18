@@ -220,7 +220,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | BE-12 | The database can be restored to a point in time. The table design is made with restoring in mind (what belongs together is restored together). Restoring has been tried once before launch. | review | M6 | – | decided |
 | BE-13 | Merging to the main branch rolls out to test automatically. Production is rolled out by a deliberate step. | this document | M1 | QA-02, BE-02 | decided |
 | BE-14 | Timed jobs exist for the season change and for deleting old shop actions. | [client-server.md](client-server.md) | M3 | – | decided |
-| BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided, service open (technical) |
+| BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided (2026-11-18: own endpoint, built in M6, see backend.md) |
 
 ## Website
 
@@ -273,6 +273,5 @@ Requirements in state `open` wait for one of these:
 | How to even out refunded Credits that are spent | STORE-09 |
 | Session lifetime, how long a run may stay paused | ACC-04 |
 | When shop actions are analysed | RUN-14 |
-| Crash report service | BE-15 |
 | Domain | WEB-07 |
 | Local purchase testing | DEV-04 |

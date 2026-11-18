@@ -16,6 +16,17 @@ import { DEV_TOOLS, tapTargets } from "./devtools";
 import { blocking, connect } from "./connect";
 import { statusScene } from "./scenes/status";
 import { stateOfFailure } from "./online";
+import { createApi } from "./api";
+import { APP_VERSION } from "./connect";
+import { createReporter, installCrashReports } from "./crash";
+
+/** Crash and error reports go to our backend from the first line on, so a failing start is reported too (BE-15). */
+function reportCrashes(): void {
+  const base = import.meta.env.VITE_BACKEND_URL;
+  if (!base) return;
+  const api = createApi({ base, appVersion: APP_VERSION, fetch: (url, init) => fetch(url, init) });
+  installCrashReports(window, createReporter((r) => api.call("clientError", r), DATA.simVersion));
+}
 
 async function boot(): Promise<void> {
   const app = new Application();
@@ -65,4 +76,5 @@ async function enter(game: Game): Promise<void> {
   if (season) game.toast(t("toast.seasonStart", { n: season.id, league: t(`league.${META.leagues.ids[leagueOf(META, season.points)]}`) }));
 }
 
+reportCrashes();
 void boot();

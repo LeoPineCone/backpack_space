@@ -13,6 +13,7 @@ import { runFight } from "./domain/fight.js";
 import { runCurrent, runFinish, runStart } from "./domain/runs.js";
 import { session } from "./domain/session.js";
 import { quests } from "./domain/quests.js";
+import { clientError } from "./domain/reports.js";
 
 export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {
   config,
@@ -26,6 +27,7 @@ export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {
   runStart,
   runFight,
   runFinish,
+  clientError,
 };
 
 /** The player id comes from the session token only (ACC-04). */

@@ -47,8 +47,11 @@ export interface RouterOptions {
   throttle?: TokenBuckets;
 }
 
-/** Routes that answer in maintenance and to old apps: the app must learn about both from them. */
-const ALWAYS_OPEN = new Set<string>(["config"]);
+/**
+ * Routes that answer in maintenance and to old apps: the app must learn about both from them, and an old app's crash
+ * is still worth knowing.
+ */
+const ALWAYS_OPEN = new Set<string>(["config", "clientError"]);
 
 const json = (status: number, body: unknown): HttpResponse => ({
   status,

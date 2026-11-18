@@ -24,6 +24,8 @@ export interface EventFields {
   season_changed: { from: number; to: number; patch: Id | null; league: [number, number] };
   plausibility_rejected: { runId: Id; round: number; reason: Id };
   result_mismatch: { runId: Id; round: number; simVersion: string };
+  /** an unhandled error or crash the app reported (BE-15); code text and versions only */
+  client_error: { kind: "error" | "rejection"; message: string; stack: string | null; appVersion: string | null; simVersion: string };
   /** an unexpected failure inside a request (the request line says `internal`) */
   error: { message: string };
 }
@@ -41,6 +43,7 @@ export const EVENT_TYPES = [
   "season_changed",
   "plausibility_rejected",
   "result_mismatch",
+  "client_error",
   "error",
 ] as const satisfies readonly EventType[];
 
