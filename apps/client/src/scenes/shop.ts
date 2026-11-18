@@ -100,7 +100,7 @@ export function shopScene(game: Game): Scene {
 
     // top bar: hero, lives, rounds, gold
     const hero = data.heroes.get(r.hero)!;
-    const heroBtn = heroBadge(hero.name, 22);
+    const heroBtn = heroBadge(hero, 22);
     view.addChild(at(tappable(heroBtn, () => game.openOverlay(heroPopup(game, r.hero)), new Rectangle(-24, -24, 48, 48)), 37, 36));
     view.addChild(at(hearts(r.lives, rules.lives, 20), 69, 16));
     const pips = new Graphics();

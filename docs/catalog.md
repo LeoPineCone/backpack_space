@@ -515,10 +515,10 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Prayer Bell | common | 2 | `#` | accessory | Every star phase: heal 18. | → Chime of Hours |
 | Votive Candle | common | 2 | `#` | accessory | Every star phase: inflict 2 Burn and heal 6. | → Sacred Flame |
 | Sundial | common | 3 | `#` | accessory | Your items: 20 % faster (during Red Giant/Collapse/Supernova). | → Chime of Hours |
-| Flare Catcher | common | 3 | `##` | accessory, mechanical | When Flare begins: gain 3 Power. Every star phase: gain 3 Shield per Power you have (max 8×). | → Solstice Engine, Canticle |
+| Flare Catcher | common | 3 | `##` | accessory, mechanical | When Flare begins: gain 3 Power. Every star phase: gain 3 Shield per Power you have (max 8×). | → Solstice Engine, Book of Last Light |
 | Dawn Needle | common | 3 | `#/#` | weapon | 1–2 damage every 1.3 s. Ranged, 2 Energy per attack. On hit: deal 1 damage per 2 Power you have (max 6×). |  |
 | Ember Censer | common | 3 | `#/#` | accessory | Every 3.2 s: inflict 2 Burn, +1 per 2 Power you have (max 4×). | → Helios Rod |
-| Hymn Scroll | common | 3 | `##` | accessory | Every star phase: remove 2 of your debuffs and gain 6 Shield, +2 per Power you have (max 8×). | → Litany |
+| Prayer Scroll | common | 3 | `##` | accessory | Every star phase: remove 2 of your debuffs and gain 6 Shield, +2 per Power you have (max 8×). | → Litany |
 | Solar Dagger | common | 3 | `#` | weapon | 1–2 damage every 1.4 s. Melee, 3 Energy per attack. On hit: deal 1 damage per 3 Burn on the enemy (max 5×). | → Twin Suns |
 | Eclipse Veil | common | 4 | `##` | armor | Every star phase: gain 22 Shield. | → Umbral Mantle |
 | Comet Rosary | rare | 5 | `###` | accessory | Every star phase: remove 3 of your debuffs and gain 2 Regen. | → Litany |
@@ -528,7 +528,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Frost Bell | rare | 5 | `#` | accessory | Every star phase: inflict 2 Cryo. Every 3 s: deal 1 damage per Cryo on the enemy (max 6×). |  |
 | Zenith Lance | rare | 6 | `#/#/#` | weapon | 4–6 damage every 1.9 s. Ranged, 3 Energy per attack. On hit: deal 1 damage per Power you have (max 10×). |  |
 | Corona Staff | rare | 6 | `#/#/#` | weapon | 6–8 damage every 2.4 s. Ranged, 5 Energy per attack. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | → Helios Rod |
-| Star Psalter | rare | 6 | `##` | accessory | Every star phase: gain 1 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | → Canticle |
+| Star Psalter | rare | 6 | `##` | accessory | Every star phase: gain 1 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | → Book of Last Light |
 | Red Giant Heart | epic | 8 | `##/##` | accessory | When Red Giant begins: heal 42 and inflict 8 Burn. You: +28 max health. | → Dying Star Scepter |
 | Eclipse Orb | epic | 8 | `##` | accessory | Every star phase: inflict 3 Jam and 2 Cryo. | → Total Eclipse |
 | Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage every 2.8 s. Ranged, 5 Energy per attack. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
@@ -541,9 +541,9 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Chime of Hours | crafted (step 1) | 5 | `##` | accessory | Every star phase: heal 14 and gain 8 Shield. Your items: 20 % faster (during Red Giant/Collapse/Supernova). | = Prayer Bell + Sundial |
 | Twin Suns | crafted (step 1) | 5 | `#/#` | weapon | 2–4 damage every 1.1 s. Melee, 3 Energy per attack. On hit: inflict 1 Burn (50 % chance). On hit: deal 1 damage per 3 Burn on the enemy (max 6×). | = Sun Shard + Solar Dagger |
 | Sacred Flame | crafted (step 1) | 7 | `*#*` | accessory | When a starred weapon activates: inflict 1 Burn (70 % chance). Every star phase: inflict 2 Burn, +1 per Power you have (max 8×) and heal 11. | = Votive Candle + Pyre Lantern |
-| Litany | crafted (step 1) | 8 | `###` | accessory | Every star phase: remove 5 of your debuffs, gain 12 Shield, +3 per Power you have (max 8×) and 3 Regen. | = Hymn Scroll + Comet Rosary |
+| Litany | crafted (step 1) | 8 | `###` | accessory | Every star phase: remove 5 of your debuffs, gain 12 Shield, +3 per Power you have (max 8×) and 3 Regen. | = Prayer Scroll + Comet Rosary |
 | Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage every 2.1 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
-| Canticle | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 2 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
+| Book of Last Light | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 2 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
 | Umbral Mantle | crafted (step 1) | 12 | `##/##` | armor | Every star phase: gain 41 Shield. Battle start: inflict 2 Jam. | = Eclipse Veil + Force Bubble; → Event Horizon |
 | Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 3 Jam, 3 Cryo and gain 11 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
 | Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.4 s. Ranged, 5 Energy per attack. Every star phase: gain 2 Power and 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |

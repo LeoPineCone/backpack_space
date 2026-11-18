@@ -1,5 +1,6 @@
 /** Small drawing helpers shared by all screens. */
-import { Container, Graphics, Rectangle, Text } from "pixi.js";
+import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
+import { artTexture } from "./art";
 import { BUTTON, C, FONT, SCREEN } from "./theme";
 import { icon } from "./icons";
 
@@ -181,9 +182,24 @@ export function dimmer(onTap?: () => void, alpha = 0.72): Graphics {
   return g;
 }
 
-/** The hero's round badge (placeholder until there is a portrait): the first letter of the name in a circle. Origin at the centre. */
-export function heroBadge(name: string, r: number, line: number = C.cyan): Container {
+/** The hero's round head picture inside a circle of radius r (art/heroes/<id>-head), or null while there is none. */
+export function heroHead(id: string, r: number): Container | null {
+  const tex = artTexture(`heroes/${id}-head`);
+  if (!tex) return null;
   const c = new Container();
-  c.addChild(disc(r, { fill: C.panel, line, lineW: 2 }), txt(name.replace(/[^\p{L}]/gu, "")[0]!.toLocaleUpperCase(), r * 0.82, { anchor: [0.5, 0.5] }));
+  const pic = new Sprite(tex);
+  pic.anchor.set(0.5);
+  pic.width = pic.height = r * 2;
+  const mask = new Graphics().circle(0, 0, r).fill(0xffffff);
+  pic.mask = mask;
+  c.addChild(pic, mask);
+  return c;
+}
+
+/** The hero's round badge: the head picture in a circle, or the first letter of the name while there is no picture. Origin at the centre. */
+export function heroBadge(hero: { id: string; name: string }, r: number, line: number = C.cyan): Container {
+  const c = new Container();
+  c.addChild(disc(r, { fill: C.panel, line, lineW: 2 }));
+  c.addChild(heroHead(hero.id, r) ?? txt(hero.name.replace(/[^\p{L}]/gu, "")[0]!.toLocaleUpperCase(), r * 0.82, { anchor: [0.5, 0.5] }));
   return c;
 }

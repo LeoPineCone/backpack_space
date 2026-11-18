@@ -117,10 +117,21 @@
       "name": "The Dying Corona",
       "kind": "star",
       "status": "draft",
-      "traits": ["a red star close to its end", "Ysel's order keeps it company", "breaking into fragments"],
+      "traits": ["a red star close to its end", "Ysel's order keeps it company", "breaking into fragments", "the planet Vigil circles it"],
       "life": "Pilgrims of the order; cracked sun pieces carried as relics.",
       "background": "A huge cracked red-and-mustard star filling the sky, broken pieces circling it, heat as wavy ink lines.",
       "items": ["sun_shard"],
+      "heroes": []
+    },
+    {
+      "id": "vigil",
+      "name": "Vigil",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["red desert planet close to the Dying Corona", "the dying star hangs huge and low in its sky", "ruins of the solar moths' monastery"],
+      "life": "Solar moths of Ysel's order, who fly to dying stars and stay until the end; dry grass on red sand.",
+      "background": "Red sandy desert with mesas under a coral and mustard evening sky, the huge cracked red star low on the horizon, old stone pillars carved with sun and moon phases.",
+      "items": [],
       "heroes": ["ysel"]
     }
   ]

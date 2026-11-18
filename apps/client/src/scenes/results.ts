@@ -151,7 +151,7 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   const meta = game.meta, p = game.profile;
   const xp1 = p.heroXp[run.hero] ?? 0, xp0 = Math.max(0, xp1 - b.xp);
   const xpRow = new Container();
-  xpRow.addChild(at(heroBadge(data.heroes.get(run.hero)!.name, 18), 18, 18));
+  xpRow.addChild(at(heroBadge(data.heroes.get(run.hero)!, 18), 18, 18));
   const lvText = txt("", 15, { anchor: [0, 0.5] });
   const lvPop = new Container();
   lvPop.addChild(lvText);

@@ -1344,8 +1344,8 @@
     "description": "A candle in a small stone cup, a star pressed into the wax, a flat mustard flame."
   },
   "hymn_scroll": {
-    "brief": "Open scroll with hymns written as star notes. Accent: bone.",
-    "description": "Lying across the box: an open scroll with hymns written as star notes, no letters."
+    "brief": "Open prayer scroll covered in star-phase symbols. Accent: bone.",
+    "description": "Lying across the box: an open prayer scroll of the solar moths, covered in small star-phase symbols instead of letters."
   },
   "solar_dagger": {
     "brief": "Iron dagger with a sun etched on the blade. Accent: mustard.",
@@ -1385,7 +1385,7 @@
   },
   "litany": {
     "brief": "Long scroll wrapped around an iron bell. Accent: bone.",
-    "description": "Along the long box: the Hymn Scroll wrapped around an iron bell, the Comet Rosary hanging from it."
+    "description": "Along the long box: the Prayer Scroll wrapped around an iron bell, the Comet Rosary hanging from it."
   },
   "total_eclipse": {
     "brief": "Round iron shield painted with a total eclipse. Accent: bone.",
@@ -1396,8 +1396,8 @@
     "description": "Filling the tall box: a black ring shield with stars bending round its edge, the White Dwarf at its centre, the Umbral Mantle hanging behind it."
   },
   "canticle": {
-    "brief": "Open hymn book with a flare curling up from its pages. Accent: mustard.",
-    "description": "Lying across the box: the Star Psalter open, a flare curling up from its pages as a flat mustard ribbon."
+    "brief": "Open book of last light with a flare curling up from its pages. Accent: mustard.",
+    "description": "Lying across the box: the Star Psalter open as a book of last light, a flare curling up from its pages as a flat mustard ribbon."
   },
   "space_hamster": {
     "brief": "Hamster from a desert planet, cheeks full of ore pebbles. Accent: mustard.",

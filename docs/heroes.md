@@ -64,7 +64,7 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 - Star phases can be shown by the wings opening wider (useful for the fight view).
 
 **Fixed marks:** the moth face with feathered antennae, the wings worn as a robe with the corona pattern, four arms.
-**Skin slot:** the wing pattern and robe (proposal, not yet confirmed).
+**Skin slot:** the wing pattern and robe (confirmed 2026-11-18).
 
 **Mechanics, as they are:** she enters every fight already holding some starlight (1 Power), and every phase she soaks up more (1 Power more); half Supernova damage because she was born for it.
 
