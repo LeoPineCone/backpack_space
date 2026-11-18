@@ -150,20 +150,24 @@ export function damagePerSecond(it: Pick<ItemDef, "damage" | "cooldown">): [numb
   return [r(it.damage[0]), r(it.damage[1])];
 }
 
+/** Energy a weapon uses per second at its base cooldown (one decimal); display only. */
+export function energyPerSecond(it: Pick<ItemDef, "energy" | "cooldown">): number | undefined {
+  if (!it.energy || !it.cooldown) return undefined;
+  return Math.round((it.energy / it.cooldown) * 10) / 10;
+}
+
 export function describeItem(it: ItemDef, data: GameData, tr: Translator = english(data)): string[] {
   const lines: string[] = [];
   const hasUse = it.effects.some((e) => e.on === "use");
   if (it.damage) {
-    const [min, max] = damagePerSecond(it)!;
-    lines.push(min === max ? tr.t("rules.item.dps", { n: min }) : tr.t("rules.item.dpsRange", { min, max }));
-    lines.push(
-      it.damage[0] === it.damage[1]
-        ? tr.t("rules.item.hit", { n: it.damage[0], s: it.cooldown ?? 0 })
-        : tr.t("rules.item.hitRange", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }),
-    );
+    // three separate numbers: the hit, its cooldown and what that makes per second (to compare weapons)
+    const range = ([min, max]: readonly [number, number]) => (min === max ? tr.num(min) : `${tr.num(min)}–${tr.num(max)}`);
+    lines.push(tr.t("rules.item.weaponStats", { dmg: range(it.damage), s: it.cooldown ?? 0, dps: range(damagePerSecond(it)!) }));
     if (it.range)
       lines.push(
-        it.energy ? tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy }) : tr.t("rules.item.weaponFree", { range: tr.term(it.range) }),
+        it.energy
+          ? tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy, perSec: energyPerSecond(it)! })
+          : tr.t("rules.item.weaponFree", { range: tr.term(it.range) }),
       );
   } else if (it.cooldown && !hasUse) lines.push(tr.t("rules.item.activates", { s: it.cooldown }));
   const useLabel = it.cooldown === undefined ? undefined : it.damage ? tr.t("rules.use.attack") : tr.t("rules.use.every", { s: it.cooldown });
