@@ -24,6 +24,12 @@ export interface SettingsValues {
   minAppVersion: string;
   /** the current season with its dates ("YYYY-MM-DD"); a setting, so a season can start without a deployment */
   season: { id: number; start: string; end: string };
+  /**
+   * Matching phase (docs/matchmaking.md "Phases"): 1 = bot backpacks only (player backpacks are collected but not
+   * handed out), 3 = player backpacks first, bots as fallback. Missing = 1. Phase 2 (players only in buckets that are
+   * full enough) waits for its threshold, which is set from the numbers collected in phase 1.
+   */
+  matchingPhase?: 1 | 3;
   /** present only locally: the development identity is accepted (DEV-05) */
   devIdentity?: boolean;
   /** signing keys for session tokens, newest first; two are accepted at once */
@@ -62,9 +68,11 @@ export interface PlayerStore {
   transact(writes: Write[]): Promise<boolean>;
 }
 
-/** The table `backpacks` (the opponent pool). Methods come with the matching issues (M2). */
+/** The table `backpacks` (the opponent pool, docs/backend.md): one partition per matching bucket. */
 export interface BackpackPool {
   put(item: Item): Promise<void>;
+  /** up to `limit` items of partition `pk` with `from` <= sort key <= `to`, in sort key order (one small read) */
+  range(pk: string, from: string, to: string, limit: number): Promise<Item[]>;
 }
 
 /** The table `actions` (recorded shop actions). Methods come with the run issues (M2). */

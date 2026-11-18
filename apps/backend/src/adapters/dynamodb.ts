@@ -105,6 +105,17 @@ export class DynamoBackpackPool implements BackpackPool {
   async put(item: Item): Promise<void> {
     await this.doc.send(new PutCommand({ TableName: (await this.settings.get()).tables.backpacks, Item: item }));
   }
+  async range(pk: string, from: string, to: string, limit: number): Promise<Item[]> {
+    const out = await this.doc.send(
+      new QueryCommand({
+        TableName: (await this.settings.get()).tables.backpacks,
+        KeyConditionExpression: "pk = :pk AND sk BETWEEN :from AND :to",
+        ExpressionAttributeValues: { ":pk": pk, ":from": from, ":to": to },
+        Limit: limit,
+      }),
+    );
+    return (out.Items as Item[] | undefined) ?? [];
+  }
 }
 
 export class DynamoActionStore implements ActionStore {

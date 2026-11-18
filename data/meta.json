@@ -131,6 +131,7 @@
       "pulsar",
       "quasar"
     ],
+    "groups": [2, 3, 3, 2],
     "pointsPerLeague": 100,
     "pointsByWins": [
       -30,
