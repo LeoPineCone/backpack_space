@@ -28,7 +28,7 @@
     "paths": [{ "id": "beasts", "name": "Big beasts", "focus": ["beast", "armor"] }, { "id": "swarm", "name": "Swarm", "focus": ["swarm"] }, { "id": "feeders", "name": "Well-fed pack", "focus": ["food", "heal", "pet_bed"] }]
   },
   {
-    "id": "ysel", "name": "Ysel", "title": "Singer of the Corona",
+    "id": "ysel", "name": "Ysel", "title": "Moth of the Last Light",
     "focus": "The star itself. Starts every fight with Power and gains more with every star phase, burns the enemy and shrugs off half the Supernova.",
     "supernovaResist": 50,
     "effects": [{ "on": "start", "gain": "power", "n": 1 }, { "on": "phase", "gain": "power", "n": 1 }],

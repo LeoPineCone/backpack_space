@@ -49,22 +49,24 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 
 **Mechanics, as they are:** her pets act at once because the herd reacts to any threat to her; her pets heal her for a quarter of the damage they deal (they groom and feed her; tied to damage, so one heavy beast heals like several small pets); more health the more room her pets take in the backpack (per cell, so a few large beasts count like many small pets) because the herd shields her.
 
-## Ysel – Singer of the Corona
+## Ysel – Moth of the Last Light
 
 *Star phases, Burn, long fights.*
 
-**Story.** Ysel belongs to an order that keeps dying stars company until the end. At her consecration she gave up her head and received a fragment of a dying sun, which has floated above her shoulders ever since. With every hymn it burns hotter. She does not fear the Supernova; she is waiting for it.
+**Story.** Ysel is a solar moth. Her kind flies to dying stars and stays with them until the end; she belongs to an order of them that keeps every dying star company. With every star phase she soaks more of the star's last light into her wings, and they open a little wider. She does not fear the Supernova: she was born for it. (Changed 2026-11-18: she no longer sings and no longer has a sun for a head.)
 
-**Look.** The head is the eye-catcher the whole design stands on.
+**Look.** A tall solar moth, calm and serious.
 
-- Above the empty collar floats a small dying sun the size of a head, held in an open cage of bent iron rings like a reliquary. Its surface is drawn flat in mustard and rust red and split by heavy black cracks; three or four broken pieces circle it slowly. Heat is drawn as wavy ink lines around it, never as glow.
-- Below it a tall figure in a heavy dark robe with rust-red bands, hands hidden in long sleeves, a bell hanging from one wrist, rosaries of small stones on the belt.
-- Each star phase changes the head: the cracks widen, the pieces circle faster (useful for the fight view).
+- Round fluffy cream moth face with two very large dark compound eyes, no beak; two large feathered mustard antennae.
+- A thick cream fur ruff. Her huge wings fold down around her like a long ceremonial robe that reaches the ground, so no feet show. The wing pattern is a sun corona with eclipse rings in mustard, coral red, navy and cream; the cream wing edges have small singed spots.
+- Under the wings a dark teal robe with a mustard and coral band showing sun and moon phases.
+- Four thin grey insect arms: the upper pair folded in prayer, the lower pair holds a bronze bell and a string of star-shard beads.
+- Star phases can be shown by the wings opening wider (useful for the fight view).
 
-**Fixed marks:** no head, a floating object held in the iron cage above the collar; the robe silhouette.
-**Skin slot:** the head object in the cage.
+**Fixed marks:** the moth face with feathered antennae, the wings worn as a robe with the corona pattern, four arms.
+**Skin slot:** the wing pattern and robe (proposal, not yet confirmed).
 
-**Mechanics, as they are:** she enters every fight already singing (1 Power), and every phase her hymn grows louder (1 Power more); half Supernova damage because she belongs to the star.
+**Mechanics, as they are:** she enters every fight already holding some starlight (1 Power), and every phase she soaks up more (1 Power more); half Supernova damage because she was born for it.
 
 ## Ideas kept for later heroes
 

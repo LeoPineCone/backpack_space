@@ -36,7 +36,7 @@ Pets. Her herd acts the moment the fight begins, is quicker than anyone else's, 
 - Starts with: Field Pack, Pet Carrier, Space Pup, Treat Pouch.
 - Signature artifacts (after round 2): Elder Tusk, Herd Heart, Ancient Egg.
 
-### Ysel – Singer of the Corona
+### Ysel – Moth of the Last Light
 
 The star itself. Starts every fight with Power and gains more with every star phase, burns the enemy and shrugs off half the Supernova.
 
