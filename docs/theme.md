@@ -41,6 +41,9 @@ night blue (art `navy`).
 | `flash` | `white` | `#ffffff` | hit flash in fights |
 | `good` | `mint` | `#6fe3a1` | healing, buffs, wins |
 | `bad` | `flare` | `#ff7a59` | damage, debuffs, losses |
+| `ink` | `ink` | `#14161f` | ink outline and hard shadow of every UI element (same as the art's Ink) |
+| `health` | `cream` | `#f1e6cc` | own health bar in fights |
+| `shield` | `teal` | `#2f9a9a` | Shield on top of the health bar |
 
 ## Rules
 
@@ -63,4 +66,31 @@ night blue (art `navy`).
 | locked | any kind at 0.4 opacity, with a lock symbol | not available yet |
 
 `pillButton` uses `primary` and `roundButton` uses `icon` by default (`src/ui.ts`), so every screen follows the
-theme. How buttons get their final comic look (ink outline, hard shadow, press effect) is still open.
+theme.
+
+## Ink comic look
+
+The UI speaks the same hand-inked language as the art (`docs/style.md`), decided by Ilja on 2026-11-18. It is drawn
+in code, not with pictures, so it stays sharp on every phone and follows this theme. Sizes live in `comic`.
+
+- **Ink outline:** buttons, cards, popups, bars, badges and bags get a black `ink` outline (`comic.outline`, 2.5 pt).
+  A coloured line (`line`) then becomes a thin inner edge. `box`/`disc` with `ink: true`.
+- **Hard shadow:** buttons and cards sit on a flat ink shadow `comic.shadow` points below them, never blurred
+  (`shadowBox`, `shadowDisc`).
+- **Press:** while the finger is down, a button moves `comic.press` points into its shadow (`pressable`). No vibration.
+- **Plates:** popups and shop cards are riveted ship plates (`plate`): outline, a thin inner line, rivets in the
+  corners. Big panels also get a little ink hatching in one corner (the bigger on screen, the more ink texture).
+- **Inked titles:** titles and big numbers (hero name, item name, gold) get an ink outline around the letters and a
+  hard shadow (`txt(..., { inked: true })`). Sentences stay plain.
+- **Bars:** dark track with outline and notches every quarter; own health in `health`, the opponent's in `dim`,
+  Shield as a `shield` strip on top, Energy in `gold`. Lost health stays a moment as a light chunk.
+- **Bags:** ink outline and a stitched seam inside, like sewn cloth; the cell grid inside is faint.
+- **Shop cards:** rarity is a coloured corner with one pip per rarity step; the price is the coin symbol.
+- **Main symbols are pictures:** gold, Credits, Galaxies, league patch, full and empty heart, Energy, level,
+  dice, bin, pin and settings are coloured ink pictures in `apps/client/art/ui/` (docs/client-art.md). They keep
+  their colours; all other symbols stay tinted line symbols.
+
+## Rarity
+
+Rarity colours come from the art palette: common warm grey, rare teal, epic violet (the only colour the art palette
+does not have), legendary mustard, artifact coral red.

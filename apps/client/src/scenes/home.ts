@@ -87,11 +87,8 @@ export function homeScene(game: Game): Scene {
     // FIGHT: to the hero choice; a run left through the run menu continues instead
     const paused = game.run && !game.run.over;
     const fw = 240, fh = 84;
-    const fight = new Container();
-    fight.addChild(box(fw + 12, fh + 12, { fill: C.gold, radius: (fh + 12) / 2 }));
-    fight.addChild(at(pillButton(t(paused ? "ui.continue" : "ui.fight"), fw, fh, () => game.show(paused ? shopScene(game) : heroScene(game)), { iconName: paused ? "play" : "swords", size: paused ? 28 : 34 }), 6, 6));
-    fight.children[1]!.addChildAt(box(fw, fh, { line: C.bg, lineW: 4, radius: fh / 2 }), 1);
-    root.addChild(at(fight, (W - fw - 12) / 2, H - 204));
+    const fight = pillButton(t(paused ? "ui.continue" : "ui.fight"), fw, fh, () => game.show(paused ? shopScene(game) : heroScene(game)), { iconName: paused ? "play" : "swords", size: paused ? 28 : 34 });
+    root.addChild(at(fight, (W - fw) / 2, H - 198));
 
     // four round buttons: quests, pass, shop, settings (the glossary lives in the settings)
     const bottom: [string, () => void][] = [

@@ -1,5 +1,6 @@
 /** Placeholder symbols: simple white line icons drawn from SVG paths, tinted when used. Real art replaces them later. */
 import { Sprite, Texture } from "pixi.js";
+import { artTexture } from "./art";
 
 const HEART = "M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z";
 const STAR = "M12 3l2.6 5.6l6 .7l-4.5 4.1l1.3 6l-5.4-3.1l-5.4 3.1l1.3-6L3.4 9.3l6-.7z";
@@ -133,11 +134,16 @@ export async function loadIcons(): Promise<void> {
 
 export const hasIcon = (name: string) => textures.has(name);
 
-/** A square icon sprite of the given size, anchored at its centre. */
+/**
+ * A square icon sprite of the given size, anchored at its centre. The main symbols have a coloured ink picture
+ * (`art/ui/<name>.png`, docs/client-art.md); it keeps its own colours, so `tint` only colours the line symbols.
+ */
 export function icon(name: IconName, size: number, tint = 0xffffff): Sprite {
-  const s = new Sprite(textures.get(name) ?? textures.get("any") ?? Texture.WHITE);
+  const art = artTexture(`ui/${name}`);
+  const s = new Sprite(art ?? textures.get(name) ?? textures.get("any") ?? Texture.WHITE);
   s.anchor.set(0.5);
   s.width = size; s.height = size;
-  s.tint = tint;
+  if (art) s.scale.set((size * 1.15) / art.width);
+  else s.tint = tint;
   return s;
 }

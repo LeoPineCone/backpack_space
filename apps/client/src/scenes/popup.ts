@@ -4,7 +4,7 @@ import { describeHero, describeItem, sellPrice } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, RARITY, RARITY_PIPS, W } from "../theme";
 import { icon } from "../icons";
-import { at, box, dimmer, disc, infoButton, pillButton, roundButton, tappable, txt } from "../ui";
+import { at, box, dimmer, disc, infoButton, pillButton, plate, roundButton, tappable, txt } from "../ui";
 import { itemIcon, pieceFit, symbolRow, ZAP } from "../pieces";
 import { GLOSSARY_GROUPS, heroRows, itemRows, keywordsIn, type Keyword, type Row } from "../symbols";
 import { t, tr, upper } from "../i18n";
@@ -80,11 +80,13 @@ function subjectPopup(game: Game, s: Subject): Scene {
 
     if (!legend) {
       if (s.art) add(s.art(), s.artH ?? 110);
-      const name = txt(upper(s.name), 22, { spacing: 0.7, wrap: IW, align: "center" });
+      const name = txt(upper(s.name), 22, { spacing: 0.7, wrap: IW, align: "center", inked: true });
       add(name, name.height, 12, name.width);
       if (s.tags.length) {
         const tags = new Container();
-        s.tags.forEach((t, i) => tags.addChild(at(disc(18, { fill: C.bg, line: C.line }), i * 44 + 18, 18), at(icon(t, 18, C.text), i * 44 + 18, 18)));
+        s.tags.forEach((t, i) =>
+          tags.addChild(at(disc(18, { fill: C.bg, line: C.line, ink: true }), i * 44 + 18, 18), at(icon(t, 18, C.text), i * 44 + 18, 18)),
+        );
         add(tags, 36, 14, s.tags.length * 44 - 8);
       }
       if (s.rows.length) {
@@ -135,7 +137,7 @@ function subjectPopup(game: Game, s: Subject): Scene {
     }
     const h = y + 2;
     const panel = new Container();
-    const bg = box(PW, h, { fill: C.panel, line: s.line, lineW: 2, radius: 20 });
+    const bg = plate(PW, h, { fill: C.panel, line: s.line, radius: 20, hatch: true });
     bg.eventMode = "static";
     panel.addChild(bg, col);
     // tall popups scroll by dragging
