@@ -16,7 +16,7 @@ Read first: the hero in `docs/heroes.md` (story, look, **fixed marks**, skin slo
 |---|---|---|---|
 | Model sheet | Not in the app. The fixed reference for every later picture and for skins. | 16:9, front + three-quarter + back, same scale and baseline | flat light grey `#c8c8c8` |
 | Full body | Hero choice (shown at 200×240 pt), hero popup, Credits shop | 4:5, three-quarter view, whole figure with margin | flat light grey, cut out afterwards |
-| Head picture | Hero ring (r 30/40 pt), hero badges (r 18–30 pt: shop, free pick, run end, progress, fight bar) | 1:1, head and shoulders, fixed marks centred so they fit in a circle | flat light grey, cut out, put on a disc |
+| Head picture | Hero ring (r 30/40 pt), hero badges (r 18–30 pt: shop, free pick, run end, progress, fight bar) | 1:1, head and shoulders, same three-quarter view and head turn as the full body (not looking straight into the camera, Ilja 2026-11-18), fixed marks centred so they fit in a circle | flat light grey, cut out, put on a disc |
 | Home scene | Behind the hero choice, shop offer, website/store (crop to landscape) | 9:16 | painted scene |
 
 Locked and silhouette states are drawn by code; skins and hero level rewards come later (a skin swaps only the
