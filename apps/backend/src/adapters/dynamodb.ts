@@ -3,7 +3,7 @@
  * Table names come from the settings on every call, so a restored table can be switched to without a deployment.
  */
 import { DynamoDBClient, TransactionCanceledException } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, TransactWriteCommand } from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, DynamoDBDocumentClient, GetCommand, PutCommand, QueryCommand, TransactWriteCommand } from "@aws-sdk/lib-dynamodb";
 import type { ActionStore, BackpackPool, Item, PlayerStore, Settings, Write } from "../ports/index.js";
 
 export interface DynamoOptions {
@@ -104,6 +104,9 @@ export class DynamoBackpackPool implements BackpackPool {
   ) {}
   async put(item: Item): Promise<void> {
     await this.doc.send(new PutCommand({ TableName: (await this.settings.get()).tables.backpacks, Item: item }));
+  }
+  async remove(pk: string, sk: string): Promise<void> {
+    await this.doc.send(new DeleteCommand({ TableName: (await this.settings.get()).tables.backpacks, Key: { pk, sk } }));
   }
   async range(pk: string, from: string, to: string, limit: number): Promise<Item[]> {
     const out = await this.doc.send(

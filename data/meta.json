@@ -10,6 +10,7 @@
     "background": "bg_home",
     "picture": "pic_pilot"
   },
+  "matching": { "easyRuns": 3 },
   "run": {
     "galaxies": {
       "perWin": 1,

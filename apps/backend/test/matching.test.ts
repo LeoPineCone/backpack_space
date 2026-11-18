@@ -1,7 +1,7 @@
 import { leagueGroup } from "@backpack-space/core";
 import { describe, expect, it } from "vitest";
 import type { DomainContext } from "../src/domain/context.js";
-import { bucketKey, dataMajor, findOpponent, poolKeys, type PoolEntry, type PoolOrigin } from "../src/domain/matching.js";
+import { bucketKey, dataMajor, findOpponent, poolKeys, type MatchRequest, type PoolEntry, type PoolOrigin } from "../src/domain/matching.js";
 import { fakePorts } from "../src/fakes/index.js";
 
 const setup = async (phase?: 1 | 3) => {
@@ -18,7 +18,7 @@ const setup = async (phase?: 1 | 3) => {
     const dataVersion = o.dataVersion ?? data.dataVersion;
     const round = o.round ?? 5;
     const entry: PoolEntry = {
-      ...poolKeys(ctx, { origin, round, lives: o.lives, league: o.league, dataVersion, id }),
+      ...poolKeys({ origin, round, lives: o.lives, league: o.league, dataVersion, id }, f.ports.random.uint32()),
       id,
       owner: o.owner ?? `bot-${id}`,
       origin,
@@ -37,7 +37,7 @@ const setup = async (phase?: 1 | 3) => {
   // a player of round 5 with one life lost, in a league inside a middle group
   const league = leagueGroup(meta, 4).from + 1;
   const req = { playerId: "me", round: 5, lives: lives - 1, league, met: [] as string[] };
-  const find = (over: Partial<typeof req> = {}) => findOpponent(ctx, { ...req, ...over });
+  const find = (over: Partial<MatchRequest> = {}) => findOpponent(ctx, { ...req, ...over });
   return { ...f, ctx, add, req, find, pool, lives, meta, data };
 };
 
@@ -140,5 +140,14 @@ describe("matching", () => {
       expect(pool.reads).toBeLessThanOrEqual(2);
     }
     expect(ids.size).toBeGreaterThan(5);
+  });
+
+  it("gives a new player the easy bot backpacks first, then the normal ones", async () => {
+    const { find, add, req } = await setup();
+    const bot = await add({ lives: req.lives, league: req.league });
+    expect((await find({ newPlayer: true }))?.entry).toEqual(bot);
+    const easy = await add({ origin: "easy", lives: req.lives - 2, league: 0 });
+    expect(await find({ newPlayer: true })).toEqual({ entry: easy, step: 5 });
+    expect((await find())?.entry).toEqual(bot);
   });
 });

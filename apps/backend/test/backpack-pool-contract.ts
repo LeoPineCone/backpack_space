@@ -21,4 +21,14 @@ export function backpackPoolContract(make: () => Promise<BackpackPool>) {
     expect(await s.range(p, "G04#", "G09#~", 10)).toEqual([]);
     expect(all[0]).toMatchObject({ pk: p, v: "G02#00000010#a" });
   });
+
+  it("removes one item", async () => {
+    const s = await make();
+    const p = pk();
+    await s.put({ pk: p, sk: "G00#1#a" });
+    await s.put({ pk: p, sk: "G00#2#b" });
+    await s.remove(p, "G00#1#a");
+    await s.remove(p, "G00#9#missing");
+    expect((await s.range(p, "G", "G~", 10)).map((i) => i.sk)).toEqual(["G00#2#b"]);
+  });
 }

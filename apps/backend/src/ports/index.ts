@@ -73,6 +73,7 @@ export interface BackpackPool {
   put(item: Item): Promise<void>;
   /** up to `limit` items of partition `pk` with `from` <= sort key <= `to`, in sort key order (one small read) */
   range(pk: string, from: string, to: string, limit: number): Promise<Item[]>;
+  remove(pk: string, sk: string): Promise<void>;
 }
 
 /** The table `actions` (recorded shop actions). Methods come with the run issues (M2). */
