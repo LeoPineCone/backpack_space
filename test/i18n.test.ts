@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { buildLocales, describeHero, describeItem } from "@backpack-space/core";
-import { ROOT, loadGameData } from "@backpack-space/core/node";
+import { ROOT, loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
 const en = JSON.parse(readFileSync(join(ROOT, "data", "locales", "en.json"), "utf8")) as Record<string, string>;
@@ -72,6 +72,27 @@ describe("languages", () => {
       // no hard-coded words on screen: texts go through t()
       expect(src.match(/\b(txt|pillButton|toast)\((["'`])[A-Za-z]{2}|\bline: ["'`][A-Za-z]{2}/g), f).toBeNull();
       for (const m of src.matchAll(/"((?:ui|toast)\.[\w.]+)"/g)) expect(known(m[1]!), `${f}: ${m[1]}`).toBe(true);
+    }
+  });
+});
+
+describe("texts the client builds from data ids (UX-04)", () => {
+  const meta = loadMeta(data);
+  const keys = [
+    ...meta.leagues.ids.map((id) => `league.${id}`),
+    ...meta.quests.rules.flatMap((r) => [`quest.${r.id}.name`, `quest.${r.id}.text`]),
+    ...["daily", "weekly"].flatMap((k) => [`ui.quest.${k}`, `ui.quest.renews.${k}`]),
+    ...meta.cosmetics.filter((c) => c.kind === "background").map((c) => `cosmetic.${c.id}`),
+    ...meta.planetTrack.flatMap((s) => ("cosmetic" in s.reward ? [`cosmetic.${s.reward.cosmetic}`] : [])),
+    ...["maintenance", "update", "noNetwork"].flatMap((k) => [`status.${k}.title`, `status.${k}.text`]),
+    ...data.heroList.flatMap((h) => ["name", "title", "focus"].map((f) => `hero.${h.id}.${f}`)),
+  ];
+
+  it("has every such text in English and German", () => {
+    for (const l of data.locales.languages) {
+      const tr = data.locales.get(l.id);
+      const missing = keys.filter((k) => !tr.has(k) || tr.t(k) === k);
+      expect(missing, l.id).toEqual([]);
     }
   });
 });
