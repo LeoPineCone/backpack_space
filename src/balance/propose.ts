@@ -15,7 +15,7 @@ import { join } from "node:path";
 import { loadTargets, startReport } from "../reports/common";
 import type { Mark } from "../reports/html";
 import { Bench } from "./bench";
-import { changeOf, selectKnobs, showKnobValue, valueAt, type Knob } from "./knobs";
+import { changeOf, selectKnobs, showKnobValue, valueAt } from "./knobs";
 import { DEFAULT_KINDS, isSeconds, KINDS, loss, outside, paired, type Kind, type LossOpts, type Metrics } from "./metrics";
 import { mergePatches, type Patch } from "./patch";
 import { senseKnobs } from "./sense";

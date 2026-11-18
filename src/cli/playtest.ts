@@ -16,9 +16,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  Rng, arrange, boardOf, buildOf, buy, compile, describeHero, describeItem, dropItem, finishRound, moveBag, moveItem, newRun, pendingMerges, place,
+  Rng, arrange, boardOf, buildOf, buy, compile, describeHero, describeItem, dropItem, finishRound, moveBag, moveItem, newRun, pendingMerges,
   placeLoose, reroll, sellBag, sellItem, sellLoose, sellPrice, simulate, starred, takeSpecial, toggleFreeze, toggleLock,
-  type Build, type GameData, type ItemDef, type RunState,
+  type Build, type ItemDef, type RunState,
 } from "@backpack-space/core";
 import { ROOT, loadGameData } from "@backpack-space/core/node";
 import { parseArgs } from "./args";

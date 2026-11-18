@@ -2,7 +2,7 @@
 import { Container } from "pixi.js";
 import { DEBUFFS, buildOf, buildStats, compile } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { C, H, W } from "../theme";
+import { C, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, roundButton, txt } from "../ui";
 import { t, tr } from "../i18n";

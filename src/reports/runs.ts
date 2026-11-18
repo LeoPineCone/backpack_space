@@ -52,7 +52,7 @@ r.log("Does skill pay? Lobbies where half of the seats play differently (all bot
 const variants: [string, object][] = [["buys at random", { randomBuys: true }], ["never combines", { noCraft: true }], ["random layout", { layout: "random" }]];
 const n2 = Math.max(4, Math.round(r.n.lobbies / 3));
 r.table(["changed seats", "their win share", "the others"], variants.map(([name, o]) => {
-  let w = [0, 0], n = [0, 0];
+  const w = [0, 0], n = [0, 0];
   for (let i = 0; i < n2; i++) {
     r.progress(`${name} ${i + 1}/${n2}`);
     const l = playLobby(data, r.seed * 104729 + i, { immortal: true, bot: (seat) => (seat % 8 < 4 ? o : {}) });

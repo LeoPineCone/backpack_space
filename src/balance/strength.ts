@@ -66,7 +66,7 @@ export interface Row { x: [number, number][]; y: number }
 
 /** Ridge logistic regression (Newton steps). Returns one weight per feature. */
 export function ridgeLogistic(rows: readonly Row[], features: number, lambda = 3, steps = 8): Float64Array {
-  let w: Float64Array = new Float64Array(features);
+  const w: Float64Array = new Float64Array(features);
   for (let it = 0; it < steps; it++) {
     const H = new Float64Array(features * features), g = new Float64Array(features);
     for (let i = 0; i < features; i++) { H[i * features + i] = lambda; g[i] = lambda * w[i]!; }

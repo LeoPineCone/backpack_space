@@ -32,7 +32,6 @@ const r = startReport({
 });
 const data: GameData = r.data;
 const heroes = data.heroList;
-const name = (h: string) => data.heroes.get(h)!.name;
 const pathOf = (seat: number): string => {
   const h = heroes[seat % heroes.length]!;
   return h.paths[Math.floor(seat / heroes.length)]?.id ?? "";

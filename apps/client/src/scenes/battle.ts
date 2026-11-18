@@ -1,6 +1,6 @@
 /** The fight: computed once by the core, then played back. Enemy on top, your backpack below, the ageing star between. */
 import { Container, Graphics, Rectangle, type Text } from "pixi.js";
-import { BUFFS, DEBUFFS, Replay, buildOf, compile, leagueOf, simulate, type BattleEvent, type Build, type CSide, type Status } from "@backpack-space/core";
+import { BUFFS, DEBUFFS, Replay, buildOf, compile, leagueOf, simulate, type BattleEvent, type CSide, type Status } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";

@@ -12,7 +12,7 @@
 - Places of the world (planets, moons, stations, stars) and which items and heroes come from them live in `lore/planets.json`; after changes run `npm run lore` (rewrites `lore/graph.html`).
 - Game words come from `data/glossary.json` (English for game and code, German for design talk); add a term there before using a new word in the game.
 - Every text the player sees goes through the language files (`data/locales/*.json`, see `docs/i18n.md`); the client never shows a hard-coded word. English is the source; new items and texts also need their German translation (`npm run i18n` lists what is missing).
-- After changes: `npm run check` (validate, typecheck, test; the same as the pull request check). After item changes also `npm run catalog`.
+- After changes: `npm run check` (validate, typecheck, lint, test; the same as the pull request check). After item changes also `npm run catalog`.
 - Balancing (numbers, new heroes or items, hero rules, measuring): follow `.claude/skills/balancing/SKILL.md` (procedure, targets, how exact the tools are, lessons learned).
 - No alcohol in the game.
 - Not a clone: no names, characters or look of Backpack Brawl or other existing games.
