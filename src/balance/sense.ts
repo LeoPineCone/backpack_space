@@ -14,7 +14,12 @@ import { Bench } from "./bench";
 import { changeOf, selectKnobs, showKnobValue, valueAt, type Knob } from "./knobs";
 import { paired, type Metrics } from "./metrics";
 
-export interface Sensed { knob: Knob; refought: number; flipped: number; /** metric key -> [change, standard error] for one step */ d: Record<string, [number, number]> }
+export interface Sensed {
+  knob: Knob;
+  refought: number;
+  flipped: number;
+  /** metric key -> [change, standard error] for one step */ d: Record<string, [number, number]>;
+}
 
 /** One replay per knob, one step stronger. */
 export function senseKnobs(bench: Bench, knobs: readonly Knob[], onKnob?: (i: number, k: Knob) => void): Sensed[] {
@@ -25,7 +30,10 @@ export function senseKnobs(bench: Bench, knobs: readonly Knob[], onKnob?: (i: nu
     if (!c) return;
     const x = bench.run({ changes: [c] });
     const d: Record<string, [number, number]> = {};
-    for (const [key, m] of bench.base[0]!) { const p = paired(m, x.metrics.get(key)!); d[key] = [p.d, Number.isFinite(p.se) ? p.se : 0]; }
+    for (const [key, m] of bench.base[0]!) {
+      const p = paired(m, x.metrics.get(key)!);
+      d[key] = [p.d, Number.isFinite(p.se) ? p.se : 0];
+    }
     out.push({ knob, refought: x.refought, flipped: x.flipped, d });
   });
   return out;
@@ -45,12 +53,18 @@ if (isMain) {
   const bench = new Bench(name, undefined, r.n.lobbies);
   const data = bench.data;
   const knobs = selectKnobs(data, bench.raw, r.flags.knobs, { price: !!r.flags.price, heroRules: !!r.flags["allow-hero-rules"] });
-  r.log(`Baseline "${name}", seed ${bench.panels[0]!.seed}, ${bench.panels[0]!.lobbies.length} lobbies.${bench.fresh ? "" : " STALE: data/ or the ratings changed since; take a new one (npm run baseline)."} ${knobs.length} knobs.`);
+  r.log(
+    `Baseline "${name}", seed ${bench.panels[0]!.seed}, ${bench.panels[0]!.lobbies.length} lobbies.${bench.fresh ? "" : " STALE: data/ or the ratings changed since; take a new one (npm run baseline)."} ${knobs.length} knobs.`,
+  );
   const sensed = senseKnobs(bench, knobs, (i, k) => r.progress(`knob ${i + 1}/${knobs.length} ${k.id}`));
 
-  const pp = (x: [number, number] | undefined) => { if (!x) return ""; const v = 100 * x[0]; return Math.abs(v) < 0.05 ? "0" : `${v > 0 ? "+" : "−"}${Math.abs(v).toFixed(1)}${Math.abs(x[0]) >= 2 * x[1] && Math.abs(v) >= 0.3 ? " *" : ""}`; };
+  const pp = (x: [number, number] | undefined) => {
+    if (!x) return "";
+    const v = 100 * x[0];
+    return Math.abs(v) < 0.05 ? "0" : `${v > 0 ? "+" : "−"}${Math.abs(v).toFixed(1)}${Math.abs(x[0]) >= 2 * x[1] && Math.abs(v) >= 0.3 ? " *" : ""}`;
+  };
   const base: Metrics = bench.base[0]!;
-  const heroesOf = (s: Sensed) => s.knob.where.item ? data.items.get(s.knob.where.item)!.hero : s.knob.where.hero;
+  const heroesOf = (s: Sensed) => (s.knob.where.item ? data.items.get(s.knob.where.item)!.hero : s.knob.where.hero);
   for (const h of data.heroList) {
     const rows = sensed.filter((s) => heroesOf(s) === h.id).sort((a, b) => Math.abs(b.d[`hero:${h.id}`]?.[0] ?? 0) - Math.abs(a.d[`hero:${h.id}`]?.[0] ?? 0));
     if (!rows.length) continue;
@@ -58,10 +72,26 @@ if (isMain) {
     r.log();
     r.log(`## ${h.name}: one step stronger, change in points of win share`);
     r.table(
-      ["knob", "step", "fights", "winner changed", `${h.id} overall`, ...h.paths.map((p) => p.name), ...h.paths.map((p) => `${p.name}, late`), ...others.map((o) => `${o.id} overall`), ""],
+      [
+        "knob",
+        "step",
+        "fights",
+        "winner changed",
+        `${h.id} overall`,
+        ...h.paths.map((p) => p.name),
+        ...h.paths.map((p) => `${p.name}, late`),
+        ...others.map((o) => `${o.id} overall`),
+        "",
+      ],
       rows.map((s) => [
-        s.knob.label, `${showKnobValue(s.knob.base)} → ${showKnobValue(valueAt(s.knob, 1))}`, s.refought, s.flipped,
-        pp(s.d[`hero:${h.id}`]), ...h.paths.map((p) => pp(s.d[`path:${h.id}/${p.id}`])), ...h.paths.map((p) => pp(s.d[`late:${h.id}/${p.id}`])), ...others.map((o) => pp(s.d[`hero:${o.id}`])),
+        s.knob.label,
+        `${showKnobValue(s.knob.base)} → ${showKnobValue(valueAt(s.knob, 1))}`,
+        s.refought,
+        s.flipped,
+        pp(s.d[`hero:${h.id}`]),
+        ...h.paths.map((p) => pp(s.d[`path:${h.id}/${p.id}`])),
+        ...h.paths.map((p) => pp(s.d[`late:${h.id}/${p.id}`])),
+        ...others.map((o) => pp(s.d[`hero:${o.id}`])),
         s.refought === 0 ? "not owned" : s.flipped === 0 ? "dead" : s.knob.botsRead ? "bots read it" : "",
       ]),
     );
@@ -70,12 +100,28 @@ if (isMain) {
   if (rest.length) {
     r.log();
     r.log("## General items and rules: one step stronger, change in points of win share");
-    r.table(["knob", "step", "fights", "winner changed", ...data.heroList.map((o) => `${o.id} overall`), ""], rest.map((s) => [s.knob.label, `${showKnobValue(s.knob.base)} → ${showKnobValue(valueAt(s.knob, 1))}`, s.refought, s.flipped, ...data.heroList.map((o) => pp(s.d[`hero:${o.id}`])), s.refought === 0 ? "not owned" : s.flipped === 0 ? "dead" : s.knob.botsRead ? "bots read it" : ""]));
+    r.table(
+      ["knob", "step", "fights", "winner changed", ...data.heroList.map((o) => `${o.id} overall`), ""],
+      rest.map((s) => [
+        s.knob.label,
+        `${showKnobValue(s.knob.base)} → ${showKnobValue(valueAt(s.knob, 1))}`,
+        s.refought,
+        s.flipped,
+        ...data.heroList.map((o) => pp(s.d[`hero:${o.id}`])),
+        s.refought === 0 ? "not owned" : s.flipped === 0 ? "dead" : s.knob.botsRead ? "bots read it" : "",
+      ]),
+    );
   }
   r.log();
-  r.log("Reading: every line is one replay with only that number changed. \"fights\" = fights with the item that were fought again; \"winner changed\" = how many of them flipped.");
-  r.log("* = at least two standard errors (paired). \"dead\": no fight changed its winner, the number is saturated or irrelevant. \"not owned\": no bot of the baseline holds the item.");
-  r.log("\"bots read it\": bots use this number when they shop or lay out (cooldown, Energy, price); the replay is an estimate, confirm with balance:replay --full.");
+  r.log(
+    'Reading: every line is one replay with only that number changed. "fights" = fights with the item that were fought again; "winner changed" = how many of them flipped.',
+  );
+  r.log(
+    '* = at least two standard errors (paired). "dead": no fight changed its winner, the number is saturated or irrelevant. "not owned": no bot of the baseline holds the item.',
+  );
+  r.log(
+    '"bots read it": bots use this number when they shop or lay out (cooldown, Energy, price); the replay is an estimate, confirm with balance:replay --full.',
+  );
   void base;
   mkdirSync(join("out", "balance"), { recursive: true });
   writeFileSync(join("out", "balance", "sense.json"), JSON.stringify(sensed) + "\n");

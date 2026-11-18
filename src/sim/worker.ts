@@ -22,11 +22,16 @@ const field = task.kind === "items" || task.kind === "picks" ? (JSON.parse(readF
 const moments = task.kind === "picks" ? (JSON.parse(readFileSync(task.moments!, "utf8")) as { m: Moment; seed: number }[]) : [];
 for (let i = task.from; i < task.to; i++) {
   out.push(
-    task.kind === "pickLobby" ? playPickLobby(data, task.seed, i)
-    : task.kind === "picks" ? scoreMoment(data, field, moments[i]!.m, moments[i]!.seed, task.fights!, !!task.careful)
-    : task.kind === "items" ? measureItem(data, data.items.get(task.ids![i]!)!, field, { builds: task.builds!, fights: task.fights! }, task.seed)
-    : task.kind === "panel" ? playPanelLobby(data, task.seed, i, task.free, task.bot)
-    : measurePathLobby(data, task.seed, i));
+    task.kind === "pickLobby"
+      ? playPickLobby(data, task.seed, i)
+      : task.kind === "picks"
+        ? scoreMoment(data, field, moments[i]!.m, moments[i]!.seed, task.fights!, !!task.careful)
+        : task.kind === "items"
+          ? measureItem(data, data.items.get(task.ids![i]!)!, field, { builds: task.builds!, fights: task.fights! }, task.seed)
+          : task.kind === "panel"
+            ? playPanelLobby(data, task.seed, i, task.free, task.bot)
+            : measurePathLobby(data, task.seed, i),
+  );
   process.stderr.write(".");
 }
 process.stdout.write(JSON.stringify(out));

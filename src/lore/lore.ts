@@ -25,7 +25,9 @@ export function loadLore(root = ROOT): Place[] {
 
 /** Problems in the lore data: unknown ids, items with two origins, broken orbits. */
 export function checkLore(data: GameData, places: Place[]): string[] {
-  const problems: string[] = [], ids = new Set<string>(), origin = new Map<string, string>();
+  const problems: string[] = [],
+    ids = new Set<string>(),
+    origin = new Map<string, string>();
   for (const p of places) {
     if (ids.has(p.id)) problems.push(`lore: place id ${p.id} used twice`);
     ids.add(p.id);

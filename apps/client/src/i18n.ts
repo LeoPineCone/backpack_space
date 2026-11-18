@@ -18,7 +18,12 @@ export function deviceLanguage(): string {
 
 /** What the player picked in the settings: a language id or DEVICE. */
 export function languageChoice(): string {
-  try { const v = localStorage.getItem(KEY); if (v && (v === DEVICE || DATA.locales.languages.some((l) => l.id === v))) return v; } catch { /* no storage */ }
+  try {
+    const v = localStorage.getItem(KEY);
+    if (v && (v === DEVICE || DATA.locales.languages.some((l) => l.id === v))) return v;
+  } catch {
+    /* no storage */
+  }
   return DEVICE;
 }
 
@@ -27,7 +32,11 @@ document.documentElement.lang = current.lang;
 
 /** Switches the language and remembers the choice on this device. */
 export function setLanguage(choice: string): void {
-  try { localStorage.setItem(KEY, choice); } catch { /* the choice only lasts this session */ }
+  try {
+    localStorage.setItem(KEY, choice);
+  } catch {
+    /* the choice only lasts this session */
+  }
   current = DATA.locales.get(choice === DEVICE ? deviceLanguage() : choice);
   document.documentElement.lang = current.lang;
 }

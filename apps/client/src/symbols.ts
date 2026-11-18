@@ -11,8 +11,15 @@ export interface Chip {
   /** trigger = outlined capsule; buff = light tile; debuff = dark tile; plain = bare symbol */
   kind: "trigger" | "buff" | "debuff" | "plain";
 }
-export interface Row { when: Chip[]; then: Chip[] }
-export interface Keyword { icon: string; word: string; text: string }
+export interface Row {
+  when: Chip[];
+  then: Chip[];
+}
+export interface Keyword {
+  icon: string;
+  word: string;
+  text: string;
+}
 
 const num = (n: number) => String(Math.round(n * 10) / 10);
 
@@ -20,14 +27,30 @@ function whenChips(e: Effect, data: GameData, cooldown?: number): Chip[] {
   const out: Chip[] = [];
   const t = (icon: string, text?: string): Chip => ({ icon, text, kind: "trigger" });
   switch (e.on) {
-    case "start": out.push(t("start")); break;
-    case "use": out.push(t("clock", cooldown !== undefined ? num(cooldown) : undefined)); break;
-    case "hit": out.push(t("hit")); break;
-    case "attacked": out.push(t("attacked")); break;
-    case "phase": out.push(t("phase", e.phase ? phaseName(data, e.phase) : undefined)); break;
-    case "starUse": out.push(t("star"), t(e.tag ?? "any")); break;
-    case "shipUse": out.push(t("ship"), t(e.tag ?? "any")); break;
-    case "lowHp": out.push(t("lowHp", `${data.rules.battle.lowHpPct}%`)); break;
+    case "start":
+      out.push(t("start"));
+      break;
+    case "use":
+      out.push(t("clock", cooldown !== undefined ? num(cooldown) : undefined));
+      break;
+    case "hit":
+      out.push(t("hit"));
+      break;
+    case "attacked":
+      out.push(t("attacked"));
+      break;
+    case "phase":
+      out.push(t("phase", e.phase ? phaseName(data, e.phase) : undefined));
+      break;
+    case "starUse":
+      out.push(t("star"), t(e.tag ?? "any"));
+      break;
+    case "shipUse":
+      out.push(t("ship"), t(e.tag ?? "any"));
+      break;
+    case "lowHp":
+      out.push(t("lowHp", `${data.rules.battle.lowHpPct}%`));
+      break;
     case "passive":
       if (e.to === "self") out.push(t("self"));
       else if (e.to === "hero") out.push(t("hero"));
@@ -67,10 +90,14 @@ function thenChips(e: Effect): Chip[] {
   const per = e.per;
   if (per) {
     const div = per.div && per.div !== 1 ? `/${num(per.div)}` : "×";
-    if (per.stars) { out.push({ icon: "star", text: div, kind: "plain" }); if (per.stars !== "any") out.push({ icon: per.stars, kind: "plain" }); }
-    else if (per.ship) { out.push({ icon: "ship", text: div, kind: "plain" }, { icon: per.ship, kind: "plain" }); }
-    else if (per.cells) { out.push({ icon: "cell", text: div, kind: "plain" }, { icon: per.cells, kind: "plain" }); }
-    else if (per.buff) out.push({ icon: per.buff, text: div, kind: "plain" });
+    if (per.stars) {
+      out.push({ icon: "star", text: div, kind: "plain" });
+      if (per.stars !== "any") out.push({ icon: per.stars, kind: "plain" });
+    } else if (per.ship) {
+      out.push({ icon: "ship", text: div, kind: "plain" }, { icon: per.ship, kind: "plain" });
+    } else if (per.cells) {
+      out.push({ icon: "cell", text: div, kind: "plain" }, { icon: per.cells, kind: "plain" });
+    } else if (per.buff) out.push({ icon: per.buff, text: div, kind: "plain" });
     else if (per.debuff) out.push({ icon: per.debuff, text: div, kind: "plain" });
   }
   return out;
@@ -87,7 +114,11 @@ export function effectRows(effects: readonly Effect[], data: GameData, cooldown?
     const when = whenChips(e, data, cooldown);
     const key = JSON.stringify(when);
     let row = byKey.get(key);
-    if (!row) { row = { when, then: [] }; byKey.set(key, row); rows.push(row); }
+    if (!row) {
+      row = { when, then: [] };
+      byKey.set(key, row);
+      rows.push(row);
+    }
     row.then.push(...thenChips(e));
   }
   return rows.filter((r) => r.then.length > 0);
@@ -97,14 +128,21 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
   let first: Row | undefined;
   if (def.cooldown !== undefined) {
     first = { when: [{ icon: "clock", text: num(def.cooldown), kind: "trigger" }], then: [] };
-    if (def.damage) first.then.push({ icon: "damage", text: def.damage[0] === def.damage[1] ? num(def.damage[0]) : `${num(def.damage[0])}–${num(def.damage[1])}`, kind: "debuff" });
+    if (def.damage)
+      first.then.push({
+        icon: "damage",
+        text: def.damage[0] === def.damage[1] ? num(def.damage[0]) : `${num(def.damage[0])}–${num(def.damage[1])}`,
+        kind: "debuff",
+      });
     if (def.range) first.then.push({ icon: def.range, kind: "plain" });
     if (def.energy) first.then.push({ icon: "energy", text: `-${num(def.energy)}`, kind: "plain" });
   }
   return effectRows(def.effects, data, def.cooldown, first);
 }
 
-export function heroRows(hero: HeroData, data: GameData): Row[] { return effectRows(hero.effects, data); }
+export function heroRows(hero: HeroData, data: GameData): Row[] {
+  return effectRows(hero.effects, data);
+}
 
 /** Every keyword with its symbol and one short sentence, from the glossary (data/glossary.json), in the current language. Numbers come from the rules. */
 export function keywords(data: GameData): Map<string, Keyword> {
@@ -115,10 +153,20 @@ export function keywords(data: GameData): Map<string, Keyword> {
 
 /** The keywords that appear in these rows (and types), in order of appearance. */
 export function keywordsIn(rows: readonly Row[], tags: readonly string[], all: Map<string, Keyword>, extra: readonly string[] = []): Keyword[] {
-  const seen = new Set<string>(), out: Keyword[] = [];
-  const take = (icon: string) => { const kw = all.get(icon); if (kw && !seen.has(icon)) { seen.add(icon); out.push(kw); } };
+  const seen = new Set<string>(),
+    out: Keyword[] = [];
+  const take = (icon: string) => {
+    const kw = all.get(icon);
+    if (kw && !seen.has(icon)) {
+      seen.add(icon);
+      out.push(kw);
+    }
+  };
   for (const t of tags) take(t);
-  for (const r of rows) { for (const c of r.when) take(c.icon); for (const c of r.then) take(c.icon); }
+  for (const r of rows) {
+    for (const c of r.when) take(c.icon);
+    for (const c of r.then) take(c.icon);
+  }
   for (const e of extra) take(e);
   return out;
 }
@@ -128,7 +176,10 @@ export const GLOSSARY_GROUPS: { title: string; icons: string[] }[] = [
   { title: "ui.group.types", icons: [...TAGS, "bag", "crafted"] },
   { title: "ui.group.buffs", icons: [...BUFFS] },
   { title: "ui.group.debuffs", icons: [...DEBUFFS] },
-  { title: "ui.group.effects", icons: ["damage", "heal", "leech", "overheal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "energy", "energyRegen", "melee", "ranged"] },
+  {
+    title: "ui.group.effects",
+    icons: ["damage", "heal", "leech", "overheal", "cleanse", "strip", "speed", "crit", "maxHp", "ready", "energy", "energyRegen", "melee", "ranged"],
+  },
   { title: "ui.group.when", icons: ["clock", "start", "hit", "attacked", "phase", "lowHp", "chance"] },
   { title: "ui.group.who", icons: ["self", "star", "ship", "hero", "cell"] },
   { title: "ui.group.merge", icons: ["merge", "radar", "lock"] },

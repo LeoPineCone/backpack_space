@@ -4,21 +4,38 @@ import { join } from "node:path";
 import { ROOT, loadGameData, loadItemArt } from "@backpack-space/core/node";
 import { checkLore, loadLore } from "../lore/lore";
 
-const d = loadGameData(), art = loadItemArt(), places = loadLore();
+const d = loadGameData(),
+  art = loadItemArt(),
+  places = loadLore();
 const problems = checkLore(d, places);
 if (problems.length) {
   console.error(`Lore problems:\n- ${problems.join("\n- ")}`);
   process.exit(1);
 }
 
-interface Node { id: string; label: string; group: string; sub: string; lines: string[] }
-const nodes: Node[] = [], links: [string, string, string][] = [];
+interface Node {
+  id: string;
+  label: string;
+  group: string;
+  sub: string;
+  lines: string[];
+}
+const nodes: Node[] = [],
+  links: [string, string, string][] = [];
 const seen = new Set<string>();
-const add = (n: Node) => { if (!seen.has(n.id)) { seen.add(n.id); nodes.push(n); } };
+const add = (n: Node) => {
+  if (!seen.has(n.id)) {
+    seen.add(n.id);
+    nodes.push(n);
+  }
+};
 
 for (const p of places) {
   add({
-    id: `place:${p.id}`, label: p.name, group: "place", sub: `${p.kind}${p.status === "draft" ? " · draft" : ""}`,
+    id: `place:${p.id}`,
+    label: p.name,
+    group: "place",
+    sub: `${p.kind}${p.status === "draft" ? " · draft" : ""}`,
     lines: [`Traits: ${p.traits.join("; ")}.`, `Life: ${p.life}`, `Background idea: ${p.background}`],
   });
   if (p.orbits) links.push([`place:${p.id}`, `place:${p.orbits}`, "orbits"]);
@@ -28,10 +45,14 @@ for (const p of places) {
     links.push([`place:${p.id}`, `hero:${h}`, "home of"]);
   }
   for (const i of p.items) {
-    const it = d.items.get(i)!, a = art[i];
+    const it = d.items.get(i)!,
+      a = art[i];
     const owner = it.hero ? d.heroes.get(it.hero)?.name : undefined;
     add({
-      id: `item:${i}`, label: it.name, group: "item", sub: `${it.tags.filter((t) => t !== "crafted").join(", ")} · ${it.rarity}${owner ? ` · ${owner}` : ""}`,
+      id: `item:${i}`,
+      label: it.name,
+      group: "item",
+      sub: `${it.tags.filter((t) => t !== "crafted").join(", ")} · ${it.rarity}${owner ? ` · ${owner}` : ""}`,
       lines: a ? [a.brief, `Picture: ${a.description}`] : [],
     });
     links.push([`place:${p.id}`, `item:${i}`, "origin of"]);
@@ -42,7 +63,8 @@ for (const p of places) {
 for (const n of nodes) {
   if (n.group !== "item") continue;
   const it = d.items.get(n.id.slice(5))!;
-  if (it.hero && seen.has(`hero:${it.hero}`) && !links.some(([a, b]) => a === n.id && b === `hero:${it.hero}`)) links.push([n.id, `hero:${it.hero}`, "hero item"]);
+  if (it.hero && seen.has(`hero:${it.hero}`) && !links.some(([a, b]) => a === n.id && b === `hero:${it.hero}`))
+    links.push([n.id, `hero:${it.hero}`, "hero item"]);
 }
 
 const data = JSON.stringify({ nodes, links }).replace(/</g, "\\u003c");

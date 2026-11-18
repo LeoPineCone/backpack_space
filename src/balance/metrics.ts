@@ -9,14 +9,32 @@ import type { LobbyStat } from "./panel";
 
 /** metric kinds and the target each is checked against */
 export const KINDS = {
-  hero: "pathHeroWinShare", third: "heroWinShare", path: "pathWinShare", late: "pathLateWinShare", open: "pathOverOpen", spread: "pathSpread",
-  duel: "heroDuel", secs: "fightSeconds", nova: "supernovaReached", main: "pathMainShare", distinct: "pathDistinct", pays: "pathPays", style: "pathStyle",
+  hero: "pathHeroWinShare",
+  third: "heroWinShare",
+  path: "pathWinShare",
+  late: "pathLateWinShare",
+  open: "pathOverOpen",
+  spread: "pathSpread",
+  duel: "heroDuel",
+  secs: "fightSeconds",
+  nova: "supernovaReached",
+  main: "pathMainShare",
+  distinct: "pathDistinct",
+  pays: "pathPays",
+  style: "pathStyle",
 } as const;
 export type Kind = keyof typeof KINDS;
 /** kinds measured in seconds; all others are shares (shown in points) */
 export const isSeconds = (kind: Kind) => kind === "secs";
 
-export interface Metric { key: string; kind: Kind; label: string; value: number; blocks: number[]; se: number }
+export interface Metric {
+  key: string;
+  kind: Kind;
+  label: string;
+  value: number;
+  blocks: number[];
+  se: number;
+}
 export type Metrics = Map<string, Metric>;
 
 const short = (data: GameData, hero: string) => data.heroes.get(hero)!.name.split(" ")[0]!.replace(/"/g, "");
@@ -30,7 +48,8 @@ function compute(data: GameData, stats: readonly LobbyStat[]): Record<string, nu
     if (!hero) continue;
     out[`hero:${h.id}`] = hero.all.p;
     const open = groups.get(`${h.id}/`);
-    const shares: number[] = [], profs: Profile[] = [];
+    const shares: number[] = [],
+      profs: Profile[] = [];
     for (const p of h.paths) {
       const g = groups.get(`${h.id}/${p.id}`);
       if (!g) continue;
@@ -41,7 +60,8 @@ function compute(data: GameData, stats: readonly LobbyStat[]): Record<string, nu
       if (pays) out[`pays:${h.id}/${p.id}`] = pays.all;
       const pr = profileOf(g);
       out[`main:${h.id}/${p.id}`] = pr.mix[pr.main];
-      shares.push(g.all.p); profs.push(pr);
+      shares.push(g.all.p);
+      profs.push(pr);
     }
     if (shares.length > 1) out[`spread:${h.id}`] = Math.max(...shares) - Math.min(...shares);
     let closest = Infinity;
@@ -51,44 +71,91 @@ function compute(data: GameData, stats: readonly LobbyStat[]): Record<string, nu
     for (let i = 0; i < profs.length; i++) for (let j = i + 1; j < profs.length; j++) alike = Math.min(alike, styleDistance(profs[i]!, profs[j]!).score);
     if (Number.isFinite(alike)) out[`style:${h.id}`] = alike;
     for (let t = 0; t < 3; t++) {
-      let w = 0, n = 0;
-      for (const s of stats) { const x = s.third[h.id]?.[t]; if (x) { w += x[0]; n += x[1]; } }
+      let w = 0,
+        n = 0;
+      for (const s of stats) {
+        const x = s.third[h.id]?.[t];
+        if (x) {
+          w += x[0];
+          n += x[1];
+        }
+      }
       if (n) out[`third:${h.id}:${t + 1}`] = w / n;
     }
     for (const o of data.heroList) {
       if (o.id === h.id) continue;
-      let w = 0, n = 0;
-      for (const s of stats) { const x = s.duel[`${h.id}>${o.id}`]; if (x) { w += x[0]; n += x[1]; } }
+      let w = 0,
+        n = 0;
+      for (const s of stats) {
+        const x = s.duel[`${h.id}>${o.id}`];
+        if (x) {
+          w += x[0];
+          n += x[1];
+        }
+      }
       if (n) out[`duel:${h.id}>${o.id}`] = w / n;
     }
   }
   for (let r = 0; r < R; r++) {
-    let secs = 0, n = 0, nova = 0;
-    for (const s of stats) { const x = s.rounds[r]; if (x) { secs += x[0]; n += x[1]; nova += x[2]; } }
-    if (n) { out[`secs:r${r + 1}`] = secs / n; out[`nova:r${r + 1}`] = nova / n; }
+    let secs = 0,
+      n = 0,
+      nova = 0;
+    for (const s of stats) {
+      const x = s.rounds[r];
+      if (x) {
+        secs += x[0];
+        n += x[1];
+        nova += x[2];
+      }
+    }
+    if (n) {
+      out[`secs:r${r + 1}`] = secs / n;
+      out[`nova:r${r + 1}`] = nova / n;
+    }
   }
   return out;
 }
 
 function labelOf(data: GameData, key: string): string {
   const [kind, rest] = [key.slice(0, key.indexOf(":")), key.slice(key.indexOf(":") + 1)];
-  const pathName = (hp: string) => { const [h, p] = hp.split("/"); return `${short(data, h!)}: ${data.heroes.get(h!)!.paths.find((x) => x.id === p)?.name ?? p}`; };
-  const third = (t: string) => { const R = data.rules.rounds, k = Number(t); return `rounds ${Math.floor(((k - 1) * R) / 3) + 1}–${Math.floor((k * R) / 3)}`; };
+  const pathName = (hp: string) => {
+    const [h, p] = hp.split("/");
+    return `${short(data, h!)}: ${data.heroes.get(h!)!.paths.find((x) => x.id === p)?.name ?? p}`;
+  };
+  const third = (t: string) => {
+    const R = data.rules.rounds,
+      k = Number(t);
+    return `rounds ${Math.floor(((k - 1) * R) / 3) + 1}–${Math.floor((k * R) / 3)}`;
+  };
   switch (kind) {
-    case "hero": return `${short(data, rest)} overall`;
-    case "third": return `${short(data, rest.split(":")[0]!)} ${third(rest.split(":")[1]!)}`;
-    case "path": return pathName(rest);
-    case "late": return `${pathName(rest)}, late rounds`;
-    case "open": return `${pathName(rest)} vs open bot`;
-    case "spread": return `${short(data, rest)}: best to weakest path`;
-    case "duel": return `${short(data, rest.split(">")[0]!)} against ${short(data, rest.split(">")[1]!)}`;
-    case "secs": return `fight length round ${rest.slice(1)}`;
-    case "nova": return `Supernova reached round ${rest.slice(1)}`;
-    case "main": return `${pathName(rest)}: main mechanic`;
-    case "pays": return `${pathName(rest)}: most against least committed third`;
-    case "style": return `${short(data, rest)}: two paths most alike in play style`;
-    case "distinct": return `${short(data, rest)}: closest two paths`;
-    default: return key;
+    case "hero":
+      return `${short(data, rest)} overall`;
+    case "third":
+      return `${short(data, rest.split(":")[0]!)} ${third(rest.split(":")[1]!)}`;
+    case "path":
+      return pathName(rest);
+    case "late":
+      return `${pathName(rest)}, late rounds`;
+    case "open":
+      return `${pathName(rest)} vs open bot`;
+    case "spread":
+      return `${short(data, rest)}: best to weakest path`;
+    case "duel":
+      return `${short(data, rest.split(">")[0]!)} against ${short(data, rest.split(">")[1]!)}`;
+    case "secs":
+      return `fight length round ${rest.slice(1)}`;
+    case "nova":
+      return `Supernova reached round ${rest.slice(1)}`;
+    case "main":
+      return `${pathName(rest)}: main mechanic`;
+    case "pays":
+      return `${pathName(rest)}: most against least committed third`;
+    case "style":
+      return `${short(data, rest)}: two paths most alike in play style`;
+    case "distinct":
+      return `${short(data, rest)}: closest two paths`;
+    default:
+      return key;
   }
 }
 
@@ -96,7 +163,12 @@ function labelOf(data: GameData, key: string): string {
 export function metricsOf(data: GameData, stats: readonly LobbyStat[]): Metrics {
   const K = blockCount(stats.length);
   const all = compute(data, stats);
-  const perBlock = Array.from({ length: K }, (_, b) => compute(data, stats.filter((_, i) => Math.min(K - 1, Math.floor((i * K) / stats.length)) === b)));
+  const perBlock = Array.from({ length: K }, (_, b) =>
+    compute(
+      data,
+      stats.filter((_, i) => Math.min(K - 1, Math.floor((i * K) / stats.length)) === b),
+    ),
+  );
   const out: Metrics = new Map();
   for (const [key, value] of Object.entries(all)) {
     const blocks = perBlock.map((x) => x[key] ?? value);
@@ -123,7 +195,8 @@ export interface LossOpts {
   /** metric kinds that count */
   kinds: readonly Kind[];
   /** distance kept to the edge of a band: shares (0.005 = half a point) and seconds */
-  margin: number; marginSeconds: number;
+  margin: number;
+  marginSeconds: number;
 }
 export const DEFAULT_KINDS: readonly Kind[] = ["hero", "third", "path", "late", "spread", "duel", "secs", "nova"];
 

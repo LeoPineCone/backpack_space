@@ -22,7 +22,12 @@ export let H = 844;
 /** The whole display in design units (x and y are negative where it reaches past the safe area). */
 export const SCREEN = { x: 0, y: 0, w: W, h: H };
 
-export interface Insets { top: number; right: number; bottom: number; left: number }
+export interface Insets {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
 
 /**
  * The safe-area insets in CSS pixels, from `env(safe-area-inset-*)` (needs `viewport-fit=cover`, see index.html).
@@ -35,7 +40,8 @@ export function safeInsets(): Insets {
     return { top, right: 0, bottom, left: 0 };
   }
   const probe = document.createElement("div");
-  probe.style.cssText = "position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)";
+  probe.style.cssText =
+    "position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)";
   document.body.append(probe);
   const cs = getComputedStyle(probe);
   const px = (v: string) => parseFloat(v) || 0;
@@ -50,13 +56,15 @@ export function safeInsets(): Insets {
  */
 let fixed = false;
 export function fitScreen(winW: number, winH: number, ins: Insets): { scale: number; x: number; y: number } {
-  const sw = Math.max(1, winW - ins.left - ins.right), sh = Math.max(1, winH - ins.top - ins.bottom);
+  const sw = Math.max(1, winW - ins.left - ins.right),
+    sh = Math.max(1, winH - ins.top - ins.bottom);
   if (!fixed) {
     H = Math.round(Math.min(MAX_H, Math.max(MIN_H, (sh * W) / sw)));
     fixed = true;
   }
   const scale = Math.min(sw / W, sh / H);
-  const x = ins.left + (sw - W * scale) / 2, y = ins.top + (sh - H * scale) / 2;
+  const x = ins.left + (sw - W * scale) / 2,
+    y = ins.top + (sh - H * scale) / 2;
   Object.assign(SCREEN, { x: -x / scale, y: -y / scale, w: winW / scale, h: winH / scale });
   return { scale, x, y };
 }

@@ -1,0 +1,25 @@
+# Generated or native project files
+node_modules/
+out/
+dist/
+apps/client/android/
+apps/client/ios/
+
+# Files changed by open pull requests (#31, #110). They are formatted once those are merged,
+# so the one-time formatting does not conflict with them. Remove these lines then.
+apps/client/src/art.ts
+apps/client/src/backdrop.ts
+apps/client/src/data.ts
+apps/client/src/icons.ts
+apps/client/src/main.ts
+apps/client/src/pieces.ts
+apps/client/src/planet.ts
+apps/client/src/scenes/hero.ts
+apps/client/src/scenes/home.ts
+apps/client/src/scenes/results.ts
+apps/client/src/scenes/shop.ts
+packages/core/src/meta.ts
+src/art/prompt.ts
+src/cli/catalog.ts
+src/cli/validate.ts
+test/meta.test.ts

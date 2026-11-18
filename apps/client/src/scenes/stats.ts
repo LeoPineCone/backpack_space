@@ -2,7 +2,7 @@
 import { Container } from "pixi.js";
 import { DEBUFFS, buildOf, buildStats, compile } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
-import { C, H, W } from "../theme";
+import { C, W } from "../theme";
 import { icon } from "../icons";
 import { at, box, dimmer, roundButton, txt } from "../ui";
 import { t, tr } from "../i18n";
@@ -16,17 +16,32 @@ export function statsOverlay(game: Game): Scene {
   const s = buildStats(compile(buildOf(game.run!), data), data.rules);
   root.addChild(dimmer(() => game.closeOverlay(), 0.94));
   root.addChild(at(txt(t("ui.stats.title"), 26, { spacing: 2 }), 20, 28));
-  root.addChild(at(roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }), W - 42, 44));
+  root.addChild(
+    at(
+      roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }),
+      W - 42,
+      44,
+    ),
+  );
 
   const short = s.energy.need > s.energy.income + 1e-9;
   const rows: { icon: string; label: string; value: string; color?: number; tint?: number; gap?: boolean }[] = [
     { icon: "maxHp", label: t("ui.stats.health"), value: String(s.maxHp), tint: C.good },
     { icon: "energy", label: t("ui.stats.energyNeed"), value: fmt(s.energy.need), color: short ? C.bad : C.text, tint: C.gold, gap: true },
-    { icon: "energyRegen", label: t("ui.stats.energyIncome", { refill: fmt(s.energy.refill), items: fmt(s.energy.fromItems) }), value: fmt(s.energy.income), tint: C.gold },
+    {
+      icon: "energyRegen",
+      label: t("ui.stats.energyIncome", { refill: fmt(s.energy.refill), items: fmt(s.energy.fromItems) }),
+      value: fmt(s.energy.income),
+      tint: C.gold,
+    },
     { icon: "clock", label: t("ui.stats.wait"), value: `${Math.round(s.energy.wait * 100)} %`, color: s.energy.wait > 0 ? C.bad : C.text },
     { icon: "weapon", label: t("ui.stats.weaponDps"), value: fmt(s.dps.weapons), gap: true },
     ...(s.dps.direct > 0 ? [{ icon: "damage", label: t("ui.stats.directDps"), value: fmt(s.dps.direct) }] : []),
-    ...DEBUFFS.filter((d) => (s.inflict[d] ?? 0) > 0).map((d) => ({ icon: d, label: t("ui.stats.inflict", { status: tr().term(d) }), value: fmt(s.inflict[d]!) })),
+    ...DEBUFFS.filter((d) => (s.inflict[d] ?? 0) > 0).map((d) => ({
+      icon: d,
+      label: t("ui.stats.inflict", { status: tr().term(d) }),
+      value: fmt(s.inflict[d]!),
+    })),
     { icon: "heal", label: t("ui.stats.heal"), value: fmt(s.healPerSec), gap: true },
     { icon: "shield", label: t("ui.stats.shieldStart"), value: fmt(s.shieldStart) },
     { icon: "shield", label: t("ui.stats.shieldPerSec"), value: fmt(s.shieldPerSec) },

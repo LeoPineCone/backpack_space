@@ -10,7 +10,10 @@ const entries = (o: Record<string, unknown>) => Object.entries(o).filter(([k]) =
 /** WCAG contrast ratio of two #rrggbb colours. */
 function contrast(a: string, b: string): number {
   const lum = (h: string) => {
-    const [r, g, bl] = [1, 3, 5].map((i) => { const c = parseInt(h.slice(i, i + 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+    const [r, g, bl] = [1, 3, 5].map((i) => {
+      const c = parseInt(h.slice(i, i + 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
     return 0.2126 * r! + 0.7152 * g! + 0.0722 * bl!;
   };
   const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m);
@@ -24,7 +27,8 @@ describe("data/theme.json", () => {
   });
   it("gives every UI job a palette colour and every button a UI colour", () => {
     for (const [k, v] of entries(theme.ui)) expect(theme.palette[v as string], `ui.${k} -> ${v}`).toBeDefined();
-    for (const kind of ["primary", "icon", "secondary"]) for (const [k, v] of entries(theme.buttons[kind])) expect(theme.ui[v as string], `buttons.${kind}.${k}`).toBeDefined();
+    for (const kind of ["primary", "icon", "secondary"])
+      for (const [k, v] of entries(theme.buttons[kind])) expect(theme.ui[v as string], `buttons.${kind}.${k}`).toBeDefined();
   });
   it("keeps text readable", () => {
     expect(contrast(ui("text"), ui("bg"))).toBeGreaterThanOrEqual(7);

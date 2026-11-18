@@ -20,15 +20,30 @@ export function runMenuOverlay(game: Game, onChange: () => void): Scene {
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
     root.addChild(dimmer(() => game.closeOverlay()));
-    const pw = 300, rw = pw - 40;
+    const pw = 300,
+      rw = pw - 40;
     const panel = new Container();
     const rows: { ic: string; label: string; color: number; tap: () => void }[] = [
       { ic: "settings", label: t("ui.settings"), color: C.text, tap: () => game.openOverlay(settingsOverlay(game, onChange)) },
-      { ic: "home", label: t("ui.runMenu.home"), color: C.text, tap: () => { game.save(); game.show(homeScene(game)); } },
       {
-        ic: "flag", label: t(armed ? "ui.runMenu.giveUpSure" : "ui.runMenu.giveUp"), color: armed ? C.bad : C.text,
+        ic: "home",
+        label: t("ui.runMenu.home"),
+        color: C.text,
         tap: () => {
-          if (!armed) { armed = true; render(); return; }
+          game.save();
+          game.show(homeScene(game));
+        },
+      },
+      {
+        ic: "flag",
+        label: t(armed ? "ui.runMenu.giveUpSure" : "ui.runMenu.giveUp"),
+        color: armed ? C.bad : C.text,
+        tap: () => {
+          if (!armed) {
+            armed = true;
+            render();
+            return;
+          }
           const run = game.run!;
           giveUp(run);
           // the stored run ends before the reward is booked, so a reload cannot book it twice
@@ -41,7 +56,14 @@ export function runMenuOverlay(game: Game, onChange: () => void): Scene {
     const bg = box(pw, ph, { fill: C.panel, line: C.cyan, lineW: 2, radius: 20 });
     bg.eventMode = "static";
     panel.addChild(bg);
-    panel.addChild(at(icon("menu", 24, C.cyan), 34, 38), at(roundButton("close", 18, () => game.closeOverlay(), { iconSize: 16 }), pw - 30, 38));
+    panel.addChild(
+      at(icon("menu", 24, C.cyan), 34, 38),
+      at(
+        roundButton("close", 18, () => game.closeOverlay(), { iconSize: 16 }),
+        pw - 30,
+        38,
+      ),
+    );
     rows.forEach((r, i) => {
       const row = new Container();
       row.addChild(box(rw, 52, { fill: C.bg, line: r.color === C.bad ? C.bad : C.line, lineW: r.color === C.bad ? 2 : 1, radius: 14 }));

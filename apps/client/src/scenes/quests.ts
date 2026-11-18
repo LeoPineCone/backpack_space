@@ -33,7 +33,13 @@ function questCard(game: Game, kind: keyof typeof SLOTS, w: number): Container {
 export function questsScene(game: Game, back: () => Scene): Scene {
   const root = new Container();
   root.addChild(screenFill(C.bg));
-  root.addChild(at(roundButton("back", 22, () => game.show(back()), { iconSize: 20 }), 36, 36));
+  root.addChild(
+    at(
+      roundButton("back", 22, () => game.show(back()), { iconSize: 20 }),
+      36,
+      36,
+    ),
+  );
   root.addChild(at(txt(upper(t("ui.quests")), 24, { spacing: 2, anchor: [0, 0.5] }), 72, 36));
   const gal = hudPill("galaxy", game.profile.galaxies, C.line, C.text, 40);
   root.addChild(at(gal, W - 14 - gal.width, 16));
@@ -45,7 +51,10 @@ export function questsScene(game: Game, back: () => Scene): Scene {
     head.addChild(at(txt(t("ui.quest.renews"), 11, { font: "text", color: C.dim, anchor: [1, 0.5] }), W - 40, 10));
     root.addChild(at(head, 20, y));
     y += 30;
-    for (let i = 0; i < SLOTS[kind]; i++) { root.addChild(at(questCard(game, kind, W - 40), 20, y)); y += 102; }
+    for (let i = 0; i < SLOTS[kind]; i++) {
+      root.addChild(at(questCard(game, kind, W - 40), 20, y));
+      y += 102;
+    }
     y += 10;
   }
   return { root };

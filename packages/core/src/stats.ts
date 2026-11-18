@@ -47,59 +47,111 @@ export function buildStats(side: CSide, rules: Rules): BuildStats {
   let rough = false;
 
   /** How often an effect fires per second, and how much it gives once at the start. */
-  interface Tally { energy: number; heal: number; direct: number; shield: number; shieldStart: number; power: number; overclock: number; inflict: Partial<Record<Debuff, number>> }
+  interface Tally {
+    energy: number;
+    heal: number;
+    direct: number;
+    shield: number;
+    shieldStart: number;
+    power: number;
+    overclock: number;
+    inflict: Partial<Record<Debuff, number>>;
+  }
   const tally = (scale: number): Tally => {
     const t: Tally = { energy: 0, heal: 0, direct: 0, shield: 0, shieldStart: 0, power: 0, overclock: 0, inflict: {} };
     const add = (ce: CEffect, perSec: number, once: number) => {
       const e = ce.e;
       if (e.on === "passive") return;
       let k = ce.mult;
-      if (e.per?.buff || e.per?.debuff) { rough = true; return; }
-      if (e.if?.chance !== undefined) { k *= e.if.chance / 100; rough = true; }
-      if (e.if?.phase) { k *= e.if.phase.filter((p) => phases.some((q) => q.id === p)).length / phases.length; rough = true; }
-      if (e.if?.hpBelow !== undefined) { rough = true; return; }
+      if (e.per?.buff || e.per?.debuff) {
+        rough = true;
+        return;
+      }
+      if (e.if?.chance !== undefined) {
+        k *= e.if.chance / 100;
+        rough = true;
+      }
+      if (e.if?.phase) {
+        k *= e.if.phase.filter((p) => phases.some((q) => q.id === p)).length / phases.length;
+        rough = true;
+      }
+      if (e.if?.hpBelow !== undefined) {
+        rough = true;
+        return;
+      }
       const n = (e.n ?? 0) * k;
-      const put = (key: "energy" | "heal" | "direct" | "shield") => { t[key] += n * perSec; if (key === "shield") t.shieldStart += n * once; };
+      const put = (key: "energy" | "heal" | "direct" | "shield") => {
+        t[key] += n * perSec;
+        if (key === "shield") t.shieldStart += n * once;
+      };
       if (e.do === "energy") put("energy");
       else if (e.do === "heal") put("heal");
       else if (e.do === "damage") put("direct");
       else if (e.gain === "shield") put("shield");
       else if (e.gain === "power") t.power += n * once;
-      else if (e.gain === "overclock") { t.overclock += n * once; if (perSec > 0) { t.overclock += n * perSec * HALF_FIGHT; rough = true; } }
-      else if (e.inflict) t.inflict[e.inflict] = (t.inflict[e.inflict] ?? 0) + n * perSec;
+      else if (e.gain === "overclock") {
+        t.overclock += n * once;
+        if (perSec > 0) {
+          t.overclock += n * perSec * HALF_FIGHT;
+          rough = true;
+        }
+      } else if (e.inflict) t.inflict[e.inflict] = (t.inflict[e.inflict] ?? 0) + n * perSec;
     };
     const timing = (ce: CEffect, it: CItem | null): [number, number] => {
       const e = ce.e;
       const r = it ? rate(it) * (it.dmg ? scale : 1) : 0;
       switch (e.on) {
-        case "use": return [r, 0];
-        case "hit": return [r, 0];
-        case "start": return [0, 1];
+        case "use":
+          return [r, 0];
+        case "hit":
+          return [r, 0];
+        case "start":
+          return [0, 1];
         case "phase":
-          if (e.phase) { rough = true; return [0, 0]; }
+          if (e.phase) {
+            rough = true;
+            return [0, 0];
+          }
           return [1 / phaseLen, 1];
-        default: rough = true; return [0, 0];
+        default:
+          rough = true;
+          return [0, 0];
       }
     };
-    for (const it of side.items) for (const ce of it.effects) { const [ps, once] = timing(ce, it); add(ce, ps, once); }
-    for (const ce of side.heroEffects) { const [ps, once] = timing(ce, null); add(ce, ps, once); }
+    for (const it of side.items)
+      for (const ce of it.effects) {
+        const [ps, once] = timing(ce, it);
+        add(ce, ps, once);
+      }
+    for (const ce of side.heroEffects) {
+      const [ps, once] = timing(ce, null);
+      add(ce, ps, once);
+    }
     // starUse / shipUse: fire when the watched item activates
-    side.watchers.forEach((list, j) => { const it = side.items[j]!; for (const ce of list) add(ce, rate(it) * (it.dmg ? scale : 1), 0); });
+    side.watchers.forEach((list, j) => {
+      const it = side.items[j]!;
+      for (const ce of list) add(ce, rate(it) * (it.dmg ? scale : 1), 0);
+    });
     return t;
   };
 
   let refill = Math.max(0, rules.energy.regen + side.energyBonus);
   // first without waiting, then with the waiting that follows (Energy on hit depends on how often weapons hit)
-  let scale = 1, t = tally(1);
+  let scale = 1,
+    t = tally(1);
   const oc = rules.status.overclock;
   global = 1 + Math.min(oc.capPct, t.overclock * oc.speedPct) / 100;
   refill *= 1 + Math.min(oc.capPct, t.overclock * oc.energyPct) / 100;
   need = weapons.reduce((s, it) => s + rate(it) * it.energy, 0);
-  for (let i = 0; i < 3; i++) { scale = need > 0 ? Math.min(1, (refill + t.energy) / need) : 1; t = tally(scale); }
+  for (let i = 0; i < 3; i++) {
+    scale = need > 0 ? Math.min(1, (refill + t.energy) / need) : 1;
+    t = tally(scale);
+  }
   const income = refill + t.energy;
 
   // the full bar at the start covers the first seconds; averaged over a typical fight
-  const deficit = need - income, fight = 2 * HALF_FIGHT;
+  const deficit = need - income,
+    fight = 2 * HALF_FIGHT;
   const wait = deficit > 0 ? (1 - income / need) * Math.max(0, 1 - rules.energy.start / deficit / fight) : 0;
   const critMult = rules.battle.critMult;
   const weaponDps = weapons.reduce((s, it) => {

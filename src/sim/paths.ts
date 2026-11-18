@@ -17,8 +17,15 @@ export type Source = (typeof SOURCES)[number];
 export const MECHANICS = ["weapon", "pet", "shield", "count", "debuff", "direct", "burn", "toxin", "spikes"] as const;
 export type Mechanic = (typeof MECHANICS)[number];
 export const MECHANIC_TEXT: Record<Mechanic, string> = {
-  weapon: "weapon hits", pet: "pet hits", shield: "Shield ram (damage per own Shield)", count: "count damage (per item in the backpack)",
-  debuff: "debuff damage (per enemy debuff)", direct: "other item damage", burn: "Burn", toxin: "Toxin", spikes: "Spikes",
+  weapon: "weapon hits",
+  pet: "pet hits",
+  shield: "Shield ram (damage per own Shield)",
+  count: "count damage (per item in the backpack)",
+  debuff: "debuff damage (per enemy debuff)",
+  direct: "other item damage",
+  burn: "Burn",
+  toxin: "Toxin",
+  spikes: "Spikes",
 };
 /** the mechanic an item's damage counts as */
 export function mechanicOf(def: ItemDef): Mechanic {
@@ -36,16 +43,28 @@ export interface SeatStat {
   /** "<hero>/<path>", "" path = open bot */
   key: string;
   /** fights won / fought, all rounds and from the late round on */
-  w: number; n: number; lw: number; ln: number;
+  w: number;
+  n: number;
+  lw: number;
+  ln: number;
   /** late rounds: damage by source, healed+shielded in hero health, fights, seconds */
-  dmg: Record<Source, number>; kept: number; fights: number; secs: number;
+  dmg: Record<Source, number>;
+  kept: number;
+  fights: number;
+  secs: number;
   /** share of the final build's item cost on the path (null for open bots) */
   commit: number | null;
   /** run wins and whether lives were left, by the real rules */
-  wins: number; alive: boolean;
+  wins: number;
+  alive: boolean;
   /** late rounds, path profile: damage by mechanic; damage of the single best item, of path items, from the third phase on;
    *  items that dealt damage (summed over fights), weapon attacks, fight seconds */
-  mech: Record<Mechanic, number>; top: number; onPath: number; lateDmg: number; dealers: number; attacks: number;
+  mech: Record<Mechanic, number>;
+  top: number;
+  onPath: number;
+  lateDmg: number;
+  dealers: number;
+  attacks: number;
 }
 
 /** first round of the last third of the run */
@@ -65,15 +84,39 @@ export interface FightRec {
   /** the fight reached the Supernova */
   nova: boolean;
   /** attacker: maximum health, healed + shielded, damage by source (order of SOURCES), per item, from the third phase on, weapon attacks */
-  hp: number; kept: number; dmg: number[]; items: number[]; late: number; attacks: number;
+  hp: number;
+  kept: number;
+  dmg: number[];
+  items: number[];
+  late: number;
+  attacks: number;
 }
 export function recOf(res: BattleResult): FightRec {
   const st = res.stats[0];
-  return { w: res.winner === 0 ? 1 : 0, secs: res.seconds, nova: res.supernova, hp: res.maxHp[0], kept: st.healed + st.shielded, dmg: SOURCES.map((k) => st[k]), items: [...st.itemDamage], late: st.late, attacks: st.attacks };
+  return {
+    w: res.winner === 0 ? 1 : 0,
+    secs: res.seconds,
+    nova: res.supernova,
+    hp: res.maxHp[0],
+    kept: st.healed + st.shielded,
+    dmg: SOURCES.map((k) => st[k]),
+    items: [...st.itemDamage],
+    late: st.late,
+    attacks: st.attacks,
+  };
 }
 /** A bot of a played lobby: its hero, path and build per round (index 0 = round 1). */
-export interface LobbySeat { hero: string; path: string; builds: Build[] }
-export interface LobbyFight { round: number; a: number; b: number; rec: FightRec }
+export interface LobbySeat {
+  hero: string;
+  path: string;
+  builds: Build[];
+}
+export interface LobbyFight {
+  round: number;
+  a: number;
+  b: number;
+  rec: FightRec;
+}
 
 /** One SeatStat per bot from the fights of a lobby (attacker's results; mirror fights do not count for the shares). */
 export function seatStats(data: GameData, seats: readonly LobbySeat[], fights: readonly LobbyFight[]): SeatStat[] {
@@ -85,20 +128,48 @@ export function seatStats(data: GameData, seats: readonly LobbySeat[], fights: r
     const last = s.builds[s.builds.length - 1]!;
     const all = last.items.reduce((x, p) => x + cost(p.item), 0);
     const commit = path ? last.items.filter((p) => onPath(data.items.get(p.item)!, path)).reduce((x, p) => x + cost(p.item), 0) / Math.max(1, all) : null;
-    return { key: `${s.hero}/${s.path}`, w: 0, n: 0, lw: 0, ln: 0, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit, wins: 0, alive: false, mech: emptyMech(), top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0 };
+    return {
+      key: `${s.hero}/${s.path}`,
+      w: 0,
+      n: 0,
+      lw: 0,
+      ln: 0,
+      dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 },
+      kept: 0,
+      fights: 0,
+      secs: 0,
+      commit,
+      wins: 0,
+      alive: false,
+      mech: emptyMech(),
+      top: 0,
+      onPath: 0,
+      lateDmg: 0,
+      dealers: 0,
+      attacks: 0,
+    };
   });
   for (const f of fights) {
-    const a = seats[f.a]!, b = seats[f.b]!;
+    const a = seats[f.a]!,
+      b = seats[f.b]!;
     const g = out[f.a]!;
     // the run by the real rules: wins until the lives are gone (fights are listed in round order)
-    if (lives[f.a]! > 0) { if (f.rec.w) g.wins++; else lives[f.a]!--; }
+    if (lives[f.a]! > 0) {
+      if (f.rec.w) g.wins++;
+      else lives[f.a]!--;
+    }
     if (a.hero === b.hero) continue;
-    g.n++; g.w += f.rec.w;
+    g.n++;
+    g.w += f.rec.w;
     if (f.round < late) continue;
-    g.ln++; g.lw += f.rec.w;
-    SOURCES.forEach((k, i) => { g.dmg[k] += f.rec.dmg[i]!; });
+    g.ln++;
+    g.lw += f.rec.w;
+    SOURCES.forEach((k, i) => {
+      g.dmg[k] += f.rec.dmg[i]!;
+    });
     g.kept += f.rec.kept / f.rec.hp;
-    g.fights++; g.secs += f.rec.secs;
+    g.fights++;
+    g.secs += f.rec.secs;
     // path profile: which mechanic and which items did the damage
     const build = a.builds[f.round - 1]!;
     const path = data.heroes.get(a.hero)!.paths.find((p) => p.id === a.path);
@@ -108,35 +179,65 @@ export function seatStats(data: GameData, seats: readonly LobbySeat[], fights: r
       const def = data.items.get(build.items[k]!.item)!;
       g.mech[mechanicOf(def)] += d;
       if (path && onPath(def, path)) g.onPath += d;
-      top = Math.max(top, d); g.dealers++;
+      top = Math.max(top, d);
+      g.dealers++;
     });
-    g.mech.burn += f.rec.dmg[2]!; g.mech.toxin += f.rec.dmg[3]!; g.mech.spikes += f.rec.dmg[4]!;
-    g.top += top; g.lateDmg += f.rec.late; g.attacks += f.rec.attacks;
+    g.mech.burn += f.rec.dmg[2]!;
+    g.mech.toxin += f.rec.dmg[3]!;
+    g.mech.spikes += f.rec.dmg[4]!;
+    g.top += top;
+    g.lateDmg += f.rec.late;
+    g.attacks += f.rec.attacks;
   }
-  out.forEach((g, i) => { g.alive = lives[i]! > 0; });
+  out.forEach((g, i) => {
+    g.alive = lives[i]! > 0;
+  });
   return out;
 }
 
 /** One lobby of the paths measurement. Lobby i of seed s is the same lobby wherever it is played. */
 export function measurePathLobby(data: GameData, seed: number, i: number): SeatStat[] {
   const l = playLobby(data, seed * 100003 + i, { path: (s) => pathOfSeat(data, s), immortal: true });
-  return seatStats(data, l.seats.map((s) => ({ hero: s.bot.hero, path: s.bot.path, builds: s.builds })), l.fights.map((f) => ({ round: f.round, a: f.a, b: f.b, rec: recOf(f.res) })));
+  return seatStats(
+    data,
+    l.seats.map((s) => ({ hero: s.bot.hero, path: s.bot.path, builds: s.builds })),
+    l.fights.map((f) => ({ round: f.round, a: f.a, b: f.b, rec: recOf(f.res) })),
+  );
 }
 
 /** a share with its standard error and the share in every block of lobbies */
-export interface Measured { p: number; se: number; blocks: number[] }
+export interface Measured {
+  p: number;
+  se: number;
+  blocks: number[];
+}
 export interface PathGroup {
   key: string;
-  all: Measured; late: Measured;
-  dmg: Record<Source, number>; kept: number; fights: number; secs: number;
-  commit: number[]; wins: number[]; alive: number; seats: number;
-  mech: Record<Mechanic, number>; top: number; onPath: number; lateDmg: number; dealers: number; attacks: number;
+  all: Measured;
+  late: Measured;
+  dmg: Record<Source, number>;
+  kept: number;
+  fights: number;
+  secs: number;
+  commit: number[];
+  wins: number[];
+  alive: number;
+  seats: number;
+  mech: Record<Mechanic, number>;
+  top: number;
+  onPath: number;
+  lateDmg: number;
+  dealers: number;
+  attacks: number;
 }
 
 /** how many blocks of lobbies the standard error uses */
 export const blockCount = (lobbies: number) => (lobbies >= 30 ? 10 : Math.max(2, Math.floor(lobbies / 3)));
 
-const sd = (xs: readonly number[]) => { const m = xs.reduce((a, b) => a + b, 0) / xs.length; return Math.sqrt(xs.reduce((s, x) => s + (x - m) ** 2, 0) / Math.max(1, xs.length - 1)); };
+const sd = (xs: readonly number[]) => {
+  const m = xs.reduce((a, b) => a + b, 0) / xs.length;
+  return Math.sqrt(xs.reduce((s, x) => s + (x - m) ** 2, 0) / Math.max(1, xs.length - 1));
+};
 /** standard error of the mean of block values */
 export const blockSe = (blocks: readonly number[]) => (blocks.length > 1 ? sd(blocks) / Math.sqrt(blocks.length) : NaN);
 
@@ -149,7 +250,29 @@ export function aggregatePaths(lobbies: readonly SeatStat[][]): Map<string, Path
   const groups = new Map<string, PathGroup & { bw: [number, number, number, number][] }>();
   const get = (key: string) => {
     let g = groups.get(key);
-    if (!g) { g = { key, all: { p: 0, se: 0, blocks: [] }, late: { p: 0, se: 0, blocks: [] }, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit: [], wins: [], alive: 0, seats: 0, mech: emptyMech(), top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0, bw: Array.from({ length: K }, (): [number, number, number, number] => [0, 0, 0, 0]) }; groups.set(key, g); }
+    if (!g) {
+      g = {
+        key,
+        all: { p: 0, se: 0, blocks: [] },
+        late: { p: 0, se: 0, blocks: [] },
+        dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 },
+        kept: 0,
+        fights: 0,
+        secs: 0,
+        commit: [],
+        wins: [],
+        alive: 0,
+        seats: 0,
+        mech: emptyMech(),
+        top: 0,
+        onPath: 0,
+        lateDmg: 0,
+        dealers: 0,
+        attacks: 0,
+        bw: Array.from({ length: K }, (): [number, number, number, number] => [0, 0, 0, 0]),
+      };
+      groups.set(key, g);
+    }
     return g;
   };
   lobbies.forEach((seats, i) => {
@@ -158,23 +281,36 @@ export function aggregatePaths(lobbies: readonly SeatStat[][]): Map<string, Path
       for (const key of [s.key, `${s.key.split("/")[0]}/*`]) {
         const g = get(key);
         const bw = g.bw[b]!;
-        bw[0] += s.w; bw[1] += s.n; bw[2] += s.lw; bw[3] += s.ln;
+        bw[0] += s.w;
+        bw[1] += s.n;
+        bw[2] += s.lw;
+        bw[3] += s.ln;
         for (const k of SOURCES) g.dmg[k] += s.dmg[k];
-        g.kept += s.kept; g.fights += s.fights; g.secs += s.secs;
+        g.kept += s.kept;
+        g.fights += s.fights;
+        g.secs += s.secs;
         for (const m of MECHANICS) g.mech[m] += s.mech[m];
-        g.top += s.top; g.onPath += s.onPath; g.lateDmg += s.lateDmg; g.dealers += s.dealers; g.attacks += s.attacks;
+        g.top += s.top;
+        g.onPath += s.onPath;
+        g.lateDmg += s.lateDmg;
+        g.dealers += s.dealers;
+        g.attacks += s.attacks;
         if (s.commit !== null) g.commit.push(s.commit);
-        g.wins.push(s.wins); g.alive += s.alive ? 1 : 0; g.seats++;
+        g.wins.push(s.wins);
+        g.alive += s.alive ? 1 : 0;
+        g.seats++;
       }
     }
   });
   for (const g of groups.values()) {
     const m = (wi: number, ni: number): Measured => {
-      const w = g.bw.reduce((x, v) => x + v[wi]!, 0), n = g.bw.reduce((x, v) => x + v[ni]!, 0);
+      const w = g.bw.reduce((x, v) => x + v[wi]!, 0),
+        n = g.bw.reduce((x, v) => x + v[ni]!, 0);
       const blocks = g.bw.map((v) => (v[ni]! ? v[wi]! / v[ni]! : w / Math.max(1, n)));
       return { p: w / Math.max(1, n), se: blockSe(blocks), blocks };
     };
-    g.all = m(0, 1); g.late = m(2, 3);
+    g.all = m(0, 1);
+    g.late = m(2, 3);
   }
   return groups;
 }
@@ -209,29 +345,68 @@ export function commitPays(seats: readonly SeatStat[]): { all: number; late: num
   if (t < 2) return undefined;
   const part = (xs: readonly SeatStat[]) => {
     const sum = (f: (s: SeatStat) => number) => xs.reduce((n, s) => n + f(s), 0);
-    return { all: sum((s) => s.w) / Math.max(1, sum((s) => s.n)), late: sum((s) => s.lw) / Math.max(1, sum((s) => s.ln)), commit: sum((s) => s.commit!) / xs.length };
+    return {
+      all:
+        sum((s) => s.w) /
+        Math.max(
+          1,
+          sum((s) => s.n),
+        ),
+      late:
+        sum((s) => s.lw) /
+        Math.max(
+          1,
+          sum((s) => s.ln),
+        ),
+      commit: sum((s) => s.commit!) / xs.length,
+    };
   };
-  const lo = part(a.slice(0, t)), hi = part(a.slice(a.length - t));
+  const lo = part(a.slice(0, t)),
+    hi = part(a.slice(a.length - t));
   return { all: hi.all - lo.all, late: hi.late - lo.late, low: lo.commit, high: hi.commit };
 }
 
 /** a path's profile from its group: shares of the damage, carry, rhythm */
-export interface Profile { mix: Record<Mechanic, number>; main: Mechanic; carry: number; dealers: number; late: number; attacksPerSec: number; pathDamage: number;
+export interface Profile {
+  mix: Record<Mechanic, number>;
+  main: Mechanic;
+  carry: number;
+  dealers: number;
+  late: number;
+  attacksPerSec: number;
+  pathDamage: number;
   /** healed + shielded per fight, in hero healths */
   kept: number;
   /** damage of one weapon or pet attack */
-  perAttack: number }
+  perAttack: number;
+}
 export function profileOf(g: PathGroup): Profile {
   const total = MECHANICS.reduce((x, m) => x + g.mech[m], 0) || 1;
   const mix = Object.fromEntries(MECHANICS.map((m) => [m, g.mech[m] / total])) as Record<Mechanic, number>;
   const main = [...MECHANICS].sort((a, b) => mix[b] - mix[a])[0]!;
   const f = Math.max(1, g.fights);
-  return { mix, main, carry: g.top / total, dealers: g.dealers / f, late: g.lateDmg / total, attacksPerSec: g.attacks / Math.max(1, g.secs), pathDamage: g.onPath / total, kept: g.kept / f, perAttack: (g.mech.weapon + g.mech.pet) / Math.max(1, g.attacks) };
+  return {
+    mix,
+    main,
+    carry: g.top / total,
+    dealers: g.dealers / f,
+    late: g.lateDmg / total,
+    attacksPerSec: g.attacks / Math.max(1, g.secs),
+    pathDamage: g.onPath / total,
+    kept: g.kept / f,
+    perAttack: (g.mech.weapon + g.mech.pet) / Math.max(1, g.attacks),
+  };
 }
 /** how different two profiles are: 1 - cosine similarity of their damage mix (0 = same, 1 = nothing shared) */
 export function profileDistance(a: Profile, b: Profile): number {
-  let ab = 0, aa = 0, bb = 0;
-  for (const m of MECHANICS) { ab += a.mix[m] * b.mix[m]; aa += a.mix[m] ** 2; bb += b.mix[m] ** 2; }
+  let ab = 0,
+    aa = 0,
+    bb = 0;
+  for (const m of MECHANICS) {
+    ab += a.mix[m] * b.mix[m];
+    aa += a.mix[m] ** 2;
+    bb += b.mix[m] ** 2;
+  }
   return aa && bb ? 1 - ab / Math.sqrt(aa * bb) : 0;
 }
 
@@ -243,12 +418,21 @@ export function profileDistance(a: Profile, b: Profile): number {
 export const STYLE_DIMENSIONS = ["mix", "tempo", "weight", "protection", "late", "carry"] as const;
 export type StyleDimension = (typeof STYLE_DIMENSIONS)[number];
 export const STYLE_TEXT: Record<StyleDimension, string> = {
-  mix: "damage mix", tempo: "attacks per second", weight: "damage per attack", protection: "healed + shielded per fight", late: "damage from phase 3 on", carry: "share of the best item",
+  mix: "damage mix",
+  tempo: "attacks per second",
+  weight: "damage per attack",
+  protection: "healed + shielded per fight",
+  late: "damage from phase 3 on",
+  carry: "share of the best item",
 };
 /** what counts as clearly different: mix distance 0.35; 50 % more attacks; 50 % more damage per attack;
  *  a quarter of the hero's health more healed + shielded; 15 points more late damage; 10 points more on one item */
 export const STYLE_STEP = { mix: 0.35, ratio: 1.5, protection: 0.25, late: 0.15, carry: 0.1 };
-export interface Style { score: number; by: StyleDimension; parts: Record<StyleDimension, number> }
+export interface Style {
+  score: number;
+  by: StyleDimension;
+  parts: Record<StyleDimension, number>;
+}
 /** How differently two paths play: the largest of the scaled dimensions (1 = clearly different in at least one). */
 export function styleDistance(a: Profile, b: Profile): Style {
   const ratio = (x: number, y: number) => (x > 0 && y > 0 ? Math.abs(Math.log(x / y)) / Math.log(STYLE_STEP.ratio) : 0);

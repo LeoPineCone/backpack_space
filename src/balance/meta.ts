@@ -23,7 +23,11 @@ export function metaShares(win: readonly (readonly number[])[], response = RESPO
     const e = u.map((v) => Math.exp(response * (v - top)));
     const z = e.reduce((a, b) => a + b, 0);
     let moved = 0;
-    const next = x.map((v, i) => { const t = 0.95 * v + 0.05 * (e[i]! / z); moved = Math.max(moved, Math.abs(t - v)); return t; });
+    const next = x.map((v, i) => {
+      const t = 0.95 * v + 0.05 * (e[i]! / z);
+      moved = Math.max(moved, Math.abs(t - v));
+      return t;
+    });
     x = next;
     if (moved < 1e-9) break;
   }
@@ -38,7 +42,13 @@ export function cycleShare(win: readonly (readonly number[])[]): number {
   const n = win.length;
   const edge = win.map((row, i) => row.map((w, j) => (i === j ? 0 : (w + 1 - win[j]![i]!) / 2 - 0.5)));
   const s = edge.map((row) => row.reduce((a, b) => a + b, 0) / n);
-  let total = 0, rest = 0;
-  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { if (i === j) continue; total += edge[i]![j]! ** 2; rest += (edge[i]![j]! - (s[i]! - s[j]!)) ** 2; }
+  let total = 0,
+    rest = 0;
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < n; j++) {
+      if (i === j) continue;
+      total += edge[i]![j]! ** 2;
+      rest += (edge[i]![j]! - (s[i]! - s[j]!)) ** 2;
+    }
   return total > 0 ? rest / total : 0;
 }

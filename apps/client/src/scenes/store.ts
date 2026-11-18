@@ -20,8 +20,10 @@ export type Offer = { key: string; reward: Reward } | { key: "premium"; premium:
 
 /** Everything the shop could sell right now, by section. */
 export function offers(game: Game): Record<Section, Offer[]> {
-  const meta = game.meta, p = game.profile;
-  const notOwned = (kind: string) => meta.cosmetics.filter((c) => c.kind === kind && !p.cosmetics.includes(c.id)).map((c): Offer => ({ key: c.id, reward: { cosmetic: c.id } }));
+  const meta = game.meta,
+    p = game.profile;
+  const notOwned = (kind: string) =>
+    meta.cosmetics.filter((c) => c.kind === kind && !p.cosmetics.includes(c.id)).map((c): Offer => ({ key: c.id, reward: { cosmetic: c.id } }));
   const skins = notOwned("skin");
   const heroes = meta.seasons.flatMap((s) => (s.hero && !ownsHero(meta, p, s.hero) ? [{ key: `hero_${s.hero}`, reward: { hero: s.hero } } as Offer] : []));
   const backgrounds = notOwned("grid");
@@ -53,7 +55,11 @@ function price(o: Offer, size: number): Container {
   const c = new Container();
   const money = !("reward" in o);
   const label = txt(t("ui.priceOpen"), size, { color: money ? C.text : C.gold, anchor: [0, 0.5] });
-  if (money) { label.anchor.set(0.5, 0.5); c.addChild(label); return c; }
+  if (money) {
+    label.anchor.set(0.5, 0.5);
+    c.addChild(label);
+    return c;
+  }
   const w = size + 4 + label.width;
   c.addChild(at(icon("credits", size, C.gold), -w / 2 + size / 2, 0), at(label, -w / 2 + size + 4, 0));
   return c;
@@ -63,12 +69,19 @@ function price(o: Offer, size: number): Container {
 export function purchaseOverlay(game: Game, o: Offer): Scene {
   const root = new Container();
   root.addChild(dimmer(() => game.closeOverlay()));
-  const pw = 310, ph = 400;
+  const pw = 310,
+    ph = 400;
   const panel = new Container();
   const bg = box(pw, ph, { fill: C.panel, line: C.gold, lineW: 2, radius: 20 });
   bg.eventMode = "static";
   panel.addChild(bg);
-  panel.addChild(at(roundButton("close", 18, () => game.closeOverlay(), { iconSize: 16 }), pw - 30, 30));
+  panel.addChild(
+    at(
+      roundButton("close", 18, () => game.closeOverlay(), { iconSize: 16 }),
+      pw - 30,
+      30,
+    ),
+  );
   // preview: the real look once there is art; for now the offer's symbol, large
   panel.addChild(at(placeholder(200, 200, "", 20), (pw - 200) / 2, 56));
   const big = offerTile(game, o, 120, () => undefined);
@@ -77,7 +90,13 @@ export function purchaseOverlay(game: Game, o: Offer): Scene {
   panel.addChild(at(big, (pw - 120) / 2, 96));
   panel.addChild(at(txt(t("ui.preview"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), pw / 2, 238));
   panel.addChild(at(price(o, 22), pw / 2, 284));
-  panel.addChild(at(pillButton(t("ui.buy"), pw - 60, 60, () => game.toast(t("toast.purchaseLater"))), 30, ph - 86));
+  panel.addChild(
+    at(
+      pillButton(t("ui.buy"), pw - 60, 60, () => game.toast(t("toast.purchaseLater"))),
+      30,
+      ph - 86,
+    ),
+  );
   root.addChild(at(panel, (W - pw) / 2, (H - ph) / 2));
   return { root };
 }
@@ -86,7 +105,11 @@ export function purchaseOverlay(game: Game, o: Offer): Scene {
 export function storeScene(game: Game, back: () => Scene, focus: Section = "offers"): Scene {
   const root = new Container();
   const all = offers(game);
-  const top = 96, viewH = H - top - 10, size = 96, perRow = 3, gap = (W - 40 - perRow * size) / (perRow - 1);
+  const top = 96,
+    viewH = H - top - 10,
+    size = 96,
+    perRow = 3,
+    gap = (W - 40 - perRow * size) / (perRow - 1);
   const list = new Container();
   let y = 0;
   const marks: Partial<Record<Section, number>> = {};
@@ -101,7 +124,13 @@ export function storeScene(game: Game, back: () => Scene, focus: Section = "offe
       continue;
     }
     items.forEach((o, i) => {
-      list.addChild(at(offerTile(game, o, size, () => game.openOverlay(purchaseOverlay(game, o))), (i % perRow) * (size + gap), y + Math.floor(i / perRow) * (size * 1.4 + 12)));
+      list.addChild(
+        at(
+          offerTile(game, o, size, () => game.openOverlay(purchaseOverlay(game, o))),
+          (i % perRow) * (size + gap),
+          y + Math.floor(i / perRow) * (size * 1.4 + 12),
+        ),
+      );
     });
     y += Math.ceil(items.length / perRow) * (size * 1.4 + 12) + 8;
   }
@@ -116,7 +145,13 @@ export function storeScene(game: Game, back: () => Scene, focus: Section = "offe
   root.addChild(holder);
 
   // header over the list
-  root.addChild(at(roundButton("back", 22, () => game.show(back()), { iconSize: 20 }), 36, 36));
+  root.addChild(
+    at(
+      roundButton("back", 22, () => game.show(back()), { iconSize: 20 }),
+      36,
+      36,
+    ),
+  );
   root.addChild(at(txt(upper(t("ui.shop")), 24, { spacing: 2, anchor: [0, 0.5] }), 72, 36));
   const cr = hudPill("credits", game.profile.credits, C.line, C.gold, 40);
   root.addChild(at(cr, W - 14 - cr.width, 16));
@@ -124,10 +159,20 @@ export function storeScene(game: Game, back: () => Scene, focus: Section = "offe
   let grab: number | null = null;
   root.eventMode = "static";
   root.hitArea = new Rectangle(0, 0, W, H);
-  root.on("pointerdown", (e) => { grab = root.toLocal(e.global).y - list.y; });
-  root.on("pointermove", (e) => { if (grab !== null) list.y = Math.max(minY, Math.min(top, root.toLocal(e.global).y - grab)); });
-  root.on("pointerup", () => { grab = null; });
-  root.on("pointerupoutside", () => { grab = null; });
-  root.on("wheel", (e) => { list.y = Math.max(minY, Math.min(top, list.y - e.deltaY)); });
+  root.on("pointerdown", (e) => {
+    grab = root.toLocal(e.global).y - list.y;
+  });
+  root.on("pointermove", (e) => {
+    if (grab !== null) list.y = Math.max(minY, Math.min(top, root.toLocal(e.global).y - grab));
+  });
+  root.on("pointerup", () => {
+    grab = null;
+  });
+  root.on("pointerupoutside", () => {
+    grab = null;
+  });
+  root.on("wheel", (e) => {
+    list.y = Math.max(minY, Math.min(top, list.y - e.deltaY));
+  });
   return { root };
 }

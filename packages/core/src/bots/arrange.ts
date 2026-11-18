@@ -5,9 +5,13 @@ import type { Rng } from "../rng.js";
 import { pendingMerges } from "../run.js";
 import type { Effect, Placement, Recipe } from "../schema.js";
 
-export interface Arranged { items: Placement[]; left: string[] }
+export interface Arranged {
+  items: Placement[];
+  left: string[];
+}
 
-const matches = (def: ItemDef, tag: string | undefined) => tag === undefined || tag === "any" || (tag === "melee" || tag === "ranged" ? def.range === tag : (def.tags as string[]).includes(tag));
+const matches = (def: ItemDef, tag: string | undefined) =>
+  tag === undefined || tag === "any" || (tag === "melee" || tag === "ranged" ? def.range === tag : (def.tags as string[]).includes(tag));
 
 /** Worth of one star link from `src` (through effect e) to `target`. */
 function linkValue(e: Effect, target: ItemDef): number {
@@ -29,7 +33,10 @@ function linkValue(e: Effect, target: ItemDef): number {
 export function layoutScore(data: GameData, bags: readonly Placement[], items: readonly Placement[], board?: Board): number {
   const { w, h } = data.rules.grid;
   let b = board;
-  if (!b) { b = emptyBoard(w, h, bags, data.shape); items.forEach((p, i) => stamp(b!, data.shape(p.item, p.rot), p.x, p.y, i)); }
+  if (!b) {
+    b = emptyBoard(w, h, bags, data.shape);
+    items.forEach((p, i) => stamp(b!, data.shape(p.item, p.rot), p.x, p.y, i));
+  }
   let score = 0;
   items.forEach((p, i) => {
     const def = data.items.get(p.item)!;
@@ -50,14 +57,23 @@ function pack(data: GameData, bags: readonly Placement[], ids: readonly string[]
   const { w, h } = data.rules.grid;
   const b = emptyBoard(w, h, bags, data.shape);
   const order = rng.shuffle([...ids]).sort((x, y) => data.items.get(y)!.size - data.items.get(x)!.size);
-  const items: Placement[] = [], left: string[] = [];
+  const items: Placement[] = [],
+    left: string[] = [];
   for (const id of order) {
     const options: Placement[] = [];
     const rots = rng.shuffle([0, 1, 2, 3]);
-    search: for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) for (const rot of rots) {
-      if (fits(b, data.shape(id, rot), x, y)) { options.push({ item: id, x, y, rot }); if (scan) break search; }
+    search: for (let y = 0; y < h; y++)
+      for (let x = 0; x < w; x++)
+        for (const rot of rots) {
+          if (fits(b, data.shape(id, rot), x, y)) {
+            options.push({ item: id, x, y, rot });
+            if (scan) break search;
+          }
+        }
+    if (!options.length) {
+      left.push(id);
+      continue;
     }
-    if (!options.length) { left.push(id); continue; }
     const p = scan ? options[0]! : rng.pick(options);
     stamp(b, data.shape(id, p.rot), p.x, p.y, items.length);
     items.push(p);
@@ -85,7 +101,11 @@ export function arrange(data: GameData, bags: readonly Placement[], ids: readonl
   const items = best!.items.map((p) => ({ ...p }));
   const base = emptyBoard(w, h, bags, data.shape);
   const blank = (): Board => ({ w, h, occ: base.occ.slice(), bag: base.bag });
-  const rebuild = () => { const b = blank(); items.forEach((p, i) => stamp(b, data.shape(p.item, p.rot), p.x, p.y, i)); return b; };
+  const rebuild = () => {
+    const b = blank();
+    items.forEach((p, i) => stamp(b, data.shape(p.item, p.rot), p.x, p.y, i));
+    return b;
+  };
   const recipes = opts.recipes ?? [];
   const total = () => layoutScore(data, bags, items, rebuild()) + (recipes.length ? MERGE_SCORE * pendingMerges(data, bags, items, recipes).length : 0);
   let score = total();
@@ -96,29 +116,44 @@ export function arrange(data: GameData, bags: readonly Placement[], ids: readonl
     if (rng.next() < 0.5) {
       // move one item somewhere else
       const b = blank();
-      items.forEach((p, k) => { if (k !== i) stamp(b, data.shape(p.item, p.rot), p.x, p.y, k); });
-      const rot = rng.int(4), s = data.shape(items[i]!.item, rot);
-      const x = rng.int(w - s.w + 1), y = rng.int(h - s.h + 1);
+      items.forEach((p, k) => {
+        if (k !== i) stamp(b, data.shape(p.item, p.rot), p.x, p.y, k);
+      });
+      const rot = rng.int(4),
+        s = data.shape(items[i]!.item, rot);
+      const x = rng.int(w - s.w + 1),
+        y = rng.int(h - s.h + 1);
       if (x < 0 || y < 0 || !fits(b, s, x, y)) continue;
       items[i] = { item: items[i]!.item, x, y, rot };
     } else {
       // swap two items
-      let j = rng.int(items.length - 1); if (j >= i) j++;
+      let j = rng.int(items.length - 1);
+      if (j >= i) j++;
       const b = blank();
-      items.forEach((p, k) => { if (k !== i && k !== j) stamp(b, data.shape(p.item, p.rot), p.x, p.y, k); });
-      const a = items[i]!, c = items[j]!;
+      items.forEach((p, k) => {
+        if (k !== i && k !== j) stamp(b, data.shape(p.item, p.rot), p.x, p.y, k);
+      });
+      const a = items[i]!,
+        c = items[j]!;
       let done = false;
       for (const ra of rng.shuffle([0, 1, 2, 3])) {
         if (!fits(b, data.shape(a.item, ra), c.x, c.y)) continue;
         const b2: Board = { w, h, occ: b.occ.slice(), bag: b.bag };
         stamp(b2, data.shape(a.item, ra), c.x, c.y, i);
-        for (const rc of [0, 1, 2, 3]) if (fits(b2, data.shape(c.item, rc), a.x, a.y)) { items[i] = { item: a.item, x: c.x, y: c.y, rot: ra }; items[j] = { item: c.item, x: a.x, y: a.y, rot: rc }; done = true; break; }
+        for (const rc of [0, 1, 2, 3])
+          if (fits(b2, data.shape(c.item, rc), a.x, a.y)) {
+            items[i] = { item: a.item, x: c.x, y: c.y, rot: ra };
+            items[j] = { item: c.item, x: a.x, y: a.y, rot: rc };
+            done = true;
+            break;
+          }
         if (done) break;
       }
       if (!done) continue;
     }
     const s2 = total();
-    if (s2 >= score) score = s2; else old.forEach((p, k) => (items[k] = p));
+    if (s2 >= score) score = s2;
+    else old.forEach((p, k) => (items[k] = p));
   }
   return { items, left: best!.left };
 }
@@ -126,7 +161,11 @@ export function arrange(data: GameData, bags: readonly Placement[], ids: readonl
 /** Same items, random layout (for measuring what placement is worth). */
 export function shuffleLayout(data: GameData, bags: readonly Placement[], ids: readonly string[], rng: Rng): Arranged {
   let best: Arranged | null = null;
-  for (let t = 0; t < 6; t++) { const a = pack(data, bags, ids, rng, false); if (!best || a.left.length < best.left.length) best = a; if (!best.left.length) break; }
+  for (let t = 0; t < 6; t++) {
+    const a = pack(data, bags, ids, rng, false);
+    if (!best || a.left.length < best.left.length) best = a;
+    if (!best.left.length) break;
+  }
   return best!;
 }
 
@@ -134,23 +173,37 @@ export function shuffleLayout(data: GameData, bags: readonly Placement[], ids: r
 export function placeBag(data: GameData, bags: readonly Placement[], id: string): Placement | null {
   const { w, h } = data.rules.grid;
   const b = emptyBoard(w, h, bags, data.shape);
-  let best: Placement | null = null, bestScore = -Infinity;
+  let best: Placement | null = null,
+    bestScore = -Infinity;
   for (let rot = 0; rot < 4; rot++) {
     const s = data.shape(id, rot);
-    for (let y = 0; y <= h - s.h; y++) for (let x = 0; x <= w - s.w; x++) {
-      if (!bagFits(b, s, x, y)) continue;
-      let touch = 0, dist = 0;
-      for (const [cx, cy] of s.cells) {
-        const px = x + cx, py = y + cy;
-        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
-          const qx = px + dx, qy = py + dy;
-          if (qx < 0 || qy < 0 || qx >= w || qy >= h) touch += 0.5; else if (b.bag[qy * w + qx] !== -1) touch += 1;
+    for (let y = 0; y <= h - s.h; y++)
+      for (let x = 0; x <= w - s.w; x++) {
+        if (!bagFits(b, s, x, y)) continue;
+        let touch = 0,
+          dist = 0;
+        for (const [cx, cy] of s.cells) {
+          const px = x + cx,
+            py = y + cy;
+          for (const [dx, dy] of [
+            [1, 0],
+            [-1, 0],
+            [0, 1],
+            [0, -1],
+          ] as const) {
+            const qx = px + dx,
+              qy = py + dy;
+            if (qx < 0 || qy < 0 || qx >= w || qy >= h) touch += 0.5;
+            else if (b.bag[qy * w + qx] !== -1) touch += 1;
+          }
+          dist += Math.abs(px - (w - 1) / 2) + Math.abs(py - (h - 1) / 2);
         }
-        dist += Math.abs(px - (w - 1) / 2) + Math.abs(py - (h - 1) / 2);
+        const score = touch - (dist / s.cells.length) * 0.3;
+        if (score > bestScore) {
+          bestScore = score;
+          best = { item: id, x, y, rot };
+        }
       }
-      const score = touch - (dist / s.cells.length) * 0.3;
-      if (score > bestScore) { bestScore = score; best = { item: id, x, y, rot }; }
-    }
   }
   return best;
 }

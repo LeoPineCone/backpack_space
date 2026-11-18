@@ -40,7 +40,9 @@ function candidates() {
   return list.filter(Boolean);
 }
 
-let found = candidates().map((home) => ({ home, major: majorVersion(home) })).find((c) => c.major >= MIN);
+let found = candidates()
+  .map((home) => ({ home, major: majorVersion(home) }))
+  .find((c) => c.major >= MIN);
 // no JAVA_HOME at all: Gradle uses the `java` on PATH, which may be fine
 if (!found && !process.env.JAVA_HOME) {
   const major = versionOf("java");
@@ -48,7 +50,9 @@ if (!found && !process.env.JAVA_HOME) {
 }
 
 if (!found) {
-  const current = process.env.JAVA_HOME ? `JAVA_HOME is ${process.env.JAVA_HOME} (Java ${majorVersion(process.env.JAVA_HOME) || "?"}).` : "JAVA_HOME is not set.";
+  const current = process.env.JAVA_HOME
+    ? `JAVA_HOME is ${process.env.JAVA_HOME} (Java ${majorVersion(process.env.JAVA_HOME) || "?"}).`
+    : "JAVA_HOME is not set.";
   console.error(
     [
       "",
@@ -69,6 +73,8 @@ if (!cmd) {
   console.error("usage: node scripts/with-java21.mjs <command> [args...]");
   process.exit(1);
 }
-const env = !found.home ? process.env : { ...process.env, JAVA_HOME: found.home, PATH: `${join(found.home, "bin")}${process.platform === "win32" ? ";" : ":"}${process.env.PATH ?? ""}` };
+const env = !found.home
+  ? process.env
+  : { ...process.env, JAVA_HOME: found.home, PATH: `${join(found.home, "bin")}${process.platform === "win32" ? ";" : ":"}${process.env.PATH ?? ""}` };
 const r = spawnSync(cmd, args, { stdio: "inherit", env, shell: process.platform === "win32" });
 process.exit(r.status ?? 1);

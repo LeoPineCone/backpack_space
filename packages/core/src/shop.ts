@@ -3,19 +3,26 @@ import type { GameData, ItemDef, ShopRarity } from "./gamedata.js";
 import type { Rng } from "./rng.js";
 import { SHOP_RARITIES } from "./schema.js";
 
-export interface Offer { item: string; price: number; sale: boolean; /** kept through rerolls and into the next round */ frozen?: boolean }
+export interface Offer {
+  item: string;
+  price: number;
+  sale: boolean;
+  /** kept through rerolls and into the next round */ frozen?: boolean;
+}
 
 /** Shop items that would complete or continue a recipe with something the player owns, and that this round can already offer. */
 export function recipePartners(data: GameData, hero: string, round: number, owned: readonly string[]): ItemDef[] {
   const odds = data.rules.shop.rarityOdds[Math.min(round, data.rules.rounds) - 1]!;
   const out = new Set<ItemDef>();
-  for (const id of new Set(owned)) for (const r of data.recipesWith.get(id) ?? []) {
-    const rest = [...r.in]; rest.splice(rest.indexOf(id), 1);
-    for (const other of rest) {
-      const def = data.items.get(other)!;
-      if (def.inShop && !def.isBag && (!def.hero || def.hero === hero) && odds[def.rarity as ShopRarity] > 0) out.add(def);
+  for (const id of new Set(owned))
+    for (const r of data.recipesWith.get(id) ?? []) {
+      const rest = [...r.in];
+      rest.splice(rest.indexOf(id), 1);
+      for (const other of rest) {
+        const def = data.items.get(other)!;
+        if (def.inShop && !def.isBag && (!def.hero || def.hero === hero) && odds[def.rarity as ShopRarity] > 0) out.add(def);
+      }
     }
-  }
   return [...out];
 }
 
@@ -28,7 +35,10 @@ export function tagShares(data: GameData, owned: readonly string[]): Map<string,
 }
 /** The path whose anchor (a hero item with a path, picked after round 2) the player owns, or "". */
 export function anchorPath(data: GameData, owned: readonly string[]): string {
-  for (const id of owned) { const d = data.items.get(id); if (d?.rarity === "artifact" && d.hero && d.path) return d.path; }
+  for (const id of owned) {
+    const d = data.items.get(id);
+    if (d?.rarity === "artifact" && d.hero && d.path) return d.path;
+  }
   return "";
 }
 /** How often an item is offered compared with the others of its list: its own weight, raised by what the player already owns
@@ -41,7 +51,10 @@ export function offerWeight(data: GameData, def: ItemDef, shares: Map<string, nu
 function pickWeighted(data: GameData, list: readonly ItemDef[], shares: Map<string, number>, rng: Rng, anchor = ""): ItemDef {
   const ws = list.map((d) => offerWeight(data, d, shares, anchor));
   let roll = rng.next() * ws.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < list.length; i++) { roll -= ws[i]!; if (roll < 0) return list[i]!; }
+  for (let i = 0; i < list.length; i++) {
+    roll -= ws[i]!;
+    if (roll < 0) return list[i]!;
+  }
   return list[list.length - 1]!;
 }
 
@@ -51,7 +64,13 @@ export function rollOffer(data: GameData, hero: string, round: number, rng: Rng,
   const odds = shop.rarityOdds[Math.min(round, data.rules.rounds) - 1]!;
   let roll = rng.next() * SHOP_RARITIES.reduce((s, r) => s + odds[r], 0);
   let rarity: ShopRarity = "common";
-  for (const r of SHOP_RARITIES) { if (roll < odds[r]) { rarity = r; break; } roll -= odds[r]; }
+  for (const r of SHOP_RARITIES) {
+    if (roll < odds[r]) {
+      rarity = r;
+      break;
+    }
+    roll -= odds[r];
+  }
   const wantHero = rng.next() * 100 < shop.heroOfferPct;
   let list: ItemDef[] = [];
   const wantBag = rng.next() * 100 < shop.bagOfferPct;
@@ -72,12 +91,22 @@ export function rollOffer(data: GameData, hero: string, round: number, rng: Rng,
 }
 
 /** A full roll of the shop. Frozen offers of `keep` stay in their slots; at most `shop.maxBags` bags are among the offers. */
-export function rollOffers(data: GameData, hero: string, round: number, rng: Rng, owned: readonly string[] = [], keep: readonly (Offer | null)[] = []): Offer[] {
+export function rollOffers(
+  data: GameData,
+  hero: string,
+  round: number,
+  rng: Rng,
+  owned: readonly string[] = [],
+  keep: readonly (Offer | null)[] = [],
+): Offer[] {
   const out: Offer[] = [];
   let bags = keep.filter((o) => o?.frozen && data.items.get(o.item)!.isBag).length;
   for (let i = 0; i < data.rules.shop.slots; i++) {
     const kept = keep[i];
-    if (kept?.frozen) { out.push(kept); continue; }
+    if (kept?.frozen) {
+      out.push(kept);
+      continue;
+    }
     const o = rollOffer(data, hero, round, rng, owned, bags >= data.rules.shop.maxBags);
     if (data.items.get(o.item)!.isBag) bags++;
     out.push(o);

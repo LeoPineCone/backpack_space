@@ -16,7 +16,9 @@ mkdirSync(dir, { recursive: true });
 for (const name of REPORTS) {
   const t0 = Date.now();
   const out = join(dir, `${name}.txt`);
-  const res = spawnSync(process.execPath, ["--import", "tsx", join("src", "reports", `${name}.ts`), ...args, "--out", out], { stdio: ["ignore", "ignore", "inherit"] });
+  const res = spawnSync(process.execPath, ["--import", "tsx", join("src", "reports", `${name}.ts`), ...args, "--out", out], {
+    stdio: ["ignore", "ignore", "inherit"],
+  });
   console.log(`${res.status === 0 ? "✓" : "✗"} ${name.padEnd(10)} ${((Date.now() - t0) / 1000).toFixed(0).padStart(5)} s  ${out}`);
 }
 console.log(`All reports: ${join(dir, "index.html")}`);

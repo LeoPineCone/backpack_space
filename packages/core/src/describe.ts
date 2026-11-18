@@ -44,7 +44,17 @@ function parts(e: Effect, data: GameData, tr: Translator): Part {
   let perText = "";
   if (per) {
     const div = per.div && per.div !== 1 ? per.div : undefined;
-    const key = per.stars ? "rules.per.stars" : per.ship ? "rules.per.ship" : per.cells ? "rules.per.cells" : per.buff ? "rules.per.buff" : per.debuff ? "rules.per.debuff" : undefined;
+    const key = per.stars
+      ? "rules.per.stars"
+      : per.ship
+        ? "rules.per.ship"
+        : per.cells
+          ? "rules.per.cells"
+          : per.buff
+            ? "rules.per.buff"
+            : per.debuff
+              ? "rules.per.debuff"
+              : undefined;
     if (key) {
       perText = ` ${tr.t(div ? `${key}.n` : key, { n: div ?? 1, tag: per.stars ?? per.ship ?? per.cells ?? "any", status: STATUS(per.buff ?? per.debuff ?? "") })}`;
       if (per.max) perText += ` ${tr.t("rules.per.max", { n: per.max })}`;
@@ -57,7 +67,14 @@ function parts(e: Effect, data: GameData, tr: Translator): Part {
   const condText = cond.length ? ` (${cond.join(tr.t("list.sep"))})` : "";
   if (e.on === "passive") {
     const tag = e.tag ?? "any";
-    const who = e.to === "self" ? tr.t("rules.who.self") : e.to === "hero" ? tr.t("rules.who.hero") : e.to === "stars" ? tr.t("rules.who.stars", { tag }) : tr.t("rules.who.ship", { tag });
+    const who =
+      e.to === "self"
+        ? tr.t("rules.who.self")
+        : e.to === "hero"
+          ? tr.t("rules.who.hero")
+          : e.to === "stars"
+            ? tr.t("rules.who.stars", { tag })
+            : tr.t("rules.who.ship", { tag });
     return { when: who, action: modText(e.mod!, tr), perText, condText };
   }
   const n = e.n ?? 0;
@@ -66,10 +83,24 @@ function parts(e: Effect, data: GameData, tr: Translator): Part {
   const object = status ? tr.t("rules.amount", { n, status: STATUS(status) }) : undefined;
   const action = verb ? tr.t(verb, { what: object! }) : tr.t(`rules.do.${e.do ?? "damage"}`, { n });
   const tag = e.tag ?? "any";
-  const when = e.on === "start" ? tr.t("rules.when.start") : e.on === "use" ? tr.t("rules.when.use") : e.on === "hit" ? tr.t("rules.when.hit") : e.on === "attacked" ? tr.t("rules.when.attacked")
-    : e.on === "lowHp" ? tr.t("rules.when.lowHp", { n: data.rules.battle.lowHpPct })
-    : e.on === "phase" ? (e.phase ? tr.t("rules.when.phase", { phase: phaseName(e.phase, tr) }) : tr.t("rules.when.everyPhase"))
-    : e.on === "starUse" ? tr.t("rules.when.starUse", { tag }) : tr.t("rules.when.shipUse", { tag });
+  const when =
+    e.on === "start"
+      ? tr.t("rules.when.start")
+      : e.on === "use"
+        ? tr.t("rules.when.use")
+        : e.on === "hit"
+          ? tr.t("rules.when.hit")
+          : e.on === "attacked"
+            ? tr.t("rules.when.attacked")
+            : e.on === "lowHp"
+              ? tr.t("rules.when.lowHp", { n: data.rules.battle.lowHpPct })
+              : e.on === "phase"
+                ? e.phase
+                  ? tr.t("rules.when.phase", { phase: phaseName(e.phase, tr) })
+                  : tr.t("rules.when.everyPhase")
+                : e.on === "starUse"
+                  ? tr.t("rules.when.starUse", { tag })
+                  : tr.t("rules.when.shipUse", { tag });
   const base = verb ? `${verb}:${status}` : e.do;
   return { when, action, object, verb, perText, condText, base, n };
 }
@@ -92,7 +123,10 @@ function describeEffects(effects: readonly Effect[], data: GameData, tr: Transla
     const when = e.on === "use" && useLabel ? useLabel : p.when;
     const key = `${when}|${p.condText}`;
     let g = groups.find((x) => x.key === key);
-    if (!g) { g = { key, when, condText: p.condText, actions: [] }; groups.push(g); }
+    if (!g) {
+      g = { key, when, condText: p.condText, actions: [] };
+      groups.push(g);
+    }
     const prev = g.last;
     if (prev && prev.base && prev.base === p.base && !prev.perText && p.perText) {
       // "heal 8, +3 per starred food" instead of "heal 8 and heal 3 per starred food"
@@ -111,9 +145,11 @@ export function describeItem(it: ItemDef, data: GameData, tr: Translator = engli
   const hasUse = it.effects.some((e) => e.on === "use");
   if (it.damage) {
     lines.push(tr.t("rules.item.damage", { min: it.damage[0], max: it.damage[1], s: it.cooldown ?? 0 }));
-    if (it.range) lines.push(it.energy ? tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy }) : tr.t("rules.item.weaponFree", { range: tr.term(it.range) }));
-  }
-  else if (it.cooldown && !hasUse) lines.push(tr.t("rules.item.activates", { s: it.cooldown }));
+    if (it.range)
+      lines.push(
+        it.energy ? tr.t("rules.item.weapon", { range: tr.term(it.range), n: it.energy }) : tr.t("rules.item.weaponFree", { range: tr.term(it.range) }),
+      );
+  } else if (it.cooldown && !hasUse) lines.push(tr.t("rules.item.activates", { s: it.cooldown }));
   const useLabel = it.cooldown === undefined ? undefined : it.damage ? tr.t("rules.use.attack") : tr.t("rules.use.every", { s: it.cooldown });
   lines.push(...describeEffects(it.effects, data, tr, useLabel));
   return lines;

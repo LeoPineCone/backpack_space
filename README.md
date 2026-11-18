@@ -24,7 +24,9 @@ npm install
 npm run validate     # checks data/*.json and prints the size of the catalogue
 npm run typecheck
 npm test
-npm run check        # all of the above in order, the same as the pull request check
+npm run lint         # ESLint and the Prettier check, one setup for all packages
+npm run format       # format the code with Prettier and fix what ESLint can fix
+npm run check        # validate, typecheck, lint, test in order: the same as the pull request check
 ```
 
 Every pull request and every push to `main` runs `npm run check` on GitHub Actions (`.github/workflows/check.yml`). `main` is protected: merge only when the check is green. The branch protection itself is set by the owner in the GitHub settings (Settings → Branches → require the `check` status). How tests are written: [docs/testing.md](docs/testing.md).

@@ -2,11 +2,28 @@
  * Lobbies of bots playing whole runs against each other. Every round each bot fights the current build of another bot
  * of the same lobby (async PvP: only the attacker's result counts for the attacker).
  */
-import { botBuild, botMerge, botShop, botSpecial, compile, newBot, simulate, type Bot, type BotOpts, type BattleResult, type Build, type CSide, type GameData, Rng } from "@backpack-space/core";
+import {
+  botBuild,
+  botMerge,
+  botShop,
+  botSpecial,
+  compile,
+  newBot,
+  simulate,
+  type Bot,
+  type BotOpts,
+  type BattleResult,
+  type Build,
+  type CSide,
+  type GameData,
+  Rng,
+} from "@backpack-space/core";
 
 /** Measured item ratings every bot uses unless its own options say otherwise (set by the reports from data/sim/ratings.json). */
 let defaultRatings: Record<string, number> = {};
-export function useRatings(r: Record<string, number>): void { defaultRatings = r; }
+export function useRatings(r: Record<string, number>): void {
+  defaultRatings = r;
+}
 export const currentRatings = (): Record<string, number> => defaultRatings;
 
 export interface LobbyOpts {
@@ -23,9 +40,14 @@ export interface LobbyOpts {
   /** called right before a bot gets its free special item after a round (the moment of the pick) */
   onSpecial?: (seat: Seat, afterRound: number) => void;
 }
-export interface Fight { round: number; a: number; b: number; res: BattleResult;
+export interface Fight {
+  round: number;
+  a: number;
+  b: number;
+  res: BattleResult;
   /** the dice of this fight: the same two builds with this seed fight the same fight again */
-  seed: number }
+  seed: number;
+}
 export interface Seat {
   bot: Bot;
   seat: number;
@@ -38,12 +60,15 @@ export interface Seat {
   wins: number;
   livesLeft: number;
 }
-export interface Lobby { seats: Seat[]; fights: Fight[] }
+export interface Lobby {
+  seats: Seat[];
+  fights: Fight[];
+}
 
 export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): Lobby {
   const rng = new Rng(seed);
   const size = opts.size ?? 16;
-  const optOf = (i: number): BotOpts => ({ ratings: defaultRatings, ...(typeof opts.bot === "function" ? opts.bot(i) : opts.bot ?? {}) });
+  const optOf = (i: number): BotOpts => ({ ratings: defaultRatings, ...(typeof opts.bot === "function" ? opts.bot(i) : (opts.bot ?? {})) });
   const seats: Seat[] = Array.from({ length: size }, (_, i) => {
     const hero = opts.hero ? opts.hero(i) : data.heroList[i % data.heroList.length]!.id;
     return { bot: newBot(data, hero, rng, opts.path?.(i)), seat: i, builds: [], won: [], endedAfter: 0, wins: 0, livesLeft: data.rules.lives };
@@ -72,7 +97,8 @@ export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): L
       const won = res.winner === 0;
       s.won.push(won);
       if (s.endedAfter === 0) {
-        if (won) s.wins++; else s.livesLeft--;
+        if (won) s.wins++;
+        else s.livesLeft--;
         if (s.livesLeft <= 0 || round === data.rules.rounds) s.endedAfter = round;
       }
       botMerge(data, s.bot, optOf(s.seat));
@@ -84,7 +110,13 @@ export function playLobby(data: GameData, seed: number, opts: LobbyOpts = {}): L
 }
 
 /** Builds of many immortal lobbies, by round: the field the reports measure against. */
-export function makeField(data: GameData, lobbies: number, seed: number, opts: LobbyOpts = {}, onLobby?: (i: number) => void): { byRound: Build[][]; lobbies: Lobby[] } {
+export function makeField(
+  data: GameData,
+  lobbies: number,
+  seed: number,
+  opts: LobbyOpts = {},
+  onLobby?: (i: number) => void,
+): { byRound: Build[][]; lobbies: Lobby[] } {
   const byRound: Build[][] = Array.from({ length: data.rules.rounds }, () => []);
   const all: Lobby[] = [];
   for (let i = 0; i < lobbies; i++) {

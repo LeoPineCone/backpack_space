@@ -34,7 +34,10 @@ export function rewardTile(game: Game, r: Reward, size: number, on = true): Cont
   const col = on ? C.text : C.dim;
   c.addChild(box(size, size, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 10 }));
   if ("credits" in r) {
-    c.addChild(at(icon("credits", size * 0.42, col), size / 2, size * 0.36), at(txt(r.credits, size * 0.26, { color: col, anchor: [0.5, 0.5] }), size / 2, size * 0.76));
+    c.addChild(
+      at(icon("credits", size * 0.42, col), size / 2, size * 0.36),
+      at(txt(r.credits, size * 0.26, { color: col, anchor: [0.5, 0.5] }), size / 2, size * 0.76),
+    );
   } else if ("hero" in r) {
     c.addChild(at(heroBadge(game.data.heroes.get(r.hero)!.name, size * 0.36, on ? C.cyan : C.dim), size / 2, size / 2));
   } else {
@@ -59,7 +62,10 @@ function stepRow(label: string | number, reached: boolean, tiles: Container[], w
   c.addChild(at(disc(18, { fill: reached ? C.cyan : C.panel, line: reached ? C.cyan : C.line, lineW: 2 }), 22, h / 2));
   c.addChild(at(txt(label, 13, { color: reached ? C.cyanInk : C.dim, anchor: [0.5, 0.5] }), 22, h / 2));
   let x = 56;
-  for (const tl of tiles) { c.addChild(at(tl, x, (h - tl.height) / 2)); x += tl.width + 10; }
+  for (const tl of tiles) {
+    c.addChild(at(tl, x, (h - tl.height) / 2));
+    x += tl.width + 10;
+  }
   if (reached && tiles.length) c.addChild(at(icon("check", 18, C.cyan), width - 16, h / 2));
   return c;
 }
@@ -84,12 +90,22 @@ function legend(game: Game): Scene {
   // taller than the screen: drag to scroll
   if (h > H - 40) {
     let grab: number | null = null;
-    bg.on("pointerdown", (e) => { grab = root.toLocal(e.global).y - panel.y; });
+    bg.on("pointerdown", (e) => {
+      grab = root.toLocal(e.global).y - panel.y;
+    });
     root.eventMode = "static";
-    root.on("pointermove", (e) => { if (grab !== null) panel.y = Math.max(H - 20 - h, Math.min(20, root.toLocal(e.global).y - grab)); });
-    root.on("pointerup", () => { grab = null; });
-    root.on("pointerupoutside", () => { grab = null; });
-    root.on("wheel", (e) => { panel.y = Math.max(H - 20 - h, Math.min(20, panel.y - e.deltaY)); });
+    root.on("pointermove", (e) => {
+      if (grab !== null) panel.y = Math.max(H - 20 - h, Math.min(20, root.toLocal(e.global).y - grab));
+    });
+    root.on("pointerup", () => {
+      grab = null;
+    });
+    root.on("pointerupoutside", () => {
+      grab = null;
+    });
+    root.on("wheel", (e) => {
+      panel.y = Math.max(H - 20 - h, Math.min(20, panel.y - e.deltaY));
+    });
   }
   return { root };
 }
@@ -97,25 +113,66 @@ function legend(game: Game): Scene {
 export function progressOverlay(game: Game, first: Tab = "hero", onClose?: () => void): Scene {
   const root = new Container();
   let tab: Tab = first;
-  const top = 160, viewH = H - top - 16, LW = W - 40;
-  let list = new Container(), minY = top;
+  const top = 160,
+    viewH = H - top - 16,
+    LW = W - 40;
+  let list = new Container(),
+    minY = top;
 
   const render = () => {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
     const p = game.profile;
     root.addChild(dimmer(undefined, 0.96));
     const title = txt(upper(t(`ui.tab.${tab}`, { n: p.season.id })), 24, { spacing: 2 });
-    root.addChild(at(title, 20, 30), at(infoButton(16, () => game.openOverlay(legend(game))), 20 + title.width + 24, 44));
-    root.addChild(at(roundButton("close", 22, () => { game.closeOverlay(); onClose?.(); }, { iconSize: 18 }), W - 42, 44));
+    root.addChild(
+      at(title, 20, 30),
+      at(
+        infoButton(16, () => game.openOverlay(legend(game))),
+        20 + title.width + 24,
+        44,
+      ),
+    );
+    root.addChild(
+      at(
+        roundButton(
+          "close",
+          22,
+          () => {
+            game.closeOverlay();
+            onClose?.();
+          },
+          { iconSize: 18 },
+        ),
+        W - 42,
+        44,
+      ),
+    );
     // tabs
     TABS.forEach((tb, i) => {
       const on = tb.id === tab;
-      root.addChild(at(roundButton(tb.icon, 24, () => { tab = tb.id; render(); }, { fill: on ? C.cyan : C.panel, line: on ? C.cyan : C.line, tint: on ? C.cyanInk : C.text, iconSize: 22 }), 47 + i * 74, 104));
+      root.addChild(
+        at(
+          roundButton(
+            tb.icon,
+            24,
+            () => {
+              tab = tb.id;
+              render();
+            },
+            { fill: on ? C.cyan : C.panel, line: on ? C.cyan : C.line, tint: on ? C.cyanInk : C.text, iconSize: 22 },
+          ),
+          47 + i * 74,
+          104,
+        ),
+      );
     });
 
     list = new Container();
     let y = 0;
-    const add = (node: Container, h: number) => { list.addChild(at(node, 0, y)); y += h; };
+    const add = (node: Container, h: number) => {
+      list.addChild(at(node, 0, y));
+      y += h;
+    };
     if (tab === "hero") heroTab(game, p, add, LW);
     else if (tab === "planets") planetTab(game, p, add, LW);
     else if (tab === "pass") passTab(game, p, add, LW);
@@ -134,11 +191,21 @@ export function progressOverlay(game: Game, first: Tab = "hero", onClose?: () =>
   let grab: number | null = null;
   root.eventMode = "static";
   root.hitArea = new Rectangle(0, 0, W, H);
-  root.on("pointerdown", (e) => { grab = root.toLocal(e.global).y - list.y; });
-  root.on("pointermove", (e) => { if (grab !== null) list.y = Math.max(minY, Math.min(top, root.toLocal(e.global).y - grab)); });
-  root.on("pointerup", () => { grab = null; });
-  root.on("pointerupoutside", () => { grab = null; });
-  root.on("wheel", (e) => { list.y = Math.max(minY, Math.min(top, list.y - e.deltaY)); });
+  root.on("pointerdown", (e) => {
+    grab = root.toLocal(e.global).y - list.y;
+  });
+  root.on("pointermove", (e) => {
+    if (grab !== null) list.y = Math.max(minY, Math.min(top, root.toLocal(e.global).y - grab));
+  });
+  root.on("pointerup", () => {
+    grab = null;
+  });
+  root.on("pointerupoutside", () => {
+    grab = null;
+  });
+  root.on("wheel", (e) => {
+    list.y = Math.max(minY, Math.min(top, list.y - e.deltaY));
+  });
   render();
   return { root };
 }
@@ -146,13 +213,17 @@ export function progressOverlay(game: Game, first: Tab = "hero", onClose?: () =>
 type Add = (node: Container, h: number) => void;
 
 function heroTab(game: Game, p: Profile, add: Add, w: number): void {
-  const meta = game.meta, hero = game.hero;
+  const meta = game.meta,
+    hero = game.hero;
   const lv = heroLevel(meta, p.heroXp[hero] ?? 0);
   const head = new Container();
   head.addChild(at(heroBadge(game.data.heroes.get(hero)!.name, 30), 30, 34));
   head.addChild(at(txt(`${t("ui.level")} ${lv.level}`, 26), 76, 6));
   head.addChild(at(bar(w - 76, 12, lv.need ? lv.into / lv.need : 1), 76, 44));
-  head.addChild(at(icon("xp", 16, C.dim), w - 8, 22), at(txt(lv.need ? `${lv.into} / ${lv.need}` : t("ui.max"), 12, { font: "text", color: C.dim, anchor: [1, 0.5] }), w - 22, 22));
+  head.addChild(
+    at(icon("xp", 16, C.dim), w - 8, 22),
+    at(txt(lv.need ? `${lv.into} / ${lv.need}` : t("ui.max"), 12, { font: "text", color: C.dim, anchor: [1, 0.5] }), w - 22, 22),
+  );
   add(head, 84);
   for (let l = 2; l <= lv.max; l++) {
     const tiles = meta.heroLevels.cosmeticAt.includes(l) ? [rewardTile(game, { cosmetic: `${hero}_lv${l}` }, 56, l <= lv.level)] : [];
@@ -169,14 +240,16 @@ function planetTab(game: Game, p: Profile, add: Add, w: number): void {
   for (const s of game.meta.planetTrack) {
     const on = p.galaxies >= s.galaxies;
     const row = stepRow(s.galaxies, on, [rewardTile(game, s.reward, 56, on)], w);
-    if ("cosmetic" in s.reward) row.addChild(at(txt(t(`cosmetic.${s.reward.cosmetic}`), 13, { font: "text", color: on ? C.text : C.dim, anchor: [0, 0.5] }), 124, 32));
+    if ("cosmetic" in s.reward)
+      row.addChild(at(txt(t(`cosmetic.${s.reward.cosmetic}`), 13, { font: "text", color: on ? C.text : C.dim, anchor: [0, 0.5] }), 124, 32));
     add(row, 66);
   }
 }
 
 function passTab(game: Game, p: Profile, add: Add, w: number): void {
   const season = seasonData(game.meta, p.season.id);
-  const lv = passLevel(game.meta, p.season), per = season.pass.galaxiesPerLevel;
+  const lv = passLevel(game.meta, p.season),
+    per = season.pass.galaxiesPerLevel;
   const head = new Container();
   head.addChild(at(icon("galaxy", 30, C.text), 22, 24), at(txt(p.season.galaxies, 26, { anchor: [0, 0.5] }), 46, 24));
   head.addChild(at(txt(`${t("ui.level")} ${lv}`, 20, { anchor: [1, 0.5] }), w, 24));
@@ -184,12 +257,16 @@ function passTab(game: Game, p: Profile, add: Add, w: number): void {
   // column heads: free, premium (locked until bought; buying is not built)
   head.addChild(at(txt(t("ui.free"), 12, { color: C.dim, spacing: 2, anchor: [0.5, 0.5] }), 84, 92));
   const prem = new Container();
-  prem.addChild(at(icon(p.season.premium ? "premium" : "lock", 16, C.gold), -38, 0), at(txt(t("ui.premium"), 12, { color: C.gold, spacing: 2, anchor: [0, 0.5] }), -26, 0));
+  prem.addChild(
+    at(icon(p.season.premium ? "premium" : "lock", 16, C.gold), -38, 0),
+    at(txt(t("ui.premium"), 12, { color: C.gold, spacing: 2, anchor: [0, 0.5] }), -26, 0),
+  );
   if (!p.season.premium) tappable(prem, () => game.openOverlay(purchaseOverlay(game, { key: "premium", premium: true })), new Rectangle(-50, -14, 120, 28));
   head.addChild(at(prem, 160, 92));
   add(head, 112);
   season.pass.levels.forEach((l, i) => {
-    const n = i + 1, on = n <= lv;
+    const n = i + 1,
+      on = n <= lv;
     const row = stepRow(n, on, [], w);
     if (l.free) row.addChild(at(rewardTile(game, l.free, 56, on), 56, 4));
     if (l.premium) {
@@ -202,9 +279,11 @@ function passTab(game: Game, p: Profile, add: Add, w: number): void {
 }
 
 function leagueTab(game: Game, p: Profile, add: Add, w: number): void {
-  const L = game.meta.leagues, cur = leagueOf(game.meta, p.season.points);
+  const L = game.meta.leagues,
+    cur = leagueOf(game.meta, p.season.points);
   for (let i = L.ids.length - 1; i >= 0; i--) {
-    const on = i === cur, reached = i <= p.season.peak;
+    const on = i === cur,
+      reached = i <= p.season.peak;
     const row = new Container();
     row.addChild(box(w, 56, { fill: on ? C.panel : C.bg, line: on ? C.gold : C.line, lineW: on ? 2 : 1, radius: 14 }));
     row.addChild(at(icon("league", 26, reached ? C.gold : C.dim), 30, 28));
@@ -220,55 +299,96 @@ function leagueTab(game: Game, p: Profile, add: Add, w: number): void {
 
 function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () => void): void {
   const meta = game.meta;
-  const set = (slot: "background" | "patch" | "picture", id: string | null) => { const q = equip(meta, p, slot, id); if (q) { game.setProfile(q); rerender(); } };
+  const set = (slot: "background" | "patch" | "picture", id: string | null) => {
+    const q = equip(meta, p, slot, id);
+    if (q) {
+      game.setProfile(q);
+      rerender();
+    }
+  };
   // the player: picture, name (tap to change), the worn patch and totals
   const head = new Container();
   head.addChild(box(w, 100, { fill: C.panel, line: C.line, radius: 16 }));
   head.addChild(at(disc(32, { fill: C.bg, line: C.gold, lineW: 3 }), 48, 48), at(icon("skin", 28, C.dim), 48, 48));
-  head.addChild(at(disc(14, { fill: C.bg, line: p.equipped.patch ? C.gold : C.line, lineW: 2 }), 74, 74), at(icon("patch", 16, p.equipped.patch ? C.gold : C.line), 74, 74));
+  head.addChild(
+    at(disc(14, { fill: C.bg, line: p.equipped.patch ? C.gold : C.line, lineW: 2 }), 74, 74),
+    at(icon("patch", 16, p.equipped.patch ? C.gold : C.line), 74, 74),
+  );
   const name = new Container();
   const label = txt(upper(p.name), 20, { spacing: 1, anchor: [0, 0.5] });
   name.addChild(label, at(icon("edit", 18, C.cyan), label.width + 16, 0));
-  tappable(name, () => {
-    void askText(p.name, NAME_MAX, t("ui.playerName")).then((v) => {
-      if (v === null || v.trim() === p.name) return;
-      const q = rename(game.profile, v);
-      if (!q) { game.toast(t("toast.nameInvalid", { n: NAME_MAX })); return; }
-      game.setProfile(q);
-      rerender();
-    });
-  }, new Rectangle(-6, -18, label.width + 40, 36));
+  tappable(
+    name,
+    () => {
+      void askText(p.name, NAME_MAX, t("ui.playerName")).then((v) => {
+        if (v === null || v.trim() === p.name) return;
+        const q = rename(game.profile, v);
+        if (!q) {
+          game.toast(t("toast.nameInvalid", { n: NAME_MAX }));
+          return;
+        }
+        game.setProfile(q);
+        rerender();
+      });
+    },
+    new Rectangle(-6, -18, label.width + 40, 36),
+  );
   head.addChild(at(name, 96, 34));
-  const stats: [string, number][] = [["swords", p.runs], ["galaxy", p.galaxies], ["credits", p.credits]];
-  stats.forEach(([ic, n], i) => { const x = 96 + i * 82; head.addChild(at(icon(ic, 18, C.dim), x + 9, 70), at(txt(n, 16, { anchor: [0, 0.5] }), x + 24, 70)); });
+  const stats: [string, number][] = [
+    ["swords", p.runs],
+    ["galaxy", p.galaxies],
+    ["credits", p.credits],
+  ];
+  stats.forEach(([ic, n], i) => {
+    const x = 96 + i * 82;
+    head.addChild(at(icon(ic, 18, C.dim), x + 9, 70), at(txt(n, 16, { anchor: [0, 0.5] }), x + 24, 70));
+  });
   add(head, 116);
 
   // player pictures
   add(at(txt(t("ui.pictures"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);
   const pics = new Container();
-  p.cosmetics.filter((c) => meta.cosmeticById.get(c)?.kind === "picture").forEach((id, i) => {
-    const on = p.equipped.picture === id;
-    const tl = new Container();
-    tl.addChild(box(64, 64, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 32 }), at(icon("skin", 30, on ? C.text : C.dim), 32, 32));
-    if (on) tl.addChild(at(icon("check", 18, C.cyan), 54, 54));
-    tappable(tl, () => set("picture", id), new Rectangle(0, 0, 64, 64));
-    pics.addChild(at(tl, i * 82, 0));
-  });
+  p.cosmetics
+    .filter((c) => meta.cosmeticById.get(c)?.kind === "picture")
+    .forEach((id, i) => {
+      const on = p.equipped.picture === id;
+      const tl = new Container();
+      tl.addChild(box(64, 64, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 32 }), at(icon("skin", 30, on ? C.text : C.dim), 32, 32));
+      if (on) tl.addChild(at(icon("check", 18, C.cyan), 54, 54));
+      tappable(tl, () => set("picture", id), new Rectangle(0, 0, 64, 64));
+      pics.addChild(at(tl, i * 82, 0));
+    });
   add(pics, 80);
 
   // hero skins: per hero its own look and every owned skin (bought or from hero levels)
   add(at(txt(t("ui.skins"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);
   for (const hero of game.data.heroList.filter((h) => meta.startHeroes.includes(h.id) || p.heroes.includes(h.id))) {
-    const owned = p.cosmetics.filter((c) => { const k = meta.cosmeticById.get(c); return (k?.kind === "skin" || k?.kind === "heroCosmetic") && k.hero === hero.id; });
+    const owned = p.cosmetics.filter((c) => {
+      const k = meta.cosmeticById.get(c);
+      return (k?.kind === "skin" || k?.kind === "heroCosmetic") && k.hero === hero.id;
+    });
     const row = new Container();
     row.addChild(at(heroBadge(hero.name, 20), 20, 32));
     const worn = p.equipped.skins[hero.id] ?? null;
     [null, ...owned].forEach((id, i) => {
       const on = worn === id;
       const tl = new Container();
-      tl.addChild(box(52, 52, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 10 }), at(icon(id === null ? "hero" : "skin", 26, on ? C.text : C.dim), 26, 26));
+      tl.addChild(
+        box(52, 52, { fill: C.bg, line: on ? C.cyan : C.line, lineW: 2, radius: 10 }),
+        at(icon(id === null ? "hero" : "skin", 26, on ? C.text : C.dim), 26, 26),
+      );
       if (on) tl.addChild(at(icon("check", 14, C.cyan), 44, 44));
-      tappable(tl, () => { const q = equipSkin(meta, p, hero.id, id); if (q) { game.setProfile(q); rerender(); } }, new Rectangle(0, 0, 52, 52));
+      tappable(
+        tl,
+        () => {
+          const q = equipSkin(meta, p, hero.id, id);
+          if (q) {
+            game.setProfile(q);
+            rerender();
+          }
+        },
+        new Rectangle(0, 0, 52, 52),
+      );
       row.addChild(at(tl, 52 + (i % 5) * 60, 6 + Math.floor(i / 5) * 60));
     });
     if (!owned.length) row.addChild(at(txt(t("ui.noSkin"), 12, { font: "text", color: C.dim, anchor: [0, 0.5] }), 52 + 64, 32));
@@ -298,7 +418,10 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
     const on = p.equipped.background === id;
     const row = new Container();
     row.addChild(box(w, 52, { fill: C.panel, line: on ? C.cyan : C.line, lineW: on ? 2 : 1, radius: 14 }));
-    row.addChild(at(icon("planet", 24, on ? C.cyan : C.dim), 28, 26), at(txt(t(`cosmetic.${id}`), 15, { font: "text", weight: "600", anchor: [0, 0.5] }), 54, 26));
+    row.addChild(
+      at(icon("planet", 24, on ? C.cyan : C.dim), 28, 26),
+      at(txt(t(`cosmetic.${id}`), 15, { font: "text", weight: "600", anchor: [0, 0.5] }), 54, 26),
+    );
     if (on) row.addChild(at(icon("check", 20, C.cyan), w - 24, 26));
     tappable(row, () => set("background", id), new Rectangle(0, 0, w, 52));
     add(row, 60);
