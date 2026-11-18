@@ -95,7 +95,7 @@ The 10 leagues are put into 4 groups. League 1 is the highest here (in `data/met
 | Intermediate | 6, 7, 8 | league 9 |
 | Amateur | 9, 10 | no drop, you stay in your league |
 
-At the start of a season you drop to the highest league of the next lower group. Examples: from league 1 to league 3, from league 6 to league 9. This replaces the earlier rule "2 leagues down". The core and `data/meta.json` still implement the earlier rule.
+At the start of a season you drop to the highest league of the next lower group. Examples: from league 1 to league 3, from league 6 to league 9. This replaces the earlier rule "2 leagues down" (core: `seasonStartLeague`, groups in `data/meta.json`).
 
 Bot players are assigned to a group, not to a single league. For bots, "league plus/minus 1" in the matching rules therefore means "same group". The groups are `leagues.groups` in `data/meta.json` (sizes from the lowest group up); `leagueGroup` in the core reads them.
 
@@ -154,4 +154,3 @@ Compressed it is about a third of that. A cap only becomes necessary when the nu
 
 ## Open questions
 
-- The group-based season reset still has to be built (core `enterSeason`, `data/meta.json`, glossary text of "League").

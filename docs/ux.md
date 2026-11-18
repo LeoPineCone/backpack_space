@@ -157,7 +157,7 @@ Everything the player customises lives in the profile: player picture, player na
 **M6 Season change**
 
 1. On start the client checks whether a new season has begun.
-2. Then: the patch of the old season is booked, 2 leagues down, a new pass. **Decided** (rules). Shown subtly like a league promotion. *Assumption*
+2. Then: the patch of the old season is booked, down to the highest league of the next lower league group (Amateur stays), a new pass. **Decided** (rules). Shown subtly like a league promotion. *Assumption*
 
 **M7 Credits shop** (structure built; what is on sale, prices and paying are open, BUY shows a toast)
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, leagueGroup, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, leagueGroup, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -19,7 +19,7 @@ describe("meta data", () => {
     for (const h of data.heroList) for (const lv of meta.heroLevels.cosmeticAt) expect(meta.cosmeticById.get(`${h.id}_lv${lv}`)?.kind).toBe("heroCosmetic");
     for (const l of meta.leagues.ids) expect(meta.cosmeticById.get(patchId(1, l))?.kind).toBe("patch");
     expect(meta.leagues.ids).toHaveLength(10);
-    expect(meta.leagues.seasonDrop).toBe(2);
+    expect(meta.leagues.groups).toEqual([2, 3, 3, 2]);
   });
   it("makes the 4 heroes without a season playable from the start", () => {
     expect(meta.startHeroes).toEqual(data.heroList.map((h) => h.id));
@@ -91,15 +91,33 @@ describe("leagues", () => {
     expect(s.points).toBe(per * 2); // but not the league
     expect(leagueOf(meta, 1e9)).toBe(meta.leagues.ids.length - 1);
   });
-  it("pays the league patch at the end of a season and starts the next one 2 leagues lower", () => {
+  it("starts a new season in the highest league of the next lower group; Amateur stays", () => {
+    // leagues from the lowest: Amateur 0-1, Intermediate 2-4, Pro 5-7, Elite 8-9 (league 10 ... league 1)
+    const start = [0, 1, 1, 1, 1, 4, 4, 4, 7, 7];
+    expect(start.map((_, l) => seasonStartLeague(meta, l))).toEqual(start);
+    for (let l = 0; l < start.length; l++) {
+      const { group } = leagueGroup(meta, l);
+      const after = seasonStartLeague(meta, l);
+      // never up; one group down, except in the lowest group
+      expect(after).toBeLessThanOrEqual(l);
+      expect(leagueGroup(meta, after).group).toBe(Math.max(0, group - 1));
+      if (group > 0) expect(leagueGroup(meta, after).to).toBe(after);
+    }
+  });
+  it("pays the league patch at the end of a season and starts the next one a group lower", () => {
     const m = withSeason2();
     let p = newProfile(m);
     p = { ...p, season: { ...p.season, points: per * 5 + 40, peak: 5 } };
     const c = enterSeason(m, p, 2)!;
     expect(c.patch).toBe(patchId(1, m.leagues.ids[5]!));
     expect(c.profile.cosmetics).toContain(c.patch);
-    expect(c.league).toEqual([5, 3]);
-    expect(c.profile.season).toMatchObject({ id: 2, galaxies: 0, premium: false, points: per * 3, peak: 3 });
+    expect(c.league).toEqual([5, 4]);
+    expect(c.profile.season).toMatchObject({ id: 2, galaxies: 0, premium: false, points: per * 4, peak: 4 });
+    const elite = enterSeason(m, { ...p, season: { ...p.season, points: per * 9, peak: 9 } }, 2)!;
+    expect(elite.league).toEqual([9, 7]);
+    const amateur = enterSeason(m, { ...p, season: { ...p.season, points: per * 1 + 30, peak: 1 } }, 2)!;
+    expect(amateur.league).toEqual([1, 1]);
+    expect(amateur.profile.season).toMatchObject({ points: per, peak: 1 });
     expect(enterSeason(m, c.profile, 2)).toBeNull();
     expect(enterSeason(m, newProfile(m), 2)!.league).toEqual([0, 0]);
     // the patch can be worn on the profile
