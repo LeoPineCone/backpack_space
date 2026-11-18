@@ -137,8 +137,8 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | RUN-10 | At the end of the run the server books hero XP, Galaxies and league points exactly once. Giving up books the reward for the standing reached. | [client-server.md](client-server.md), [ux.md](ux.md) | M2 | – | decided |
 | RUN-11 | A run survives a lost connection and a closed app on the same device. It continues at the same round. Continuing after a reinstall or on another device is not in scope for version 1. | [client-server.md](client-server.md), [backend.md](backend.md) | M2 | RUN-03 | decided |
 | RUN-12 | A request with a simulation version the server does not accept is answered with "update required". | [client-server.md](client-server.md) | M2 | CORE-03 | decided |
-| RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | open (technical) |
-| RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | open: how long (technical) |
+| RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | decided (2026-11-18: two simulation builds during a rollout, a maintenance window when the engine changes) |
+| RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | decided (2026-11-18: 180 days) |
 
 ## Matchmaking
 
@@ -146,7 +146,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | --- | --- | --- | --- | --- | --- |
 | MM-01 | An opponent is searched by round, then run standing, then league, relaxing step by step. The round is never relaxed. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-02 | Never the player's own backpack, no opponent twice in a run, only backpacks valid under the player's data version. | [matchmaking.md](matchmaking.md) | M2 | CORE-08 | decided |
-| MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided, number of bot players open (technical) |
+| MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided (2026-11-18: 50 bot players per league group plus 16 easy bots) |
 | MM-04 | Bot backpacks live in the backend and can be replaced without an app update. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-05 | Player backpacks are stored from the first day but handed out as opponents only after the numbers are evaluated. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-06 | The first 2 to 3 runs of a new player go against easier bot backpacks. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | decided |
@@ -211,7 +211,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | BE-03 | Region and services: one European region; HTTP API in front of the Lambdas. | review | M1 | – | decided (Frankfurt) |
 | BE-04 | Data is stored in DynamoDB. | designer, 2026-11-17 | M1 | – | decided |
 | BE-05 | Every request is checked against a schema before anything else happens: fields, types, size. | review | M1 | QA-08 | decided |
-| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided, numbers open (technical) |
+| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided (2026-11-18: numbers in docs/backend.md) |
 | BE-07 | The configuration request carries minimum version, season, server date and a maintenance switch that can be set without a deployment. | [client-server.md](client-server.md) | M1 | – | decided |
 | BE-08 | Each Lambda may reach only what it needs. Secrets are kept in the AWS Parameter Store (chosen for cost), not in code or settings files. | review | M1 | – | decided |
 | BE-09 | Logs are structured and carry the player id but no names or store identities. | review | M1 | – | decided |
@@ -271,10 +271,8 @@ Requirements in state `open` wait for one of these:
 | Season hero of season 1 | META-05 |
 | Meta numbers | META-08 |
 | How to even out refunded Credits that are spent | STORE-09 |
-| Session lifetime, how long a run may stay paused, request limits | ACC-04, BE-06 |
-| How long shop actions are kept, and when they are analysed | RUN-14 |
-| Open runs after an update of the simulation version | RUN-13 |
-| Number and spread of bot players | MM-03 |
+| Session lifetime, how long a run may stay paused | ACC-04 |
+| When shop actions are analysed | RUN-14 |
 | Crash report service | BE-15 |
 | Domain | WEB-07 |
 | Local purchase testing | DEV-04 |

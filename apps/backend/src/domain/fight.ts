@@ -20,7 +20,7 @@ import { loadProfile, playerKey } from "./players.js";
 import { expiresIn, gameFor, majorChanged, readRun, roundKey, ROUNDS_KEEP_DAYS, RUN, toBody, type StoredRun } from "./runs.js";
 import { isoDay } from "./config.js";
 
-/** How long recorded actions are kept (RUN-14, proposal): long enough for the planned analysis after some weeks. */
+/** How long recorded actions are kept (RUN-14, decided 2026-11-18): long enough for the planned analysis after some weeks. */
 export const ACTIONS_KEEP_DAYS = 180;
 
 export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFightResponse> {
