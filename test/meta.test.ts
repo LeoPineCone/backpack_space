@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, leagueGroup, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, heroLevel, heroCosmeticId, leagueGroup, rewardTrack, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -130,6 +130,15 @@ describe("leagues", () => {
     expect(seasonAt(m, "2026-10-01")).toBe(1);
     expect(seasonAt(m, "2027-01-31")).toBe(1);
     expect(seasonAt(m, "2027-02-01T10:00:00Z")).toBe(2);
+  });
+});
+
+describe("reward tracks", () => {
+  it("names the track a booked reward comes from", () => {
+    expect(rewardTrack(meta, { cosmetic: heroCosmeticId(meta.startHeroes[0]!, meta.heroLevels.cosmeticAt[0]!) })).toBe("level");
+    for (const step of meta.planetTrack) expect(rewardTrack(meta, step.reward)).toBe("planet");
+    const pass = meta.seasons[0]!.pass.levels.flatMap((l) => [l.free, l.premium]).find((r) => r && "cosmetic" in r)!;
+    expect(rewardTrack(meta, pass)).toBe("pass");
   });
 });
 

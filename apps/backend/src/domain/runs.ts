@@ -17,12 +17,12 @@ import type {
   RunStartRequest,
   RunStartResponse,
 } from "@backpack-space/api";
-import { bookRun } from "@backpack-space/core";
+import { bookRun, rewardTrack, type Meta, type Reward } from "@backpack-space/core";
 import type { Item, Write } from "../ports/index.js";
 import { ApiError, type DomainContext, type Game } from "./context.js";
 import { dataMajor } from "./matching.js";
 import { logEvent, type EventFields } from "./log.js";
-import { loadProfile, playerKey, profileWrites } from "./players.js";
+import { loadProfile, playerKey, profileWrites, type Origin } from "./players.js";
 
 export const RUN = "RUN";
 export const doneKey = (runId: string) => `DONE#${runId}`;
@@ -155,6 +155,13 @@ export async function runFinish(ctx: DomainContext, body: unknown): Promise<RunF
   return finishRun(ctx, runId, reason);
 }
 
+/** The origin of each thing a booking unlocked, by the track its reward came from. */
+function originOf(meta: Meta, rewards: Reward[]): (id: string) => Origin {
+  const by = new Map<string, Origin>();
+  for (const r of rewards) if (!("credits" in r)) by.set("cosmetic" in r ? r.cosmetic : r.hero, rewardTrack(meta, r));
+  return (id) => by.get(id) ?? "pass";
+}
+
 async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): Promise<RunFinishResponse> {
   const playerId = ctx.playerId!;
   const pk = playerKey(playerId);
@@ -187,7 +194,8 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
     const answer: RunFinishResponse = { result, profile };
     const now = clock.now();
     const writes: Write[] = [
-      ...profileWrites(playerId, profile, stored, now, "run", stored.profile),
+      // each unlocked thing is owned with the track it came from (hero level, planet track, pass)
+      ...profileWrites(playerId, profile, stored, now, originOf(game.meta, booking.rewards), stored.profile),
       { put: { pk, sk: doneKey(runId), reason, answer, at: now, expiresAt: expiresIn(now, ROUNDS_KEEP_DAYS) } satisfies Item, ifNotExists: true },
       { delete: { pk, sk: RUN }, ifVersion: run.version },
     ];
