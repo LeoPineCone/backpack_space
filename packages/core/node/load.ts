@@ -59,7 +59,7 @@ export function loadRatings(dataDir = DATA_DIR): Record<string, number> {
 }
 
 /** Accent colours of the palette in docs/style.md. */
-export const ART_ACCENTS = ["rust red", "deep teal", "mustard", "moss", "copper", "bone"] as const;
+export const ART_ACCENTS = ["coral red", "teal", "mustard", "sage", "copper", "cream"] as const;
 
 /** Picture data per item for the artwork (data/item-art.json). */
 export interface ItemArt {

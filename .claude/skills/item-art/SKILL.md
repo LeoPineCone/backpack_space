@@ -10,8 +10,8 @@ boring, they must be creative, and you see at once that the game has a space the
 
 A picture comes from two fields in `data/item-art.json` per item or bag:
 
-- `brief`: one line for the asset list, ends with `Accent: <palette colour>.` (rust red, deep teal, mustard,
-  moss, copper or bone).
+- `brief`: one line for the asset list, ends with `Accent: <palette colour>.` (coral red, teal, mustard,
+  sage, copper or cream; docs/style.md).
 - `description`: the full English picture description that goes into the prompt. It is never shown in the app.
 
 `npm run art:prompt -- <id> [<id> ...]` (or `--all`) builds the finished prompt from the style base in
