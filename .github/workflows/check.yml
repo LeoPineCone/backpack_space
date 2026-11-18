@@ -12,7 +12,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,9 +30,14 @@ jobs:
         run: npm run check
 
   # Level 4 in the browser engines (docs/testing.md): own job, so a failure says which level broke.
+  # Runs in Playwright's own image: browsers and their system libraries are already inside, so no apt install and
+  # no browser download (that step sometimes hung for 10-20 minutes). The tag must match the Playwright version
+  # in package-lock.json; test/ci.test.ts checks that.
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -41,7 +46,5 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      - name: Install browsers
-        run: npx playwright install --with-deps chromium webkit
       - name: Reference fights in Chromium and WebKit
         run: npm run test:e2e
