@@ -337,7 +337,7 @@
   },
   "prism_laser": {
     "brief": "Laser pistol with a Facet crystal prism clamped over its lens rings. Accent: teal.",
-    "description": "Upright, barrel up: the chunky Laser Pistol with its three teal lens rings, a jagged Facet crystal clamped on top as a prism, its shot leaving as one flat teal stripe."
+    "description": "Upright, barrel up: the chunky Laser Pistol with its three teal lens rings, a jagged Facet crystal clamped on top as a prism, nothing leaving the muzzle."
   },
   "twin_lasers": {
     "brief": "Two laser pistols welded side by side on one shared grip. Accent: coral red.",
@@ -345,7 +345,7 @@
   },
   "nail_storm": {
     "brief": "Rivet gun fed by a copper wire spool, one rivet in flight. Accent: copper.",
-    "description": "Lying across the box: the stubby thruster-nozzle rivet gun, a fat copper wire spool bolted on top feeding a belt of rivets into it, one single rivet flying from the muzzle."
+    "description": "Lying across the box: the stubby thruster-nozzle rivet gun, a fat copper wire spool bolted on top feeding a belt of rivets into it."
   },
   "flamethrower": {
     "brief": "Plasma cutter with a fuel can underneath and a flat flame tongue. Accent: coral red.",
@@ -385,7 +385,7 @@
   },
   "burst_rifle": {
     "brief": "Needle rifle with a targeting lens scope, one needle in flight. Accent: mustard.",
-    "description": "Along the long box: the thin needle rifle, its crystal needle drum under the middle, a round riveted targeting lens with crosshair as its scope, one single needle leaving the muzzle."
+    "description": "Along the long box: the thin needle rifle, its crystal needle drum under the middle, a round riveted targeting lens with crosshair as its scope."
   },
   "laser_turret": {
     "brief": "Scrap tripod turret with a crystal eye and copper wire. Accent: teal.",
@@ -617,7 +617,7 @@
   },
   "void_beam": {
     "brief": "Prism laser grown long, a black void in its crystal. Accent: cream.",
-    "description": "Upright through the tall box: a long emitter with three teal lens rings, the Facet crystal at its tip turned to a flat black void with a crisp cream outline, a short black beam with cream edge above."
+    "description": "Upright through the tall box: a long emitter with three teal lens rings, the Facet crystal at its tip turned to a flat black void with a crisp cream outline."
   },
   "gatling_laser": {
     "brief": "Ring of laser barrels around a copper coil battery. Accent: coral red.",
@@ -653,7 +653,7 @@
   },
   "star_piercer": {
     "brief": "Railgun rails stretched long with a crystal sniper scope. Accent: mustard.",
-    "description": "Along the long box: the two parallel teal docking rails stretched long, a crystal sniper scope on top, a fat capacitor at the back, one small slug with a star-shaped mustard tip between the rails."
+    "description": "Along the long box: the two parallel teal docking rails stretched long, a crystal sniper scope on top, a fat capacitor at the back, a star-shaped mustard muzzle cap at the front."
   },
   "captains_dinner": {
     "brief": "Tray with a domed dish, ration and jerky, star napkin. Accent: cream.",
@@ -1485,7 +1485,7 @@
   },
   "laser_pistol": {
     "brief": "Chunky pistol whose barrel is a stack of lens rings, solar fin on the back. Accent: coral red.",
-    "description": "Upright, barrel pointing up: a chunky pistol whose barrel is a short stack of three teal lens rings, a small solar fin on its back to recharge it, the grip wrapped in tape. The shot leaves as one flat coral red stripe."
+    "description": "Upright, barrel pointing up: a chunky pistol whose barrel is a short stack of three teal lens rings, a small solar fin on its back to recharge it, the grip wrapped in tape."
   },
   "rivet_gun": {
     "brief": "Hull-repair gun from a thruster nozzle, rivets riding round it like a planet ring. Accent: copper.",
@@ -1529,7 +1529,7 @@
   },
   "cryo_sprayer": {
     "brief": "Spray gun with a tank of Rime methane ice, hexagon frost spray. Accent: teal.",
-    "description": "Lying across the box: a spray gun with a round tank of frozen methane from the night planet Rime on top, frost crust on the nozzle, a spray of flat teal hexagon ice crystals."
+    "description": "Lying across the box: a spray gun with a round tank of frozen methane from the night planet Rime on top, frost crust on the nozzle, a few flat teal hexagon ice crystals stuck to the nozzle."
   },
   "ion_blaster": {
     "brief": "Blaster whose barrel is three floating rings like planet rings. Accent: teal.",
@@ -1537,7 +1537,7 @@
   },
   "spore_launcher": {
     "brief": "Living tube gun grown from a Murk puffball, spore pods inside. Accent: sage.",
-    "description": "Lying across the box: a tube gun grown from a giant puffball fungus of the fog planet Murk, its breech a hinged mushroom cap, round sage spore pods inside, one pod at the muzzle."
+    "description": "Lying across the box: a tube gun grown from a giant puffball fungus of the fog planet Murk, its breech a hinged mushroom cap, round sage spore pods inside."
   },
   "meteor_hammer": {
     "brief": "Hammer whose head is a whole little meteor with a re-entry scorch. Accent: coral red.",
@@ -1553,7 +1553,7 @@
   },
   "needle_rifle": {
     "brief": "Long thin rifle with a drum of crystal needles from Facet. Accent: teal.",
-    "description": "Along the long box: a thin long-barrelled rifle with a slim stock and a long scope, under the middle a see-through drum full of teal crystal needles from the planet Facet, one needle flying from the muzzle as a straight black stroke."
+    "description": "Along the long box: a thin long-barrelled rifle with a slim stock and a long scope, under the middle a see-through drum full of teal crystal needles from the planet Facet."
   },
   "acid_flask": {
     "brief": "Flask with a pressure valve, acid floating as a ball inside. Accent: sage.",
@@ -1564,8 +1564,8 @@
     "description": "Lying across the box: a short hand saw whose chain of black triangle teeth circles a flat bar like a planet's ring, a chunky coral red motor grip at the back with a tether clip."
   },
   "railgun": {
-    "brief": "Two rails from a station docking track, one slug at the front. Accent: teal.",
-    "description": "Along the long box: two straight parallel teal rails taken from a station's docking track, braces between them, a boxy grip and a fat capacitor at the back end. One small slug sits between the rails at the front."
+    "brief": "Two rails from a station docking track on a boxy grip. Accent: teal.",
+    "description": "Along the long box: two straight parallel teal rails taken from a station's docking track, braces between them, a boxy grip and a fat capacitor at the back end."
   },
   "gamma_lance": {
     "brief": "Pole lance tipped with a caged reactor rod. Accent: mustard.",
@@ -1581,7 +1581,7 @@
   },
   "photon_bow": {
     "brief": "Bow bent from a solar panel strip, arrow with a star head. Accent: mustard.",
-    "description": "Upright through the tall box: a bow bent from a long strip of solar panel with flat teal cells, the string a straight mustard line, a nocked arrow whose head is a small five-pointed star."
+    "description": "Upright through the tall box: a bow bent from a long strip of solar panel with flat teal cells, the string a straight mustard line, a small five-pointed star at the top tip."
   },
   "void_scythe": {
     "brief": "L-shaped scythe whose blade is a slice of night sky. Accent: cream.",
@@ -1637,7 +1637,7 @@
   },
   "zenith_lance": {
     "brief": "Slim iron lance with a sun disc below its point, a sun ray shooting off the tip. Accent: mustard.",
-    "description": "Standing tall: a slim dark iron lance of the order, a small mustard sun disc below a long point, a coral red band and prayer cords on the shaft, a short sun ray drawn as one flat stroke leaving the tip."
+    "description": "Standing tall: a slim dark iron lance of the order, a small mustard sun disc below a long point, a coral red band and prayer cords on the shaft."
   },
   "pebble_mites": {
     "brief": "One tiny mite whose shell is a round ore pebble. Accent: mustard.",

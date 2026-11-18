@@ -63,8 +63,8 @@ Rules for the idea:
   item carries one shape and one feature, a big item up to four.
 - **Still the same world:** worn, practical, salvaged, patched (docs/style.md, "Items"). Inventive does not mean
   clean sci-fi chrome.
-- **One projectile at most.** A weapon shows at most one projectile (one arrow, one slug, one needle), never a
-  burst, a volley or a beam line across the picture (Ilja 2026-11-18).
+- **No projectiles.** A weapon shows no projectile at all: no shot, slug, needle, nocked arrow, beam or volley
+  leaving or sitting in it (Ilja 2026-11-18). A flame or spray right at the nozzle is part of the weapon.
 - **No glow.** Energy, heat and light are flat colour shapes or wavy ink lines, never glow, bloom or neon.
 - **No text, letters, logos.** No alcohol. Nothing from Backpack Brawl or other existing games.
 
