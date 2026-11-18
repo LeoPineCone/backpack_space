@@ -201,6 +201,17 @@
   "ui.quest.weekly": "WEEKLY",
   "ui.quest.rulesOpen": "Special rules follow",
   "ui.quest.renews": "new soon",
+
+  "status.retry": "TRY AGAIN",
+  "status.maintenance.title": "MAINTENANCE",
+  "status.maintenance.text": "We are working on the game. Please come back a little later.",
+  "status.update.title": "UPDATE NEEDED",
+  "status.update.text": "A new version of the game is ready. Please update the app in the store.",
+  "status.noNetwork.title": "NO CONNECTION",
+  "status.noNetwork.text": "The game needs the internet. Check your connection and try again.",
+  "status.signInFailed.title": "NOT SIGNED IN",
+  "status.signInFailed.text": "The game keeps your progress with Game Center or Google Play Games. Please sign in there and try again.",
+
   "ui.music": "Music",
   "ui.sounds": "Sounds",
   "ui.account": "Account",

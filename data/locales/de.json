@@ -786,6 +786,17 @@
   "ui.quest.weekly": "WÖCHENTLICH",
   "ui.quest.rulesOpen": "Sonderregeln folgen",
   "ui.quest.renews": "bald neu",
+
+  "status.retry": "NOCHMAL",
+  "status.maintenance.title": "WARTUNG",
+  "status.maintenance.text": "Wir arbeiten gerade am Spiel. Bitte schau etwas später wieder vorbei.",
+  "status.update.title": "UPDATE NÖTIG",
+  "status.update.text": "Eine neue Version des Spiels ist da. Bitte aktualisiere die App im Store.",
+  "status.noNetwork.title": "KEINE VERBINDUNG",
+  "status.noNetwork.text": "Das Spiel braucht das Internet. Prüfe deine Verbindung und versuche es noch einmal.",
+  "status.signInFailed.title": "NICHT ANGEMELDET",
+  "status.signInFailed.text": "Das Spiel speichert deinen Fortschritt über Game Center oder Google Play Spiele. Bitte melde dich dort an und versuche es noch einmal.",
+
   "ui.music": "Musik",
   "ui.sounds": "Geräusche",
   "ui.account": "Konto",

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Backpack Space – game client (PixiJS), shipped to iOS/Android with Capacitor. Only shows what the core computes.",
+  "description": "Backpack Space \u2013 game client (PixiJS), shipped to iOS/Android with Capacitor. Only shows what the core computes.",
   "scripts": {
     "typecheck": "tsc --noEmit -p .",
     "web:build": "npm run client:build --prefix ../..",
@@ -14,6 +14,7 @@
     "cap:run:android": "npm run web:build && node scripts/with-java21.mjs cap run android"
   },
   "dependencies": {
+    "@backpack-space/api": "*",
     "@backpack-space/core": "*",
     "@capacitor/android": "^8.6.2",
     "@capacitor/core": "^8.6.2",
