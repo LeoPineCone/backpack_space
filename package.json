@@ -7,6 +7,7 @@
   "scripts": {
     "validate": "tsx src/cli/validate.ts",
     "battle": "tsx src/cli/battle.ts",
+    "sim:reference": "tsx src/cli/reference-fights.ts",
     "playtest": "tsx src/cli/playtest.ts",
     "catalog": "tsx src/cli/catalog.ts",
     "art:prompt": "tsx src/cli/art-prompt.ts",
@@ -32,10 +33,11 @@
     "balance:propose": "tsx src/balance/propose.ts",
     "balance:sweep": "tsx src/balance/sweep.ts",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "lint": "eslint . && prettier --check \"**/*.{ts,js,mjs}\"",
     "format": "prettier --write \"**/*.{ts,js,mjs}\" && eslint . --fix",
     "check": "npm run validate && npm run typecheck && npm run lint && npm test",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p playground && npm run typecheck --workspaces --if-present",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p playground && tsc --noEmit -p e2e && npm run typecheck --workspaces --if-present",
     "play": "vite playground",
     "play:build": "vite build playground --outDir ../out/play --emptyOutDir",
     "play:ghosts": "tsx playground/make-ghosts.ts",
@@ -49,6 +51,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^22.10.0",
     "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
