@@ -36,7 +36,11 @@ describe("a whole run over HTTP against the bot pool", () => {
     expect(rounds).toBeGreaterThanOrEqual(data.rules.lives);
     expect(run.lives === 0 || run.round === data.rules.rounds).toBe(true);
 
-    const fin = RunFinishResponse.parse(await (await post("/runs/finish", { runId, reason: "gave_up" })).json());
+    // two finish requests at the same time: one booking, identical answers
+    const [a, b] = await Promise.all([post("/runs/finish", { runId, reason: "finished" }), post("/runs/finish", { runId, reason: "finished" })]);
+    const [ta, tb] = [await a.text(), await b.text()];
+    expect(tb).toBe(ta);
+    const fin = RunFinishResponse.parse(JSON.parse(ta));
     expect(fin.result).toMatchObject({ runId, wins: run.wins, livesLeft: run.lives, roundsPlayed: rounds });
     expect(fin.profile.runs).toBe(profile.runs + 1);
   });

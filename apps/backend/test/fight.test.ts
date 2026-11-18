@@ -1,11 +1,11 @@
-import { RunFightResponse, RunStartResponse, SessionResponse, type BuildBody } from "@backpack-space/api";
+import { RunCurrentResponse, RunFightResponse, RunFinishResponse, RunStartResponse, SessionResponse, type BuildBody } from "@backpack-space/api";
 import { compile, simulate } from "@backpack-space/core";
 import { describe, expect, it } from "vitest";
 import { createApp } from "../src/app.js";
 import { ACTIONS_KEEP_DAYS } from "../src/domain/fight.js";
 import { poolKeys, type PoolEntry, type PoolOrigin } from "../src/domain/matching.js";
 import { playerKey } from "../src/domain/players.js";
-import { roundKey } from "../src/domain/runs.js";
+import { roundKey, ROUNDS_KEEP_DAYS } from "../src/domain/runs.js";
 import { buckets } from "../src/seed/bot-pool.js";
 import { fakePorts } from "../src/fakes/index.js";
 import type { Write } from "../src/ports/index.js";
@@ -58,7 +58,23 @@ const setup = async (opts: { easy?: boolean } = {}) => {
   });
   const fight = (round: number, over?: Parameters<typeof fightBody>[1]) => call("/runs/fight", fightBody(round, over));
   const events = (name: string) => f.log.lines.filter((l) => l.type === "event" && l.event === name);
-  return { ...f, backpacks: f.ports.backpacks, actions: f.ports.actions, app, call, run, fight, fightBody, events, playerId, data, meta, hero, startBuild };
+  return {
+    ...f,
+    token: session.token,
+    backpacks: f.ports.backpacks,
+    actions: f.ports.actions,
+    app,
+    call,
+    run,
+    fight,
+    fightBody,
+    events,
+    playerId,
+    data,
+    meta,
+    hero,
+    startBuild,
+  };
 };
 
 describe("fight request", () => {
@@ -185,5 +201,65 @@ describe("fight request", () => {
     const { fight, run, players, playerId } = await setup({ easy: true });
     expect((await fight(1)).status).toBe(200);
     expect(String((await players.get(playerKey(playerId), roundKey(run.runId, 1)))!.owner)).toMatch(/^easy-/);
+  });
+});
+
+describe("finishing a run (booking exactly once)", () => {
+  const playOut = async (f: Awaited<ReturnType<typeof setup>>) => {
+    let state = f.run;
+    let rounds = 0;
+    while (!state.over) {
+      state = RunFightResponse.parse((await f.fight(state.round)).body).run;
+      rounds++;
+    }
+    return { state, rounds };
+  };
+
+  it("books a run that is over with reason finished, once, with the rounds played", async () => {
+    const f = await setup();
+    const { state, rounds } = await playOut(f);
+    const a = await f.call("/runs/finish", { runId: f.run.runId, reason: "finished" });
+    const b = await f.call("/runs/finish", { runId: f.run.runId, reason: "finished" });
+    expect(b).toEqual(a);
+    const { result } = RunFinishResponse.parse(a.body);
+    expect(result).toMatchObject({ wins: state.wins, livesLeft: state.lives, roundsPlayed: rounds });
+    expect(f.events("run_finished")).toEqual([expect.objectContaining({ reason: "finished" })]);
+  });
+
+  it("counts finished for a run that is not over as giving up", async () => {
+    const f = await setup();
+    await f.fight(1);
+    expect((await f.call("/runs/finish", { runId: f.run.runId, reason: "finished" })).status).toBe(200);
+    expect(f.events("run_finished")).toEqual([expect.objectContaining({ reason: "gave_up" })]);
+    expect((await f.players.get(playerKey(f.playerId), `DONE#${f.run.runId}`))?.reason).toBe("gave_up");
+  });
+
+  it("books an over run on its own when the app asks for the open run, and only once", async () => {
+    const f = await setup();
+    await playOut(f);
+    const get = async () =>
+      RunCurrentResponse.parse(
+        JSON.parse(
+          (await f.app({ method: "GET", path: "/runs/current", headers: { "x-app-version": "1.0.0", authorization: `Bearer ${f.token}` }, body: null })).body,
+        ),
+      );
+    const first = await get();
+    expect(first.run).toBeNull();
+    expect(first.finished?.result.runId).toBe(f.run.runId);
+    const second = await get();
+    expect(second).toEqual({ run: null });
+    expect(f.events("run_finished")).toHaveLength(1);
+    // the app reporting the end afterwards gets the same answer
+    expect((await f.call("/runs/finish", { runId: f.run.runId, reason: "finished" })).body).toEqual(first.finished);
+  });
+
+  it("lets ROUND# and DONE# entries expire after 30 days", async () => {
+    const f = await setup();
+    await f.fight(1);
+    await f.call("/runs/finish", { runId: f.run.runId, reason: "gave_up" });
+    const items = await f.players.query(playerKey(f.playerId));
+    const expiry = Math.floor(f.clock.now() / 1000) + ROUNDS_KEEP_DAYS * 86400;
+    for (const i of items.filter((x) => x.sk.startsWith("ROUND#") || x.sk.startsWith("DONE#"))) expect(i.expiresAt).toBe(expiry);
+    expect(items.find((i) => i.sk === "PROFILE")).not.toHaveProperty("expiresAt");
   });
 });
