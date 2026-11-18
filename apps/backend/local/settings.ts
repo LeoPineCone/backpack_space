@@ -6,7 +6,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
-import type { Settings, SettingsValues } from "../src/ports/index.js";
+import { refreshingSettings } from "../src/adapters/refreshing-settings.js";
+import type { Clock, Settings, SettingsValues } from "../src/ports/index.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const SETTINGS_FILE = join(here, "settings.json");
@@ -18,6 +19,7 @@ export const LocalSettings = z
     dynamodb: z.object({ endpoint: z.url(), region: z.string().min(1) }).strict(),
     maintenance: z.object({ on: z.boolean(), textKey: z.string().optional() }).strict(),
     minAppVersion: z.string().regex(/^\d{1,4}\.\d{1,4}\.\d{1,4}$/),
+    season: z.object({ id: z.number().int().min(1), start: z.iso.date(), end: z.iso.date() }).strict(),
     devIdentity: z.boolean().optional(),
     tokenKeys: z
       .array(z.object({ id: z.string().min(1), secret: z.string().min(32) }).strict())
@@ -36,9 +38,16 @@ export function loadLocalSettings(overrides: Partial<LocalSettings> = {}): { val
   return { values, file };
 }
 
-/** The settings port over fixed local values (the file is read once at start). */
-export function fixedSettings(values: LocalSettings): Settings {
-  const { maintenance, minAppVersion, devIdentity, tokenKeys, tokenLifetime, tables } = values;
-  const v: SettingsValues = { maintenance, minAppVersion, tokenKeys, tokenLifetime, tables, ...(devIdentity ? { devIdentity } : {}) };
-  return { get: async () => v };
+export function toSettingsValues(values: LocalSettings): SettingsValues {
+  const { maintenance, minAppVersion, season, devIdentity, tokenKeys, tokenLifetime, tables } = values;
+  return { maintenance, minAppVersion, season, tokenKeys, tokenLifetime, tables, ...(devIdentity ? { devIdentity } : {}) };
+}
+
+/**
+ * The settings port of the local backend: re-reads the file at most once a minute, like the cloud reads the
+ * Parameter Store, so the maintenance switch or the minimum version can be tried without a restart.
+ * Port and database address are read once at start.
+ */
+export function localSettingsPort(clock: Clock, overrides: Partial<LocalSettings> = {}): Settings {
+  return refreshingSettings(async () => toSettingsValues(loadLocalSettings(overrides).values), clock);
 }
