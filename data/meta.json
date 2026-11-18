@@ -11,6 +11,22 @@
     "picture": "pic_pilot"
   },
   "matching": { "easyRuns": 3 },
+  "quests": {
+    "$comment": "Ilja 2026-11-18: rules 1 to 7 of the proposal list. When a quest counts as done and its bonus are still open.",
+    "perDay": 3,
+    "perWeek": 1,
+    "daily": ["shortFlight", "earlyNova", "goldRain", "noReroll", "farLight", "noGifts"],
+    "weekly": ["oneShot", "earlyNova"],
+    "rules": [
+      { "id": "shortFlight", "rounds": 6, "lives": 2 },
+      { "id": "oneShot", "lives": 1 },
+      { "id": "earlyNova", "phaseSeconds": 4 },
+      { "id": "goldRain", "goldBonus": 5 },
+      { "id": "noReroll", "noReroll": true },
+      { "id": "farLight", "rarityAhead": 3 },
+      { "id": "noGifts", "noSpecials": true }
+    ]
+  },
   "names": {
     "blocked": [
       "fuck",

@@ -105,7 +105,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | CORE-04 | The shop of a round follows completely from a seed that the caller passes in. | [client-server.md](client-server.md) | M0 | – | decided |
 | CORE-05 | The core has a plausibility check for a backpack of a given round (items exist, layout valid, rarity and tier possible, value fits the gold earned so far). | [client-server.md](client-server.md) | M2 | – | decided |
 | CORE-06 | The season reset follows the league groups (core, `data/meta.json`, glossary text). | [matchmaking.md](matchmaking.md) | M3 | – | decided |
-| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided; which rules exist still has to be designed (needs designer) |
+| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided (2026-11-18: rules 1 to 7 of the proposal list, built in M3) |
 | CORE-08 | The data version (major.minor) is part of the data and decides whether a stored backpack can still be matched. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 
 ## Account and profile
@@ -161,7 +161,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | META-03 | The season follows the server date. At the season change the server hands out the league patch, applies the reset and starts the new pass. | [retention.md](retention.md) | M3 | CORE-06 | decided |
 | META-04 | Season pass with a free and a premium lane. The premium lane gives the season hero from level 1. | [retention.md](retention.md) | M3 | – | decided |
 | META-05 | Version 1 ships with a season hero. | hero design in progress | M3 | – | decided, hero open (needs designer) |
-| META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided, contents open (needs designer) |
+| META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided (2026-11-18: 3 daily, 1 weekly, no league points, built in M3); when a quest counts as done and its extra reward open |
 | META-07 | League up after a run is shown as a quiet animation in the screen, hero level up as an animation at the end of the run. | [ux.md](ux.md) | M3 | – | decided |
 | META-08 | All numbers of the meta systems are balanced, not placeholders: XP per level, Galaxies per pass level, league points, free Credits. | [retention.md](retention.md) | M6 | – | open (needs designer) |
 | META-09 | A season hero of an earlier season can be bought after its season. It cannot be earned by playing. | [retention.md](retention.md), review | after version 1 | – | decided |

@@ -12,6 +12,7 @@ import { profile, profileEquip, profileName, profileSkin } from "./domain/profil
 import { runFight } from "./domain/fight.js";
 import { runCurrent, runFinish, runStart } from "./domain/runs.js";
 import { session } from "./domain/session.js";
+import { quests } from "./domain/quests.js";
 
 export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {
   config,
@@ -20,6 +21,7 @@ export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {
   profileEquip,
   profileSkin,
   profileName,
+  quests,
   runCurrent,
   runStart,
   runFight,

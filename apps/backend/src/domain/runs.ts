@@ -17,16 +17,21 @@ import type {
   RunStartRequest,
   RunStartResponse,
 } from "@backpack-space/api";
-import { bookRun, rewardTrack, type Meta, type Reward } from "@backpack-space/core";
+import { bookRun, questData, questRule, questsOn, rewardTrack, type Meta, type Reward } from "@backpack-space/core";
 import type { Item, Write } from "../ports/index.js";
 import { ApiError, type DomainContext, type Game } from "./context.js";
 import { dataMajor } from "./matching.js";
 import { logEvent, type EventFields } from "./log.js";
 import { loadProfile, playerKey, profileWrites, type Origin } from "./players.js";
+import { isoDay } from "./config.js";
 
 export const RUN = "RUN";
 export const doneKey = (runId: string) => `DONE#${runId}`;
 export const roundKey = (runId: string, round: number) => `ROUND#${runId}#${String(round).padStart(2, "0")}`;
+/** P#<playerId> / QUEST#<questId>: the player finished a run of this quest (one per quest and period, META-06) */
+export const questKey = (questId: string) => `QUEST#${questId}`;
+/** how long a played quest is remembered: longer than its period (a week at most) */
+export const QUESTS_KEEP_DAYS = 14;
 
 /** The RUN item. `version` counts every write; a write only succeeds on the version it read. */
 export interface StoredRun {
@@ -43,6 +48,8 @@ export interface StoredRun {
   simVersion: string;
   /** the data version the run started with (missing on runs from before it was stored: counts as current) */
   dataVersion?: string;
+  /** a quest run: the quest id (its special rule changes the rules of the run) */
+  quest?: string;
   /** milliseconds since 1970 */
   startedAt: number;
   version: number;
@@ -56,6 +63,7 @@ export const toBody = (r: StoredRun): RunBody => ({
   wins: r.wins,
   shopSeed: r.shopSeed,
   over: r.over,
+  ...(r.quest ? { quest: r.quest } : {}),
 });
 
 export async function readRun(ctx: DomainContext, playerId: string): Promise<StoredRun | null> {
@@ -71,6 +79,15 @@ export function gameFor(ctx: DomainContext, simVersion: string): Game {
   if (simVersion === game.data.simVersion) return game;
   if (previousGame && simVersion === previousGame.data.simVersion) return previousGame;
   throw new ApiError("update_required");
+}
+
+/** The build a run plays with: the one the request names, with the rules of its quest, if it is a quest run (CORE-07). */
+export function runGame(ctx: DomainContext, simVersion: string, quest: string | undefined): Game {
+  const game = gameFor(ctx, simVersion);
+  if (!quest) return game;
+  const rule = questRule(game.meta.quests, quest);
+  if (!rule) throw new ApiError("quest_unavailable");
+  return { ...game, data: questData(game.data, rule) };
 }
 
 /**
@@ -92,9 +109,9 @@ export async function runCurrent(ctx: DomainContext): Promise<RunCurrentResponse
 
 /** POST /runs: starts a run with a shop seed for round 1; while one is open, that one comes back unchanged. */
 export async function runStart(ctx: DomainContext, body: unknown): Promise<RunStartResponse> {
-  const { hero, simVersion } = body as RunStartRequest;
+  const { hero, simVersion, quest } = body as RunStartRequest;
   const playerId = ctx.playerId!;
-  const game = gameFor(ctx, simVersion);
+  const game = runGame(ctx, simVersion, quest);
   const open = await readRun(ctx, playerId);
   if (open && !open.over && !majorChanged(open, game)) return { run: toBody(open) };
   // an open run that is over or of an old data major is booked first, then the new run starts
@@ -106,6 +123,11 @@ export async function runStart(ctx: DomainContext, body: unknown): Promise<RunSt
   if (!stored) throw new Error("signed-in player without profile");
   const playable = data.heroes.has(hero) && (meta.startHeroes.includes(hero) || stored.profile.heroes.includes(hero));
   if (!playable) throw new ApiError("bad_request");
+  // a quest can be started on the days it is open, once per player (META-06)
+  if (quest) {
+    const open = questsOn(meta.quests, isoDay(ctx.ports.clock.now())).some((q) => q.id === quest);
+    if (!open || (await ctx.ports.players.get(playerKey(playerId), questKey(quest)))) throw new ApiError("quest_unavailable");
+  }
 
   const { random, clock, players } = ctx.ports;
   const run: StoredRun = {
@@ -119,6 +141,7 @@ export async function runStart(ctx: DomainContext, body: unknown): Promise<RunSt
     met: [],
     simVersion,
     dataVersion: data.dataVersion,
+    ...(quest ? { quest } : {}),
     startedAt: clock.now(),
     version: 1,
   };
@@ -178,7 +201,8 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
 
     const summary = { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.over ? run.round : run.round - 1 };
     // the core's profile carries Credits; on the server they live at RevenueCat (earned Credits: STORE issues)
-    const booking = bookRun(game.meta, { ...stored.profile, credits: 0 }, summary);
+    // a quest run books no league points (its special rule makes it unlike a normal run)
+    const booking = bookRun(game.meta, { ...stored.profile, credits: 0 }, summary, { quest: !!run.quest });
     const { credits: _credits, ...profile } = booking.profile;
     const result: RunResult = {
       runId,
@@ -190,6 +214,7 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
       league: booking.league,
       pass: booking.pass,
       rewards: booking.rewards,
+      ...(run.quest ? { quest: run.quest } : {}),
     };
     const answer: RunFinishResponse = { result, profile };
     const now = clock.now();
@@ -198,6 +223,8 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
       ...profileWrites(playerId, profile, stored, now, originOf(game.meta, booking.rewards), stored.profile),
       { put: { pk, sk: doneKey(runId), reason, answer, at: now, expiresAt: expiresIn(now, ROUNDS_KEEP_DAYS) } satisfies Item, ifNotExists: true },
       { delete: { pk, sk: RUN }, ifVersion: run.version },
+      // the quest counts as played; a second start of it is refused
+      ...(run.quest ? [{ put: { pk, sk: questKey(run.quest), runId, at: now, expiresAt: expiresIn(now, QUESTS_KEEP_DAYS) } }] : []),
     ];
     if (await players.transact(writes)) {
       logEvent(ctx, "run_finished", { runId, reason: EVENT_REASON[reason], wins: run.wins, livesLeft: run.lives });

@@ -166,10 +166,12 @@ Everything the player customises lives in the profile: player picture, player na
 3. Every purchase shows a preview and asks for confirmation, for Credits and for real money alike. **Decided** (2026-11-17)
 4. No offers on the start screen for launch; the shop is reached through the cart button and the Credits counter. **Decided** (2026-11-17, replaces the earlier "start screen as shop window")
 
-**M8 Daily and weekly quests** (structure built with placeholder cards: 3 daily, 1 weekly)
+**M8 Daily and weekly quests** (built: 3 daily, 1 weekly, from the server)
 
 1. One entry point for both, a button in the bottom row of the start screen. **Decided** (2026-11-17)
-2. Every quest is a whole run, maybe shorter or longer than a normal one, always with special rules; rewards are Galaxies. **Decided** Which quests and rules: **open**.
+2. Every quest is a whole run, maybe shorter or longer than a normal one, always with special rules; rewards are Galaxies. **Decided** Rules 1 to 7 of the proposal list (2026-11-18, [retention.md](retention.md)). **Decided**
+3. A card shows the rule's name and what it changes; a played quest shows a check and cannot be started again until its day or week renews. Play leads to hero selection, then the run starts with the rule. Offline the screen says that quests need the connection. *Assumption*
+4. When a quest counts as done and its extra reward: **open**.
 
 **M9 Settings**
 
@@ -202,7 +204,7 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | V5 | Round result | screen | outcome of the round | victory/defeat, hearts, top 3 items, chart, CONTINUE | built |
 | V6 | Run end | screen | summary and reward | Galaxies, final backpack, XP and level (animated), league points (animated), unlocks, NEW RUN, home, share | built |
 | V7 | Credits shop | screen | buy | sections: offers, skins, heroes, backgrounds, Credits | built (prices "?") |
-| V8 | Quests | screen | daily and weekly | list with progress and reward; starts a run with special rules | built (placeholder cards) |
+| V8 | Quests | screen | daily and weekly | list of today's dailies and this week's weekly, played ones checked; starts a run with its special rule | built |
 | V9 | Status | screen | maintenance, update needed, no connection, not signed in (M11) | symbol, title, one sentence, TRY AGAIN | built (no store link yet) |
 | P1 | Item popup | popup | what an item does | picture, name, symbol rows, "i", recipe radar; in the backpack: turn, sell, lock | built |
 | P2 | Hero popup | popup | what a hero does | passive as symbol rows, paths, "i" | built |
@@ -227,7 +229,7 @@ Every action has one gesture and one visible response; what is not possible is e
 | V1 | Fight | tap FIGHT | hero choice | – |
 | V1 | Profile, leagues, planets, pass | tap picture, patch, Galaxies, pass | progress on the matching tab | – |
 | V1 | Shop | tap cart or Credits | Credits shop | – |
-| V1 | Quests | tap quests | quests | starting a quest: today a toast |
+| V1 | Quests | tap quests | quests | starting a quest leads to hero selection |
 | V1 | Settings | tap gear | settings (glossary inside) | – |
 | V2 | Choose a hero | tap on the ring | picture, name, level change | – |
 | V2 | Explain the hero | tap "i" | hero popup | – |
@@ -274,6 +276,6 @@ Every action has one gesture and one visible response; what is not possible is e
 
 ## Still open
 
-- Which daily and weekly quests, with which special rules.
+- When a quest counts as done, and its extra reward.
 - The exact form of the league promotion animation.
 - Sound and music.

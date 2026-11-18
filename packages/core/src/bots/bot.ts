@@ -249,7 +249,7 @@ export function botShop(data: GameData, bot: Bot, round: number, rng: Rng, opts:
       offers[b.slot] = null;
       if (data.items.get(o.item)!.isBag) bot.bags.push(placeBag(data, bot.bags, o.item)!);
       else bot.inv.push(o.item);
-    } else if (bot.gold >= rules.shop.rerollCost + 3 && log.rerolls < maxRerolls) {
+    } else if (rules.shop.rerolls !== false && bot.gold >= rules.shop.rerollCost + 3 && log.rerolls < maxRerolls) {
       bot.gold -= rules.shop.rerollCost;
       log.rerolls++;
       offers = rollOffers(data, bot.hero, round, rng, bot.inv);

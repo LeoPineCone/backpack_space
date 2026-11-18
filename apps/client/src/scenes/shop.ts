@@ -261,7 +261,8 @@ export function shopScene(game: Game): Scene {
     const rr = roundButton("dice", 32, () => { if (game.act(act.reroll())) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
     rr.addChild(at(disc(11, { fill: C.gold, framed: true }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
-    view.addChild(at(rr, REROLL.x, REROLL.y));
+    // a quest rule can switch rerolls off: then there is no reroll button
+    if (rules.shop.rerolls !== false) view.addChild(at(rr, REROLL.x, REROLL.y));
     view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) fight(); }, { iconName: "swords" }), FIGHT.x, FIGHT.y));
     const bin = new Container();
     const ring = new Graphics();

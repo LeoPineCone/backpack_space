@@ -25,6 +25,8 @@ export const ERROR_CODES = [
   "not_owned",
   /** the player name is empty, too long or refused by the name filter */
   "name_rejected",
+  /** the quest is not open today, or this player already played it */
+  "quest_unavailable",
   /** too many requests: wait and repeat */
   "rate_limited",
   /** something broke on the server */
@@ -45,6 +47,7 @@ export const ERROR_STATUS: Record<ErrorCode, number> = {
   insufficient_credits: 402,
   not_owned: 409,
   name_rejected: 422,
+  quest_unavailable: 409,
   rate_limited: 429,
   internal: 500,
 };

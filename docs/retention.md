@@ -39,9 +39,19 @@ Where exactly free Credits come from (free pass, planet track) is an assumption,
 
 ## Daily and weekly quests
 
-Quests are played against static opponents with specific restrictions and reward Galaxies. The deterministic core makes fixed opponents and equal conditions for everyone easy.
+Every quest is a whole run with one special rule (decided by Ilja 2026-11-18, rules 1 to 7 of the proposal list). Opponents come from the normal pool. A quest run pays Galaxies and hero XP like a normal run, but no league points. Every day 3 daily quests are open and every week (Monday to Sunday, UTC) 1 weekly quest; which ones follows from the date alone, the same for everyone. Each quest can be played once in its day or week.
 
-Example restrictions (not decided): organic items only, the supernova comes earlier, win with 3 animals in the backpack.
+| Rule | What changes | Daily | Weekly |
+| --- | --- | --- | --- |
+| Short flight | 6 rounds, 2 lives | yes | – |
+| One shot | 1 life for the whole run | – | yes |
+| Early nova | every phase of the star clock lasts 4 s, so the supernova comes earlier | yes | yes |
+| Gold rain | 5 more gold every round | yes | – |
+| No reroll | the shop cannot be rerolled | yes | – |
+| Far light | the shop offers the rarities of 3 rounds later | yes | – |
+| No gifts | no free picks after rounds 2 and 6 | yes | – |
+
+The numbers and which rules are daily or weekly live in `data/meta.json` → `quests`; the core turns a rule into changed run rules (`packages/core/src/quests.ts`). Still open: when a quest counts as done (just played, or a number of wins) and what extra reward it gives.
 
 ## Leagues
 
@@ -65,7 +75,7 @@ Ideas (not decided):
 
 ## Open points
 
-- Daily and weekly quests: which ones, how hard, how many per day and week?
+- Daily and weekly quests: when does one count as done, and what extra reward does it give?
 - Speed of hero levels, planet track and pass (Galaxies per level)?
 - How many free Credits, and what does a hero cost?
 - Premium pass price? (Season length decided 2026-11-18: 3 months.)
@@ -92,4 +102,4 @@ Assumptions of step 1 (open for change):
 - Free Credits come from the free pass and the planet track.
 - Season 1 started on 2026-11-01 and has no season hero.
 
-Not built yet (step 2 and later): daily and weekly quests (they need restricted runs in the core), the shop for skins, heroes and Credits, buying the premium pass, real payments, accounts and a server, real art for planets, patches and skins.
+Not built yet (step 2 and later): quest rewards beyond a normal run, the shop for skins, heroes and Credits, buying the premium pass, real payments, accounts and a server, real art for planets, patches and skins.

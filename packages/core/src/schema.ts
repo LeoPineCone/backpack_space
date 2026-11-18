@@ -187,6 +187,8 @@ export const Rules = z
         bagOfferPct: z.number(),
         recipeOfferPct: z.number(),
         rerollCost: z.number(),
+        /** false: the shop cannot be rerolled (a quest rule); missing = it can */
+        rerolls: z.boolean().optional(),
         heroOfferPct: z.number(),
         salePct: z.number(),
         sellPct: z.number(),

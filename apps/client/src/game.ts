@@ -6,6 +6,8 @@ import {
   bookRun,
   buildOf,
   newRun,
+  questData,
+  questRule,
   enterSeason,
   seasonAt,
   type GameData,
@@ -63,15 +65,19 @@ export class Game {
   signIn: (() => Promise<OnlineState>) | null = null;
   /** online: the server's id of the current run */
   runId: string | null = null;
+  /** the quest of the current run, if it is a quest run: its special rule changes the rules (CORE-07) */
+  quest: string | null = null;
   /** starts the app's entry again: configuration, sign-in, open run (main.ts) */
   reenter: () => void = () => {};
   readonly opponents: OpponentSource;
 
   constructor(
     readonly app: Application,
-    readonly data: GameData,
+    /** the game data as shipped; `data` is what the current run plays with */
+    readonly baseData: GameData,
     readonly meta: Meta,
   ) {
+    const data = baseData;
     this.keywords = keywords(data);
     this.profile = readProfile(meta);
     this.opponents = new GhostOpponents(data);
@@ -83,6 +89,23 @@ export class Game {
     app.ticker.add((t) => this.tick(t.deltaMS / 1000));
     window.addEventListener("resize", () => this.layout());
     this.layout();
+  }
+
+  private questCache: { id: string; data: GameData } | null = null;
+
+  /** The game data of the current run: during a quest run with the rules of its quest, otherwise as shipped. */
+  get data(): GameData {
+    return this.run && this.quest ? this.dataFor(this.quest) : this.baseData;
+  }
+
+  /** The game data a quest plays with (the shipped data for no quest or an unknown one). */
+  dataFor(quest: string | null): GameData {
+    if (!quest) return this.baseData;
+    if (this.questCache?.id !== quest) {
+      const rule = questRule(this.meta.quests, quest);
+      this.questCache = { id: quest, data: rule ? questData(this.baseData, rule) : this.baseData };
+    }
+    return this.questCache.data;
   }
 
   private layout(): void {
@@ -161,7 +184,8 @@ export class Game {
 
   /** Stores the run on this device; `fight` while a fight of this round is running or shown. */
   save(fight: SavedFight | null = null): void {
-    if (this.run && !this.run.over) writeSave({ run: this.run, seed: this.seed, fight, ...(this.runId ? { runId: this.runId } : {}) });
+    if (this.run && !this.run.over)
+      writeSave({ run: this.run, seed: this.seed, fight, ...(this.runId ? { runId: this.runId } : {}), ...(this.quest ? { quest: this.quest } : {}) });
     else clearSave();
   }
 
@@ -172,12 +196,13 @@ export class Game {
 
   /** Takes up a stored run; returns its running fight, or undefined when there is no run to continue. */
   resume(): { fight: SavedFight | null } | undefined {
-    const s = readSave(this.data);
+    const s = readSave(this.baseData);
     if (!s) return undefined;
     this.run = s.run;
     this.seed = s.seed;
     this.hero = s.run.hero;
     this.runId = s.runId ?? null;
+    this.quest = s.quest ?? null;
     return { fight: s.fight };
   }
 
@@ -199,19 +224,20 @@ export class Game {
     return res;
   }
 
-  /** Starts a run on the server: the run id and the shop seed of round 1 come from there (RUN-03). */
-  async startRun(hero: string): Promise<ApiResult<null>> {
-    const res = await this.call("runStart", { hero, simVersion: this.data.simVersion });
+  /** Starts a run on the server: the run id and the shop seed of round 1 come from there (RUN-03); `quest`: a quest run. */
+  async startRun(hero: string, quest?: string): Promise<ApiResult<null>> {
+    const res = await this.call("runStart", { hero, simVersion: this.baseData.simVersion, ...(quest ? { quest } : {}) });
     if (!res.ok) return res;
     const r = res.value.run;
-    if (r.round !== 1 || r.hero !== hero) {
+    if (r.round !== 1 || r.hero !== hero || r.quest !== quest) {
       // an open run this device has no copy of: the server books it, then the new run starts
       const ended = await this.call("runFinish", { runId: r.runId, reason: "no_local_copy" });
       if (!ended.ok) return ended;
       this.setProfile(bookingFromServer(ended.value, this.profile).profile);
-      return this.startRun(hero);
+      return this.startRun(hero, quest);
     }
-    this.run = newRun(this.data, hero, r.shopSeed);
+    this.quest = r.quest ?? null;
+    this.run = newRun(this.dataFor(this.quest), hero, r.shopSeed);
     this.seed = r.shopSeed;
     this.runId = r.runId;
     this.save();
@@ -226,7 +252,7 @@ export class Game {
       round: run.round,
       backpack: buildOf(run),
       actions: roundActions(run.log),
-      simVersion: this.data.simVersion,
+      simVersion: this.baseData.simVersion,
     });
     if (!res.ok) return res;
     const a = res.value;

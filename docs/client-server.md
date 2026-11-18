@@ -257,7 +257,8 @@ All requests except the configuration and the webhook need the session token.
 | `POST /profile/skin` | change a hero's look | hero and an owned skin, or nothing for the base look | profile | yes |
 | `POST /profile/name` | change the player name | name; the server tidies it and refuses offensive or political words | profile | yes |
 | `GET /runs/current`                      | app start                                                   | nothing                                            | open run with standing and shop seed of the round, or nothing; an over run that was never reported is booked now and its result comes along | yes                                              |
-| `POST /runs`                             | start a run                                                 | hero, simulation version                           | run id, shop seed for round 1                                                          | yes, while a run is open the same one comes back |
+| `GET /quests` | quests screen | nothing | the quests open today and this week, each marked whether the player played it | yes |
+| `POST /runs`                             | start a run                                                 | hero, simulation version, quest id for a quest run | run id, shop seed for round 1                                                          | yes, while a run is open the same one comes back |
 | `POST /runs/fight`       | Fight button                                                | run id, round, backpack, actions of the round, simulation version | opponent backpack, name, league patch, fight seed, result, shop seed of the next round | yes, same answer per run and round               |
 | `POST /runs/finish`                      | end of the run, giving up, or no local copy of the open run | run id, reason (finished, gave up, no local copy)  | rewards, profile                                                                       | yes, same answer                                 |
 | `POST /shop/buy`                         | purchase with Credits                                       | thing                                              | profile or "balance too low"                                                           | yes, deducts only once                           |
@@ -281,6 +282,7 @@ Every error answer carries a fixed code by which the app decides what to show. T
 | backpack is rejected       | code `invalid_backpack`                                        | error note, the run stays paused before the fight        |
 | thing not owned            | code `not_owned`                                               | show a note, the profile stays as it was                 |
 | name refused               | code `name_rejected`                                           | show a note, the old name stays                          |
+| quest not open or played   | code `quest_unavailable`                                       | show a note, back to the quests list                     |
 | balance too low            | code `insufficient_credits`                                    | read the balance again, show the way to the Credit packs |
 | purchase not confirmed yet | the profile does not hold the ownership yet                    | show "Confirming purchase", load the profile again       |
 | too many requests          | code `rate_limited`                                            | wait and repeat, without a message to the player         |
