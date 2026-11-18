@@ -7,5 +7,14 @@
   "devIdentity": true,
   "tokenKeys": [{ "id": "local-1", "secret": "local-only-not-a-secret-change-me-in-settings-json" }],
   "tokenLifetime": 3600,
+  "limits": {
+    "config": { "rate": 50, "burst": 100 },
+    "session": { "rate": 50, "burst": 100 },
+    "profile": { "rate": 50, "burst": 100 },
+    "runCurrent": { "rate": 50, "burst": 100 },
+    "runStart": { "rate": 20, "burst": 50 },
+    "runFight": { "rate": 100, "burst": 200 },
+    "runFinish": { "rate": 20, "burst": 50 }
+  },
   "tables": { "players": "local-players", "backpacks": "local-backpacks", "actions": "local-actions" }
 }

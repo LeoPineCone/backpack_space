@@ -30,6 +30,11 @@ export interface SettingsValues {
    * full enough) waits for its threshold, which is set from the numbers collected in phase 1.
    */
   matchingPhase?: 1 | 3;
+  /**
+   * Request limits per route (BE-06): steady requests per second over all players and a burst. The cloud setup sets
+   * them on the HTTP API; the local server applies them itself. A route without an entry has no limit.
+   */
+  limits?: Partial<Record<string, { rate: number; burst: number }>>;
   /** present only locally: the development identity is accepted (DEV-05) */
   devIdentity?: boolean;
   /** signing keys for session tokens, newest first; two are accepted at once */

@@ -9,6 +9,7 @@ import type { AddressInfo } from "node:net";
 import { fileURLToPath } from "node:url";
 import { MAX_BODY_BYTES } from "@backpack-space/api";
 import { createApp } from "../src/app.js";
+import { TokenBuckets } from "../src/http/throttle.js";
 import { DynamoActionStore, DynamoBackpackPool, DynamoPlayerStore, documentClient } from "../src/adapters/dynamodb.js";
 import { storeIdentity } from "../src/adapters/store-identity.js";
 import { cryptoRandom, stdoutLog, systemClock } from "../src/adapters/system.js";
@@ -79,7 +80,7 @@ export interface RunningServer {
 /** Starts the local backend; `overrides` replace values of the settings file (tests: ports, tables). */
 export async function startServer(overrides: Partial<LocalSettings> = {}, log?: LogSink, builds?: Builds): Promise<RunningServer> {
   const { values } = loadLocalSettings(overrides);
-  const route = createApp(localPorts(values, overrides, log, builds));
+  const route = createApp(localPorts(values, overrides, log, builds), { throttle: new TokenBuckets() });
   const server = createServer((req, res) => {
     void (async () => {
       let out: HttpResponse;

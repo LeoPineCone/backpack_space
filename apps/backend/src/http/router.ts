@@ -2,7 +2,7 @@
  * The one router (DEV-02): it maps method and path to a domain function. The Lambda handlers and the local server
  * both call `handle`, so a path is defined in exactly one place (`ROUTES` in packages/api).
  *
- * Every request goes through the same steps (docs/backend.md):
+ * Every request goes through the same steps (docs/backend.md), after the request limit of its route (local only):
  *   1. schema check of the body (fields, types, size)
  *   2. session token check (routes with `auth`); the player id comes from the token
  *   3. maintenance and version check (not for /config, which reports both)
@@ -24,6 +24,7 @@ import {
 import { ApiError, type DomainContext, type Ports } from "../domain/context.js";
 import { logEvent } from "../domain/log.js";
 import type { HttpRequest, HttpResponse } from "./types.js";
+import type { TokenBuckets } from "./throttle.js";
 import { compareVersions } from "./version.js";
 
 /** A domain function: gets the checked body, returns the answer body. */
@@ -39,6 +40,11 @@ export interface RouterOptions {
   tokens: TokenCheck;
   /** the route table; tests may pass their own */
   table?: Record<string, Route>;
+  /**
+   * Request limits per route from the settings (`limits`). Only the local server passes this; in the cloud the HTTP
+   * API applies the same limits before a Lambda runs.
+   */
+  throttle?: TokenBuckets;
 }
 
 /** Routes that answer in maintenance and to old apps: the app must learn about both from them. */
@@ -100,6 +106,7 @@ export function createRouter(opts: RouterOptions): (req: HttpRequest) => Promise
     const fn = found && opts.routes[found.name as RouteName];
     if (!found || !fn) return fail("not_found");
     const { name, route } = found;
+    if (opts.throttle && !opts.throttle.take(name, ctx.settings.limits?.[name as RouteName], opts.ports.clock.now())) return fail("rate_limited");
 
     // 1. schema check
     if (req.body && req.body.length > MAX_BODY_BYTES) return fail("bad_request");
