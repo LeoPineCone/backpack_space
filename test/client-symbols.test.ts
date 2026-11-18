@@ -48,9 +48,9 @@ describe("client symbols", () => {
   it("the client draws every kind of modifier", () => {
     const symbols = readFileSync(join(ROOT, "apps", "client", "src", "symbols.ts"), "utf8");
     const schema = readFileSync(join(ROOT, "packages", "core", "src", "schema.ts"), "utf8");
-    const mods = [
-      ...schema.slice(schema.indexOf("const Mod ="), schema.indexOf("}).strict();", schema.indexOf("const Mod ="))).matchAll(/^\s+(\w+): z\./gm),
-    ].map((m) => m[1]!);
+    const mods = [...schema.slice(schema.indexOf("const Mod ="), schema.indexOf(".strict()", schema.indexOf("const Mod ="))).matchAll(/^\s+(\w+): z\./gm)].map(
+      (m) => m[1]!,
+    );
     expect(mods.length).toBeGreaterThan(5);
     for (const k of mods) expect(symbols, k).toContain(`m.${k})`);
   });
