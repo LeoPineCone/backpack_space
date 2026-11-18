@@ -13,6 +13,7 @@ import { settingsOverlay } from "./settings";
 import { homeScene } from "./home";
 import { runEndScene } from "./results";
 import { t } from "../i18n";
+import { onRunFailure } from "./online-flow";
 
 export function runMenuOverlay(game: Game, onChange: () => void): Scene {
   const root = new Container();
@@ -45,6 +46,16 @@ export function runMenuOverlay(game: Game, onChange: () => void): Scene {
             return;
           }
           const run = game.run!;
+          if (game.isOnline) {
+            // online the server books the run with the standing it knows (RUN-11)
+            void game.finishOnline("gave_up").then((res) => {
+              if (res.ok) {
+                game.act(act.giveUp());
+                game.show(runEndScene(game, res.value));
+              } else onRunFailure(game, res, () => game.closeOverlay());
+            });
+            return;
+          }
           game.act(act.giveUp());
           // the stored run ends before the reward is booked, so a reload cannot book it twice
           game.dropSave();

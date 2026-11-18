@@ -82,7 +82,7 @@ A run is a loop of shop, fight and result: 12 rounds, or until the 4 lives are g
 5. Reroll (1 gold) for new offers; pinned offers stay, also into the next round.
 6. Merging: matching neighbours glow and an energy beam joins them. They merge automatically after the fight. Locking in the item popup prevents it. **Decided**
 7. Numbers: the row with health and Energy; the chart button opens all backpack numbers.
-8. FIGHT starts the fight; it is blocked while a free pick is open.
+8. FIGHT starts the fight; it is blocked while a free pick is open. Online the app first shows the search screen (V4a) while the server picks the opponent and decides the round; the fight follows as soon as the answer is there. Without an answer the run stays in the shop with a toast, and FIGHT tries again (the same round gets the same answer). **Assumption** (2026-11-18)
 9. Opponent: not shown in the shop; it appears in the fight, with name and league patch. **Decided** (2026-11-17)
 
 **F3 Fight**
@@ -184,6 +184,8 @@ No sign-in screen. Progress is bound silently to Game Center (iOS) or Google Pla
 1. On start the app asks the server for its configuration, signs in silently and loads the profile from the server (backend.md). While that runs, the screen stays dark; it takes a moment only.
 2. If something keeps the player out, one screen (V9) says what and why, with one button TRY AGAIN: maintenance (with the server's text if it names one), update needed (old app), no connection, not signed in (Game Center / Play Games refused or not signed in). **Assumption** (2026-11-18) A store link for "update needed" comes when the store entries exist.
 3. Otherwise the start screen opens as before; the season date comes from the server.
+   - Online the app also asks the server for the open run. A local copy of that run continues; a copy of another run is dropped. An open run without a copy (other device, reinstall) is reported and ended by the server, and a run that was over is booked; both show a toast with the wins. **Assumption** (2026-11-18)
+   - Online, the server starts every run, decides every fight and books the run end (also after giving up); the device keeps the shop phase in progress.
 4. Development builds sign in as a development player (`?player=player-2` picks another one). Without a backend address the app plays offline with the profile on the device (hosted preview).
 
 ## Screens and popups
@@ -195,7 +197,8 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | V1 | Start screen | screen | hub | planet background, player picture with level and name, league patch, Galaxies, Credits, FIGHT; bottom row: quests, pass, shop, settings | built |
 | V2 | Hero choice | screen | choose a hero, start a run | back, Galaxies, Credits, hero picture with level, name, 3 trait symbols + "i", ring of heroes, START or SHOP in the middle | built |
 | V3 | Shop + backpack | screen | buy, pack, prepare | hero, lives, round, gold; 6 offers with pins; backpack grid; loose items; health/Energy row + chart; reroll, FIGHT, bin; run menu button | built |
-| V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (name is a placeholder; the patch shows the player's league) |
+| V4a | Search | screen | online: wait for the server's opponent | turning radar symbol, SEARCHING, one sentence | built |
+| V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (online: name and patch from the server; offline: placeholder name, the player's league) |
 | V5 | Round result | screen | outcome of the round | victory/defeat, hearts, top 3 items, chart, CONTINUE | built |
 | V6 | Run end | screen | summary and reward | Galaxies, final backpack, XP and level (animated), league points (animated), unlocks, NEW RUN, home, share | built |
 | V7 | Credits shop | screen | buy | sections: offers, skins, heroes, backgrounds, Credits | built (prices "?") |

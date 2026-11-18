@@ -12,11 +12,16 @@ import { homeScene } from "./home";
 import { heroScene } from "./hero";
 import { rewardTile } from "./progress";
 import { t, tr, upper } from "../i18n";
+import { nextSeed } from "../server-run";
+import type { SavedFight } from "../save";
+import { onRunFailure } from "./online-flow";
+import { statusScene } from "./status";
 
 const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
 const SOURCE_ICON: Record<string, string> = { weapon: "weapon", direct: "damage", burn: "burn", toxin: "toxin", spikes: "spikes" };
 
-export interface Fought { result: BattleResult; sides: [CSide, CSide]; player: Build }
+/** `server`: online, what the server decided for the round; its result counts, not the replay (RUN-08). */
+export interface Fought { result: BattleResult; sides: [CSide, CSide]; player: Build; server?: SavedFight["server"] }
 
 /** Damage by source for both sides, behind the chart button. */
 function details(game: Game, f: Fought): Scene {
@@ -51,7 +56,7 @@ function details(game: Game, f: Fought): Scene {
 export function resultScene(game: Game, f: Fought): Scene {
   const root = new Container();
   const data = game.data, run = game.run!, st = f.result.stats;
-  const won = f.result.winner === 0;
+  const won = f.server ? f.server.won : f.result.winner === 0;
   const livesAfter = run.lives - (won ? 0 : 1);
   const col = won ? C.gold : C.dim;
 
@@ -92,9 +97,17 @@ export function resultScene(game: Game, f: Fought): Scene {
 
   root.addChild(at(roundButton("chart", 32, () => game.openOverlay(details(game, f)), { iconSize: 26 }), 52, H - 52));
   root.addChild(at(pillButton(t("ui.continue"), W - 116, 64, () => {
-    finishRound(run, data, won);
+    finishRound(run, data, won, f.server ? nextSeed(f.server.run) : undefined);
+    if (run.over && game.isOnline) {
+      // the server books the end once; without an answer it books it on its own at the next start
+      const report = () => void game.finishOnline("finished").then((res) => {
+        if (res.ok) game.show(runEndScene(game, res.value));
+        else onRunFailure(game, res, () => game.show(statusScene({ kind: "noNetwork" }, report)));
+      });
+      report();
+    }
     // the stored run ends before the reward is booked, so a reload cannot book it twice
-    if (run.over) { game.dropSave(); game.show(runEndScene(game, game.bookRun(run))); }
+    else if (run.over) { game.dropSave(); game.show(runEndScene(game, game.bookRun(run))); }
     else {
       game.show(shopScene(game));
       // what merged after this fight is shown once

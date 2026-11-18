@@ -14,6 +14,7 @@ import { t } from "./i18n";
 import { DEV_TOOLS } from "./devtools";
 import { blocking, connect } from "./connect";
 import { statusScene } from "./scenes/status";
+import { stateOfFailure } from "./online";
 
 async function boot(): Promise<void> {
   const app = new Application();
@@ -23,6 +24,7 @@ async function boot(): Promise<void> {
   const fonts = Promise.all(['700 16px "Chakra Petch"', "400 12px Inter", "600 12px Inter"].map((f) => document.fonts.load(f))).catch(() => undefined);
   await Promise.all([loadIcons(), loadArt(), Promise.race([fonts, new Promise((r) => setTimeout(r, 2500))])]);
   const game = new Game(app, DATA, META);
+  game.reenter = () => void enter(game);
   await enter(game);
   if (DEV_TOOLS) {
     // for automated checks
@@ -40,9 +42,22 @@ async function enter(game: Game): Promise<void> {
     return;
   }
   const season = game.checkSeason(online.kind === "ready" ? online.config.serverDate : undefined);
-  // a stored run continues where it was left: in the shop, or in the fight that was already started
-  const resumed = game.resume();
-  game.show(!resumed ? homeScene(game) : resumed.fight ? battleScene(game, resumed.fight) : shopScene(game));
+  if (game.isOnline) {
+    // the server says which run is open; the copy on this device only continues when it belongs to it (RUN-11)
+    const res = await game.enterRun();
+    if (!res.ok) {
+      game.online = stateOfFailure(res.error, res.textKey);
+      game.show(statusScene(game.online, () => void enter(game)));
+      return;
+    }
+    const { booked, fight } = res.value;
+    game.show(!game.run ? homeScene(game) : fight ? battleScene(game, fight) : shopScene(game));
+    if (booked) game.toast(t("toast.runBooked", { wins: booked.wins }));
+  } else {
+    // offline: a stored run continues where it was left, in the shop or in the fight that was already started
+    const resumed = game.resume();
+    game.show(!resumed ? homeScene(game) : resumed.fight ? battleScene(game, resumed.fight) : shopScene(game));
+  }
   if (season) game.toast(t("toast.seasonStart", { n: season.profile.season.id, league: t(`league.${META.leagues.ids[season.league[1]]}`) }));
 }
 
