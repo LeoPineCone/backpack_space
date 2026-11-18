@@ -47,7 +47,7 @@ Example restrictions (not decided): organic items only, the supernova comes earl
 
 After each run you gain or lose league points and move up through the leagues. At the end of the season you get a patch for the league you reached that season. One patch can be equipped on the profile, where it is shown.
 
-Decided: 10 leagues. Each league reached is a floor; you cannot drop below it (points inside a league can be lost). At the start of a new season you drop to the highest league of the next lower league group (decided 2026-11-17, see [matchmaking.md](matchmaking.md)); in the lowest group you stay where you are. This replaces the earlier rule "2 leagues down"; the core implements it in `seasonStartLeague`.
+Decided: a season lasts 3 months (2026-11-18), so a new hero comes four times a year. Decided: 10 leagues. Each league reached is a floor; you cannot drop below it (points inside a league can be lost). At the start of a new season you drop to the highest league of the next lower league group (decided 2026-11-17, see [matchmaking.md](matchmaking.md)); in the lowest group you stay where you are. This replaces the earlier rule "2 leagues down"; the core implements it in `seasonStartLeague`.
 
 Ideas (not decided):
 
@@ -68,7 +68,7 @@ Ideas (not decided):
 - Daily and weekly quests: which ones, how hard, how many per day and week?
 - Speed of hero levels, planet track and pass (Galaxies per level)?
 - How many free Credits, and what does a hero cost?
-- Season length and premium pass price?
+- Premium pass price? (Season length decided 2026-11-18: 3 months.)
 - Which cosmetics go on the hero level paths?
 - Leagues: points formula, points per league, final league names?
 - First minutes of a new player (onboarding, first runs, when leagues and the pass appear).
