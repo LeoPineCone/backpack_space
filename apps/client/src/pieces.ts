@@ -6,7 +6,7 @@ import { Container, Graphics, Sprite } from "pixi.js";
 import { artTexture } from "./art";
 import { PET_KINDS, starLinks, type GameData, type ItemDef, type Placement, type StarLink } from "@backpack-space/core";
 import { C, COMIC, RARITY, TAG_FILL } from "./theme";
-import { icon } from "./icons";
+import { hasArt, icon } from "./icons";
 import { at, disc, txt } from "./ui";
 import type { Chip, Row } from "./symbols";
 import { tr } from "./i18n";
@@ -150,8 +150,12 @@ export function chip(ch: Chip, size = 32): { node: Container; w: number } {
     return { node: c, w: x + size * 0.55 };
   }
   const buff = ch.kind === "buff";
-  const g = new Graphics().roundRect(0, 0, size, size, size * 0.25).fill(buff ? C.text : C.bg).stroke({ width: 1.5, color: C.text, alignment: 1 });
-  c.addChild(g, at(icon(ch.icon, size * 0.58, buff ? C.bg : C.text), size / 2, size / 2));
+  // a coloured picture cannot be inverted: it sits on a dark chip, framed green (buff) or red (debuff)
+  const art = hasArt(ch.icon);
+  const g = art
+    ? new Graphics().roundRect(0, 0, size, size, size * 0.25).fill(C.bg).stroke({ width: 2, color: buff ? C.good : C.bad, alignment: 1 })
+    : new Graphics().roundRect(0, 0, size, size, size * 0.25).fill(buff ? C.text : C.bg).stroke({ width: 1.5, color: C.text, alignment: 1 });
+  c.addChild(g, at(icon(ch.icon, size * (art ? 0.66 : 0.58), buff ? C.bg : C.text), size / 2, size / 2));
   let w = size;
   if (label) { label.style.fontSize = size * 0.56; c.addChild(at(label, size + 4, size / 2)); w += 4 + label.width; }
   return { node: c, w };

@@ -10,7 +10,7 @@ keeps its placeholder symbol, so pictures can be added one by one.
 | `art/space.jpg` | star field behind every menu background | 1080×1920, JPEG |
 | `art/planets/<place>.jpg` | surface map of a place in `lore/planets.json` | 2048×1024 (2:1), JPEG, left edge continues the right edge |
 | `art/items/<item id>.png` | item picture, replaces the type symbol and initials on the tile (`src/pieces.ts`) | 176 px per cell of the unturned shape (a 1×2 item is 176×352), PNG with transparent background; the client turns it with the item |
-| `art/ui/<symbol>.png` | coloured ink symbol that replaces the line symbol of the same name (`icon()` in `src/icons.ts`): coin, credits, galaxy, patch, heartFull, heart, energy, level, dice, bin, pin, settings, and the item types (ranged, armor, accessory, pet, beast, swarm, food, mechanical, organic; `weapon` is kept for the glossary) | 128×128, PNG with transparent background; made as sheets of four or nine (OpenArt, 2k high) on flat light grey and cut out |
+| `art/ui/<symbol>.png` | coloured ink symbol that replaces the line symbol of the same name (`icon()` in `src/icons.ts`; `hasArt()` tells whether one exists): main symbols, item types (`weapon` only for the glossary), statuses, effects, triggers, glossary and menu terms; full list in the folder | 128×128, PNG with transparent background; made as sheets of four or nine (OpenArt, 2k high) on flat light grey and cut out |
 | `art/heroes/<hero id>.webp`, `art/heroes/<hero id>-head.webp` | hero full body (hero choice, 200×240 pt) and round head picture (hero ring and every hero badge, cut to a circle by `heroHead` in `src/ui.ts`); made with `.claude/skills/hero-art/SKILL.md` | full body fits 600×720, head 256×256, WebP with transparent background |
 
 ## Menu backgrounds
