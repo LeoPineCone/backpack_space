@@ -78,7 +78,11 @@ export class FakePlayerStore implements PlayerStore {
         const old = this.items.get(key(w.put.pk, w.put.sk));
         if (w.ifNotExists && old) return false;
         if (w.ifVersion !== undefined && (old?.version ?? 0) !== w.ifVersion) return false;
-      } else if (w.ifExists && !this.items.has(key(w.delete.pk, w.delete.sk))) return false;
+      } else {
+        const old = this.items.get(key(w.delete.pk, w.delete.sk));
+        if (w.ifExists && !old) return false;
+        if (w.ifVersion !== undefined && (!old || old.version !== w.ifVersion)) return false;
+      }
     }
     for (const w of writes) {
       if ("put" in w) this.items.set(key(w.put.pk, w.put.sk), structuredClone(w.put));

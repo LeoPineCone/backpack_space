@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buy, finishRound, newRun, reroll, rollOffers, shopRng, type RunState } from "@backpack-space/core";
+import { buy, finishRound, newRun, parseFight, replayRun, reroll, rollOffers, shopRng, type RunState } from "@backpack-space/core";
 import { loadGameData } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -75,5 +75,34 @@ describe("shop from the run seed", () => {
     };
     expect(picks(3)).toEqual(picks(3));
     expect(picks(3).some((p) => p !== null)).toBe(true);
+  });
+
+  it("takes the next round's shop seed from the server: it becomes the run's seed and is logged (RUN-03)", () => {
+    const a = newRun(data, hero, 5);
+    const b = newRun(data, hero, 5);
+    finishRound(a, data, true, 1111);
+    finishRound(b, data, true, 2222);
+    expect(a.seed).toBe(1111);
+    expect(a.log.at(-1)).toBe("won 1111");
+    expect(items(a)).not.toEqual(items(b));
+    // the shop of the new round follows from the handed-out seed alone
+    const owned = [...a.items.map((p) => p.item), ...a.loose];
+    expect(rollOffers(data, hero, a.round, shopRng(1111, a.round, 0), owned, []).map((o) => o.item)).toEqual(items(a));
+    // a replay follows the logged seeds
+    finishRound(a, data, false, 3333);
+    const again = replayRun(data, hero, 5, a.log);
+    expect(again.seed).toBe(3333);
+    expect(items(again)).toEqual(items(a));
+    expect(again.special).toEqual(a.special);
+  });
+
+  it("reads fight lines with and without a seed and refuses broken ones", () => {
+    expect(parseFight("won")).toEqual({ won: true });
+    expect(parseFight("lost 0")).toEqual({ won: false, nextSeed: 0 });
+    expect(parseFight("won 4294967295")).toEqual({ won: true, nextSeed: 4294967295 });
+    expect(parseFight("won 4294967296")).toBeNull();
+    expect(parseFight("won -1")).toBeNull();
+    expect(parseFight("won  1")).toBeNull();
+    expect(parseFight("rr")).toBeNull();
   });
 });

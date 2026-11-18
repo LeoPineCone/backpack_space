@@ -179,9 +179,19 @@ function run(s: RunState, data: GameData, a: ParsedAction): boolean {
   }
 }
 
-/** The log lines `finishRound` writes for a fight; they are not player actions. */
+/** The log lines `finishRound` writes for a fight ("won", or "won <seed>" with the next round's shop seed); they are not player actions. */
 export const FIGHT_WON = "won";
 export const FIGHT_LOST = "lost";
+const FIGHT_LINE = /^(won|lost)(?: (\d{1,10}))?$/;
+
+/** A fight line of the log: the result and, from the server, the next round's shop seed. Null for any other line. */
+export function parseFight(line: Action): { won: boolean; nextSeed?: number } | null {
+  const m = FIGHT_LINE.exec(line);
+  if (!m) return null;
+  if (m[2] === undefined) return { won: m[1] === FIGHT_WON };
+  const seed = Number(m[2]);
+  return seed <= 0xffffffff ? { won: m[1] === FIGHT_WON, nextSeed: seed } : null;
+}
 
 /**
  * Rebuilds a run from its hero, seed and log. Throws on the first line that does not apply, so a log that was
@@ -190,9 +200,10 @@ export const FIGHT_LOST = "lost";
 export function replayRun(data: GameData, hero: string, seed: number, log: readonly Action[]): RunState {
   const s = newRun(data, hero, seed);
   log.forEach((line, n) => {
-    if (line === FIGHT_WON || line === FIGHT_LOST) {
+    const fight = parseFight(line);
+    if (fight) {
       if (s.over) throw new Error(`log line ${n + 1}: fight after the end of the run`);
-      finishRound(s, data, line === FIGHT_WON);
+      finishRound(s, data, fight.won, fight.nextSeed);
     } else if (!applyAction(s, data, line)) throw new Error(`log line ${n + 1}: "${line}" does not apply`);
   });
   return s;

@@ -15,8 +15,11 @@ export const playerKey = (playerId: string) => `P#${playerId}`;
 export const identityKey = (id: CheckedIdentity) => `ID#${id.platform}#${id.storeId}`;
 const OWN = "OWN#";
 
-/** Where an owned thing came from (STORE-04); more origins come with the store and the pass. */
-export type Origin = "start" | "pass" | "level" | "planet" | "credits" | "purchase";
+/**
+ * Where an owned thing came from (STORE-04); more origins come with the store and the pass. "run": unlocked by a
+ * booked run (hero level, planet track or pass); the booking issue splits it by track (META-01).
+ */
+export type Origin = "start" | "pass" | "level" | "planet" | "credits" | "purchase" | "run";
 
 /** The stored profile: the PROFILE item and the owned things, with its version number. */
 export interface StoredProfile {
