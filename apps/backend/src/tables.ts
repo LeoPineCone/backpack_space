@@ -28,7 +28,7 @@ export const TABLES: Record<TableName, TableDefinition> = {
   players: {
     purpose: "everything about a player that must stay consistent: profile, ownership, open run, rounds, handled purchase events",
     indexes: [],
-    // ROUND# and DONE# entries of finished runs expire (30 days); profile and ownership never carry the field
+    // ROUND# and DONE# entries expire (7 days); profile and ownership never carry the field
     expiresField: "expiresAt",
     pointInTimeRestore: true,
   },
