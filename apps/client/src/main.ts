@@ -1,4 +1,5 @@
 /** Backpack Space client. It shows and replays what the shared core computes; it never decides a rule or a fight. */
+import "./fonts.css"; // the fonts ship inside the app (src/fonts), no request to another server
 import "pixi.js/unsafe-eval"; // no code generation at runtime, so strict content security policies (store wrappers, hosted previews) work
 import { Application } from "pixi.js";
 import { DATA, META } from "./data";
@@ -15,7 +16,7 @@ async function boot(): Promise<void> {
   const app = new Application();
   await app.init({ preference: "webgl", resizeTo: window, background: C.bgDeep, antialias: true, autoDensity: true, resolution: Math.min(3, window.devicePixelRatio || 1) });
   document.body.append(app.canvas);
-  // fonts are placeholders too; the game starts without them when they cannot be fetched
+  // the fonts are bundled; the wait only guards against a broken file, the game then starts with the fallback font
   const fonts = Promise.all(['700 16px "Chakra Petch"', "400 12px Inter", "600 12px Inter"].map((f) => document.fonts.load(f))).catch(() => undefined);
   await Promise.all([loadIcons(), loadArt(), Promise.race([fonts, new Promise((r) => setTimeout(r, 2500))])]);
   const game = new Game(app, DATA, META);
