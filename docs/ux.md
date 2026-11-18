@@ -107,7 +107,7 @@ A run is a loop of shop, fight and result: 12 rounds, or until the 4 lives are g
 **F6 Run end**
 
 1. Summary: Galaxies (wins + lives left), final backpack, hero XP and level, league points, what was unlocked.
-2. A new hero level is shown as an animation on this screen. A league promotion is a subtle animation in the view itself, probably without a full-screen moment; the exact form is still to try out. **Decided** (2026-11-17)
+2. A new hero level is shown as an animation on this screen. A league promotion is a subtle animation in the view itself, probably without a full-screen moment; the exact form is still to try out. **Decided** (2026-11-17) Built (M3): the XP bar fills and a new level pops in gold; then the league points count up and a new league fades in with a soft ring. Online the server's booking drives both (`apps/client/src/run-end.ts`).
 3. Actions: NEW RUN (to the hero choice), home, share (not built). **Decided** (2026-11-17): NEW RUN goes to the hero choice, not straight into the shop.
 
 **F7 Leave and resume**
@@ -173,7 +173,7 @@ Everything the player customises lives in the profile: player picture, player na
 
 **M9 Settings**
 
-The gear button: language, music, sounds, account, privacy, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; account, privacy and help are placeholders.
+The gear button: language, music, sounds, account, privacy policy, terms of use, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; account and help are placeholders. Privacy policy and terms of use open the website page in the player's language outside the app (WEB-03, build setting `VITE_WEBSITE_URL`, page `<site>/<language>/privacy/` and `/terms/`); until the website exists (M5) a toast says the page comes with it.
 
 **M10 Account**
 
@@ -214,7 +214,7 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | P8 | Introduction | overlay | first run | spot, symbols, one line, dots, X | built |
 | P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; profile holds everything to customise | built (placeholder rewards) |
 | P10 | Glossary | popup (from settings and "i") | all terms | groups, scrolls | built |
-| P11 | Settings | popup | options | language, music, sounds, account, privacy, help, glossary | built (music and sounds without sound; account, privacy, help placeholders) |
+| P11 | Settings | popup | options | language, music, sounds, account, privacy policy, terms of use, help, glossary | built (music and sounds without sound; account and help placeholders; website links wait for M5) |
 | P12 | Purchase | popup | confirm a purchase | preview, price, BUY | built (BUY shows a toast) |
 | P13 | Run menu | popup | leave a run | settings, home, give up | built |
 
@@ -266,7 +266,8 @@ Every action has one gesture and one visible response; what is not possible is e
 | P9 | Wear a skin | tap a skin beside its hero | worn by that hero | only owned skins |
 | V7 | Buy | tap an offer, then BUY | purchase popup, then the purchase | today a toast |
 | P11 | Music, sounds | tap the row | switch on/off | – |
-| P11 | Account, privacy, help | tap the row | – | today a toast |
+| P11 | Account, help | tap the row | – | today a toast |
+| P11 | Privacy policy, terms of use | tap the row | the website page opens outside the app | today a toast until the website exists |
 | P11 | Language | tap a row | switched at once | – |
 | P13 | Home / give up | tap / tap twice | start screen (run paused) / run end with reward | – |
 | all popups | Close | X or tap beside | popup closes | P5 cannot be closed |

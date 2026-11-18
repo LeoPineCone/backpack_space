@@ -310,7 +310,7 @@ export class Game {
     return b;
   }
 
-  /** Moves the profile into the season that runs on `date` (the server's date when online), if a new one has started. */
+  /** Offline only (online the server changes the season): moves the profile into the season that runs on `date`, if a new one has started. */
   checkSeason(date: string = today()): SeasonChange | null {
     const c = enterSeason(this.meta, this.profile, seasonAt(this.meta, date));
     if (c) this.setProfile(c.profile);
