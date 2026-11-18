@@ -105,3 +105,11 @@ export function profileWrites(
     ...own("hero", heroes),
   ];
 }
+
+/**
+ * Stores a changed profile if nobody else wrote it since it was read (version check). Returns false when another
+ * write came first; the caller reads again and decides.
+ */
+export async function saveProfile(ctx: DomainContext, playerId: string, read: StoredProfile, next: ProfileBody, origin: Origin): Promise<boolean> {
+  return ctx.ports.players.transact(profileWrites(playerId, next, read, ctx.ports.clock.now(), origin, read.profile));
+}
