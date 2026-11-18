@@ -16,6 +16,7 @@ interface Probe {
   runId: string | null;
   round: number | null;
   fought: number | null;
+  overlays: number;
 }
 
 /** The buttons on screen, as the client's dev tools list them (apps/client/src/devtools.ts). */
@@ -23,14 +24,25 @@ const targets = (page: Page) => page.evaluate(() => (window as unknown as { __ta
 
 const probe = (page: Page) =>
   page.evaluate((): Probe => {
-    const g = (window as unknown as { __game?: { isOnline: boolean; runId: string | null; run: { round: number; results: unknown[] } | null } }).__game;
-    return { online: !!g?.isOnline, runId: g?.runId ?? null, round: g?.run?.round ?? null, fought: g?.run?.results.length ?? null };
+    const g = (
+      window as unknown as {
+        __game?: { isOnline: boolean; runId: string | null; run: { round: number; results: unknown[] } | null; overlays?: unknown[] };
+      }
+    ).__game;
+    return {
+      online: !!g?.isOnline,
+      runId: g?.runId ?? null,
+      round: g?.run?.round ?? null,
+      fought: g?.run?.results.length ?? null,
+      overlays: g?.overlays?.length ?? 0,
+    };
   });
 
 /** Waits until a button with this name shows, then taps it where it is on the page. */
 async function tap(page: Page, name: string, timeout = 30_000): Promise<void> {
   await shows(page, name, timeout);
   const found = (await targets(page)).find((t) => t.name === name)!;
+  (requests.get(page) ?? []).push(`tap ${name} at ${Math.round(found.x)},${Math.round(found.y)}`);
   await page.mouse.click(found.x, found.y);
 }
 
@@ -48,9 +60,16 @@ async function until(page: Page, what: string, check: (seen: string[], state: Pr
       { timeout, message: what },
     )
     .toBe(true)
-    .catch((e: Error) => {
+    .catch(async (e: Error) => {
+      const events = await page.evaluate(() => (window as unknown as { __events?: string[] }).__events?.slice(-24) ?? []);
       throw new Error(
-        `${e.message}\non screen: ${JSON.stringify(seen)}\nstate: ${JSON.stringify(state)}\nrequests: ${JSON.stringify(requests.get(page) ?? [])}`,
+        [
+          e.message,
+          `on screen: ${JSON.stringify(seen)}`,
+          `state: ${JSON.stringify(state)}`,
+          `requests and taps: ${JSON.stringify(requests.get(page) ?? [])}`,
+          `pointer events: ${JSON.stringify(events)}`,
+        ].join("\n"),
       );
     });
 }
@@ -70,6 +89,13 @@ async function open(page: Page, player: string): Promise<void> {
   });
   page.on("requestfailed", (r) => log.push(`${r.method()} ${r.url()} failed: ${r.failure()?.errorText ?? "?"}`));
   await page.addInitScript(() => {
+    // the pointer events the page receives, for the failure message
+    const events: string[] = [];
+    Object.assign(window, { __events: events });
+    for (const type of ["pointerdown", "pointerup", "pointercancel", "click"])
+      window.addEventListener(type, (e) => events.push(`${type} ${Math.round((e as MouseEvent).clientX)},${Math.round((e as MouseEvent).clientY)}`), {
+        capture: true,
+      });
     if (!sessionStorage.getItem("e2e.started")) {
       localStorage.clear();
       localStorage.setItem("backpack-space.intro", "1");
