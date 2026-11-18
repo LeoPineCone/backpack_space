@@ -21,6 +21,10 @@ not chance and not a bot quirk.
   repo text stays English.
 - Write every balancing pass into `docs/findings.md` (newest on top): question, what changed, numbers
   before/after with accuracy and seed, what stays open.
+- Raise the data version (`dataVersion` in `data/rules.json`, CORE-08): minor for number changes, major when an
+  item is removed or reshaped, a recipe changes or a rule changes (a major step makes stored backpacks of players
+  unmatchable; then `npm run data:major`). `test/dataversion.test.ts` catches removed items and changed shapes and
+  recipes; rule changes you raise yourself.
 
 ## The tools
 

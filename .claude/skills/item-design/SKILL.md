@@ -89,6 +89,8 @@ so the formula is a good start. Then:
 
 ## 6. Checks
 
+- Data version (`dataVersion` in `data/rules.json`): a removed item or a changed shape or recipe raises the major
+  (then `npm run data:major`; `test/dataversion.test.ts` says when); a new item or changed numbers raise the minor.
 - `npm run validate && npm run typecheck && npm test`, then `npm run catalog` (docs/catalog.md shows the
   generated rules text: read it, it is what the player sees).
 - Measure (balancing skill): `npm run ratings -- --only <id>` so the bots value it (only its rating changes),

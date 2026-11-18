@@ -56,6 +56,8 @@ export interface GameData {
   shape: (item: string, rot: number) => Shape;
   /** changes whenever a fight or a shop could come out differently (CORE-03); text-only data does not change it */
   simVersion: string;
+  /** major.minor of the data (rules.json); decides whether a stored backpack can be matched (canMatch) */
+  dataVersion: string;
 }
 
 export function parseOrThrow<T extends z.ZodTypeAny>(schema: T, raw: unknown, where: string): z.infer<T> {
@@ -208,6 +210,7 @@ export function buildGameData(raw: RawData): GameData {
     glossary,
     locales,
     simVersion,
+    dataVersion: rules.dataVersion,
   };
 }
 

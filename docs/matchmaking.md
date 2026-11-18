@@ -99,7 +99,7 @@ Bot players are assigned to a group, not to a single league. For bots, "league p
 
 ## Versions
 
-Every backpack carries two versions: the data version decides whether it can be matched, the app version is for analysis only.
+Every backpack carries two versions: the data version decides whether it can be matched, the app version is for analysis only. The data version is `dataVersion` in `data/rules.json`; the core decides with `canMatch(stored, own)` (same major). `test/dataversion.test.ts` fails when an item, shape or recipe of the current major is gone without a new major (`npm run data:major` records a new one).
 
 | Change | Data version | Old backpacks |
 | --- | --- | --- |
