@@ -142,7 +142,7 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   for (let y = 0; y < data.rules.grid.h; y++) for (let x = 0; x < data.rules.grid.w; x++) g.rect(gx + x * cell + 0.5, gy + y * cell + 0.5, cell - 1, cell - 1);
   g.stroke({ width: 1, color: C.gridLine });
   root.addChild(g);
-  for (const p of run.bags) root.addChild(at(piece(data, p.item, p.rot, cell, { label: false }), gx + p.x * cell, gy + p.y * cell));
+  for (const p of run.bags) root.addChild(at(piece(data, p.item, p.rot, cell, { label: false, placed: true }), gx + p.x * cell, gy + p.y * cell));
   for (const p of run.items) root.addChild(at(piece(data, p.item, p.rot, cell), gx + p.x * cell, gy + p.y * cell));
   root.addChild(at(starMarks(data, run.bags, run.items, cell), gx, gy));
 

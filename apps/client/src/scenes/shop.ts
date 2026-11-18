@@ -153,7 +153,7 @@ export function shopScene(game: Game): Scene {
     view.addChild(grid);
     const combos = pendingMerges(data, r.bags, r.items);
     const inCombo = new Set(combos.flatMap((c) => c.idxs));
-    r.bags.forEach((p) => view.addChild(at(piece(data, p.item, p.rot, CELL, { label: false }), GX + p.x * CELL, GY + p.y * CELL)));
+    r.bags.forEach((p) => view.addChild(at(piece(data, p.item, p.rot, CELL, { label: false, placed: true }), GX + p.x * CELL, GY + p.y * CELL)));
     r.items.forEach((p, i) => view.addChild(at(piece(data, p.item, p.rot, CELL, inCombo.has(i) ? { line: C.gold } : {}), GX + p.x * CELL, GY + p.y * CELL)));
     // items that could merge with something on screen glow softly (a locked item never does)
     r.items.forEach((p, i) => {
