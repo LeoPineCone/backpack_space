@@ -19,6 +19,7 @@ import {
 import { boardOf, parseShape, type Shape } from "./grid.js";
 import { buildGlossary, type Glossary } from "./glossary.js";
 import { buildLocales, type Locales } from "./i18n.js";
+import { simVersionOf } from "./simversion.js";
 
 export interface ItemDef extends Omit<ItemData, "tags"> {
   tags: (Tag | "crafted")[];
@@ -53,6 +54,8 @@ export interface GameData {
   /** every shipped language (data/locales/*.json); English is the source and the fallback */
   locales: Locales;
   shape: (item: string, rot: number) => Shape;
+  /** changes whenever a fight or a shop could come out differently (CORE-03); text-only data does not change it */
+  simVersion: string;
 }
 
 export function parseOrThrow<T extends z.ZodTypeAny>(schema: T, raw: unknown, where: string): z.infer<T> {
@@ -187,6 +190,7 @@ export function buildGameData(raw: RawData): GameData {
   const emptyPool = (): Record<ShopRarity, ItemDef[]> => ({ common: [], rare: [], epic: [], legendary: [] });
   const pool = { general: emptyPool(), hero: new Map(heroList.map((h) => [h.id, emptyPool()])) };
   const itemList = [...items.values()];
+  const simVersion = simVersionOf({ rules, heroes: heroList, items: itemList, recipes });
   for (const it of itemList) if (it.inShop && !it.isBag) (it.hero ? pool.hero.get(it.hero)! : pool.general)[it.rarity as ShopRarity].push(it);
   return {
     rules,
@@ -203,6 +207,7 @@ export function buildGameData(raw: RawData): GameData {
     shape,
     glossary,
     locales,
+    simVersion,
   };
 }
 

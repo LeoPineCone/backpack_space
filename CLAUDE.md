@@ -4,6 +4,7 @@
 - `packages/core/src/` must stay free of Node APIs (no fs, no process) – the core runs in the client and on the server. Its own tsconfig has no Node/DOM types, so `npm run typecheck` catches violations. Node-only helpers go to `packages/core/node/`.
 - A future client only replays what the core computes; it never decides battle outcomes.
 - The core is deterministic: no Math.random, no clock reads. Randomness only via `Rng` with a seed.
+- Raise `ENGINE_VERSION` in `packages/core/src/simversion.ts` when a core logic change can change a fight, a shop or a run. Data changes change the simulation version by themselves.
 - Game values belong in `data/*.json`, not in code. Item rules text is generated from the effect data (`describe.ts`), never written by hand.
 - Items are maintained directly in `data/items/*.json` (no generator scripts). Before adding or changing an item, follow `.claude/skills/item-design/SKILL.md` (size by type, price, number budget, checks). Every item and bag needs a picture brief in `data/item-art.json` (ends with "Accent: <palette colour>."); write and rewrite those with `.claude/skills/item-art/SKILL.md` (inventive, clearly space-themed, one animal per pet). A new effect idea that the effect schema cannot express needs a schema + battle change first.
 - UI colours, fonts and button kinds come from `data/theme.json` (`docs/theme.md`); never write a colour into client code.

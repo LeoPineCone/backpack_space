@@ -26,6 +26,8 @@ async function boot(): Promise<void> {
   if (season) game.toast(t("toast.seasonStart", { n: season.profile.season.id, league: t(`league.${META.leagues.ids[season.league[1]]}`) }));
   // for automated checks
   (window as unknown as { __game: Game }).__game = game;
+  // the version of the rules this build computes with (CORE-03); a future server compares it
+  if (import.meta.env.DEV) console.info(`simVersion ${DATA.simVersion}`);
 }
 
 void boot();

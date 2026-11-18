@@ -2,6 +2,7 @@ export * from "./schema.js";
 export * from "./rng.js";
 export * from "./grid.js";
 export * from "./gamedata.js";
+export * from "./simversion.js";
 export * from "./compile.js";
 export * from "./battle.js";
 export * from "./replay.js";
