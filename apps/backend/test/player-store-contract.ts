@@ -62,4 +62,21 @@ export function playerStoreContract(make: () => Promise<PlayerStore>) {
     expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 3 }])).toBe(true);
     expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 3 }])).toBe(false);
   });
+
+  it("reads every item with one sort key over all partitions, page by page", async () => {
+    const s = await make();
+    const mine = [pk(), pk(), pk()];
+    await s.transact(mine.flatMap((p) => [{ put: { pk: p, sk: "PROFILE", n: 1 } }, { put: { pk: p, sk: "RUN" } }]));
+    const seen: string[] = [];
+    let next: string | undefined;
+    do {
+      const page = await s.scan("PROFILE", next);
+      for (const i of page.items) {
+        expect(i.sk).toBe("PROFILE");
+        seen.push(i.pk);
+      }
+      next = page.next;
+    } while (next);
+    expect(seen.filter((p) => mine.includes(p)).sort()).toEqual([...mine].sort());
+  });
 }

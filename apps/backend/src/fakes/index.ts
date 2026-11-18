@@ -7,6 +7,7 @@ import type {
   IdentityCheck,
   Item,
   LogSink,
+  Page,
   PlayerStore,
   Random,
   RevenueCat,
@@ -72,6 +73,15 @@ export class FakePlayerStore implements PlayerStore {
       .sort((a, b) => (a.sk < b.sk ? -1 : a.sk > b.sk ? 1 : 0))
       .map((i) => structuredClone(i));
   }
+  /** pages of `pageSize` items; the cursor is the position */
+  pageSize = 100;
+  async scan(sk: string, next?: string): Promise<Page> {
+    return page(
+      [...this.items.values()].filter((i) => i.sk === sk),
+      next,
+      this.pageSize,
+    );
+  }
   async transact(writes: Write[]): Promise<boolean> {
     for (const w of writes) {
       if ("put" in w) {
@@ -114,9 +124,27 @@ export class FakeBackpackPool implements BackpackPool {
 
 export class FakeActionStore implements ActionStore {
   readonly items: Item[] = [];
+  pageSize = 100;
   async put(item: Item): Promise<void> {
+    const at = this.items.findIndex((i) => i.pk === item.pk && i.sk === item.sk);
+    if (at >= 0) this.items.splice(at, 1);
     this.items.push(structuredClone(item));
   }
+  async expired(nowSec: number, next?: string): Promise<Page> {
+    const old = this.items.filter((i) => typeof i.expiresAt === "number" && i.expiresAt < nowSec).map((i) => ({ pk: i.pk, sk: i.sk }));
+    return page(old, next, this.pageSize);
+  }
+  async remove(pk: string, sk: string): Promise<void> {
+    const at = this.items.findIndex((i) => i.pk === pk && i.sk === sk);
+    if (at >= 0) this.items.splice(at, 1);
+  }
+}
+
+/** A page of `all` from position `next`. */
+function page(all: Item[], next: string | undefined, size: number): Page {
+  const from = Number(next ?? 0);
+  const items = all.slice(from, from + size).map((i) => structuredClone(i));
+  return from + size < all.length ? { items, next: String(from + size) } : { items };
 }
 
 /** Accepts a fixed list of identities: request JSON string -> identity. */

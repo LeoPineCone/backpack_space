@@ -6,10 +6,12 @@
  * The profile the app gets is put together from PROFILE and the OWN# entries. No Credits: they live at RevenueCat.
  */
 import type { ProfileBody } from "@backpack-space/api";
-import { newProfile } from "@backpack-space/core";
+import { enterSeason, newProfile } from "@backpack-space/core";
 import type { CheckedIdentity, Item, Write } from "../ports/index.js";
 import type { DomainContext } from "./context.js";
 import { isoDay } from "./config.js";
+import { logEvent } from "./log.js";
+import { seasonNow } from "./season.js";
 
 export const playerKey = (playerId: string) => `P#${playerId}`;
 export const identityKey = (id: CheckedIdentity) => `ID#${id.platform}#${id.storeId}`;
@@ -17,9 +19,10 @@ const OWN = "OWN#";
 
 /**
  * Where an owned thing came from (STORE-04): a booked run unlocks it by a hero level, the planet track or the season
- * pass (META-01); the store adds Credits and purchases. A refund removes exactly the entries of its origin.
+ * pass (META-01); a season change hands out the league patch (META-03); the store adds Credits and purchases. A refund
+ * removes exactly the entries of its origin.
  */
-export type Origin = "start" | "pass" | "level" | "planet" | "credits" | "purchase";
+export type Origin = "start" | "pass" | "level" | "planet" | "league" | "credits" | "purchase";
 
 /** The stored profile: the PROFILE item and the owned things, with its version number. */
 export interface StoredProfile {
@@ -50,16 +53,45 @@ export async function findOrCreatePlayer(ctx: DomainContext, identity: CheckedId
   return { playerId: String(winner.playerId), created: false };
 }
 
-/** A new profile as the core makes it (lowest league, 0 points), for the season of the settings. */
+/** A new profile as the core makes it (lowest league, 0 points), for the season running now. */
 export function startProfile(ctx: DomainContext): ProfileBody {
   const meta = ctx.ports.game.meta;
-  const season = meta.seasons.some((s) => s.id === ctx.settings.season.id) ? ctx.settings.season.id : undefined;
-  const { credits: _credits, ...profile } = newProfile(meta, season);
+  const { credits: _credits, ...profile } = newProfile(meta, seasonNow(meta, ctx.settings, ctx.ports.clock.now()).id);
   return profile;
 }
 
+/**
+ * The player's profile, in the season running now: a profile of an earlier season is moved into it first and stored
+ * (a player who was away gets the season change when they next appear, META-03).
+ */
 export async function loadProfile(ctx: DomainContext, playerId: string): Promise<StoredProfile | null> {
-  return assemble(await ctx.ports.players.query(playerKey(playerId)));
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const stored = assemble(await ctx.ports.players.query(playerKey(playerId)));
+    if (!stored) return null;
+    const moved = await catchUpSeason(ctx, playerId, stored);
+    if (moved) return moved;
+    // another request wrote the profile in between: read again
+  }
+  throw new Error("season change kept colliding");
+}
+
+/**
+ * Moves a stored profile into the season running now and stores it on the version it read. Returns the profile as
+ * it is now (unchanged when it is already in this season), or null when another write came first. Doing it twice
+ * changes nothing the second time: the profile is then already in the season.
+ */
+export async function catchUpSeason(ctx: DomainContext, playerId: string, stored: StoredProfile): Promise<StoredProfile | null> {
+  const { game, clock } = ctx.ports;
+  const now = clock.now();
+  const season = seasonNow(game.meta, ctx.settings, now).id;
+  // the core's profile carries Credits; on the server they live at RevenueCat
+  const change = enterSeason(game.meta, { ...stored.profile, credits: 0 }, season);
+  if (!change) return stored;
+  const { credits: _credits, ...profile } = change.profile;
+  const writes = profileWrites(playerId, profile, stored, now, (id) => (id === change.patch ? "league" : "pass"), stored.profile);
+  if (!(await ctx.ports.players.transact(writes))) return null;
+  logEvent(ctx, "season_changed", { from: stored.profile.season.id, to: season, patch: change.patch, league: change.league });
+  return { profile, version: stored.version + 1, createdAt: stored.createdAt };
 }
 
 /** Puts the profile together from the items of the player's partition. */
