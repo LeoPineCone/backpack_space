@@ -1,6 +1,6 @@
 /**
  * Settings (docs/ux.md P11): language, music, sounds, account, privacy policy, terms of use, help and the glossary.
- * Music and sounds are switches without sound yet; help is a placeholder. Account: export and deletion (account.ts). Privacy policy and terms of use
+ * Music and sounds switch the sound module (sound.ts) on and off; help is a placeholder. Account: export and deletion (account.ts). Privacy policy and terms of use
  * open the website pages in the player's language (WEB-03). No vibration setting: the app never vibrates.
  */
 import { Container, Rectangle } from "pixi.js";
@@ -10,6 +10,7 @@ import { at, box, dimmer, roundButton, tappable, txt } from "../ui";
 import { icon } from "../icons";
 import { glossary } from "./popup";
 import { accountOverlay } from "./account";
+import { soundPrefsChanged } from "../sound";
 import { readPrefs, writePrefs, type Prefs } from "../prefs";
 import { DEVICE, deviceLanguage, languageChoice, setLanguage, t, tr } from "../i18n";
 import { websiteUrl, type WebsitePage } from "../website";
@@ -80,6 +81,7 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
     const prefs = readPrefs();
     const flip = (k: keyof Prefs) => {
       writePrefs({ ...prefs, [k]: !prefs[k] });
+      soundPrefsChanged();
       render();
     };
     // more: account (Game Center / Google Play Games, silently), privacy policy, terms of use, help, glossary

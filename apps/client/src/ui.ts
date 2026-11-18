@@ -3,6 +3,7 @@ import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
 import { artTexture } from "./art";
 import { BUTTON, C, COMIC, FONT, SCREEN } from "./theme";
 import { icon } from "./icons";
+import { playSound } from "./sound";
 
 export interface TxtOpts {
   color?: number;
@@ -181,6 +182,7 @@ export function tappable<T extends Container>(obj: T, onTap: () => void, hit?: R
   obj.on("pointerdown", (e) => e.stopPropagation());
   obj.on("pointertap", (e) => {
     e.stopPropagation();
+    playSound("tap");
     onTap();
   });
   return obj;

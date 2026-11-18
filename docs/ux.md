@@ -175,7 +175,7 @@ Everything the player customises lives in the profile: player picture, player na
 
 **M9 Settings**
 
-The gear button: language, music, sounds, account, privacy policy, terms of use, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; help is a placeholder. Account (ACC-08, built 2026-11-18): a short note that sign-in runs through Game Center or Google Play Games, "Get my data" (a JSON file through the share sheet or a download) and "Delete account" with a confirmation that says what is lost; afterwards the game starts again as a new player. *Assumption* Privacy policy and terms of use open the website page in the player's language outside the app (WEB-03, build setting `VITE_WEBSITE_URL`, page `<site>/<language>/privacy/` and `/terms/`); until the website exists (M5) a toast says the page comes with it.
+The gear button: language, music, sounds, account, privacy policy, terms of use, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds switch the sound module on and off (UX-09, built 2026-11-18, `apps/client/src/sound.ts`): a tap sound on every button, a sound for a won and a lost fight, and a looping menu music that starts with the first touch. The files ship inside the app in `apps/client/art/sounds/` (`tap`, `win`, `lose`, `music-menu`; wav, mp3, ogg or m4a); today they are silent stand-ins, the real ones come with #104 and only replace those files. Help is a placeholder. Account (ACC-08, built 2026-11-18): a short note that sign-in runs through Game Center or Google Play Games, "Get my data" (a JSON file through the share sheet or a download) and "Delete account" with a confirmation that says what is lost; afterwards the game starts again as a new player. *Assumption* Privacy policy and terms of use open the website page in the player's language outside the app (WEB-03, build setting `VITE_WEBSITE_URL`, page `<site>/<language>/privacy/` and `/terms/`); until the website exists (M5) a toast says the page comes with it.
 
 **M10 Account**
 
@@ -267,7 +267,7 @@ Every action has one gesture and one visible response; what is not possible is e
 | P9 | Rename | tap the name in the profile | the phone keyboard opens; the new name shows at once | "A name has 1 to 16 characters" |
 | P9 | Wear a skin | tap a skin beside its hero | worn by that hero | only owned skins |
 | V7 | Buy | tap an offer, then BUY | purchase popup, then the purchase | today a toast |
-| P11 | Music, sounds | tap the row | switch on/off | – |
+| P11 | Music, sounds | tap the row | switch on/off, takes effect at once and is remembered on the device | – |
 | P11 | Account | tap the row | account: get my data, delete account | offline a toast |
 | P11 | Get my data | tap the row | the data file goes to the share sheet or a download | – |
 | P11 | Delete account | tap the row, then DELETE FOR GOOD in the confirmation | the game starts again as a new player | – |

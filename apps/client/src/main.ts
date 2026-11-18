@@ -19,6 +19,8 @@ import { stateOfFailure } from "./online";
 import { createApi } from "./api";
 import { APP_VERSION } from "./connect";
 import { createReporter, installCrashReports } from "./crash";
+import { createSounds, useSounds } from "./sound";
+import { readPrefs } from "./prefs";
 
 /** Crash and error reports go to our backend from the first line on, so a failing start is reported too (BE-15). */
 function reportCrashes(): void {
@@ -26,6 +28,16 @@ function reportCrashes(): void {
   if (!base) return;
   const api = createApi({ base, appVersion: APP_VERSION, fetch: (url, init) => fetch(url, init) });
   installCrashReports(window, createReporter((r) => api.call("clientError", r), DATA.simVersion));
+}
+
+/** The sound files ship in the app (art/sounds); the menu music starts with the first touch, as browsers ask. */
+function startSounds(): void {
+  const files: Record<string, string> = {};
+  for (const [path, url] of Object.entries(import.meta.glob<string>("../art/sounds/*.{wav,mp3,ogg,m4a}", { eager: true, query: "?url", import: "default" })))
+    files[path.replace(/^.*\/|\.\w+$/g, "")] = url;
+  const sounds = createSounds(files, (url) => new Audio(url), readPrefs);
+  useSounds(sounds);
+  window.addEventListener("pointerdown", () => sounds.music("menu"), { once: true });
 }
 
 async function boot(): Promise<void> {
@@ -36,6 +48,7 @@ async function boot(): Promise<void> {
   const fonts = Promise.all(['700 16px "Chakra Petch"', "400 12px Inter", "600 12px Inter"].map((f) => document.fonts.load(f))).catch(() => undefined);
   await Promise.all([loadIcons(), loadArt(), Promise.race([fonts, new Promise((r) => setTimeout(r, 2500))])]);
   const game = new Game(app, DATA, META);
+  startSounds();
   game.reenter = () => void enter(game);
   await enter(game);
   if (DEV_TOOLS) {
