@@ -87,11 +87,15 @@ export interface BackpackPool {
   /** up to `limit` items of partition `pk` with `from` <= sort key <= `to`, in sort key order (one small read) */
   range(pk: string, from: string, to: string, limit: number): Promise<Item[]>;
   remove(pk: string, sk: string): Promise<void>;
+  /** every backpack of a player (index `byPlayer`; account export and deletion) */
+  byPlayer(playerId: string): Promise<Item[]>;
 }
 
 /** The table `actions` (recorded shop actions). */
 export interface ActionStore {
   put(item: Item): Promise<void>;
+  /** every entry of a player (index `byPlayer`; account export and deletion) */
+  byPlayer(playerId: string): Promise<Item[]>;
   /** one page of the keys of items whose `expiresAt` (seconds since 1970) lies before `nowSec` (timed jobs only) */
   expired(nowSec: number, next?: string): Promise<Page>;
   remove(pk: string, sk: string): Promise<void>;
@@ -128,6 +132,8 @@ export interface SessionTokens {
 /** RevenueCat (M4). */
 export interface RevenueCat {
   balance(playerId: string): Promise<number>;
+  /** deletes the customer and what RevenueCat holds about them (ACC-08); nothing happens for an unknown customer */
+  deleteCustomer(playerId: string): Promise<void>;
 }
 
 /** Where log lines go: stdout as JSON in the cloud and locally, an array in tests. */

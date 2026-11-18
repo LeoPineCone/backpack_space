@@ -1,6 +1,6 @@
 /**
  * Settings (docs/ux.md P11): language, music, sounds, account, privacy policy, terms of use, help and the glossary.
- * Music and sounds are switches without sound yet; account and help are placeholders. Privacy policy and terms of use
+ * Music and sounds are switches without sound yet; help is a placeholder. Account: export and deletion (account.ts). Privacy policy and terms of use
  * open the website pages in the player's language (WEB-03). No vibration setting: the app never vibrates.
  */
 import { Container, Rectangle } from "pixi.js";
@@ -9,6 +9,7 @@ import { C, W } from "../theme";
 import { at, box, dimmer, roundButton, tappable, txt } from "../ui";
 import { icon } from "../icons";
 import { glossary } from "./popup";
+import { accountOverlay } from "./account";
 import { readPrefs, writePrefs, type Prefs } from "../prefs";
 import { DEVICE, deviceLanguage, languageChoice, setLanguage, t, tr } from "../i18n";
 import { websiteUrl, type WebsitePage } from "../website";
@@ -85,7 +86,7 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
     const items: { ic: string; label: string; on?: boolean; tap: () => void }[] = [
       { ic: "music", label: t("ui.music"), on: prefs.music, tap: () => flip("music") },
       { ic: "sound", label: t("ui.sounds"), on: prefs.sounds, tap: () => flip("sounds") },
-      { ic: "account", label: t("ui.account"), tap: () => game.toast(t("toast.accountLater")) },
+      { ic: "account", label: t("ui.account"), tap: () => game.openOverlay(accountOverlay(game)) },
       { ic: "privacy", label: t("ui.privacy"), tap: () => openPage(game, "privacy") },
       { ic: "info", label: t("ui.terms"), tap: () => openPage(game, "terms") },
       { ic: "help", label: t("ui.help"), tap: () => game.toast(t("toast.helpLater")) },

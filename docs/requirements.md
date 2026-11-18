@@ -119,7 +119,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | ACC-05 | The profile (ownership, league, pass, hero levels, Galaxies, equipped things) lives on the server. The app keeps only a copy. | [client-server.md](client-server.md) | M1 | ACC-03 | decided |
 | ACC-06 | Everything a player can customise is in the profile: picture, name, background, hero skins, league patch. | [ux.md](ux.md) | M3 | ACC-05 | decided |
 | ACC-07 | Player names are free text, limited to a maximum length, with a filter that refuses offensive and political names. | review | M3 | – | decided, length open (technical) |
-| ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
+| ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, built in M6 (backend.md "Account deletion and export"); store rules noted there, check again with LB-07 |
 
 ## Run
 

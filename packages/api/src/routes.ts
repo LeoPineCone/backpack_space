@@ -5,6 +5,8 @@
  */
 import { z } from "zod";
 import {
+  AccountDeleteResponse,
+  AccountExportResponse,
   ClientErrorRequest,
   ClientErrorResponse,
   ConfigResponse,
@@ -48,6 +50,8 @@ export const ROUTES = {
   runStart: { method: "POST", path: "/runs", auth: true, request: RunStartRequest, response: RunStartResponse },
   runFight: { method: "POST", path: "/runs/fight", auth: true, request: RunFightRequest, response: RunFightResponse },
   runFinish: { method: "POST", path: "/runs/finish", auth: true, request: RunFinishRequest, response: RunFinishResponse },
+  accountExport: { method: "GET", path: "/account/export", auth: true, request: NoBody, response: AccountExportResponse },
+  accountDelete: { method: "DELETE", path: "/account", auth: true, request: NoBody, response: AccountDeleteResponse },
   clientError: { method: "POST", path: "/reports/error", auth: false, request: ClientErrorRequest, response: ClientErrorResponse },
 } as const satisfies Record<string, Route>;
 export type RouteName = keyof typeof ROUTES;

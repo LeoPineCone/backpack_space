@@ -278,3 +278,16 @@ export const ClientErrorRequest = z.strictObject({
 export type ClientErrorRequest = z.infer<typeof ClientErrorRequest>;
 export const ClientErrorResponse = z.strictObject({ received: z.literal(true) });
 export type ClientErrorResponse = z.infer<typeof ClientErrorResponse>;
+
+/** GET /account/export (ACC-08): everything stored about the player, as it is stored. */
+export const AccountExportResponse = z.strictObject({
+  playerId: z.string().min(1),
+  /** the player's entries in the table `players` */
+  player: z.array(z.record(z.string(), z.unknown())),
+  /** their recorded shop actions */
+  actions: z.array(z.record(z.string(), z.unknown())),
+});
+export type AccountExportResponse = z.infer<typeof AccountExportResponse>;
+/** DELETE /account (ACC-08) */
+export const AccountDeleteResponse = z.strictObject({ deleted: z.literal(true) });
+export type AccountDeleteResponse = z.infer<typeof AccountDeleteResponse>;

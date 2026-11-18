@@ -175,7 +175,7 @@ Everything the player customises lives in the profile: player picture, player na
 
 **M9 Settings**
 
-The gear button: language, music, sounds, account, privacy policy, terms of use, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; account and help are placeholders. Privacy policy and terms of use open the website page in the player's language outside the app (WEB-03, build setting `VITE_WEBSITE_URL`, page `<site>/<language>/privacy/` and `/terms/`); until the website exists (M5) a toast says the page comes with it.
+The gear button: language, music, sounds, account, privacy policy, terms of use, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; help is a placeholder. Account (ACC-08, built 2026-11-18): a short note that sign-in runs through Game Center or Google Play Games, "Get my data" (a JSON file through the share sheet or a download) and "Delete account" with a confirmation that says what is lost; afterwards the game starts again as a new player. *Assumption* Privacy policy and terms of use open the website page in the player's language outside the app (WEB-03, build setting `VITE_WEBSITE_URL`, page `<site>/<language>/privacy/` and `/terms/`); until the website exists (M5) a toast says the page comes with it.
 
 **M10 Account**
 
@@ -216,7 +216,7 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | P8 | Introduction | overlay | first run | spot, symbols, one line, dots, X | built |
 | P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; profile holds everything to customise | built (placeholder rewards) |
 | P10 | Glossary | popup (from settings and "i") | all terms | groups, scrolls | built |
-| P11 | Settings | popup | options | language, music, sounds, account, privacy policy, terms of use, help, glossary | built (music and sounds without sound; account and help placeholders; website links wait for M5) |
+| P11 | Settings | popup | options | language, music, sounds, account (export and deletion), privacy policy, terms of use, help, glossary | built (music and sounds without sound; help placeholder; website links wait for M5) |
 | P12 | Purchase | popup | confirm a purchase | preview, price, BUY | built (BUY shows a toast) |
 | P13 | Run menu | popup | leave a run | settings, home, give up | built |
 
@@ -268,7 +268,10 @@ Every action has one gesture and one visible response; what is not possible is e
 | P9 | Wear a skin | tap a skin beside its hero | worn by that hero | only owned skins |
 | V7 | Buy | tap an offer, then BUY | purchase popup, then the purchase | today a toast |
 | P11 | Music, sounds | tap the row | switch on/off | – |
-| P11 | Account, help | tap the row | – | today a toast |
+| P11 | Account | tap the row | account: get my data, delete account | offline a toast |
+| P11 | Get my data | tap the row | the data file goes to the share sheet or a download | – |
+| P11 | Delete account | tap the row, then DELETE FOR GOOD in the confirmation | the game starts again as a new player | – |
+| P11 | Help | tap the row | – | today a toast |
 | P11 | Privacy policy, terms of use | tap the row | the website page opens outside the app | today a toast until the website exists |
 | P11 | Language | tap a row | switched at once | – |
 | P13 | Home / give up | tap / tap twice | start screen (run paused) / run end with reward | – |

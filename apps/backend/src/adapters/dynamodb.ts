@@ -127,6 +127,9 @@ export class DynamoBackpackPool implements BackpackPool {
     );
     return (out.Items as Item[] | undefined) ?? [];
   }
+  async byPlayer(playerId: string): Promise<Item[]> {
+    return queryAll(this.doc, (await this.settings.get()).tables.backpacks, "byPlayer", "playerId", playerId);
+  }
 }
 
 export class DynamoActionStore implements ActionStore {
@@ -149,6 +152,30 @@ export class DynamoActionStore implements ActionStore {
   async remove(pk: string, sk: string): Promise<void> {
     await this.doc.send(new DeleteCommand({ TableName: (await this.settings.get()).tables.actions, Key: { pk, sk } }));
   }
+  async byPlayer(playerId: string): Promise<Item[]> {
+    return queryAll(this.doc, (await this.settings.get()).tables.actions, "byPlayer", "playerId", playerId);
+  }
+}
+
+/** Every item of one key of an index, page by page. */
+async function queryAll(doc: DynamoDBDocumentClient, table: string, index: string, field: string, value: string): Promise<Item[]> {
+  const items: Item[] = [];
+  let next: string | undefined;
+  do {
+    const out = await doc.send(
+      new QueryCommand({
+        TableName: table,
+        IndexName: index,
+        KeyConditionExpression: "#f = :v",
+        ExpressionAttributeNames: { "#f": field },
+        ExpressionAttributeValues: { ":v": value },
+        ...cursor(next),
+      }),
+    );
+    items.push(...((out.Items ?? []) as Item[]));
+    next = out.LastEvaluatedKey ? JSON.stringify(out.LastEvaluatedKey) : undefined;
+  } while (next);
+  return items;
 }
 
 /** The cursor of a page is DynamoDB's last evaluated key as JSON. */

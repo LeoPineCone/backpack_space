@@ -14,6 +14,7 @@ import { runCurrent, runFinish, runStart } from "./domain/runs.js";
 import { session } from "./domain/session.js";
 import { quests } from "./domain/quests.js";
 import { clientError } from "./domain/reports.js";
+import { accountDelete, accountExport } from "./domain/account.js";
 
 export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {
   config,
@@ -28,6 +29,8 @@ export const DOMAIN_ROUTES: Partial<Record<RouteName, DomainFn>> = {
   runFight,
   runFinish,
   clientError,
+  accountExport,
+  accountDelete,
 };
 
 /** The player id comes from the session token only (ACC-04). */

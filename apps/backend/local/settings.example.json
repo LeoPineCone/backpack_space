@@ -19,7 +19,9 @@
     "runStart": { "rate": 20, "burst": 50 },
     "runFight": { "rate": 100, "burst": 200 },
     "runFinish": { "rate": 20, "burst": 50 },
-    "clientError": { "rate": 10, "burst": 50 }
+    "clientError": { "rate": 10, "burst": 50 },
+    "accountExport": { "rate": 5, "burst": 20 },
+    "accountDelete": { "rate": 5, "burst": 20 }
   },
   "tables": { "players": "local-players", "backpacks": "local-backpacks", "actions": "local-actions" }
 }

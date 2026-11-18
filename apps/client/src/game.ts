@@ -6,6 +6,7 @@ import {
   bookRun,
   buildOf,
   newRun,
+  newProfile,
   questData,
   questRule,
   enterSeason,
@@ -321,6 +322,22 @@ export class Game {
     if (!res.ok) return res.error;
     this.setProfile(profileFromServer((res.value as { profile: Parameters<typeof profileFromServer>[0] }).profile, this.profile));
     return null;
+  }
+
+  /**
+   * Deletes the account on the server (ACC-08); afterwards this device forgets the run and the profile, and the next
+   * start signs in as a new player.
+   */
+  async deleteAccount(): Promise<ApiResult<ResponseOf<"accountDelete">>> {
+    const res = await this.call("accountDelete", {});
+    if (res.ok) {
+      this.run = null;
+      this.runId = null;
+      this.quest = null;
+      this.dropSave();
+      this.setProfile(newProfile(this.meta));
+    }
+    return res;
   }
 
   /** Stores a changed profile. */
