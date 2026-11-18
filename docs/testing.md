@@ -43,7 +43,8 @@ File names: `<subject>.test.ts` for unit, `<subject>.api.test.ts` for interface,
 | --- | --- |
 | `npm test` | Level 1 only. Fast, needs nothing running. This is what a developer runs all the time. |
 | `npm run test:api` | Level 2. Starts the local database and backend, runs the interface tests, stops them. Exists from M1. |
-| `npm run test:e2e` | Level 3 and 4 in Chromium and WebKit. Exists from M2 (level 4 from M0, in Node). |
+| `npm run test:e2e` | Level 3 and 4 in Chromium and WebKit (Playwright, `playwright.config.ts`). Today: the reference fights (`e2e/reference-fights.e2e.ts`); client runs come in M2. Needs the browsers once: `npx playwright install chromium webkit`. |
+| `npm run sim:reference` | Regenerates `data/sim/reference-fights.json` on purpose, after a change that alters fight results. |
 | `npm run check` | `validate`, `typecheck`, lint, `npm test`. The same as the automatic pull request check. |
 
 The test run on the pull request runs all levels that exist at that time. A level that needs a container or a browser runs in its own step, so a failure says which level broke.
