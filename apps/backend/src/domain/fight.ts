@@ -17,7 +17,7 @@ import { ApiError, type DomainContext } from "./context.js";
 import { logEvent } from "./log.js";
 import { findOpponent, poolKeys, type PoolEntry } from "./matching.js";
 import { loadProfile, playerKey } from "./players.js";
-import { checkSimVersion, readRun, roundKey, RUN, toBody, type StoredRun } from "./runs.js";
+import { checkSimVersion, expiresIn, readRun, roundKey, ROUNDS_KEEP_DAYS, RUN, toBody, type StoredRun } from "./runs.js";
 import { isoDay } from "./config.js";
 
 /** How long recorded actions are kept (RUN-14, proposal): long enough for the planned analysis after some weeks. */
@@ -89,7 +89,18 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
     const now = clock.now();
     const committed = await players.transact([
       {
-        put: { pk, sk: roundKey(run.runId, run.round), backpack: build, opponent: opp.id, owner: opp.owner, fightSeed, result, answer, at: now },
+        put: {
+          pk,
+          sk: roundKey(run.runId, run.round),
+          backpack: build,
+          opponent: opp.id,
+          owner: opp.owner,
+          fightSeed,
+          result,
+          answer,
+          at: now,
+          expiresAt: expiresIn(now, ROUNDS_KEEP_DAYS),
+        },
         ifNotExists: true,
       },
       { put: { pk, sk: RUN, ...next }, ifVersion: run.version },

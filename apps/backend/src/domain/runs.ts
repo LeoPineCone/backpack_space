@@ -64,9 +64,10 @@ export function checkSimVersion(ctx: DomainContext, simVersion: string): void {
   if (simVersion !== ctx.ports.game.data.simVersion) throw new ApiError("update_required");
 }
 
-/** GET /runs/current: the open run, or null. */
+/** GET /runs/current: the open run, or null; a run that is over is booked now (the app never reported its end). */
 export async function runCurrent(ctx: DomainContext): Promise<RunCurrentResponse> {
   const run = await readRun(ctx, ctx.playerId!);
+  if (run?.over) return { run: null, finished: await finishRun(ctx, run.runId, "finished") };
   return { run: run ? toBody(run) : null };
 }
 
@@ -108,7 +109,11 @@ export async function runStart(ctx: DomainContext, body: unknown): Promise<RunSt
   return { run: toBody(run) };
 }
 
-const EVENT_REASON: Record<FinishReason, EventFields["run_finished"]["reason"]> = { gave_up: "gave_up", no_local_copy: "abandoned" };
+const EVENT_REASON: Record<FinishReason, EventFields["run_finished"]["reason"]> = { finished: "finished", gave_up: "gave_up", no_local_copy: "abandoned" };
+
+/** How long `ROUND#` and `DONE#` entries are kept for repeats (proposal in docs/backend.md); DynamoDB removes them after. */
+export const ROUNDS_KEEP_DAYS = 30;
+export const expiresIn = (nowMs: number, days: number) => Math.floor(nowMs / 1000) + days * 86400;
 
 /**
  * POST /runs/finish: ends the open run and books the standing the server knows, once. The profile write (on its
@@ -117,6 +122,10 @@ const EVENT_REASON: Record<FinishReason, EventFields["run_finished"]["reason"]> 
  */
 export async function runFinish(ctx: DomainContext, body: unknown): Promise<RunFinishResponse> {
   const { runId, reason } = body as RunFinishRequest;
+  return finishRun(ctx, runId, reason);
+}
+
+async function finishRun(ctx: DomainContext, runId: string, asked: FinishReason): Promise<RunFinishResponse> {
   const playerId = ctx.playerId!;
   const pk = playerKey(playerId);
   const { players, game, clock } = ctx.ports;
@@ -127,6 +136,8 @@ export async function runFinish(ctx: DomainContext, body: unknown): Promise<RunF
     if (!run || run.runId !== runId) throw new ApiError("run_conflict");
     const stored = await loadProfile(ctx, playerId);
     if (!stored) throw new Error("signed-in player without profile");
+    // the app may only call a run finished that is over; otherwise it gave up
+    const reason: FinishReason = asked === "finished" && !run.over ? "gave_up" : asked;
 
     const summary = { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.over ? run.round : run.round - 1 };
     // the core's profile carries Credits; on the server they live at RevenueCat (earned Credits: STORE issues)
@@ -147,7 +158,7 @@ export async function runFinish(ctx: DomainContext, body: unknown): Promise<RunF
     const now = clock.now();
     const writes: Write[] = [
       ...profileWrites(playerId, profile, stored, now, "run", stored.profile),
-      { put: { pk, sk: doneKey(runId), reason, answer, at: now } satisfies Item, ifNotExists: true },
+      { put: { pk, sk: doneKey(runId), reason, answer, at: now, expiresAt: expiresIn(now, ROUNDS_KEEP_DAYS) } satisfies Item, ifNotExists: true },
       { delete: { pk, sk: RUN }, ifVersion: run.version },
     ];
     if (await players.transact(writes)) {

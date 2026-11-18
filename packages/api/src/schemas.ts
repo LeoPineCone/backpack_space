@@ -136,10 +136,6 @@ export const RunBody = z.strictObject({
 });
 export type RunBody = z.infer<typeof RunBody>;
 
-/** GET /runs/current: the open run, or null. */
-export const RunCurrentResponse = z.strictObject({ run: RunBody.nullable() });
-export type RunCurrentResponse = z.infer<typeof RunCurrentResponse>;
-
 /** POST /runs: start a run. While a run is open, the same open run comes back (whatever hero is asked for). */
 export const RunStartRequest = z.strictObject({ hero: Id, simVersion: SimVersion });
 export type RunStartRequest = z.infer<typeof RunStartRequest>;
@@ -194,10 +190,11 @@ export const RunFightResponse = z.strictObject({
 export type RunFightResponse = z.infer<typeof RunFightResponse>;
 
 /**
- * Why a run ends early: the player gave up, or the app has no local copy of the open run (reinstall, other device;
- * the server then books the standing it knows, RUN-11).
+ * Why a run ends: it is over (last round fought or no lives left), the player gave up, or the app has no local copy
+ * of the open run (reinstall, other device; the server then books the standing it knows, RUN-11). "finished" for a
+ * run that is not over counts as giving up.
  */
-export const FINISH_REASONS = ["gave_up", "no_local_copy"] as const;
+export const FINISH_REASONS = ["finished", "gave_up", "no_local_copy"] as const;
 export type FinishReason = (typeof FINISH_REASONS)[number];
 export const RunFinishRequest = z.strictObject({ runId: Id, reason: z.enum(FINISH_REASONS) });
 export type RunFinishRequest = z.infer<typeof RunFinishRequest>;
@@ -226,3 +223,10 @@ export type RunResult = z.infer<typeof RunResult>;
 /** POST /runs/finish: the same answer for every repeat of the request. */
 export const RunFinishResponse = z.strictObject({ result: RunResult, profile: ProfileBody });
 export type RunFinishResponse = z.infer<typeof RunFinishResponse>;
+
+/**
+ * GET /runs/current: the open run, or null. A run that is over but was never reported finished is booked at this
+ * request; `finished` then carries what was booked, so the app can show it.
+ */
+export const RunCurrentResponse = z.strictObject({ run: RunBody.nullable(), finished: RunFinishResponse.optional() });
+export type RunCurrentResponse = z.infer<typeof RunCurrentResponse>;
