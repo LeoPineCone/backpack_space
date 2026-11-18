@@ -408,8 +408,8 @@
     "description": "Filling the square box: a heavy hull-plate panel, its middle a grid of round coral red reactive charges, short sharp spikes along the rim, rivets at the corners."
   },
   "exo_suit": {
-    "brief": "Space suit inside an iron frame, big visor helmet on top. Accent: mustard.",
-    "description": "Upright through the tall box: the limp space suit now standing in a riveted iron exoskeleton frame, pistons at knees and elbows, the round mustard-tinted visor helmet on top."
+    "brief": "Exo frame torso with iron shoulder brace and spine rail. Accent: mustard.",
+    "description": "Upright through the tall box: only the upper body of a space suit, no legs, strapped into exo parts: a riveted iron shoulder brace, a spine rail, a piston at the elbow and an arm brace hanging below."
   },
   "aegis_projector": {
     "brief": "Satellite dish shield powered by a star cell, hexagon of force. Accent: teal.",
@@ -549,7 +549,7 @@
   },
   "magma_hound": {
     "brief": "Comet fox grown big with magma newt basalt skin. Accent: coral red.",
-    "description": "Filling the square box: a lean long-legged hound mid-stride, cracked black basalt skin with coral red heat in the cracks, antenna-dish ears, a long tail of drifting ash. One single animal."
+    "description": "Filling the square box: a lean long-legged hound mid-stride, cracked black basalt skin with coral red heat in the cracks, short swept-back basalt horns and pointed ears, a long tail of drifting ash. One single animal."
   },
   "snow_lynx": {
     "brief": "Shadow lynx with frosted fur and ice crystal crest. Accent: teal.",
@@ -648,8 +648,8 @@
     "description": "Filling the wide box: a short wall of overlapping riveted bulkhead plates with X braces, the old satellite dish mounted on top as a shield turret, copper bolts."
   },
   "life_support_suit": {
-    "brief": "Exo suit with a tube backpack and a heartbeat screen. Accent: sage.",
-    "description": "The suit fills the left column and top right: the iron-framed exo suit, a medkit backpack with sage tubes on the top right cell, a heartbeat screen on the chest; lower right cell empty."
+    "brief": "Exo torso with a tube backpack and a heartbeat screen. Accent: sage.",
+    "description": "Only the upper body of a suit in a riveted exo frame fills the top left; a medkit backpack with sage tubes fills the top right cell; a hose runs down the lower left cell; a heartbeat screen on the chest; lower right cell empty."
   },
   "star_piercer": {
     "brief": "Railgun rails stretched long with a crystal sniper scope. Accent: mustard.",
@@ -736,8 +736,8 @@
     "description": "Lying across the box: a small round robot with a sage air-filter mask as its face, one wrench arm and one arm holding a folded towel, a kind tilt of the head."
   },
   "survival_suit": {
-    "brief": "Space suit wrapped in a crinkled mustard foil blanket. Accent: mustard.",
-    "description": "Filling the square box: the empty space suit wrapped in the crinkled foil rescue blanket like a cape, hard mustard and cream foil facets, helmet hanging at its side."
+    "brief": "Suit torso wrapped in a crinkled mustard foil blanket. Accent: mustard.",
+    "description": "Filling the square box: only the upper body of a space suit, no legs, wrapped in the crinkled foil rescue blanket like a cape, hard mustard and cream foil facets, the helmet hanging at its side."
   },
   "power_meal": {
     "brief": "Lunch box with a rocket protein bar and planet pills. Accent: mustard.",
