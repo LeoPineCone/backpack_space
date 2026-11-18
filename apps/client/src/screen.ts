@@ -11,6 +11,7 @@
  * leaves, but at least MIN_H (shorter screens scale everything down) and at most MAX_H (taller ones get an empty band).
  * Screens therefore place their top parts from y = 0 down and their bottom parts from y = H up.
  */
+import { DEV_TOOLS } from "./devtools";
 export const W = 390;
 /** Every screen fits into this height (an iPhone 15 Pro's safe area is about 753). */
 export const MIN_H = 750;
@@ -31,10 +32,10 @@ export interface Insets {
 
 /**
  * The safe-area insets in CSS pixels, from `env(safe-area-inset-*)` (needs `viewport-fit=cover`, see index.html).
- * For checks in a desktop browser `?safe=top,bottom` (e.g. `?safe=59,34`) pretends to be a phone.
+ * For checks in a desktop browser `?safe=top,bottom` (e.g. `?safe=59,34`) pretends to be a phone (development builds only, devtools.ts).
  */
 export function safeInsets(): Insets {
-  const fake = new URLSearchParams(location.search).get("safe");
+  const fake = DEV_TOOLS ? new URLSearchParams(location.search).get("safe") : null;
   if (fake) {
     const [top = 0, bottom = 0] = fake.split(",").map(Number);
     return { top, right: 0, bottom, left: 0 };

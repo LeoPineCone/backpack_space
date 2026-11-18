@@ -11,6 +11,7 @@ import { homeScene } from "./scenes/home";
 import { shopScene } from "./scenes/shop";
 import { battleScene } from "./scenes/battle";
 import { t } from "./i18n";
+import { DEV_TOOLS } from "./devtools";
 
 async function boot(): Promise<void> {
   const app = new Application();
@@ -25,10 +26,12 @@ async function boot(): Promise<void> {
   const resumed = game.resume();
   game.show(!resumed ? homeScene(game) : resumed.fight ? battleScene(game, resumed.fight) : shopScene(game));
   if (season) game.toast(t("toast.seasonStart", { n: season.profile.season.id, league: t(`league.${META.leagues.ids[season.league[1]]}`) }));
-  // for automated checks
-  (window as unknown as { __game: Game }).__game = game;
-  // the version of the rules this build computes with (CORE-03); a future server compares it
-  if (import.meta.env.DEV) console.info(`simVersion ${DATA.simVersion}`);
+  if (DEV_TOOLS) {
+    // for automated checks
+    (window as unknown as { __game: Game }).__game = game;
+    // the version of the rules this build computes with (CORE-03); a future server compares it
+    console.info(`simVersion ${DATA.simVersion}`);
+  }
 }
 
 void boot();

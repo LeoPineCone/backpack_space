@@ -74,7 +74,7 @@ The page uses `viewport-fit=cover`, so the app draws over the whole display. `ap
 - y = 0 is the top of the safe area, y = `H` its bottom. `H` is set once at start from the device (between 750 and 900; an iPhone 15 Pro gives about 753). Screens put their top parts from 0 down and their bottom parts from `H` up, and must fit into 750.
 - `SCREEN` is the whole display in design units. Only backgrounds use it: `screenFill`, `dimmer`, the menu backdrop.
 - Shorter screens (e.g. iPhone SE) scale everything down a little; on desktop browsers there is no inset.
-- To check in a desktop browser, add `?safe=47,34` (top, bottom in CSS pixels; an iPhone 14) to the URL.
+- To check in a desktop browser, add `?safe=47,34` (top, bottom in CSS pixels; an iPhone 14) to the URL. Works in the dev server (`npm run client`) and in `npm run client:build:dev`, not in the production build (`apps/client/src/devtools.ts`).
 - Background colour `#070b18` (the client's background), so there is no white flash at start.
 - App icon and splash screen are still the Capacitor defaults. Replacing them is a later step with `@capacitor/assets` once there is art.
 
