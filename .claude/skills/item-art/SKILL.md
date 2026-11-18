@@ -162,6 +162,12 @@ Image credits are limited. Generate only when Ilja asks, check the balance first
 - **Sheets with slots shaped like the items** (2026-11-18): on a 2×2 sheet of square quarters the model draws
   2×1 and 3×1 items compact and they fill only half their box. Put items of one shape on one sheet with slots of
   that shape instead (e.g. eight 2×1 items as 2 columns × 4 rows, four 4×1 items as 4 rows).
+- **Slot sheets work** (2026-11-18, 30 sheets, 168 items, no refusal): wide items as "laid out in 4 horizontal rows
+  of equal height ... Row 2, left half: Name (a wide 2:1 item filling the left half of the row from end to end)",
+  3:1 and 4:1 items one per row; tall items as columns ("Column 2, upper half: ... a tall 1:2 item standing
+  upright"). 137 of 168 reached 90 % of their long side. Do not leave half a column empty: the model then
+  stretches that item over the whole column. Big and odd-shaped items in quarters still often come out centred
+  (stem or body in the middle instead of the left cell); check their free cells after cutting.
 - At most two weapons per sheet, mixed with other items, and no flame tongues on weapons: sheets with three or
   more weapons and flames at a muzzle were refused by the safety filter (2026-11-18).
 - A single weapon alone on one image (Railgun, 21:9) was refused twice by the model's safety filter; put
