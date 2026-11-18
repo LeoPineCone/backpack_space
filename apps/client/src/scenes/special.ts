@@ -22,7 +22,7 @@ export function specialOverlay(game: Game, onDone: () => void): Scene {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
     root.addChild(dimmer(undefined, 0.96));
     // the hero's badge over a pick from the hero's own items, a star over a general artifact
-    if (heroPick) root.addChild(at(heroBadge(data.heroes.get(game.run!.hero)!.name, 26, C.gold), W / 2, 56));
+    if (heroPick) root.addChild(at(heroBadge(data.heroes.get(game.run!.hero)!, 26, C.gold), W / 2, 56));
     else root.addChild(at(icon("starFull", 44, C.gold), W / 2, 56));
     root.addChild(at(txt(t("ui.chooseOne"), 28, { spacing: 1.7, anchor: [0.5, 0] }), W / 2, 86));
     const cardH = options.length > 2 ? 150 : 180,

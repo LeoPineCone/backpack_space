@@ -1,10 +1,11 @@
 /** Choose a hero (after FIGHT on the start screen): heroes on a ring, the start button in the middle, the chosen hero large on top. */
-import { Container, Graphics, Rectangle } from "pixi.js";
+import { Container, Graphics, Rectangle, Sprite } from "pixi.js";
+import { artTexture } from "../art";
 import { BUFFS, DEBUFFS, TAGS, heroLevel, newRun, ownsHero } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, SCREEN, W } from "../theme";
 import { icon, hasIcon } from "../icons";
-import { at, box, disc, hudPill, infoButton, placeholder, roundButton, tappable, txt } from "../ui";
+import { at, box, disc, heroHead, hudPill, infoButton, placeholder, roundButton, tappable, txt } from "../ui";
 import { heroPopup } from "./popup";
 import { homeScene } from "./home";
 import { shopScene } from "./shop";
@@ -59,8 +60,18 @@ export function heroScene(game: Game): Scene {
     // the chosen hero
     const art = new Container();
     if (hero && sel.kind === "own") {
-      art.addChild(placeholder(200, 240, "", 24), at(txt(t("ui.placeholder.heroArt"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 192));
-      art.addChild(at(txt(sel.letter, 96, { color: C.line, anchor: [0.5, 0.5] }), 100, 110));
+      const tex = artTexture(`heroes/${sel.id}`);
+      if (tex) {
+        // the full-body picture, fitted into the 200×240 frame and standing on its bottom edge
+        const pic = new Sprite(tex);
+        const k = Math.min(200 / tex.width, 240 / tex.height);
+        pic.scale.set(k);
+        pic.anchor.set(0.5, 1);
+        art.addChild(at(pic, 100, 240));
+      } else {
+        art.addChild(placeholder(200, 240, "", 24), at(txt(t("ui.placeholder.heroArt"), 11, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 100, 192));
+        art.addChild(at(txt(sel.letter, 96, { color: C.line, anchor: [0.5, 0.5] }), 100, 110));
+      }
       const lvl = new Container();
       lvl.addChild(disc(28, { fill: C.bg, line: C.cyan, lineW: 2 }), at(txt(t("ui.level"), 9, { font: "text", color: C.dim, anchor: [0.5, 0.5] }), 0, -11), at(txt(heroLevel(meta, p.heroXp[sel.id] ?? 0).level, 22, { anchor: [0.5, 0.5] }), 0, 5));
       tappable(lvl, () => progress("hero"), new Rectangle(-32, -32, 64, 64));
@@ -91,7 +102,7 @@ export function heroScene(game: Game): Scene {
       const r = i === selected ? 40 : 30;
       const b = new Container();
       b.addChild(disc(r, { fill: s.kind === "own" ? C.panel : C.bg, line: i === selected ? C.cyan : s.kind === "own" ? C.dim : C.line, lineW: i === selected ? 3 : 2 }));
-      if (s.kind === "own") b.addChild(txt(s.letter, 22, { anchor: [0.5, 0.5] }));
+      if (s.kind === "own") b.addChild(heroHead(s.id, r - (i === selected ? 3 : 2)) ?? txt(s.letter, 22, { anchor: [0.5, 0.5] }));
       else if (s.kind === "locked") b.addChild(icon("lock", 22, C.dim));
       else b.addChild(txt("?", 20, { color: C.line, anchor: [0.5, 0.5] }));
       tappable(b, () => { selected = i; if (s.kind === "own") game.hero = s.id; render(); }, new Rectangle(-r - 4, -r - 4, r * 2 + 8, r * 2 + 8));

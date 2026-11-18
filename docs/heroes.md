@@ -15,8 +15,10 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 - An old, patched research suit that does not fit what is inside. One arm is swollen tight; the other sleeve hangs half empty and a vine whip slides out of the cuff. Roots and bark push through seams and patches; it stands a little wrong, like a puppet worked from inside.
 - The helmet visor is cracked and packed with tightly coiled rust-red tendrils pressing against the glass, with a cluster of pale seed bulbs among them. Nothing in there looks back.
 - A specimen clamp with a tag is still bolted to the suit's chest from the experiment.
+- The belly of the suit is torn open; rust-red tendrils and pale seed bulbs bulge out of the tear.
+- From the back tank a long thorny stalk arches over the helmet and dangles one large rust-red and bone **lure flower** in front of the visor, like an anglerfish lure. Its poison pollen turns around it as a small flat spiral galaxy (drawn, never glowing).
 
-**Fixed marks:** the cracked visor full of coiled tendrils (no face), the name patch "VENN".
+**Fixed marks:** the cracked visor full of coiled tendrils (no face), the lure flower with its pollen galaxy (decided 2026-11-17; the name patch is now an ordinary detail of the suit).
 **Skin slot:** the suit.
 
 **Mechanics, as they are:** every meal is a gift from the garden and Toxin is the side effect it does not understand. Thorn wall: the suit turns to bark. Hungry jungle: the plant pets are its offshoots. The Watering Drone belonged to the botanist and still follows the suit.
@@ -40,29 +42,31 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 
 **Story.** As a tiny creature Quill fell out of an escape pod into the middle of a herd of wild space beasts. Instead of eating her, the herd took her in. Nobody trained anyone: the animals protect her because they want to. She is the weakest of the herd and the only one who makes plans. Whoever threatens her has the whole herd against them.
 
-**Look.** A small, fluffy creature with huge ears and big eyes, wearing a far too large coat of shed fur the herd gave her. She sits in a woven nest between the horns of a **Tusked Behemoth** (her epic item): a huge, shaggy, low beast with four tusks. Smaller animals cling to the beast's fur.
+**Look.** A small, fluffy creature with huge ears and big eyes, wearing a far too large coat of shed fur the herd gave her. Her ears are her antennas: teal inside with a radar-dish pattern. She sits in a woven nest on the dented hatch of her old escape pod, between the two short horns of a **Tusked Behemoth** (her epic item): a huge, shaggy, low beast with coral-red and cream striped fur, two big mirrored tusks and no trunk. Her herd's small animals cling to the beast's fur: the Space Pup (horn stub, comet-like tail), the Burrow Rat (asteroid-rock armour, crystal teeth) and the Glutton Toad (three stalk eyes). Model sheet decided 2026-11-18.
 
 **Fixed marks:** the huge ears, the oversized fur coat.
 **Skin slot:** the beast she rides (other beasts can carry her).
 
 **Mechanics, as they are:** her pets act at once because the herd reacts to any threat to her; her pets heal her for a quarter of the damage they deal (they groom and feed her; tied to damage, so one heavy beast heals like several small pets); more health the more room her pets take in the backpack (per cell, so a few large beasts count like many small pets) because the herd shields her.
 
-## Ysel – Singer of the Corona
+## Ysel – Moth of the Last Light
 
 *Star phases, Burn, long fights.*
 
-**Story.** Ysel belongs to an order that keeps dying stars company until the end. At her consecration she gave up her head and received a fragment of a dying sun, which has floated above her shoulders ever since. With every hymn it burns hotter. She does not fear the Supernova; she is waiting for it.
+**Story.** Ysel is a solar moth. Her kind flies to dying stars and stays with them until the end; she belongs to an order of them that keeps every dying star company. With every star phase she soaks more of the star's last light into her wings, and they open a little wider. She does not fear the Supernova: she was born for it. (Changed 2026-11-18: she no longer sings and no longer has a sun for a head.)
 
-**Look.** The head is the eye-catcher the whole design stands on.
+**Look.** A tall solar moth, calm and serious.
 
-- Above the empty collar floats a small dying sun the size of a head, held in an open cage of bent iron rings like a reliquary. Its surface is drawn flat in mustard and rust red and split by heavy black cracks; three or four broken pieces circle it slowly. Heat is drawn as wavy ink lines around it, never as glow.
-- Below it a tall figure in a heavy dark robe with rust-red bands, hands hidden in long sleeves, a bell hanging from one wrist, rosaries of small stones on the belt.
-- Each star phase changes the head: the cracks widen, the pieces circle faster (useful for the fight view).
+- Round fluffy cream moth face with two very large dark compound eyes, no beak; two large feathered mustard antennae.
+- A thick cream fur ruff. Her huge wings fold down around her like a long ceremonial robe that reaches the ground, so no feet show. The wing pattern is a sun corona with eclipse rings in mustard, coral red, navy and cream; the cream wing edges have small singed spots.
+- Under the wings a dark teal robe with a mustard and coral band showing sun and moon phases.
+- Four thin grey insect arms: the upper pair folded in prayer, the lower pair holds a bronze bell and a string of star-shard beads.
+- Star phases can be shown by the wings opening wider (useful for the fight view).
 
-**Fixed marks:** no head, a floating object held in the iron cage above the collar; the robe silhouette.
-**Skin slot:** the head object in the cage.
+**Fixed marks:** the moth face with feathered antennae, the wings worn as a robe with the corona pattern, four arms.
+**Skin slot:** the wing pattern and robe (confirmed 2026-11-18).
 
-**Mechanics, as they are:** she enters every fight already singing (1 Power), and every phase her hymn grows louder (1 Power more); half Supernova damage because she belongs to the star.
+**Mechanics, as they are:** she enters every fight already holding some starlight (1 Power), and every phase she soaks up more (1 Power more); half Supernova damage because she was born for it.
 
 ## Ideas kept for later heroes
 

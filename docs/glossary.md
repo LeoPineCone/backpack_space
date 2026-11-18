@@ -14,6 +14,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Round** | Runde | Shop and packing, then one fight. | `RunState.round` |
 | **Life** | Leben | A run starts with 4. A lost fight costs one. | `RunState.lives`, `rules.lives` |
 | **Gold** | Gold | Money for the shop, paid every round. | `RunState.gold`, `rules.goldPerRound` |
+| **Give up** | Aufgeben | Ends the run in the shop. The reward counts the rounds fought so far. | `giveUp` |
 
 ## Backpack and bags
 
@@ -108,7 +109,12 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Season** | Season | A stretch of time with its own pass and league race. A new season brings a new hero. | `meta.seasons`, `SeasonState` |
 | **League** | Liga | Your rank. Runs win or lose league points; a league you reached cannot be lost. A new season starts two leagues lower. | `meta.leagues`, `leagueOf` |
 | **League patch** | Liga-Patch | Paid at the end of a season for the league you reached. Wear one on your profile. | `patchId`, `Profile.equipped.patch` |
+| **Profile level** | Profilstufe | The number on your picture: the levels of all your heroes added up. | `profileLevel` |
 | **Cosmetic** | Kosmetik | Changes the look only, never the game: skins, backgrounds, grid backgrounds, patches. | `meta.cosmetics` |
+| **Skin** | Skin | Another look for one hero. Worn in the profile. | `Profile.equipped.skins`, `equipSkin` |
+| **Player picture** | Spielerbild | Your picture on the start screen. Chosen in the profile. | `Profile.equipped.picture` |
+| **Quest** | Aufgabe | A daily or weekly run with special rules that pays Galaxies. | `questsScene` |
+| **Shop (Credits)** | Shop (Credits) | Where skins, backgrounds, heroes of earlier seasons and the premium pass are bought. Every purchase shows a preview first. | `storeScene`, `purchaseOverlay` |
 
 ## Fight
 

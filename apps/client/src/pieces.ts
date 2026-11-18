@@ -1,5 +1,9 @@
-/** Draws items and bags as placeholder tiles: the shape in cells, a type symbol and the item's initials. */
-import { Container, Graphics } from "pixi.js";
+/**
+ * Draws items and bags as tiles: the shape in cells with the rarity frame, and inside either the item's picture
+ * (`art/items/<id>.png`, see docs/client-art.md) or, while it has none, a type symbol and the item's initials.
+ */
+import { Container, Graphics, Sprite } from "pixi.js";
+import { artTexture } from "./art";
 import { PET_KINDS, starLinks, type GameData, type ItemDef, type Placement, type StarLink } from "@backpack-space/core";
 import { C, RARITY, TAG_FILL } from "./theme";
 import { icon } from "./icons";
@@ -13,7 +17,8 @@ export const initials = (name: string) => {
   return (words.length === 1 ? words[0]!.slice(0, 2) : words.map((w) => w[0]!).slice(0, 3).join("")).toLocaleUpperCase();
 };
 
-export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number }
+/** bare: an item with a picture is drawn as the picture alone, without tile and frame (shop offers). */
+export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number; bare?: boolean }
 
 /** The symbol on an item's tile: its first type, but a pet shows its kind (beast or swarm) when it has one. */
 function tileIcon(def: ItemDef): string {
@@ -26,6 +31,10 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const def = data.items.get(id)!;
   const s = data.shape(id, rot);
   const c = new Container();
+  if (o.bare && !def.isBag) {
+    const pic = itemArt(data, id, rot, cell);
+    if (pic) { pic.alpha = o.alpha ?? 1; c.addChild(pic); return c; }
+  }
   const g = new Graphics();
   const pad = def.isBag ? 0 : Math.max(1.5, cell * 0.06);
   const fill = def.isBag ? C.bag : TAG_FILL[def.tags[0] ?? "bag"] ?? C.line;
@@ -37,7 +46,9 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
     const r = has.has(`${x + 1},${y}`) ? 0 : pad, b = has.has(`${x},${y + 1}`) ? 0 : pad;
     g.rect(x * cell + l, y * cell + t, cell - l - r, cell - t - b);
   }
-  g.fill({ color: fill, alpha: o.alpha ?? 1 });
+  // with a picture the type colour stays only as a faint tint, so it does not fight the picture's own colours
+  const tint = !def.isBag && artTexture(`items/${id}`) ? 0.22 : 1;
+  g.fill({ color: fill, alpha: (o.alpha ?? 1) * tint });
   // outline: every cell edge that has no neighbour
   const lw = def.isBag ? 1 : Math.max(1.5, cell * 0.05);
   for (const [x, y] of s.cells) {
@@ -55,12 +66,31 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const mid = [...s.cells].sort((a, b) => Math.hypot(a[0] - mx, a[1] - my) - Math.hypot(b[0] - mx, b[1] - my))[0]!;
   const cx = mid[0] * cell + cell / 2, cy = mid[1] * cell + cell / 2;
   const label = o.label !== false && cell >= 26;
-  if (!def.isBag || o.label !== false) {
+  const pic = def.isBag ? null : itemArt(data, id, rot, cell);
+  if (pic) c.addChild(pic);
+  else if (!def.isBag || o.label !== false) {
     c.addChild(at(icon(tileIcon(def), cell * (label ? 0.42 : 0.55), def.isBag ? C.dim : C.text), cx, cy - (label ? cell * 0.12 : 0)));
     if (label) c.addChild(at(txt(initials(tr().item(id)), cell * 0.24, { color: def.isBag ? C.dim : C.text, anchor: [0.5, 0.5] }), cx, cy + cell * 0.27));
   }
   if (o.stars) for (const [x, y] of s.stars) c.addChild(at(icon("starFull", cell * 0.45, C.gold), x * cell + cell / 2, y * cell + cell / 2));
   return c;
+}
+
+/**
+ * The item's picture over its bounding box, turned with the item. The file is drawn for rotation 0 at
+ * width × height of the unturned shape in cells. Returns null while the item has no picture.
+ */
+function itemArt(data: GameData, id: string, rot: number, cell: number): Sprite | null {
+  const tex = artTexture(`items/${id}`);
+  if (!tex) return null;
+  const s0 = data.shape(id, 0), s = data.shape(id, rot);
+  const sp = new Sprite(tex);
+  sp.anchor.set(0.5);
+  sp.width = s0.w * cell;
+  sp.height = s0.h * cell;
+  sp.rotation = (rot & 3) * Math.PI / 2;
+  sp.position.set(s.w * cell / 2, s.h * cell / 2);
+  return sp;
 }
 
 /** A piece scaled to fit a box, centred in it. Origin top-left of the box. */
@@ -145,13 +175,21 @@ export function starMarks(data: GameData, bags: readonly Placement[], items: rea
 
 /**
  * An item as a square icon of one fixed size, whatever its shape: type symbol and initials on the type colour, rarity frame.
- * Used where items stand side by side (recipes). Origin top-left. Real item art replaces the inside later.
+ * Used where items stand side by side (recipes). Origin top-left. The item's picture replaces symbol and initials.
  */
 export function itemIcon(data: GameData, id: string, size: number, o: { line?: number } = {}): Container {
   const def = data.items.get(id)!;
   const c = new Container();
   const fill = def.isBag ? C.bag : TAG_FILL[def.tags[0] ?? "bag"] ?? C.line;
   c.addChild(new Graphics().roundRect(0, 0, size, size, size * 0.2).fill(fill).stroke({ width: Math.max(2, size * 0.05), color: o.line ?? (def.isBag ? C.bagLine : RARITY[def.rarity] ?? C.dim), alignment: 1 }));
+  const tex = def.isBag ? null : artTexture(`items/${id}`);
+  if (tex) {
+    const sp = new Sprite(tex), k = size * 0.86 / Math.max(tex.width, tex.height);
+    sp.anchor.set(0.5);
+    sp.scale.set(k);
+    c.addChild(at(sp, size / 2, size / 2));
+    return c;
+  }
   c.addChild(at(icon(tileIcon(def), size * 0.42, C.text), size / 2, size * 0.4));
   c.addChild(at(txt(initials(tr().item(id)), size * 0.22, { anchor: [0.5, 0.5] }), size / 2, size * 0.77));
   return c;

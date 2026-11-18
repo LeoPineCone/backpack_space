@@ -138,7 +138,7 @@ Image credits are limited. Generate only when Ilja asks, check the balance first
   composition and background lines as `art:prompt`. One 1k image gives four quarters of 512 px, plenty for 176 px
   per cell. Cost per item drops to a quarter and the four come out in exactly the same style. Mix items from
   different planets and types on one sheet. Single images stay the rule for 2×2 and larger items.
-- Lava, fire and heat tend to come out orange and glowing; keep insisting on flat rust red and ink lines.
+- Lava, fire and heat tend to come out orange and glowing; keep insisting on flat coral red and ink lines.
 - Small puffs of smoke or steam at an item's edge look odd at backpack size (Rocket Chili); leave them out.
 - Judge in this order: does it read as the named thing at real size? Is there a space idea? Does it fit the
   style and palette?

@@ -9,6 +9,8 @@ keeps its placeholder symbol, so pictures can be added one by one.
 |---|---|---|
 | `art/space.jpg` | star field behind every menu background | 1080×1920, JPEG |
 | `art/planets/<place>.jpg` | surface map of a place in `lore/planets.json` | 2048×1024 (2:1), JPEG, left edge continues the right edge |
+| `art/items/<item id>.png` | item picture, replaces the type symbol and initials on the tile (`src/pieces.ts`) | 176 px per cell of the unturned shape (a 1×2 item is 176×352), PNG with transparent background; the client turns it with the item |
+| `art/heroes/<hero id>.webp`, `art/heroes/<hero id>-head.webp` | hero full body (hero choice, 200×240 pt) and round head picture (hero ring and every hero badge, cut to a circle by `heroHead` in `src/ui.ts`); made with `.claude/skills/hero-art/SKILL.md` | full body fits 600×720, head 256×256, WebP with transparent background |
 
 ## Menu backgrounds
 

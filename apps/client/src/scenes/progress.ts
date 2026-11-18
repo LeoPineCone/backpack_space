@@ -39,11 +39,11 @@ export function rewardTile(game: Game, r: Reward, size: number, on = true): Cont
       at(txt(r.credits, size * 0.26, { color: col, anchor: [0.5, 0.5] }), size / 2, size * 0.76),
     );
   } else if ("hero" in r) {
-    c.addChild(at(heroBadge(game.data.heroes.get(r.hero)!.name, size * 0.36, on ? C.cyan : C.dim), size / 2, size / 2));
+    c.addChild(at(heroBadge(game.data.heroes.get(r.hero)!, size * 0.36, on ? C.cyan : C.dim), size / 2, size / 2));
   } else {
     const cos = game.meta.cosmeticById.get(r.cosmetic);
     c.addChild(at(icon(KIND_ICON[cos?.kind ?? ""] ?? "skin", size * 0.5, col), size / 2, size / 2));
-    if (cos?.hero) c.addChild(at(heroBadge(game.data.heroes.get(cos.hero)!.name, size * 0.17, on ? C.cyan : C.dim), size - size * 0.17, size * 0.17));
+    if (cos?.hero) c.addChild(at(heroBadge(game.data.heroes.get(cos.hero)!, size * 0.17, on ? C.cyan : C.dim), size - size * 0.17, size * 0.17));
   }
   return c;
 }
@@ -217,7 +217,7 @@ function heroTab(game: Game, p: Profile, add: Add, w: number): void {
     hero = game.hero;
   const lv = heroLevel(meta, p.heroXp[hero] ?? 0);
   const head = new Container();
-  head.addChild(at(heroBadge(game.data.heroes.get(hero)!.name, 30), 30, 34));
+  head.addChild(at(heroBadge(game.data.heroes.get(hero)!, 30), 30, 34));
   head.addChild(at(txt(`${t("ui.level")} ${lv.level}`, 26), 76, 6));
   head.addChild(at(bar(w - 76, 12, lv.need ? lv.into / lv.need : 1), 76, 44));
   head.addChild(
@@ -368,7 +368,7 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
       return (k?.kind === "skin" || k?.kind === "heroCosmetic") && k.hero === hero.id;
     });
     const row = new Container();
-    row.addChild(at(heroBadge(hero.name, 20), 20, 32));
+    row.addChild(at(heroBadge(hero, 20), 20, 32));
     const worn = p.equipped.skins[hero.id] ?? null;
     [null, ...owned].forEach((id, i) => {
       const on = worn === id;

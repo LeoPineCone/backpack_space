@@ -10,6 +10,7 @@
 - UI colours, fonts and button kinds come from `data/theme.json` (`docs/theme.md`); never write a colour into client code.
 - Screens, navigation and player actions follow `docs/ux.md`; a new screen or action goes there first.
 - Menu backgrounds (turning planets): follow `.claude/skills/planet-art/SKILL.md`.
+- Hero pictures (look drafts, model sheet, full body, head, home scene, later skins): follow `.claude/skills/hero-art/SKILL.md`.
 - Places of the world (planets, moons, stations, stars) and which items and heroes come from them live in `lore/planets.json`; after changes run `npm run lore` (rewrites `lore/graph.html`).
 - Game words come from `data/glossary.json` (English for game and code, German for design talk); add a term there before using a new word in the game.
 - Every text the player sees goes through the language files (`data/locales/*.json`, see `docs/i18n.md`); the client never shows a hard-coded word. English is the source; new items and texts also need their German translation (`npm run i18n` lists what is missing).
