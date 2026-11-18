@@ -14,6 +14,7 @@
     "profileEquip": { "rate": 20, "burst": 50 },
     "profileSkin": { "rate": 20, "burst": 50 },
     "profileName": { "rate": 20, "burst": 50 },
+    "quests": { "rate": 50, "burst": 100 },
     "runCurrent": { "rate": 50, "burst": 100 },
     "runStart": { "rate": 20, "burst": 50 },
     "runFight": { "rate": 100, "burst": 200 },

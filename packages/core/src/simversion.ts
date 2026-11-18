@@ -7,7 +7,7 @@
  * Raised by hand whenever the logic of the core changes what a fight, a shop or a run computes
  * (battle.ts, compile.ts, shop.ts, run.ts, rng.ts …). Data changes are caught by the hash and need no raise.
  */
-export const ENGINE_VERSION = 2;
+export const ENGINE_VERSION = 3;
 
 /** Keys that never change a fight: display text, and the data version (it names the data, it is not part of it). */
 const TEXT_KEYS = new Set(["name", "title", "dataVersion"]);

@@ -20,6 +20,8 @@ export interface Saved {
   fight: SavedFight | null;
   /** online: the server's id of the run this copy belongs to */
   runId?: string;
+  /** a quest run: the quest id (the run plays with its rules) */
+  quest?: string;
 }
 
 export function writeSave(s: Omit<Saved, "v">): void {

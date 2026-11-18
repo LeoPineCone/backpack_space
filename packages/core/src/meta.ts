@@ -8,6 +8,7 @@
  */
 import { z } from "zod";
 import { parseOrThrow, type GameData } from "./gamedata.js";
+import { checkQuests, QuestsData } from "./quests.js";
 
 const Int = z.number().int().min(0);
 
@@ -40,6 +41,8 @@ export const MetaData = z.object({
     blocked: z.array(z.string().regex(/^[a-z0-9]{3,}$/)),
     blockedWords: z.array(z.string().regex(/^[a-z]{2,}$/)),
   }).strict(),
+  /** daily and weekly quests: a whole run with one special rule each (quests.ts) */
+  quests: QuestsData,
   /** what a finished run pays */
   run: z.object({
     galaxies: z.object({ perWin: Int, perLifeLeft: Int }).strict(),
@@ -108,6 +111,7 @@ export function buildMeta(raw: unknown, data: GameData): Meta {
   for (const h of data.heroList) for (const lv of m.heroLevels.cosmeticAt) add({ id: heroCosmeticId(h.id, lv), kind: "heroCosmetic", hero: h.id });
   for (const s of m.seasons) for (const l of m.leagues.ids) add({ id: patchId(s.id, l), kind: "patch", season: s.id, league: l });
 
+  problems.push(...checkQuests(m.quests, data));
   const rising = (xs: number[]) => xs.every((x, i) => i === 0 || x > xs[i - 1]!);
   if (!rising(m.heroLevels.xp)) problems.push("heroLevels.xp must rise from level to level");
   const maxLevel = m.heroLevels.xp.length + 1;
@@ -364,8 +368,11 @@ export interface RunBooking {
   rewards: Reward[];
 }
 
-/** Books a finished run: hero XP, Galaxies (season pass and planet track), league points. */
-export function bookRun(meta: Meta, p0: Profile, r: RunSummary): RunBooking {
+/**
+ * Books a finished run: hero XP, Galaxies (season pass and planet track), league points. A quest run (`quest`) books
+ * no league points: its special rule makes it unlike a normal run.
+ */
+export function bookRun(meta: Meta, p0: Profile, r: RunSummary, opts: { quest?: boolean } = {}): RunBooking {
   const p = clone(p0);
   const galaxies = runGalaxies(meta, r), xp = runHeroXp(meta, r);
   const xp0 = p.heroXp[r.hero] ?? 0;
@@ -377,7 +384,7 @@ export function bookRun(meta: Meta, p0: Profile, r: RunSummary): RunBooking {
   p.season.galaxies += galaxies;
   const pass1 = passLevel(meta, p.season);
   const league0 = leagueOf(meta, p.season.points), points0 = p.season.points;
-  Object.assign(p.season, addLeaguePoints(meta, p.season, runLeaguePoints(meta, r)));
+  if (!opts.quest) Object.assign(p.season, addLeaguePoints(meta, p.season, runLeaguePoints(meta, r)));
   p.runs++;
   const rewards = grant(p, [
     ...heroLevelRewards(meta, r.hero, lv0, lv1),

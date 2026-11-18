@@ -14,6 +14,8 @@ export const AppVersion = z.string().regex(/^\d{1,4}\.\d{1,4}\.\d{1,4}$/);
 /** "YYYY-MM-DD" (server date) */
 export const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const Count = z.number().int().min(0).max(1_000_000_000);
+/** a quest: `d<day>:<rule>` or `w<monday>:<rule>` (packages/core quests.ts) */
+export const QuestId = z.string().regex(/^[dw]\d{4}-\d{2}-\d{2}:[a-zA-Z]{1,40}$/);
 
 // ---------- headers every request carries
 
@@ -135,11 +137,13 @@ export const RunBody = z.strictObject({
   shopSeed: Seed,
   /** the last round is fought or the lives are gone: the run only waits for its finish */
   over: z.boolean(),
+  /** a quest run: the quest id; its special rule changes the rules of the run (missing = a normal run) */
+  quest: QuestId.optional(),
 });
 export type RunBody = z.infer<typeof RunBody>;
 
 /** POST /runs: start a run. While a run is open, the same open run comes back (whatever hero is asked for). */
-export const RunStartRequest = z.strictObject({ hero: Id, simVersion: SimVersion });
+export const RunStartRequest = z.strictObject({ hero: Id, simVersion: SimVersion, quest: QuestId.optional() });
 export type RunStartRequest = z.infer<typeof RunStartRequest>;
 export const RunStartResponse = z.strictObject({ run: RunBody });
 export type RunStartResponse = z.infer<typeof RunStartResponse>;
@@ -220,6 +224,8 @@ export const RunResult = z.strictObject({
   league: Pair,
   pass: Pair,
   rewards: z.array(RewardBody).max(100),
+  /** a quest run: the quest id (it books no league points) */
+  quest: QuestId.optional(),
 });
 export type RunResult = z.infer<typeof RunResult>;
 /** POST /runs/finish: the same answer for every repeat of the request. */
@@ -242,3 +248,18 @@ export type ProfileSkinRequest = z.infer<typeof ProfileSkinRequest>;
 /** POST /profile/name (ACC-07): the new player name; the server tidies and checks it with the core's name filter. */
 export const ProfileNameRequest = z.strictObject({ name: z.string().max(64) });
 export type ProfileNameRequest = z.infer<typeof ProfileNameRequest>;
+
+// ---------- GET /quests (META-06)
+
+/** One open quest: a whole run with one special rule. `played`: this player finished a run of it in its period. */
+export const QuestBody = z.strictObject({
+  id: QuestId,
+  kind: z.enum(["daily", "weekly"]),
+  rule: Id,
+  /** the day (daily) or the Monday of the week (weekly), YYYY-MM-DD */
+  period: IsoDate,
+  played: z.boolean(),
+});
+export type QuestBody = z.infer<typeof QuestBody>;
+export const QuestsResponse = z.strictObject({ quests: z.array(QuestBody).max(20) });
+export type QuestsResponse = z.infer<typeof QuestsResponse>;

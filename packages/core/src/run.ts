@@ -100,7 +100,7 @@ export function startRound(s: RunState, data: GameData): void {
   s.offers = rollOffers(data, s.hero, s.round, shopRng(s.seed, s.round, 0), [...s.items.map((p) => p.item), ...s.loose], s.offers);
 }
 export function reroll(s: RunState, data: GameData): boolean {
-  if (s.gold < data.rules.shop.rerollCost) return false;
+  if (data.rules.shop.rerolls === false || s.gold < data.rules.shop.rerollCost) return false;
   s.gold -= data.rules.shop.rerollCost;
   s.rerolls++;
   s.offers = rollOffers(data, s.hero, s.round, shopRng(s.seed, s.round, s.rerolls), [...s.items.map((p) => p.item), ...s.loose], s.offers);

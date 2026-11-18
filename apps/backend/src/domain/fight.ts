@@ -17,7 +17,7 @@ import { ApiError, type DomainContext, type Game } from "./context.js";
 import { logEvent } from "./log.js";
 import { findOpponent, poolKeys, type PoolEntry } from "./matching.js";
 import { loadProfile, playerKey } from "./players.js";
-import { expiresIn, gameFor, majorChanged, readRun, roundKey, ROUNDS_KEEP_DAYS, RUN, toBody, type StoredRun } from "./runs.js";
+import { expiresIn, gameFor, majorChanged, readRun, roundKey, ROUNDS_KEEP_DAYS, RUN, runGame, toBody, type StoredRun } from "./runs.js";
 import { isoDay } from "./config.js";
 
 /** How long recorded actions are kept (RUN-14, decided 2026-11-18): long enough for the planned analysis after some weeks. */
@@ -35,10 +35,11 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
     const stored = await players.get(pk, roundKey(req.runId, req.round));
     if (stored) return stored.answer as RunFightResponse;
     // 3.
-    const game = gameFor(ctx, req.simVersion);
-    const { data } = game;
     const run = await readRun(ctx, playerId);
     if (!run || run.runId !== req.runId || run.round !== req.round || run.over) throw new ApiError("run_conflict");
+    // a quest run fights with the rules of its quest (CORE-07)
+    const game = runGame(ctx, req.simVersion, run.quest);
+    const { data } = game;
     // the run's data major is gone: it is booked at the next GET /runs/current (RUN-13)
     if (majorChanged(run, game)) throw new ApiError("run_conflict");
     // 4.
@@ -52,17 +53,20 @@ export async function runFight(ctx: DomainContext, body: unknown): Promise<RunFi
     const profile = await loadProfile(ctx, playerId);
     if (!profile) throw new Error("signed-in player without profile");
     const league = leagueOf(meta, profile.profile.season.points);
+    // a quest run meets the opponents of a normal run with as many lost fights (its lives may start lower)
+    const lost = data.rules.lives - run.lives;
+    const base = gameFor(ctx, req.simVersion);
     const match = await findOpponent(
       ctx,
       {
         playerId,
         round: run.round,
-        lives: run.lives,
+        lives: Math.max(1, base.data.rules.lives - lost),
         league,
         met: run.met,
         newPlayer: profile.profile.runs < meta.matching.easyRuns,
       },
-      game,
+      base,
     );
     if (!match) throw new Error(`no opponent for round ${run.round} with ${run.lives} lives`);
     const opp = match.entry;
@@ -164,7 +168,8 @@ async function afterCommit(
     simVersion: data.simVersion,
     expiresAt: Math.floor(o.now / 1000) + ACTIONS_KEEP_DAYS * 86400,
   };
-  const results = await Promise.allSettled([ctx.ports.backpacks.put(entry), ctx.ports.actions.put(actions)]);
+  // a quest backpack grew under other rules: it never becomes an opponent in normal runs
+  const results = await Promise.allSettled([o.run.quest ? Promise.resolve() : ctx.ports.backpacks.put(entry), ctx.ports.actions.put(actions)]);
   for (const [i, r] of results.entries())
     if (r.status === "rejected")
       logEvent(ctx, "error", {

@@ -25,6 +25,7 @@ const samples: Record<RouteName, { request: unknown; response: unknown }> = {
   profileEquip: { request: { slot: "grid", id: null }, response: { profile } },
   profileSkin: { request: { hero: "venn", id: "venn_lv3" }, response: { profile } },
   profileName: { request: { name: "Star Rider" }, response: { profile } },
+  quests: { request: {}, response: { quests: [{ id: "d2026-11-18:goldRain", kind: "daily", rule: "goldRain", period: "2026-11-18", played: false }] } },
   runCurrent: { request: {}, response: { run: null } },
   runStart: {
     request: { hero: "venn", simVersion: "2.157d28e9292bed" },
