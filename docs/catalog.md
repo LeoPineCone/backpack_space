@@ -164,7 +164,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
 | Reinforced Bulkhead | crafted (step 1) | 4 | `###` | armor, mechanical | Battle start: gain 50 Shield. | = Hull Plating + Scrap Metal; → Citadel Plating |
-| Exo Suit | crafted (step 1) | 5 | `#/#/#` | armor, mechanical | You: +56 max health. Battle start: gain 22 Shield. When a weapon hits you: gain 4 Shield (15 % chance). | = Space Suit + Visor Helmet; → Life Support Suit |
+| Exo Suit | crafted (step 1) | 5 | `##/##` | armor, mechanical | You: +56 max health. Battle start: gain 22 Shield. When a weapon hits you: gain 4 Shield (15 % chance). | = Space Suit + Visor Helmet; → Life Support Suit |
 | Hazmat Suit | crafted (step 1) | 6 | `##/##` | armor | You: +42 max health. Battle start: gain 28 Shield. Every star phase: remove 4 of your debuffs. | = Space Suit + Lead Vest |
 | Shield Capacitor | crafted (step 1) | 6 | `#/#` | armor, mechanical | Every 2.5 s: gain 12 Shield. | = Shield Battery + Power Cell |
 | Survival Suit | crafted (step 1) | 6 | `##/##` | armor | You: +60 max health. Every star phase: remove 3 of your debuffs and heal 16. | = Thermal Blanket + Space Suit |
@@ -172,7 +172,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Thorn Plate | crafted (step 1) | 8 | `##/##` | armor, organic | Battle start: gain 28 Shield and 2 Spikes. | = Thorn Mail + Hull Plating |
 | Glacier Mail | crafted (step 1) | 8 | `##/##` | armor | Battle start: gain 50 Shield. When a weapon hits you: inflict 1 Cryo (35 % chance). | = Cryo Coat + Frost Gem |
 | Aegis Projector | crafted (step 1) | 9 | `##/##` | armor, mechanical | Every 2.2 s: gain 15 Shield. | = Deflector Dish + Power Cell; → Aegis Fortress |
-| Ghost Shroud | crafted (step 1) | 13 | `##/#.` | armor | Battle start: inflict 5 Jam. Every star phase: inflict 2 Jam. When a weapon hits you: inflict 2 Jam (20 % chance). | = Phase Cloak + Holo Decoy |
+| Ghost Shroud | crafted (step 1) | 13 | `##/##` | armor | Battle start: inflict 5 Jam. Every star phase: inflict 2 Jam. When a weapon hits you: inflict 2 Jam (20 % chance). | = Phase Cloak + Holo Decoy |
 | Citadel Plating | crafted (step 2) | 10 | `###/###` | armor, mechanical | Battle start: gain 63 Shield. Every 2.5 s: gain 14 Shield. | = Reinforced Bulkhead + Deflector Dish; → Dyson Bastion |
 | Life Support Suit | crafted (step 2) | 10 | `##/##/#.` | armor, mechanical | You: +70 max health. Battle start: gain 28 Shield. Every 3 s: heal 13 and remove 1 of your debuffs. | = Exo Suit + Nano Medkit |
 | Aegis Fortress | crafted (step 2) | 17 | `##/##/##` | armor, mechanical | Every 2 s: gain 18 Shield. Every star phase: gain 42 Shield. | = Aegis Projector + Force Bubble; → Dyson Bastion |
@@ -274,7 +274,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Sentry Drone | rare | 6 | `#/#` | pet, weapon, mechanical | 2–3 damage every 1.2 s. Ranged, attacks without Energy. | → Gunship Drone |
 | Tundra Yak | rare | 6 | `##/##` | pet, beast, weapon, organic | 7–9 damage every 2.4 s. Melee, attacks without Energy. You: +20 max health. |  |
 | Guardian Drone | rare | 6 | `##` | pet, mechanical | Every 3 s: gain 7 Shield. When a weapon hits you: gain 5 Shield (20 % chance). |  |
-| Shadow Lynx | epic | 8 | `##/#.` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. This item: +25 % crit. | → Snow Lynx |
+| Shadow Lynx | epic | 8 | `###` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. This item: +25 % crit. | → Snow Lynx |
 | Star Whale Calf | epic | 9 | `###/###` | pet, beast, organic | You: +70 max health. Every 4 s: heal 11. |  |
 | Void Kraken | legendary | 14 | `###/###/#.#` | pet, beast, weapon, organic | 9–12 damage every 2.2 s. Melee, attacks without Energy. On hit: inflict 1 Cryo and 1 Toxin. | → Leviathan |
 
@@ -414,7 +414,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 5–7 damage every 1.3 s. Melee, attacks without Energy. On hit: heal 3, +1 per 2 pets in your backpack (max 5×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
 | Harvest Crate | crafted (step 1) | 8 | `*##*/*##*` | food, organic | Every 2.7 s: heal 14. Starred food: 40 % faster. | = Compost Bin + Moon Melon |
 | Irrigation Swarm | crafted (step 1) | 8 | `*##*` | pet, swarm, mechanical | Every 2.2 s: heal 9 and inflict 1 Toxin. Starred organic items: 30 % faster. | = Watering Drone + Pollen Cloud + Grow Lamp |
-| Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 1 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
+| Living Armor | crafted (step 1) | 8 | `##/##` | armor, organic | Battle start: gain 40 Shield, 1 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
 | Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage every 2.3 s. Ranged, 4 Energy per attack. On hit: inflict 3 Toxin and 1 Jam per 6 Toxin on the enemy (max 3×). | = Blight Bomb + Pollen Cloud |
 | Ambrosia | crafted (step 1) | 10 | `##/##` | food, organic | Every star phase: heal 34 and remove 3 of your debuffs. Every 3.1 s: heal 11 and gain 1 Regen. | = Nectar Flask + Healing Moss |
 | Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes and 21 Shield. When a weapon hits you: inflict 1 Toxin (40 % chance). | = Thornvine + Root Network |
@@ -498,7 +498,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage every 1.6 s. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
 | Cozy Den | crafted (step 1) | 6 | `*##*/*##*` | accessory | Starred pets: 40 % faster. Every 3 s: heal 1 per 2 cells your pets cover (max 8×). | = Pet Bed + Kibble Sack |
 | Banquet Trough | crafted (step 1) | 6 | `*##*` | food | Every 3 s: heal 3 per 2 cells your pets cover (max 8×), gain 1 Power and gain 2 Energy. When a starred pet activates: heal 2 (60 % chance). | = Feeding Bowl + Kibble Sack |
-| Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, swarm, weapon, organic | 2–3 damage every 0.6 s. Melee, attacks without Energy. | = Burrow Rat + Burrow Rat + Kibble Sack |
+| Rat Pack | crafted (step 1) | 7 | `###` | pet, swarm, weapon, organic | 2–3 damage every 0.6 s. Melee, attacks without Energy. | = Burrow Rat + Burrow Rat + Kibble Sack |
 | Shell Dragon | crafted (step 1) | 7 | `##/##` | pet, beast, armor, organic | Battle start: gain 14 Shield per beast in your backpack (max 4×) and 2 Spikes. | = Pack Lizard + Rock Crab |
 | Pack Bond | crafted (step 1) | 7 | `*#*` | accessory | Your swarm pets: +1 damage. Starred pets: 20 % faster, +15 % crit. | = Grooming Comb + Calling Shell |
 | Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage every 1.1 s. Melee, attacks without Energy. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
@@ -545,7 +545,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage every 2.1 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
 | Book of Last Light | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 2 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
 | Umbral Mantle | crafted (step 1) | 12 | `##/##` | armor | Every star phase: gain 41 Shield. Battle start: inflict 2 Jam. | = Eclipse Veil + Force Bubble; → Event Horizon |
-| Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 3 Jam, 3 Cryo and gain 11 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
+| Total Eclipse | crafted (step 1) | 13 | `##/##` | armor | Every star phase: inflict 3 Jam, 3 Cryo and gain 11 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
 | Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage every 2.4 s. Ranged, 5 Energy per attack. Every star phase: gain 2 Power and 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
 | Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 8–11 damage every 2 s. Ranged, 4 Energy per attack. On hit: inflict 3 Burn. When Red Giant begins: heal 56 and inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
 | Event Horizon | crafted (step 2) | 21 | `##/##/##` | armor | Every star phase: gain 68 Shield. When Collapse begins: gain 119 Shield. You: +70 max health. Battle start: inflict 3 Jam. | = White Dwarf + Umbral Mantle |

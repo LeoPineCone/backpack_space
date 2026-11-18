@@ -397,7 +397,7 @@
   },
   "acid_sprayer": {
     "brief": "Cryo sprayer whose tank is now an acid flask, sage spray. Accent: sage.",
-    "description": "The spray gun body runs along the top cells, the grip drops down the left cell; on top a round flask of sage acid with a valve, frosty nozzle; the lower right cell stays empty."
+    "description": "Like a pistol: the spray gun body runs along the whole top row, short nozzle at the right end, the grip drops straight down the lower left cell; a round flask of sage acid on top; nothing in the lower right."
   },
   "reinforced_bulkhead": {
     "brief": "Hull plate doubled with scrap, cross braces and big bolts. Accent: copper.",
@@ -409,7 +409,7 @@
   },
   "exo_suit": {
     "brief": "Exo frame torso with iron shoulder brace and spine rail. Accent: mustard.",
-    "description": "Standing tall from the bottom to the top of the box: a suit torso strapped into an exo frame, an iron shoulder brace at the top, a long spine rail, a piston at the elbow and a long arm brace reaching down to the bottom."
+    "description": "Filling the square box: the upper body of a space suit strapped into a yellow exo frame, wide iron shoulder braces reaching both top corners, a spine rail, one piston arm brace reaching down to the bottom edge. No legs."
   },
   "aegis_projector": {
     "brief": "Satellite dish shield powered by a star cell, hexagon of force. Accent: teal.",
@@ -429,7 +429,7 @@
   },
   "ghost_shroud": {
     "brief": "Phase cloak hood with a holo projector puck, dashes below. Accent: cream.",
-    "description": "The empty starry hood fills the top left cell, the cloak spreads across the top right and down the left, breaking into rows of cream dashes; a small holo puck hangs at the collar; lower right cell empty."
+    "description": "Filling the square box: a wide cream cloak with an empty starry hood at the top, spread open to both sides, its lower half breaking into rows of cream dashes down to the bottom edge; a small holo puck at the collar."
   },
   "sniper_scope": {
     "brief": "Targeting lens extended into a long scope with a crystal lens. Accent: teal.",
@@ -685,7 +685,7 @@
   },
   "plague_hydra": {
     "brief": "Three-headed serpent with crystal fangs and jelly frills. Accent: sage.",
-    "description": "The body coils across the whole bottom-left cell and middle row, three long necks rise to the very top of both top cells, each head with crystal fangs dripping sage venom, see-through jelly frills; lower right cell empty. One single animal."
+    "description": "Three long necks fill the upper four cells, the heads reaching the top corners; the thick body coils only inside the lower left cell, down to the bottom edge; nothing in the lower right. Crystal fangs dripping sage venom, see-through jelly frills. One single animal."
   },
   "inferno_blade": {
     "brief": "Plasma katana with twin fuel cans on its guard. Accent: coral red.",
@@ -717,7 +717,7 @@
   },
   "med_bay": {
     "brief": "Small medical cabinet with an IV bag and a scrubber fan. Accent: coral red.",
-    "description": "The cabinet fills the top cells, the scrubber unit drops down the left cell: a floating IV bag on a tether on top, a coral red cross on the door, a fan grille below; lower right cell empty."
+    "description": "A wide medical cabinet fills the whole top row, coral red cross on the door, an IV bag floating on a tether; only in the lower left cell a scrubber unit with a fan grille; nothing in the lower right."
   },
   "shield_capacitor": {
     "brief": "Shield battery with a star power cell clipped on. Accent: teal.",
@@ -893,7 +893,7 @@
   },
   "giant_mantrap": {
     "brief": "Huge offshoot with several snapping jaws. Accent: coral red.",
-    "description": "The jaws fill the top row, the coiled tendrils drop into the lower left cell; the lower right stays empty. A huge offshoot with three snapping jaws, wet biogel glistening on its stems as flat drops, no eyes."
+    "description": "The three jaws fill the whole top row edge to edge; one thick coiled stem drops straight down the lower left cell to the bottom edge; nothing in the lower right. A huge offshoot, coral red jaws, wet biogel as flat drops, no eyes."
   },
   "harvest_crate": {
     "brief": "Station crate overflowing with odd vegetables. Accent: copper.",
@@ -901,11 +901,11 @@
   },
   "briar_fortress": {
     "brief": "Thorny arch around a bent station door frame. Accent: sage.",
-    "description": "An arch of thick thorny branches: the whole top row is the lintel reaching both ends, the two lower corner cells are thick posts, the gap between them stays empty like a doorway. The bent frame of a station airlock door shows through; thick roots grip it; pale seed bulbs hang in the thorns."
+    "description": "An arch of thick thorny branches: the whole top row is the lintel reaching both ends, the two lower corner cells are slim posts going straight down, the two middle lower cells stay plain like an open doorway. The bent frame of a station airlock door shows through; roots grip the posts; pale seed bulbs hang in the thorns."
   },
   "hydra_bloom": {
     "brief": "Three snapping flower heads on tendril stems. Accent: coral red.",
-    "description": "The three heads fill the upper four cells, the stems drop into the lower left; the lower right stays empty. A plant with three snapping flower heads on long tendril stems, one of them the pink orchid, coral red jaws, no eyes."
+    "description": "The three snapping flower heads fill the upper four cells edge to edge; the stems gather into one bundle that drops straight down the lower left cell to the bottom edge; nothing in the lower right. One head is the pink orchid, coral red jaws, no eyes."
   },
   "irrigation_swarm": {
     "brief": "One sprinkler drone with a lamp and pollen. Accent: teal.",
@@ -969,7 +969,7 @@
   },
   "living_armor": {
     "brief": "Suit chest plate overgrown with bark. Accent: sage.",
-    "description": "The plate fills the whole top row from end to end, the overgrown sleeve drops into the lower left cell; the lower right cells stay empty. A space-suit chest plate and arm overgrown with bark and thorny vines, seams split open."
+    "description": "Filling the square box edge to edge: a space-suit chest plate with both shoulder pieces, overgrown with bark and thorny vines that spill over every side, seams split open, small pale seed pods in the vines."
   },
   "jungle_tyrant": {
     "brief": "Huge plant beast of jaws and vine arms. Accent: sage.",
@@ -1033,7 +1033,7 @@
   },
   "sun_eagle": {
     "brief": "Star Falcon grown into a sun-crested eagle. Accent: mustard.",
-    "description": "The spread wings fill the top row, the body and talons drop into the lower left; the lower right stays empty. The Star Falcon grown into an eagle with a crest of stiff feathers like sun rays, a targeting lens worn over one eye."
+    "description": "The spread wings fill the whole top row; the body hangs straight down the lower left cell, talons at the bottom edge; nothing in the lower right. The Star Falcon grown into an eagle, crest of sun-ray feathers, a lens over one eye."
   },
   "cozy_den": {
     "brief": "Den dug into a small asteroid, lined with fur. Accent: coral red.",
@@ -1048,8 +1048,8 @@
     "description": "The body fills the upper four cells, the star tail drops into the lower left; the lower right stays empty. A beast with the Star Hound's wild mane and the Sun Eagle's wings, its tail ending in a small flat star."
   },
   "rat_pack": {
-    "brief": "One fat burrow rat hugging a big seed. Accent: copper.",
-    "description": "The rat fills the top row and the lower left cell, the lower right stays empty. One fat Burrow Rat with rock plates and crystal teeth, curled round a big seed from the Kibble Sack, cheeks stuffed."
+    "brief": "One long burrow rat with a big seed and a thick tail. Accent: copper.",
+    "description": "Stretched end to end across the long box: one fat Burrow Rat in side view, rock plates on its back, crystal teeth gnawing a big seed at the front end, its thick plated tail running out to the far end."
   },
   "elder_tusk": {
     "brief": "Cracked old tusk tip on a braided cord. Accent: coral red.",
@@ -1249,7 +1249,7 @@
   },
   "storm_driver": {
     "brief": "Rail Driver with the Dynamo strapped under it. Accent: mustard.",
-    "description": "The rail gun runs along the top row, a battery box hangs in the lower left; the lower right cells stay empty. The Rail Driver with the Dynamo strapped under it, flat mustard sparks round the rails."
+    "description": "The rail gun runs along the whole top row from end to end; a squat battery box hangs only inside the lower left cell, down to the bottom edge; nothing below the middle and right cells. The Rail Driver with the Dynamo strapped under it, flat mustard sparks round the rails."
   },
   "junk_titan": {
     "brief": "Huge scrap robot with a satellite shell. Accent: copper.",
@@ -1321,7 +1321,7 @@
   },
   "dying_star_scepter": {
     "brief": "Sceptre with the Red Giant Heart in its rings. Accent: coral red.",
-    "description": "The ring cage fills the upper four cells, the shaft drops into the lower left; the lower right stays empty. A sceptre with the Red Giant Heart held in its eclipse rings, the cocoon censer hanging below."
+    "description": "Like a war hammer: a big ring cage fills the upper four cells edge to edge, the Red Giant Heart held in its eclipse rings; a thick shaft drops straight down the lower left cell to the bottom edge, the small cocoon censer tied to it; nothing in the lower right."
   },
   "solstice_engine": {
     "brief": "Engine with two half-suns, chime and flare ring. Accent: mustard.",
@@ -1388,8 +1388,8 @@
     "description": "Running the full length of the long box, end to end: a long prayer scroll unrolled flat, a small bronze bell tied at each end, the comet bead string draped along its whole length."
   },
   "total_eclipse": {
-    "brief": "Moth-wing shield in an L: eclipse disc with two wings. Accent: cream.",
-    "description": "An L-shaped shield: a round eclipse disc with the Mirror of Dusk in the top left cell, one moth wing spreading right across the top right cell, the other wing reaching down into the lower left cell; the lower right cell stays empty."
+    "brief": "Round moth-wing shield painted with a total eclipse. Accent: cream.",
+    "description": "Filling the square box edge to edge: a round shield painted with a total eclipse, two moth wings spread across it, crescent moons at the rim, the Mirror of Dusk set in its centre."
   },
   "event_horizon": {
     "brief": "Black ring shield with stars bending round it. Accent: teal.",
@@ -1464,8 +1464,8 @@
     "description": "A chubby wrinkled cream tardigrade with eight stubby clawed legs, wearing a tiny round space helmet it does not need, looking completely unbothered."
   },
   "shadow_lynx": {
-    "brief": "Shadow cat with an eclipse ring round its outline. Accent: mustard.",
-    "description": "The lynx's body fills the top row, its head and front paws drop into the lower left cell; the right lower cell stays empty. A cat of pure black shadow rimmed by a thin mustard ring like a solar eclipse, ear tufts, two cream eyes."
+    "brief": "Shadow cat stalking low, eclipse ring round its outline. Accent: mustard.",
+    "description": "Stretched end to end across the long box: a lynx of pure black shadow stalking low in side view, nose at one end, long tail at the other, rimmed by a thin mustard ring like a solar eclipse, ear tufts, cream eyes."
   },
   "star_whale_calf": {
     "brief": "Chubby baby whale with star freckles swimming through space. Accent: teal.",
@@ -1473,7 +1473,7 @@
   },
   "void_kraken": {
     "brief": "Dark tentacled beast with one huge teal eye. Accent: teal.",
-    "description": "A dark tentacled beast filling the box: head and body across the top two rows, two thick tentacles hanging into the bottom corners, the middle bottom cell empty. One huge round eye in teal is the focus; suckers as plain cream dots, skin night-blue under heavy black shadow."
+    "description": "A dark tentacled beast filling the box: head and body across the top two rows edge to edge, two thick tentacles hanging straight down into the bottom left and bottom right cells only, the bottom middle cell stays plain. One huge round teal eye is the focus; suckers as cream dots, skin night-blue under heavy black shadow."
   },
   "guardian_drone": {
     "brief": "Drone holding a round shield plate in front of it. Accent: teal.",

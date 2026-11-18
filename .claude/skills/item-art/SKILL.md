@@ -94,6 +94,15 @@ Rules for the idea:
   "Stretched end to end across the wide box:", "Standing tall from the bottom to the top of the box:" or
   "Running the full length of the long box, end to end:". Target: the picture covers at least 75 % of the long
   side of its box (for square boxes, of both sides); measure after every batch and redo what falls short.
+- **Odd shapes** (Ilja 2026-11-18): no part of the picture may reach into a cell outside the shape, because another
+  item can lie there; the prompt names the empty cells (`art:prompt`). Pick a motif whose silhouette already has
+  that shape: L = head and handle (pick, axe, pistol, saw, scythe); long with a foot = gun with grip, flag on a
+  pole; 2×3 without a corner = hammer or sceptre with a big head over the top four cells; gate = arch, door,
+  bridge; gap in the middle of the bottom row = two legs or tentacles. Round things (shields, discs), suits and
+  lying or curled animals do not fit odd shapes: change the item's shape instead (item-design skill, balancing
+  check, data version major), as done for Total Eclipse, Living Armor, Exo Suit, Ghost Shroud, Shadow Lynx and
+  Rat Pack. Mining Pick is the model L.
+- Thin items (1 cell wide) only need to fill their length; 50 % of the box area is fine there (Zenith Lance).
 - Word limits (checked by `npm run validate`, `packages/core/node/load.ts`): 1 cell 30 words, 2–3 cells 45,
   4–5 cells 60, 6+ cells 75. Short is better: describe the idea and the silhouette, not texture.
 - Avoid wording that invites noise: no "scratches", "grain", "fine detail", "intricate".
