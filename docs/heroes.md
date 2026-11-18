@@ -42,7 +42,7 @@ Every hero has **fixed marks** that stay the same in every picture, and one **sk
 
 **Story.** As a tiny creature Quill fell out of an escape pod into the middle of a herd of wild space beasts. Instead of eating her, the herd took her in. Nobody trained anyone: the animals protect her because they want to. She is the weakest of the herd and the only one who makes plans. Whoever threatens her has the whole herd against them.
 
-**Look.** A small, fluffy creature with huge ears and big eyes, wearing a far too large coat of shed fur the herd gave her. She sits in a woven nest between the horns of a **Tusked Behemoth** (her epic item): a huge, shaggy, low beast with four tusks. Smaller animals cling to the beast's fur.
+**Look.** A small, fluffy creature with huge ears and big eyes, wearing a far too large coat of shed fur the herd gave her. Her ears are her antennas: teal inside with a radar-dish pattern. She sits in a woven nest on the dented hatch of her old escape pod, between the two short horns of a **Tusked Behemoth** (her epic item): a huge, shaggy, low beast with coral-red and cream striped fur, two big mirrored tusks and no trunk. Her herd's small animals cling to the beast's fur: the Space Pup (horn stub, comet-like tail), the Burrow Rat (asteroid-rock armour, crystal teeth) and the Glutton Toad (three stalk eyes). Model sheet decided 2026-11-18.
 
 **Fixed marks:** the huge ears, the oversized fur coat.
 **Skin slot:** the beast she rides (other beasts can carry her).

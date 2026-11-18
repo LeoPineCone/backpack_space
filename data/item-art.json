@@ -984,8 +984,8 @@
     "description": "Lying across the box: a sickly flower on a long stem, held out like a gift, puffing moss-green toxic pollen."
   },
   "space_pup": {
-    "brief": "Small shaggy herd pup with big paws and a tuft of fur on its head. Accent: mustard.",
-    "description": "A young pup of Quill's herd: shaggy, oversized paws, a tuft of fur standing up on its head, ears too big like hers. Mustard fur."
+    "brief": "Shaggy herd pup with big paws, a soft horn stub and a comet-like tail. Accent: mustard.",
+    "description": "A young pup of Quill's herd: shaggy mustard fur, oversized paws, a soft stubby horn on its forehead like a young behemoth, and a bushy tail that streams behind it like a small comet."
   },
   "treat_pouch": {
     "brief": "Woven pouch of dried berries and roots the herd gathers. Accent: copper.",
@@ -1004,8 +1004,8 @@
     "description": "Upright: a woven sack of dried seeds and roots, tied with cord, a tuft of fur on the knot, a few seeds spilt at the bottom."
   },
   "burrow_rat": {
-    "brief": "Rat with big front teeth peeking out of a hole in the ground. Accent: copper.",
-    "description": "A rat with big front teeth peeking out of a round hole in the ground, only head and paws showing."
+    "brief": "Rat with an asteroid-rock armoured back and two teal crystal front teeth. Accent: copper.",
+    "description": "A rat peeking out of a round hole in the ground, its back armoured with small grey asteroid-rock plates, strong digging claws and two big teal crystal front teeth."
   },
   "hatchery": {
     "brief": "Salvaged egg incubator, its lid replaced by a woven nest of eggs under shed fur. Accent: mustard.",
@@ -1624,8 +1624,8 @@
     "description": "Lying lengthwise: a long piston ram with a heavy wedge head, salvaged shield plates bolted along both flanks, hoses taped to the piston, teal force lines at the tip."
   },
   "glutton_toad": {
-    "brief": "Fat round toad with a wide grin, tongue out, crumbs on its chin. Accent: moss.",
-    "description": "A fat round moss-green toad sitting upright, wide grin, cheeks bulging with food, tongue half out, a few crumbs on its chin."
+    "brief": "Fat grinning toad with three stalk eyes and a cratered belly. Accent: moss.",
+    "description": "A fat round moss-green toad sitting upright, wide grin, three eyes on short stalks, crater-like spots on its round belly, cheeks bulging with food, a few crumbs on its chin."
   },
   "trough_boar": {
     "brief": "Stocky bristled boar with small tusks, snout deep in a scrap of food. Accent: mustard.",
