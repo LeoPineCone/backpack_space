@@ -99,6 +99,9 @@ export class FakeBackpackPool implements BackpackPool {
   async put(item: Item): Promise<void> {
     this.items.set(key(item.pk, item.sk), structuredClone(item));
   }
+  async remove(pk: string, sk: string): Promise<void> {
+    this.items.delete(key(pk, sk));
+  }
   async range(pk: string, from: string, to: string, limit: number): Promise<Item[]> {
     this.reads++;
     return [...this.items.values()]

@@ -11,6 +11,7 @@
     "@aws-sdk/client-dynamodb": "^3.1171.0",
     "@aws-sdk/lib-dynamodb": "^3.1171.0",
     "@backpack-space/api": "*",
-    "@backpack-space/core": "*"
+    "@backpack-space/core": "*",
+    "zod": "^4.6.7"
   }
 }

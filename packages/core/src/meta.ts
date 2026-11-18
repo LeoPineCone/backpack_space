@@ -29,6 +29,8 @@ export const MetaData = z.object({
   $comment: z.string().optional(),
   /** what a new profile starts with */
   start: z.object({ name: z.string().min(1).max(NAME_MAX), credits: Int, cosmetics: z.array(z.string()), background: z.string(), picture: z.string() }).strict(),
+  /** opponents: a new player meets the easier bot backpacks in this many first runs (docs/matchmaking.md) */
+  matching: z.object({ easyRuns: Int }).strict(),
   /** what a finished run pays */
   run: z.object({
     galaxies: z.object({ perWin: Int, perLifeLeft: Int }).strict(),

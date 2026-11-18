@@ -13,13 +13,15 @@
  *   4. lives +-1, any league
  *   5. any lives, any league
  * Bot players belong to a league group, so for bot backpacks "same league" and "league +-1" mean the player's group.
+ * A new player meets the easy bot backpacks first, and bots of every standing before anything harder.
  * Always: never the player's own backpack, nobody twice in a run, only backpacks valid under the player's data version.
  */
 import { canMatch, leagueGroup, parseDataVersion, type Build } from "@backpack-space/core";
 import type { Item } from "../ports/index.js";
 import type { DomainContext } from "./context.js";
 
-export type PoolOrigin = "bot" | "player";
+/** "easy": the easier bot backpacks for the first runs of a new player (MM-06). */
+export type PoolOrigin = "bot" | "easy" | "player";
 
 /** One stored backpack of the pool. */
 export interface PoolEntry extends Item {
@@ -54,9 +56,9 @@ export function dataMajor(dataVersion: string): number {
 export const bucketKey = (origin: PoolOrigin, major: number, round: number, lives: number) => `${origin}#${major}#R${pad2(round)}#L${lives}`;
 export const poolSortKey = (league: number, random: number, id: string) => `G${pad2(league)}#${hex8(random)}#${id}`;
 
-/** The keys of a new pool entry: its bucket, and a sort key with a fresh random value. */
-export function poolKeys(ctx: DomainContext, e: { origin: PoolOrigin; round: number; lives: number; league: number; dataVersion: string; id: string }) {
-  return { pk: bucketKey(e.origin, dataMajor(e.dataVersion), e.round, e.lives), sk: poolSortKey(e.league, ctx.ports.random.uint32(), e.id) };
+/** The keys of a new pool entry: its bucket, and a sort key with the given random value (unsigned 32 bits). */
+export function poolKeys(e: { origin: PoolOrigin; round: number; lives: number; league: number; dataVersion: string; id: string }, random: number) {
+  return { pk: bucketKey(e.origin, dataMajor(e.dataVersion), e.round, e.lives), sk: poolSortKey(e.league, random, e.id) };
 }
 
 export interface MatchRequest {
@@ -68,6 +70,8 @@ export interface MatchRequest {
   league: number;
   /** owners already met in this run */
   met: readonly string[];
+  /** a new player in their first runs: the easy bot backpacks come first (MM-06) */
+  newPlayer?: boolean;
 }
 export interface Match {
   entry: PoolEntry;
@@ -92,7 +96,7 @@ export async function findOpponent(ctx: DomainContext, req: MatchRequest): Promi
   const group = leagueGroup(meta, req.league);
   const leagues = (origin: PoolOrigin, d: number | null): [number, number] => {
     if (d === null) return [0, top];
-    if (origin === "bot") return [group.from, group.to];
+    if (origin !== "player") return [group.from, group.to];
     return [Math.max(0, req.league - d), Math.min(top, req.league + d)];
   };
   const steps: [number | null, number | null][] = [
@@ -102,13 +106,14 @@ export async function findOpponent(ctx: DomainContext, req: MatchRequest): Promi
     [1, null],
     [null, null],
   ];
-  const origins: PoolOrigin[] = (ctx.settings.matchingPhase ?? 1) === 1 ? ["bot"] : ["player", "bot"];
+  const origins: PoolOrigin[] = req.newPlayer ? ["easy", "bot"] : (ctx.settings.matchingPhase ?? 1) === 1 ? ["bot"] : ["player", "bot"];
   const ok = (e: PoolEntry) =>
     e.owner !== req.playerId && e.playerId !== req.playerId && !req.met.includes(e.owner) && canMatch(e.dataVersion, data.dataVersion);
   const tried = new Set<string>();
 
-  for (const [n, [dLives, dLeague]] of steps.entries()) {
-    for (const origin of origins) {
+  // origins in order of preference: all steps of the first before the next one (fallback)
+  for (const origin of origins) {
+    for (const [n, [dLives, dLeague]] of steps.entries()) {
       const [lo, hi] = leagues(origin, dLeague);
       for (const l of shuffle(ctx, lives(dLives))) {
         const pk = bucketKey(origin, major, req.round, l);

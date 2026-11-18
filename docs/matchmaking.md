@@ -81,6 +81,8 @@ At launch there are 50 bot backpacks per round and run standing. They belong to 
 - **Variety:** all 4 heroes and all paths of each hero are present. Bot players of different skill also fill the buckets with few lives.
 - **Storage:** the bot backpacks live in the backend, not in the app. They can be replaced without an app update.
 - **Upkeep:** they are checked after every data change. After a major change they are generated again.
+- **Built (M2):** `npm run seed` (`apps/backend/src/seed/bot-pool.ts`). Proposal for the number of bot players: 50 per league group (200), half of the lowest group plays a little weaker (lays out with less effort); plus 16 easy bots. Runs that rarely happen (all wins late in a run) are short of builds; such a bucket borrows builds of the same round from the nearest standing (about 7 % of the launch set). The launch set takes about a minute to generate.
+- **Easy tier:** the first `matching.easyRuns` runs of a player (3, in `data/meta.json`) meet bots that buy and lay out at random (`easy` partitions, a fifth of the normal amount per bucket), with the normal bots as fallback.
 
 ## League groups
 

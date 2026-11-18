@@ -1,0 +1,5 @@
+{
+  "$comment": "Name parts of the invented bot players in the opponent pool (docs/matchmaking.md \"Bot backpacks\"). A bot is called '<first> <second>'; names must pass the player name rule (at most 16 characters). Proper names, not translated.",
+  "first": ["Astro", "Nova", "Comet", "Orbit", "Pulsar", "Quark", "Zenith", "Nebula", "Lunar", "Solar", "Vega", "Orion", "Cosmo", "Meteor", "Photon", "Ion", "Halo", "Rigel", "Lyra", "Dusty"],
+  "second": ["Pilot", "Drifter", "Miner", "Scout", "Ranger", "Tinker", "Hopper", "Seeker", "Rover", "Smith", "Runner", "Keeper", "Wren", "Moth", "Fox", "Otter"]
+}
