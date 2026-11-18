@@ -1,11 +1,11 @@
 {
- "simVersion": "2.157d28e9292bed",
+ "simVersion": "2.13806d14b88210",
  "fights": [
   {
-   "name": "longest fight: rook vs quill, round 9",
+   "name": "longest fight: ysel vs quill, round 10",
    "a": {
-    "hero": "rook",
-    "round": 9,
+    "hero": "ysel",
+    "round": 10,
     "bags": [
      {
       "item": "field_pack",
@@ -14,7 +14,7 @@
       "rot": 0
      },
      {
-      "item": "tool_roll",
+      "item": "relic_case",
       "x": 1,
       "y": 2,
       "rot": 0
@@ -26,196 +26,136 @@
       "rot": 0
      },
      {
-      "item": "sling_bag",
+      "item": "belt_pocket",
       "x": 0,
-      "y": 1,
+      "y": 2,
       "rot": 1
      },
      {
-      "item": "relic_case",
-      "x": 1,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "holster",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "holster",
-      "x": 5,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 7,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 6,
-      "y": 2,
+      "item": "pouch",
+      "x": 4,
+      "y": 1,
       "rot": 0
      },
      {
       "item": "stasis_vault",
-      "x": 6,
-      "y": 3,
+      "x": 1,
+      "y": 0,
       "rot": 0
+     },
+     {
+      "item": "seed_satchel",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 4,
+      "y": 0,
+      "rot": 1
      }
     ],
     "items": [
      {
-      "item": "photon_bow",
+      "item": "ghost_shroud",
       "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "needle_rifle",
+      "x": 3,
       "y": 0,
       "rot": 3
      },
      {
-      "item": "factory_line",
+      "item": "nova_crown",
       "x": 5,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "siege_ram",
-      "x": 4,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "welder_bot",
-      "x": 1,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "recycler",
-      "x": 0,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "plague_vault",
-      "x": 2,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "gravity_well",
-      "x": 7,
       "y": 1,
       "rot": 1
      },
      {
-      "item": "ram_plate",
-      "x": 8,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "junk_cannon",
-      "x": 0,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "plasma_welder",
-      "x": 4,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "acid_flask",
-      "x": 2,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "grav_clamp",
-      "x": 3,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "venom_sac",
-      "x": 7,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "moon_cheese",
-      "x": 4,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "protein_bar",
-      "x": 5,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "star_compass",
-      "x": 7,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "crystal_shard",
-      "x": 3,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "fusion_battery",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "scrap_metal",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "master_blueprint",
-      "x": 6,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "comet_sorbet",
-      "x": 4,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "shield_emitter",
-      "x": 2,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "lunar_moth",
-      "x": 8,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "med_scanner",
+      "item": "time_dilator",
       "x": 1,
       "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "sundae",
+      "x": 0,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "ion_blaster",
+      "x": 0,
+      "y": 4,
       "rot": 0
      },
      {
-      "item": "hydro_lettuce",
+      "item": "eclipse_veil",
+      "x": 1,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "chime_of_hours",
       "x": 2,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "star_psalter",
+      "x": 4,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "phase_cloak",
+      "x": 4,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "targeting_lens",
+      "x": 3,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "frost_bell",
+      "x": 5,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "tardigrade",
+      "x": 0,
+      "y": 6,
+      "rot": 3
+     },
+     {
+      "item": "frost_bell",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "frost_bell",
+      "x": 4,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "crit_array",
+      "x": 4,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holo_decoy",
+      "x": 3,
       "y": 4,
       "rot": 0
      }
@@ -223,7 +163,7 @@
    },
    "b": {
     "hero": "quill",
-    "round": 9,
+    "round": 10,
     "bags": [
      {
       "item": "field_pack",
@@ -238,174 +178,192 @@
       "rot": 0
      },
      {
-      "item": "sling_bag",
-      "x": 0,
+      "item": "pouch",
+      "x": 2,
       "y": 4,
       "rot": 0
      },
      {
+      "item": "sling_bag",
+      "x": 3,
+      "y": 1,
+      "rot": 0
+     },
+     {
       "item": "side_pocket",
+      "x": 2,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "seed_satchel",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
       "x": 0,
       "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 3,
-      "y": 0,
       "rot": 0
      }
     ],
     "items": [
      {
-      "item": "emergency_beacon",
-      "x": 3,
+      "item": "metronome",
+      "x": 1,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "inferno_canister",
+      "x": 1,
       "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "hull_plating",
+      "x": 3,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "hamster_wheel",
+      "x": 1,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "laser_turret",
+      "x": 5,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "nebula_jelly",
+      "x": 4,
+      "y": 6,
       "rot": 0
+     },
+     {
+      "item": "power_meal",
+      "x": 0,
+      "y": 5,
+      "rot": 1
      },
      {
       "item": "herd_heart",
       "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "kibble_sack",
-      "x": 1,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "sundae",
-      "x": 3,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "nano_medkit",
-      "x": 1,
       "y": 3,
-      "rot": 0
+      "rot": 1
+     },
+     {
+      "item": "candied_fruit",
+      "x": 3,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "guard_hound",
+      "x": 2,
+      "y": 1,
+      "rot": 1
      },
      {
       "item": "banquet_trough",
       "x": 5,
-      "y": 2,
+      "y": 3,
       "rot": 3
      },
      {
-      "item": "wormhole_generator",
-      "x": 1,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "garden_bowl",
-      "x": 0,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "med_scanner",
-      "x": 3,
+      "item": "guard_goose",
+      "x": 2,
       "y": 4,
       "rot": 3
      },
      {
-      "item": "comet_sorbet",
+      "item": "banquet_trough",
+      "x": 4,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "geiger_counter",
       "x": 5,
       "y": 5,
       "rot": 0
      },
      {
-      "item": "overclock_chip",
-      "x": 0,
+      "item": "hawk_eye_parrot",
+      "x": 2,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "biogel",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "rocket_chili",
+      "x": 1,
       "y": 6,
-      "rot": 3
+      "rot": 0
+     },
+     {
+      "item": "copper_wire",
+      "x": 2,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "treat_pouch",
+      "x": 4,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "feeding_bowl",
+      "x": 3,
+      "y": 6,
+      "rot": 0
      },
      {
       "item": "dust_bunny",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "burrow_rat",
-      "x": 5,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "moon_moth",
       "x": 3,
       "y": 5,
       "rot": 0
      },
      {
-      "item": "first_aid_patch",
-      "x": 3,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "venom_sac",
-      "x": 4,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "overclock_chip",
-      "x": 1,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "med_scanner",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "energy_gel",
-      "x": 2,
-      "y": 6,
+      "item": "stardust_vial",
+      "x": 0,
+      "y": 0,
       "rot": 3
-     },
-     {
-      "item": "comet_sorbet",
-      "x": 4,
-      "y": 6,
-      "rot": 1
      }
     ]
    },
-   "seed": 9014,
+   "seed": 10000,
    "expect": {
-    "winner": 0,
-    "seconds": 41,
+    "winner": 1,
+    "seconds": 40,
     "hp": [
-     -44,
-     -70
+     -79,
+     -7
     ]
    }
   },
   {
-   "name": "covers hero:venn, on:shipUse, gain:spikes and 3 more: venn vs ysel, round 3",
+   "name": "covers hero:venn, on:shipUse, mod:overheal and 4 more: venn vs rook, round 5",
    "a": {
     "hero": "venn",
-    "round": 3,
+    "round": 5,
     "bags": [
      {
       "item": "field_pack",
@@ -420,46 +378,58 @@
       "rot": 0
      },
      {
-      "item": "cargo_pocket",
-      "x": 3,
-      "y": 0,
+      "item": "pouch",
+      "x": 2,
+      "y": 4,
       "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "belt_pocket",
+      "x": 0,
+      "y": 2,
+      "rot": 1
      }
     ],
     "items": [
      {
-      "item": "thorn_pod",
-      "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
       "item": "terrarium_heart",
       "x": 2,
       "y": 2,
-      "rot": 0
+      "rot": 3
      },
      {
-      "item": "thruster",
-      "x": 4,
-      "y": 0,
-      "rot": 1
+      "item": "mantrap_pack",
+      "x": 1,
+      "y": 2,
+      "rot": 3
      },
      {
-      "item": "repair_kit",
-      "x": 5,
+      "item": "carnivorous_orchid",
+      "x": 3,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "bark_shield",
+      "x": 0,
       "y": 2,
       "rot": 1
      },
      {
-      "item": "rock_crab",
-      "x": 3,
-      "y": 0,
-      "rot": 3
+      "item": "targeting_lens",
+      "x": 4,
+      "y": 2,
+      "rot": 1
      },
      {
-      "item": "repair_bot",
-      "x": 1,
+      "item": "bramble_seed",
+      "x": 5,
       "y": 2,
       "rot": 0
      },
@@ -470,34 +440,46 @@
       "rot": 0
      },
      {
-      "item": "gravity_dumplings",
-      "x": 3,
+      "item": "snap_sprout",
+      "x": 2,
       "y": 4,
       "rot": 1
      },
      {
       "item": "trellis",
-      "x": 2,
+      "x": 1,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "antitoxin",
+      "x": 5,
       "y": 3,
       "rot": 0
      },
      {
-      "item": "star_fruit",
+      "item": "medi_moss",
       "x": 5,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "targeting_lens",
+      "x": 3,
       "y": 4,
       "rot": 0
      },
      {
-      "item": "geiger_counter",
-      "x": 3,
+      "item": "pollen_cloud",
+      "x": 4,
       "y": 3,
-      "rot": 0
+      "rot": 1
      }
     ]
    },
    "b": {
-    "hero": "ysel",
-    "round": 3,
+    "hero": "rook",
+    "round": 5,
     "bags": [
      {
       "item": "field_pack",
@@ -506,7 +488,7 @@
       "rot": 0
      },
      {
-      "item": "relic_case",
+      "item": "tool_roll",
       "x": 1,
       "y": 2,
       "rot": 0
@@ -518,82 +500,106 @@
       "rot": 3
      },
      {
-      "item": "cargo_pocket",
+      "item": "belt_pocket",
       "x": 4,
       "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 3,
+      "y": 6,
       "rot": 0
      }
     ],
     "items": [
      {
-      "item": "nova_crown",
+      "item": "salvage_rig",
       "x": 1,
       "y": 2,
-      "rot": 0
+      "rot": 2
      },
      {
-      "item": "space_suit",
-      "x": 4,
-      "y": 6,
-      "rot": 1
-     },
-     {
-      "item": "lead_vest",
+      "item": "capacitor_bank",
       "x": 5,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "hull_plating",
-      "x": 4,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "twin_suns",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "asteroid_chunk",
-      "x": 3,
       "y": 2,
       "rot": 1
      },
      {
-      "item": "coolant_tank",
+      "item": "gravity_well",
       "x": 4,
-      "y": 3,
-      "rot": 1
+      "y": 2,
+      "rot": 3
      },
      {
-      "item": "sundial",
+      "item": "plasma_welder",
       "x": 3,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "ram_plate",
+      "x": 2,
       "y": 4,
       "rot": 2
      },
      {
-      "item": "prayer_bell",
-      "x": 2,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "first_aid_patch",
+      "item": "nanite_swarm",
       "x": 3,
       "y": 5,
-      "rot": 3
+      "rot": 0
+     },
+     {
+      "item": "gravity_dumplings",
+      "x": 5,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "clockwork_chick",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "ablative_tiles",
+      "x": 4,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "mushroom_cluster",
+      "x": 4,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "turbo_fan",
+      "x": 5,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "gravity_dumplings",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "star_compass",
+      "x": 3,
+      "y": 6,
+      "rot": 0
      }
     ]
    },
-   "seed": 3004,
+   "seed": 5012,
    "expect": {
     "winner": 1,
-    "seconds": 37.5,
+    "seconds": 36,
     "hp": [
-     -1,
-     36
+     -17,
+     52
     ]
    }
   },
@@ -724,6 +730,430 @@
     "hp": [
      112,
      -5
+    ]
+   }
+  },
+  {
+   "name": "long fight: rook vs quill, round 12",
+   "a": {
+    "hero": "rook",
+    "round": 12,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holster",
+      "x": 7,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cooler_bag",
+      "x": 6,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 6,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 6,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "star_piercer",
+      "x": 1,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "fungal_mortar",
+      "x": 2,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "dyson_fragment",
+      "x": 4,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "emergency_beacon",
+      "x": 6,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "salvage_rig",
+      "x": 2,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "solar_panel",
+      "x": 8,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 5,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "shield_capacitor",
+      "x": 3,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "guardian_drone",
+      "x": 6,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "tesla_coil",
+      "x": 7,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "honey_cake",
+      "x": 4,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "nano_weave",
+      "x": 6,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "life_orchid",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "junk_cannon",
+      "x": 5,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "caretaker_bot",
+      "x": 1,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "nano_weave",
+      "x": 4,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "ablative_tiles",
+      "x": 5,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "stardust_vial",
+      "x": 4,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "turbo_fan",
+      "x": 3,
+      "y": 6,
+      "rot": 3
+     },
+     {
+      "item": "grav_clamp",
+      "x": 7,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "laser_parrot",
+      "x": 6,
+      "y": 4,
+      "rot": 0
+     }
+    ]
+   },
+   "b": {
+    "hero": "quill",
+    "round": 12,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "padded_case",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cooler_bag",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "padded_case",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 2,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "stasis_vault",
+      "x": 0,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "thunder_ram",
+      "x": 1,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "cryo_baton",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stasis_field",
+      "x": 1,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "honey_cake",
+      "x": 4,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "sundae",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "repair_bot",
+      "x": 5,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "herd_heart",
+      "x": 2,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "magma_curry",
+      "x": 4,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "trough_boar",
+      "x": 3,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "glutton_toad",
+      "x": 0,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "blizzard_gem",
+      "x": 2,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "star_hound",
+      "x": 3,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "warp_coil",
+      "x": 3,
+      "y": 1,
+      "rot": 2
+     },
+     {
+      "item": "astrolabe",
+      "x": 0,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "mushroom_cluster",
+      "x": 4,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "vitamin_pack",
+      "x": 5,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "treat_pouch",
+      "x": 4,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "sniper_scope",
+      "x": 6,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "ice_cream",
+      "x": 6,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "venom_fang",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "venom_sac",
+      "x": 6,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "zoo_beacon",
+      "x": 5,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "star_compass",
+      "x": 3,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "geiger_counter",
+      "x": 2,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "antitoxin",
+      "x": 1,
+      "y": 6,
+      "rot": 0
+     }
+    ]
+   },
+   "seed": 12014,
+   "expect": {
+    "winner": 1,
+    "seconds": 39.1,
+    "hp": [
+     -10,
+     647
     ]
    }
   },
@@ -1086,6 +1516,848 @@
    }
   },
   {
+   "name": "long fight: quill vs rook, round 10",
+   "a": {
+    "hero": "quill",
+    "round": 10,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "belt_pocket",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "belt_pocket",
+      "x": 5,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "stasis_vault",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holster",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 6,
+      "y": 4,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "ancient_egg",
+      "x": 2,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "swarm_cloud",
+      "x": 0,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "snow_lynx",
+      "x": 4,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cryo_sprayer",
+      "x": 4,
+      "y": 3,
+      "rot": 3
+     },
+     {
+      "item": "star_hound",
+      "x": 4,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "star_falcon",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "purifier_bot",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "repair_bot",
+      "x": 1,
+      "y": 3,
+      "rot": 3
+     },
+     {
+      "item": "banquet_trough",
+      "x": 5,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "stasis_field",
+      "x": 6,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "biogel",
+      "x": 2,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "feeding_bowl",
+      "x": 3,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "crystal_shard",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "holo_decoy",
+      "x": 5,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "power_cell",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "biogel",
+      "x": 2,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "copper_wire",
+      "x": 1,
+      "y": 6,
+      "rot": 3
+     },
+     {
+      "item": "zoo_beacon",
+      "x": 4,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "treat_pouch",
+      "x": 6,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "marrow_treat",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "cosmic_egg",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "burrow_rat",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "burrow_rat",
+      "x": 6,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "dust_bunny",
+      "x": 3,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "burrow_rat",
+      "x": 7,
+      "y": 5,
+      "rot": 2
+     }
+    ]
+   },
+   "b": {
+    "hero": "rook",
+    "round": 10,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 4,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "belt_pocket",
+      "x": 1,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 3,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 2,
+      "y": 0,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "dyson_fragment",
+      "x": 2,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "factory_line",
+      "x": 4,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "reactor_heart",
+      "x": 2,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "cryo_coat",
+      "x": 1,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "ram_plate",
+      "x": 2,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "welder_bot",
+      "x": 4,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "junk_cannon",
+      "x": 5,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "recycler",
+      "x": 0,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "reactive_armor",
+      "x": 0,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 5,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "gravity_well",
+      "x": 0,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "junk_cannon",
+      "x": 1,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "ram_plate",
+      "x": 3,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "power_cell",
+      "x": 2,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "star_fruit",
+      "x": 4,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "grav_clamp",
+      "x": 0,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "gravity_dumplings",
+      "x": 3,
+      "y": 6,
+      "rot": 3
+     },
+     {
+      "item": "power_cell",
+      "x": 3,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "spare_parts",
+      "x": 1,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "star_fruit",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "sniper_scope",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "stardust_vial",
+      "x": 4,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "spare_parts",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "prism_cluster",
+      "x": 5,
+      "y": 6,
+      "rot": 0
+     }
+    ]
+   },
+   "seed": 10016,
+   "expect": {
+    "winner": 1,
+    "seconds": 39,
+    "hp": [
+     -19,
+     13
+    ]
+   }
+  },
+  {
+   "name": "long fight: rook vs rook, round 11",
+   "a": {
+    "hero": "rook",
+    "round": 11,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "belt_pocket",
+      "x": 4,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "belt_pocket",
+      "x": 1,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "bastion_frame",
+      "x": 3,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "bulwark_array",
+      "x": 0,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "factory_line",
+      "x": 5,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "magnet_crane",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "breach_ram",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "drone_bay",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "asteroid_honey",
+      "x": 2,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 2,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "astronaut_ration",
+      "x": 4,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "gravity_well",
+      "x": 0,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "asteroid_mole",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "frost_gem",
+      "x": 3,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "royal_jelly",
+      "x": 5,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "sniper_scope",
+      "x": 1,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "grav_clamp",
+      "x": 4,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "spare_parts",
+      "x": 2,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "frost_gem",
+      "x": 3,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "spare_parts",
+      "x": 2,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "antitoxin",
+      "x": 4,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "star_fruit",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "quantum_dice",
+      "x": 4,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "star_compass",
+      "x": 0,
+      "y": 6,
+      "rot": 3
+     }
+    ]
+   },
+   "b": {
+    "hero": "rook",
+    "round": 11,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holster",
+      "x": 7,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cooler_bag",
+      "x": 6,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 6,
+      "y": 4,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "dyson_fragment",
+      "x": 3,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "fungal_mortar",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "salvage_rig",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "star_piercer",
+      "x": 7,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "emergency_beacon",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "nano_weave",
+      "x": 4,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "asteroid_honey",
+      "x": 4,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "shield_capacitor",
+      "x": 3,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "nano_weave",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "guardian_drone",
+      "x": 1,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "tesla_coil",
+      "x": 5,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "solar_panel",
+      "x": 1,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 8,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "junk_cannon",
+      "x": 5,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "caretaker_bot",
+      "x": 5,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "grav_clamp",
+      "x": 5,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "laser_parrot",
+      "x": 5,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "ablative_tiles",
+      "x": 3,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "crystal_candy",
+      "x": 4,
+      "y": 6,
+      "rot": 0
+     }
+    ]
+   },
+   "seed": 11012,
+   "expect": {
+    "winner": 1,
+    "seconds": 39,
+    "hp": [
+     -83,
+     591
+    ]
+   }
+  },
+  {
    "name": "long fight: venn vs ysel, round 11",
    "a": {
     "hero": "venn",
@@ -1116,27 +2388,21 @@
       "rot": 1
      },
      {
-      "item": "side_pocket",
+      "item": "sling_bag",
+      "x": 1,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
       "x": 0,
       "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 2,
-      "y": 0,
       "rot": 0
      },
      {
-      "item": "cargo_pocket",
+      "item": "belt_pocket",
       "x": 4,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 6,
-      "y": 3,
+      "y": 1,
       "rot": 0
      },
      {
@@ -1148,134 +2414,110 @@
     ],
     "items": [
      {
-      "item": "tentacle_whip",
-      "x": 2,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "mantrap_pack",
-      "x": 2,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "nebula_jelly",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "spore_stew",
+      "item": "tundra_yak",
       "x": 0,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "life_orchid",
-      "x": 3,
-      "y": 1,
+      "y": 0,
       "rot": 1
      },
      {
-      "item": "life_orchid",
-      "x": 5,
-      "y": 2,
-      "rot": 2
+      "item": "strangler_fig",
+      "x": 2,
+      "y": 0,
+      "rot": 1
      },
      {
       "item": "terrarium_heart",
       "x": 0,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "magma_curry",
-      "x": 1,
-      "y": 4,
+      "y": 5,
       "rot": 1
      },
      {
-      "item": "slime_pup",
-      "x": 5,
-      "y": 0,
+      "item": "mantrap_pack",
+      "x": 0,
+      "y": 4,
       "rot": 2
      },
      {
-      "item": "pollen_cloud",
-      "x": 5,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "grow_lamp",
-      "x": 1,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "visor_helmet",
+      "item": "plague_blossom",
       "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 6,
       "y": 3,
       "rot": 0
      },
      {
-      "item": "nectar_flask",
+      "item": "sundae",
       "x": 0,
-      "y": 4,
+      "y": 2,
       "rot": 1
      },
      {
-      "item": "pollen_cloud",
-      "x": 3,
-      "y": 3,
-      "rot": 0
+      "item": "plague_blossom",
+      "x": 1,
+      "y": 6,
+      "rot": 2
      },
      {
-      "item": "galactic_cookbook",
-      "x": 0,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "comet_sorbet",
-      "x": 4,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "grow_lamp",
+      "item": "life_orchid",
       "x": 2,
       "y": 3,
       "rot": 1
      },
      {
-      "item": "star_compass",
-      "x": 0,
-      "y": 0,
+      "item": "asteroid_honey",
+      "x": 3,
+      "y": 1,
       "rot": 1
      },
      {
-      "item": "prism_cluster",
-      "x": 3,
+      "item": "fire_drakeling",
+      "x": 4,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "venus_mantrap",
+      "x": 2,
       "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "sap_tap",
-      "x": 3,
-      "y": 2,
-      "rot": 1
+      "rot": 2
      },
      {
       "item": "grow_lamp",
-      "x": 0,
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "copper_wire",
+      "x": 5,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "sap_tap",
+      "x": 5,
+      "y": 1,
+      "rot": 2
+     },
+     {
+      "item": "star_fruit",
+      "x": 4,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "grow_lamp",
+      "x": 2,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "laser_parrot",
+      "x": 5,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "mushroom_cluster",
+      "x": 1,
       "y": 5,
       "rot": 1
      }
@@ -1328,142 +2570,690 @@
       "rot": 0
      },
      {
-      "item": "belt_pocket",
+      "item": "stasis_vault",
       "x": 0,
-      "y": 2,
-      "rot": 1
+      "y": 0,
+      "rot": 0
      }
     ],
     "items": [
      {
-      "item": "titan_core",
-      "x": 3,
+      "item": "spiked_bulkhead",
+      "x": 0,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "total_eclipse",
+      "x": 4,
       "y": 0,
       "rot": 1
      },
      {
-      "item": "eclipse_orb",
-      "x": 5,
-      "y": 4,
+      "item": "titan_core",
+      "x": 2,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "tentacle_whip",
+      "x": 1,
+      "y": 2,
       "rot": 3
      },
      {
-      "item": "asteroid_chunk",
-      "x": 1,
+      "item": "thorn_mail",
+      "x": 4,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "ice_ferret",
+      "x": 0,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "cryo_sprayer",
+      "x": 4,
       "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "purifier_bot",
+      "x": 5,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "nova_crown",
+      "x": 5,
+      "y": 2,
       "rot": 1
      },
      {
       "item": "nano_weave",
       "x": 0,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "mirror_of_dusk",
-      "x": 4,
       "y": 4,
       "rot": 0
      },
      {
-      "item": "eclipse_orb",
-      "x": 2,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "star_psalter",
-      "x": 5,
-      "y": 0,
-      "rot": 1
-     },
-     {
       "item": "phase_cloak",
-      "x": 5,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "chime_of_hours",
-      "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "ice_ferret",
-      "x": 0,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "ice_ferret",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "purifier_bot",
-      "x": 2,
+      "x": 3,
       "y": 2,
       "rot": 1
      },
      {
       "item": "cryo_baton",
       "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "nova_crown",
-      "x": 3,
-      "y": 3,
+      "y": 4,
       "rot": 1
      },
      {
-      "item": "visor_helmet",
-      "x": 0,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "magnetic_boots",
-      "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "overclock_chip",
-      "x": 4,
-      "y": 6,
+      "item": "chime_of_hours",
+      "x": 2,
+      "y": 2,
       "rot": 3
      },
      {
-      "item": "prism_cluster",
+      "item": "needle_wasps",
       "x": 3,
-      "y": 6,
+      "y": 5,
       "rot": 2
      },
      {
       "item": "frost_bell",
-      "x": 3,
-      "y": 5,
-      "rot": 3
+      "x": 2,
+      "y": 6,
+      "rot": 0
      },
      {
       "item": "star_compass",
-      "x": 1,
+      "x": 3,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "visor_helmet",
+      "x": 3,
       "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "prism_cluster",
+      "x": 1,
+      "y": 5,
       "rot": 0
      }
     ]
    },
    "seed": 11022,
    "expect": {
-    "winner": 0,
-    "seconds": 38,
+    "winner": 1,
+    "seconds": 39,
     "hp": [
-     284,
-     -6
+     -53,
+     253
+    ]
+   }
+  },
+  {
+   "name": "long fight: ysel vs quill, round 11",
+   "a": {
+    "hero": "ysel",
+    "round": 11,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "belt_pocket",
+      "x": 0,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "pouch",
+      "x": 4,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "seed_satchel",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 4,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "holster",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "ghost_shroud",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "ghost_shroud",
+      "x": 1,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "burst_rifle",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "chime_of_hours",
+      "x": 0,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "time_dilator",
+      "x": 5,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "ion_blaster",
+      "x": 1,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "sundae",
+      "x": 2,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "eclipse_veil",
+      "x": 0,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "nova_crown",
+      "x": 5,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "star_psalter",
+      "x": 1,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "frost_bell",
+      "x": 4,
+      "y": 3,
+      "rot": 3
+     },
+     {
+      "item": "frost_bell",
+      "x": 4,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "crit_array",
+      "x": 2,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "frost_bell",
+      "x": 0,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "laser_parrot",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "tardigrade",
+      "x": 2,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "frost_bell",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     }
+    ]
+   },
+   "b": {
+    "hero": "quill",
+    "round": 11,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 2,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "side_pocket",
+      "x": 3,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "sling_bag",
+      "x": 3,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "duffel",
+      "x": 0,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "stasis_vault",
+      "x": 5,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "duffel",
+      "x": 6,
+      "y": 2,
+      "rot": 1
+     }
+    ],
+    "items": [
+     {
+      "item": "hive_queen",
+      "x": 4,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "swarm_cloud",
+      "x": 2,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "swarm_cloud",
+      "x": 3,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "ancient_egg",
+      "x": 0,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "glow_swarm",
+      "x": 4,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "pet_bed",
+      "x": 2,
+      "y": 3,
+      "rot": 3
+     },
+     {
+      "item": "needle_wasps",
+      "x": 5,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "glow_swarm",
+      "x": 0,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "toxic_gland",
+      "x": 0,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "hamster_wheel",
+      "x": 6,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "feeding_bowl",
+      "x": 1,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "treat_pouch",
+      "x": 5,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "geiger_counter",
+      "x": 7,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "lodestone",
+      "x": 7,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "pack_bond",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "burrow_rat",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "first_aid_patch",
+      "x": 6,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "geiger_counter",
+      "x": 7,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "feeding_bowl",
+      "x": 6,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "galactic_cookbook",
+      "x": 2,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "beetle_lantern",
+      "x": 6,
+      "y": 6,
+      "rot": 2
+     }
+    ]
+   },
+   "seed": 11008,
+   "expect": {
+    "winner": 0,
+    "seconds": 37.7,
+    "hp": [
+     79,
+     -9
+    ]
+   }
+  },
+  {
+   "name": "long fight: venn vs ysel, round 3",
+   "a": {
+    "hero": "venn",
+    "round": 3,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "seed_satchel",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "thorn_pod",
+      "x": 4,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "terrarium_heart",
+      "x": 2,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "thruster",
+      "x": 4,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "repair_kit",
+      "x": 5,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "rock_crab",
+      "x": 3,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "repair_bot",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "pollen_cloud",
+      "x": 4,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "gravity_dumplings",
+      "x": 3,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "trellis",
+      "x": 2,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "star_fruit",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "geiger_counter",
+      "x": 3,
+      "y": 3,
+      "rot": 0
+     }
+    ]
+   },
+   "b": {
+    "hero": "ysel",
+    "round": 3,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 2,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 4,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "nova_crown",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "space_suit",
+      "x": 4,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "lead_vest",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "hull_plating",
+      "x": 4,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "twin_suns",
+      "x": 4,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "asteroid_chunk",
+      "x": 3,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "coolant_tank",
+      "x": 4,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "sundial",
+      "x": 3,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "prayer_bell",
+      "x": 2,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "first_aid_patch",
+      "x": 3,
+      "y": 5,
+      "rot": 3
+     }
+    ]
+   },
+   "seed": 3004,
+   "expect": {
+    "winner": 1,
+    "seconds": 37.5,
+    "hp": [
+     -1,
+     36
     ]
    }
   },
@@ -1954,10 +3744,10 @@
    }
   },
   {
-   "name": "long fight: venn vs rook, round 5",
+   "name": "long fight: venn vs rook, round 7",
    "a": {
     "hero": "venn",
-    "round": 5,
+    "round": 7,
     "bags": [
      {
       "item": "field_pack",
@@ -1972,108 +3762,484 @@
       "rot": 0
      },
      {
-      "item": "pouch",
+      "item": "side_pocket",
       "x": 2,
       "y": 4,
-      "rot": 0
+      "rot": 3
+     },
+     {
+      "item": "side_pocket",
+      "x": 3,
+      "y": 5,
+      "rot": 2
      },
      {
       "item": "pouch",
-      "x": 1,
-      "y": 4,
+      "x": 5,
+      "y": 5,
       "rot": 0
      },
      {
       "item": "belt_pocket",
+      "x": 5,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
       "x": 0,
-      "y": 2,
-      "rot": 1
+      "y": 4,
+      "rot": 0
      }
     ],
     "items": [
      {
+      "item": "rock_crab",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
       "item": "terrarium_heart",
       "x": 2,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "cryo_sprayer",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "stasis_field",
+      "x": 4,
       "y": 2,
-      "rot": 3
+      "rot": 0
      },
      {
       "item": "mantrap_pack",
-      "x": 1,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "carnivorous_orchid",
-      "x": 3,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "bark_shield",
-      "x": 0,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "targeting_lens",
-      "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "bramble_seed",
-      "x": 5,
+      "x": 2,
       "y": 2,
       "rot": 0
      },
      {
-      "item": "pollen_cloud",
+      "item": "guardian_drone",
+      "x": 3,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "star_chart",
+      "x": 5,
+      "y": 3,
+      "rot": 3
+     },
+     {
+      "item": "toxic_gland",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "star_compass",
+      "x": 4,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "sap_tap",
+      "x": 4,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "acid_flask",
+      "x": 3,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "hydro_lettuce",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "biogel",
+      "x": 6,
+      "y": 6,
+      "rot": 3
+     },
+     {
+      "item": "copper_wire",
+      "x": 3,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "comet_sorbet",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "crystal_candy",
       "x": 4,
       "y": 4,
       "rot": 0
+     },
+     {
+      "item": "zoo_beacon",
+      "x": 5,
+      "y": 5,
+      "rot": 3
      },
      {
       "item": "snap_sprout",
-      "x": 2,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "trellis",
-      "x": 1,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "antitoxin",
       "x": 5,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "medi_moss",
-      "x": 5,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "targeting_lens",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 4,
-      "y": 3,
+      "y": 6,
       "rot": 1
      }
     ]
    },
    "b": {
     "hero": "rook",
-    "round": 5,
+    "round": 7,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "seed_satchel",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "padded_case",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "deflector_dish",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "mirror_shield",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "siege_ram",
+      "x": 0,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "factory_line",
+      "x": 1,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "breach_ram",
+      "x": 4,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "shock_trap",
+      "x": 5,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 4,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "ram_plate",
+      "x": 0,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "gravity_well",
+      "x": 2,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "rivet_gun",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "junk_cannon",
+      "x": 2,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "cosmic_egg",
+      "x": 3,
+      "y": 6,
+      "rot": 3
+     },
+     {
+      "item": "moon_cheese",
+      "x": 2,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "quantum_dice",
+      "x": 3,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "lodestone",
+      "x": 4,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "targeting_lens",
+      "x": 1,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "laser_parrot",
+      "x": 0,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "fusion_battery",
+      "x": 1,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "lucky_comet",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "gravity_dumplings",
+      "x": 4,
+      "y": 6,
+      "rot": 0
+     }
+    ]
+   },
+   "seed": 7014,
+   "expect": {
+    "winner": 0,
+    "seconds": 36,
+    "hp": [
+     198,
+     -52
+    ]
+   }
+  },
+  {
+   "name": "long fight: venn vs rook, round 8",
+   "a": {
+    "hero": "venn",
+    "round": 8,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "seed_satchel",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "sling_bag",
+      "x": 1,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "strangler_fig",
+      "x": 0,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "wormhole_generator",
+      "x": 4,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "needle_wasps",
+      "x": 3,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "terrarium_heart",
+      "x": 1,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "fire_drakeling",
+      "x": 2,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "mantrap_pack",
+      "x": 1,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "life_orchid",
+      "x": 0,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "sap_tap",
+      "x": 1,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "mushroom_cluster",
+      "x": 5,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "grow_lamp",
+      "x": 0,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "pollen_cloud",
+      "x": 3,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "blight_bomb",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "comet_sorbet",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "grow_lamp",
+      "x": 4,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "pollen_cloud",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "grow_lamp",
+      "x": 3,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "nectar_flask",
+      "x": 4,
+      "y": 3,
+      "rot": 0
+     }
+    ]
+   },
+   "b": {
+    "hero": "rook",
+    "round": 8,
     "bags": [
      {
       "item": "field_pack",
@@ -2104,104 +4270,388 @@
       "x": 3,
       "y": 6,
       "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 2,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "cooler_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "padded_case",
+      "x": 1,
+      "y": 0,
+      "rot": 0
      }
     ],
     "items": [
      {
       "item": "salvage_rig",
       "x": 1,
-      "y": 2,
-      "rot": 2
+      "y": 0,
+      "rot": 3
      },
      {
-      "item": "capacitor_bank",
-      "x": 5,
-      "y": 2,
+      "item": "storm_driver",
+      "x": 3,
+      "y": 0,
       "rot": 1
      },
      {
-      "item": "gravity_well",
+      "item": "nano_medkit",
       "x": 4,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "tesla_coil",
+      "x": 4,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "gravity_well",
+      "x": 5,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "plasma_cutter",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "ram_plate",
+      "x": 1,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "spore_stew",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "antitoxin",
+      "x": 5,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "grav_clamp",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "quantum_dice",
+      "x": 3,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "grav_clamp",
+      "x": 3,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "spare_parts",
+      "x": 2,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "clockwork_chick",
+      "x": 5,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "gravity_dumplings",
+      "x": 2,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "laser_parrot",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "holo_decoy",
+      "x": 3,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "crit_array",
+      "x": 3,
+      "y": 1,
+      "rot": 1
+     }
+    ]
+   },
+   "seed": 8022,
+   "expect": {
+    "winner": 0,
+    "seconds": 36,
+    "hp": [
+     98,
+     -39
+    ]
+   }
+  },
+  {
+   "name": "long fight: rook vs quill, round 9",
+   "a": {
+    "hero": "rook",
+    "round": 9,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "tool_roll",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 0,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "relic_case",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holster",
+      "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holster",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 7,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 6,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 6,
+      "y": 3,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "photon_bow",
+      "x": 3,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "siege_ram",
+      "x": 4,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "factory_line",
+      "x": 1,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "thorn_mail",
+      "x": 8,
       "y": 2,
       "rot": 3
      },
      {
       "item": "plasma_welder",
-      "x": 3,
-      "y": 2,
-      "rot": 2
+      "x": 6,
+      "y": 3,
+      "rot": 0
      },
      {
-      "item": "ram_plate",
-      "x": 2,
+      "item": "gravity_well",
+      "x": 1,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "junk_cannon",
+      "x": 1,
       "y": 4,
       "rot": 2
      },
      {
-      "item": "nanite_swarm",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "gravity_dumplings",
+      "item": "welder_bot",
       "x": 5,
-      "y": 6,
-      "rot": 2
-     },
-     {
-      "item": "clockwork_chick",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "ablative_tiles",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "mushroom_cluster",
-      "x": 4,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "turbo_fan",
-      "x": 5,
-      "y": 4,
+      "y": 1,
       "rot": 1
      },
      {
-      "item": "gravity_dumplings",
-      "x": 5,
-      "y": 5,
+      "item": "scrubber_unit",
+      "x": 2,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "plague_vault",
+      "x": 8,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "recycler",
+      "x": 6,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "ram_plate",
+      "x": 0,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "med_scanner",
+      "x": 7,
+      "y": 3,
       "rot": 0
      },
      {
       "item": "star_compass",
-      "x": 3,
-      "y": 6,
+      "x": 7,
+      "y": 4,
       "rot": 0
+     },
+     {
+      "item": "master_blueprint",
+      "x": 5,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "venom_sac",
+      "x": 3,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "shield_emitter",
+      "x": 0,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "lucky_comet",
+      "x": 4,
+      "y": 4,
+      "rot": 2
+     },
+     {
+      "item": "circuit_board",
+      "x": 7,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "grav_clamp",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "crystal_shard",
+      "x": 2,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "scrap_metal",
+      "x": 3,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "acid_flask",
+      "x": 3,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "fusion_battery",
+      "x": 1,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "lunar_moth",
+      "x": 6,
+      "y": 1,
+      "rot": 2
+     },
+     {
+      "item": "moon_cheese",
+      "x": 0,
+      "y": 4,
+      "rot": 1
      }
     ]
    },
-   "seed": 5012,
-   "expect": {
-    "winner": 1,
-    "seconds": 36,
-    "hp": [
-     -17,
-     52
-    ]
-   }
-  },
-  {
-   "name": "long fight: quill vs rook, round 10",
-   "a": {
+   "b": {
     "hero": "quill",
-    "round": 10,
+    "round": 9,
     "bags": [
      {
       "item": "field_pack",
@@ -2216,249 +4666,25 @@
       "rot": 0
      },
      {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 5,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "stasis_vault",
-      "x": 0,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "holster",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "stasis_vault",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 6,
-      "y": 3,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "swarm_cloud",
-      "x": 4,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "hive_queen",
-      "x": 2,
-      "y": 0,
-      "rot": 3
-     },
-     {
-      "item": "ancient_egg",
-      "x": 0,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "hull_plating",
-      "x": 6,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "star_falcon",
-      "x": 2,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "star_hound",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "trough_boar",
-      "x": 3,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "purifier_bot",
-      "x": 7,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "nail_storm",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "stasis_field",
-      "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "banquet_trough",
-      "x": 1,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "repair_bot",
-      "x": 6,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "zoo_beacon",
-      "x": 5,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "crystal_shard",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "dust_bunny",
-      "x": 3,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "marrow_treat",
-      "x": 6,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "feeding_bowl",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "power_cell",
-      "x": 1,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "burrow_rat",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "burrow_rat",
-      "x": 7,
-      "y": 5,
-      "rot": 2
-     },
-     {
-      "item": "treat_pouch",
-      "x": 4,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "burrow_rat",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "biogel",
-      "x": 2,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "calling_shell",
-      "x": 4,
-      "y": 6,
-      "rot": 3
-     },
-     {
-      "item": "scrap_metal",
-      "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "biogel",
-      "x": 1,
-      "y": 6,
-      "rot": 0
-     }
-    ]
-   },
-   "b": {
-    "hero": "rook",
-    "round": 10,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "tool_roll",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
       "item": "sling_bag",
       "x": 0,
       "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 0,
-      "y": 5,
       "rot": 0
      },
      {
       "item": "side_pocket",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "relic_case",
       "x": 2,
       "y": 5,
       "rot": 0
      },
      {
-      "item": "cargo_pocket",
+      "item": "relic_case",
       "x": 4,
       "y": 5,
       "rot": 0
@@ -2470,154 +4696,136 @@
       "rot": 1
      },
      {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 1,
-      "rot": 0
-     },
-     {
       "item": "stasis_vault",
-      "x": 3,
+      "x": 1,
       "y": 0,
       "rot": 0
      }
     ],
     "items": [
      {
-      "item": "junk_titan",
+      "item": "star_hound",
+      "x": 2,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "toxic_gland",
+      "x": 5,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "herd_heart",
+      "x": 3,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "nano_medkit",
       "x": 3,
       "y": 0,
       "rot": 1
      },
      {
-      "item": "dyson_fragment",
+      "item": "banquet_trough",
+      "x": 0,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "plague_vault",
       "x": 0,
       "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "toxic_gland",
+      "x": 1,
+      "y": 2,
       "rot": 2
      },
      {
-      "item": "welder_bot",
+      "item": "jammer_beacon",
       "x": 3,
       "y": 4,
       "rot": 0
      },
      {
-      "item": "recycler",
-      "x": 3,
-      "y": 3,
+      "item": "sundae",
+      "x": 1,
+      "y": 4,
       "rot": 0
      },
      {
-      "item": "ram_plate",
-      "x": 5,
+      "item": "ion_blaster",
+      "x": 3,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "kibble_sack",
+      "x": 1,
       "y": 0,
       "rot": 3
      },
      {
-      "item": "nanite_swarm",
-      "x": 1,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "cryo_coat",
+      "item": "garden_bowl",
       "x": 2,
-      "y": 1,
-      "rot": 0
+      "y": 5,
+      "rot": 1
      },
      {
-      "item": "gravity_well",
+      "item": "first_aid_patch",
       "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "stasis_field",
-      "x": 0,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "junk_cannon",
-      "x": 1,
       "y": 4,
       "rot": 0
      },
      {
-      "item": "reactor_heart",
-      "x": 5,
-      "y": 4,
-      "rot": 1
+      "item": "med_scanner",
+      "x": 1,
+      "y": 5,
+      "rot": 0
      },
      {
-      "item": "phase_cloak",
-      "x": 3,
+      "item": "ice_cream",
+      "x": 0,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "marrow_treat",
+      "x": 0,
       "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "recycler",
-      "x": 0,
-      "y": 5,
       "rot": 0
      },
      {
-      "item": "overclock_chip",
+      "item": "med_scanner",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "ice_cream",
       "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "sniper_scope",
-      "x": 2,
       "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "grav_clamp",
-      "x": 0,
-      "y": 6,
       "rot": 2
      },
      {
-      "item": "prism_cluster",
-      "x": 4,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "power_cell",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "logic_core",
-      "x": 4,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "geiger_counter",
-      "x": 1,
-      "y": 6,
-      "rot": 1
-     },
-     {
-      "item": "stardust_vial",
+      "item": "moon_cheese",
       "x": 2,
-      "y": 6,
+      "y": 3,
       "rot": 0
      }
     ]
    },
-   "seed": 10016,
+   "seed": 9014,
    "expect": {
     "winner": 1,
     "seconds": 36,
     "hp": [
-     -64,
-     355
+     -67,
+     268
     ]
    }
   },
@@ -2836,10 +5044,192 @@
    }
   },
   {
-   "name": "long fight: rook vs rook, round 11",
+   "name": "long fight: quill vs rook, round 9",
    "a": {
+    "hero": "quill",
+    "round": 9,
+    "bags": [
+     {
+      "item": "field_pack",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 1,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "pouch",
+      "x": 2,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 3,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 2,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "seed_satchel",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     }
+    ],
+    "items": [
+     {
+      "item": "metronome",
+      "x": 3,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "hull_plating",
+      "x": 0,
+      "y": 0,
+      "rot": 3
+     },
+     {
+      "item": "inferno_canister",
+      "x": 4,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "kibble_sack",
+      "x": 3,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "power_meal",
+      "x": 1,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "hamster_wheel",
+      "x": 5,
+      "y": 5,
+      "rot": 3
+     },
+     {
+      "item": "guard_hound",
+      "x": 5,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "candied_fruit",
+      "x": 2,
+      "y": 1,
+      "rot": 3
+     },
+     {
+      "item": "herd_heart",
+      "x": 1,
+      "y": 1,
+      "rot": 1
+     },
+     {
+      "item": "banquet_trough",
+      "x": 1,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "copper_wire",
+      "x": 0,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "hawk_eye_parrot",
+      "x": 5,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "feeding_bowl",
+      "x": 3,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "treat_pouch",
+      "x": 5,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "stardust_vial",
+      "x": 0,
+      "y": 6,
+      "rot": 2
+     },
+     {
+      "item": "copper_wire",
+      "x": 2,
+      "y": 4,
+      "rot": 3
+     },
+     {
+      "item": "crystal_shard",
+      "x": 2,
+      "y": 5,
+      "rot": 0
+     },
+     {
+      "item": "rocket_chili",
+      "x": 2,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "feeding_bowl",
+      "x": 4,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "scrap_metal",
+      "x": 3,
+      "y": 5,
+      "rot": 2
+     },
+     {
+      "item": "geiger_counter",
+      "x": 3,
+      "y": 2,
+      "rot": 0
+     }
+    ]
+   },
+   "b": {
     "hero": "rook",
-    "round": 11,
+    "round": 9,
     "bags": [
      {
       "item": "field_pack",
@@ -2888,968 +5278,138 @@
       "x": 0,
       "y": 1,
       "rot": 1
-     },
-     {
-      "item": "stasis_vault",
-      "x": 5,
-      "y": 5,
-      "rot": 0
      }
     ],
     "items": [
      {
       "item": "bastion_frame",
-      "x": 3,
-      "y": 0,
-      "rot": 3
+      "x": 0,
+      "y": 2,
+      "rot": 1
      },
      {
       "item": "bastion_frame",
-      "x": 0,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "factory_line",
-      "x": 4,
-      "y": 6,
+      "x": 3,
+      "y": 0,
       "rot": 0
      },
      {
-      "item": "phase_cloak",
+      "item": "rail_driver",
       "x": 5,
-      "y": 3,
-      "rot": 2
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "factory_line",
+      "x": 2,
+      "y": 2,
+      "rot": 1
      },
      {
       "item": "astronaut_ration",
       "x": 0,
       "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "nanite_swarm",
-      "x": 5,
-      "y": 0,
       "rot": 1
-     },
-     {
-      "item": "purifier_bot",
-      "x": 3,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "gravity_well",
-      "x": 7,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "asteroid_honey",
-      "x": 4,
-      "y": 2,
-      "rot": 0
      },
      {
       "item": "breach_ram",
+      "x": 3,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "gravity_well",
       "x": 1,
       "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "scrap_golem",
-      "x": 4,
-      "y": 4,
       "rot": 3
      },
      {
-      "item": "stun_baton",
+      "item": "hull_plating",
+      "x": 4,
+      "y": 2,
+      "rot": 3
+     },
+     {
+      "item": "asteroid_honey",
+      "x": 5,
+      "y": 3,
+      "rot": 1
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 3,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "spare_parts",
       "x": 2,
       "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "grav_clamp",
-      "x": 0,
-      "y": 6,
-      "rot": 3
-     },
-     {
-      "item": "royal_jelly",
-      "x": 2,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "sniper_scope",
-      "x": 2,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "frost_gem",
-      "x": 3,
-      "y": 6,
       "rot": 1
      },
      {
       "item": "star_compass",
-      "x": 0,
-      "y": 1,
+      "x": 4,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "grav_clamp",
+      "x": 1,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "sniper_scope",
+      "x": 3,
+      "y": 5,
       "rot": 0
      },
      {
       "item": "star_fruit",
-      "x": 1,
+      "x": 0,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "circuit_board",
+      "x": 3,
+      "y": 6,
+      "rot": 0
+     },
+     {
+      "item": "spare_parts",
+      "x": 2,
       "y": 6,
       "rot": 3
      },
      {
-      "item": "spare_parts",
-      "x": 6,
-      "y": 5,
-      "rot": 0
+      "item": "frost_gem",
+      "x": 0,
+      "y": 1,
+      "rot": 1
      },
      {
       "item": "quantum_dice",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "spare_parts",
-      "x": 5,
+      "x": 4,
       "y": 5,
       "rot": 0
      }
     ]
    },
-   "b": {
-    "hero": "rook",
-    "round": 11,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "tool_roll",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "tool_roll",
-      "x": 1,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 5,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "sling_bag",
-      "x": 6,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "pet_carrier",
-      "x": 7,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "stasis_vault",
-      "x": 7,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "pouch",
-      "x": 0,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 0,
-      "y": 4,
-      "rot": 3
-     }
-    ],
-    "items": [
-     {
-      "item": "dyson_fragment",
-      "x": 0,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "acid_sprayer",
-      "x": 2,
-      "y": 0,
-      "rot": 2
-     },
-     {
-      "item": "recycler",
-      "x": 5,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "junk_cannon",
-      "x": 8,
-      "y": 0,
-      "rot": 3
-     },
-     {
-      "item": "shield_capacitor",
-      "x": 2,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "breach_ram",
-      "x": 3,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "nanite_swarm",
-      "x": 0,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "junk_cannon",
-      "x": 6,
-      "y": 0,
-      "rot": 2
-     },
-     {
-      "item": "ram_plate",
-      "x": 1,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "magma_curry",
-      "x": 6,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "guardian_drone",
-      "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "breach_ram",
-      "x": 7,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "caretaker_bot",
-      "x": 4,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "asteroid_honey",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "guardian_drone",
-      "x": 6,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "grav_clamp",
-      "x": 8,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "ablative_tiles",
-      "x": 2,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "visor_helmet",
-      "x": 3,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "crystal_shard",
-      "x": 8,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "shield_emitter",
-      "x": 1,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "overclock_chip",
-      "x": 0,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "ablative_tiles",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "ablative_tiles",
-      "x": 4,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "sniper_scope",
-      "x": 2,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "medi_moss",
-      "x": 6,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "crystal_shard",
-      "x": 7,
-      "y": 4,
-      "rot": 3
-     }
-    ]
-   },
-   "seed": 11012,
-   "expect": {
-    "winner": 1,
-    "seconds": 35,
-    "hp": [
-     -4,
-     942
-    ]
-   }
-  },
-  {
-   "name": "long fight: venn vs rook, round 9",
-   "a": {
-    "hero": "venn",
-    "round": 9,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 3,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "pet_carrier",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "root_network",
-      "x": 3,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "sundae",
-      "x": 2,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "sundae",
-      "x": 5,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "plague_blossom",
-      "x": 4,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "panacea",
-      "x": 1,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "terrarium_heart",
-      "x": 4,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "mantrap_pack",
-      "x": 4,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "tardigrade",
-      "x": 3,
-      "y": 6,
-      "rot": 1
-     },
-     {
-      "item": "antenna",
-      "x": 4,
-      "y": 6,
-      "rot": 2
-     },
-     {
-      "item": "biogel",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 5,
-      "y": 5,
-      "rot": 2
-     },
-     {
-      "item": "sap_tap",
-      "x": 1,
-      "y": 6,
-      "rot": 2
-     },
-     {
-      "item": "grow_lamp",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "trellis",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "compost_bin",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "galactic_cookbook",
-      "x": 1,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "grow_lamp",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 2,
-      "y": 6,
-      "rot": 1
-     },
-     {
-      "item": "trellis",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     }
-    ]
-   },
-   "b": {
-    "hero": "rook",
-    "round": 9,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "tool_roll",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "holster",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 0,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "stasis_vault",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 6,
-      "y": 4,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "dyson_fragment",
-      "x": 0,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "factory_line",
-      "x": 2,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "junk_cannon",
-      "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "tesla_coil",
-      "x": 1,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "guardian_drone",
-      "x": 5,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "breach_ram",
-      "x": 3,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "cryo_sprayer",
-      "x": 0,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "nanite_swarm",
-      "x": 3,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "thorn_mail",
-      "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "medi_moss",
-      "x": 2,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "fuel_canister",
-      "x": 3,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "turbo_fan",
-      "x": 6,
-      "y": 6,
-      "rot": 3
-     },
-     {
-      "item": "moon_cheese",
-      "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "dark_matter",
-      "x": 2,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "acid_flask",
-      "x": 0,
-      "y": 6,
-      "rot": 3
-     },
-     {
-      "item": "assembly_core",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "crit_array",
-      "x": 1,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "crystal_shard",
-      "x": 3,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "crystal_candy",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "scrap_metal",
-      "x": 4,
-      "y": 6,
-      "rot": 1
-     },
-     {
-      "item": "tardigrade",
-      "x": 6,
-      "y": 5,
-      "rot": 2
-     }
-    ]
-   },
-   "seed": 9006,
+   "seed": 9020,
    "expect": {
     "winner": 0,
-    "seconds": 34,
+    "seconds": 35,
     "hp": [
-     920,
-     -52
+     311,
+     -48
     ]
    }
   },
   {
-   "name": "long fight: venn vs rook, round 12",
+   "name": "long fight: rook vs venn, round 12",
    "a": {
-    "hero": "venn",
-    "round": 12,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 3,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "pet_carrier",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "holster",
-      "x": 1,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 5,
-      "y": 1,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "mantrap_pack",
-      "x": 4,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "black_box",
-      "x": 5,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "panacea",
-      "x": 2,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "sundae",
-      "x": 4,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "terrarium_heart",
-      "x": 2,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "nebula_jelly",
-      "x": 1,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "plague_blossom",
-      "x": 1,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "sundae",
-      "x": 4,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "healing_moss",
-      "x": 3,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "targeting_lens",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "crystal_shard",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "tardigrade",
-      "x": 4,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "grow_lamp",
-      "x": 3,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "tardigrade",
-      "x": 2,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "laser_parrot",
-      "x": 4,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "galactic_cookbook",
-      "x": 3,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "trellis",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 1,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "sap_tap",
-      "x": 5,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "biogel",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "compost_bin",
-      "x": 5,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "trellis",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "nectar_flask",
-      "x": 2,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "grow_lamp",
-      "x": 3,
-      "y": 2,
-      "rot": 3
-     }
-    ]
-   },
-   "b": {
     "hero": "rook",
     "round": 12,
     "bags": [
@@ -3866,55 +5426,67 @@
       "rot": 0
      },
      {
-      "item": "sling_bag",
-      "x": 0,
+      "item": "pouch",
+      "x": 2,
       "y": 4,
       "rot": 0
      },
      {
-      "item": "cargo_pocket",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "stasis_vault",
+      "item": "seed_satchel",
       "x": 3,
       "y": 0,
       "rot": 0
      },
      {
-      "item": "stasis_vault",
-      "x": 6,
+      "item": "side_pocket",
+      "x": 1,
       "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "cargo_pocket",
+      "x": 5,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "side_pocket",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "sling_bag",
+      "x": 6,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "stasis_vault",
+      "x": 7,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "side_pocket",
+      "x": 7,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "stasis_vault",
+      "x": 3,
+      "y": 5,
       "rot": 0
      }
     ],
     "items": [
+     {
+      "item": "captains_banquet",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
      {
       "item": "dyson_fragment",
       "x": 3,
@@ -3922,324 +5494,136 @@
       "rot": 1
      },
      {
-      "item": "nanite_swarm",
+      "item": "siege_ram",
       "x": 5,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "recycler",
-      "x": 0,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "force_bubble",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "recycler",
-      "x": 0,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "tesla_coil",
-      "x": 6,
-      "y": 1,
-      "rot": 3
-     },
-     {
-      "item": "gravity_well",
-      "x": 7,
       "y": 0,
-      "rot": 0
+      "rot": 1
      },
      {
       "item": "stasis_field",
       "x": 1,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "phase_cloak",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "ram_plate",
-      "x": 1,
       "y": 2,
-      "rot": 0
+      "rot": 1
      },
      {
-      "item": "welder_bot",
-      "x": 5,
-      "y": 1,
+      "item": "asteroid_honey",
+      "x": 3,
+      "y": 3,
       "rot": 1
      },
      {
       "item": "junk_cannon",
-      "x": 3,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "repair_bot",
-      "x": 1,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "reactor_heart",
-      "x": 5,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "overclock_chip",
-      "x": 8,
-      "y": 1,
-      "rot": 3
-     },
-     {
-      "item": "scrap_metal",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "logic_core",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "dark_matter",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "holo_decoy",
       "x": 4,
-      "y": 5,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "toolbox",
+      "x": 8,
+      "y": 0,
       "rot": 3
+     },
+     {
+      "item": "welder_bot",
+      "x": 5,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "junk_cannon",
+      "x": 7,
+      "y": 0,
+      "rot": 1
+     },
+     {
+      "item": "breach_ram",
+      "x": 3,
+      "y": 6,
+      "rot": 1
+     },
+     {
+      "item": "nanite_swarm",
+      "x": 6,
+      "y": 2,
+      "rot": 2
+     },
+     {
+      "item": "candied_fruit",
+      "x": 5,
+      "y": 5,
+      "rot": 1
+     },
+     {
+      "item": "guardian_drone",
+      "x": 2,
+      "y": 3,
+      "rot": 3
+     },
+     {
+      "item": "sundae",
+      "x": 2,
+      "y": 2,
+      "rot": 0
      },
      {
       "item": "sniper_scope",
-      "x": 3,
-      "y": 5,
-      "rot": 0
+      "x": 6,
+      "y": 0,
+      "rot": 3
      },
      {
-      "item": "geiger_counter",
+      "item": "logic_core",
       "x": 4,
-      "y": 3,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "turbo_fan",
+      "x": 7,
+      "y": 4,
       "rot": 2
      },
      {
       "item": "power_cell",
-      "x": 3,
-      "y": 2,
-      "rot": 0
+      "x": 6,
+      "y": 4,
+      "rot": 3
      },
      {
       "item": "stardust_vial",
-      "x": 4,
-      "y": 6,
+      "x": 8,
+      "y": 3,
       "rot": 1
      },
      {
-      "item": "prism_cluster",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     }
-    ]
-   },
-   "seed": 12002,
-   "expect": {
-    "winner": 0,
-    "seconds": 34,
-    "hp": [
-     907,
-     -171
-    ]
-   }
-  },
-  {
-   "name": "long fight: ysel vs quill, round 10",
-   "a": {
-    "hero": "ysel",
-    "round": 10,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
+      "item": "dark_matter",
       "x": 3,
       "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "stasis_vault",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "meteor_hammer",
-      "x": 4,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "snow_lynx",
-      "x": 1,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "zenith_lance",
-      "x": 0,
-      "y": 6,
-      "rot": 1
-     },
-     {
-      "item": "cryo_sprayer",
-      "x": 3,
-      "y": 2,
       "rot": 3
      },
      {
-      "item": "twin_suns",
+      "item": "overclock_chip",
+      "x": 8,
+      "y": 2,
+      "rot": 0
+     },
+     {
+      "item": "turbo_fan",
+      "x": 5,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "overclock_chip",
       "x": 4,
       "y": 5,
       "rot": 2
-     },
-     {
-      "item": "honey_cake",
-      "x": 3,
-      "y": 0,
-      "rot": 2
-     },
-     {
-      "item": "canticle",
-      "x": 0,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "stellar_lens",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "laser_parrot",
-      "x": 4,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "gravity_anchor",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "sacred_flame",
-      "x": 3,
-      "y": 5,
-      "rot": 2
-     },
-     {
-      "item": "fuel_canister",
-      "x": 1,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "solar_dagger",
-      "x": 1,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "sacred_flame",
-      "x": 3,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "galactic_cookbook",
-      "x": 5,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "votive_candle",
-      "x": 5,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "algae_shake",
-      "x": 2,
-      "y": 4,
-      "rot": 0
      }
     ]
    },
    "b": {
-    "hero": "quill",
-    "round": 10,
+    "hero": "venn",
+    "round": 12,
     "bags": [
      {
       "item": "field_pack",
@@ -4248,178 +5632,202 @@
       "rot": 0
      },
      {
-      "item": "pet_carrier",
+      "item": "seed_satchel",
       "x": 1,
       "y": 2,
       "rot": 0
      },
      {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
       "item": "side_pocket",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "relic_case",
       "x": 2,
-      "y": 5,
-      "rot": 0
+      "y": 4,
+      "rot": 3
      },
      {
-      "item": "side_pocket",
+      "item": "pouch",
       "x": 4,
       "y": 5,
       "rot": 0
      },
      {
-      "item": "cargo_pocket",
+      "item": "tool_roll",
+      "x": 0,
+      "y": 4,
+      "rot": 0
+     },
+     {
+      "item": "belt_pocket",
+      "x": 0,
+      "y": 2,
+      "rot": 1
+     },
+     {
+      "item": "stasis_vault",
+      "x": 0,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "seed_satchel",
       "x": 3,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "holster",
+      "x": 5,
       "y": 0,
       "rot": 0
      },
      {
       "item": "cooler_bag",
-      "x": 1,
+      "x": 7,
       "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "pet_carrier",
+      "x": 6,
+      "y": 2,
       "rot": 0
      }
     ],
     "items": [
      {
-      "item": "emergency_beacon",
-      "x": 1,
+      "item": "titan_core",
+      "x": 0,
       "y": 0,
-      "rot": 3
+      "rot": 2
      },
      {
-      "item": "hatchery",
-      "x": 3,
+      "item": "world_seed",
+      "x": 2,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "living_armor",
+      "x": 4,
+      "y": 0,
+      "rot": 2
+     },
+     {
+      "item": "plague_blossom",
+      "x": 6,
       "y": 0,
       "rot": 0
      },
      {
-      "item": "nano_medkit",
-      "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "herd_heart",
-      "x": 2,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "sundae",
-      "x": 2,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "kibble_sack",
-      "x": 5,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "garden_bowl",
+      "item": "plague_blossom",
       "x": 3,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "wormhole_generator",
-      "x": 0,
       "y": 4,
-      "rot": 0
+      "rot": 2
      },
      {
-      "item": "banquet_trough",
-      "x": 3,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "comet_sorbet",
+      "item": "candied_fruit",
       "x": 1,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "rock_crab",
+      "x": 3,
       "y": 2,
       "rot": 0
      },
      {
-      "item": "energy_gel",
+      "item": "thorn_pod",
+      "x": 7,
+      "y": 1,
+      "rot": 0
+     },
+     {
+      "item": "nebula_jelly",
+      "x": 6,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "nebula_jelly",
+      "x": 1,
+      "y": 4,
+      "rot": 1
+     },
+     {
+      "item": "plague_blossom",
       "x": 3,
       "y": 5,
-      "rot": 3
+      "rot": 0
      },
      {
-      "item": "overclock_chip",
+      "item": "star_fruit",
       "x": 0,
-      "y": 6,
-      "rot": 3
+      "y": 5,
+      "rot": 1
      },
      {
-      "item": "burrow_rat",
-      "x": 1,
+      "item": "holo_decoy",
+      "x": 2,
       "y": 5,
       "rot": 2
      },
      {
-      "item": "comet_sorbet",
-      "x": 4,
-      "y": 4,
+      "item": "bramble_seed",
+      "x": 7,
+      "y": 2,
       "rot": 0
      },
      {
-      "item": "crystal_shard",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "comet_sorbet",
-      "x": 5,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "med_scanner",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "first_aid_patch",
+      "item": "star_fruit",
       "x": 0,
-      "y": 5,
+      "y": 2,
       "rot": 0
      },
      {
-      "item": "med_scanner",
+      "item": "royal_jelly",
       "x": 5,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "royal_jelly",
+      "x": 8,
+      "y": 0,
+      "rot": 0
+     },
+     {
+      "item": "stardust_vial",
+      "x": 3,
+      "y": 3,
+      "rot": 2
+     },
+     {
+      "item": "royal_jelly",
+      "x": 4,
+      "y": 3,
+      "rot": 0
+     },
+     {
+      "item": "grow_lamp",
+      "x": 2,
       "y": 4,
       "rot": 0
      },
      {
-      "item": "overclock_chip",
-      "x": 2,
-      "y": 6,
-      "rot": 1
+      "item": "antimatter_dagger",
+      "x": 5,
+      "y": 2,
+      "rot": 0
      }
     ]
    },
-   "seed": 10002,
+   "seed": 12020,
    "expect": {
     "winner": 0,
-    "seconds": 33.7,
+    "seconds": 33.8,
     "hp": [
-     487,
-     -18
+     977,
+     -2
     ]
    }
   },
@@ -4622,1174 +6030,6 @@
     "hp": [
      -4,
      17
-    ]
-   }
-  },
-  {
-   "name": "long fight: venn vs quill, round 2",
-   "a": {
-    "hero": "venn",
-    "round": 2,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "pet_carrier",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "shield_battery",
-      "x": 4,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "rock_crab",
-      "x": 4,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "watering_drone",
-      "x": 2,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "seed_pod",
-      "x": 3,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "fang_dagger",
-      "x": 1,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "targeting_lens",
-      "x": 1,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "trellis",
-      "x": 3,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "fuel_canister",
-      "x": 2,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "trellis",
-      "x": 4,
-      "y": 2,
-      "rot": 0
-     }
-    ]
-   },
-   "b": {
-    "hero": "quill",
-    "round": 2,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "pet_carrier",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "pet_bed",
-      "x": 3,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "rock_crab",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "solar_panel",
-      "x": 4,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "star_hound",
-      "x": 1,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "glutton_toad",
-      "x": 1,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "copper_wire",
-      "x": 2,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "burrow_rat",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "antenna",
-      "x": 4,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "treat_pouch",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     }
-    ]
-   },
-   "seed": 2000,
-   "expect": {
-    "winner": 1,
-    "seconds": 33.1,
-    "hp": [
-     0,
-     12
-    ]
-   }
-  },
-  {
-   "name": "long fight: quill vs quill, round 6",
-   "a": {
-    "hero": "quill",
-    "round": 6,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "pet_carrier",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 3,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 2,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "stasis_vault",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "winch_harpoon",
-      "x": 2,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "banquet_trough",
-      "x": 4,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "herd_heart",
-      "x": 4,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "guard_goose",
-      "x": 1,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "metronome",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "guard_hound",
-      "x": 4,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "geiger_counter",
-      "x": 4,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "copper_wire",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "feeding_bowl",
-      "x": 3,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "star_fruit",
-      "x": 3,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "copper_wire",
-      "x": 4,
-      "y": 6,
-      "rot": 3
-     },
-     {
-      "item": "treat_pouch",
-      "x": 2,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "feeding_bowl",
-      "x": 5,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "vitamin_pack",
-      "x": 5,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "laser_parrot",
-      "x": 3,
-      "y": 0,
-      "rot": 2
-     },
-     {
-      "item": "space_hamster",
-      "x": 5,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "fuel_canister",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "scrap_metal",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     }
-    ]
-   },
-   "b": {
-    "hero": "quill",
-    "round": 6,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "pet_carrier",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 0,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "side_pocket",
-      "x": 0,
-      "y": 4,
-      "rot": 3
-     }
-    ],
-    "items": [
-     {
-      "item": "glutton_toad",
-      "x": 0,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "herd_heart",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "astronaut_ration",
-      "x": 2,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "glutton_toad",
-      "x": 5,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "black_box",
-      "x": 1,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "hydro_lettuce",
-      "x": 0,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "med_scanner",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "royal_jelly",
-      "x": 3,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "marrow_treat",
-      "x": 5,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "med_scanner",
-      "x": 2,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "stardust_vial",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "gravity_dumplings",
-      "x": 1,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "gravity_dumplings",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "treat_pouch",
-      "x": 4,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "rocket_chili",
-      "x": 3,
-      "y": 4,
-      "rot": 3
-     }
-    ]
-   },
-   "seed": 6012,
-   "expect": {
-    "winner": 0,
-    "seconds": 32.2,
-    "hp": [
-     151,
-     0
-    ]
-   }
-  },
-  {
-   "name": "long fight: venn vs rook, round 4",
-   "a": {
-    "hero": "venn",
-    "round": 4,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 0,
-      "y": 2,
-      "rot": 1
-     }
-    ],
-    "items": [
-     {
-      "item": "scrubber_unit",
-      "x": 4,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "rot_bloom",
-      "x": 0,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "needle_wasps",
-      "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "terrarium_heart",
-      "x": 1,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "irrigation_swarm",
-      "x": 2,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "acid_flask",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "trellis",
-      "x": 0,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "pebble_mites",
-      "x": 1,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "seed_pod",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 2,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "prism_cluster",
-      "x": 5,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "copper_wire",
-      "x": 3,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "fuel_canister",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     }
-    ]
-   },
-   "b": {
-    "hero": "rook",
-    "round": 4,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "tool_roll",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 2,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "belt_pocket",
-      "x": 4,
-      "y": 5,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "nanite_swarm",
-      "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "plasma_welder",
-      "x": 3,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "magnet_crane",
-      "x": 2,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "recycler",
-      "x": 1,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "magnet_crane",
-      "x": 4,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "ram_plate",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "grav_clamp",
-      "x": 3,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "clockwork_chick",
-      "x": 4,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "circuit_board",
-      "x": 3,
-      "y": 5,
-      "rot": 3
-     },
-     {
-      "item": "hydro_lettuce",
-      "x": 5,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "star_compass",
-      "x": 5,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "gravity_dumplings",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     }
-    ]
-   },
-   "seed": 4000,
-   "expect": {
-    "winner": 0,
-    "seconds": 32,
-    "hp": [
-     90,
-     -3
-    ]
-   }
-  },
-  {
-   "name": "long fight: venn vs venn, round 12",
-   "a": {
-    "hero": "venn",
-    "round": 12,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "cooler_bag",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 0,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "stasis_vault",
-      "x": 0,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "cargo_pocket",
-      "x": 5,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 7,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 6,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "padded_case",
-      "x": 6,
-      "y": 4,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "living_armor",
-      "x": 0,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "world_seed",
-      "x": 3,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "titan_core",
-      "x": 5,
-      "y": 0,
-      "rot": 3
-     },
-     {
-      "item": "ironbark_golem",
-      "x": 7,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "thruster",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "shield_battery",
-      "x": 1,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "nano_weave",
-      "x": 3,
-      "y": 2,
-      "rot": 3
-     },
-     {
-      "item": "toxic_gland",
-      "x": 5,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "life_orchid",
-      "x": 7,
-      "y": 2,
-      "rot": 2
-     },
-     {
-      "item": "asteroid_honey",
-      "x": 0,
-      "y": 3,
-      "rot": 0
-     },
-     {
-      "item": "space_noodles",
-      "x": 2,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "thorn_pod",
-      "x": 4,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "garden_bowl",
-      "x": 6,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "scrap_metal",
-      "x": 3,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "antimatter_dagger",
-      "x": 4,
-      "y": 4,
-      "rot": 3
-     },
-     {
-      "item": "fuel_canister",
-      "x": 4,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 1,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "frost_gem",
-      "x": 5,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "grow_lamp",
-      "x": 7,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "frost_gem",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "tardigrade",
-      "x": 0,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "healing_moss",
-      "x": 1,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 7,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "prism_cluster",
-      "x": 3,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 2,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "sap_tap",
-      "x": 1,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "ice_cream",
-      "x": 6,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "sap_tap",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     }
-    ]
-   },
-   "b": {
-    "hero": "venn",
-    "round": 12,
-    "bags": [
-     {
-      "item": "field_pack",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "seed_satchel",
-      "x": 1,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 0,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "belt_pocket",
-      "x": 0,
-      "y": 2,
-      "rot": 1
-     },
-     {
-      "item": "pouch",
-      "x": 4,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "pouch",
-      "x": 3,
-      "y": 1,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 4,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "side_pocket",
-      "x": 2,
-      "y": 0,
-      "rot": 0
-     },
-     {
-      "item": "side_pocket",
-      "x": 0,
-      "y": 0,
-      "rot": 2
-     },
-     {
-      "item": "duffel",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "sling_bag",
-      "x": 3,
-      "y": 5,
-      "rot": 0
-     }
-    ],
-    "items": [
-     {
-      "item": "jungle_tyrant",
-      "x": 1,
-      "y": 0,
-      "rot": 3
-     },
-     {
-      "item": "magma_hound",
-      "x": 3,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "strangler_fig",
-      "x": 5,
-      "y": 0,
-      "rot": 1
-     },
-     {
-      "item": "terrarium_heart",
-      "x": 0,
-      "y": 1,
-      "rot": 1
-     },
-     {
-      "item": "rock_crab",
-      "x": 3,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "life_orchid",
-      "x": 4,
-      "y": 3,
-      "rot": 1
-     },
-     {
-      "item": "panacea",
-      "x": 1,
-      "y": 3,
-      "rot": 2
-     },
-     {
-      "item": "plague_vault",
-      "x": 3,
-      "y": 2,
-      "rot": 0
-     },
-     {
-      "item": "irrigation_swarm",
-      "x": 0,
-      "y": 3,
-      "rot": 3
-     },
-     {
-      "item": "prism_cluster",
-      "x": 4,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 1,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "pollen_cloud",
-      "x": 0,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "trellis",
-      "x": 2,
-      "y": 5,
-      "rot": 0
-     },
-     {
-      "item": "hawk_eye_parrot",
-      "x": 2,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "sap_tap",
-      "x": 1,
-      "y": 5,
-      "rot": 2
-     },
-     {
-      "item": "stardust_vial",
-      "x": 3,
-      "y": 5,
-      "rot": 1
-     },
-     {
-      "item": "grow_lamp",
-      "x": 2,
-      "y": 4,
-      "rot": 2
-     },
-     {
-      "item": "trellis",
-      "x": 4,
-      "y": 5,
-      "rot": 2
-     },
-     {
-      "item": "grow_lamp",
-      "x": 0,
-      "y": 6,
-      "rot": 0
-     },
-     {
-      "item": "snap_sprout",
-      "x": 5,
-      "y": 4,
-      "rot": 1
-     },
-     {
-      "item": "tardigrade",
-      "x": 1,
-      "y": 4,
-      "rot": 0
-     },
-     {
-      "item": "grow_lamp",
-      "x": 5,
-      "y": 5,
-      "rot": 1
-     }
-    ]
-   },
-   "seed": 12004,
-   "expect": {
-    "winner": 1,
-    "seconds": 32,
-    "hp": [
-     -143,
-     511
     ]
    }
   }
