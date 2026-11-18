@@ -17,7 +17,10 @@ export interface Heat {
   highIsBad?: boolean;
 }
 
-export interface Series { name: string; values: (number | null)[] }
+export interface Series {
+  name: string;
+  values: (number | null)[];
+}
 export interface Chart {
   /** line: one line per series. bar: grouped bars. stack: bars of the series stacked to 100 % per x. */
   type: "line" | "bar" | "stack";
@@ -38,7 +41,12 @@ export interface Chart {
 /** A cell checked against a target: "ok" gets a green frame and ✓, "off" a red frame and ✗, "" nothing. */
 export type Mark = "ok" | "off" | "";
 
-export interface TargetResult { ok: boolean; what: string; want: string; got: string }
+export interface TargetResult {
+  ok: boolean;
+  what: string;
+  want: string;
+  got: string;
+}
 
 export type Block =
   | { kind: "h"; text: string }
@@ -68,8 +76,13 @@ export interface ReportPage {
 
 const esc = (s: Cell) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 /** first number in a cell, NaN if there is none ("54 % ±4" → 54, "+3.5" → 3.5, "-" → NaN) */
-export const cellNumber = (c: Cell): number => { if (typeof c === "number") return c; const m = /[-+−]?\d+(\.\d+)?/.exec(c); return m ? Number(m[0].replace("−", "-")) : NaN; };
-const fmt = (v: number, unit = "") => `${Math.abs(v) >= 100 || Number.isInteger(v) ? Math.round(v) : v.toFixed(1)}${unit === "%" ? " %" : unit === "s" ? " s" : ""}`;
+export const cellNumber = (c: Cell): number => {
+  if (typeof c === "number") return c;
+  const m = /[-+−]?\d+(\.\d+)?/.exec(c);
+  return m ? Number(m[0].replace("−", "-")) : NaN;
+};
+const fmt = (v: number, unit = "") =>
+  `${Math.abs(v) >= 100 || Number.isInteger(v) ? Math.round(v) : v.toFixed(1)}${unit === "%" ? " %" : unit === "s" ? " s" : ""}`;
 
 const STYLE = `
 :root {
@@ -154,13 +167,17 @@ function heatStyle(v: number, h: Heat): string {
 }
 
 /** a header "wins all rounds [target 46–54 %]" shows the bracket as a second, green line */
-const headCell = (x: string) => { const m = /^(.*?)\s*\[(target [^\]]+)\]$/.exec(x); return m ? `${esc(m[1]!)}<small>${esc(m[2]!)}</small>` : esc(x); };
+const headCell = (x: string) => {
+  const m = /^(.*?)\s*\[(target [^\]]+)\]$/.exec(x);
+  return m ? `${esc(m[1]!)}<small>${esc(m[2]!)}</small>` : esc(x);
+};
 
 function renderTable(head: string[], rows: Cell[][], heat?: Heat, marks?: Mark[][]): string {
   const cols = heat ? new Set(heat.cols ?? head.map((_, i) => i).slice(1)) : new Set<number>();
   const th = head.map((x) => `<th>${headCell(x)}</th>`).join("");
   const td = (c: Cell, i: number, m: Mark | undefined) => {
-    if (m) return `<td class="mark-${m}" title="${m === "ok" ? "within target" : "outside target"}">${esc(c)}<span class="sym">${m === "ok" ? "✓" : "✗"}</span></td>`;
+    if (m)
+      return `<td class="mark-${m}" title="${m === "ok" ? "within target" : "outside target"}">${esc(c)}<span class="sym">${m === "ok" ? "✓" : "✗"}</span></td>`;
     return `<td${heat && cols.has(i) ? heatStyle(cellNumber(c), heat) : ""}>${esc(c)}</td>`;
   };
   const body = rows.map((r, k) => `<tr>${r.map((c, i) => td(c, i, marks?.[k]?.[i])).join("")}</tr>`).join("\n");
@@ -169,11 +186,14 @@ function renderTable(head: string[], rows: Cell[][], heat?: Heat, marks?: Mark[]
 
 // ---------------------------------------------------------------- charts
 
-const W = 640, PH = 214, M = { l: 44, r: 16, t: 12 };
+const W = 640,
+  PH = 214,
+  M = { l: 44, r: 16, t: 12 };
 
 function niceTicks(lo: number, hi: number, n = 5): number[] {
   const span = hi - lo || 1;
-  const raw = span / n, mag = 10 ** Math.floor(Math.log10(raw));
+  const raw = span / n,
+    mag = 10 ** Math.floor(Math.log10(raw));
   const step = [1, 2, 2.5, 5, 10].map((k) => k * mag).find((s) => s >= raw)!;
   const out: number[] = [];
   for (let v = Math.ceil(lo / step) * step; v <= hi + step * 1e-6; v += step) out.push(Math.round(v * 1e6) / 1e6);
@@ -189,70 +209,116 @@ function renderChart(c: Chart): string {
   if (c.type === "line" && lo > 0 && lo < hi * 0.5) lo = 0;
   if (c.yMin !== undefined) lo = c.yMin;
   if (c.yMax !== undefined) hi = c.yMax;
-  if (!Number.isFinite(lo) || !Number.isFinite(hi)) { lo = 0; hi = 1; }
+  if (!Number.isFinite(lo) || !Number.isFinite(hi)) {
+    lo = 0;
+    hi = 1;
+  }
   if (hi === lo) hi = lo + 1;
   const ticks = niceTicks(lo, hi);
   // keep the edge of a target band visible: one more grid step above it
-  const last = ticks[ticks.length - 1]!, step = ticks.length > 1 ? last - ticks[ticks.length - 2]! : 1;
+  const last = ticks[ticks.length - 1]!,
+    step = ticks.length > 1 ? last - ticks[ticks.length - 2]! : 1;
   if (!stacked && c.yMax === undefined && c.band?.max !== undefined && c.band.max >= last - step * 1e-6) ticks.push(Math.round((last + step) * 1e6) / 1e6);
-  if (!stacked && c.yMin === undefined && c.band?.min !== undefined && c.band.min <= ticks[0]! + step * 1e-6 && ticks[0]! - step >= 0) ticks.unshift(Math.round((ticks[0]! - step) * 1e6) / 1e6);
-  lo = Math.min(lo, ticks[0]!); hi = Math.max(hi, ticks[ticks.length - 1]!);
+  if (!stacked && c.yMin === undefined && c.band?.min !== undefined && c.band.min <= ticks[0]! + step * 1e-6 && ticks[0]! - step >= 0)
+    ticks.unshift(Math.round((ticks[0]! - step) * 1e6) / 1e6);
+  lo = Math.min(lo, ticks[0]!);
+  hi = Math.max(hi, ticks[ticks.length - 1]!);
   const endLabels = c.type === "line" && c.series.length > 1 && c.series.length <= 4;
   const right = endLabels ? 90 : M.r;
   // long category names are written at a slant below the axis
   const longest = Math.max(...c.x.map((x) => String(x).length));
   const slant = longest * 6.2 > (W - M.l - right) / c.x.length;
   const L = slant ? M.l + Math.min(80, longest * 4) : M.l;
-  const pw = W - L - right, ph = PH;
+  const pw = W - L - right,
+    ph = PH;
   const below = slant ? Math.min(150, longest * 5 + 14) : 34;
   const H = M.t + ph + below + (slant && c.xLabel ? 14 : 0);
   const y = (v: number) => M.t + ph - ((v - lo) / (hi - lo)) * ph;
-  const n = c.x.length, slot = pw / n;
+  const n = c.x.length,
+    slot = pw / n;
   const xc = (i: number) => L + slot * (i + 0.5);
   const parts: string[] = [];
   // band and grid
   if (c.band) {
-    const top = y(Math.min(hi, c.band.max ?? hi)), bottom = y(Math.max(lo, c.band.min ?? lo));
-    parts.push(`<rect x="${L}" y="${top.toFixed(1)}" width="${pw}" height="${Math.max(0, bottom - top).toFixed(1)}" fill="var(--band)"><title>target ${c.band.min !== undefined ? fmt(c.band.min, unit) : ""}–${c.band.max !== undefined ? fmt(c.band.max, unit) : ""}</title></rect>`);
+    const top = y(Math.min(hi, c.band.max ?? hi)),
+      bottom = y(Math.max(lo, c.band.min ?? lo));
+    parts.push(
+      `<rect x="${L}" y="${top.toFixed(1)}" width="${pw}" height="${Math.max(0, bottom - top).toFixed(1)}" fill="var(--band)"><title>target ${c.band.min !== undefined ? fmt(c.band.min, unit) : ""}–${c.band.max !== undefined ? fmt(c.band.max, unit) : ""}</title></rect>`,
+    );
     parts.push(`<text x="${L + pw - 4}" y="${(top + 12).toFixed(1)}" text-anchor="end" style="fill: var(--good-ink)">target</text>`);
   }
   for (const t of ticks) {
-    parts.push(`<line x1="${L}" x2="${L + pw}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="${t === 0 ? "var(--axis)" : "var(--grid)"}" stroke-width="1"/>`);
+    parts.push(
+      `<line x1="${L}" x2="${L + pw}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="${t === 0 ? "var(--axis)" : "var(--grid)"}" stroke-width="1"/>`,
+    );
     parts.push(`<text x="${L - 6}" y="${(y(t) + 4).toFixed(1)}" text-anchor="end">${esc(fmt(t, unit))}</text>`);
   }
-  if (c.ref !== undefined) parts.push(`<line x1="${L}" x2="${L + pw}" y1="${y(c.ref).toFixed(1)}" y2="${y(c.ref).toFixed(1)}" stroke="var(--ink2)" stroke-dasharray="4 4" stroke-width="1"/>`);
+  if (c.ref !== undefined)
+    parts.push(
+      `<line x1="${L}" x2="${L + pw}" y1="${y(c.ref).toFixed(1)}" y2="${y(c.ref).toFixed(1)}" stroke="var(--ink2)" stroke-dasharray="4 4" stroke-width="1"/>`,
+    );
   const every = slant ? 1 : Math.ceil(n / 14);
   const axisY = M.t + ph;
   c.x.forEach((x, i) => {
     if (i % every !== 0) return;
-    parts.push(slant
-      ? `<text transform="translate(${xc(i).toFixed(1)},${axisY + 12}) rotate(-40)" text-anchor="end">${esc(x)}</text>`
-      : `<text x="${xc(i).toFixed(1)}" y="${axisY + 16}" text-anchor="middle">${esc(x)}</text>`);
+    parts.push(
+      slant
+        ? `<text transform="translate(${xc(i).toFixed(1)},${axisY + 12}) rotate(-40)" text-anchor="end">${esc(x)}</text>`
+        : `<text x="${xc(i).toFixed(1)}" y="${axisY + 16}" text-anchor="middle">${esc(x)}</text>`,
+    );
   });
   if (c.xLabel) parts.push(`<text x="${L + pw / 2}" y="${H - 4}" text-anchor="middle">${esc(c.xLabel)}</text>`);
   const col = (k: number) => `var(--s${(k % 8) + 1})`;
   const tip = (s: Series, i: number, v: number) => `<title>${esc(s.name)}, ${esc(c.xLabel ?? "")} ${esc(c.x[i]!)}: ${esc(fmt(v, unit))}</title>`;
   if (c.type === "line") {
     c.series.forEach((s, k) => {
-      let d = "", pen = false;
-      s.values.forEach((v, i) => { if (v === null || !Number.isFinite(v)) { pen = false; return; } d += `${pen ? "L" : "M"}${xc(i).toFixed(1)},${y(v).toFixed(1)}`; pen = true; });
+      let d = "",
+        pen = false;
+      s.values.forEach((v, i) => {
+        if (v === null || !Number.isFinite(v)) {
+          pen = false;
+          return;
+        }
+        d += `${pen ? "L" : "M"}${xc(i).toFixed(1)},${y(v).toFixed(1)}`;
+        pen = true;
+      });
       parts.push(`<path d="${d}" fill="none" stroke="${col(k)}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`);
-      s.values.forEach((v, i) => { if (v !== null && Number.isFinite(v)) parts.push(`<g><circle cx="${xc(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="10" fill="transparent"/><circle cx="${xc(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.5" fill="${col(k)}" stroke="var(--surface)" stroke-width="2"/>${tip(s, i, v)}</g>`); });
+      s.values.forEach((v, i) => {
+        if (v !== null && Number.isFinite(v))
+          parts.push(
+            `<g><circle cx="${xc(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="10" fill="transparent"/><circle cx="${xc(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.5" fill="${col(k)}" stroke="var(--surface)" stroke-width="2"/>${tip(s, i, v)}</g>`,
+          );
+      });
     });
     if (endLabels) {
-      const ends = c.series.map((s, k) => { let i = s.values.length - 1; while (i >= 0 && (s.values[i] === null || !Number.isFinite(s.values[i]!))) i--; return { k, name: s.name, at: i >= 0 ? y(s.values[i]!) : NaN }; }).filter((e) => Number.isFinite(e.at)).sort((a, b) => a.at - b.at);
+      const ends = c.series
+        .map((s, k) => {
+          let i = s.values.length - 1;
+          while (i >= 0 && (s.values[i] === null || !Number.isFinite(s.values[i]!))) i--;
+          return { k, name: s.name, at: i >= 0 ? y(s.values[i]!) : NaN };
+        })
+        .filter((e) => Number.isFinite(e.at))
+        .sort((a, b) => a.at - b.at);
       for (let i = 1; i < ends.length; i++) ends[i]!.at = Math.max(ends[i]!.at, ends[i - 1]!.at + 13);
-      for (const e of ends) parts.push(`<text class="end" x="${L + pw + 8}" y="${(e.at + 4).toFixed(1)}">${esc(e.name.length > 13 ? e.name.slice(0, 12) + "…" : e.name)}</text>`);
+      for (const e of ends)
+        parts.push(`<text class="end" x="${L + pw + 8}" y="${(e.at + 4).toFixed(1)}">${esc(e.name.length > 13 ? e.name.slice(0, 12) + "…" : e.name)}</text>`);
     }
   } else if (c.type === "bar") {
-    const k = c.series.length, gap = 2, bw = Math.max(2, Math.min(28, (slot * 0.75 - gap * (k - 1)) / k));
-    c.series.forEach((s, j) => s.values.forEach((v, i) => {
-      if (v === null || !Number.isFinite(v)) return;
-      const x0 = xc(i) - (k * bw + (k - 1) * gap) / 2 + j * (bw + gap);
-      const base = y(Math.max(lo, Math.min(0, hi)));
-      const yy = Math.min(y(v), base), h = Math.max(1, Math.abs(y(v) - base));
-      parts.push(`<g><rect x="${x0.toFixed(1)}" y="${yy.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col(j)}"/>${tip(s, i, v)}</g>`);
-    }));
+    const k = c.series.length,
+      gap = 2,
+      bw = Math.max(2, Math.min(28, (slot * 0.75 - gap * (k - 1)) / k));
+    c.series.forEach((s, j) =>
+      s.values.forEach((v, i) => {
+        if (v === null || !Number.isFinite(v)) return;
+        const x0 = xc(i) - (k * bw + (k - 1) * gap) / 2 + j * (bw + gap);
+        const base = y(Math.max(lo, Math.min(0, hi)));
+        const yy = Math.min(y(v), base),
+          h = Math.max(1, Math.abs(y(v) - base));
+        parts.push(
+          `<g><rect x="${x0.toFixed(1)}" y="${yy.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="${col(j)}"/>${tip(s, i, v)}</g>`,
+        );
+      }),
+    );
   } else {
     const bw = Math.min(36, slot * 0.7);
     c.x.forEach((_, i) => {
@@ -262,13 +328,19 @@ function renderChart(c: Chart): string {
         const v = s.values[i] ?? 0;
         if (v <= 0) return;
         const share = (100 * v) / total;
-        const y0 = y(acc + share), h = y(acc) - y0;
-        parts.push(`<g><rect x="${(xc(i) - bw / 2).toFixed(1)}" y="${y0.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0, h - 2).toFixed(1)}" rx="2" fill="${col(j)}"/><title>${esc(s.name)}, ${esc(c.xLabel ?? "")} ${esc(c.x[i]!)}: ${esc(fmt(share, "%"))}</title></g>`);
+        const y0 = y(acc + share),
+          h = y(acc) - y0;
+        parts.push(
+          `<g><rect x="${(xc(i) - bw / 2).toFixed(1)}" y="${y0.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0, h - 2).toFixed(1)}" rx="2" fill="${col(j)}"/><title>${esc(s.name)}, ${esc(c.xLabel ?? "")} ${esc(c.x[i]!)}: ${esc(fmt(share, "%"))}</title></g>`,
+        );
         acc += share;
       });
     });
   }
-  const legend = c.series.length > 1 ? `<div class="legend">${c.series.map((s, k) => `<span><i style="background:${col(k)}"></i>${esc(s.name)}</span>`).join("")}</div>` : "";
+  const legend =
+    c.series.length > 1
+      ? `<div class="legend">${c.series.map((s, k) => `<span><i style="background:${col(k)}"></i>${esc(s.name)}</span>`).join("")}</div>`
+      : "";
   return `<figure class="card"><figcaption>${esc(c.title)}</figcaption>${legend}<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.title)}">${parts.join("")}</svg></figure>`;
 }
 
@@ -283,21 +355,39 @@ export function renderReport(r: ReportPage): string {
   out.push(`<nav class="top"><a href="index.html">← All reports</a>${r.text ? ` · <a href="${esc(r.text)}">text version</a>` : ""}</nav>`);
   out.push(`<h1>${esc(r.title)}</h1>`);
   out.push(`<p class="question">${esc(r.question)}</p>`);
-  out.push(`<div class="meta">${r.meta.map((m) => `<p>${esc(m)}</p>`).join("")}<p>Run ${esc(r.written.slice(0, 16).replace("T", " "))} UTC, ${r.seconds} s.</p></div>`);
+  out.push(
+    `<div class="meta">${r.meta.map((m) => `<p>${esc(m)}</p>`).join("")}<p>Run ${esc(r.written.slice(0, 16).replace("T", " "))} UTC, ${r.seconds} s.</p></div>`,
+  );
   const targets = r.blocks.filter((b): b is Extract<Block, { kind: "target" }> => b.kind === "target").map((b) => b.target);
   if (targets.length) {
     const off = targets.filter((t) => !t.ok).length;
-    out.push(`<p><span class="pill ok">✓ ${targets.length - off} OK</span>${off ? `<span class="pill off">✗ ${off} OFF</span>` : ""} <a href="#targets">targets</a></p>`);
+    out.push(
+      `<p><span class="pill ok">✓ ${targets.length - off} OK</span>${off ? `<span class="pill off">✗ ${off} OFF</span>` : ""} <a href="#targets">targets</a></p>`,
+    );
   }
-  let charts: string[] = [], tgs: TargetResult[] = [], targetsAnchor = false;
+  let charts: string[] = [],
+    tgs: TargetResult[] = [],
+    targetsAnchor = false;
   const flush = () => {
     if (charts.length) out.push(`<div class="charts">${charts.join("")}</div>`);
-    if (tgs.length) { out.push(`${targetsAnchor ? "" : '<a id="targets"></a>'}${renderTargets(tgs)}`); targetsAnchor = true; }
-    charts = []; tgs = [];
+    if (tgs.length) {
+      out.push(`${targetsAnchor ? "" : '<a id="targets"></a>'}${renderTargets(tgs)}`);
+      targetsAnchor = true;
+    }
+    charts = [];
+    tgs = [];
   };
   for (const b of r.blocks) {
-    if (b.kind === "chart") { if (tgs.length) flush(); charts.push(renderChart(b.chart)); continue; }
-    if (b.kind === "target") { if (charts.length) flush(); tgs.push(b.target); continue; }
+    if (b.kind === "chart") {
+      if (tgs.length) flush();
+      charts.push(renderChart(b.chart));
+      continue;
+    }
+    if (b.kind === "target") {
+      if (charts.length) flush();
+      tgs.push(b.target);
+      continue;
+    }
     flush();
     if (b.kind === "h") out.push(`<h2>${esc(b.text)}</h2>`);
     else if (b.kind === "p") out.push(`<p${b.text.startsWith("  ") ? ' class="indent"' : ""}>${esc(b.text.trim())}</p>`);
@@ -307,7 +397,11 @@ export function renderReport(r: ReportPage): string {
   return page(`${r.title} – Backpack Space report`, out.join("\n"));
 }
 
-export interface IndexEntry { id: string; file: string; page?: ReportPage }
+export interface IndexEntry {
+  id: string;
+  file: string;
+  page?: ReportPage;
+}
 
 export function renderIndex(entries: IndexEntry[]): string {
   const cards = entries.map((e) => {
@@ -318,10 +412,17 @@ export function renderIndex(entries: IndexEntry[]): string {
     const pills = ts.length ? `<div><span class="pill ok">✓ ${ts.length - off} OK</span>${off ? `<span class="pill off">✗ ${off} OFF</span>` : ""}</div>` : "";
     return `<div class="card"><h3><a href="${esc(e.file)}">${esc(r.title)}</a></h3><p>${esc(r.question)}</p>${pills}<p class="meta">${esc(r.written.slice(0, 16).replace("T", " "))} UTC · ${esc(r.accuracy)}, seed ${r.seed} · ${r.seconds} s${r.text ? ` · <a href="${esc(r.text)}">text</a>` : ""}</p></div>`;
   });
-  const all = entries.flatMap((e) => (e.page ? e.page.blocks.filter((b): b is Extract<Block, { kind: "target" }> => b.kind === "target").map((b) => ({ id: e.id, file: e.file, t: b.target })) : []));
+  const all = entries.flatMap((e) =>
+    e.page
+      ? e.page.blocks.filter((b): b is Extract<Block, { kind: "target" }> => b.kind === "target").map((b) => ({ id: e.id, file: e.file, t: b.target }))
+      : [],
+  );
   const offList = all.filter((x) => !x.t.ok);
   const summary = all.length
     ? `<div class="card"><p><span class="pill ok">✓ ${all.length - offList.length} targets OK</span>${offList.length ? `<span class="pill off">✗ ${offList.length} OFF</span>` : ""}</p>${offList.map((x) => `<p>✗ <a href="${esc(x.file)}#targets">${esc(x.id)}</a>: ${esc(x.t.what)} (target ${esc(x.t.want)}, measured ${esc(x.t.got)})</p>`).join("")}</div>`
     : "";
-  return page("Backpack Space reports", `<h1>Balancing reports</h1>\n<p class="question">Backpack Space. Every report run writes its page here; targets come from data/sim/targets.json.</p>\n${summary}\n<div class="index-grid">${cards.join("\n")}</div>`);
+  return page(
+    "Backpack Space reports",
+    `<h1>Balancing reports</h1>\n<p class="question">Backpack Space. Every report run writes its page here; targets come from data/sim/targets.json.</p>\n${summary}\n<div class="index-grid">${cards.join("\n")}</div>`,
+  );
 }

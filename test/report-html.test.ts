@@ -6,8 +6,16 @@ import { cellNumber, renderReport, type ReportPage } from "../src/reports/html";
 import { targetResult, writeReportPage } from "../src/reports/common";
 
 const page = (blocks: ReportPage["blocks"]): ReportPage => ({
-  kind: "backpack-space-report", id: "heroes", title: "Heroes", question: "Even <heroes>?", meta: ["Accuracy: quick"],
-  accuracy: "quick", seed: 1, seconds: 3, written: "2026-11-15T12:00:00.000Z", blocks,
+  kind: "backpack-space-report",
+  id: "heroes",
+  title: "Heroes",
+  question: "Even <heroes>?",
+  meta: ["Accuracy: quick"],
+  accuracy: "quick",
+  seed: 1,
+  seconds: 3,
+  written: "2026-11-15T12:00:00.000Z",
+  blocks,
 });
 
 describe("report pages", () => {
@@ -22,24 +30,77 @@ describe("report pages", () => {
     expect(targetResult({ min: 0.45, max: 0.55, what: "w" }, [0.47, 0.6], true)).toEqual({ ok: false, what: "w", want: "45 %–55 %", got: "47 %–60 %" });
     expect(targetResult({ max: 45, what: "w" }, [40], false).ok).toBe(true);
     expect(targetResult({ min: 0.48, max: 0.52, what: "w" }, [0.4791], true).ok).toBe(true); // printed as 48 %
-    expect(targetResult({ min: 0.02, what: "w", unit: "pts" }, [-0.03, 0.04], true)).toMatchObject({ ok: false, want: "at least +2 pts", got: "−3 pts to +4 pts" });
+    expect(targetResult({ min: 0.02, what: "w", unit: "pts" }, [-0.03, 0.04], true)).toMatchObject({
+      ok: false,
+      want: "at least +2 pts",
+      got: "−3 pts to +4 pts",
+    });
   });
 
   it("renders headings, heat tables, charts and target lights as escaped static HTML", () => {
-    const html = renderReport(page([
-      { kind: "h", text: "Hero against hero" },
-      { kind: "table", head: ["", "A", "B"], rows: [["A", "-", "70 %"], ["B", "30 %", "-"]], heat: { center: 50, span: 20 } },
-      { kind: "chart", chart: { type: "line", title: "Win share", x: [1, 2, 3], unit: "%", band: { min: 45, max: 55 }, series: [{ name: "A", values: [50, 52, null] }, { name: "B", values: [48, 47, 46] }] } },
-      { kind: "chart", chart: { type: "stack", title: "Damage", x: [1], series: [{ name: "weapon", values: [3] }, { name: "burn", values: [1] }] } },
-      { kind: "target", target: { ok: false, what: "win share", want: "45 %–55 %", got: "30 %–70 %" } },
-    ]));
+    const html = renderReport(
+      page([
+        { kind: "h", text: "Hero against hero" },
+        {
+          kind: "table",
+          head: ["", "A", "B"],
+          rows: [
+            ["A", "-", "70 %"],
+            ["B", "30 %", "-"],
+          ],
+          heat: { center: 50, span: 20 },
+        },
+        {
+          kind: "chart",
+          chart: {
+            type: "line",
+            title: "Win share",
+            x: [1, 2, 3],
+            unit: "%",
+            band: { min: 45, max: 55 },
+            series: [
+              { name: "A", values: [50, 52, null] },
+              { name: "B", values: [48, 47, 46] },
+            ],
+          },
+        },
+        {
+          kind: "chart",
+          chart: {
+            type: "stack",
+            title: "Damage",
+            x: [1],
+            series: [
+              { name: "weapon", values: [3] },
+              { name: "burn", values: [1] },
+            ],
+          },
+        },
+        { kind: "target", target: { ok: false, what: "win share", want: "45 %–55 %", got: "30 %–70 %" } },
+      ]),
+    );
     expect(html).toContain("Even &lt;heroes&gt;?");
     expect(html).toContain("<h2>Hero against hero</h2>");
     expect(html).toContain("var(--pos) 100%"); // 70 % is a full blue cell
     expect(html).toContain("var(--neg) 100%");
     expect((html.match(/<svg /g) ?? []).length).toBe(2);
     expect(html).toContain("✗ OFF");
-    const marked = renderReport(page([{ kind: "table", head: ["path", "wins [target 46–54 %]"], rows: [["A", "58 %"], ["B", "50 %"]], marks: [["", "off"], ["", "ok"]] }]));
+    const marked = renderReport(
+      page([
+        {
+          kind: "table",
+          head: ["path", "wins [target 46–54 %]"],
+          rows: [
+            ["A", "58 %"],
+            ["B", "50 %"],
+          ],
+          marks: [
+            ["", "off"],
+            ["", "ok"],
+          ],
+        },
+      ]),
+    );
     expect(marked).toContain('class="mark-off"');
     expect(marked).toContain('class="mark-ok"');
     expect(marked).toContain("<small>target 46–54 %</small>");

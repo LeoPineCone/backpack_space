@@ -12,7 +12,16 @@ const explained = new Set(data.glossary.terms.flatMap((t) => (t.icon ? [t.icon] 
 /** The symbols the client shows for an effect (mirrors apps/client/src/symbols.ts). */
 function symbolsOf(e: Effect): string[] {
   const out: string[] = [];
-  const on: Record<string, string | undefined> = { start: "start", use: "clock", hit: "hit", attacked: "attacked", phase: "phase", starUse: "star", shipUse: "ship", lowHp: "lowHp" };
+  const on: Record<string, string | undefined> = {
+    start: "start",
+    use: "clock",
+    hit: "hit",
+    attacked: "attacked",
+    phase: "phase",
+    starUse: "star",
+    shipUse: "ship",
+    lowHp: "lowHp",
+  };
   if (on[e.on]) out.push(on[e.on]!);
   if (e.tag) out.push(e.tag);
   if (e.gain) out.push(e.gain);
@@ -39,7 +48,9 @@ describe("client symbols", () => {
   it("the client draws every kind of modifier", () => {
     const symbols = readFileSync(join(ROOT, "apps", "client", "src", "symbols.ts"), "utf8");
     const schema = readFileSync(join(ROOT, "packages", "core", "src", "schema.ts"), "utf8");
-    const mods = [...schema.slice(schema.indexOf("const Mod ="), schema.indexOf("}).strict();", schema.indexOf("const Mod ="))).matchAll(/^\s+(\w+): z\./gm)].map((m) => m[1]!);
+    const mods = [
+      ...schema.slice(schema.indexOf("const Mod ="), schema.indexOf("}).strict();", schema.indexOf("const Mod ="))).matchAll(/^\s+(\w+): z\./gm),
+    ].map((m) => m[1]!);
     expect(mods.length).toBeGreaterThan(5);
     for (const k of mods) expect(symbols, k).toContain(`m.${k})`);
   });

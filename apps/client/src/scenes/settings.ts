@@ -26,7 +26,13 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
     root.removeChildren().forEach((c) => c.destroy({ children: true }));
     root.addChild(dimmer(undefined, 0.94));
     root.addChild(at(txt(t("ui.settings"), 26, { spacing: 2 }), 20, 28));
-    root.addChild(at(roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }), W - 42, 44));
+    root.addChild(
+      at(
+        roundButton("close", 22, () => game.closeOverlay(), { iconSize: 18 }),
+        W - 42,
+        44,
+      ),
+    );
 
     // language
     let y = 92;
@@ -45,12 +51,16 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
       row.addChild(at(txt(r.label, 16, { font: "text", weight: "600", anchor: [0, 0.5] }), 18, 24));
       if (r.sub) row.addChild(at(txt(r.sub, 12, { font: "text", color: C.dim, anchor: [1, 0.5] }), rw - (on ? 52 : 18), 24));
       if (on) row.addChild(at(icon("check", 20, C.cyan), rw - 26, 24));
-      tappable(row, () => {
-        setLanguage(r.id);
-        game.languageChanged();
-        onChange();
-        render();
-      }, new Rectangle(0, 0, rw, 48));
+      tappable(
+        row,
+        () => {
+          setLanguage(r.id);
+          game.languageChanged();
+          onChange();
+          render();
+        },
+        new Rectangle(0, 0, rw, 48),
+      );
       root.addChild(at(row, 20, y));
       y += 56;
     }
@@ -58,7 +68,10 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
     // sound
     y += 10;
     const prefs = readPrefs();
-    const flip = (k: keyof Prefs) => { writePrefs({ ...prefs, [k]: !prefs[k] }); render(); };
+    const flip = (k: keyof Prefs) => {
+      writePrefs({ ...prefs, [k]: !prefs[k] });
+      render();
+    };
     // more: account (Game Center / Google Play Games, silently), privacy, help, glossary
     const items: { ic: string; label: string; on?: boolean; tap: () => void }[] = [
       { ic: "music", label: t("ui.music"), on: prefs.music, tap: () => flip("music") },

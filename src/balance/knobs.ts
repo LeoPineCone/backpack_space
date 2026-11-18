@@ -15,18 +15,24 @@ export interface Knob {
   label: string;
   base: number | [number, number];
   /** size of one step and its direction (+1: a higher number is stronger) */
-  step: number; dir: 1 | -1;
-  min: number; max: number;
+  step: number;
+  dir: 1 | -1;
+  min: number;
+  max: number;
   /** bots read this number when they shop or lay out (price, Energy, cooldown): a replay is only an estimate */
   botsRead: boolean;
 }
 
-const round = (v: number, step: number) => { const d = step % 1 === 0 ? 0 : step * 10 % 1 === 0 ? 1 : 2; return Number(v.toFixed(d)); };
+const round = (v: number, step: number) => {
+  const d = step % 1 === 0 ? 0 : (step * 10) % 1 === 0 ? 1 : 2;
+  return Number(v.toFixed(d));
+};
 /** the knob's value after `steps` steps; undefined when that leaves its limits */
 export function valueAt(k: Knob, steps: number): Value | undefined {
   const shift = steps * k.dir * k.step;
   if (Array.isArray(k.base)) {
-    const lo = round(k.base[0] + shift, k.step), hi = round(k.base[1] + shift, k.step);
+    const lo = round(k.base[0] + shift, k.step),
+      hi = round(k.base[1] + shift, k.step);
     return lo < k.min || hi > k.max ? undefined : [lo, hi];
   }
   const v = round(k.base + shift, k.step);
@@ -57,7 +63,8 @@ function effectKnobs(effects: Obj[], make: (path: string, what: string, base: nu
     for (const [key, v] of Object.entries(mod ?? {})) {
       if (typeof v !== "number" || v === 0) continue;
       const sign = v > 0 ? { min: key === "damage" ? 1 : 1 } : { max: -0.5, min: -1e9 };
-      if (key === "energy") make(`${p}.mod.energy`, `${what} Energy cost`, v, { step: 0.5, dir: -1, botsRead: true, ...(v > 0 ? { min: 0.5 } : { max: -0.5, min: -1e9 }) });
+      if (key === "energy")
+        make(`${p}.mod.energy`, `${what} Energy cost`, v, { step: 0.5, dir: -1, botsRead: true, ...(v > 0 ? { min: 0.5 } : { max: -0.5, min: -1e9 }) });
       else if (key === "energyRegen") make(`${p}.mod.energyRegen`, `${what} Energy refill`, v, { step: 0.5, botsRead: true, min: 0.5 });
       else if (key === "ready") make(`${p}.mod.ready`, `${what} ready`, v, { step: 10, min: 10, max: 100 });
       else make(`${p}.mod.${key}`, `${what} ${key}`, v, { step: key === "damage" ? 1 : tenth(v), ...sign });
@@ -72,8 +79,12 @@ export function itemKnobs(raw: RawData, id: string, withPrice = false): Knob[] {
   const out: Knob[] = [];
   const make = (path: string, what: string, base: number | [number, number], o: Partial<Knob>) =>
     out.push({ id: `${id}:${path}`, where: { item: id }, path, label: `${it.name} ${what}`, base, step: 1, dir: 1, min: 0, max: 1e9, botsRead: false, ...o });
-  if (Array.isArray(it.damage)) { const d = it.damage as [number, number]; make("damage", "damage", d, { step: tenth((d[0] + d[1]) / 2), min: 1 }); }
-  if (typeof it.cooldown === "number") make("cooldown", "cooldown", it.cooldown, { step: it.cooldown < 1.5 ? 0.1 : it.cooldown < 3 ? 0.2 : 0.3, dir: -1, min: 0.4, botsRead: true });
+  if (Array.isArray(it.damage)) {
+    const d = it.damage as [number, number];
+    make("damage", "damage", d, { step: tenth((d[0] + d[1]) / 2), min: 1 });
+  }
+  if (typeof it.cooldown === "number")
+    make("cooldown", "cooldown", it.cooldown, { step: it.cooldown < 1.5 ? 0.1 : it.cooldown < 3 ? 0.2 : 0.3, dir: -1, min: 0.4, botsRead: true });
   if (typeof it.energy === "number" && it.energy > 0) make("energy", "Energy per attack", it.energy, { step: 0.5, dir: -1, min: 0.5, botsRead: true });
   if (withPrice && typeof it.cost === "number" && it.cost > 0) make("cost", "price", it.cost, { step: 1, dir: -1, min: 1, botsRead: true });
   effectKnobs((it.effects as Obj[] | undefined) ?? [], (path, what, base, o) => make(path, what, base, o));
@@ -86,7 +97,19 @@ export function heroKnobs(raw: RawData, id: string): Knob[] {
   if (!h) throw new Error(`no hero ${id}`);
   const out: Knob[] = [];
   const make = (path: string, what: string, base: number, o: Partial<Knob>) =>
-    out.push({ id: `hero.${id}:${path}`, where: { hero: id }, path, label: `${h.name} (hero rule) ${what}`, base, step: 1, dir: 1, min: 0, max: 1e9, botsRead: false, ...o });
+    out.push({
+      id: `hero.${id}:${path}`,
+      where: { hero: id },
+      path,
+      label: `${h.name} (hero rule) ${what}`,
+      base,
+      step: 1,
+      dir: 1,
+      min: 0,
+      max: 1e9,
+      botsRead: false,
+      ...o,
+    });
   if (typeof h.hpBonus === "number" && h.hpBonus) make("hpBonus", "health bonus", h.hpBonus, { step: tenth(h.hpBonus) });
   if (typeof h.supernovaResist === "number" && h.supernovaResist) make("supernovaResist", "Supernova resistance", h.supernovaResist, { step: 5, max: 90 });
   effectKnobs((h.effects as Obj[] | undefined) ?? [], make);
@@ -98,7 +121,18 @@ export function ruleKnob(raw: RawData, spec: string): Knob {
   const [path, step] = spec.split("@");
   const base = getPath(raw.rules, path!);
   if (typeof base !== "number") throw new Error(`rules.json has no number at "${path}"`);
-  return { id: `rules:${path}`, where: { rules: true }, path: path!, label: `rule ${path}`, base, step: Number(step ?? tenth(base)), dir: 1, min: 0, max: 1e9, botsRead: true };
+  return {
+    id: `rules:${path}`,
+    where: { rules: true },
+    path: path!,
+    label: `rule ${path}`,
+    base,
+    step: Number(step ?? tenth(base)),
+    dir: 1,
+    min: 0,
+    max: 1e9,
+    botsRead: true,
+  };
 }
 
 /**
@@ -107,7 +141,10 @@ export function ruleKnob(raw: RawData, spec: string): Knob {
  */
 export function selectKnobs(data: GameData, raw: RawData, spec: string, o: { price?: boolean; heroRules?: boolean } = {}): Knob[] {
   const out: Knob[] = [];
-  for (const part of spec.split("+").map((s) => s.trim()).filter(Boolean)) {
+  for (const part of spec
+    .split("+")
+    .map((s) => s.trim())
+    .filter(Boolean)) {
     const [kind, arg = ""] = [part.slice(0, part.indexOf(":")), part.slice(part.indexOf(":") + 1)];
     if (kind === "hero") {
       if (!data.heroes.has(arg)) throw new Error(`--knobs: no hero ${arg}`);

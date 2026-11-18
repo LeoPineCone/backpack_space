@@ -22,7 +22,18 @@ import { Rng, type GameData } from "@backpack-space/core";
 import { loadGameData, loadRatings } from "@backpack-space/core/node";
 import { useRatings } from "../sim/lobby";
 import { parseArgs } from "../cli/args";
-import { renderIndex, renderReport, type Block, type Cell, type Chart, type Heat, type IndexEntry, type Mark, type ReportPage, type TargetResult } from "./html";
+import {
+  renderIndex,
+  renderReport,
+  type Block,
+  type Cell,
+  type Chart,
+  type Heat,
+  type IndexEntry,
+  type Mark,
+  type ReportPage,
+  type TargetResult,
+} from "./html";
 
 export type Accuracy = "quick" | "normal" | "precise";
 
@@ -64,7 +75,13 @@ export interface Report<C> {
 
 export function startReport<C extends Record<string, number>>(spec: ReportSpec<C>, argv = process.argv.slice(2)): Report<C> {
   const { flags, rest } = parseArgs(argv);
-  const accuracy: Accuracy = flags.quick ? "quick" : flags.precise ? "precise" : flags.accuracy === "quick" || flags.accuracy === "precise" ? flags.accuracy : "normal";
+  const accuracy: Accuracy = flags.quick
+    ? "quick"
+    : flags.precise
+      ? "precise"
+      : flags.accuracy === "quick" || flags.accuracy === "precise"
+        ? flags.accuracy
+        : "normal";
   const n = { ...spec.presets[accuracy] } as Record<string, number>;
   const keys = Object.keys(n);
   if (flags.sims) n[keys[0]!] = Number(flags.sims);
@@ -77,8 +94,12 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
   let inHeader = true;
   const log = (...out: string[]) => {
     for (const line of out.length ? out : [""]) {
-      lines.push(line); console.log(line);
-      if (inHeader) { if (line && !line.startsWith("# ") && !line.startsWith("Question: ")) meta.push(line); continue; }
+      lines.push(line);
+      console.log(line);
+      if (inHeader) {
+        if (line && !line.startsWith("# ") && !line.startsWith("Question: ")) meta.push(line);
+        continue;
+      }
       if (!line.trim()) continue;
       blocks.push(line.startsWith("## ") ? { kind: "h", text: line.slice(3) } : { kind: "p", text: line });
     }
@@ -90,31 +111,69 @@ export function startReport<C extends Record<string, number>>(spec: ReportSpec<C
   log();
   log(`Question: ${spec.question}`);
   log(`Accuracy: ${accuracy}, seed ${seed}. ${keys.map((k) => `${k} ${n[k]} (${spec.explain[k as keyof C]})`).join(", ")}.`);
-  log(`Bots: ${Object.keys(ratings).length ? `use the measured item ratings in data/sim/ratings.json (${Object.keys(ratings).length} items)` : "no measured item ratings (price and synergies only)"}.`);
+  log(
+    `Bots: ${Object.keys(ratings).length ? `use the measured item ratings in data/sim/ratings.json (${Object.keys(ratings).length} items)` : "no measured item ratings (price and synergies only)"}.`,
+  );
   log(`Game data: data/*.json as it is now. More accuracy: --accuracy precise or --sims N; another sample: --seed S.`);
   inHeader = false;
-  const quiet = (text: string[]) => { for (const line of text) { lines.push(line); console.log(line); } };
+  const quiet = (text: string[]) => {
+    for (const line of text) {
+      lines.push(line);
+      console.log(line);
+    }
+  };
   return {
-    data: loadGameData(), flags, rest, n: n as C, accuracy, seed, rng: new Rng(seed), log,
+    data: loadGameData(),
+    flags,
+    rest,
+    n: n as C,
+    accuracy,
+    seed,
+    rng: new Rng(seed),
+    log,
     table: (head, rows, heat, marks) => {
       const text = marks ? rows.map((row, k) => row.map((c, i) => (marks[k]?.[i] ? `${c} ${marks[k]![i] === "ok" ? "✓" : "✗"}` : c))) : rows;
-      quiet(table(head, text)); blocks.push({ kind: "table", head, rows, heat, marks });
+      quiet(table(head, text));
+      blocks.push({ kind: "table", head, rows, heat, marks });
     },
-    chart: (chart) => { blocks.push({ kind: "chart", chart }); },
-    target: (t, values, asPct) => { const x = targetResult(t, values, asPct); quiet([targetLine(x)]); blocks.push({ kind: "target", target: x }); },
-    value: (key, nums) => { values[key] = nums; },
-    progress: (line) => { if (process.stderr.isTTY) process.stderr.write(`\r${line}`.padEnd(60) + "\r"); },
+    chart: (chart) => {
+      blocks.push({ kind: "chart", chart });
+    },
+    target: (t, values, asPct) => {
+      const x = targetResult(t, values, asPct);
+      quiet([targetLine(x)]);
+      blocks.push({ kind: "target", target: x });
+    },
+    value: (key, nums) => {
+      values[key] = nums;
+    },
+    progress: (line) => {
+      if (process.stderr.isTTY) process.stderr.write(`\r${line}`.padEnd(60) + "\r");
+    },
     done: () => {
       log();
       log(`(${((Date.now() - t0) / 1000).toFixed(0)} s)`);
       const seconds = Math.round((Date.now() - t0) / 1000);
-      if (flags.out) { mkdirSync(dirname(flags.out) || ".", { recursive: true }); writeFileSync(flags.out, lines.join("\n") + "\n"); console.log(`Written to ${flags.out}`); }
+      if (flags.out) {
+        mkdirSync(dirname(flags.out) || ".", { recursive: true });
+        writeFileSync(flags.out, lines.join("\n") + "\n");
+        console.log(`Written to ${flags.out}`);
+      }
       if (!flags["no-html"]) {
         const dir = flags.out ? dirname(flags.out) : join("out", "reports");
         const name = flags.out ? basename(flags.out).replace(/\.[^.]*$/, "") : spec.id;
         const page: ReportPage = {
-          kind: "backpack-space-report", id: spec.id, title: spec.title, question: spec.question, meta, accuracy, seed, seconds,
-          written: new Date().toISOString(), text: flags.out ? basename(flags.out) : undefined, blocks,
+          kind: "backpack-space-report",
+          id: spec.id,
+          title: spec.title,
+          question: spec.question,
+          meta,
+          accuracy,
+          seed,
+          seconds,
+          written: new Date().toISOString(),
+          text: flags.out ? basename(flags.out) : undefined,
+          blocks,
           values: Object.keys(values).length ? values : undefined,
         };
         writeReportPage(dir, name, page);
@@ -138,13 +197,20 @@ export function writeReportPage(dir: string, name: string, page: ReportPage): vo
 /** index.html for all report pages (<name>.json) in dir; reports that never ran there are listed as missing. */
 export function writeReportIndex(dir: string): void {
   const found: IndexEntry[] = [];
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
+  for (const f of readdirSync(dir)
+    .filter((f) => f.endsWith(".json"))
+    .sort()) {
     try {
       const page = JSON.parse(readFileSync(join(dir, f), "utf8")) as ReportPage;
       if (page.kind === "backpack-space-report") found.push({ id: page.id, file: f.replace(/\.json$/, ".html"), page });
-    } catch { /* not a report page */ }
+    } catch {
+      /* not a report page */
+    }
   }
-  const order = (id: string) => { const i = (REPORT_IDS as readonly string[]).indexOf(id); return i < 0 ? REPORT_IDS.length : i; };
+  const order = (id: string) => {
+    const i = (REPORT_IDS as readonly string[]).indexOf(id);
+    return i < 0 ? REPORT_IDS.length : i;
+  };
   const entries: IndexEntry[] = [...found, ...REPORT_IDS.filter((id) => !found.some((e) => e.id === id)).map((id) => ({ id, file: "" }))];
   entries.sort((a, b) => order(a.id) - order(b.id) || a.file.localeCompare(b.file));
   writeFileSync(join(dir, "index.html"), renderIndex(entries));
@@ -169,14 +235,32 @@ export function table(head: string[], rows: (string | number)[][]): string[] {
   return cells.map((r) => "  " + r.map((v, c) => (c === 0 ? v.padEnd(widths[c]!) : v.padStart(widths[c]!))).join("  "));
 }
 
-export const median = (xs: readonly number[]) => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]!; };
-export const quantile = (xs: readonly number[], q: number) => { if (!xs.length) return 0; const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(s.length * q))]!; };
+export const median = (xs: readonly number[]) => {
+  if (!xs.length) return 0;
+  const s = [...xs].sort((a, b) => a - b);
+  return s[Math.floor(s.length / 2)]!;
+};
+export const quantile = (xs: readonly number[], q: number) => {
+  if (!xs.length) return 0;
+  const s = [...xs].sort((a, b) => a - b);
+  return s[Math.min(s.length - 1, Math.floor(s.length * q))]!;
+};
 
-export interface Target { min?: number; max?: number; what: string; /** "pts": a difference of shares, shown as "+4 pts" */ unit?: "pts" }
+export interface Target {
+  min?: number;
+  max?: number;
+  what: string;
+  /** "pts": a difference of shares, shown as "+4 pts" */ unit?: "pts";
+}
 /** Balancing targets from data/sim/targets.json. */
-export function loadTargets(): Record<string, Target> { return JSON.parse(readFileSync("data/sim/targets.json", "utf8")); }
+export function loadTargets(): Record<string, Target> {
+  return JSON.parse(readFileSync("data/sim/targets.json", "utf8"));
+}
 /** "ok" when the value lies within the target, else "off" (for table marks) */
-export const markOf = (t: Target, v: number): "ok" | "off" => { const x = whole(v); return (t.min === undefined || x >= t.min) && (t.max === undefined || x <= t.max) ? "ok" : "off"; };
+export const markOf = (t: Target, v: number): "ok" | "off" => {
+  const x = whole(v);
+  return (t.min === undefined || x >= t.min) && (t.max === undefined || x <= t.max) ? "ok" : "off";
+};
 /** shares are compared as the whole percent the reports print, so "48 %" never fails a 48–52 % target */
 const whole = (v: number) => Math.round(v * 100) / 100;
 /** the target as a short range for a table header: "46–54 %", "≥ 2 pts", "≤ 6 pts" */
@@ -186,12 +270,16 @@ export function targetRange(t: Target, unit: "%" | "pts"): string {
   return t.min !== undefined && t.max !== undefined ? `${f(t.min)}–${f(t.max)}${u}` : t.min !== undefined ? `≥ ${f(t.min)}${u}` : `≤ ${f(t.max!)}${u}`;
 }
 /** a difference of shares in points: "+4 pts", "−3 pts", "0 pts" */
-export const pts = (x: number) => { const v = Math.round(100 * x); return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)} pts`; };
+export const pts = (x: number) => {
+  const v = Math.round(100 * x);
+  return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v)} pts`;
+};
 const fmt = (x: number, asPct: boolean, unit?: "pts") => (unit === "pts" ? pts(x) : asPct ? pct(x) : x.toFixed(1));
 /** Checks measured values against a target. */
 export function targetResult(t: Target, values: readonly number[], asPct: boolean): TargetResult {
   const r = (v: number) => (asPct ? whole(v) : v);
-  const lo = r(Math.min(...values)), hi = r(Math.max(...values));
+  const lo = r(Math.min(...values)),
+    hi = r(Math.max(...values));
   const ok = (t.min === undefined || lo >= t.min) && (t.max === undefined || hi <= t.max);
   const f = (x: number) => fmt(x, asPct, t.unit);
   const want = t.min !== undefined && t.max !== undefined ? `${f(t.min)}–${f(t.max)}` : t.min !== undefined ? `at least ${f(t.min)}` : `at most ${f(t.max!)}`;

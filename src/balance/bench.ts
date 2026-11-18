@@ -13,15 +13,35 @@ import { metricsOf, type Metrics } from "./metrics";
 import { readPanel, replay, stored, writePanel, type Panel } from "./panel";
 import { EMPTY, patchedData, touchedBy, type Patch } from "./patch";
 
-export interface BaselineMeta { kind: "backpack-space-baseline"; name: string; written: string; lobbies: number; seeds: number[]; dataHash: string; seconds: number }
+export interface BaselineMeta {
+  kind: "backpack-space-baseline";
+  name: string;
+  written: string;
+  lobbies: number;
+  seeds: number[];
+  dataHash: string;
+  seconds: number;
+}
 
 export const baselineDir = (name: string) => join("out", "baseline", name);
 
 /** Hash of everything a fight or a bot's purchase can depend on: items, heroes, rules, recipes, ratings. */
 export function dataHash(dataDir = DATA_DIR): string {
   const h = createHash("sha256");
-  const files = [...readdirSync(join(dataDir, "items")).filter((f) => f.endsWith(".json")).sort().map((f) => join("items", f)), "heroes.json", "rules.json", "recipes.json", join("sim", "ratings.json")];
-  for (const f of files) { h.update(f); h.update(existsSync(join(dataDir, f)) ? readFileSync(join(dataDir, f)) : ""); }
+  const files = [
+    ...readdirSync(join(dataDir, "items"))
+      .filter((f) => f.endsWith(".json"))
+      .sort()
+      .map((f) => join("items", f)),
+    "heroes.json",
+    "rules.json",
+    "recipes.json",
+    join("sim", "ratings.json"),
+  ];
+  for (const f of files) {
+    h.update(f);
+    h.update(existsSync(join(dataDir, f)) ? readFileSync(join(dataDir, f)) : "");
+  }
   return h.digest("hex").slice(0, 16);
 }
 
@@ -31,7 +51,10 @@ export function writeBaseline(name: string, meta: Omit<BaselineMeta, "kind" | "n
   for (const p of panels) writePanel(join(dir, `panel-s${p.seed}.json`), p);
   const ratings = join(DATA_DIR, "sim", "ratings.json");
   writeFileSync(join(dir, "ratings.json"), existsSync(ratings) ? readFileSync(ratings) : "{}\n");
-  writeFileSync(join(dir, "meta.json"), JSON.stringify({ kind: "backpack-space-baseline", name, dataHash: dataHash(), ...meta } satisfies BaselineMeta, null, 1) + "\n");
+  writeFileSync(
+    join(dir, "meta.json"),
+    JSON.stringify({ kind: "backpack-space-baseline", name, dataHash: dataHash(), ...meta } satisfies BaselineMeta, null, 1) + "\n",
+  );
   return dir;
 }
 

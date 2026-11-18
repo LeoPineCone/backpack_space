@@ -1,6 +1,21 @@
 /** Builds the validated, indexed game data from raw JSON. Shared by Node and browser loaders. */
 import { z } from "zod";
-import { BEAST_MIN_CELLS, BUFFS, DEBUFFS, PET_KINDS, TAGS, Hero, Item, Recipe, Rules, SHOP_RARITIES, type Effect, type HeroData, type ItemData, type Tag } from "./schema.js";
+import {
+  BEAST_MIN_CELLS,
+  BUFFS,
+  DEBUFFS,
+  PET_KINDS,
+  TAGS,
+  Hero,
+  Item,
+  Recipe,
+  Rules,
+  SHOP_RARITIES,
+  type Effect,
+  type HeroData,
+  type ItemData,
+  type Tag,
+} from "./schema.js";
 import { boardOf, parseShape, type Shape } from "./grid.js";
 import { buildGlossary, type Glossary } from "./glossary.js";
 import { buildLocales, type Locales } from "./i18n.js";
@@ -46,7 +61,14 @@ export function parseOrThrow<T extends z.ZodTypeAny>(schema: T, raw: unknown, wh
   return r.data;
 }
 
-export interface RawData { rules: unknown; heroes: unknown; recipes: unknown; glossary: unknown; itemFiles: Record<string, unknown>; /** "en.json", "de.json", ... */ locales: Record<string, unknown> }
+export interface RawData {
+  rules: unknown;
+  heroes: unknown;
+  recipes: unknown;
+  glossary: unknown;
+  itemFiles: Record<string, unknown>;
+  /** "en.json", "de.json", ... */ locales: Record<string, unknown>;
+}
 
 export function buildGameData(raw: RawData): GameData {
   const problems: string[] = [];
@@ -84,7 +106,10 @@ export function buildGameData(raw: RawData): GameData {
   const depthOf = (id: string, seen: string[] = []): number => {
     const r = outputs.get(id);
     if (!r) return 0;
-    if (seen.includes(id)) { problems.push(`recipe ${id}: cycle`); return 0; }
+    if (seen.includes(id)) {
+      problems.push(`recipe ${id}: cycle`);
+      return 0;
+    }
     return 1 + Math.max(...r.in.map((i) => depthOf(i, [...seen, id])));
   };
   for (const it of items.values()) {
@@ -94,12 +119,15 @@ export function buildGameData(raw: RawData): GameData {
     if (it.depth > rules.recipes.maxDepth) problems.push(`${it.id}: recipe chain of ${it.depth} steps, the limit is ${rules.recipes.maxDepth}`);
     it.inShop = !it.crafted && it.rarity !== "artifact" && it.shop !== false;
     if (it.hero && !heroes.has(it.hero)) problems.push(`${it.id}: unknown hero ${it.hero}`);
-    if (it.path !== undefined && !heroes.get(it.hero ?? "")?.paths.some((p) => p.id === it.path)) problems.push(`${it.id}: path ${it.path} is not a path of its hero`);
-    if (it.isBag && (it.tags.length > 1 || it.cooldown || it.crafted || it.effects.some((e) => e.on !== "passive" || (e.to !== "inside" && e.to !== "hero")))) problems.push(`${it.id}: a bag only has the tag "bag" and passives for the items inside or the hero`);
+    if (it.path !== undefined && !heroes.get(it.hero ?? "")?.paths.some((p) => p.id === it.path))
+      problems.push(`${it.id}: path ${it.path} is not a path of its hero`);
+    if (it.isBag && (it.tags.length > 1 || it.cooldown || it.crafted || it.effects.some((e) => e.on !== "passive" || (e.to !== "inside" && e.to !== "hero"))))
+      problems.push(`${it.id}: a bag only has the tag "bag" and passives for the items inside or the hero`);
     if (!it.isBag && it.effects.some((e) => e.to === "inside")) problems.push(`${it.id}: only bags target "inside"`);
     if ((it.damage === undefined) !== !it.tags.includes("weapon")) problems.push(`${it.id}: weapons (and only weapons) need damage`);
     if (it.damage && !it.cooldown) problems.push(`${it.id}: weapon without cooldown`);
-    if (it.damage && (it.range === undefined || it.energy === undefined)) problems.push(`${it.id}: weapons need "range" (melee/ranged) and "energy" (cost per attack)`);
+    if (it.damage && (it.range === undefined || it.energy === undefined))
+      problems.push(`${it.id}: weapons need "range" (melee/ranged) and "energy" (cost per attack)`);
     if (it.energy !== undefined && it.energy > rules.energy.max) problems.push(`${it.id}: costs more Energy than the maximum ${rules.energy.max}`);
     const kinds = PET_KINDS.filter((k) => it.tags.includes(k));
     if (kinds.length && !it.tags.includes("pet")) problems.push(`${it.id}: only pets are a ${kinds[0]}`);
@@ -113,7 +141,8 @@ export function buildGameData(raw: RawData): GameData {
   }
   for (const r of recipes) {
     const out = items.get(r.out);
-    if (out && r.in.some((i) => items.get(i)?.hero && items.get(i)?.hero !== out.hero)) problems.push(`recipe ${r.out}: hero input but the output belongs to another pool`);
+    if (out && r.in.some((i) => items.get(i)?.hero && items.get(i)?.hero !== out.hero))
+      problems.push(`recipe ${r.out}: hero input but the output belongs to another pool`);
   }
 
   // heroes
@@ -121,21 +150,36 @@ export function buildGameData(raw: RawData): GameData {
   const shape = (item: string, rot: number): Shape => {
     const k = `${item}/${rot & 3}`;
     let s = shapes.get(k);
-    if (!s) { const def = items.get(item); if (!def) throw new Error(`unknown item ${item}`); s = parseShape(def.shape, rot); shapes.set(k, s); }
+    if (!s) {
+      const def = items.get(item);
+      if (!def) throw new Error(`unknown item ${item}`);
+      s = parseShape(def.shape, rot);
+      shapes.set(k, s);
+    }
     return s;
   };
   for (const h of heroList) {
     h.effects.forEach((e, i) => checkEffect(e, `hero ${h.id} effect ${i + 1}`, phaseIds, problems, false, true));
-    for (const a of h.artifacts) if (items.get(a)?.rarity !== "artifact" || items.get(a)?.hero !== h.id) problems.push(`hero ${h.id}: ${a} is not an artifact of this hero`);
+    for (const a of h.artifacts)
+      if (items.get(a)?.rarity !== "artifact" || items.get(a)?.hero !== h.id) problems.push(`hero ${h.id}: ${a} is not an artifact of this hero`);
     // every path has exactly one anchor among the hero items picked after round 2
-    for (const p of h.paths) { const n = h.artifacts.filter((a) => items.get(a)?.path === p.id).length; if (n !== 1) problems.push(`hero ${h.id} path ${p.id}: needs exactly one hero item (anchor) with this path, has ${n}`); }
+    for (const p of h.paths) {
+      const n = h.artifacts.filter((a) => items.get(a)?.path === p.id).length;
+      if (n !== 1) problems.push(`hero ${h.id} path ${p.id}: needs exactly one hero item (anchor) with this path, has ${n}`);
+    }
     const words: readonly string[] = [...TAGS, ...BUFFS, ...DEBUFFS, "heal", "cleanse", "strip", "damage", "crafted", "energy"];
     for (const p of h.paths) for (const f of p.focus) if (!words.includes(f) && !items.has(f)) problems.push(`hero ${h.id} path ${p.id}: unknown focus ${f}`);
     for (const p of h.bags) if (!items.get(p.item)?.isBag) problems.push(`hero ${h.id}: ${p.item} is not a bag`);
     for (const p of h.start) if (!items.has(p.item) || items.get(p.item)!.isBag) problems.push(`hero ${h.id}: bad start item ${p.item}`);
-    if (!problems.length) try { boardOf(rules.grid.w, rules.grid.h, h.bags, h.start, shape); } catch (e) { problems.push(`hero ${h.id}: ${(e as Error).message}`); }
+    if (!problems.length)
+      try {
+        boardOf(rules.grid.w, rules.grid.h, h.bags, h.start, shape);
+      } catch (e) {
+        problems.push(`hero ${h.id}: ${(e as Error).message}`);
+      }
   }
-  if (rules.heroHp.length < rules.rounds || rules.goldPerRound.length < rules.rounds || rules.shop.rarityOdds.length < rules.rounds) problems.push("rules: heroHp, goldPerRound and rarityOdds need one entry per round");
+  if (rules.heroHp.length < rules.rounds || rules.goldPerRound.length < rules.rounds || rules.shop.rarityOdds.length < rules.rounds)
+    problems.push("rules: heroHp, goldPerRound and rarityOdds need one entry per round");
   const glossary = buildGlossary(raw.glossary, rules, problems);
   const locales = buildLocales(raw.locales, { rules, heroList, itemList: [...items.values()], glossary }, problems);
   if (problems.length) throw new Error(`Game data problems:\n- ${problems.join("\n- ")}`);
@@ -145,8 +189,20 @@ export function buildGameData(raw: RawData): GameData {
   const itemList = [...items.values()];
   for (const it of itemList) if (it.inShop && !it.isBag) (it.hero ? pool.hero.get(it.hero)! : pool.general)[it.rarity as ShopRarity].push(it);
   return {
-    rules, heroes, heroList, items, itemList, recipes, recipesWith, pool,
-    generalArtifacts: itemList.filter((i) => i.rarity === "artifact" && !i.hero), bags: itemList.filter((i) => i.isBag && i.inShop), phaseIds, shape, glossary, locales,
+    rules,
+    heroes,
+    heroList,
+    items,
+    itemList,
+    recipes,
+    recipesWith,
+    pool,
+    generalArtifacts: itemList.filter((i) => i.rarity === "artifact" && !i.hero),
+    bags: itemList.filter((i) => i.isBag && i.inShop),
+    phaseIds,
+    shape,
+    glossary,
+    locales,
   };
 }
 

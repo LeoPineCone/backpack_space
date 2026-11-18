@@ -32,29 +32,55 @@ if (r.flags.check) {
   r.log(fresh ? "It matches the current game data and ratings." : "STALE: data/ or the ratings changed since. Take a new one: npm run baseline");
   process.exit(fresh ? 0 : 1);
 }
-const data = r.data, L = r.n.lobbies, jobs = jobsFrom(r.flags);
+const data = r.data,
+  L = r.n.lobbies,
+  jobs = jobsFrom(r.flags);
 const seeds = (r.flags.seeds ?? `${r.seed},${r.seed + 1}`).split(",").map(Number);
 const t0 = Date.now();
 const panels: Panel[] = [];
 for (const seed of seeds) {
-  const lobbies = await runParallel<PanelLobby>({ kind: "panel", seed, ratings: !r.flags["no-ratings"] }, L, jobs, (i) => playPanelLobby(data, seed, i), (d) => r.progress(`seed ${seed}: lobby ${d}/${L}`));
+  const lobbies = await runParallel<PanelLobby>(
+    { kind: "panel", seed, ratings: !r.flags["no-ratings"] },
+    L,
+    jobs,
+    (i) => playPanelLobby(data, seed, i),
+    (d) => r.progress(`seed ${seed}: lobby ${d}/${L}`),
+  );
   panels.push({ seed, lobbies });
 }
 const dir = writeBaseline(name, { written: new Date().toISOString(), lobbies: L, seeds, seconds: Math.round((Date.now() - t0) / 1000) }, panels);
 
 const T = loadTargets();
-const metrics = panels.map((p) => metricsOf(data, p.lobbies.map((l) => lobbyStat(data, l.seats, l.fights))));
+const metrics = panels.map((p) =>
+  metricsOf(
+    data,
+    p.lobbies.map((l) => lobbyStat(data, l.seats, l.fights)),
+  ),
+);
 r.log();
 r.log(`Stored in ${dir}/ (data ${dataHash()}). Every number below is measured once per seed; a target counts as off when it is off on the first seed.`);
-let off = 0, total = 0;
+let off = 0,
+  total = 0;
 for (const kind of Object.keys(KINDS) as (keyof typeof KINDS)[]) {
   const rows = [...metrics[0]!.values()].filter((m) => m.kind === kind);
   if (!rows.length) continue;
   r.log();
   r.log(`## ${KIND_TITLES[kind]} [target ${showTarget(kind, T)}]`);
-  const marks: Mark[][] = rows.map((m) => { const k = markFor(kind, T, m.value); total++; if (k === "off") off++; return ["", k, ...seeds.slice(1).map(() => "" as Mark)]; });
-  r.table(["", ...seeds.map((s) => `seed ${s}`)], rows.map((m) => [m.label, ...metrics.map((ms) => showMetric(ms.get(m.key)!))]), undefined, marks);
+  const marks: Mark[][] = rows.map((m) => {
+    const k = markFor(kind, T, m.value);
+    total++;
+    if (k === "off") off++;
+    return ["", k, ...seeds.slice(1).map(() => "" as Mark)];
+  });
+  r.table(
+    ["", ...seeds.map((s) => `seed ${s}`)],
+    rows.map((m) => [m.label, ...metrics.map((ms) => showMetric(ms.get(m.key)!))]),
+    undefined,
+    marks,
+  );
 }
 r.log();
-r.log(`${off} of ${total} target checks are off (seed ${seeds[0]}). Next: npm run balance:sense -- --knobs hero:<id>   or   npm run balance:propose -- --knobs hero:<id>`);
+r.log(
+  `${off} of ${total} target checks are off (seed ${seeds[0]}). Next: npm run balance:sense -- --knobs hero:<id>   or   npm run balance:propose -- --knobs hero:<id>`,
+);
 r.done();

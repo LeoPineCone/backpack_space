@@ -2,7 +2,26 @@ import { describe, expect, it } from "vitest";
 import { loadGameData } from "@backpack-space/core/node";
 import { aggregatePaths, blockCount, blockSe, boostPath, measurePathLobby, type SeatStat } from "../src/sim/paths";
 
-const seat = (key: string, w: number, n: number): SeatStat => ({ key, w, n, lw: w, ln: n, dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, kept: 0, fights: 0, secs: 0, commit: null, wins: 0, alive: false, mech: { weapon: 0, pet: 0, shield: 0, count: 0, debuff: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 }, top: 0, onPath: 0, lateDmg: 0, dealers: 0, attacks: 0 });
+const seat = (key: string, w: number, n: number): SeatStat => ({
+  key,
+  w,
+  n,
+  lw: w,
+  ln: n,
+  dmg: { weapon: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 },
+  kept: 0,
+  fights: 0,
+  secs: 0,
+  commit: null,
+  wins: 0,
+  alive: false,
+  mech: { weapon: 0, pet: 0, shield: 0, count: 0, debuff: 0, direct: 0, burn: 0, toxin: 0, spikes: 0 },
+  top: 0,
+  onPath: 0,
+  lateDmg: 0,
+  dealers: 0,
+  attacks: 0,
+});
 
 describe("paths measurement", () => {
   it("takes the standard error from blocks of lobbies", () => {
@@ -18,7 +37,10 @@ describe("paths measurement", () => {
   });
 
   it("adds every bot to its hero as well", () => {
-    const groups = aggregatePaths([[seat("a/x", 3, 4), seat("a/", 1, 4)], [seat("a/x", 1, 4), seat("a/", 3, 4)]]);
+    const groups = aggregatePaths([
+      [seat("a/x", 3, 4), seat("a/", 1, 4)],
+      [seat("a/x", 1, 4), seat("a/", 3, 4)],
+    ]);
     expect(groups.get("a/*")!.all.p).toBe(0.5);
     expect(groups.get("a/*")!.seats).toBe(4);
   });

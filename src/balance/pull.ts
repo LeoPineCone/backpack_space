@@ -7,7 +7,12 @@ import { onPath, type GameData } from "@backpack-space/core";
 import { metricsOf } from "./metrics";
 import { lobbyStat, type PanelLobby } from "./panel";
 
-export interface PullRow { key: string; label: string; unit: "%" | "pts" | ""; /** key in data/sim/targets.json, if the row has a target */ target?: string }
+export interface PullRow {
+  key: string;
+  label: string;
+  unit: "%" | "pts" | "";
+  /** key in data/sim/targets.json, if the row has a target */ target?: string;
+}
 export const PULL_ROWS: PullRow[] = [
   { key: "commit", label: "build on the path (share of item cost), average", unit: "%", target: "pathCommit" },
   { key: "commitMin", label: "build on the path, weakest path", unit: "%", target: "pathCommit" },
@@ -26,7 +31,8 @@ export const PULL_ROWS: PullRow[] = [
 
 /** share of the items of two builds that only one of them has (1 - shared / all, by item id) */
 export function itemDistance(a: readonly string[], b: readonly string[]): number {
-  const x = new Set(a), y = new Set(b);
+  const x = new Set(a),
+    y = new Set(b);
   let both = 0;
   for (const id of x) if (y.has(id)) both++;
   const all = x.size + y.size - both;
@@ -40,7 +46,10 @@ export function pullOf(data: GameData, lobbies: readonly PanelLobby[]): Record<s
   const final = (l: PanelLobby, seat: number) => l.seats[seat]!.builds[l.seats[seat]!.builds.length - 1]!.items.map((p) => p.item);
   const cost = (id: string) => Math.max(1, data.items.get(id)!.cost);
   const commit = new Map<string, number[]>();
-  const same: number[] = [], openV: number[] = [], apart: number[] = [], heroItems: number[] = [];
+  const same: number[] = [],
+    openV: number[] = [],
+    apart: number[] = [],
+    heroItems: number[] = [];
   lobbies.forEach((l, i) => {
     const next = i % 2 === 0 ? lobbies[i + 1] : undefined;
     l.seats.forEach((s, k) => {
@@ -55,20 +64,32 @@ export function pullOf(data: GameData, lobbies: readonly PanelLobby[]): Record<s
       }
       // the same seat of the next lobby plays the same hero and path with other shops
       if (next && next.seats[k]?.hero === s.hero && next.seats[k]!.path === s.path) (path ? same : openV).push(itemDistance(items, final(next, k)));
-      if (path) l.seats.forEach((o, j) => { if (j > k && o.hero === s.hero && o.path && o.path !== s.path) apart.push(itemDistance(items, final(l, j))); });
+      if (path)
+        l.seats.forEach((o, j) => {
+          if (j > k && o.hero === s.hero && o.path && o.path !== s.path) apart.push(itemDistance(items, final(l, j)));
+        });
     });
   });
   for (const [key, list] of commit) out[`commit:${key}`] = mean(list);
   const commits = [...commit.values()].map(mean);
-  out.commit = mean(commits); out.commitMin = Math.min(...commits);
-  out.varietySame = mean(same); out.varietyOpen = mean(openV); out.apart = mean(apart); out.heroItems = mean(heroItems);
-  const m = metricsOf(data, lobbies.map((l) => lobbyStat(data, l.seats, l.fights)));
+  out.commit = mean(commits);
+  out.commitMin = Math.min(...commits);
+  out.varietySame = mean(same);
+  out.varietyOpen = mean(openV);
+  out.apart = mean(apart);
+  out.heroItems = mean(heroItems);
+  const m = metricsOf(
+    data,
+    lobbies.map((l) => lobbyStat(data, l.seats, l.fights)),
+  );
   const of = (kind: string) => [...m.values()].filter((x) => x.kind === kind);
   for (const x of [...of("hero"), ...of("path"), ...of("open")]) out[x.key] = x.value;
   const open = of("open").map((x) => x.value);
-  out.open = mean(open); out.openMin = Math.min(...open);
+  out.open = mean(open);
+  out.openMin = Math.min(...open);
   const pays = of("pays").map((x) => x.value);
-  out.pays = mean(pays); out.paysMin = Math.min(...pays);
+  out.pays = mean(pays);
+  out.paysMin = Math.min(...pays);
   out.distinctMin = Math.min(...of("distinct").map((x) => x.value));
   out.styleMin = Math.min(...of("style").map((x) => x.value));
   out.spreadMax = Math.max(...of("spread").map((x) => x.value));

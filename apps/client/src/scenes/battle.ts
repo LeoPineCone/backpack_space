@@ -10,15 +10,26 @@ import { resultScene } from "./results";
 import { t, tr, upper } from "../i18n";
 import type { SavedFight } from "../save";
 
-const CELL = 34, BX = 42;
+const CELL = 34,
+  BX = 42;
 const STATUSES: Status[] = [...BUFFS, ...DEBUFFS];
 
-interface SideView { hpFill: Graphics; enFill: Graphics; hpText: Text; chips: Container; chipKey: string; flashes: Graphics[]; barY: number }
+interface SideView {
+  hpFill: Graphics;
+  enFill: Graphics;
+  hpText: Text;
+  chips: Container;
+  chipKey: string;
+  flashes: Graphics[];
+  barY: number;
+}
 
 /** `saved`: a fight started before a reload; it is fought again with the same opponent and seed, so it ends the same way. */
 export function battleScene(game: Game, saved?: SavedFight): Scene {
   const root = new Container();
-  const data = game.data, rules = data.rules, B = rules.battle;
+  const data = game.data,
+    rules = data.rules,
+    B = rules.battle;
   const player = buildOf(game.run!);
   const league = leagueOf(game.meta, game.profile.season.points);
   if (!saved) game.opponents.submit(player, league);
@@ -28,19 +39,27 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const sides: [CSide, CSide] = [compile(player, data), compile(ghost, data)];
   const result = simulate(sides[0], sides[1], rules, fight.seed, { log: true });
   const replay = new Replay(sides, result, rules);
-  let speed = 1, endWait = 0.9, left = false;
+  let speed = 1,
+    endWait = 0.9,
+    left = false;
 
   root.addChild(screenFill(C.bg));
   const fx = new Container();
 
   // side 1 (enemy) at the top of the safe area, side 0 (you) below; extra height on tall screens goes between them
-  const extra = Math.max(0, H - 750), clockY = 330 + extra / 2;
-  const gridY = [clockY + 36, 74], barY = [clockY + 276, 4];
+  const extra = Math.max(0, H - 750),
+    clockY = 330 + extra / 2;
+  const gridY = [clockY + 36, 74],
+    barY = [clockY + 276, 4];
   const builds = [player, ghost];
   const views: SideView[] = [0, 1].map((i) => {
-    const b = builds[i]!, hero = sides[i]!.hero;
+    const b = builds[i]!,
+      hero = sides[i]!.hero;
     const bar = new Container();
-    bar.addChild(at(disc(28, { fill: C.panel, line: i === 0 ? C.cyan : C.dim, lineW: 2 }), 28, 28), at(txt(hero.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase(), 22, { anchor: [0.5, 0.5] }), 28, 28));
+    bar.addChild(
+      at(disc(28, { fill: C.panel, line: i === 0 ? C.cyan : C.dim, lineW: 2 }), 28, 28),
+      at(txt(hero.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase(), 22, { anchor: [0.5, 0.5] }), 28, 28),
+    );
     bar.addChild(at(box(250, 22, { fill: C.panel, line: C.dim, radius: 11 }), 66, 6));
     const hpFill = new Graphics();
     const hpText = txt("", 15, { anchor: [0, 0.5] });
@@ -86,14 +105,15 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     clock.clear();
     let x = W / 2 - 62;
     sizes.forEach((r, i) => {
-      const nova = i === sizes.length - 1, col = nova ? C.bad : C.gold;
+      const nova = i === sizes.length - 1,
+        col = nova ? C.bad : C.gold;
       const cx = x + r;
       const p = i < replay.phaseIdx ? 1 : i > replay.phaseIdx ? 0 : nova ? 1 : Math.max(0, Math.min(1, (replay.time - phaseStart[i]!) / B.phases[i]!.seconds));
       if (p > 0) clock.circle(cx, clockY, r * (0.35 + 0.65 * p)).fill({ color: col, alpha: 0.35 + 0.65 * p });
       clock.circle(cx, clockY, r).stroke({ width: 2, color: col });
       x += r * 2 + 8;
     });
-    phaseLabel.text = upper(tr().term(replay.phaseIdx >= B.phases.length ? B.supernova.id : B.phases[replay.phaseIdx]?.id ?? ""));
+    phaseLabel.text = upper(tr().term(replay.phaseIdx >= B.phases.length ? B.supernova.id : (B.phases[replay.phaseIdx]?.id ?? "")));
     phaseLabel.style.fill = replay.time > novaAt ? C.bad : C.dim;
   };
 
@@ -102,10 +122,20 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     const b = new Container();
     const paint = () => {
       b.removeChildren().forEach((c) => c.destroy());
-      b.addChild(box(52, 44, { fill: speed === v ? C.cyan : C.bg, line: speed === v ? C.cyan : C.line, lineW: 2, radius: 22 }), at(txt(`×${v}`, 16, { color: speed === v ? C.cyanInk : C.text, anchor: [0.5, 0.5] }), 26, 22));
+      b.addChild(
+        box(52, 44, { fill: speed === v ? C.cyan : C.bg, line: speed === v ? C.cyan : C.line, lineW: 2, radius: 22 }),
+        at(txt(`×${v}`, 16, { color: speed === v ? C.cyanInk : C.text, anchor: [0.5, 0.5] }), 26, 22),
+      );
     };
     paint();
-    tappable(b, () => { speed = v; speedBtns.forEach((s) => s.paint()); }, new Rectangle(0, 0, 52, 44));
+    tappable(
+      b,
+      () => {
+        speed = v;
+        speedBtns.forEach((s) => s.paint());
+      },
+      new Rectangle(0, 0, 52, 44),
+    );
     root.addChild(at(b, W - 15 - (3 - i) * 60 + 8, H - 56));
     return { paint };
   });
@@ -114,8 +144,14 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
 
   const paint = () => {
     for (const i of [0, 1] as const) {
-      const v = views[i]!, s = replay.sides[i], max = result.maxHp[i], hp = Math.max(0, Math.round(s.hp));
-      v.hpFill.clear().roundRect(2, 2, Math.max(0, (250 - 4) * Math.min(1, hp / max)), 18, 9).fill(i === 0 ? C.text : C.dim);
+      const v = views[i]!,
+        s = replay.sides[i],
+        max = result.maxHp[i],
+        hp = Math.max(0, Math.round(s.hp));
+      v.hpFill
+        .clear()
+        .roundRect(2, 2, Math.max(0, (250 - 4) * Math.min(1, hp / max)), 18, 9)
+        .fill(i === 0 ? C.text : C.dim);
       const en = Math.max(0, Math.min(1, s.energy / rules.energy.max));
       v.enFill.clear();
       if (en > 0) v.enFill.roundRect(1, 1, Math.max(2, (250 - 2) * en), 6, 3).fill(C.gold);
@@ -131,7 +167,11 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
           const buff = (BUFFS as readonly string[]).includes(k);
           const n = txt(s.st[k], 13, { color: buff ? C.bg : C.text, anchor: [0, 0.5] });
           const w = 4 + 15 + 3 + n.width + 6;
-          v.chips.addChild(at(box(w, 24, { fill: buff ? C.text : C.bg, line: C.text, radius: 7 }), x, 0), at(icon(k, 15, buff ? C.bg : C.text), x + 11.5, 12), at(n, x + 22, 12));
+          v.chips.addChild(
+            at(box(w, 24, { fill: buff ? C.text : C.bg, line: C.text, radius: 7 }), x, 0),
+            at(icon(k, 15, buff ? C.bg : C.text), x + 11.5, 12),
+            at(n, x + 22, 12),
+          );
           x += w + 5;
         }
       }
@@ -149,16 +189,37 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
   const show = (e: BattleEvent) => {
     const foe = 1 - e.s;
     switch (e.k) {
-      case "attack": flash(e.s, e.i, 0xffffff); if (e.v > 0) float(foe, `-${e.v}${e.crit ? "!" : ""}`, e.crit ? C.gold : C.bad); break;
-      case "use": flash(e.s, e.i, 0xffffff); break;
-      case "miss": flash(e.s, e.i, C.bad); break;
-      case "damage": case "tick": if (e.v > 0) float(foe, `-${e.v}`, C.bad); break;
-      case "nova": if (e.v > 0) float(e.s, `-${e.v}`, C.bad); break;
-      case "heal": if (e.v > 0) float(e.s, `+${e.v}`, C.good); break;
-      default: break;
+      case "attack":
+        flash(e.s, e.i, 0xffffff);
+        if (e.v > 0) float(foe, `-${e.v}${e.crit ? "!" : ""}`, e.crit ? C.gold : C.bad);
+        break;
+      case "use":
+        flash(e.s, e.i, 0xffffff);
+        break;
+      case "miss":
+        flash(e.s, e.i, C.bad);
+        break;
+      case "damage":
+      case "tick":
+        if (e.v > 0) float(foe, `-${e.v}`, C.bad);
+        break;
+      case "nova":
+        if (e.v > 0) float(e.s, `-${e.v}`, C.bad);
+        break;
+      case "heal":
+        if (e.v > 0) float(e.s, `+${e.v}`, C.good);
+        break;
+      default:
+        break;
     }
   };
-  const flash = (side: number, i: number, tint: number) => { const f = views[side]!.flashes[i]; if (f) { f.tint = tint; f.alpha = 0.75; } };
+  const flash = (side: number, i: number, tint: number) => {
+    const f = views[side]!.flashes[i];
+    if (f) {
+      f.tint = tint;
+      f.alpha = 0.75;
+    }
+  };
 
   for (const e of replay.start()) show(e);
   paint();
@@ -174,12 +235,18 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
         t.life -= dt;
         t.y -= dt * 34;
         t.alpha = Math.max(0, Math.min(1, t.life / 0.4));
-        if (t.life <= 0) { fx.removeChild(t); t.destroy(); }
+        if (t.life <= 0) {
+          fx.removeChild(t);
+          t.destroy();
+        }
       }
       paint();
       if (replay.done) {
         endWait -= dt;
-        if (endWait <= 0) { left = true; game.show(resultScene(game, { result, sides, player })); }
+        if (endWait <= 0) {
+          left = true;
+          game.show(resultScene(game, { result, sides, player }));
+        }
       }
     },
   };
