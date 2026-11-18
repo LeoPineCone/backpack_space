@@ -9,8 +9,8 @@
  */
 export const ENGINE_VERSION = 2;
 
-/** Keys that only hold display text; they never change a fight. */
-const TEXT_KEYS = new Set(["name", "title"]);
+/** Keys that never change a fight: display text, and the data version (it names the data, it is not part of it). */
+const TEXT_KEYS = new Set(["name", "title", "dataVersion"]);
 
 /** JSON with sorted keys and without text-only keys, so the same rules always give the same string. */
 function canonical(value: unknown): string {

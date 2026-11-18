@@ -17,3 +17,4 @@ export * from "./bots/bot.js";
 export * from "./stats.js";
 export * from "./meta.js";
 export * from "./plausible.js";
+export * from "./dataversion.js";

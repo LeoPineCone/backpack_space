@@ -174,6 +174,8 @@ const Odds = z.object({ common: z.number(), rare: z.number(), epic: z.number(), 
 
 export const Rules = z
   .object({
+    /** major.minor (CORE-08): major goes up when an item is removed or reshaped or a rule changes, minor for numbers */
+    dataVersion: z.string().regex(/^\d+\.\d+$/),
     grid: z.object({ w: z.number().int(), h: z.number().int() }).strict(),
     rounds: z.number().int(),
     lives: z.number().int(),

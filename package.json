@@ -8,6 +8,7 @@
     "validate": "tsx src/cli/validate.ts",
     "battle": "tsx src/cli/battle.ts",
     "sim:reference": "tsx src/cli/reference-fights.ts",
+    "data:major": "tsx src/cli/data-major.ts",
     "playtest": "tsx src/cli/playtest.ts",
     "catalog": "tsx src/cli/catalog.ts",
     "art:prompt": "tsx src/cli/art-prompt.ts",
