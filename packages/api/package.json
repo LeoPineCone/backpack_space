@@ -1,0 +1,16 @@
+{
+  "name": "@backpack-space/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The contract between app and backend: paths, request and response schemas, error codes",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}

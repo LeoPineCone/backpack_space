@@ -1,0 +1,15 @@
+{
+  "$comment": "The contract is shared by the app and the backend: no Node or DOM types.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "types": [],
+    "lib": ["ES2022"],
+    "noEmit": true
+  },
+  "include": ["src"]
+}

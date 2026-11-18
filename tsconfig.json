@@ -12,5 +12,5 @@
     "lib": ["ES2022"],
     "noEmit": true
   },
-  "include": ["src", "packages/core", "test", "playground/make-ghosts.ts"]
+  "include": ["src", "packages/core", "packages/*/test", "test", "playground/make-ghosts.ts"]
 }
