@@ -276,64 +276,64 @@
     "description": "A small signal lamp on a base, its lens marked with mustard paw prints of different alien feet, one three-toed, one six-toed."
   },
   "field_pack": {
-    "brief": "Starting backpack seen flat from above, detail only on the border. Accent: copper.",
-    "description": "The starting backpack seen flat from above, filling the whole box as one worn canvas panel. Detail only along the border: two shoulder straps, buckles, a tether clip, a patched corner and a rolled sleeping mat strapped across the top edge. The middle stays an even, dark, quiet surface, because items lie on top of it."
+    "brief": "Starting backpack from above: a canvas rim with straps, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a thin worn canvas rim, two strap buckles on the top edge, a narrow rolled mat along it, a copper clip in one corner. The inside is one plain dark field."
   },
   "pouch": {
-    "brief": "Soft pouch sewn from a space-suit glove, cinched by a cord. Accent: copper.",
-    "description": "Seen from above: a soft pouch sewn from an old space-suit glove, fingers folded under, cinched by a cord; its open mouth is a dark hole where an item sits."
+    "brief": "Space-suit glove pouch: a drawstring rim, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a round drawstring rim of space-suit glove fabric, one folded thumb as a tab on the edge. The inside is one plain dark field."
   },
   "belt_pocket": {
-    "brief": "Stiff little canvas pocket with a snap and a belt loop. Accent: copper.",
-    "description": "Seen from above, lying across both cells: a stiff little pocket of worn canvas with one snap button and a strip of belt loop along the top edge. Inside stays a dark, quiet area."
+    "brief": "Canvas pocket: belt loop and snap on the rim, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a thin canvas rim, a belt loop along the top edge and one snap button on it. The inside is one plain dark field."
   },
   "sling_bag": {
-    "brief": "Narrow tube bag, strap along one edge ending in a buckle and tether clip. Accent: copper.",
-    "description": "Seen from above, filling the long box: a narrow tube-shaped bag, the strap running along one long edge and ending in a scuffed buckle. Two patches; the middle stays plain and dark."
+    "brief": "Tube bag: strap along one edge, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a thin canvas rim, the strap as a narrow band along one long edge ending in a buckle. The inside is one plain dark field."
   },
   "side_pocket": {
-    "brief": "L-shaped zipped pocket, the empty corner stays free. Accent: copper.",
-    "description": "L-shaped pocket seen from above, the zip running along the inner corner; the empty corner of the box stays free. Canvas with a patched seam, quiet dark interior for items."
+    "brief": "L-shaped pocket: zip along the inner corner, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: an L-shaped canvas rim, the zip running along the inner corner; the empty corner of the box stays free. The inside is one plain dark field."
   },
   "cargo_pocket": {
-    "brief": "Square utility pocket with a folded flap and heavy buckle. Accent: copper.",
-    "description": "Square utility pocket seen from above: a flap folded back along the top edge with one heavy buckle, a reinforced corner patch. Details stay on the rim; the inside is plain and dark."
+    "brief": "Utility pocket: folded flap and buckle on the top edge, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a thin canvas rim, a folded flap as a band along the top edge with one heavy buckle. The inside is one plain dark field."
   },
   "duffel": {
-    "brief": "Wide unzipped duffel with handles flopped over the edge. Accent: copper.",
-    "description": "A wide, soft duffel seen from above, unzipped: the long zip runs around the rim, two carrying handles flop over the top edge, one end cap is patched. The open middle is an even, dark area for items."
+    "brief": "Duffel: zip all round the rim, two handles, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: the zip running all round as a thin rim, two handles lying flat over the top edge, one patched end. The inside is one plain dark field."
   },
   "cooler_bag": {
-    "brief": "Quilted insulated bag with frost on the zip. Accent: teal.",
-    "description": "Square insulated bag seen from above, its padded rim quilted in diamonds, frost crust along the zip and a snowflake patch in one corner. The inside is a plain dark lining."
+    "brief": "Cooler bag: quilted rim with frost on the zip, the middle plain. Accent: teal.",
+    "description": "Seen flat from above: a quilted rim, frost only on the zip, a small snowflake patch in one corner. The inside is one plain dark field."
   },
   "holster": {
-    "brief": "Square leather bag with a gun-shaped stitch on the flap. Accent: copper.",
-    "description": "Square bag of thick leather seen from above, a gun-shaped stitch mark on the corner flap and two straps with buckles on the edge. The middle stays plain, darker leather."
+    "brief": "Leather bag: thick rim with two buckled straps, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a thick leather rim, two buckled straps on one side edge. The inside is one plain dark field."
   },
   "tool_roll": {
-    "brief": "Unrolled canvas tool roll with empty spanner slots. Accent: copper.",
-    "description": "A canvas tool roll unrolled flat: a row of empty spanner slots along one edge, a tie cord dangling from a corner. The rest is plain, worn canvas where items lie."
+    "brief": "Tool roll: row of empty spanner loops on the bottom edge, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a canvas rim, a row of empty spanner loops only along the bottom edge, a tie cord at one corner. The inside is one plain dark field."
   },
   "pet_carrier": {
-    "brief": "Carrier box from above, barred window and paw sticker. Accent: copper.",
-    "description": "A carrier box seen from above with its lid off: a barred little window on one side wall, a scratched paw sticker on the rim, a tuft of fur caught in the corner. The floor is plain and dark."
+    "brief": "Pet carrier: hard rim with a barred window, the middle plain. Accent: copper.",
+    "description": "Seen flat from above: a hard shell rim, a small barred window in one side wall, a paw sticker in a corner. The inside is one plain dark field."
   },
   "seed_satchel": {
-    "brief": "Square satchel with seed packets peeking out. Accent: sage.",
-    "description": "Square satchel seen from above, seed packets and a dry leaf peeking out of a front pocket on one edge, a leaf patch on the flap. The middle stays plain canvas."
+    "brief": "Seed satchel: canvas rim with a leaf patch, the middle plain. Accent: sage.",
+    "description": "Seen flat from above: a thin canvas rim, a sage leaf patch on the flap at the top edge. The inside is one plain dark field."
   },
   "relic_case": {
-    "brief": "Old case with brass corners and a star seal. Accent: mustard.",
-    "description": "An old square case seen from above, lid opened back: brass-capped corners, a worn star seal on the clasp, faded velvet inside. Detail on the corners only; the velvet is an even dark field."
+    "brief": "Relic case: brass corners and a star seal, the middle plain. Accent: mustard.",
+    "description": "Seen flat from above: a thin old case rim with brass corner caps and a mustard star seal on the top edge. The inside is one plain dark field."
   },
   "padded_case": {
-    "brief": "Quilted case with a stitched cross patch. Accent: coral red.",
-    "description": "Quilted square case seen from above, puffy padding along the rim, a stitched cross patch in one corner. Soft and slightly bulging; the middle stays plain."
+    "brief": "Padded case: puffy padded rim, the middle plain. Accent: coral red.",
+    "description": "Seen flat from above: a puffy padded rim all round, a small coral red stitched patch in one corner. The inside is one plain dark field."
   },
   "stasis_vault": {
-    "brief": "Armoured open box with a frost-frozen lock dial. Accent: teal.",
-    "description": "A heavy armoured box seen from above with its lid open, filling the wide box: thick riveted walls, a big lock dial on the front wall whose hands are frozen with frost. Detail stays on the walls; the inner floor is plain and dark."
+    "brief": "Stasis vault: thick riveted walls and a frozen lock dial, the middle plain. Accent: teal.",
+    "description": "Seen flat from above: thick riveted walls as the rim, a frost-covered lock dial on the front wall. The inside is one plain dark field."
   },
   "prism_laser": {
     "brief": "Laser pistol with a crystal prism bolted over the muzzle. Accent: teal.",
