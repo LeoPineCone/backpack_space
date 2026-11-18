@@ -176,6 +176,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Crit** | Krit | Chance for ×2 damage. | `mod.crit`, `battle.critMult` |
 | **Max health** | Max. Lebenspunkte | More health for the hero. | `mod.maxHp` |
 | **Charged** | Aufgeladen | Part of the first cooldown is already done. | `mod.ready` |
+| **Damage per second** | Schaden pro Sekunde | Damage of one hit divided by the cooldown. Compares weapons; the weapon still hits once per cooldown. | `dps` |
 
 ## When (triggers)
 

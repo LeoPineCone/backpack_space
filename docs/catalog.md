@@ -74,66 +74,66 @@ The star itself. Starts every fight with Power and gains more with every star ph
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Rivet Gun | common | 2 | `##` | weapon, mechanical | 1.3 damage per second. Hits for 2 every 1.5 s. Ranged, 3 Energy per attack. | → Nail Storm |
-| Asteroid Chunk | common | 2 | `##` | weapon | 1–1.7 damage per second. Hits for 3–5 every 3 s. Ranged, 6 Energy per attack. | → Slag Mace |
-| Fang Dagger | common | 2 | `#` | weapon, organic | 0.7–1.3 damage per second. Hits for 1–2 every 1.5 s. Melee, 3 Energy per attack. This item: +15 % crit. | → Venom Fang |
-| Laser Pistol | common | 3 | `#/#` | weapon, mechanical | 1.5–2 damage per second. Hits for 3–4 every 2 s. Ranged, 4 Energy per attack. | → Prism Laser, Twin Lasers, Gunship Drone |
-| Stun Baton | common | 3 | `#/#` | weapon, mechanical | 1–1.5 damage per second. Hits for 2–3 every 2 s. Melee, 4 Energy per attack. On hit: inflict 1 Jam. | → Cryo Baton |
-| Mining Pick | common | 3 | `##/#.` | weapon | 1.5–2.3 damage per second. Hits for 4–6 every 2.6 s. Melee, 5 Energy per attack. On hit: destroy 2 enemy Shield. | → Drill Mole |
-| Flare Gun | common | 3 | `##` | weapon, mechanical | 0.3–0.7 damage per second. Hits for 1–2 every 3 s. Ranged, 6 Energy per attack. On hit: inflict 2 Burn. |  |
-| Boomerang Blade | common | 3 | `##` | weapon | 1.3–2.1 damage per second. Hits for 3–5 every 2.4 s. Ranged, 5 Energy per attack. Each attack: deal 3 damage (30 % chance). | → Buzz Blade |
-| Plasma Cutter | common | 4 | `##` | weapon, mechanical | 1.2–1.6 damage per second. Hits for 3–4 every 2.5 s. Melee, 5 Energy per attack. On hit: inflict 1 Burn. | → Flamethrower |
-| Acid Flask | rare | 4 | `#` | weapon, organic | 0.3–0.7 damage per second. Hits for 1–2 every 3 s. Ranged, 6 Energy per attack. On hit: destroy 6 enemy Shield. On hit: inflict 1 Toxin (50 % chance). | → Acid Sprayer |
-| Cryo Sprayer | rare | 5 | `##` | weapon, mechanical | 0.9–1.4 damage per second. Hits for 2–3 every 2.2 s. Ranged, 4 Energy per attack. On hit: inflict 2 Cryo. | → Glacier Cannon, Acid Sprayer |
-| Ion Blaster | rare | 5 | `#/#` | weapon, mechanical | 1.5–2.5 damage per second. Hits for 3–5 every 2 s. Ranged, 4 Energy per attack. On hit: inflict 1 Jam. | → EMP Cannon |
-| Spore Launcher | rare | 5 | `##` | weapon, organic | 0.4–0.8 damage per second. Hits for 1–2 every 2.6 s. Ranged, 5 Energy per attack. On hit: inflict 1 Toxin. | → Fungal Mortar |
-| Shock Gauntlet | rare | 5 | `#/#` | weapon, mechanical | 1.4–2.1 damage per second. Hits for 2–3 every 1.4 s. Melee, 3 Energy per attack. On hit: deal 1 damage per 3 Overclock you have (max 6×). |  |
-| Needle Rifle | rare | 5 | `###` | weapon, mechanical | 2.1–2.9 damage per second. Hits for 6–8 every 2.8 s. Ranged, 5 Energy per attack. This item: +25 % crit. | → Burst Rifle |
-| Plasma Sword | rare | 6 | `#/#/#` | weapon, mechanical | 2.5–3.5 damage per second. Hits for 5–7 every 2 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. | → Plasma Katana |
-| Harpoon Launcher | rare | 6 | `###` | weapon, mechanical | 2.5–3.4 damage per second. Hits for 8–11 every 3.2 s. Ranged, 6 Energy per attack. On hit: destroy 5 enemy Shield. | → Winch Harpoon |
-| Meteor Hammer | rare | 6 | `##/##` | weapon | 2.6–3.8 damage per second. Hits for 9–13 every 3.4 s. Melee, 6 Energy per attack. This item: +20 % crit. | → Neutron Hammer |
-| Tentacle Whip | rare | 6 | `###` | weapon, organic | 1.9–2.5 damage per second. Hits for 3–4 every 1.6 s. Melee, 3 Energy per attack. On hit: heal 1. |  |
-| Ripper Saw | rare | 6 | `##` | weapon, mechanical | 1.3–3.8 damage per second. Hits for 1–3 every 0.8 s. Melee, 2 Energy per attack. | → Buzz Blade |
-| Gamma Lance | epic | 8 | `###` | weapon, mechanical | 2.1–2.9 damage per second. Hits for 5–7 every 2.4 s. Melee, 5 Energy per attack. On hit: inflict 2 Radiation. |  |
-| Antimatter Dagger | epic | 8 | `#` | weapon | 2–3 damage per second. Hits for 2–3 every 1 s. Melee, 3 Energy per attack. This item: +30 % crit. |  |
-| Photon Bow | epic | 8 | `#*/#*/#*` | weapon | 2.3–3.2 damage per second. Hits for 5–7 every 2.2 s. Ranged, 4 Energy per attack. This item: +3 damage per starred accessory. |  |
-| Railgun | epic | 9 | `####` | weapon, mechanical | 4.5–6 damage per second. Hits for 18–24 every 4 s. Ranged, 7 Energy per attack. | → Star Piercer |
-| Swarm Missiles | epic | 9 | `##/##` | weapon, mechanical | 4–5 damage per second. Hits for 4–5 every 1 s. Ranged, 3 Energy per attack. |  |
-| Graviton Maul | legendary | 12 | `##/##/#.` | weapon | 5.6–7.2 damage per second. Hits for 20–26 every 3.6 s. Melee, 6 Energy per attack. On hit: destroy 10 enemy Shield and inflict 2 Cryo. |  |
-| Void Scythe | legendary | 13 | `##/#./#.` | weapon | 4.5–6.4 damage per second. Hits for 10–14 every 2.2 s. Melee, 4 Energy per attack. On hit: deal 1 damage per 2 Toxin on the enemy (max 15×). |  |
-| Solar Cannon | legendary | 13 | `###/###` | weapon, mechanical | 4.7–6 damage per second. Hits for 14–18 every 3 s. Ranged, 6 Energy per attack. On hit: inflict 3 Burn. |  |
+| Rivet Gun | common | 2 | `##` | weapon, mechanical | 2 damage per hit, every 1.5 s: 1.3 damage per second. Ranged, 3 Energy per attack: 2 Energy per second. | → Nail Storm |
+| Asteroid Chunk | common | 2 | `##` | weapon | 3–5 damage per hit, every 3 s: 1–1.7 damage per second. Ranged, 6 Energy per attack: 2 Energy per second. | → Slag Mace |
+| Fang Dagger | common | 2 | `#` | weapon, organic | 1–2 damage per hit, every 1.5 s: 0.7–1.3 damage per second. Melee, 3 Energy per attack: 2 Energy per second. This item: +15 % crit. | → Venom Fang |
+| Laser Pistol | common | 3 | `#/#` | weapon, mechanical | 3–4 damage per hit, every 2 s: 1.5–2 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. | → Prism Laser, Twin Lasers, Gunship Drone |
+| Stun Baton | common | 3 | `#/#` | weapon, mechanical | 2–3 damage per hit, every 2 s: 1–1.5 damage per second. Melee, 4 Energy per attack: 2 Energy per second. On hit: inflict 1 Jam. | → Cryo Baton |
+| Mining Pick | common | 3 | `##/#.` | weapon | 4–6 damage per hit, every 2.6 s: 1.5–2.3 damage per second. Melee, 5 Energy per attack: 1.9 Energy per second. On hit: destroy 2 enemy Shield. | → Drill Mole |
+| Flare Gun | common | 3 | `##` | weapon, mechanical | 1–2 damage per hit, every 3 s: 0.3–0.7 damage per second. Ranged, 6 Energy per attack: 2 Energy per second. On hit: inflict 2 Burn. |  |
+| Boomerang Blade | common | 3 | `##` | weapon | 3–5 damage per hit, every 2.4 s: 1.3–2.1 damage per second. Ranged, 5 Energy per attack: 2.1 Energy per second. Each attack: deal 3 damage (30 % chance). | → Buzz Blade |
+| Plasma Cutter | common | 4 | `##` | weapon, mechanical | 3–4 damage per hit, every 2.5 s: 1.2–1.6 damage per second. Melee, 5 Energy per attack: 2 Energy per second. On hit: inflict 1 Burn. | → Flamethrower |
+| Acid Flask | rare | 4 | `#` | weapon, organic | 1–2 damage per hit, every 3 s: 0.3–0.7 damage per second. Ranged, 6 Energy per attack: 2 Energy per second. On hit: destroy 6 enemy Shield. On hit: inflict 1 Toxin (50 % chance). | → Acid Sprayer |
+| Cryo Sprayer | rare | 5 | `##` | weapon, mechanical | 2–3 damage per hit, every 2.2 s: 0.9–1.4 damage per second. Ranged, 4 Energy per attack: 1.8 Energy per second. On hit: inflict 2 Cryo. | → Glacier Cannon, Acid Sprayer |
+| Ion Blaster | rare | 5 | `#/#` | weapon, mechanical | 3–5 damage per hit, every 2 s: 1.5–2.5 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. On hit: inflict 1 Jam. | → EMP Cannon |
+| Spore Launcher | rare | 5 | `##` | weapon, organic | 1–2 damage per hit, every 2.6 s: 0.4–0.8 damage per second. Ranged, 5 Energy per attack: 1.9 Energy per second. On hit: inflict 1 Toxin. | → Fungal Mortar |
+| Shock Gauntlet | rare | 5 | `#/#` | weapon, mechanical | 2–3 damage per hit, every 1.4 s: 1.4–2.1 damage per second. Melee, 3 Energy per attack: 2.1 Energy per second. On hit: deal 1 damage per 3 Overclock you have (max 6×). |  |
+| Needle Rifle | rare | 5 | `###` | weapon, mechanical | 6–8 damage per hit, every 2.8 s: 2.1–2.9 damage per second. Ranged, 5 Energy per attack: 1.8 Energy per second. This item: +25 % crit. | → Burst Rifle |
+| Plasma Sword | rare | 6 | `#/#/#` | weapon, mechanical | 5–7 damage per hit, every 2 s: 2.5–3.5 damage per second. Melee, 4 Energy per attack: 2 Energy per second. On hit: inflict 1 Burn. | → Plasma Katana |
+| Harpoon Launcher | rare | 6 | `###` | weapon, mechanical | 8–11 damage per hit, every 3.2 s: 2.5–3.4 damage per second. Ranged, 6 Energy per attack: 1.9 Energy per second. On hit: destroy 5 enemy Shield. | → Winch Harpoon |
+| Meteor Hammer | rare | 6 | `##/##` | weapon | 9–13 damage per hit, every 3.4 s: 2.6–3.8 damage per second. Melee, 6 Energy per attack: 1.8 Energy per second. This item: +20 % crit. | → Neutron Hammer |
+| Tentacle Whip | rare | 6 | `###` | weapon, organic | 3–4 damage per hit, every 1.6 s: 1.9–2.5 damage per second. Melee, 3 Energy per attack: 1.9 Energy per second. On hit: heal 1. |  |
+| Ripper Saw | rare | 6 | `##` | weapon, mechanical | 1–3 damage per hit, every 0.8 s: 1.3–3.8 damage per second. Melee, 2 Energy per attack: 2.5 Energy per second. | → Buzz Blade |
+| Gamma Lance | epic | 8 | `###` | weapon, mechanical | 5–7 damage per hit, every 2.4 s: 2.1–2.9 damage per second. Melee, 5 Energy per attack: 2.1 Energy per second. On hit: inflict 2 Radiation. |  |
+| Antimatter Dagger | epic | 8 | `#` | weapon | 2–3 damage per hit, every 1 s: 2–3 damage per second. Melee, 3 Energy per attack: 3 Energy per second. This item: +30 % crit. |  |
+| Photon Bow | epic | 8 | `#*/#*/#*` | weapon | 5–7 damage per hit, every 2.2 s: 2.3–3.2 damage per second. Ranged, 4 Energy per attack: 1.8 Energy per second. This item: +3 damage per starred accessory. |  |
+| Railgun | epic | 9 | `####` | weapon, mechanical | 18–24 damage per hit, every 4 s: 4.5–6 damage per second. Ranged, 7 Energy per attack: 1.8 Energy per second. | → Star Piercer |
+| Swarm Missiles | epic | 9 | `##/##` | weapon, mechanical | 4–5 damage per hit, every 1 s: 4–5 damage per second. Ranged, 3 Energy per attack: 3 Energy per second. |  |
+| Graviton Maul | legendary | 12 | `##/##/#.` | weapon | 20–26 damage per hit, every 3.6 s: 5.6–7.2 damage per second. Melee, 6 Energy per attack: 1.7 Energy per second. On hit: destroy 10 enemy Shield and inflict 2 Cryo. |  |
+| Void Scythe | legendary | 13 | `##/#./#.` | weapon | 10–14 damage per hit, every 2.2 s: 4.5–6.4 damage per second. Melee, 4 Energy per attack: 1.8 Energy per second. On hit: deal 1 damage per 2 Toxin on the enemy (max 15×). |  |
+| Solar Cannon | legendary | 13 | `###/###` | weapon, mechanical | 14–18 damage per hit, every 3 s: 4.7–6 damage per second. Ranged, 6 Energy per attack: 2 Energy per second. On hit: inflict 3 Burn. |  |
 
 ### Weapon: crafted (27)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Slag Mace | crafted (step 1) | 3 | `#/#` | weapon, mechanical | 1.9–2.7 damage per second. Hits for 5–7 every 2.6 s. Melee, 5 Energy per attack. On hit: destroy 3 enemy Shield. | = Asteroid Chunk + Scrap Metal; → Neutron Hammer |
-| Nail Storm | crafted (step 1) | 4 | `##` | weapon, mechanical | 1.4–2.9 damage per second. Hits for 1–2 every 0.7 s. Ranged, 2 Energy per attack. On hit: inflict 1 Jam (15 % chance). | = Rivet Gun + Copper Wire |
-| Venom Fang | crafted (step 1) | 5 | `#` | weapon, organic | 1.5–2.3 damage per second. Hits for 2–3 every 1.3 s. Melee, 3 Energy per attack. This item: +15 % crit. On hit: inflict 1 Toxin (30 % chance). | = Fang Dagger + Venom Sac; → Plague Hydra |
-| Prism Laser | crafted (step 1) | 6 | `#/#` | weapon, mechanical | 3.1–4.4 damage per second. Hits for 5–7 every 1.6 s. Ranged, 3 Energy per attack. This item: +15 % crit. | = Laser Pistol + Crystal Shard; → Void Beam |
-| Twin Lasers | crafted (step 1) | 6 | `##/##` | weapon, mechanical | 3–4 damage per second. Hits for 3–4 every 1 s. Ranged, 3 Energy per attack. | = Laser Pistol + Laser Pistol; → Gatling Laser |
-| Cryo Baton | crafted (step 1) | 6 | `#/#` | weapon, mechanical | 1.7–2.2 damage per second. Hits for 3–4 every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Cryo and 1 Jam. | = Stun Baton + Frost Gem |
-| Flamethrower | crafted (step 1) | 7 | `###` | weapon, mechanical | 1.5–2.5 damage per second. Hits for 3–5 every 2 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. | = Plasma Cutter + Fuel Canister; → Dragon Engine |
-| Glacier Cannon | crafted (step 1) | 8 | `##/##` | weapon, mechanical | 1.8–2.7 damage per second. Hits for 4–6 every 2.2 s. Ranged, 4 Energy per attack. On hit: inflict 2 Cryo. Each attack: remove 1 of your debuffs. | = Cryo Sprayer + Coolant Tank; → Absolute Zero |
-| Fungal Mortar | crafted (step 1) | 8 | `##/##` | weapon, organic | 0.8–1.3 damage per second. Hits for 2–3 every 2.4 s. Ranged, 5 Energy per attack. On hit: inflict 2 Toxin. Each attack: heal 3. | = Spore Launcher + Mushroom Cluster; → Bloom Artillery |
-| Winch Harpoon | crafted (step 1) | 8 | `###` | weapon, mechanical | 3.5–4.6 damage per second. Hits for 9–12 every 2.6 s. Ranged, 5 Energy per attack. On hit: destroy 6 enemy Shield and inflict 1 Cryo. | = Harpoon Launcher + Copper Wire |
-| Burst Rifle | crafted (step 1) | 8 | `###` | weapon, mechanical | 2.9–3.8 damage per second. Hits for 7–9 every 2.4 s. Ranged, 5 Energy per attack. This item: +45 % crit. | = Needle Rifle + Targeting Lens |
-| Plasma Katana | crafted (step 1) | 9 | `#/#/#` | weapon, mechanical | 3.9–5 damage per second. Hits for 7–9 every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. This item: +15 % crit. | = Plasma Sword + Crystal Shard; → Inferno Blade |
-| Buzz Blade | crafted (step 1) | 9 | `##/#.` | weapon, mechanical | 2.9–5.7 damage per second. Hits for 2–4 every 0.7 s. Melee, 2 Energy per attack. On hit: deal 3 damage (20 % chance). | = Ripper Saw + Boomerang Blade |
-| Acid Sprayer | crafted (step 1) | 9 | `##/#.` | weapon, organic | 0.9–1.4 damage per second. Hits for 2–3 every 2.2 s. Ranged, 4 Energy per attack. On hit: destroy 6 enemy Shield, inflict 1 Toxin and 1 Cryo. | = Acid Flask + Cryo Sprayer |
-| EMP Cannon | crafted (step 1) | 10 | `##/##` | weapon, mechanical | 2.5–3.5 damage per second. Hits for 5–7 every 2 s. Ranged, 4 Energy per attack. On hit: inflict 2 Jam and destroy 4 enemy Shield. | = Ion Blaster + Jammer Beacon; → Storm Coil |
-| Neutron Hammer | crafted (step 2) | 9 | `##/##/#.` | weapon, mechanical | 4.3–5.7 damage per second. Hits for 13–17 every 3 s. Melee, 6 Energy per attack. This item: +25 % crit. On hit: destroy 8 enemy Shield. | = Slag Mace + Meteor Hammer; → Worldbreaker |
-| Dragon Engine | crafted (step 2) | 10 | `####` | weapon, mechanical | 2.5–3.8 damage per second. Hits for 4–6 every 1.6 s. Ranged, 3 Energy per attack. On hit: inflict 2 Burn. Battle start: gain 2 Overclock. | = Flamethrower + Thruster |
-| Gatling Laser | crafted (step 2) | 11 | `##/##` | weapon, mechanical | 6–8 damage per second. Hits for 3–4 every 0.5 s. Ranged, 2 Energy per attack. | = Twin Lasers + Fusion Battery; → Death Blossom |
-| Absolute Zero | crafted (step 2) | 13 | `##/##/##` | weapon, mechanical | 2.5–3.5 damage per second. Hits for 5–7 every 2 s. Ranged, 4 Energy per attack. On hit: inflict 2 Cryo. Each attack: heal 4 and remove 1 of your debuffs. | = Glacier Cannon + Comet Sorbet; → Entropy Engine |
-| Void Beam | crafted (step 2) | 14 | `#/#/#` | weapon, mechanical | 5.7–7.9 damage per second. Hits for 8–11 every 1.4 s. Ranged, 3 Energy per attack. This item: +25 % crit. | = Prism Laser + Dark Matter; → Death Blossom |
-| Bloom Artillery | crafted (step 2) | 14 | `###/###` | weapon, organic | 1.4–2.3 damage per second. Hits for 3–5 every 2.2 s. Ranged, 4 Energy per attack. On hit: inflict 3 Toxin. Each attack: heal 4. | = Fungal Mortar + Plague Slug; → Entropy Engine |
-| Storm Coil | crafted (step 2) | 15 | `##/##` | weapon, mechanical | 3.3–4.4 damage per second. Hits for 6–8 every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 2 Jam and destroy 4 enemy Shield. Each attack: gain 1 Overclock (35 % chance). | = EMP Cannon + Overclock Chip |
-| Star Piercer | crafted (step 2) | 15 | `####` | weapon, mechanical | 7.1–8.8 damage per second. Hits for 24–30 every 3.4 s. Ranged, 6 Energy per attack. This item: +35 % crit. On hit: destroy 10 enemy Shield. | = Railgun + Sniper Scope |
-| Inferno Blade | crafted (step 2) | 15 | `#*/#*/#*` | weapon, mechanical | 5–6.3 damage per second. Hits for 8–10 every 1.6 s. Melee, 3 Energy per attack. On hit: inflict 3 Burn. This item: +20 % crit and +2 damage per starred accessory. | = Plasma Katana + Inferno Canister |
-| Worldbreaker | crafted (step 3) | 17 | `##/##/##` | weapon, mechanical | 9.3–12.1 damage per second. Hits for 26–34 every 2.8 s. Melee, 5 Energy per attack. This item: +30 % crit. On hit: destroy 12 enemy Shield and inflict 2 Cryo. | = Neutron Hammer + Dark Matter |
-| Death Blossom | crafted (step 3) | 25 | `###/###` | weapon, mechanical | 12.5–17.5 damage per second. Hits for 5–7 every 0.4 s. Ranged, 2 Energy per attack. This item: +20 % crit. | = Gatling Laser + Void Beam |
-| Entropy Engine | crafted (step 3) | 27 | `###/###/##.` | weapon, mechanical, organic | 3.3–5 damage per second. Hits for 6–9 every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 4 Cryo and 4 Toxin. Each attack: heal 7. | = Absolute Zero + Bloom Artillery |
+| Slag Mace | crafted (step 1) | 3 | `#/#` | weapon, mechanical | 5–7 damage per hit, every 2.6 s: 1.9–2.7 damage per second. Melee, 5 Energy per attack: 1.9 Energy per second. On hit: destroy 3 enemy Shield. | = Asteroid Chunk + Scrap Metal; → Neutron Hammer |
+| Nail Storm | crafted (step 1) | 4 | `##` | weapon, mechanical | 1–2 damage per hit, every 0.7 s: 1.4–2.9 damage per second. Ranged, 2 Energy per attack: 2.9 Energy per second. On hit: inflict 1 Jam (15 % chance). | = Rivet Gun + Copper Wire |
+| Venom Fang | crafted (step 1) | 5 | `#` | weapon, organic | 2–3 damage per hit, every 1.3 s: 1.5–2.3 damage per second. Melee, 3 Energy per attack: 2.3 Energy per second. This item: +15 % crit. On hit: inflict 1 Toxin (30 % chance). | = Fang Dagger + Venom Sac; → Plague Hydra |
+| Prism Laser | crafted (step 1) | 6 | `#/#` | weapon, mechanical | 5–7 damage per hit, every 1.6 s: 3.1–4.4 damage per second. Ranged, 3 Energy per attack: 1.9 Energy per second. This item: +15 % crit. | = Laser Pistol + Crystal Shard; → Void Beam |
+| Twin Lasers | crafted (step 1) | 6 | `##/##` | weapon, mechanical | 3–4 damage per hit, every 1 s: 3–4 damage per second. Ranged, 3 Energy per attack: 3 Energy per second. | = Laser Pistol + Laser Pistol; → Gatling Laser |
+| Cryo Baton | crafted (step 1) | 6 | `#/#` | weapon, mechanical | 3–4 damage per hit, every 1.8 s: 1.7–2.2 damage per second. Melee, 4 Energy per attack: 2.2 Energy per second. On hit: inflict 1 Cryo and 1 Jam. | = Stun Baton + Frost Gem |
+| Flamethrower | crafted (step 1) | 7 | `###` | weapon, mechanical | 3–5 damage per hit, every 2 s: 1.5–2.5 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. On hit: inflict 2 Burn. | = Plasma Cutter + Fuel Canister; → Dragon Engine |
+| Glacier Cannon | crafted (step 1) | 8 | `##/##` | weapon, mechanical | 4–6 damage per hit, every 2.2 s: 1.8–2.7 damage per second. Ranged, 4 Energy per attack: 1.8 Energy per second. On hit: inflict 2 Cryo. Each attack: remove 1 of your debuffs. | = Cryo Sprayer + Coolant Tank; → Absolute Zero |
+| Fungal Mortar | crafted (step 1) | 8 | `##/##` | weapon, organic | 2–3 damage per hit, every 2.4 s: 0.8–1.3 damage per second. Ranged, 5 Energy per attack: 2.1 Energy per second. On hit: inflict 2 Toxin. Each attack: heal 3. | = Spore Launcher + Mushroom Cluster; → Bloom Artillery |
+| Winch Harpoon | crafted (step 1) | 8 | `###` | weapon, mechanical | 9–12 damage per hit, every 2.6 s: 3.5–4.6 damage per second. Ranged, 5 Energy per attack: 1.9 Energy per second. On hit: destroy 6 enemy Shield and inflict 1 Cryo. | = Harpoon Launcher + Copper Wire |
+| Burst Rifle | crafted (step 1) | 8 | `###` | weapon, mechanical | 7–9 damage per hit, every 2.4 s: 2.9–3.8 damage per second. Ranged, 5 Energy per attack: 2.1 Energy per second. This item: +45 % crit. | = Needle Rifle + Targeting Lens |
+| Plasma Katana | crafted (step 1) | 9 | `#/#/#` | weapon, mechanical | 7–9 damage per hit, every 1.8 s: 3.9–5 damage per second. Melee, 4 Energy per attack: 2.2 Energy per second. On hit: inflict 1 Burn. This item: +15 % crit. | = Plasma Sword + Crystal Shard; → Inferno Blade |
+| Buzz Blade | crafted (step 1) | 9 | `##/#.` | weapon, mechanical | 2–4 damage per hit, every 0.7 s: 2.9–5.7 damage per second. Melee, 2 Energy per attack: 2.9 Energy per second. On hit: deal 3 damage (20 % chance). | = Ripper Saw + Boomerang Blade |
+| Acid Sprayer | crafted (step 1) | 9 | `##/#.` | weapon, organic | 2–3 damage per hit, every 2.2 s: 0.9–1.4 damage per second. Ranged, 4 Energy per attack: 1.8 Energy per second. On hit: destroy 6 enemy Shield, inflict 1 Toxin and 1 Cryo. | = Acid Flask + Cryo Sprayer |
+| EMP Cannon | crafted (step 1) | 10 | `##/##` | weapon, mechanical | 5–7 damage per hit, every 2 s: 2.5–3.5 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. On hit: inflict 2 Jam and destroy 4 enemy Shield. | = Ion Blaster + Jammer Beacon; → Storm Coil |
+| Neutron Hammer | crafted (step 2) | 9 | `##/##/#.` | weapon, mechanical | 13–17 damage per hit, every 3 s: 4.3–5.7 damage per second. Melee, 6 Energy per attack: 2 Energy per second. This item: +25 % crit. On hit: destroy 8 enemy Shield. | = Slag Mace + Meteor Hammer; → Worldbreaker |
+| Dragon Engine | crafted (step 2) | 10 | `####` | weapon, mechanical | 4–6 damage per hit, every 1.6 s: 2.5–3.8 damage per second. Ranged, 3 Energy per attack: 1.9 Energy per second. On hit: inflict 2 Burn. Battle start: gain 2 Overclock. | = Flamethrower + Thruster |
+| Gatling Laser | crafted (step 2) | 11 | `##/##` | weapon, mechanical | 3–4 damage per hit, every 0.5 s: 6–8 damage per second. Ranged, 2 Energy per attack: 4 Energy per second. | = Twin Lasers + Fusion Battery; → Death Blossom |
+| Absolute Zero | crafted (step 2) | 13 | `##/##/##` | weapon, mechanical | 5–7 damage per hit, every 2 s: 2.5–3.5 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. On hit: inflict 2 Cryo. Each attack: heal 4 and remove 1 of your debuffs. | = Glacier Cannon + Comet Sorbet; → Entropy Engine |
+| Void Beam | crafted (step 2) | 14 | `#/#/#` | weapon, mechanical | 8–11 damage per hit, every 1.4 s: 5.7–7.9 damage per second. Ranged, 3 Energy per attack: 2.1 Energy per second. This item: +25 % crit. | = Prism Laser + Dark Matter; → Death Blossom |
+| Bloom Artillery | crafted (step 2) | 14 | `###/###` | weapon, organic | 3–5 damage per hit, every 2.2 s: 1.4–2.3 damage per second. Ranged, 4 Energy per attack: 1.8 Energy per second. On hit: inflict 3 Toxin. Each attack: heal 4. | = Fungal Mortar + Plague Slug; → Entropy Engine |
+| Storm Coil | crafted (step 2) | 15 | `##/##` | weapon, mechanical | 6–8 damage per hit, every 1.8 s: 3.3–4.4 damage per second. Ranged, 4 Energy per attack: 2.2 Energy per second. On hit: inflict 2 Jam and destroy 4 enemy Shield. Each attack: gain 1 Overclock (35 % chance). | = EMP Cannon + Overclock Chip |
+| Star Piercer | crafted (step 2) | 15 | `####` | weapon, mechanical | 24–30 damage per hit, every 3.4 s: 7.1–8.8 damage per second. Ranged, 6 Energy per attack: 1.8 Energy per second. This item: +35 % crit. On hit: destroy 10 enemy Shield. | = Railgun + Sniper Scope |
+| Inferno Blade | crafted (step 2) | 15 | `#*/#*/#*` | weapon, mechanical | 8–10 damage per hit, every 1.6 s: 5–6.3 damage per second. Melee, 3 Energy per attack: 1.9 Energy per second. On hit: inflict 3 Burn. This item: +20 % crit and +2 damage per starred accessory. | = Plasma Katana + Inferno Canister |
+| Worldbreaker | crafted (step 3) | 17 | `##/##/##` | weapon, mechanical | 26–34 damage per hit, every 2.8 s: 9.3–12.1 damage per second. Melee, 5 Energy per attack: 1.8 Energy per second. This item: +30 % crit. On hit: destroy 12 enemy Shield and inflict 2 Cryo. | = Neutron Hammer + Dark Matter |
+| Death Blossom | crafted (step 3) | 25 | `###/###` | weapon, mechanical | 5–7 damage per hit, every 0.4 s: 12.5–17.5 damage per second. Ranged, 2 Energy per attack: 5 Energy per second. This item: +20 % crit. | = Gatling Laser + Void Beam |
+| Entropy Engine | crafted (step 3) | 27 | `###/###/##.` | weapon, mechanical, organic | 6–9 damage per hit, every 1.8 s: 3.3–5 damage per second. Ranged, 4 Energy per attack: 2.2 Energy per second. On hit: inflict 4 Cryo and 4 Toxin. Each attack: heal 7. | = Absolute Zero + Bloom Artillery |
 
 ### Armor: shop (19)
 
@@ -255,28 +255,28 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Moon Moth | common | 2 | `#` | pet, swarm, organic | Every 3 s: inflict 1 Jam. | → Lunar Moth, Dust Storm |
 | Glow Beetle | common | 2 | `#` | pet, swarm, organic | Every star phase: heal 11 and gain 6 Energy. | → Beetle Lantern |
 | Dust Bunny | common | 2 | `#` | pet, swarm, organic | Battle start: inflict 8 Jam. | → Dust Storm |
-| Pebble Mites | common | 2 | `#` | pet, swarm, weapon, organic | 0.7–1.3 damage per second. Hits for 1–2 every 1.5 s. Melee, attacks without Energy. On hit: gain 1 Shield. |  |
-| Space Hamster | common | 3 | `*#*` | pet, swarm, weapon, organic | 0.7–1.3 damage per second. Hits for 1–2 every 1.5 s. Melee, attacks without Energy. This item: +1 damage per starred food. On hit: gain 2 Energy. | → Hamster Wheel |
+| Pebble Mites | common | 2 | `#` | pet, swarm, weapon, organic | 1–2 damage per hit, every 1.5 s: 0.7–1.3 damage per second. Melee, attacks without Energy. On hit: gain 1 Shield. |  |
+| Space Hamster | common | 3 | `*#*` | pet, swarm, weapon, organic | 1–2 damage per hit, every 1.5 s: 0.7–1.3 damage per second. Melee, attacks without Energy. This item: +1 damage per starred food. On hit: gain 2 Energy. | → Hamster Wheel |
 | Vacuum Slug | common | 3 | `##` | pet, organic | Every 4 s: inflict 1 Toxin. | → Plague Slug, Jelly Swarm |
 | Rock Crab | common | 3 | `##` | pet, armor, organic | Battle start: gain 17 Shield and 1 Spikes. | → Fortress Crab, Shell Dragon |
 | Asteroid Mole | common | 3 | `#/#` | pet, organic | Every 3 s: deal 5 damage. | → Drill Mole |
 | Scout Drone | common | 3 | `*#*/.#.` | pet, mechanical | Starred weapons: 20 % faster. | → Medic Drone |
-| Dune Ox | common | 4 | `##/##` | pet, beast, weapon, organic | 1.9–2.7 damage per second. Hits for 5–7 every 2.6 s. Melee, attacks without Energy. Battle start: gain 6 Shield. |  |
+| Dune Ox | common | 4 | `##/##` | pet, beast, weapon, organic | 5–7 damage per hit, every 2.6 s: 1.9–2.7 damage per second. Melee, attacks without Energy. Battle start: gain 6 Shield. |  |
 | Tardigrade | rare | 4 | `#` | pet, organic | Once below 50 % health: gain 49 Shield. You: +21 max health. |  |
 | Repair Bot | rare | 5 | `#/#` | pet, mechanical | Every 3 s: gain 7 Shield. | → Welder Bot, Caretaker Bot |
 | Laser Parrot | rare | 5 | `*#*` | pet, organic | When a starred weapon activates: deal 3 damage (60 % chance). | → Hawk-Eye Parrot |
 | Nebula Jelly | rare | 5 | `##` | pet, organic | When a weapon hits you: inflict 1 Toxin (15 % chance). Every 5 s: gain 1 Regen. | → Jelly Swarm |
 | Magma Newt | rare | 5 | `##` | pet, organic | Every 3 s: inflict 2 Burn. | → Magma Hound |
-| Ice Ferret | rare | 5 | `##` | pet, weapon, organic | 1.1–1.7 damage per second. Hits for 2–3 every 1.8 s. Melee, attacks without Energy. On hit: inflict 1 Cryo. | → Snow Lynx, Glacier Drake |
-| Needle Wasps | rare | 5 | `##` | pet, swarm, weapon, organic | 1.1–2.2 damage per second. Hits for 1–2 every 0.9 s. Melee, attacks without Energy. This item: +15 % crit. |  |
+| Ice Ferret | rare | 5 | `##` | pet, weapon, organic | 2–3 damage per hit, every 1.8 s: 1.1–1.7 damage per second. Melee, attacks without Energy. On hit: inflict 1 Cryo. | → Snow Lynx, Glacier Drake |
+| Needle Wasps | rare | 5 | `##` | pet, swarm, weapon, organic | 1–2 damage per hit, every 0.9 s: 1.1–2.2 damage per second. Melee, attacks without Energy. This item: +15 % crit. |  |
 | Purifier Bot | rare | 5 | `#/#` | pet, mechanical | Every 2.5 s: remove 1 of your debuffs and gain 4 Shield. | → Caretaker Bot |
-| Comet Fox | rare | 6 | `##` | pet, weapon, organic | 1.9–2.5 damage per second. Hits for 3–4 every 1.6 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn (30 % chance). | → Magma Hound |
-| Sentry Drone | rare | 6 | `#/#` | pet, weapon, mechanical | 1.7–2.5 damage per second. Hits for 2–3 every 1.2 s. Ranged, attacks without Energy. | → Gunship Drone |
-| Tundra Yak | rare | 6 | `##/##` | pet, beast, weapon, organic | 2.9–3.8 damage per second. Hits for 7–9 every 2.4 s. Melee, attacks without Energy. You: +20 max health. |  |
+| Comet Fox | rare | 6 | `##` | pet, weapon, organic | 3–4 damage per hit, every 1.6 s: 1.9–2.5 damage per second. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn (30 % chance). | → Magma Hound |
+| Sentry Drone | rare | 6 | `#/#` | pet, weapon, mechanical | 2–3 damage per hit, every 1.2 s: 1.7–2.5 damage per second. Ranged, attacks without Energy. | → Gunship Drone |
+| Tundra Yak | rare | 6 | `##/##` | pet, beast, weapon, organic | 7–9 damage per hit, every 2.4 s: 2.9–3.8 damage per second. Melee, attacks without Energy. You: +20 max health. |  |
 | Guardian Drone | rare | 6 | `##` | pet, mechanical | Every 3 s: gain 7 Shield. When a weapon hits you: gain 5 Shield (20 % chance). |  |
-| Shadow Lynx | epic | 8 | `##/#.` | pet, weapon, organic | 2.1–3.6 damage per second. Hits for 3–5 every 1.4 s. Melee, attacks without Energy. This item: +25 % crit. | → Snow Lynx |
+| Shadow Lynx | epic | 8 | `##/#.` | pet, weapon, organic | 3–5 damage per hit, every 1.4 s: 2.1–3.6 damage per second. Melee, attacks without Energy. This item: +25 % crit. | → Snow Lynx |
 | Star Whale Calf | epic | 9 | `###/###` | pet, beast, organic | You: +70 max health. Every 4 s: heal 11. |  |
-| Void Kraken | legendary | 14 | `###/###/#.#` | pet, beast, weapon, organic | 4.1–5.5 damage per second. Hits for 9–12 every 2.2 s. Melee, attacks without Energy. On hit: inflict 1 Cryo and 1 Toxin. | → Leviathan |
+| Void Kraken | legendary | 14 | `###/###/#.#` | pet, beast, weapon, organic | 9–12 damage per hit, every 2.2 s: 4.1–5.5 damage per second. Melee, attacks without Energy. On hit: inflict 1 Cryo and 1 Toxin. | → Leviathan |
 
 ### Pet: crafted (28)
 
@@ -285,31 +285,31 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Slime Pup | crafted (step 1) | 4 | `#/#` | pet, organic | Every 3 s: heal 6. When a weapon hits you: inflict 1 Toxin (12 % chance). | = Cosmic Egg + Biogel |
 | Clockwork Chick | crafted (step 1) | 4 | `#` | pet, mechanical | Every 4.5 s: gain 1 Overclock. | = Cosmic Egg + Copper Wire |
 | Dust Storm | crafted (step 1) | 4 | `##` | pet, swarm, organic | Battle start: inflict 4 Jam. Every 2.5 s: inflict 1 Jam. | = Dust Bunny + Moon Moth |
-| Fire Drakeling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 1.1–1.7 damage per second. Hits for 2–3 every 1.8 s. Ranged, attacks without Energy. On hit: inflict 1 Burn. | = Cosmic Egg + Fuel Canister; → Solar Drake |
-| Frost Hatchling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 1.1–2.2 damage per second. Hits for 2–4 every 1.8 s. Ranged, attacks without Energy. On hit: inflict 1 Cryo. | = Cosmic Egg + Coolant Tank; → Glacier Drake |
+| Fire Drakeling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2–3 damage per hit, every 1.8 s: 1.1–1.7 damage per second. Ranged, attacks without Energy. On hit: inflict 1 Burn. | = Cosmic Egg + Fuel Canister; → Solar Drake |
+| Frost Hatchling | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2–4 damage per hit, every 1.8 s: 1.1–2.2 damage per second. Ranged, attacks without Energy. On hit: inflict 1 Cryo. | = Cosmic Egg + Coolant Tank; → Glacier Drake |
 | Beetle Lantern | crafted (step 1) | 5 | `#` | pet, swarm, organic | Every star phase: heal 14 and gain 1 Power. | = Glow Beetle + Crystal Shard |
-| Laser Turret | crafted (step 1) | 6 | `##` | pet, weapon, mechanical | 1.7–3.3 damage per second. Hits for 2–4 every 1.2 s. Ranged, attacks without Energy. | = Scrap Metal + Copper Wire + Crystal Shard |
-| Hamster Wheel | crafted (step 1) | 6 | `*##*` | pet, weapon, mechanical | 1.5–2.3 damage per second. Hits for 2–3 every 1.3 s. Melee, attacks without Energy. Starred mechanical items: 30 % faster. On hit: gain 3 Energy. | = Space Hamster + Power Cell |
+| Laser Turret | crafted (step 1) | 6 | `##` | pet, weapon, mechanical | 2–4 damage per hit, every 1.2 s: 1.7–3.3 damage per second. Ranged, attacks without Energy. | = Scrap Metal + Copper Wire + Crystal Shard |
+| Hamster Wheel | crafted (step 1) | 6 | `*##*` | pet, weapon, mechanical | 2–3 damage per hit, every 1.3 s: 1.5–2.3 damage per second. Melee, attacks without Energy. Starred mechanical items: 30 % faster. On hit: gain 3 Energy. | = Space Hamster + Power Cell |
 | Lunar Moth | crafted (step 1) | 6 | `#` | pet, swarm, organic | Every 2.5 s: inflict 1 Jam. Battle start: gain 1 Power and 1 Overclock. | = Moon Moth + Stardust Vial |
 | Fortress Crab | crafted (step 1) | 6 | `##/##` | pet, beast, armor, organic | Battle start: gain 36 Shield and 1 Spikes. | = Rock Crab + Hull Plating; → Titan Crab |
 | Plague Slug | crafted (step 1) | 6 | `##/##` | pet, organic | Every 3 s: inflict 1 Toxin and heal 4. | = Vacuum Slug + Mushroom Cluster; → Bloom Artillery |
 | Welder Bot | crafted (step 1) | 6 | `##` | pet, mechanical | Battle start: gain 11 Shield. Every 2.5 s: gain 8 Shield. | = Repair Bot + Scrap Metal |
-| Drill Mole | crafted (step 1) | 6 | `##/##` | pet, beast, weapon, organic | 2.3–3.2 damage per second. Hits for 5–7 every 2.2 s. Melee, attacks without Energy. On hit: destroy 4 enemy Shield. Each attack: deal 3 damage. | = Asteroid Mole + Mining Pick |
+| Drill Mole | crafted (step 1) | 6 | `##/##` | pet, beast, weapon, organic | 5–7 damage per hit, every 2.2 s: 2.3–3.2 damage per second. Melee, attacks without Energy. On hit: destroy 4 enemy Shield. Each attack: deal 3 damage. | = Asteroid Mole + Mining Pick |
 | Medic Drone | crafted (step 1) | 6 | `*##*` | pet, mechanical | Every 2.5 s: heal 8. Starred weapons: 20 % faster. | = Repair Kit + Scout Drone; → Command Drone |
 | Hawk-Eye Parrot | crafted (step 1) | 8 | `*#*` | pet, organic | When a starred weapon activates: deal 4 damage (80 % chance). Starred weapons: +20 % crit. | = Laser Parrot + Targeting Lens |
 | Jelly Swarm | crafted (step 1) | 8 | `##/##` | pet, swarm, organic | When a weapon hits you: inflict 1 Toxin (20 % chance). Every 3.5 s: inflict 1 Toxin and gain 1 Regen. | = Nebula Jelly + Vacuum Slug; → Plague Hydra |
-| Gunship Drone | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 3.3–5.6 damage per second. Hits for 3–5 every 0.9 s. Ranged, attacks without Energy. | = Sentry Drone + Laser Pistol; → Command Drone |
+| Gunship Drone | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 3–5 damage per hit, every 0.9 s: 3.3–5.6 damage per second. Ranged, attacks without Energy. | = Sentry Drone + Laser Pistol; → Command Drone |
 | Caretaker Bot | crafted (step 1) | 10 | `##` | pet, mechanical | Every 2.2 s: gain 8 Shield, remove 1 of your debuffs and heal 4. | = Purifier Bot + Repair Bot |
-| Magma Hound | crafted (step 1) | 11 | `##/##` | pet, beast, weapon, organic | 2.9–4.3 damage per second. Hits for 4–6 every 1.4 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn. | = Comet Fox + Magma Newt |
-| Snow Lynx | crafted (step 1) | 13 | `##/##` | pet, beast, weapon, organic | 3.3–5 damage per second. Hits for 4–6 every 1.2 s. Melee, attacks without Energy. This item: +25 % crit. On hit: inflict 1 Cryo. | = Shadow Lynx + Ice Ferret |
+| Magma Hound | crafted (step 1) | 11 | `##/##` | pet, beast, weapon, organic | 4–6 damage per hit, every 1.4 s: 2.9–4.3 damage per second. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn. | = Comet Fox + Magma Newt |
+| Snow Lynx | crafted (step 1) | 13 | `##/##` | pet, beast, weapon, organic | 4–6 damage per hit, every 1.2 s: 3.3–5 damage per second. Melee, attacks without Energy. This item: +25 % crit. On hit: inflict 1 Cryo. | = Shadow Lynx + Ice Ferret |
 | Star Hatchling | crafted (step 1) | 14 | `##` | pet, organic | Every star phase: gain 1 Power, 3 Regen and 1 Overclock. You: +42 max health. | = Cosmic Egg + Stardust Vial + Royal Jelly |
-| Glacier Drake | crafted (step 2) | 10 | `##/##` | pet, beast, weapon, organic | 2.9–4.3 damage per second. Hits for 4–6 every 1.4 s. Ranged, attacks without Energy. On hit: inflict 1 Cryo. | = Frost Hatchling + Ice Ferret |
-| Solar Drake | crafted (step 2) | 13 | `##/##` | pet, beast, weapon, organic | 3.3–4.7 damage per second. Hits for 5–7 every 1.5 s. Melee, attacks without Energy. On hit: inflict 2 Burn. Each attack: heal 3. | = Fire Drakeling + Magma Curry; → Phoenix |
-| Plague Hydra | crafted (step 2) | 13 | `##/##/#.` | pet, beast, weapon, organic | 2.3–3.8 damage per second. Hits for 3–5 every 1.3 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Toxin (50 % chance). When a weapon hits you: inflict 1 Toxin (20 % chance). | = Venom Fang + Jelly Swarm |
+| Glacier Drake | crafted (step 2) | 10 | `##/##` | pet, beast, weapon, organic | 4–6 damage per hit, every 1.4 s: 2.9–4.3 damage per second. Ranged, attacks without Energy. On hit: inflict 1 Cryo. | = Frost Hatchling + Ice Ferret |
+| Solar Drake | crafted (step 2) | 13 | `##/##` | pet, beast, weapon, organic | 5–7 damage per hit, every 1.5 s: 3.3–4.7 damage per second. Melee, attacks without Energy. On hit: inflict 2 Burn. Each attack: heal 3. | = Fire Drakeling + Magma Curry; → Phoenix |
+| Plague Hydra | crafted (step 2) | 13 | `##/##/#.` | pet, beast, weapon, organic | 3–5 damage per hit, every 1.3 s: 2.3–3.8 damage per second. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Toxin (50 % chance). When a weapon hits you: inflict 1 Toxin (20 % chance). | = Venom Fang + Jelly Swarm |
 | Titan Crab | crafted (step 2) | 15 | `###/###` | pet, beast, armor, organic | Battle start: gain 70 Shield and 3 Spikes. When a weapon hits you: gain 7 Shield (20 % chance). | = Fortress Crab + Mirror Shield; → Leviathan |
-| Command Drone | crafted (step 2) | 15 | `###/###` | pet, weapon, mechanical | 5.6–7.8 damage per second. Hits for 5–7 every 0.9 s. Ranged, attacks without Energy. Each attack: heal 4 (30 % chance). | = Gunship Drone + Medic Drone |
-| Phoenix | crafted (step 3) | 22 | `##/##` | pet, beast, weapon, organic | 4.6–6.9 damage per second. Hits for 6–9 every 1.3 s. Melee, attacks without Energy. On hit: inflict 3 Burn. Once below 50 % health: heal 98. Every star phase: gain 2 Regen. | = Solar Drake + Star Fruit + Stardust Vial |
-| Leviathan | crafted (step 3) | 29 | `###/###/###` | pet, beast, weapon, armor, organic | 6–8 damage per second. Hits for 12–16 every 2 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and 2 Toxin. Battle start: gain 140 Shield and 6 Spikes. | = Titan Crab + Void Kraken |
+| Command Drone | crafted (step 2) | 15 | `###/###` | pet, weapon, mechanical | 5–7 damage per hit, every 0.9 s: 5.6–7.8 damage per second. Ranged, attacks without Energy. Each attack: heal 4 (30 % chance). | = Gunship Drone + Medic Drone |
+| Phoenix | crafted (step 3) | 22 | `##/##` | pet, beast, weapon, organic | 6–9 damage per hit, every 1.3 s: 4.6–6.9 damage per second. Melee, attacks without Energy. On hit: inflict 3 Burn. Once below 50 % health: heal 98. Every star phase: gain 2 Regen. | = Solar Drake + Star Fruit + Stardust Vial |
+| Leviathan | crafted (step 3) | 29 | `###/###/###` | pet, beast, weapon, armor, organic | 12–16 damage per hit, every 2 s: 6–8 damage per second. Melee, attacks without Energy. On hit: inflict 2 Cryo and 2 Toxin. Battle start: gain 140 Shield and 6 Spikes. | = Titan Crab + Void Kraken |
 
 ### Food: shop (24)
 
@@ -382,7 +382,7 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Seed Pod | common | 2 | `#` | weapon, organic | 1.3–1.7 damage per second. Hits for 3–4 every 2.4 s. Ranged, 5 Energy per attack. On hit: inflict 1 Toxin. | → Spore Mine, Thorn Pod |
+| Seed Pod | common | 2 | `#` | weapon, organic | 3–4 damage per hit, every 2.4 s: 1.3–1.7 damage per second. Ranged, 5 Energy per attack: 2.1 Energy per second. On hit: inflict 1 Toxin. | → Spore Mine, Thorn Pod |
 | Watering Drone | common | 2 | `#/#` | pet, mechanical | Every 3 s: heal 10. | → Irrigation Swarm |
 | Compost Bin | common | 3 | `*#*` | accessory, organic | Starred food: 30 % faster. Every 4 s: gain 2 Regen and gain 3 Energy. | → Harvest Crate |
 | Thornvine | common | 3 | `###` | armor, organic | Battle start: gain 1 Spikes and 11 Shield. When a weapon hits you: inflict 1 Toxin (25 % chance). | → Briar Fortress, Living Armor |
@@ -390,162 +390,162 @@ Who the heroes are and how they look: [docs/heroes.md](heroes.md).
 | Grow Lamp | common | 3 | `.*./*#*/.*.` | accessory, mechanical | Starred organic items: 25 % faster. | → Irrigation Swarm |
 | Bramble Seed | common | 3 | `#` | accessory, organic | Every star phase: gain 1 Spikes. | → Thorn Pod |
 | Sap Tap | common | 3 | `*#*` | accessory, organic | When a starred organic item activates: heal 2 and gain 1 Energy (50 % chance). You: 25 % of healing above full health becomes Shield. |  |
-| Snap Sprout | common | 3 | `#` | pet, weapon, organic | 1.7–3.3 damage per second. Hits for 2–4 every 1.2 s. Melee, attacks without Energy. On hit: heal 1. | → Mantrap Pack |
+| Snap Sprout | common | 3 | `#` | pet, weapon, organic | 2–4 damage per hit, every 1.2 s: 1.7–3.3 damage per second. Melee, attacks without Energy. On hit: heal 1. | → Mantrap Pack |
 | Trellis | common | 3 | `*#*` | accessory, organic | Starred pets: +1 damage, 25 % faster. When a starred pet activates: heal 2. |  |
 | Moon Melon | rare | 5 | `##/##` | food, organic | Every 2.8 s: heal 13 and gain 3 Energy. | → Harvest Crate |
 | Healing Moss | rare | 5 | `#` | food, organic | Every star phase: heal 22 and remove 2 of your debuffs. | → Ambrosia |
 | Thorn Hedge | rare | 5 | `##` | armor, organic | Battle start: gain 12 Shield. Every star phase: gain 2 Shield per Spikes you have (max 8×). |  |
 | Bark Shield | rare | 5 | `##` | armor, organic | Battle start: gain 28 Shield and 2 Regen. | → Living Armor |
 | Nectar Flask | rare | 5 | `#` | food, organic | Every 3.8 s: heal 8 and gain 1 Regen. | → Ambrosia |
-| Venus Mantrap | rare | 6 | `##` | pet, weapon, organic | 3.1–4.4 damage per second. Hits for 5–7 every 1.6 s. Melee, attacks without Energy. On hit: heal 2, +1 per 2 pets in your backpack (max 4×). | → Giant Mantrap |
-| Blight Bomb | rare | 6 | `#` | weapon, organic | 0.3–0.6 damage per second. Hits for 1–2 every 3.2 s. Ranged, 6 Energy per attack. On hit: inflict 3 Toxin. | → Plague Blossom |
+| Venus Mantrap | rare | 6 | `##` | pet, weapon, organic | 5–7 damage per hit, every 1.6 s: 3.1–4.4 damage per second. Melee, attacks without Energy. On hit: heal 2, +1 per 2 pets in your backpack (max 4×). | → Giant Mantrap |
+| Blight Bomb | rare | 6 | `#` | weapon, organic | 1–2 damage per hit, every 3.2 s: 0.3–0.6 damage per second. Ranged, 6 Energy per attack: 1.9 Energy per second. On hit: inflict 3 Toxin. | → Plague Blossom |
 | Rot Bloom | rare | 6 | `##` | accessory, organic | Every star phase: deal 1 damage per Toxin on the enemy (max 24×). |  |
 | Root Network | epic | 8 | `####` | accessory, organic | You: +14 max health per organic item in your backpack (max 10×). | → Briar Fortress |
-| Carnivorous Orchid | epic | 9 | `##` | weapon, organic | 2.2–3.3 damage per second. Hits for 4–6 every 1.8 s. Melee, 4 Energy per attack. On hit: deal 1 damage per 2 Toxin on the enemy (max 12×). | → Hydra Bloom |
-| Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 3.2–4.1 damage per second. Hits for 7–9 every 2.2 s. Melee, attacks without Energy. On hit: inflict 5 Cryo and heal 3. | → Jungle Tyrant |
+| Carnivorous Orchid | epic | 9 | `##` | weapon, organic | 4–6 damage per hit, every 1.8 s: 2.2–3.3 damage per second. Melee, 4 Energy per attack: 2.2 Energy per second. On hit: deal 1 damage per 2 Toxin on the enemy (max 12×). | → Hydra Bloom |
+| Strangler Fig | epic | 9 | `###` | pet, weapon, organic | 7–9 damage per hit, every 2.2 s: 3.2–4.1 damage per second. Melee, attacks without Energy. On hit: inflict 5 Cryo and heal 3. | → Jungle Tyrant |
 | Ironbark Golem | epic | 9 | `##/##` | pet, armor, organic | Battle start: gain 50 Shield and 2 Spikes. Every star phase: gain 2 Regen. When a weapon hits you: inflict 1 Toxin (30 % chance). |  |
 | Sun Blossom | legendary | 12 | `##/##` | food, organic | Every star phase: heal 40 and gain 3 Regen. Every 2.7 s: inflict 1 Toxin. |  |
 | World Seed | artifact | 0 | `##/##` | accessory, organic | Battle start: gain 1 Spikes. Every star phase: gain 1 Spikes, 2 Regen and 2 Shield per Spikes you have (max 5×). |  |
 | Queen Spore | artifact | 0 | `*#*` | accessory, organic | Battle start: inflict 5 Toxin. Every 3 s: inflict 3 Toxin. When a starred food activates: inflict 2 Toxin. |  |
 | Terrarium Heart | artifact | 0 | `*##*` | accessory, organic | Starred pets: +7 damage, 25 % faster. When a starred pet activates: heal 5. You: 50 % of healing above full health becomes Shield. |  |
-| Spore Mine | crafted (step 1) | 5 | `##` | weapon, organic | 1.1–1.7 damage per second. Hits for 2–3 every 1.8 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin (45 % chance). Each attack: heal 1. | = Seed Pod + Mushroom Cluster |
-| Thorn Pod | crafted (step 1) | 5 | `##` | weapon, organic | 1–2 damage per second. Hits for 2–4 every 2 s. Ranged, 4 Energy per attack. On hit: inflict 1 Toxin. Battle start: gain 1 Spikes. | = Seed Pod + Bramble Seed |
-| Mantrap Pack | crafted (step 1) | 6 | `##` | pet, weapon, organic | 4.4–5.6 damage per second. Hits for 4–5 every 0.9 s. Melee, attacks without Energy. On hit: heal 1. | = Snap Sprout + Snap Sprout |
-| Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 3.8–5.4 damage per second. Hits for 5–7 every 1.3 s. Melee, attacks without Energy. On hit: heal 3, +1 per 2 pets in your backpack (max 5×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
+| Spore Mine | crafted (step 1) | 5 | `##` | weapon, organic | 2–3 damage per hit, every 1.8 s: 1.1–1.7 damage per second. Ranged, 4 Energy per attack: 2.2 Energy per second. On hit: inflict 1 Toxin (45 % chance). Each attack: heal 1. | = Seed Pod + Mushroom Cluster |
+| Thorn Pod | crafted (step 1) | 5 | `##` | weapon, organic | 2–4 damage per hit, every 2 s: 1–2 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. On hit: inflict 1 Toxin. Battle start: gain 1 Spikes. | = Seed Pod + Bramble Seed |
+| Mantrap Pack | crafted (step 1) | 6 | `##` | pet, weapon, organic | 4–5 damage per hit, every 0.9 s: 4.4–5.6 damage per second. Melee, attacks without Energy. On hit: heal 1. | = Snap Sprout + Snap Sprout |
+| Giant Mantrap | crafted (step 1) | 8 | `##/#.` | pet, weapon, organic | 5–7 damage per hit, every 1.3 s: 3.8–5.4 damage per second. Melee, attacks without Energy. On hit: heal 3, +1 per 2 pets in your backpack (max 5×). | = Venus Mantrap + Biogel; → Hydra Bloom, Jungle Tyrant |
 | Harvest Crate | crafted (step 1) | 8 | `*##*/*##*` | food, organic | Every 2.7 s: heal 14. Starred food: 40 % faster. | = Compost Bin + Moon Melon |
 | Irrigation Swarm | crafted (step 1) | 8 | `*##*` | pet, swarm, mechanical | Every 2.2 s: heal 9 and inflict 1 Toxin. Starred organic items: 30 % faster. | = Watering Drone + Pollen Cloud + Grow Lamp |
 | Living Armor | crafted (step 1) | 8 | `###/#..` | armor, organic | Battle start: gain 40 Shield, 1 Spikes and 2 Regen. Every star phase: gain 1 Spikes. When a weapon hits you: inflict 1 Toxin (30 % chance). | = Bark Shield + Thornvine |
-| Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 0.9–1.3 damage per second. Hits for 2–3 every 2.3 s. Ranged, 4 Energy per attack. On hit: inflict 3 Toxin and 1 Jam per 6 Toxin on the enemy (max 3×). | = Blight Bomb + Pollen Cloud |
+| Plague Blossom | crafted (step 1) | 9 | `##` | weapon, organic | 2–3 damage per hit, every 2.3 s: 0.9–1.3 damage per second. Ranged, 4 Energy per attack: 1.7 Energy per second. On hit: inflict 3 Toxin and 1 Jam per 6 Toxin on the enemy (max 3×). | = Blight Bomb + Pollen Cloud |
 | Ambrosia | crafted (step 1) | 10 | `##/##` | food, organic | Every star phase: heal 34 and remove 3 of your debuffs. Every 3.1 s: heal 11 and gain 1 Regen. | = Nectar Flask + Healing Moss |
 | Briar Fortress | crafted (step 1) | 11 | `####/#..#` | armor, organic | You: +8 max health per organic item in your backpack (max 12×). Battle start: gain 2 Spikes and 21 Shield. When a weapon hits you: inflict 1 Toxin (40 % chance). | = Thornvine + Root Network |
-| Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 5.7–7.9 damage per second. Hits for 8–11 every 1.4 s. Melee, attacks without Energy. On hit: heal 4 and deal 2 damage per pet in your backpack (max 6×). | = Giant Mantrap + Carnivorous Orchid |
-| Jungle Tyrant | crafted (step 2) | 17 | `###/###` | pet, weapon, organic | 6.7–9.2 damage per second. Hits for 8–11 every 1.2 s. Melee, attacks without Energy. On hit: inflict 2 Cryo and heal 4, +1 per pet in your backpack (max 6×). | = Strangler Fig + Giant Mantrap |
+| Hydra Bloom | crafted (step 2) | 17 | `##/##/#.` | pet, weapon, organic | 8–11 damage per hit, every 1.4 s: 5.7–7.9 damage per second. Melee, attacks without Energy. On hit: heal 4 and deal 2 damage per pet in your backpack (max 6×). | = Giant Mantrap + Carnivorous Orchid |
+| Jungle Tyrant | crafted (step 2) | 17 | `###/###` | pet, weapon, organic | 8–11 damage per hit, every 1.2 s: 6.7–9.2 damage per second. Melee, attacks without Energy. On hit: inflict 2 Cryo and heal 4, +1 per pet in your backpack (max 6×). | = Strangler Fig + Giant Mantrap |
 
 ### RK-7 "Rook" (38)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Welding Arm | common | 3 | `#/#` | weapon, mechanical | 3.1–4.4 damage per second. Hits for 5–7 every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | → Plasma Welder, Rivet Cannon |
+| Welding Arm | common | 3 | `#/#` | weapon, mechanical | 5–7 damage per hit, every 1.6 s: 3.1–4.4 damage per second. Melee, 2 Energy per attack: 1.3 Energy per second. On hit: gain 3 Shield. | → Plasma Welder, Rivet Cannon |
 | Spare Parts | common | 3 | `*#*` | accessory, mechanical | Battle start: gain 11 Shield, +17 per starred mechanical item. | → Junk Titan |
 | Circuit Board | common | 3 | `#` | accessory, mechanical | Every star phase: gain 2 Overclock and gain 5 Energy. | → Logic Core |
 | Conveyor Belt | common | 3 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield and gain 1 Energy (50 % chance). | → Factory Line |
 | Toolbox | common | 3 | `##` | accessory, mechanical | Every 4 s: gain 7 Shield and remove 1 of your debuffs. | → Factory Line |
 | Capacitor Bank | common | 3 | `##` | accessory, mechanical | Battle start: gain 2 Overclock. You: +1.5 Energy per second. | → Dynamo |
-| Bolt Thrower | common | 3 | `#/#` | weapon, mechanical | 1.3–1.9 damage per second. Hits for 2–3 every 1.6 s. Ranged, 2 Energy per attack. | → Rivet Cannon |
+| Bolt Thrower | common | 3 | `#/#` | weapon, mechanical | 2–3 damage per hit, every 1.6 s: 1.3–1.9 damage per second. Ranged, 2 Energy per attack: 1.3 Energy per second. | → Rivet Cannon |
 | Grav Clamp | common | 3 | `#` | accessory, mechanical | Every star phase: destroy 10 enemy Shield and gain 6 Shield. | → Gravity Well |
-| Breach Ram | common | 3 | `#/#` | weapon, mechanical | 1–1.5 damage per second. Hits for 2–3 every 2 s. Melee, 2 Energy per attack. On hit: deal 1 damage per 12 Shield you have (max 6×). |  |
+| Breach Ram | common | 3 | `#/#` | weapon, mechanical | 2–3 damage per hit, every 2 s: 1–1.5 damage per second. Melee, 2 Energy per attack: 1 Energy per second. On hit: deal 1 damage per 12 Shield you have (max 6×). |  |
 | Magnet Crane | rare | 5 | `##` | accessory, mechanical | Every 3.5 s: destroy 5 enemy Shield and gain 7 Shield. | → Salvage Rig, Gravity Well |
 | Recycler | rare | 5 | `##` | accessory, mechanical | Every star phase: gain 8 Shield, +6 per crafted item in your backpack (max 5×). | → Salvage Rig |
 | Shield Emitter | rare | 5 | `*#*` | armor, mechanical | Every 3 s: gain 6 Shield, +4 per starred mechanical item and deal 1 damage per 6 Shield you have (max 6×). | → Bulwark Array |
 | Turbo Fan | rare | 5 | `#` | accessory, mechanical | Every 3 s: gain 2 Overclock. | → Dynamo |
 | Ram Plate | rare | 5 | `##` | armor, mechanical | Battle start: gain 12 Shield. When a weapon hits you: deal 1 damage per 8 Shield you have (max 5×). |  |
-| Junk Cannon | rare | 6 | `*##*` | weapon, mechanical | 1.8–2.5 damage per second. Hits for 5–7 every 2.8 s. Ranged, 4 Energy per attack. This item: +3 damage per starred mechanical item. | → Scrap Howitzer |
-| Scrap Golem | rare | 6 | `##` | pet, weapon, mechanical | 1.8–2.7 damage per second. Hits for 4–6 every 2.2 s. Melee, attacks without Energy. Battle start: gain 6 Shield per crafted item in your backpack (max 6×). | → Junk Titan |
-| Siege Ram | rare | 6 | `###` | weapon, mechanical | 1.9–2.7 damage per second. Hits for 5–7 every 2.6 s. Melee, 3 Energy per attack. On hit: gain 4 Shield and deal 1 damage per 10 Shield you have (max 16×). |  |
+| Junk Cannon | rare | 6 | `*##*` | weapon, mechanical | 5–7 damage per hit, every 2.8 s: 1.8–2.5 damage per second. Ranged, 4 Energy per attack: 1.4 Energy per second. This item: +3 damage per starred mechanical item. | → Scrap Howitzer |
+| Scrap Golem | rare | 6 | `##` | pet, weapon, mechanical | 4–6 damage per hit, every 2.2 s: 1.8–2.7 damage per second. Melee, attacks without Energy. Battle start: gain 6 Shield per crafted item in your backpack (max 6×). | → Junk Titan |
+| Siege Ram | rare | 6 | `###` | weapon, mechanical | 5–7 damage per hit, every 2.6 s: 1.9–2.7 damage per second. Melee, 3 Energy per attack: 1.2 Energy per second. On hit: gain 4 Shield and deal 1 damage per 10 Shield you have (max 16×). |  |
 | Drone Bay | rare | 6 | `##` | accessory, mechanical | Every 3 s: deal 1 damage per crafted item in your backpack (max 5×) and destroy 2 enemy Shield. |  |
-| Tesla Coil | epic | 8 | `#/#` | weapon, mechanical | 1.3–2.5 damage per second. Hits for 2–4 every 1.6 s. Ranged, 2 Energy per attack. On hit: inflict 1 Jam and deal 1 damage per 2 Overclock you have (max 6×). | → Arc Forge |
+| Tesla Coil | epic | 8 | `#/#` | weapon, mechanical | 2–4 damage per hit, every 1.6 s: 1.3–2.5 damage per second. Ranged, 2 Energy per attack: 1.3 Energy per second. On hit: inflict 1 Jam and deal 1 damage per 2 Overclock you have (max 6×). | → Arc Forge |
 | Assembly Core | epic | 9 | `.*./*#*/.*.` | accessory, mechanical | Starred crafted items: +1 damage, 20 % faster. |  |
-| Rail Driver | epic | 9 | `###` | weapon, mechanical | 4–5.3 damage per second. Hits for 12–16 every 3 s. Ranged, 5 Energy per attack. On hit: destroy 8 enemy Shield and deal 1 damage per Overclock you have (max 12×). | → Storm Driver |
+| Rail Driver | epic | 9 | `###` | weapon, mechanical | 12–16 damage per hit, every 3 s: 4–5.3 damage per second. Ranged, 5 Energy per attack: 1.7 Energy per second. On hit: destroy 8 enemy Shield and deal 1 damage per Overclock you have (max 12×). | → Storm Driver |
 | Bastion Frame | epic | 9 | `##/##` | armor, mechanical | Battle start: gain 70 Shield. When a weapon hits you: deal 1 damage per 12 Shield you have (max 6×). | → Bulwark Array |
 | Quantum Forge | legendary | 12 | `##/##` | accessory, mechanical | Every star phase: gain 3 Overclock and 26 Shield. Every 3 s: destroy 8 enemy Shield. You: +2 Energy per second. |  |
 | Master Blueprint | artifact | 0 | `#` | accessory | Every 2 s: deal 9 damage, +1 per crafted item in your backpack (max 4×) and destroy 5 enemy Shield. Your crafted items: 20 % faster. |  |
 | Perpetual Engine | artifact | 0 | `*##*` | accessory, mechanical | Every 2.5 s: gain 1 Overclock and gain 3 Energy. When a starred weapon activates: deal 1 damage per 2 Overclock you have (max 4×). |  |
 | Nanite Swarm | artifact | 0 | `##` | accessory, mechanical | Every 2.5 s: deal 2 damage per 3 Shield you have (max 20×). Every star phase: gain 30 Shield and remove 2 of your debuffs. |  |
-| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 3.1–4.4 damage per second. Hits for 5–7 every 1.6 s. Melee, 2 Energy per attack. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
+| Plasma Welder | crafted (step 1) | 4 | `#/#` | weapon, mechanical | 5–7 damage per hit, every 1.6 s: 3.1–4.4 damage per second. Melee, 2 Energy per attack: 1.3 Energy per second. On hit: gain 3 Shield. | = Welding Arm + Scrap Metal; → Arc Forge |
 | Logic Core | crafted (step 1) | 6 | `*#*` | accessory, mechanical | Every star phase: gain 3 Overclock. Starred mechanical items: 20 % faster. You: +1 Energy per second. | = Circuit Board + Power Cell |
 | Factory Line | crafted (step 1) | 6 | `***/###` | accessory, mechanical | When a starred mechanical item activates: gain 4 Shield (60 % chance). Every 3.5 s: gain 8 Shield and remove 1 of your debuffs. | = Conveyor Belt + Toolbox |
-| Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 2.5–4.2 damage per second. Hits for 3–5 every 1.2 s. Ranged, 2 Energy per attack. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
+| Rivet Cannon | crafted (step 1) | 6 | `#/#/#` | weapon, mechanical | 3–5 damage per hit, every 1.2 s: 2.5–4.2 damage per second. Ranged, 2 Energy per attack: 1.7 Energy per second. On hit: gain 1 Shield. | = Welding Arm + Bolt Thrower |
 | Dynamo | crafted (step 1) | 8 | `##` | accessory, mechanical | Battle start: gain 6 Overclock and 16 Shield. Every 2.5 s: gain 1 Overclock. You: +2 Energy per second. | = Capacitor Bank + Turbo Fan; → Storm Driver |
 | Gravity Well | crafted (step 1) | 8 | `##` | accessory, mechanical | Every star phase: destroy 14 enemy Shield. Every 3 s: destroy 8 enemy Shield, gain 8 Shield and inflict 2 Cryo. | = Grav Clamp + Magnet Crane |
-| Scrap Howitzer | crafted (step 1) | 9 | `*##*/*##*` | weapon, mechanical | 2.9–4.2 damage per second. Hits for 7–10 every 2.4 s. Ranged, 4 Energy per attack. This item: +3 damage per starred mechanical item. | = Junk Cannon + Scrap Metal + Copper Wire |
-| Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 3–4 damage per second. Hits for 6–8 every 2 s. Melee, attacks without Energy. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
+| Scrap Howitzer | crafted (step 1) | 9 | `*##*/*##*` | weapon, mechanical | 7–10 damage per hit, every 2.4 s: 2.9–4.2 damage per second. Ranged, 4 Energy per attack: 1.7 Energy per second. This item: +3 damage per starred mechanical item. | = Junk Cannon + Scrap Metal + Copper Wire |
+| Junk Titan | crafted (step 1) | 9 | `##/##` | pet, weapon, mechanical | 6–8 damage per hit, every 2 s: 3–4 damage per second. Melee, attacks without Energy. Battle start: gain 8 Shield per crafted item in your backpack (max 8×). | = Scrap Golem + Spare Parts |
 | Salvage Rig | crafted (step 1) | 10 | `##/##` | accessory, mechanical | Every 3 s: destroy 8 enemy Shield and gain 11 Shield. Every star phase: gain 6 Shield per crafted item in your backpack (max 6×). | = Magnet Crane + Recycler |
 | Bulwark Array | crafted (step 1) | 14 | `*##*/*##*` | armor, mechanical | Battle start: gain 80 Shield. Every 2.5 s: gain 10 Shield, +5 per starred mechanical item and deal 1 damage per 6 Shield you have (max 12×). | = Shield Emitter + Bastion Frame |
-| Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 2.9–4.3 damage per second. Hits for 4–6 every 1.4 s. Melee, 2 Energy per attack. On hit: gain 3 Shield, inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
-| Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 5.8–7.1 damage per second. Hits for 14–17 every 2.4 s. Ranged, 4 Energy per attack. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield and deal 1 damage per Overclock you have (max 14×). | = Rail Driver + Dynamo |
+| Arc Forge | crafted (step 2) | 12 | `##/##` | weapon, mechanical | 4–6 damage per hit, every 1.4 s: 2.9–4.3 damage per second. Melee, 2 Energy per attack: 1.4 Energy per second. On hit: gain 3 Shield, inflict 1 Jam and deal 1 damage per 3 Overclock you have (max 10×). | = Plasma Welder + Tesla Coil |
+| Storm Driver | crafted (step 2) | 17 | `###/#..` | weapon, mechanical | 14–17 damage per hit, every 2.4 s: 5.8–7.1 damage per second. Ranged, 4 Energy per attack: 1.7 Energy per second. Battle start: gain 4 Overclock. On hit: destroy 10 enemy Shield and deal 1 damage per Overclock you have (max 14×). | = Rail Driver + Dynamo |
 
 ### Quill (38)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Space Pup | common | 2 | `#/#` | pet, weapon, organic | 1.8–2.4 damage per second. Hits for 3–4 every 1.7 s. Melee, attacks without Energy. | → Star Hound, Guard Hound |
+| Space Pup | common | 2 | `#/#` | pet, weapon, organic | 3–4 damage per hit, every 1.7 s: 1.8–2.4 damage per second. Melee, attacks without Energy. | → Star Hound, Guard Hound |
 | Grooming Comb | common | 2 | `*#*` | accessory | Starred pets: 10 % faster, +10 % crit, -1 Energy per attack. | → Pack Bond |
 | Treat Pouch | common | 3 | `*#*` | food | Starred pets: +2 damage. Every 4 s: heal 4 and gain 2 Energy. |  |
 | Pet Bed | common | 3 | `*##*` | accessory | Starred pets: 40 % faster, -1 Energy per attack. | → Cozy Den |
 | Kibble Sack | common | 3 | `#/#` | food | Every 3.5 s: heal 1 per 2 cells your pets cover (max 6×) and gain 3 Energy. Every 3.5 s: gain 1 Power (60 % chance). | → Cozy Den, Rat Pack, Banquet Trough |
-| Glutton Toad | common | 3 | `#/#` | pet, weapon, organic | 0.5–1.1 damage per second. Hits for 1–2 every 1.9 s. Melee, attacks without Energy. When any of your food activates: deal 1 damage. |  |
-| Burrow Rat | common | 3 | `#` | pet, swarm, weapon, organic | 0.7–1.4 damage per second. Hits for 1–2 every 1.4 s. Melee, attacks without Energy. | → Star Hound, Rat Pack |
+| Glutton Toad | common | 3 | `#/#` | pet, weapon, organic | 1–2 damage per hit, every 1.9 s: 0.5–1.1 damage per second. Melee, attacks without Energy. When any of your food activates: deal 1 damage. |  |
+| Burrow Rat | common | 3 | `#` | pet, swarm, weapon, organic | 1–2 damage per hit, every 1.4 s: 0.7–1.4 damage per second. Melee, attacks without Energy. | → Star Hound, Rat Pack |
 | Feeding Bowl | common | 3 | `*#*` | food | When a starred pet activates: heal 3 and gain 1 Energy (50 % chance). | → Banquet Trough |
-| Guard Goose | common | 3 | `#/#` | pet, weapon, organic | 1.1–1.7 damage per second. Hits for 2–3 every 1.8 s. Melee, attacks without Energy. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
+| Guard Goose | common | 3 | `#/#` | pet, weapon, organic | 2–3 damage per hit, every 1.8 s: 1.1–1.7 damage per second. Melee, attacks without Energy. When a weapon hits you: deal 3 damage (15 % chance). | → Guard Hound |
 | Pack Lizard | common | 4 | `##/##` | pet, beast, armor, organic | Battle start: gain 12 Shield per beast in your backpack (max 4×). | → Shell Dragon |
 | Hatchery | rare | 5 | `##/##` | accessory, mechanical | Battle start: gain 1 Power per 6 cells your pets cover (max 2×). Every star phase: heal 1 per 2 cells your pets cover (max 6×) and gain 4 Energy. |  |
 | Calling Shell | rare | 5 | `#` | accessory | Your swarm pets: +1 damage. | → Pack Bond |
 | War Saddle | rare | 5 | `*#*` | armor | Starred beasts: +6 damage. Battle start: gain 16 Shield. | → Armored Bear |
 | Glow Swarm | rare | 5 | `##` | pet, swarm, organic | Every 2.5 s: deal 1 damage per swarm pet in your backpack (max 5×). | → Swarm Cloud |
 | Marrow Treat | rare | 5 | `*#*` | food | Every 3.5 s: gain 1 Power. Starred pets: 15 % faster. |  |
-| Trough Boar | rare | 6 | `##` | pet, weapon, organic | 1.4–2.3 damage per second. Hits for 3–5 every 2.2 s. Melee, attacks without Energy. When any of your food activates: deal 2 damage per Power you have (max 10×). |  |
-| Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 1.7–2.5 damage per second. Hits for 2–3 every 1.2 s. Melee, attacks without Energy. This item: +20 % crit. | → Sun Eagle |
-| Moon Bear | rare | 6 | `##/##` | pet, beast, weapon, organic | 3.1–4.2 damage per second. Hits for 8–11 every 2.6 s. Melee, attacks without Energy. You: +28 max health. Battle start: gain 10 Shield. | → Armored Bear |
+| Trough Boar | rare | 6 | `##` | pet, weapon, organic | 3–5 damage per hit, every 2.2 s: 1.4–2.3 damage per second. Melee, attacks without Energy. When any of your food activates: deal 2 damage per Power you have (max 10×). |  |
+| Star Falcon | rare | 6 | `#/#` | pet, weapon, organic | 2–3 damage per hit, every 1.2 s: 1.7–2.5 damage per second. Melee, attacks without Energy. This item: +20 % crit. | → Sun Eagle |
+| Moon Bear | rare | 6 | `##/##` | pet, beast, weapon, organic | 8–11 damage per hit, every 2.6 s: 3.1–4.2 damage per second. Melee, attacks without Energy. You: +28 max health. Battle start: gain 10 Shield. | → Armored Bear |
 | Hive Queen | epic | 8 | `##/##` | pet, swarm, organic | Every 2.2 s: deal 1 damage per swarm pet in your backpack (max 8×). | → Swarm Cloud |
 | Nursery | epic | 8 | `##/##` | accessory, mechanical | Every star phase: heal 5 per 2 cells your pets cover (max 8×). Your pets: 10 % faster. You: +1.5 Energy per second. |  |
-| Tusked Behemoth | epic | 9 | `###/###` | pet, beast, weapon, organic | 5.5–7.6 damage per second. Hits for 16–22 every 2.9 s. Melee, attacks without Energy. Battle start: gain 28 Shield. | → Juggernaut |
-| Thunder Ram | epic | 9 | `##/##` | pet, beast, weapon, organic | 5.4–6.7 damage per second. Hits for 13–16 every 2.4 s. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
-| Sky Serpent | legendary | 13 | `####` | pet, beast, weapon, organic | 6–8.7 damage per second. Hits for 9–13 every 1.5 s. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
+| Tusked Behemoth | epic | 9 | `###/###` | pet, beast, weapon, organic | 16–22 damage per hit, every 2.9 s: 5.5–7.6 damage per second. Melee, attacks without Energy. Battle start: gain 28 Shield. | → Juggernaut |
+| Thunder Ram | epic | 9 | `##/##` | pet, beast, weapon, organic | 13–16 damage per hit, every 2.4 s: 5.4–6.7 damage per second. Melee, attacks without Energy. On hit: destroy 8 enemy Shield. This item: +20 % crit. | → Juggernaut |
+| Sky Serpent | legendary | 13 | `####` | pet, beast, weapon, organic | 9–13 damage per hit, every 1.5 s: 6–8.7 damage per second. Melee, attacks without Energy. On hit: inflict 1 Burn and 1 Cryo. This item: +20 % crit. |  |
 | Elder Tusk | artifact | 0 | `#` | accessory | Your beasts: +12 damage, 25 % faster. Battle start: gain 36 Shield. |  |
 | Herd Heart | artifact | 0 | `*##*` | accessory, organic | When a starred food activates: gain 1 Power (80 % chance). Every star phase: heal 2 per 2 cells your pets cover (max 10×). |  |
 | Ancient Egg | artifact | 0 | `##/##` | pet, organic | Every 1.2 s: deal 5 damage, +1 per swarm pet in your backpack (max 10×). Your swarm pets: 25 % faster. |  |
-| Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2.1–3.6 damage per second. Hits for 3–5 every 1.4 s. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
-| Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 2.5–3.1 damage per second. Hits for 4–5 every 1.6 s. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
+| Star Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 3–5 damage per hit, every 1.4 s: 2.1–3.6 damage per second. Melee, attacks without Energy. Each attack: heal 3 (25 % chance). | = Space Pup + Burrow Rat; → Celestial Chimera |
+| Guard Hound | crafted (step 1) | 5 | `##` | pet, weapon, organic | 4–5 damage per hit, every 1.6 s: 2.5–3.1 damage per second. Melee, attacks without Energy. When a weapon hits you: deal 4 damage (20 % chance). Battle start: gain 14 Shield. | = Space Pup + Guard Goose |
 | Cozy Den | crafted (step 1) | 6 | `*##*/*##*` | accessory | Starred pets: 40 % faster. Every 3 s: heal 1 per 2 cells your pets cover (max 8×). | = Pet Bed + Kibble Sack |
 | Banquet Trough | crafted (step 1) | 6 | `*##*` | food | Every 3 s: heal 3 per 2 cells your pets cover (max 8×), gain 1 Power and gain 2 Energy. When a starred pet activates: heal 2 (60 % chance). | = Feeding Bowl + Kibble Sack |
-| Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, swarm, weapon, organic | 3.3–5 damage per second. Hits for 2–3 every 0.6 s. Melee, attacks without Energy. | = Burrow Rat + Burrow Rat + Kibble Sack |
+| Rat Pack | crafted (step 1) | 7 | `##/#.` | pet, swarm, weapon, organic | 2–3 damage per hit, every 0.6 s: 3.3–5 damage per second. Melee, attacks without Energy. | = Burrow Rat + Burrow Rat + Kibble Sack |
 | Shell Dragon | crafted (step 1) | 7 | `##/##` | pet, beast, armor, organic | Battle start: gain 14 Shield per beast in your backpack (max 4×) and 2 Spikes. | = Pack Lizard + Rock Crab |
 | Pack Bond | crafted (step 1) | 7 | `*#*` | accessory | Your swarm pets: +1 damage. Starred pets: 20 % faster, +15 % crit. | = Grooming Comb + Calling Shell |
-| Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 5.5–7.3 damage per second. Hits for 6–8 every 1.1 s. Melee, attacks without Energy. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
-| Armored Bear | crafted (step 1) | 11 | `##/##` | pet, beast, weapon, armor, organic | 7.3–9.5 damage per second. Hits for 16–21 every 2.2 s. Melee, attacks without Energy. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
+| Sun Eagle | crafted (step 1) | 9 | `##/#.` | pet, weapon, organic | 6–8 damage per hit, every 1.1 s: 5.5–7.3 damage per second. Melee, attacks without Energy. This item: +30 % crit. | = Star Falcon + Targeting Lens; → Celestial Chimera |
+| Armored Bear | crafted (step 1) | 11 | `##/##` | pet, beast, weapon, armor, organic | 16–21 damage per hit, every 2.2 s: 7.3–9.5 damage per second. Melee, attacks without Energy. You: +56 max health. Battle start: gain 40 Shield. | = Moon Bear + War Saddle |
 | Swarm Cloud | crafted (step 1) | 13 | `##/##` | pet, swarm, organic | Every 2 s: deal 1 damage per swarm pet in your backpack (max 8×) and inflict 1 Jam. | = Glow Swarm + Hive Queen |
-| Juggernaut | crafted (step 1) | 18 | `###/###` | pet, beast, weapon, organic | 11.7–15 damage per second. Hits for 28–36 every 2.4 s. Melee, attacks without Energy. This item: +25 % crit. On hit: destroy 12 enemy Shield. Battle start: gain 56 Shield. | = Thunder Ram + Tusked Behemoth |
-| Celestial Chimera | crafted (step 2) | 14 | `##/##/#.` | pet, beast, weapon, organic | 10–15 damage per second. Hits for 8–12 every 0.8 s. Melee, attacks without Energy. This item: +35 % crit. On hit: inflict 2 Burn (20 % chance). | = Star Hound + Sun Eagle |
+| Juggernaut | crafted (step 1) | 18 | `###/###` | pet, beast, weapon, organic | 28–36 damage per hit, every 2.4 s: 11.7–15 damage per second. Melee, attacks without Energy. This item: +25 % crit. On hit: destroy 12 enemy Shield. Battle start: gain 56 Shield. | = Thunder Ram + Tusked Behemoth |
+| Celestial Chimera | crafted (step 2) | 14 | `##/##/#.` | pet, beast, weapon, organic | 8–12 damage per hit, every 0.8 s: 10–15 damage per second. Melee, attacks without Energy. This item: +35 % crit. On hit: inflict 2 Burn (20 % chance). | = Star Hound + Sun Eagle |
 
 ### Ysel (38)
 
 | Item | Rarity | Gold | Shape | Tags | Rules | Recipes |
 |---|---|---|---|---|---|---|
-| Sun Shard | common | 2 | `#` | weapon | 1.8–2.4 damage per second. Hits for 3–4 every 1.7 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. | → Sunblade, Twin Suns |
+| Sun Shard | common | 2 | `#` | weapon | 3–4 damage per hit, every 1.7 s: 1.8–2.4 damage per second. Ranged, 4 Energy per attack: 2.4 Energy per second. On hit: inflict 2 Burn. | → Sunblade, Twin Suns |
 | Prayer Bell | common | 2 | `#` | accessory | Every star phase: heal 18. | → Chime of Hours |
 | Votive Candle | common | 2 | `#` | accessory | Every star phase: inflict 2 Burn and heal 6. | → Sacred Flame |
 | Sundial | common | 3 | `#` | accessory | Your items: 20 % faster (during Red Giant/Collapse/Supernova). | → Chime of Hours |
 | Flare Catcher | common | 3 | `##` | accessory, mechanical | When Flare begins: gain 3 Power. Every star phase: gain 3 Shield per Power you have (max 8×). | → Solstice Engine, Book of Last Light |
-| Dawn Needle | common | 3 | `#/#` | weapon | 0.8–1.5 damage per second. Hits for 1–2 every 1.3 s. Ranged, 2 Energy per attack. On hit: deal 1 damage per 2 Power you have (max 6×). |  |
+| Dawn Needle | common | 3 | `#/#` | weapon | 1–2 damage per hit, every 1.3 s: 0.8–1.5 damage per second. Ranged, 2 Energy per attack: 1.5 Energy per second. On hit: deal 1 damage per 2 Power you have (max 6×). |  |
 | Ember Censer | common | 3 | `#/#` | accessory | Every 3.2 s: inflict 2 Burn, +1 per 2 Power you have (max 4×). | → Helios Rod |
 | Prayer Scroll | common | 3 | `##` | accessory | Every star phase: remove 2 of your debuffs and gain 6 Shield, +2 per Power you have (max 8×). | → Litany |
-| Solar Dagger | common | 3 | `#` | weapon | 0.7–1.4 damage per second. Hits for 1–2 every 1.4 s. Melee, 3 Energy per attack. On hit: deal 1 damage per 3 Burn on the enemy (max 5×). | → Twin Suns |
+| Solar Dagger | common | 3 | `#` | weapon | 1–2 damage per hit, every 1.4 s: 0.7–1.4 damage per second. Melee, 3 Energy per attack: 2.1 Energy per second. On hit: deal 1 damage per 3 Burn on the enemy (max 5×). | → Twin Suns |
 | Eclipse Veil | common | 4 | `##` | armor | Every star phase: gain 22 Shield. | → Umbral Mantle |
 | Comet Rosary | rare | 5 | `###` | accessory | Every star phase: remove 3 of your debuffs and gain 2 Regen. | → Litany |
 | Dawn Chime | rare | 5 | `#` | accessory | Battle start: gain 4 Overclock and 17 Shield. | → Solstice Engine |
 | Mirror of Dusk | rare | 5 | `#/#` | armor | When a weapon hits you: inflict 1 Jam (20 % chance). Every star phase: gain 14 Shield. | → Total Eclipse |
 | Pyre Lantern | rare | 5 | `*#*` | accessory | When a starred weapon activates: inflict 1 Burn (50 % chance). | → Sacred Flame |
 | Frost Bell | rare | 5 | `#` | accessory | Every star phase: inflict 2 Cryo. Every 3 s: deal 1 damage per Cryo on the enemy (max 6×). |  |
-| Zenith Lance | rare | 6 | `#/#/#` | weapon | 2.1–3.2 damage per second. Hits for 4–6 every 1.9 s. Ranged, 3 Energy per attack. On hit: deal 1 damage per Power you have (max 10×). |  |
-| Corona Staff | rare | 6 | `#/#/#` | weapon | 2.5–3.3 damage per second. Hits for 6–8 every 2.4 s. Ranged, 5 Energy per attack. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | → Helios Rod |
+| Zenith Lance | rare | 6 | `#/#/#` | weapon | 4–6 damage per hit, every 1.9 s: 2.1–3.2 damage per second. Ranged, 3 Energy per attack: 1.6 Energy per second. On hit: deal 1 damage per Power you have (max 10×). |  |
+| Corona Staff | rare | 6 | `#/#/#` | weapon | 6–8 damage per hit, every 2.4 s: 2.5–3.3 damage per second. Ranged, 5 Energy per attack: 2.1 Energy per second. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | → Helios Rod |
 | Star Psalter | rare | 6 | `##` | accessory | Every star phase: gain 1 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | → Book of Last Light |
 | Red Giant Heart | epic | 8 | `##/##` | accessory | When Red Giant begins: heal 42 and inflict 8 Burn. You: +28 max health. | → Dying Star Scepter |
 | Eclipse Orb | epic | 8 | `##` | accessory | Every star phase: inflict 3 Jam and 2 Cryo. | → Total Eclipse |
-| Collapse Engine | epic | 9 | `##` | weapon, mechanical | 1.8–2.5 damage per second. Hits for 5–7 every 2.8 s. Ranged, 5 Energy per attack. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
+| Collapse Engine | epic | 9 | `##` | weapon, mechanical | 5–7 damage per hit, every 2.8 s: 1.8–2.5 damage per second. Ranged, 5 Energy per attack: 1.8 Energy per second. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | → Solstice Engine |
 | White Dwarf | epic | 9 | `##/##` | armor | Every star phase: gain 14 Shield. When Collapse begins: gain 94 Shield. You: +42 max health. | → Event Horizon |
 | Supernova Seed | legendary | 12 | `##` | accessory | When Supernova begins: deal 110 damage. Every star phase: inflict 5 Burn and gain 1 Power. |  |
 | Nova Crown | artifact | 0 | `##` | accessory | Every 2.5 s: deal 5 damage, inflict 1 Cryo and deal 3 damage per Cryo on the enemy (max 5×). Every star phase: inflict 1 Jam. When Supernova begins: gain 112 Shield. |  |
 | Eternal Dawn | artifact | 0 | `#` | accessory | Every star phase: gain 1 Power and 2 Overclock. |  |
 | Stellar Lens | artifact | 0 | `.*./*#*/.*.` | accessory | When a starred weapon activates: inflict 1 Burn (80 % chance). Starred weapons: +15 % crit. |  |
-| Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 1.7–2.8 damage per second. Hits for 3–5 every 1.8 s. Melee, 4 Energy per attack. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |
+| Sunblade | crafted (step 1) | 5 | `#/#` | weapon | 3–5 damage per hit, every 1.8 s: 1.7–2.8 damage per second. Melee, 4 Energy per attack: 2.2 Energy per second. On hit: inflict 1 Burn. This item: +10 % crit. | = Sun Shard + Crystal Shard |
 | Chime of Hours | crafted (step 1) | 5 | `##` | accessory | Every star phase: heal 14 and gain 8 Shield. Your items: 20 % faster (during Red Giant/Collapse/Supernova). | = Prayer Bell + Sundial |
-| Twin Suns | crafted (step 1) | 5 | `#/#` | weapon | 1.8–3.6 damage per second. Hits for 2–4 every 1.1 s. Melee, 3 Energy per attack. On hit: inflict 1 Burn (50 % chance). On hit: deal 1 damage per 3 Burn on the enemy (max 6×). | = Sun Shard + Solar Dagger |
+| Twin Suns | crafted (step 1) | 5 | `#/#` | weapon | 2–4 damage per hit, every 1.1 s: 1.8–3.6 damage per second. Melee, 3 Energy per attack: 2.7 Energy per second. On hit: inflict 1 Burn (50 % chance). On hit: deal 1 damage per 3 Burn on the enemy (max 6×). | = Sun Shard + Solar Dagger |
 | Sacred Flame | crafted (step 1) | 7 | `*#*` | accessory | When a starred weapon activates: inflict 1 Burn (70 % chance). Every star phase: inflict 2 Burn, +1 per Power you have (max 8×) and heal 11. | = Votive Candle + Pyre Lantern |
 | Litany | crafted (step 1) | 8 | `###` | accessory | Every star phase: remove 5 of your debuffs, gain 12 Shield, +3 per Power you have (max 8×) and 3 Regen. | = Prayer Scroll + Comet Rosary |
-| Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 2.9–3.8 damage per second. Hits for 6–8 every 2.1 s. Ranged, 4 Energy per attack. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
+| Helios Rod | crafted (step 1) | 9 | `#/#/#` | weapon | 6–8 damage per hit, every 2.1 s: 2.9–3.8 damage per second. Ranged, 4 Energy per attack: 1.9 Energy per second. On hit: inflict 2 Burn. This item: 25 % faster (during Flare/Red Giant). | = Corona Staff + Ember Censer; → Dying Star Scepter |
 | Book of Last Light | crafted (step 1) | 9 | `##` | accessory | Every star phase: gain 2 Power. When Flare begins: gain 3 Power. Your weapons: 15 % faster (during Red Giant/Collapse/Supernova). | = Star Psalter + Flare Catcher |
 | Umbral Mantle | crafted (step 1) | 12 | `##/##` | armor | Every star phase: gain 41 Shield. Battle start: inflict 2 Jam. | = Eclipse Veil + Force Bubble; → Event Horizon |
 | Total Eclipse | crafted (step 1) | 13 | `##/#.` | armor | Every star phase: inflict 3 Jam, 3 Cryo and gain 11 Shield. When a weapon hits you: inflict 1 Jam (25 % chance). | = Mirror of Dusk + Eclipse Orb |
-| Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 2.9–3.8 damage per second. Hits for 7–9 every 2.4 s. Ranged, 5 Energy per attack. Every star phase: gain 2 Power and 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
-| Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 4–5.5 damage per second. Hits for 8–11 every 2 s. Ranged, 4 Energy per attack. On hit: inflict 3 Burn. When Red Giant begins: heal 56 and inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
+| Solstice Engine | crafted (step 1) | 17 | `##/##` | weapon, mechanical | 7–9 damage per hit, every 2.4 s: 2.9–3.8 damage per second. Ranged, 5 Energy per attack: 2.1 Energy per second. Every star phase: gain 2 Power and 1 Overclock. This item: +4 damage, 100 % faster (during Red Giant/Collapse/Supernova). | = Collapse Engine + Flare Catcher + Dawn Chime |
+| Dying Star Scepter | crafted (step 2) | 17 | `##/##/#.` | weapon | 8–11 damage per hit, every 2 s: 4–5.5 damage per second. Ranged, 4 Energy per attack: 2 Energy per second. On hit: inflict 3 Burn. When Red Giant begins: heal 56 and inflict 10 Burn. This item: 30 % faster (during Red Giant/Collapse). | = Helios Rod + Red Giant Heart |
 | Event Horizon | crafted (step 2) | 21 | `##/##/##` | armor | Every star phase: gain 68 Shield. When Collapse begins: gain 119 Shield. You: +70 max health. Battle start: inflict 3 Jam. | = White Dwarf + Umbral Mantle |

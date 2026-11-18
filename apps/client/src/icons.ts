@@ -49,6 +49,7 @@ const PATHS: Record<string, string> = {
   maxHp: HEART + "M12 9v5M9.500 11.500h5",
   ready: "M6 4l14 8l-14 8z",
   // triggers and targets
+  dps: "M4 17a8 8 0 0 1 16 0M12 17l4-6M7 13l1 1M12 9v1M17 13l-1 1",
   clock: "M12 4a8 8 0 1 0 0 16a8 8 0 0 0 0-16zM12 8v4l3 2",
   start: "M6 21V4M6 4h11l-2 4l2 4H6",
   hit: "M12 5a7 7 0 1 0 0 14a7 7 0 0 0 0-14zM12 2v5M12 17v5M2 12h5M17 12h5",

@@ -134,6 +134,7 @@
     { "id": "ready", "group": "effect", "en": "Charged", "de": "Aufgeladen", "icon": "ready", "text": "Part of the first cooldown is already done.", "code": ["mod.ready"] },
 
     { "id": "clock", "group": "when", "en": "Cooldown", "de": "Abklingzeit", "icon": "clock", "text": "Seconds between uses.", "code": ["cooldown", "on: use"] },
+    { "id": "dps", "group": "effect", "en": "Damage per second", "de": "Schaden pro Sekunde", "icon": "dps", "text": "Damage of one hit divided by the cooldown. Compares weapons; the weapon still hits once per cooldown." },
     { "id": "start", "group": "when", "en": "Fight start", "de": "Kampfbeginn", "icon": "start", "text": "Once, when the fight begins.", "code": ["on: start"] },
     { "id": "hit", "group": "when", "en": "On hit", "de": "Bei Treffer", "icon": "hit", "text": "When this weapon hits.", "code": ["on: hit"] },
     { "id": "attacked", "group": "when", "en": "When hit", "de": "Wenn getroffen", "icon": "attacked", "text": "When a weapon hits you.", "code": ["on: attacked"] },

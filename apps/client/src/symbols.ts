@@ -2,7 +2,7 @@
  * Turns effect data into rows of symbols ("clock 4.5 -> heal 8, regen 1") and the keywords that explain them.
  * Like the generated rules text, the symbols come from the effect data, so they cannot disagree with the battle.
  */
-import { BUFFS, DEBUFFS, TAGS, damagePerSecond, type Effect, type GameData, type HeroData, type ItemDef } from "@backpack-space/core";
+import { BUFFS, DEBUFFS, TAGS, damagePerSecond, energyPerSecond, type Effect, type GameData, type HeroData, type ItemDef } from "@backpack-space/core";
 import { tr } from "./i18n";
 
 export interface Chip {
@@ -128,16 +128,20 @@ export function itemRows(def: ItemDef, data: GameData): Row[] {
   let first: Row | undefined;
   if (def.cooldown !== undefined) {
     first = { when: [{ icon: "clock", text: num(def.cooldown), kind: "trigger" }], then: [] };
-    // damage per second, so weapons with different cooldowns compare at a glance; the hit itself is in the rules text
-    const dps = damagePerSecond(def);
-    if (dps)
-      first.then.push({
-        icon: "damage",
-        text: tr().t("symbol.dps", { n: dps[0] === dps[1] ? tr().num(dps[0]) : `${tr().num(dps[0])}–${tr().num(dps[1])}` }),
-        kind: "debuff",
-      });
+    if (def.damage) {
+      // damage per hit, then damage per second (hit / cooldown) so weapons compare at a glance
+      const range = ([a, b]: readonly [number, number]) => (a === b ? tr().num(a) : `${tr().num(a)}–${tr().num(b)}`);
+      first.then.push({ icon: "damage", text: range(def.damage), kind: "debuff" });
+      const dps = damagePerSecond(def);
+      if (dps) first.then.push({ icon: "dps", text: tr().t("symbol.perSec", { n: range(dps) }), kind: "plain" });
+    }
     if (def.range) first.then.push({ icon: def.range, kind: "plain" });
-    if (def.energy) first.then.push({ icon: "energy", text: `-${num(def.energy)}`, kind: "plain" });
+    if (def.energy) {
+      first.then.push({ icon: "energy", text: `-${tr().num(def.energy)}`, kind: "plain" });
+      // Energy per second, to set against the refill
+      const eps = energyPerSecond(def);
+      if (eps) first.then.push({ icon: "energy", text: tr().t("symbol.perSec", { n: `-${tr().num(eps)}` }), kind: "plain" });
+    }
   }
   return effectRows(def.effects, data, def.cooldown, first);
 }
