@@ -84,6 +84,12 @@ credits used and left in every result message (`openart_account_get`).
   different planet (Rook's first scene repeated Venn's banded planet). Planets drift to Earth looks; ask for "a
   strange alien planet ..., no blue oceans, no white clouds". To change only the planet, an image2image edit of
   the chosen picture that says "ONLY CHANGE THE PLANET" works; removing it can leave the sky empty.
+- **Every hero has its own main colour** (table in `docs/heroes.md`, Ilja 2026-11-18: with the shared palette
+  all four looked alike on the hero choice). Name it in every prompt, keep cream as the common thread, and add
+  "same moderate saturation, cream highlights, clean, very little grime" so the heroes still look like one set.
+  A hero in a single colour looked flat ("Venn wirkt einfach grün"); give the main colour one or two contrasting
+  accents. Recolouring a finished picture works as image2image ("Recolor this exact character ... only change the
+  colours"); try it cheaply at 1k first.
 - For pictures that get cut out (sheet, full body, head): "Background: flat plain light grey (#c8c8c8),
   nothing else, no floor shadow". A black ink outline on a dark background cannot be cut out cleanly.
 - Composition of the home scene: hero in the upper two thirds; the bottom third calmer, because the hero ring
