@@ -63,6 +63,8 @@ Rules for the idea:
   item carries one shape and one feature, a big item up to four.
 - **Still the same world:** worn, practical, salvaged, patched (docs/style.md, "Items"). Inventive does not mean
   clean sci-fi chrome.
+- **One projectile at most.** A weapon shows at most one projectile (one arrow, one slug, one needle), never a
+  burst, a volley or a beam line across the picture (Ilja 2026-11-18).
 - **No glow.** Energy, heat and light are flat colour shapes or wavy ink lines, never glow, bloom or neon.
 - **No text, letters, logos.** No alcohol. Nothing from Backpack Brawl or other existing games.
 
@@ -142,4 +144,8 @@ Image credits are limited. Generate only when Ilja asks, check the balance first
 - Small puffs of smoke or steam at an item's edge look odd at backpack size (Rocket Chili); leave them out.
 - Judge in this order: does it read as the named thing at real size? Is there a space idea? Does it fit the
   style and palette?
+- A single weapon alone on one image (Railgun, 21:9) was refused twice by the model's safety filter; put
+  weapons on a normal four-item sheet with other items.
+- Pets that "fire" something (Laser Parrot with a laser line) read badly; show the animal and its alien feature,
+  not the attack.
 - Write lessons learned into this skill.
