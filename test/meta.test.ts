@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addLeaguePoints, bookRun, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, playerName, heroLevel, heroCosmeticId, leagueGroup, rewardTrack, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
+import { addHeroXp, addLeaguePoints, bookRun, heroLevelRewards, heroRewardId, isEliteLeague, runHeroXp, buildMeta, enterSeason, equip, equipSkin, fitProfile, rename, playerName, heroLevel, heroCosmeticId, leagueGroup, rewardTrack, seasonStartLeague, leagueOf, newProfile, ownsHero, passLevel, patchId, profileLevel, runGalaxies, seasonAt, unlockPremium, type MetaData, type Profile } from "@backpack-space/core";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
 
 const data = loadGameData();
@@ -42,12 +42,12 @@ describe("meta data", () => {
 describe("after a run", () => {
   it("pays Galaxies = wins + lives left, hero XP and league points", () => {
     const p = newProfile(meta);
-    const b = bookRun(meta, p, { hero: "rook", wins: 9, livesLeft: 2, roundsPlayed: 12 });
+    const b = bookRun(meta, p, { hero: "rook", wins: 9, livesLeft: 2, roundsPlayed: 12, completed: true });
     expect(b.galaxies).toBe(11);
-    expect(runGalaxies(meta, { hero: "rook", wins: 0, livesLeft: -1, roundsPlayed: 4 })).toBe(0);
+    expect(runGalaxies(meta, { hero: "rook", wins: 0, livesLeft: -1, roundsPlayed: 4, completed: false })).toBe(0);
     expect(b.profile.galaxies).toBe(11);
     expect(b.profile.season.galaxies).toBe(11);
-    expect(b.profile.heroXp.rook).toBe(12 * meta.run.heroXp.perRound + 9 * meta.run.heroXp.perWin);
+    expect(b.profile.heroXp.rook).toBe(12 * meta.run.heroXp.perRound + meta.run.heroXp.completedBonus);
     expect(b.points).toBe(meta.leagues.pointsByWins[9]);
     expect(b.profile.runs).toBe(1);
     // the input profile stays as it was
@@ -56,7 +56,7 @@ describe("after a run", () => {
   it("unlocks hero cosmetics, planet steps and free pass rewards when their thresholds are crossed", () => {
     let p = newProfile(meta);
     const all = [];
-    for (let i = 0; i < 40; i++) { const b = bookRun(meta, p, { hero: "venn", wins: 12, livesLeft: 4, roundsPlayed: 12 }); all.push(...b.rewards); p = b.profile; }
+    for (let i = 0; i < 40; i++) { const b = bookRun(meta, p, { hero: "venn", wins: 12, livesLeft: 4, roundsPlayed: 12, completed: true }); all.push(...b.rewards); p = b.profile; }
     const lv = heroLevel(meta, p.heroXp.venn!).level;
     for (const at of meta.heroLevels.cosmeticAt.filter((l) => l <= lv)) expect(p.cosmetics).toContain(`venn_lv${at}`);
     for (const s of meta.planetTrack.filter((s) => s.galaxies <= p.galaxies)) if ("cosmetic" in s.reward) expect(p.cosmetics).toContain(s.reward.cosmetic);
@@ -142,6 +142,81 @@ describe("reward tracks", () => {
   });
 });
 
+describe("hero levels", () => {
+  const t = meta.heroLevels.xp;
+  const top = t.length + 1, last = top - meta.heroLevels.eliteLevels;
+  const capNormal = t[last - 2]!;
+  const run = (o: Partial<{ roundsPlayed: number; completed: boolean }> = {}) => ({ hero: "venn", wins: 6, livesLeft: 1, roundsPlayed: 12, completed: false, ...o });
+  /** a profile in a league (0 = the lowest) with some XP on venn */
+  const at = (league: number, xp: number): Profile => {
+    const p = newProfile(meta);
+    p.season.points = league * per;
+    p.season.peak = league;
+    p.heroXp.venn = xp;
+    return p;
+  };
+  const elite = meta.leagues.ids.length - 1;
+
+  it("pay XP per round played, wins do not count, a completed run gets the bonus", () => {
+    expect(runHeroXp(meta, run({ roundsPlayed: 7 }))).toBe(7 * meta.run.heroXp.perRound);
+    expect(runHeroXp(meta, { ...run({ roundsPlayed: 7 }), wins: 0 })).toBe(runHeroXp(meta, run({ roundsPlayed: 7 })));
+    expect(runHeroXp(meta, run({ completed: true }))).toBe(12 * meta.run.heroXp.perRound + meta.run.heroXp.completedBonus);
+  });
+  it("get early levels fast and later ones slower; the top 3 are Elite levels", () => {
+    const steps = t.map((x, i) => x - (i ? t[i - 1]! : 0));
+    expect(top).toBe(23);
+    expect(last).toBe(20);
+    expect(heroLevel(meta, 0).eliteFrom).toBe(21);
+    // the shortest run (4 lost rounds) already reaches level 2
+    expect(heroLevel(meta, runHeroXp(meta, run({ roundsPlayed: 4 }))).level).toBe(2);
+    for (let i = 1; i < last - 1; i++) expect(steps[i]!).toBeGreaterThanOrEqual(steps[i - 1]!);
+  });
+  it("stop at level 20 outside the Elite league group; what goes past is lost", () => {
+    expect(isEliteLeague(meta, elite)).toBe(true);
+    expect(isEliteLeague(meta, elite - meta.leagues.groups.at(-1)!)).toBe(false);
+    expect(addHeroXp(meta, capNormal - 100, 5000, false)).toBe(capNormal);
+    expect(addHeroXp(meta, capNormal, 5000, false)).toBe(capNormal);
+    expect(addHeroXp(meta, capNormal, 5000, true)).toBe(capNormal + 5000);
+    expect(addHeroXp(meta, t.at(-1)! - 10, 5000, true)).toBe(t.at(-1)!);
+    const b = bookRun(meta, at(0, capNormal - 100), run({ completed: true }));
+    expect(b.xp).toBe(100);
+    expect(b.level).toEqual([last - 1, last]);
+    expect(bookRun(meta, at(0, capNormal), run()).xp).toBe(0);
+  });
+  it("fill the Elite levels only with ranked runs played in the Elite league group, never with quests", () => {
+    const p = at(elite, capNormal);
+    const ranked = bookRun(meta, p, run({ completed: true }));
+    expect(ranked.xp).toBe(runHeroXp(meta, run({ completed: true })));
+    expect(bookRun(meta, p, run({ completed: true }), { quest: true }).xp).toBe(0);
+    // a quest still levels a hero below level 20
+    expect(bookRun(meta, at(elite, 0), run(), { quest: true }).xp).toBe(runHeroXp(meta, run()));
+    // the league counts as it was when the run was played: a run that brings the player into Elite fills nothing yet
+    const below = at(elite - meta.leagues.groups.at(-1)!, capNormal);
+    below.season.points = below.season.points + per - 1;
+    expect(bookRun(meta, below, { ...run({ completed: true }), wins: 12 }).xp).toBe(0);
+  });
+  it("give skin, pin and frame at level 20 and a pin and a title at each Elite level", () => {
+    expect(heroLevelRewards(meta, "venn", last - 1, last)).toEqual(["skin", "pin", "frame"].map((k) => ({ cosmetic: heroRewardId("venn", last, k) })));
+    for (let lv = last + 1; lv <= top; lv++) expect(heroLevelRewards(meta, "venn", lv - 1, lv)).toEqual(["pin", "title"].map((k) => ({ cosmetic: heroRewardId("venn", lv, k) })));
+    const title = heroRewardId("venn", top, "title");
+    expect(meta.cosmeticById.get(title)).toMatchObject({ kind: "title", hero: "venn", level: top });
+    expect(rewardTrack(meta, { cosmetic: title })).toBe("level");
+    expect(meta.cosmeticById.get(heroRewardId("venn", last, "skin"))?.kind).toBe("skin");
+    const b = bookRun(meta, at(elite, t.at(-2)!), run({ completed: true, roundsPlayed: 12 }));
+    expect(b.rewards).toEqual([]);
+  });
+  it("let the player wear an owned title and take it off", () => {
+    const title = heroRewardId("venn", last + 1, "title");
+    const p = newProfile(meta);
+    expect(equip(meta, p, "title", title)).toBeNull();
+    p.cosmetics.push(title);
+    const q = equip(meta, p, "title", title)!;
+    expect(q.equipped.title).toBe(title);
+    expect(equip(meta, q, "title", null)!.equipped.title).toBeNull();
+    expect(equip(meta, p, "title", heroRewardId("venn", last, "pin"))).toBeNull();
+  });
+});
+
 describe("season heroes", () => {
   it("are owned through the premium pass only", () => {
     const m = withSeason2();
@@ -153,6 +228,16 @@ describe("season heroes", () => {
     expect(u.rewards).toContainEqual({ hero });
     expect(ownsHero(m, u.profile, hero)).toBe(true);
   });
+  it("level 25 % faster in their season with the premium pass", () => {
+    const m = withSeason2();
+    const hero = m.seasons[1]!.hero!;
+    const r = { hero, wins: 5, livesLeft: 0, roundsPlayed: 8, completed: false };
+    const base = 8 * m.run.heroXp.perRound;
+    expect(runHeroXp(m, r, { id: 2, premium: false })).toBe(base);
+    expect(runHeroXp(m, r, { id: 2, premium: true })).toBe(base * 1.25);
+    expect(runHeroXp(m, r, { id: 1, premium: true })).toBe(base);
+    expect(runHeroXp(m, { ...r, hero: data.heroList[1]!.id }, { id: 2, premium: true })).toBe(base);
+  });
 });
 
 describe("stored profiles", () => {
@@ -161,7 +246,7 @@ describe("stored profiles", () => {
     const stored = { ...p, cosmetics: [...p.cosmetics, "bg_gone"], equipped: { background: "bg_gone", patch: "patch_gone" } } as Profile;
     const f = fitProfile(meta, JSON.parse(JSON.stringify(stored)))!;
     expect(f.cosmetics).not.toContain("bg_gone");
-    expect(f.equipped).toEqual({ background: meta.start.background, patch: null, picture: meta.start.picture, grid: null, skins: {} });
+    expect(f.equipped).toEqual({ background: meta.start.background, patch: null, picture: meta.start.picture, grid: null, title: null, skins: {} });
     expect(fitProfile(meta, { nonsense: true })).toBeNull();
   });
   it("keep the player's name and give older profiles the start name", () => {

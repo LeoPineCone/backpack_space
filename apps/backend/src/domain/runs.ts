@@ -204,7 +204,14 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
     // the app may only call a run finished that is over; otherwise it gave up
     const reason: EndReason = asked === "finished" && !run.over ? "gave_up" : asked;
 
-    const summary = { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.over ? run.round : run.round - 1 };
+    // completed: every round played with a life left; a run given up or lost is not
+    const summary = {
+      hero: run.hero,
+      wins: run.wins,
+      livesLeft: run.lives,
+      roundsPlayed: run.over ? run.round : run.round - 1,
+      completed: run.over && run.lives > 0,
+    };
     // the core's profile carries Credits; on the server they live at RevenueCat (earned Credits: STORE issues)
     // a quest run books no league points (its special rule makes it unlike a normal run)
     const booking = bookRun(game.meta, { ...stored.profile, credits: 0 }, summary, { quest: !!run.quest });

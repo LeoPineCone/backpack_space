@@ -146,7 +146,7 @@ One popup with five tabs; every entry opens the matching tab:
 
 **M4 Customise (profile)**
 
-Everything the player customises lives in the profile: player picture, player name, menu background, hero skins and the league patch. **Decided** (2026-11-17) Tap a patch or a background to wear it; the start screen changes at once.
+Everything the player customises lives in the profile: player picture, player name, menu background, hero skins, the league patch and a title. **Decided** (2026-11-17) Tap a patch or a background to wear it; the start screen changes at once. The worn title shows above the name (Ilja 2026-11-19: picture, title, name, patch or pin at the side); titles are only earned (Elite hero levels), never sold.
 
 **M5 Season pass**
 
@@ -214,7 +214,7 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | P6 | Backpack numbers | popup | numbers of the backpack | health, Energy, waiting, damage per second, healing, Shield, melee/ranged | built |
 | P7 | Fight details | popup | damage by source | both sides side by side | built |
 | P8 | Introduction | overlay | first run | spot, symbols, one line, dots, X | built |
-| P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; profile holds everything to customise | built (placeholder rewards) |
+| P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; hero levels show levels 21 to 23 under an "Elite levels" heading; profile holds everything to customise | built (placeholder rewards) |
 | P10 | Glossary | popup (from settings and "i") | all terms | groups, scrolls | built |
 | P11 | Settings | popup | options | language, music, sounds, account (export and deletion), privacy policy, terms of use, help, glossary | built (music and sounds without sound; help placeholder; website links wait for M5) |
 | P12 | Purchase | popup | confirm a purchase | preview, price, BUY | built (BUY shows a toast) |
@@ -263,6 +263,7 @@ Every action has one gesture and one visible response; what is not possible is e
 | P5 | Choose and take | tap a card, TAKE | the item drops loose, FIGHT is free again | – |
 | P9 | Switch tab | tap a tab symbol | other tab | – |
 | P9 | Wear | tap a patch, background or skin | worn; the start screen changes | – |
+| P9 | Wear a title | tap a title in the profile; tap the worn one to take it off | shown above the name | only earned titles |
 | P9 | Buy premium | tap the premium column | purchase | – |
 | P9 | Rename | tap the name in the profile | the phone keyboard opens; the new name shows at once | "A name has 1 to 16 characters" |
 | P9 | Wear a skin | tap a skin beside its hero | worn by that hero | only owned skins |

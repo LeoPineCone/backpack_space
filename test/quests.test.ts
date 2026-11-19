@@ -107,7 +107,7 @@ describe("which quests are open (META-06)", () => {
 describe("booking a quest run", () => {
   it("pays Galaxies and hero XP like a run, but no league points", () => {
     const p = newProfile(meta);
-    const summary = { hero, wins: 9, livesLeft: 1, roundsPlayed: 12 };
+    const summary = { hero, wins: 9, livesLeft: 1, roundsPlayed: 12, completed: true };
     const normal = bookRun(meta, p, summary);
     const quest = bookRun(meta, p, summary, { quest: true });
     expect(quest.galaxies).toBe(normal.galaxies);

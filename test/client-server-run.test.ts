@@ -14,6 +14,7 @@ const finished: RunFinishResponse = {
     wins: 5,
     livesLeft: 0,
     roundsPlayed: 9,
+    completed: false,
     galaxies: 5,
     xp: 40,
     level: [1, 2],
