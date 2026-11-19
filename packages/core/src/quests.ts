@@ -39,6 +39,8 @@ export const QuestsData = z
     /** the rules a daily or a weekly quest is drawn from (ids of `rules`) */
     daily: z.array(z.string()),
     weekly: z.array(z.string()),
+    /** extra Galaxies for a played quest run on top of what the run pays (docs/retention.md "Quests") */
+    bonusGalaxies: z.object({ daily: z.number().int().min(0), weekly: z.number().int().min(0) }).strict(),
     rules: z.array(QuestRule).min(1),
   })
   .strict();
@@ -135,6 +137,11 @@ export function questsOn(q: QuestsData, day: string): Quest[] {
     ...draw(q.daily, q.perDay, dayNumber(day) * 2 + 1).map(make("daily", day.slice(0, 10))),
     ...draw(q.weekly, q.perWeek, dayNumber(week) * 2).map(make("weekly", week)),
   ];
+}
+
+/** Whether a quest id is a daily or a weekly quest (its first letter), or null for no quest id. */
+export function questKind(questId: string): QuestKind | null {
+  return questId.startsWith("d") ? "daily" : questId.startsWith("w") ? "weekly" : null;
 }
 
 /** The rule of a quest id, if the quests know it. */

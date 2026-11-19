@@ -214,7 +214,7 @@ async function finishRun(ctx: DomainContext, runId: string, asked: EndReason): P
     };
     // the core's profile carries Credits; on the server they live at RevenueCat (earned Credits: STORE issues)
     // a quest run books no league points (its special rule makes it unlike a normal run)
-    const booking = bookRun(game.meta, { ...stored.profile, credits: 0 }, summary, { quest: !!run.quest });
+    const booking = bookRun(game.meta, { ...stored.profile, credits: 0 }, summary, run.quest ? { quest: run.quest } : {});
     const { credits: _credits, ...profile } = booking.profile;
     const result: RunResult = {
       runId,

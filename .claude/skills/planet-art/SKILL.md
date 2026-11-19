@@ -77,7 +77,7 @@ Image.fromarray(a.clip(0, 255).astype("uint8")).save("apps/client/art/planets/<p
 ```
 
 Then link it: in `data/meta.json`, the background cosmetic gets `"planet": "<place id>"` (for example
-`bg_ice` → `rime`). `npm run validate` checks that the place exists. A background without a map keeps the
+`bg_rime` → `rime`). `npm run validate` checks that the place exists. A background without a map keeps the
 placeholder, so nothing breaks while pictures are missing.
 
 ## 5. Look at it
@@ -91,5 +91,5 @@ see the loop is seamless.
 
 - Clouds or haze as a second, faster layer; rings (gas giant, ringed planet) need an extra flat ring picture.
 - Other screens than the start screen still use the plain background.
-- `bg_home` (the default background) and `bg_lava` both show Cinder (2026-11-17, Ilja liked the lava planet
+- `bg_home` (the default background) shows Cinder (2026-11-17, Ilja liked the lava planet
   from Rook's home scene); `bg_home` may get its own place later.

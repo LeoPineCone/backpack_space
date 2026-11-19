@@ -12,6 +12,7 @@ import {
   heroLevelRewards,
   rename,
   leagueOf,
+  passGalaxies,
   passLevel,
   seasonData,
   type Meta,
@@ -286,11 +287,12 @@ function planetTab(game: Game, p: Profile, add: Add, w: number): void {
 function passTab(game: Game, p: Profile, add: Add, w: number): void {
   const season = seasonData(game.meta, p.season.id);
   const lv = passLevel(game.meta, p.season),
-    per = season.pass.galaxiesPerLevel;
+    from = passGalaxies(season.pass, lv),
+    to = passGalaxies(season.pass, lv + 1);
   const head = new Container();
   head.addChild(at(icon("galaxy", 30, C.text), 22, 24), at(txt(p.season.galaxies, 26, { anchor: [0, 0.5] }), 46, 24));
   head.addChild(at(txt(`${t("ui.level")} ${lv}`, 20, { anchor: [1, 0.5] }), w, 24));
-  head.addChild(at(bar(w, 12, lv >= season.pass.levels.length ? 1 : (p.season.galaxies % per) / per), 0, 56));
+  head.addChild(at(bar(w, 12, lv >= season.pass.levels.length ? 1 : (p.season.galaxies - from) / (to - from)), 0, 56));
   // column heads: free, premium (locked until bought; buying is not built)
   head.addChild(at(txt(t("ui.free"), 12, { color: C.dim, spacing: 2, anchor: [0.5, 0.5] }), 84, 92));
   const prem = new Container();
