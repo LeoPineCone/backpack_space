@@ -103,7 +103,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Galaxies** | Galaxien | Earned after every run: wins plus lives left. They move the season pass and the planet track. | `Profile.galaxies`, `meta.run.galaxies`, `runGalaxies` |
 | **Credits** | Credits | Premium currency for skins and heroes of earlier seasons. Bought, or earned slowly. | `Profile.credits` |
 | **Hero XP** | Helden-XP | Every run gives the hero you played XP. XP raises the hero's level; levels give cosmetics. | `Profile.heroXp`, `meta.heroLevels`, `heroLevel` |
-| **Planet track** | Planeten-Strang | Permanent track across seasons, moved by Galaxies. Gives planets as menu backgrounds and some Credits. | `meta.planetTrack` |
+| **Planet track** | Planeten-Strang | Permanent track across seasons, moved by Galaxies. Gives planets as menu backgrounds. | `meta.planetTrack` |
 | **Season pass** | Season-Pass | Track of one season, moved by Galaxies. Free rewards for everyone, premium rewards with the premium pass. | `meta.seasons.pass`, `passLevel` |
 | **Premium pass** | Premium-Pass | The paid side of the season pass: the season's new hero from level 1, skins, grid backgrounds. | `SeasonState.premium`, `unlockPremium` |
 | **Season** | Season | A stretch of time with its own pass and league race. A new season brings a new hero. | `meta.seasons`, `SeasonState` |
@@ -112,6 +112,10 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Profile level** | Profilstufe | The number on your picture: the levels of all your heroes added up. | `profileLevel` |
 | **Cosmetic** | Kosmetik | Changes the look only, never the game: skins, backgrounds, grid backgrounds, patches. | `meta.cosmetics` |
 | **Skin** | Skin | Another look for one hero. Worn in the profile. | `Profile.equipped.skins`, `equipSkin` |
+| **Elite level** | Elite-Stufe | Hero levels 21 to 23 after level 20. Only ranked runs in the Elite league group fill them. | `heroLevels.eliteLevels`, `addHeroXp` |
+| **Title** | Titel | Words shown with your name on the profile. Never sold, only earned, for example with an Elite level. | `Profile.equipped.title` |
+| **Hero pin** | Helden-Pin | A small badge of one hero for the profile, earned at hero level 20 and with each Elite level. Not the shop pin. | `heroRewardId` |
+| **Hero frame** | Heldenrahmen | A frame around a hero, earned at hero level 20. Draft. | `heroRewardId` |
 | **Player picture** | Spielerbild | Your picture on the start screen. Chosen in the profile. | `Profile.equipped.picture` |
 | **Quest** | Aufgabe | A daily or weekly run with special rules that pays Galaxies. | `questsScene` |
 | **Shop (Credits)** | Shop (Credits) | Where skins, backgrounds, heroes of earlier seasons and the premium pass are bought. Every purchase shows a preview first. | `storeScene`, `purchaseOverlay` |
