@@ -105,7 +105,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | CORE-04 | The shop of a round follows completely from a seed that the caller passes in. | [client-server.md](client-server.md) | M0 | – | decided |
 | CORE-05 | The core has a plausibility check for a backpack of a given round (items exist, layout valid, rarity and tier possible, value fits the gold earned so far). | [client-server.md](client-server.md) | M2 | – | decided |
 | CORE-06 | The season reset follows the league groups (core, `data/meta.json`, glossary text). | [matchmaking.md](matchmaking.md) | M3 | – | decided |
-| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided; which rules exist still has to be designed (needs designer) |
+| CORE-07 | The core can play a run with special rules, as the quests need them. | [retention.md](retention.md) | M3 | META-07 | decided (2026-11-18: rules 1 to 7 of the proposal list, built in M3) |
 | CORE-08 | The data version (major.minor) is part of the data and decides whether a stored backpack can still be matched. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 
 ## Account and profile
@@ -119,7 +119,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | ACC-05 | The profile (ownership, league, pass, hero levels, Galaxies, equipped things) lives on the server. The app keeps only a copy. | [client-server.md](client-server.md) | M1 | ACC-03 | decided |
 | ACC-06 | Everything a player can customise is in the profile: picture, name, background, hero skins, league patch. | [ux.md](ux.md) | M3 | ACC-05 | decided |
 | ACC-07 | Player names are free text, limited to a maximum length, with a filter that refuses offensive and political names. | review | M3 | – | decided, length open (technical) |
-| ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, check against the store rules (LB-07) |
+| ACC-08 | A player can delete the account and get their data from the settings. The website does not delete accounts itself; it states that a deletion request can be sent to the support address. | [client-server.md](client-server.md) | M6 | WEB-01 | decided, built in M6 (backend.md "Account deletion and export"); store rules noted there, check again with LB-07 |
 
 ## Run
 
@@ -137,8 +137,8 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | RUN-10 | At the end of the run the server books hero XP, Galaxies and league points exactly once. Giving up books the reward for the standing reached. | [client-server.md](client-server.md), [ux.md](ux.md) | M2 | – | decided |
 | RUN-11 | A run survives a lost connection and a closed app on the same device. It continues at the same round. Continuing after a reinstall or on another device is not in scope for version 1. | [client-server.md](client-server.md), [backend.md](backend.md) | M2 | RUN-03 | decided |
 | RUN-12 | A request with a simulation version the server does not accept is answered with "update required". | [client-server.md](client-server.md) | M2 | CORE-03 | decided |
-| RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | open (technical) |
-| RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | open: how long (technical) |
+| RUN-13 | It is defined what happens to open runs when an update changes the simulation version. | [client-server.md](client-server.md) | M2 | – | decided (2026-11-18: two simulation builds during a rollout, a maintenance window when the engine changes) |
+| RUN-14 | Stored shop actions are kept for a set time and then deleted. | [client-server.md](client-server.md) | M2 | RUN-06 | decided (2026-11-18: 180 days) |
 
 ## Matchmaking
 
@@ -146,7 +146,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | --- | --- | --- | --- | --- | --- |
 | MM-01 | An opponent is searched by round, then run standing, then league, relaxing step by step. The round is never relaxed. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-02 | Never the player's own backpack, no opponent twice in a run, only backpacks valid under the player's data version. | [matchmaking.md](matchmaking.md) | M2 | CORE-08 | decided |
-| MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided, number of bot players open (technical) |
+| MM-03 | At launch there are 50 bot backpacks per round and run standing (2,100), made by invented bot players with name, league group and patch. | [matchmaking.md](matchmaking.md) | M2 | – | decided (2026-11-18: 50 bot players per league group plus 16 easy bots) |
 | MM-04 | Bot backpacks live in the backend and can be replaced without an app update. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-05 | Player backpacks are stored from the first day but handed out as opponents only after the numbers are evaluated. | [matchmaking.md](matchmaking.md) | M2 | – | decided |
 | MM-06 | The first 2 to 3 runs of a new player go against easier bot backpacks. | [matchmaking.md](matchmaking.md) | M2 | MM-03 | decided |
@@ -161,11 +161,11 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | META-03 | The season follows the server date. At the season change the server hands out the league patch, applies the reset and starts the new pass. | [retention.md](retention.md) | M3 | CORE-06 | decided |
 | META-04 | Season pass with a free and a premium lane. The premium lane gives the season hero from level 1. | [retention.md](retention.md) | M3 | – | decided |
 | META-05 | Version 1 ships with a season hero. | hero design in progress | M3 | – | decided, hero open (needs designer) |
-| META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided, contents open (needs designer) |
+| META-06 | Daily and weekly quests are reached through one entry point. They are whole runs with special rules and give Galaxies. | [ux.md](ux.md), [retention.md](retention.md) | M3 | CORE-07 | decided (2026-11-18: 3 daily, 1 weekly, no league points, built in M3); when a quest counts as done and its extra reward open |
 | META-07 | League up after a run is shown as a quiet animation in the screen, hero level up as an animation at the end of the run. | [ux.md](ux.md) | M3 | – | decided |
 | META-08 | All numbers of the meta systems are balanced, not placeholders: XP per level, Galaxies per pass level, league points, free Credits. | [retention.md](retention.md) | M6 | – | open (needs designer) |
 | META-09 | A season hero of an earlier season can be bought after its season. It cannot be earned by playing. | [retention.md](retention.md), review | after version 1 | – | decided |
-| META-10 | A season lasts between 3 and 6 months. The exact length is fixed. | [retention.md](retention.md) | M3 | – | decided, exact length open (needs designer) |
+| META-10 | A season lasts 3 months (decided 2026-11-18). | [retention.md](retention.md) | M3 | – | decided |
 
 ## Store
 
@@ -199,7 +199,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | UX-06 | Development helpers (such as the game handle on `window`) exist only in development builds. | review | M0 | – | decided |
 | UX-07 | Outside the safe area the client draws only backgrounds. | [mobile.md](mobile.md) | – | – | decided |
 | UX-08 | Settings: language, music, sounds, account, privacy, help, glossary. | [ux.md](ux.md) | M3 | WEB-03 | decided |
-| UX-09 | The game has sounds, and they can be switched off. Planned are menu sounds and perhaps nothing more; the sound files are still to be made. | [ux.md](ux.md) | M6 | – | decided, content open (needs designer) |
+| UX-09 | The game has sounds, and they can be switched off. Planned are menu sounds and perhaps nothing more; the sound files are still to be made. | [ux.md](ux.md) | M6 | – | decided; module and switches built (2026-11-18, silent stand-in files), the sound files are open (needs designer, #104) |
 | UX-10 | Final art replaces the placeholders: items, bags, heroes, skins, planets, league patches, symbols. | [style.md](style.md), [item-art.md](item-art.md) | M6 | – | decided |
 
 ## Backend and operations
@@ -211,7 +211,7 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | BE-03 | Region and services: one European region; HTTP API in front of the Lambdas. | review | M1 | – | decided (Frankfurt) |
 | BE-04 | Data is stored in DynamoDB. | designer, 2026-11-17 | M1 | – | decided |
 | BE-05 | Every request is checked against a schema before anything else happens: fields, types, size. | review | M1 | QA-08 | decided |
-| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided, numbers open (technical) |
+| BE-06 | Request limits per player and per address protect the backend. | review | M2 | – | decided (2026-11-18: numbers in docs/backend.md) |
 | BE-07 | The configuration request carries minimum version, season, server date and a maintenance switch that can be set without a deployment. | [client-server.md](client-server.md) | M1 | – | decided |
 | BE-08 | Each Lambda may reach only what it needs. Secrets are kept in the AWS Parameter Store (chosen for cost), not in code or settings files. | review | M1 | – | decided |
 | BE-09 | Logs are structured and carry the player id but no names or store identities. | review | M1 | – | decided |
@@ -220,18 +220,18 @@ Browser runs say a lot, but not everything. The client is a web app inside a web
 | BE-12 | The database can be restored to a point in time. The table design is made with restoring in mind (what belongs together is restored together). Restoring has been tried once before launch. | review | M6 | – | decided |
 | BE-13 | Merging to the main branch rolls out to test automatically. Production is rolled out by a deliberate step. | this document | M1 | QA-02, BE-02 | decided |
 | BE-14 | Timed jobs exist for the season change and for deleting old shop actions. | [client-server.md](client-server.md) | M3 | – | decided |
-| BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided, service open (technical) |
+| BE-15 | The app reports crashes and errors of the client. | designer, 2026-11-17 | M6 | – | decided (2026-11-18: own endpoint, built in M6, see backend.md) |
 
 ## Website
 
 | Id | Requirement | Source | Milestone | Depends on | State |
 | --- | --- | --- | --- | --- | --- |
-| WEB-01 | A static website lives in this repo as its own module and is hosted at AWS. | designer, 2026-11-17 | M5 | – | decided |
-| WEB-02 | It has a landing page that advertises the game with art and links to the stores. | designer, 2026-11-17 | M5 | – | decided |
-| WEB-03 | It has imprint, privacy policy and terms of use. The app links to them from the settings. | designer, 2026-11-17 | M5 | LB-01, LB-02 | decided |
-| WEB-04 | It has a support contact and states that an account deletion request can be sent to that address (see ACC-08). | this document | M5 | ACC-08 | decided |
-| WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided |
-| WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided |
+| WEB-01 | A static website lives in this repo as its own module and is hosted at AWS. | designer, 2026-11-17 | M5 | – | decided; built 2026-11-18 (apps/web, docs/website.md); hosting with #56 |
+| WEB-02 | It has a landing page that advertises the game with art and links to the stores. | designer, 2026-11-17 | M5 | – | decided; built 2026-11-18 with placeholder store links |
+| WEB-03 | It has imprint, privacy policy and terms of use. The app links to them from the settings. | designer, 2026-11-17 | M5 | LB-01, LB-02 | decided; pages built 2026-11-18 with marked placeholders; texts open (LB-01, LB-02) |
+| WEB-04 | It has a support contact and states that an account deletion request can be sent to that address (see ACC-08). | this document | M5 | ACC-08 | decided; page built 2026-11-18; support address open (#93) |
+| WEB-05 | English and German, built so that another language is easy to add. | this document | M5 | – | decided; built 2026-11-18 |
+| WEB-06 | It uses the look of the game (`data/theme.json`, [style.md](style.md)) and loads nothing from other servers. | this document | M5 | – | decided; built 2026-11-18, checked by a test |
 | WEB-07 | A domain is registered and set up. | designer, 2026-11-17 | M5 | – | open (needs designer) |
 
 ## Launch blockers
@@ -267,14 +267,11 @@ Requirements in state `open` wait for one of these:
 | Provider: person or company | LB-01, LB-02, WEB-03 |
 | Launch platform: Android first? | LB-04, QA-07 |
 | Quest contents: which special rules, how many per day and week | META-06, CORE-07 |
-| Exact season length, pass price, Credit packs, Credits prices of skins and heroes | META-10, STORE-12 |
+| Pass price, Credit packs, Credits prices of skins and heroes (season length decided: 3 months) | STORE-12 |
 | Season hero of season 1 | META-05 |
 | Meta numbers | META-08 |
 | How to even out refunded Credits that are spent | STORE-09 |
-| Session lifetime, how long a run may stay paused, request limits | ACC-04, BE-06 |
-| How long shop actions are kept, and when they are analysed | RUN-14 |
-| Open runs after an update of the simulation version | RUN-13 |
-| Number and spread of bot players | MM-03 |
-| Crash report service | BE-15 |
+| Session lifetime, how long a run may stay paused | ACC-04 |
+| When shop actions are analysed | RUN-14 |
 | Domain | WEB-07 |
 | Local purchase testing | DEV-04 |

@@ -1,6 +1,6 @@
 /** After a fight: the result of the round, and at the end of a run the summary with its reward. */
 import { Container, Graphics } from "pixi.js";
-import { finishRound, heroLevel, type BattleResult, type Build, type CSide, type RunBooking } from "@backpack-space/core";
+import { finishRound, type BattleResult, type Build, type CSide, type RunBooking } from "@backpack-space/core";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
@@ -12,11 +12,18 @@ import { homeScene } from "./home";
 import { heroScene } from "./hero";
 import { rewardTile } from "./progress";
 import { t, tr, upper } from "../i18n";
+import { nextSeed } from "../server-run";
+import { runEndFrame, RUN_END_SECONDS } from "../run-end";
+import type { SavedFight } from "../save";
+import { onRunFailure } from "./online-flow";
+import { statusScene } from "./status";
+import { playSound } from "../sound";
 
 const SOURCES = ["weapon", "direct", "burn", "toxin", "spikes"] as const;
 const SOURCE_ICON: Record<string, string> = { weapon: "weapon", direct: "damage", burn: "burn", toxin: "toxin", spikes: "spikes" };
 
-export interface Fought { result: BattleResult; sides: [CSide, CSide]; player: Build }
+/** `server`: online, what the server decided for the round; its result counts, not the replay (RUN-08). */
+export interface Fought { result: BattleResult; sides: [CSide, CSide]; player: Build; server?: SavedFight["server"] }
 
 /** Damage by source for both sides, behind the chart button. */
 function details(game: Game, f: Fought): Scene {
@@ -51,7 +58,8 @@ function details(game: Game, f: Fought): Scene {
 export function resultScene(game: Game, f: Fought): Scene {
   const root = new Container();
   const data = game.data, run = game.run!, st = f.result.stats;
-  const won = f.result.winner === 0;
+  const won = f.server ? f.server.won : f.result.winner === 0;
+  playSound(won ? "win" : "lose");
   const livesAfter = run.lives - (won ? 0 : 1);
   const col = won ? C.gold : C.dim;
 
@@ -92,9 +100,17 @@ export function resultScene(game: Game, f: Fought): Scene {
 
   root.addChild(at(roundButton("chart", 32, () => game.openOverlay(details(game, f)), { iconSize: 26 }), 52, H - 52));
   root.addChild(at(pillButton(t("ui.continue"), W - 116, 64, () => {
-    finishRound(run, data, won);
+    finishRound(run, data, won, f.server ? nextSeed(f.server.run) : undefined);
+    if (run.over && game.isOnline) {
+      // the server books the end once; without an answer it books it on its own at the next start
+      const report = () => void game.finishOnline("finished").then((res) => {
+        if (res.ok) game.show(runEndScene(game, res.value));
+        else onRunFailure(game, res, () => game.show(statusScene({ kind: "noNetwork" }, report)));
+      });
+      report();
+    }
     // the stored run ends before the reward is booked, so a reload cannot book it twice
-    if (run.over) { game.dropSave(); game.show(runEndScene(game, game.bookRun(run))); }
+    else if (run.over) { game.dropSave(); game.show(runEndScene(game, game.bookRun(run))); }
     else {
       game.show(shopScene(game));
       // what merged after this fight is shown once
@@ -146,10 +162,9 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   for (const p of run.items) root.addChild(at(piece(data, p.item, p.rot, cell), gx + p.x * cell, gy + p.y * cell));
   root.addChild(at(starMarks(data, run.bags, run.items, cell), gx, gy));
 
-  // hero XP and level, league points, what was unlocked. Both rows play a short animation (docs/ux.md F6):
-  // the XP bar fills up and a new level pops in gold; league points count up and a new league fades in, without a full-screen moment.
+  // hero XP and level, league points, what was unlocked; both rows animate from the booking (run-end.ts)
   const meta = game.meta, p = game.profile;
-  const xp1 = p.heroXp[run.hero] ?? 0, xp0 = Math.max(0, xp1 - b.xp);
+  const xp1 = p.heroXp[run.hero] ?? 0;
   const xpRow = new Container();
   xpRow.addChild(at(heroBadge(data.heroes.get(run.hero)!, 18), 18, 18));
   const lvText = txt("", 15, { anchor: [0, 0.5] });
@@ -167,7 +182,6 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   lgRow.addChild(at(glow, 18, 18), at(icon("league", 26, C.gold), 18, 18));
   const lgOld = txt(upper(t(`league.${meta.leagues.ids[b.league[0]]}`)), 15, { anchor: [0, 0.5] });
   const lgNew = txt(upper(t(`league.${meta.leagues.ids[b.league[1]]}`)), 15, { color: b.league[1] > b.league[0] ? C.gold : C.text, anchor: [0, 0.5] });
-  lgNew.alpha = b.league[1] === b.league[0] ? 1 : 0;
   lgOld.visible = b.league[1] !== b.league[0];
   lgRow.addChild(at(lgOld, 46, 18), at(lgNew, 46, 18));
   const ptsText = txt("0", 16, { color: b.points > 0 ? C.good : b.points < 0 ? C.bad : C.dim, anchor: [1, 0.5] });
@@ -175,26 +189,17 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   root.addChild(at(lgRow, 20, rowsY + 42));
 
   let time = 0;
-  const DELAY = 0.4, FILL = 1.2;
   const draw = () => {
-    const k = Math.min(1, Math.max(0, (time - DELAY) / FILL)), ease = 1 - (1 - k) ** 3;
-    const lv = heroLevel(meta, xp0 + (xp1 - xp0) * ease);
-    const up = lv.level > b.level[0];
-    lvText.text = `${t("ui.level")} ${lv.level}`;
-    lvText.style.fill = up ? C.gold : C.text;
-    xpFill.clear().roundRect(0, 0, Math.max(8, 110 * (lv.need ? lv.into / lv.need : 1)), 8, 4).fill(C.cyan);
-    // the level pops once when it goes up
-    const popAt = up ? time - (DELAY + FILL * 0.2) : -1;
-    lvPop.scale.set(popAt >= 0 && popAt < 0.5 ? 1 + 0.5 * Math.sin((popAt / 0.5) * Math.PI) : 1);
-    // league: points count up after the XP; a new league fades in with a soft ring
-    const kl = Math.min(1, Math.max(0, (time - DELAY - FILL) / 0.8));
-    ptsText.text = `${b.points > 0 ? "+" : ""}${Math.round(b.points * kl)}`;
-    if (b.league[1] !== b.league[0]) {
-      lgNew.alpha = kl;
-      lgOld.alpha = 1 - kl;
-      glow.alpha = kl > 0 && kl < 1 ? Math.sin(kl * Math.PI) : 0;
-      glow.scale.set(1 + kl * 0.6);
-    }
+    const f = runEndFrame(meta, b, xp1, time);
+    lvText.text = `${t("ui.level")} ${f.level}`;
+    lvText.style.fill = f.up ? C.gold : C.text;
+    xpFill.clear().roundRect(0, 0, Math.max(8, 110 * f.bar), 8, 4).fill(C.cyan);
+    lvPop.scale.set(f.pop);
+    ptsText.text = `${b.points > 0 ? "+" : ""}${f.points}`;
+    lgNew.alpha = f.league;
+    lgOld.alpha = 1 - f.league;
+    glow.alpha = f.ring;
+    glow.scale.set(f.ringScale);
   };
   draw();
   const shown = b.rewards.slice(0, 6);
@@ -203,5 +208,5 @@ export function runEndScene(game: Game, b: RunBooking): Scene {
   root.addChild(at(roundButton("share", 32, () => game.toast(t("toast.shareLater")), { iconSize: 26 }), 52, H - 52));
   root.addChild(at(pillButton(t("ui.newRun"), W - 192, 64, () => { game.run = null; game.show(heroScene(game)); }), 96, H - 84));
   root.addChild(at(roundButton("home", 32, () => { game.run = null; game.dropSave(); game.show(homeScene(game)); }, { iconSize: 26 }), W - 52, H - 52));
-  return { root, update: (dt) => { if (time < 4) { time += dt; draw(); } } };
+  return { root, update: (dt) => { if (time < RUN_END_SECONDS) { time += dt; draw(); } } };
 }

@@ -24,6 +24,17 @@ export interface SettingsValues {
   minAppVersion: string;
   /** the current season with its dates ("YYYY-MM-DD"); a setting, so a season can start without a deployment */
   season: { id: number; start: string; end: string };
+  /**
+   * Matching phase (docs/matchmaking.md "Phases"): 1 = bot backpacks only (player backpacks are collected but not
+   * handed out), 3 = player backpacks first, bots as fallback. Missing = 1. Phase 2 (players only in buckets that are
+   * full enough) waits for its threshold, which is set from the numbers collected in phase 1.
+   */
+  matchingPhase?: 1 | 3;
+  /**
+   * Request limits per route (BE-06): steady requests per second over all players and a burst. The cloud setup sets
+   * them on the HTTP API; the local server applies them itself. A route without an entry has no limit.
+   */
+  limits?: Partial<Record<string, { rate: number; burst: number }>>;
   /** present only locally: the development identity is accepted (DEV-05) */
   devIdentity?: boolean;
   /** signing keys for session tokens, newest first; two are accepted at once */
@@ -48,25 +59,46 @@ export interface Item {
   [field: string]: unknown;
 }
 /** A write that only succeeds if its condition holds; all writes of one `transact` succeed or none does. */
-export type Write = { put: Item; ifNotExists?: boolean; ifVersion?: number } | { delete: { pk: string; sk: string }; ifExists?: boolean };
+export type Write =
+  | { put: Item; ifNotExists?: boolean; ifVersion?: number }
+  /** `ifVersion`: delete only an existing item with this version number */
+  | { delete: { pk: string; sk: string }; ifExists?: boolean; ifVersion?: number };
+
+/** One page of a read over a whole table (timed jobs only); `next` continues it, missing at the end. */
+export interface Page {
+  items: Item[];
+  next?: string;
+}
 
 /** The table `players` (one partition per player). */
 export interface PlayerStore {
   get(pk: string, sk: string): Promise<Item | null>;
   /** every item of a partition, sorted by sort key */
   query(pk: string): Promise<Item[]>;
+  /** one page of the items with this sort key over all partitions, in no fixed order (timed jobs only) */
+  scan(sk: string, next?: string): Promise<Page>;
   /** writes together; false when a condition failed (then nothing was written) */
   transact(writes: Write[]): Promise<boolean>;
 }
 
-/** The table `backpacks` (the opponent pool). Methods come with the matching issues (M2). */
+/** The table `backpacks` (the opponent pool, docs/backend.md): one partition per matching bucket. */
 export interface BackpackPool {
   put(item: Item): Promise<void>;
+  /** up to `limit` items of partition `pk` with `from` <= sort key <= `to`, in sort key order (one small read) */
+  range(pk: string, from: string, to: string, limit: number): Promise<Item[]>;
+  remove(pk: string, sk: string): Promise<void>;
+  /** every backpack of a player (index `byPlayer`; account export and deletion) */
+  byPlayer(playerId: string): Promise<Item[]>;
 }
 
-/** The table `actions` (recorded shop actions). Methods come with the run issues (M2). */
+/** The table `actions` (recorded shop actions). */
 export interface ActionStore {
   put(item: Item): Promise<void>;
+  /** every entry of a player (index `byPlayer`; account export and deletion) */
+  byPlayer(playerId: string): Promise<Item[]>;
+  /** one page of the keys of items whose `expiresAt` (seconds since 1970) lies before `nowSec` (timed jobs only) */
+  expired(nowSec: number, next?: string): Promise<Page>;
+  remove(pk: string, sk: string): Promise<void>;
 }
 
 /** What Apple or Google confirm about a sign-in (ACC-02). */
@@ -100,6 +132,8 @@ export interface SessionTokens {
 /** RevenueCat (M4). */
 export interface RevenueCat {
   balance(playerId: string): Promise<number>;
+  /** deletes the customer and what RevenueCat holds about them (ACC-08); nothing happens for an unknown customer */
+  deleteCustomer(playerId: string): Promise<void>;
 }
 
 /** Where log lines go: stdout as JSON in the cloud and locally, an array in tests. */

@@ -1,0 +1,8 @@
+{
+  "$comment": "Facts of the website that are not texts (WEB-02, WEB-04). A value with [[TODO: ...]] is a placeholder: the preview shows it marked, the production build (npm run web:build) refuses it.",
+  "stores": {
+    "apple": "[[TODO: App Store link, once the listing exists (#106)]]",
+    "google": "[[TODO: Google Play link, once the listing exists (#106)]]"
+  },
+  "supportEmail": "[[TODO: support address (#93)]]"
+}

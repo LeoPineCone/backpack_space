@@ -1,6 +1,7 @@
 /**
- * Settings (docs/ux.md P11): language, music, sounds, account, privacy, help and the glossary.
- * Music and sounds are switches without sound yet; account, privacy and help are placeholders. No vibration setting: the app never vibrates.
+ * Settings (docs/ux.md P11): language, music, sounds, account, privacy policy, terms of use, help and the glossary.
+ * Music and sounds switch the sound module (sound.ts) on and off; help is a placeholder. Account: export and deletion (account.ts). Privacy policy and terms of use
+ * open the website pages in the player's language (WEB-03). No vibration setting: the app never vibrates.
  */
 import { Container, Rectangle } from "pixi.js";
 import type { Game, Scene } from "../game";
@@ -8,8 +9,18 @@ import { C, W } from "../theme";
 import { at, box, dimmer, roundButton, tappable, txt } from "../ui";
 import { icon } from "../icons";
 import { glossary } from "./popup";
+import { accountOverlay } from "./account";
+import { soundPrefsChanged } from "../sound";
 import { readPrefs, writePrefs, type Prefs } from "../prefs";
-import { DEVICE, deviceLanguage, languageChoice, setLanguage, t } from "../i18n";
+import { DEVICE, deviceLanguage, languageChoice, setLanguage, t, tr } from "../i18n";
+import { websiteUrl, type WebsitePage } from "../website";
+
+/** Opens a website page outside the app (the system browser in the store app); a toast while there is no website. */
+function openPage(game: Game, page: WebsitePage): void {
+  const url = websiteUrl(import.meta.env.VITE_WEBSITE_URL, page, tr().lang);
+  if (url) window.open(url, "_blank", "noopener");
+  else game.toast(t("toast.websiteLater"));
+}
 
 /** A switch drawn as a pill with a knob; origin top-left. */
 function toggle(on: boolean): Container {
@@ -70,14 +81,16 @@ export function settingsOverlay(game: Game, onChange: () => void): Scene {
     const prefs = readPrefs();
     const flip = (k: keyof Prefs) => {
       writePrefs({ ...prefs, [k]: !prefs[k] });
+      soundPrefsChanged();
       render();
     };
-    // more: account (Game Center / Google Play Games, silently), privacy, help, glossary
+    // more: account (Game Center / Google Play Games, silently), privacy policy, terms of use, help, glossary
     const items: { ic: string; label: string; on?: boolean; tap: () => void }[] = [
       { ic: "music", label: t("ui.music"), on: prefs.music, tap: () => flip("music") },
       { ic: "sound", label: t("ui.sounds"), on: prefs.sounds, tap: () => flip("sounds") },
-      { ic: "account", label: t("ui.account"), tap: () => game.toast(t("toast.accountLater")) },
-      { ic: "privacy", label: t("ui.privacy"), tap: () => game.toast(t("toast.privacyLater")) },
+      { ic: "account", label: t("ui.account"), tap: () => game.openOverlay(accountOverlay(game)) },
+      { ic: "privacy", label: t("ui.privacy"), tap: () => openPage(game, "privacy") },
+      { ic: "info", label: t("ui.terms"), tap: () => openPage(game, "terms") },
       { ic: "help", label: t("ui.help"), tap: () => game.toast(t("toast.helpLater")) },
       { ic: "book", label: t("ui.glossaryRow"), tap: () => game.openOverlay(glossary(game)) },
     ];

@@ -82,7 +82,7 @@ A run is a loop of shop, fight and result: 12 rounds, or until the 4 lives are g
 5. Reroll (1 gold) for new offers; pinned offers stay, also into the next round.
 6. Merging: matching neighbours glow and an energy beam joins them. They merge automatically after the fight. Locking in the item popup prevents it. **Decided**
 7. Numbers: the row with health and Energy; the chart button opens all backpack numbers.
-8. FIGHT starts the fight; it is blocked while a free pick is open.
+8. FIGHT starts the fight; it is blocked while a free pick is open. Online the app first shows the search screen (V4a) while the server picks the opponent and decides the round; the fight follows as soon as the answer is there. Without an answer the run stays in the shop with a toast, and FIGHT tries again (the same round gets the same answer). **Assumption** (2026-11-18)
 9. Opponent: not shown in the shop; it appears in the fight, with name and league patch. **Decided** (2026-11-17)
 
 **F3 Fight**
@@ -107,7 +107,7 @@ A run is a loop of shop, fight and result: 12 rounds, or until the 4 lives are g
 **F6 Run end**
 
 1. Summary: Galaxies (wins + lives left), final backpack, hero XP and level, league points, what was unlocked.
-2. A new hero level is shown as an animation on this screen. A league promotion is a subtle animation in the view itself, probably without a full-screen moment; the exact form is still to try out. **Decided** (2026-11-17)
+2. A new hero level is shown as an animation on this screen. A league promotion is a subtle animation in the view itself, probably without a full-screen moment; the exact form is still to try out. **Decided** (2026-11-17) Built (M3): the XP bar fills and a new level pops in gold; then the league points count up and a new league fades in with a soft ring. Online the server's booking drives both (`apps/client/src/run-end.ts`).
 3. Actions: NEW RUN (to the hero choice), home, share (not built). **Decided** (2026-11-17): NEW RUN goes to the hero choice, not straight into the shop.
 
 **F7 Leave and resume**
@@ -146,7 +146,7 @@ One popup with five tabs; every entry opens the matching tab:
 
 **M4 Customise (profile)**
 
-Everything the player customises lives in the profile: player picture, player name, menu background, hero skins and the league patch. **Decided** (2026-11-17) Tap a patch or a background to wear it; the start screen changes at once.
+Everything the player customises lives in the profile: player picture, player name, menu background, hero skins, the league patch and a title. **Decided** (2026-11-17) Tap a patch or a background to wear it; the start screen changes at once. The worn title shows above the name (Ilja 2026-11-19: picture, title, name, patch or badge at the side); titles are only earned (Elite hero levels), never sold.
 
 **M5 Season pass**
 
@@ -157,7 +157,7 @@ Everything the player customises lives in the profile: player picture, player na
 **M6 Season change**
 
 1. On start the client checks whether a new season has begun.
-2. Then: the patch of the old season is booked, 2 leagues down, a new pass. **Decided** (rules). Shown subtly like a league promotion. *Assumption*
+2. Then: the patch of the old season is booked, down to the highest league of the next lower league group (Amateur stays), a new pass. **Decided** (rules). Shown subtly like a league promotion. *Assumption*
 
 **M7 Credits shop** (structure built; what is on sale, prices and paying are open, BUY shows a toast)
 
@@ -166,14 +166,16 @@ Everything the player customises lives in the profile: player picture, player na
 3. Every purchase shows a preview and asks for confirmation, for Credits and for real money alike. **Decided** (2026-11-17)
 4. No offers on the start screen for launch; the shop is reached through the cart button and the Credits counter. **Decided** (2026-11-17, replaces the earlier "start screen as shop window")
 
-**M8 Daily and weekly quests** (structure built with placeholder cards: 3 daily, 1 weekly)
+**M8 Daily and weekly quests** (built: 3 daily, 1 weekly, from the server)
 
 1. One entry point for both, a button in the bottom row of the start screen. **Decided** (2026-11-17)
-2. Every quest is a whole run, maybe shorter or longer than a normal one, always with special rules; rewards are Galaxies. **Decided** Which quests and rules: **open**.
+2. Every quest is a whole run, maybe shorter or longer than a normal one, always with special rules; rewards are Galaxies. **Decided** Rules 1 to 7 of the proposal list (2026-11-18, [retention.md](retention.md)). **Decided**
+3. A card shows the rule's name and what it changes; a played quest shows a check and cannot be started again until its day or week renews. Play leads to hero selection, then the run starts with the rule. Offline the screen says that quests need the connection. *Assumption*
+4. When a quest counts as done and its extra reward: **open**.
 
 **M9 Settings**
 
-The gear button: language, music, sounds, account, privacy, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds are switches without sound yet; account, privacy and help are placeholders.
+The gear button: language, music, sounds, account, privacy policy, terms of use, help and the glossary. No vibration setting, because the app never vibrates. **Decided** (2026-11-17) Music and sounds switch the sound module on and off (UX-09, built 2026-11-18, `apps/client/src/sound.ts`): a tap sound on every button, a sound for a won and a lost fight, and a looping menu music that starts with the first touch. The files ship inside the app in `apps/client/art/sounds/` (`tap`, `win`, `lose`, `music-menu`; wav, mp3, ogg or m4a); today they are silent stand-ins, the real ones come with #104 and only replace those files. Help is a placeholder. Account (ACC-08, built 2026-11-18): a short note that sign-in runs through Game Center or Google Play Games, "Get my data" (a JSON file through the share sheet or a download) and "Delete account" with a confirmation that says what is lost; afterwards the game starts again as a new player. *Assumption* Privacy policy and terms of use open the website page in the player's language outside the app (WEB-03, build setting `VITE_WEBSITE_URL`, page `<site>/<language>/privacy/` and `/terms/`); until the website exists (M5) a toast says the page comes with it.
 
 **M10 Account**
 
@@ -184,6 +186,8 @@ No sign-in screen. Progress is bound silently to Game Center (iOS) or Google Pla
 1. On start the app asks the server for its configuration, signs in silently and loads the profile from the server (backend.md). While that runs, the screen stays dark; it takes a moment only.
 2. If something keeps the player out, one screen (V9) says what and why, with one button TRY AGAIN: maintenance (with the server's text if it names one), update needed (old app), no connection, not signed in (Game Center / Play Games refused or not signed in). **Assumption** (2026-11-18) A store link for "update needed" comes when the store entries exist.
 3. Otherwise the start screen opens as before; the season date comes from the server.
+   - Online the app also asks the server for the open run. A local copy of that run continues; a copy of another run is dropped. An open run without a copy (other device, reinstall) is reported and ended by the server, and a run that was over is booked; both show a toast with the wins. **Assumption** (2026-11-18)
+   - Online, the server starts every run, decides every fight and books the run end (also after giving up); the device keeps the shop phase in progress.
 4. Development builds sign in as a development player (`?player=player-2` picks another one). Without a backend address the app plays offline with the profile on the device (hosted preview).
 
 ## Screens and popups
@@ -195,11 +199,12 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | V1 | Start screen | screen | hub | planet background, player picture with level and name, league patch, Galaxies, Credits, FIGHT; bottom row: quests, pass, shop, settings | built |
 | V2 | Hero choice | screen | choose a hero, start a run | back, Galaxies, Credits, hero picture with level, name, 3 trait symbols + "i", ring of heroes, START or SHOP in the middle | built |
 | V3 | Shop + backpack | screen | buy, pack, prepare | hero, lives, round, gold; 6 offers with pins; backpack grid; loose items; health/Energy row + chart; reroll, FIGHT, bin; run menu button | built |
-| V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (name is a placeholder; the patch shows the player's league) |
+| V4a | Search | screen | online: wait for the server's opponent | turning radar symbol, SEARCHING, one sentence | built |
+| V4 | Fight | screen | play the fight back | opponent on top with name and patch, star clock, own backpack below, health and Energy bars, speed ×1/×2/×4 | built (online: name and patch from the server; offline: placeholder name, the player's league) |
 | V5 | Round result | screen | outcome of the round | victory/defeat, hearts, top 3 items, chart, CONTINUE | built |
 | V6 | Run end | screen | summary and reward | Galaxies, final backpack, XP and level (animated), league points (animated), unlocks, NEW RUN, home, share | built |
 | V7 | Credits shop | screen | buy | sections: offers, skins, heroes, backgrounds, Credits | built (prices "?") |
-| V8 | Quests | screen | daily and weekly | list with progress and reward; starts a run with special rules | built (placeholder cards) |
+| V8 | Quests | screen | daily and weekly | list of today's dailies and this week's weekly, played ones checked; starts a run with its special rule | built |
 | V9 | Status | screen | maintenance, update needed, no connection, not signed in (M11) | symbol, title, one sentence, TRY AGAIN | built (no store link yet) |
 | P1 | Item popup | popup | what an item does | picture, name, symbol rows, "i", recipe radar; in the backpack: turn, sell, lock | built |
 | P2 | Hero popup | popup | what a hero does | passive as symbol rows, paths, "i" | built |
@@ -209,9 +214,9 @@ A screen replaces the previous one. A popup lies on top; X or a tap beside it cl
 | P6 | Backpack numbers | popup | numbers of the backpack | health, Energy, waiting, damage per second, healing, Shield, melee/ranged | built |
 | P7 | Fight details | popup | damage by source | both sides side by side | built |
 | P8 | Introduction | overlay | first run | spot, symbols, one line, dots, X | built |
-| P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; profile holds everything to customise | built (placeholder rewards) |
+| P9 | Progress | popup with 5 tabs | hero levels, planets, pass, leagues, profile | per tab a track with steps and reward tiles, "i"; hero levels show levels 21 to 23 under an "Elite levels" heading; profile holds everything to customise | built (placeholder rewards) |
 | P10 | Glossary | popup (from settings and "i") | all terms | groups, scrolls | built |
-| P11 | Settings | popup | options | language, music, sounds, account, privacy, help, glossary | built (music and sounds without sound; account, privacy, help placeholders) |
+| P11 | Settings | popup | options | language, music, sounds, account (export and deletion), privacy policy, terms of use, help, glossary | built (music and sounds without sound; help placeholder; website links wait for M5) |
 | P12 | Purchase | popup | confirm a purchase | preview, price, BUY | built (BUY shows a toast) |
 | P13 | Run menu | popup | leave a run | settings, home, give up | built |
 
@@ -224,7 +229,7 @@ Every action has one gesture and one visible response; what is not possible is e
 | V1 | Fight | tap FIGHT | hero choice | – |
 | V1 | Profile, leagues, planets, pass | tap picture, patch, Galaxies, pass | progress on the matching tab | – |
 | V1 | Shop | tap cart or Credits | Credits shop | – |
-| V1 | Quests | tap quests | quests | starting a quest: today a toast |
+| V1 | Quests | tap quests | quests | starting a quest leads to hero selection |
 | V1 | Settings | tap gear | settings (glossary inside) | – |
 | V2 | Choose a hero | tap on the ring | picture, name, level change | – |
 | V2 | Explain the hero | tap "i" | hero popup | – |
@@ -258,18 +263,23 @@ Every action has one gesture and one visible response; what is not possible is e
 | P5 | Choose and take | tap a card, TAKE | the item drops loose, FIGHT is free again | – |
 | P9 | Switch tab | tap a tab symbol | other tab | – |
 | P9 | Wear | tap a patch, background or skin | worn; the start screen changes | – |
+| P9 | Wear a title | tap a title in the profile; tap the worn one to take it off | shown above the name | only earned titles |
 | P9 | Buy premium | tap the premium column | purchase | – |
 | P9 | Rename | tap the name in the profile | the phone keyboard opens; the new name shows at once | "A name has 1 to 16 characters" |
 | P9 | Wear a skin | tap a skin beside its hero | worn by that hero | only owned skins |
 | V7 | Buy | tap an offer, then BUY | purchase popup, then the purchase | today a toast |
-| P11 | Music, sounds | tap the row | switch on/off | – |
-| P11 | Account, privacy, help | tap the row | – | today a toast |
+| P11 | Music, sounds | tap the row | switch on/off, takes effect at once and is remembered on the device | – |
+| P11 | Account | tap the row | account: get my data, delete account | offline a toast |
+| P11 | Get my data | tap the row | the data file goes to the share sheet or a download | – |
+| P11 | Delete account | tap the row, then DELETE FOR GOOD in the confirmation | the game starts again as a new player | – |
+| P11 | Help | tap the row | – | today a toast |
+| P11 | Privacy policy, terms of use | tap the row | the website page opens outside the app | today a toast until the website exists |
 | P11 | Language | tap a row | switched at once | – |
 | P13 | Home / give up | tap / tap twice | start screen (run paused) / run end with reward | – |
 | all popups | Close | X or tap beside | popup closes | P5 cannot be closed |
 
 ## Still open
 
-- Which daily and weekly quests, with which special rules.
+- When a quest counts as done, and its extra reward.
 - The exact form of the league promotion animation.
 - Sound and music.

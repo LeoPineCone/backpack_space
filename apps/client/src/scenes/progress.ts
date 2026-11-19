@@ -4,7 +4,22 @@
  * Rewards are placeholders (a symbol for the kind of cosmetic) until the cosmetics are designed.
  */
 import { Container, Graphics, Rectangle } from "pixi.js";
-import { NAME_MAX, equip, equipSkin, heroLevel, rename, leagueOf, passLevel, seasonData, type Profile, type Reward } from "@backpack-space/core";
+import {
+  NAME_MAX,
+  equip,
+  equipSkin,
+  heroLevel,
+  heroLevelRewards,
+  rename,
+  leagueOf,
+  passGalaxies,
+  passLevel,
+  seasonData,
+  type Meta,
+  type Profile,
+  type Reward,
+} from "@backpack-space/core";
+import type { ApiFailure } from "../api";
 import type { Game, Scene } from "../game";
 import { C, H, W } from "../theme";
 import { icon } from "../icons";
@@ -26,7 +41,24 @@ export type Tab = (typeof TABS)[number]["id"];
 /** symbols of the progress terms, in the order the legend explains them (data/glossary.json, group "meta") */
 export const PROGRESS_ICONS = ["galaxy", "credits", "xp", "planet", "pass", "premium", "league", "patch", "skin"];
 
-const KIND_ICON: Record<string, string> = { background: "planet", grid: "cell", skin: "skin", heroCosmetic: "skin", patch: "patch" };
+const KIND_ICON: Record<string, string> = {
+  background: "planet",
+  grid: "cell",
+  skin: "skin",
+  heroCosmetic: "skin",
+  patch: "patch",
+  badge: "star",
+  title: "flag",
+  frame: "hero",
+};
+
+/** The words of a title: an Elite level's title names the hero and the Elite level (placeholder until the titles are written). */
+export function titleText(meta: Meta, id: string): string {
+  const c = meta.cosmeticById.get(id);
+  if (!c?.hero || c.level === undefined) return id;
+  const eliteFrom = heroLevel(meta, 0).eliteFrom;
+  return t("title.heroElite", { hero: t(`hero.${c.hero}.name`), n: c.level - eliteFrom + 1 });
+}
 
 /** A reward as a tile: its symbol, and the amount or the hero it belongs to. Origin top-left. */
 export function rewardTile(game: Game, r: Reward, size: number, on = true): Container {
@@ -226,7 +258,13 @@ function heroTab(game: Game, p: Profile, add: Add, w: number): void {
   );
   add(head, 84);
   for (let l = 2; l <= lv.max; l++) {
-    const tiles = meta.heroLevels.cosmeticAt.includes(l) ? [rewardTile(game, { cosmetic: `${hero}_lv${l}` }, 56, l <= lv.level)] : [];
+    // the Elite levels: only ranked runs in the highest league group fill them
+    if (l === lv.eliteFrom) {
+      const head = new Container();
+      head.addChild(at(icon("league", 16, C.gold), 12, 12), at(txt(t("ui.eliteLevels"), 13, { color: C.gold, spacing: 2, anchor: [0, 0.5] }), 28, 12));
+      add(head, 30);
+    }
+    const tiles = heroLevelRewards(meta, hero, l - 1, l).map((r) => rewardTile(game, r, 56, l <= lv.level));
     add(stepRow(l, l <= lv.level, tiles, w, tiles.length ? 66 : 44), tiles.length ? 66 : 44);
   }
 }
@@ -249,11 +287,12 @@ function planetTab(game: Game, p: Profile, add: Add, w: number): void {
 function passTab(game: Game, p: Profile, add: Add, w: number): void {
   const season = seasonData(game.meta, p.season.id);
   const lv = passLevel(game.meta, p.season),
-    per = season.pass.galaxiesPerLevel;
+    from = passGalaxies(season.pass, lv),
+    to = passGalaxies(season.pass, lv + 1);
   const head = new Container();
   head.addChild(at(icon("galaxy", 30, C.text), 22, 24), at(txt(p.season.galaxies, 26, { anchor: [0, 0.5] }), 46, 24));
   head.addChild(at(txt(`${t("ui.level")} ${lv}`, 20, { anchor: [1, 0.5] }), w, 24));
-  head.addChild(at(bar(w, 12, lv >= season.pass.levels.length ? 1 : (p.season.galaxies % per) / per), 0, 56));
+  head.addChild(at(bar(w, 12, lv >= season.pass.levels.length ? 1 : (p.season.galaxies - from) / (to - from)), 0, 56));
   // column heads: free, premium (locked until bought; buying is not built)
   head.addChild(at(txt(t("ui.free"), 12, { color: C.dim, spacing: 2, anchor: [0.5, 0.5] }), 84, 92));
   const prem = new Container();
@@ -299,12 +338,17 @@ function leagueTab(game: Game, p: Profile, add: Add, w: number): void {
 
 function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () => void): void {
   const meta = game.meta;
-  const set = (slot: "background" | "patch" | "picture", id: string | null) => {
-    const q = equip(meta, p, slot, id);
-    if (q) {
-      game.setProfile(q);
+  /** a change checked on the device; online the server applies it (Game.changeProfile) */
+  const apply = (done: Promise<ApiFailure | null>) =>
+    void done.then((failed) => {
+      if (failed === "name_rejected") game.toast(t("toast.nameInvalid", { n: NAME_MAX }));
+      else if (failed === "not_owned") game.toast(t("toast.notOwned"));
+      else if (failed) game.toast(t("toast.noConnectionShort"));
       rerender();
-    }
+    });
+  const set = (slot: "background" | "patch" | "picture" | "title", id: string | null) => {
+    const q = equip(meta, p, slot, id);
+    if (q) apply(game.changeProfile(q, "profileEquip", { slot, id }));
   };
   // the player: picture, name (tap to change), the worn patch and totals
   const head = new Container();
@@ -322,18 +366,19 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
     () => {
       void askText(p.name, NAME_MAX, t("ui.playerName")).then((v) => {
         if (v === null || v.trim() === p.name) return;
-        const q = rename(game.profile, v);
+        const q = rename(game.meta, game.profile, v);
         if (!q) {
           game.toast(t("toast.nameInvalid", { n: NAME_MAX }));
           return;
         }
-        game.setProfile(q);
-        rerender();
+        apply(game.changeProfile(q, "profileName", { name: v }));
       });
     },
     new Rectangle(-6, -18, label.width + 40, 36),
   );
-  head.addChild(at(name, 96, 34));
+  head.addChild(at(name, 96, 38));
+  // the worn title, above the name
+  if (p.equipped.title) head.addChild(at(txt(upper(titleText(meta, p.equipped.title)), 11, { color: C.gold, spacing: 1.5, anchor: [0, 0.5] }), 96, 16));
   const stats: [string, number][] = [
     ["swords", p.runs],
     ["galaxy", p.galaxies],
@@ -382,10 +427,7 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
         tl,
         () => {
           const q = equipSkin(meta, p, hero.id, id);
-          if (q) {
-            game.setProfile(q);
-            rerender();
-          }
+          if (q) apply(game.changeProfile(q, "profileSkin", { hero: hero.id, id }));
         },
         new Rectangle(0, 0, 52, 52),
       );
@@ -411,6 +453,23 @@ function profileTab(game: Game, p: Profile, add: Add, w: number, rerender: () =>
       grid.addChild(at(tl, (i % 4) * 82, Math.floor(i / 4) * 96));
     });
     add(grid, Math.ceil(patches.length / 4) * 96 + 4);
+  }
+
+  // titles: earned only, one worn at a time (tap the worn one to take it off)
+  add(at(txt(t("ui.titles"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);
+  const titles = p.cosmetics.filter((c) => meta.cosmeticById.get(c)?.kind === "title");
+  if (!titles.length) add(at(txt(t("ui.noTitle"), 13, { font: "text", color: C.dim }), 4, 0), 36);
+  for (const id of titles) {
+    const on = p.equipped.title === id;
+    const row = new Container();
+    row.addChild(box(w, 52, { fill: C.panel, line: on ? C.cyan : C.line, lineW: on ? 2 : 1, radius: 14 }));
+    row.addChild(
+      at(icon("flag", 24, on ? C.cyan : C.dim), 28, 26),
+      at(txt(titleText(meta, id), 15, { font: "text", weight: "600", anchor: [0, 0.5] }), 54, 26),
+    );
+    if (on) row.addChild(at(icon("check", 20, C.cyan), w - 24, 26));
+    tappable(row, () => set("title", on ? null : id), new Rectangle(0, 0, w, 52));
+    add(row, 60);
   }
 
   add(at(txt(t("ui.backgrounds"), 13, { color: C.gold, spacing: 2 }), 4, 0), 28);

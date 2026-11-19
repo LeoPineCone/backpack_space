@@ -3,6 +3,7 @@ import { Container, Graphics, Rectangle, Sprite, Text } from "pixi.js";
 import { artTexture } from "./art";
 import { BUTTON, C, COMIC, FONT, SCREEN } from "./theme";
 import { icon } from "./icons";
+import { playSound } from "./sound";
 
 export interface TxtOpts {
   color?: number;
@@ -181,6 +182,7 @@ export function tappable<T extends Container>(obj: T, onTap: () => void, hit?: R
   obj.on("pointerdown", (e) => e.stopPropagation());
   obj.on("pointertap", (e) => {
     e.stopPropagation();
+    playSound("tap");
     onTap();
   });
   return obj;
@@ -193,7 +195,7 @@ export function at<T extends Container>(obj: T, x: number, y: number): T {
 
 /** Round button with a symbol; origin at its centre. */
 export function roundButton(name: string, r: number, onTap: () => void, o: { fill?: number; line?: number; tint?: number; iconSize?: number } = {}): Container {
-  const c = new Container();
+  const c = new Container({ label: name });
   const face = new Container();
   c.addChild(face);
   face.addChild(disc(r, { fill: o.fill ?? BUTTON.icon.fill, line: o.line ?? BUTTON.icon.line, lineW: 2, framed: true }));

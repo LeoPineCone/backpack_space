@@ -7,6 +7,7 @@ import type {
   IdentityCheck,
   Item,
   LogSink,
+  Page,
   PlayerStore,
   Random,
   RevenueCat,
@@ -72,13 +73,26 @@ export class FakePlayerStore implements PlayerStore {
       .sort((a, b) => (a.sk < b.sk ? -1 : a.sk > b.sk ? 1 : 0))
       .map((i) => structuredClone(i));
   }
+  /** pages of `pageSize` items; the cursor is the position */
+  pageSize = 100;
+  async scan(sk: string, next?: string): Promise<Page> {
+    return page(
+      [...this.items.values()].filter((i) => i.sk === sk),
+      next,
+      this.pageSize,
+    );
+  }
   async transact(writes: Write[]): Promise<boolean> {
     for (const w of writes) {
       if ("put" in w) {
         const old = this.items.get(key(w.put.pk, w.put.sk));
         if (w.ifNotExists && old) return false;
         if (w.ifVersion !== undefined && (old?.version ?? 0) !== w.ifVersion) return false;
-      } else if (w.ifExists && !this.items.has(key(w.delete.pk, w.delete.sk))) return false;
+      } else {
+        const old = this.items.get(key(w.delete.pk, w.delete.sk));
+        if (w.ifExists && !old) return false;
+        if (w.ifVersion !== undefined && (!old || old.version !== w.ifVersion)) return false;
+      }
     }
     for (const w of writes) {
       if ("put" in w) this.items.set(key(w.put.pk, w.put.sk), structuredClone(w.put));
@@ -89,17 +103,54 @@ export class FakePlayerStore implements PlayerStore {
 }
 
 export class FakeBackpackPool implements BackpackPool {
-  readonly items: Item[] = [];
+  readonly items = new Map<string, Item>();
+  /** how many reads were made (the matching must stay cheap) */
+  reads = 0;
   async put(item: Item): Promise<void> {
-    this.items.push(structuredClone(item));
+    this.items.set(key(item.pk, item.sk), structuredClone(item));
+  }
+  async remove(pk: string, sk: string): Promise<void> {
+    this.items.delete(key(pk, sk));
+  }
+  async range(pk: string, from: string, to: string, limit: number): Promise<Item[]> {
+    this.reads++;
+    return [...this.items.values()]
+      .filter((i) => i.pk === pk && i.sk >= from && i.sk <= to)
+      .sort((a, b) => (a.sk < b.sk ? -1 : a.sk > b.sk ? 1 : 0))
+      .slice(0, limit)
+      .map((i) => structuredClone(i));
+  }
+  async byPlayer(playerId: string): Promise<Item[]> {
+    return [...this.items.values()].filter((i) => i.playerId === playerId).map((i) => structuredClone(i));
   }
 }
 
 export class FakeActionStore implements ActionStore {
   readonly items: Item[] = [];
+  pageSize = 100;
   async put(item: Item): Promise<void> {
+    const at = this.items.findIndex((i) => i.pk === item.pk && i.sk === item.sk);
+    if (at >= 0) this.items.splice(at, 1);
     this.items.push(structuredClone(item));
   }
+  async expired(nowSec: number, next?: string): Promise<Page> {
+    const old = this.items.filter((i) => typeof i.expiresAt === "number" && i.expiresAt < nowSec).map((i) => ({ pk: i.pk, sk: i.sk }));
+    return page(old, next, this.pageSize);
+  }
+  async remove(pk: string, sk: string): Promise<void> {
+    const at = this.items.findIndex((i) => i.pk === pk && i.sk === sk);
+    if (at >= 0) this.items.splice(at, 1);
+  }
+  async byPlayer(playerId: string): Promise<Item[]> {
+    return this.items.filter((i) => i.playerId === playerId).map((i) => structuredClone(i));
+  }
+}
+
+/** A page of `all` from position `next`. */
+function page(all: Item[], next: string | undefined, size: number): Page {
+  const from = Number(next ?? 0);
+  const items = all.slice(from, from + size).map((i) => structuredClone(i));
+  return from + size < all.length ? { items, next: String(from + size) } : { items };
 }
 
 /** Accepts a fixed list of identities: request JSON string -> identity. */
@@ -112,8 +163,13 @@ export class FakeIdentityCheck implements IdentityCheck {
 
 export class FakeRevenueCat implements RevenueCat {
   readonly balances = new Map<string, number>();
+  readonly deleted: string[] = [];
   async balance(playerId: string): Promise<number> {
     return this.balances.get(playerId) ?? 0;
+  }
+  async deleteCustomer(playerId: string): Promise<void> {
+    this.balances.delete(playerId);
+    this.deleted.push(playerId);
   }
 }
 

@@ -1,0 +1,10 @@
+{
+  "name": "@backpack-space/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Backpack Space website (WEB-01): a static site built from templates and language files, no requests to other servers.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  }
+}

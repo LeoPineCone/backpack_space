@@ -100,7 +100,7 @@ export function startRound(s: RunState, data: GameData): void {
   s.offers = rollOffers(data, s.hero, s.round, shopRng(s.seed, s.round, 0), [...s.items.map((p) => p.item), ...s.loose], s.offers);
 }
 export function reroll(s: RunState, data: GameData): boolean {
-  if (s.gold < data.rules.shop.rerollCost) return false;
+  if (data.rules.shop.rerolls === false || s.gold < data.rules.shop.rerollCost) return false;
   s.gold -= data.rules.shop.rerollCost;
   s.rerolls++;
   s.offers = rollOffers(data, s.hero, s.round, shopRng(s.seed, s.round, s.rerolls), [...s.items.map((p) => p.item), ...s.loose], s.offers);
@@ -315,10 +315,15 @@ export function giveUp(s: RunState): void {
 }
 
 /** Books the fight of this round, merges what lies together and opens the next shop (or ends the run). */
-export function finishRound(s: RunState, data: GameData, won: boolean): void {
+/**
+ * Books a fight, merges, and opens the next round. `nextSeed`: the shop seed of the next round as the server hands it
+ * out (RUN-03); from then on it is the run's seed, so the shops and free picks ahead cannot be known before the fight.
+ * Without it (offline, bots) the run keeps its seed. The log line carries the seed, so a replay follows the same way.
+ */
+export function finishRound(s: RunState, data: GameData, won: boolean, nextSeed?: number): void {
   if (won) s.wins++;
   else s.lives--;
-  s.log.push(won ? "won" : "lost");
+  s.log.push((won ? "won" : "lost") + (nextSeed === undefined ? "" : ` ${nextSeed >>> 0}`));
   s.results.push(won);
   const fought = s.round;
   s.merged = [];
@@ -327,6 +332,7 @@ export function finishRound(s: RunState, data: GameData, won: boolean): void {
     return;
   }
   s.merged = mergeAll(s, data);
+  if (nextSeed !== undefined) s.seed = nextSeed >>> 0;
   s.round++;
   s.special = specialOptions(data, s.hero, fought, specialRng(s.seed, fought));
   startRound(s, data);

@@ -12,6 +12,9 @@ import { shopScene } from "./shop";
 import { progressOverlay, type Tab } from "./progress";
 import { storeScene } from "./store";
 import { t, upper } from "../i18n";
+import { onRunFailure } from "./online-flow";
+import { questsScene } from "./quests";
+import type { QuestBody } from "@backpack-space/api";
 
 type Slot = { kind: "own"; id: string; letter: string } | { kind: "locked" } | { kind: "soon" };
 
@@ -26,9 +29,12 @@ function traits(game: Game, heroId: string): string[] {
   return out.slice(0, 3);
 }
 
-export function heroScene(game: Game): Scene {
+/** `quest`: the hero is chosen for a quest run (online only); its special rule shows at the top. */
+export function heroScene(game: Game, quest?: QuestBody): Scene {
   const root = new Container();
   const data = game.data;
+  /** a start request is on its way (online) */
+  let busy = false;
   const slots: Slot[] = [
     ...data.heroList.filter((h) => ownsHero(game.meta, game.profile, h.id)).map((h): Slot => ({ kind: "own", id: h.id, letter: h.name.replace(/[^A-Za-z]/g, "")[0]!.toUpperCase() })),
     { kind: "locked" }, { kind: "locked" }, { kind: "soon" }, { kind: "soon" },
@@ -51,7 +57,8 @@ export function heroScene(game: Game): Scene {
     root.addChild(at(icon("planet", 14, C.dim), 21, line - 14), at(txt(t(`cosmetic.${p.equipped.background}`), 10, { font: "text", color: C.dim }), 34, line - 20));
 
     // back to the start screen; currencies stay in view
-    root.addChild(at(roundButton("back", 22, () => game.show(homeScene(game)), { iconSize: 20 }), 36, 36));
+    root.addChild(at(roundButton("back", 22, () => game.show(quest ? questsScene(game, () => homeScene(game)) : homeScene(game)), { iconSize: 20 }), 36, 36));
+    if (quest) root.addChild(at(icon(quest.kind, 18, C.gold), 74, 36), at(txt(upper(t(`quest.${quest.rule}.name`)), 15, { color: C.gold, spacing: 1.5, anchor: [0, 0.5] }), 90, 36));
     const gal = tappable(hudPill("galaxy", p.galaxies, C.line, C.text), () => progress("planets"));
     root.addChild(at(gal, W - 14 - gal.width, 14));
     const cr = tappable(hudPill("credits", p.credits, C.line, C.gold, 36), () => game.show(storeScene(game, () => heroScene(game))));
@@ -115,7 +122,24 @@ export function heroScene(game: Game): Scene {
       face.addChild(disc(66, { fill: C.gold, framed: true }), at(inkShade(132, 132, C.gold, (g) => g.circle(66, 66, 64)), -66, -66), disc(58, { line: C.ink, lineW: 2 }), txt(t("ui.start"), 28, { color: C.goldInk, spacing: 1.5, anchor: [0.5, 0.5] }));
       mid.addChild(face);
       pressable(mid, face);
-      tappable(mid, () => { game.newSeed(); game.run = newRun(data, sel.id, game.seed); game.show(shopScene(game)); }, new Rectangle(-69, -69, 138, 138));
+      tappable(mid, () => {
+        if (game.isOnline) {
+          // online the server starts the run and hands out the seed of the first shop
+          if (busy) return;
+          busy = true;
+          void game.startRun(sel.id, quest?.id).then((res) => {
+            busy = false;
+            if (res.ok) game.show(shopScene(game));
+            else if (quest && res.error === "quest_unavailable") {
+              // played already, or the day turned: back to today's quests
+              game.toast(t("toast.questPlayed"));
+              game.show(questsScene(game, () => homeScene(game)));
+            } else onRunFailure(game, res, () => {});
+          });
+          return;
+        }
+        game.newSeed(); game.quest = null; game.run = newRun(data, sel.id, game.seed); game.show(shopScene(game));
+      }, new Rectangle(-69, -69, 138, 138));
     } else {
       const face = new Container();
       face.addChild(disc(66, { fill: C.cyan, framed: true }), at(inkShade(132, 132, C.cyan, (g) => g.circle(66, 66, 64)), -66, -66), disc(58, { line: C.ink, lineW: 2 }), at(icon("cart", 34, C.cyanInk), 0, -14), at(txt(t("ui.shop"), 22, { color: C.cyanInk, spacing: 1.5, anchor: [0.5, 0.5] }), 0, 22));

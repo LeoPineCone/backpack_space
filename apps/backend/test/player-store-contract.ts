@@ -52,4 +52,31 @@ export function playerStoreContract(make: () => Promise<PlayerStore>) {
     expect(await s.get(p, "RUN")).toBeNull();
     expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifExists: true }])).toBe(false);
   });
+
+  it("deletes on a version number only when it matches", async () => {
+    const s = await make();
+    const p = pk();
+    await s.transact([{ put: { pk: p, sk: "RUN", version: 3 } }]);
+    expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 2 }])).toBe(false);
+    expect(await s.get(p, "RUN")).not.toBeNull();
+    expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 3 }])).toBe(true);
+    expect(await s.transact([{ delete: { pk: p, sk: "RUN" }, ifVersion: 3 }])).toBe(false);
+  });
+
+  it("reads every item with one sort key over all partitions, page by page", async () => {
+    const s = await make();
+    const mine = [pk(), pk(), pk()];
+    await s.transact(mine.flatMap((p) => [{ put: { pk: p, sk: "PROFILE", n: 1 } }, { put: { pk: p, sk: "RUN" } }]));
+    const seen: string[] = [];
+    let next: string | undefined;
+    do {
+      const page = await s.scan("PROFILE", next);
+      for (const i of page.items) {
+        expect(i.sk).toBe("PROFILE");
+        seen.push(i.pk);
+      }
+      next = page.next;
+    } while (next);
+    expect(seen.filter((p) => mine.includes(p)).sort()).toEqual([...mine].sort());
+  });
 }

@@ -3,13 +3,12 @@
  * server on a free port. Everything is thrown away afterwards, so the tests never see data of `npm run db`.
  * With API_URL set (for example the test environment after a deployment) nothing is started.
  */
-import { execFileSync } from "node:child_process";
 import { appendFileSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { TestProject } from "vitest/node";
 import { startServer } from "../../local/server.js";
-import { createTables, localClient, waitForDb } from "../../local/tables.js";
+import { prepareTestDb, startTestDb } from "../../local/test-db.js";
 
 declare module "vitest" {
   export interface ProvidedContext {
@@ -21,14 +20,6 @@ declare module "vitest" {
   }
 }
 
-/** The same image as `npm run db` (one place: local/compose.yaml). */
-function dbImage(): string {
-  const compose = readFileSync(new URL("../../local/compose.yaml", import.meta.url), "utf8");
-  const m = /image:\s*(\S+)/.exec(compose);
-  if (!m?.[1]) throw new Error("no image in apps/backend/local/compose.yaml");
-  return m[1];
-}
-
 export default async function setup(project: TestProject) {
   const external = process.env.API_URL;
   if (external) {
@@ -37,15 +28,11 @@ export default async function setup(project: TestProject) {
     project.provide("logFile", "");
     return;
   }
-  const docker = (...args: string[]) => execFileSync("docker", args, { encoding: "utf8" }).trim();
-  const container = docker("run", "-d", "--rm", "-p", "127.0.0.1::8000", dbImage(), "-jar", "DynamoDBLocal.jar", "-inMemory", "-sharedDb");
+  const db = startTestDb();
   try {
-    const port = docker("port", container, "8000").split("\n")[0]?.split(":").pop();
-    const endpoint = `http://127.0.0.1:${port}`;
+    const { endpoint } = db;
     const tables = { players: "test-players", backpacks: "test-backpacks", actions: "test-actions" };
-    const client = localClient(endpoint);
-    await waitForDb(client);
-    await createTables(client, tables);
+    await prepareTestDb(endpoint, tables);
     const logFile = join(mkdtempSync(join(tmpdir(), "backpack-space-api-")), "log.jsonl");
     writeFileSync(logFile, "");
     const server = await startServer(
@@ -57,11 +44,11 @@ export default async function setup(project: TestProject) {
     project.provide("logFile", logFile);
     return async () => {
       await server.close();
-      docker("stop", container);
+      db.stop();
       checkOneLinePerRequest(logFile);
     };
   } catch (e) {
-    docker("stop", container);
+    db.stop();
     throw e;
   }
 }

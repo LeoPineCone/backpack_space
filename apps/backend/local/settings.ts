@@ -5,6 +5,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ROUTES, type RouteName } from "@backpack-space/api";
 import { z } from "zod";
 import { refreshingSettings } from "../src/adapters/refreshing-settings.js";
 import type { Clock, Settings, SettingsValues } from "../src/ports/index.js";
@@ -21,6 +22,13 @@ export const LocalSettings = z
     minAppVersion: z.string().regex(/^\d{1,4}\.\d{1,4}\.\d{1,4}$/),
     season: z.object({ id: z.number().int().min(1), start: z.iso.date(), end: z.iso.date() }).strict(),
     devIdentity: z.boolean().optional(),
+    matchingPhase: z.union([z.literal(1), z.literal(3)]).optional(),
+    limits: z
+      .partialRecord(
+        z.enum(Object.keys(ROUTES) as [RouteName, ...RouteName[]]),
+        z.object({ rate: z.number().positive(), burst: z.number().int().min(1) }).strict(),
+      )
+      .optional(),
     tokenKeys: z
       .array(z.object({ id: z.string().min(1), secret: z.string().min(32) }).strict())
       .min(1)
@@ -39,8 +47,18 @@ export function loadLocalSettings(overrides: Partial<LocalSettings> = {}): { val
 }
 
 export function toSettingsValues(values: LocalSettings): SettingsValues {
-  const { maintenance, minAppVersion, season, devIdentity, tokenKeys, tokenLifetime, tables } = values;
-  return { maintenance, minAppVersion, season, tokenKeys, tokenLifetime, tables, ...(devIdentity ? { devIdentity } : {}) };
+  const { maintenance, minAppVersion, season, devIdentity, matchingPhase, limits, tokenKeys, tokenLifetime, tables } = values;
+  return {
+    maintenance,
+    minAppVersion,
+    season,
+    tokenKeys,
+    tokenLifetime,
+    tables,
+    ...(devIdentity ? { devIdentity } : {}),
+    ...(matchingPhase ? { matchingPhase } : {}),
+    ...(limits ? { limits } : {}),
+  };
 }
 
 /**

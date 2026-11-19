@@ -28,6 +28,8 @@ export const TABLES: Record<TableName, TableDefinition> = {
   players: {
     purpose: "everything about a player that must stay consistent: profile, ownership, open run, rounds, handled purchase events",
     indexes: [],
+    // ROUND# and DONE# entries expire (7 days); profile and ownership never carry the field
+    expiresField: "expiresAt",
     pointInTimeRestore: true,
   },
   backpacks: {
@@ -39,7 +41,8 @@ export const TABLES: Record<TableName, TableDefinition> = {
   },
   actions: {
     purpose: "the recorded shop actions of every round",
-    indexes: [],
+    // all entries of one player: account export and deletion (ACC-08)
+    indexes: [{ name: "byPlayer", partitionKey: "playerId", sortKey: "pk" }],
     expiresField: "expiresAt",
     pointInTimeRestore: false,
   },

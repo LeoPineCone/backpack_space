@@ -36,7 +36,7 @@ describe("profile on the server", () => {
   it("is stored as PROFILE plus one OWN# entry per owned thing", async () => {
     const { players, playerId, ports } = await setup();
     const items = await players.query(playerKey(playerId));
-    expect(items.map((i) => i.sk)).toEqual([...ports.game.meta.start.cosmetics.map((c) => `OWN#${c}`).sort(), "PROFILE"]);
+    expect(items.map((i) => i.sk)).toEqual(["IDENTITY", ...ports.game.meta.start.cosmetics.map((c) => `OWN#${c}`).sort(), "PROFILE"]);
     expect(items.find((i) => i.sk === "PROFILE")).not.toHaveProperty("credits");
     expect(items.find((i) => i.sk === "OWN#bg_home")).toMatchObject({ kind: "cosmetic", origin: "start", at: "2026-11-18" });
   });

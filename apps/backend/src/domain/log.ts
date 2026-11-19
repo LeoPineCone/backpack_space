@@ -13,15 +13,19 @@ type Id = string;
 export interface EventFields {
   run_started: { runId: Id; hero: Id; simVersion: string };
   fight: { runId: Id; round: number; result: "win" | "loss" | "draw"; simVersion: string };
-  run_finished: { runId: Id; reason: "finished" | "gave_up" | "abandoned"; wins: number; livesLeft: number };
+  run_finished: { runId: Id; reason: "finished" | "gave_up" | "abandoned" | "data_major"; wins: number; livesLeft: number };
   /** a real-money purchase reported by RevenueCat; `ref` is RevenueCat's event id */
   purchase: { ref: Id; product: Id };
   credits_spent: { ref: Id; amount: number; thing: Id };
   credits_earned: { ref: Id; amount: number; source: Id };
   refund: { ref: Id; product: Id; removed: Id[] };
   account_deleted: Record<string, never>;
+  /** the profile moved into a later season: league patch of the season `from`, league before and after the drop */
+  season_changed: { from: number; to: number; patch: Id | null; league: [number, number] };
   plausibility_rejected: { runId: Id; round: number; reason: Id };
   result_mismatch: { runId: Id; round: number; simVersion: string };
+  /** an unhandled error or crash the app reported (BE-15); code text and versions only */
+  client_error: { kind: "error" | "rejection"; message: string; stack: string | null; appVersion: string | null; simVersion: string };
   /** an unexpected failure inside a request (the request line says `internal`) */
   error: { message: string };
 }
@@ -36,8 +40,10 @@ export const EVENT_TYPES = [
   "credits_earned",
   "refund",
   "account_deleted",
+  "season_changed",
   "plausibility_rejected",
   "result_mismatch",
+  "client_error",
   "error",
 ] as const satisfies readonly EventType[];
 

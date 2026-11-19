@@ -17,6 +17,7 @@ import { runMenuOverlay } from "./runmenu";
 import { heroPopup, itemPopup } from "./popup";
 import { specialOverlay } from "./special";
 import { battleScene } from "./battle";
+import { onRunFailure, searchingScene } from "./online-flow";
 import { fmt, statsOverlay } from "./stats";
 import { t } from "../i18n";
 
@@ -49,6 +50,18 @@ export function shopScene(game: Game): Scene {
   FIGHT.y = H - 72;
   SELL.y = REROLL.y = FIGHT.y + FIGHT.h / 2;
   FLOOR.h = Math.min(104, Math.max(76, FIGHT.y - 48 - FLOOR.y));
+  /**
+   * FIGHT: offline the device picks a stored opponent; online the fight request goes to the server (search screen
+   * meanwhile). Without an answer the run stays paused in this shop and FIGHT sends the same request again.
+   */
+  const fight = () => {
+    if (!game.isOnline) { game.show(battleScene(game)); return; }
+    game.show(searchingScene());
+    void game.requestFight().then((res) => {
+      if (res.ok) game.show(battleScene(game, res.value));
+      else onRunFailure(game, res, () => game.show(shopScene(game)));
+    });
+  };
   const data = game.data, rules = data.rules;
   const run = (): RunState => game.run!;
   let drag: Drag | null = null;
@@ -248,8 +261,9 @@ export function shopScene(game: Game): Scene {
     const rr = roundButton("dice", 32, () => { if (game.act(act.reroll())) render(); else game.toast(t("toast.notEnoughGold")); }, { line: C.dim, iconSize: 28 });
     rr.addChild(at(disc(11, { fill: C.gold, framed: true }), 24, 22), at(txt(rules.shop.rerollCost, 13, { color: C.goldInk, anchor: [0.5, 0.5] }), 24, 22));
     if (r.gold < rules.shop.rerollCost) rr.alpha = 0.5;
-    view.addChild(at(rr, REROLL.x, REROLL.y));
-    view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) game.show(battleScene(game)); }, { iconName: "swords" }), FIGHT.x, FIGHT.y));
+    // a quest rule can switch rerolls off: then there is no reroll button
+    if (rules.shop.rerolls !== false) view.addChild(at(rr, REROLL.x, REROLL.y));
+    view.addChild(at(pillButton(t("ui.fight"), 208, 64, () => { if (!run().special) fight(); }, { iconName: "swords" }), FIGHT.x, FIGHT.y));
     const bin = new Container();
     const ring = new Graphics();
     for (let k = 0; k < 16; k++) ring.arc(0, 0, SELL.r, (k * Math.PI) / 8, (k * Math.PI) / 8 + 0.24).stroke({ width: 2, color: C.dim });

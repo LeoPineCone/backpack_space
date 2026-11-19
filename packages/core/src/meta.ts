@@ -8,6 +8,7 @@
  */
 import { z } from "zod";
 import { parseOrThrow, type GameData } from "./gamedata.js";
+import { checkQuests, questKind, QuestsData } from "./quests.js";
 
 const Int = z.number().int().min(0);
 
@@ -22,34 +23,67 @@ export const Reward = z.union([
 ]);
 export type Reward = z.infer<typeof Reward>;
 
-export const COSMETIC_KINDS = ["background", "grid", "skin", "heroCosmetic", "patch", "picture"] as const;
+export const COSMETIC_KINDS = ["background", "grid", "skin", "heroCosmetic", "patch", "picture", "badge", "title", "frame"] as const;
 export type CosmeticKind = (typeof COSMETIC_KINDS)[number];
 
 export const MetaData = z.object({
   $comment: z.string().optional(),
   /** what a new profile starts with */
   start: z.object({ name: z.string().min(1).max(NAME_MAX), credits: Int, cosmetics: z.array(z.string()), background: z.string(), picture: z.string() }).strict(),
+  /** opponents: a new player meets the easier bot backpacks in this many first runs (docs/matchmaking.md) */
+  matching: z.object({ easyRuns: Int }).strict(),
+  /**
+   * Player names (ACC-07): a name is refused when, written in plain letters (lower case, umlauts spelled out, digits
+   * read as letters, everything else dropped), it contains a `blocked` part or one of its words is a `blockedWord`.
+   * Offensive and political words in English and German; short or ambiguous ones only as whole words.
+   */
+  names: z.object({
+    blocked: z.array(z.string().regex(/^[a-z0-9]{3,}$/)),
+    blockedWords: z.array(z.string().regex(/^[a-z]{2,}$/)),
+  }).strict(),
+  /** daily and weekly quests: a whole run with one special rule each (quests.ts) */
+  quests: QuestsData,
   /** what a finished run pays */
   run: z.object({
     galaxies: z.object({ perWin: Int, perLifeLeft: Int }).strict(),
-    heroXp: z.object({ perRound: Int, perWin: Int }).strict(),
+    heroXp: z.object({
+      $comment: z.string().optional(),
+      /** XP for each round played (wins give nothing extra: they go with the rounds) */
+      perRound: Int,
+      /** extra XP for a completed run: every round played with a life left (a quest: its own last round) */
+      completedBonus: Int,
+      /** percent more XP for the season's hero while the player holds that season's premium pass */
+      seasonHeroPremiumPercent: Int,
+    }).strict(),
   }).strict(),
   heroLevels: z.object({
-    /** total XP needed for level 2, 3, ... (level 1 needs none); strictly rising */
+    $comment: z.string().optional(),
+    /** total XP needed for level 2, 3, ... (level 1 needs none); strictly rising; the last `eliteLevels` are the Elite levels */
     xp: z.array(z.number().int().positive()).min(1),
+    /**
+     * the top levels that only ranked runs in the highest league group fill (docs/retention.md "Hero levels"); below them
+     * a hero stops at the last normal level and XP past it are lost
+     */
+    eliteLevels: Int,
     /** levels that give the hero a cosmetic (placeholders `<hero>_lv<level>` until the cosmetics are designed) */
     cosmeticAt: z.array(z.number().int().min(2)),
+    /** levels that give the hero cosmetics of these kinds, made per hero as `<hero>_lv<level>_<kind>` */
+    rewards: z.array(z.object({ level: z.number().int().min(2), kinds: z.array(z.enum(["skin", "badge", "title", "frame"])).min(1) }).strict()),
   }).strict(),
   /** permanent, across seasons: total Galaxies ever earned unlock each step */
   planetTrack: z.array(z.object({ galaxies: z.number().int().positive(), reward: Reward }).strict()).min(1),
   leagues: z.object({
     /** ids from the lowest to the highest league; the names are drafts (locales `league.<id>`) */
     ids: z.array(z.string()).min(2),
+    /**
+     * league groups from the lowest up, as the number of leagues in each (docs/matchmaking.md "League groups"):
+     * Amateur, Intermediate, Pro, Elite. Bot players belong to a group, not to a single league. A new season starts in the
+     * highest league of the next lower group; the lowest group keeps its league.
+     */
+    groups: z.array(z.number().int().positive()).min(1),
     pointsPerLeague: z.number().int().positive(),
     /** league points for a run by its wins: index = wins (0 ... rounds) */
     pointsByWins: z.array(z.number().int()),
-    /** leagues you move back at the start of a new season */
-    seasonDrop: Int,
   }).strict(),
   cosmetics: z.array(z.object({ id: z.string(), kind: z.enum(COSMETIC_KINDS), hero: z.string().optional(), /** backgrounds: the place of lore/planets.json it shows */ planet: z.string().optional() }).strict()),
   seasons: z.array(z.object({
@@ -59,7 +93,11 @@ export const MetaData = z.object({
     /** the hero this season brings (premium pass level 1), if any */
     hero: z.string().optional(),
     pass: z.object({
+      $comment: z.string().optional(),
+      /** Galaxies for each level after the `firstLevels` */
       galaxiesPerLevel: z.number().int().positive(),
+      /** Galaxies for level 2, 3, ... before the flat `galaxiesPerLevel` starts (a fast start); none: flat from level 2 */
+      firstLevels: z.array(z.number().int().positive()).optional(),
       /** level 1, 2, ...; level 1 is open from the start of the season */
       levels: z.array(z.object({ free: Reward.optional(), premium: Reward.optional() }).strict()).min(1),
     }).strict(),
@@ -67,7 +105,18 @@ export const MetaData = z.object({
 }).strict();
 export type MetaData = z.infer<typeof MetaData>;
 
-export interface Cosmetic { id: string; kind: CosmeticKind; hero?: string; /** backgrounds: the place of lore/planets.json it shows */ planet?: string; /** patches: the season and league they stand for */ season?: number; league?: string }
+export interface Cosmetic {
+  id: string;
+  kind: CosmeticKind;
+  hero?: string;
+  /** backgrounds: the place of lore/planets.json it shows */
+  planet?: string;
+  /** patches: the season and league they stand for */
+  season?: number;
+  league?: string;
+  /** made by a hero level: that level */
+  level?: number;
+}
 
 export interface Meta extends MetaData {
   cosmeticById: Map<string, Cosmetic>;
@@ -76,6 +125,8 @@ export interface Meta extends MetaData {
 }
 
 export const heroCosmeticId = (hero: string, level: number) => `${hero}_lv${level}`;
+/** a cosmetic of a kind that a hero level gives (`heroLevels.rewards`) */
+export const heroRewardId = (hero: string, level: number, kind: string) => `${hero}_lv${level}_${kind}`;
 export const patchId = (season: number, league: string) => `patch_s${season}_${league}`;
 
 /** Validates data/meta.json against the game data. */
@@ -90,16 +141,24 @@ export function buildMeta(raw: unknown, data: GameData): Meta {
     if (c.hero && !data.heroes.has(c.hero)) problems.push(`cosmetic ${c.id}: unknown hero ${c.hero}`);
     add(c);
   }
-  for (const h of data.heroList) for (const lv of m.heroLevels.cosmeticAt) add({ id: heroCosmeticId(h.id, lv), kind: "heroCosmetic", hero: h.id });
+  for (const h of data.heroList) {
+    for (const lv of m.heroLevels.cosmeticAt) add({ id: heroCosmeticId(h.id, lv), kind: "heroCosmetic", hero: h.id, level: lv });
+    for (const r of m.heroLevels.rewards) for (const kind of r.kinds) add({ id: heroRewardId(h.id, r.level, kind), kind, hero: h.id, level: r.level });
+  }
   for (const s of m.seasons) for (const l of m.leagues.ids) add({ id: patchId(s.id, l), kind: "patch", season: s.id, league: l });
 
+  problems.push(...checkQuests(m.quests, data));
   const rising = (xs: number[]) => xs.every((x, i) => i === 0 || x > xs[i - 1]!);
   if (!rising(m.heroLevels.xp)) problems.push("heroLevels.xp must rise from level to level");
   const maxLevel = m.heroLevels.xp.length + 1;
   for (const lv of m.heroLevels.cosmeticAt) if (lv > maxLevel) problems.push(`heroLevels.cosmeticAt ${lv}: the highest level is ${maxLevel}`);
+  for (const r of m.heroLevels.rewards) if (r.level > maxLevel) problems.push(`heroLevels.rewards level ${r.level}: the highest level is ${maxLevel}`);
+  if (new Set(m.heroLevels.rewards.map((r) => r.level)).size !== m.heroLevels.rewards.length) problems.push("heroLevels.rewards: a level is listed twice");
+  if (m.heroLevels.eliteLevels >= maxLevel) problems.push("heroLevels.eliteLevels must leave normal levels");
   if (!rising(m.planetTrack.map((s) => s.galaxies))) problems.push("planetTrack: the Galaxies of the steps must rise");
   if (m.leagues.pointsByWins.length !== data.rules.rounds + 1) problems.push(`leagues.pointsByWins needs ${data.rules.rounds + 1} entries (0 to ${data.rules.rounds} wins)`);
   if (new Set(m.leagues.ids).size !== m.leagues.ids.length) problems.push("leagues.ids: duplicate id");
+  if (m.leagues.groups.reduce((a, b) => a + b, 0) !== m.leagues.ids.length) problems.push("leagues.groups must add up to the number of leagues");
   if (!rising(m.seasons.map((s) => s.id))) problems.push("seasons: ids must rise");
   if (!m.seasons.every((s, i) => i === 0 || s.start > m.seasons[i - 1]!.start)) problems.push("seasons: start dates must rise");
 
@@ -156,7 +215,8 @@ export interface Profile {
   heroes: string[];
   cosmetics: string[];
   /** what is worn: menu background, league patch, player picture, and a skin per hero (none = the hero's own look) */
-  equipped: { background: string; patch: string | null; picture: string; skins: Record<string, string> };
+  /** grid: the backpack grid background (null = the plain grid); title: shown with the name (null = none) */
+  equipped: { background: string; patch: string | null; picture: string; grid: string | null; title: string | null; skins: Record<string, string> };
   season: SeasonState;
   runs: number;
 }
@@ -164,7 +224,7 @@ export interface Profile {
 export function newProfile(meta: Meta, seasonId = meta.seasons[0]!.id): Profile {
   const p: Profile = {
     name: meta.start.name, galaxies: 0, credits: meta.start.credits, heroXp: {}, heroes: [], cosmetics: [...meta.start.cosmetics],
-    equipped: { background: meta.start.background, patch: null, picture: meta.start.picture, skins: {} },
+    equipped: { background: meta.start.background, patch: null, picture: meta.start.picture, grid: null, title: null, skins: {} },
     season: { id: seasonId, galaxies: 0, premium: false, points: 0, peak: 0 }, runs: 0,
   };
   grant(p, passRewardsUpTo(meta, p.season, 1, 0));
@@ -193,7 +253,16 @@ export function ownsHero(meta: Meta, p: Profile, hero: string): boolean { return
 
 // --- hero levels
 
-export interface Level { level: number; max: number; /** XP into this level */ into: number; /** XP this level needs to the next; 0 at the top */ need: number }
+export interface Level {
+  level: number;
+  max: number;
+  /** the first Elite level (only ranked runs in the highest league group fill it) */
+  eliteFrom: number;
+  /** XP into this level */
+  into: number;
+  /** XP this level needs to the next; 0 at the top */
+  need: number;
+}
 
 export function heroLevel(meta: Meta, xp: number): Level {
   const t = meta.heroLevels.xp;
@@ -201,14 +270,43 @@ export function heroLevel(meta: Meta, xp: number): Level {
   while (level - 1 < t.length && xp >= t[level - 1]!) level++;
   const from = level === 1 ? 0 : t[level - 2]!;
   const to = t[level - 1];
-  return { level, max: t.length + 1, into: xp - from, need: to === undefined ? 0 : to - from };
+  const max = t.length + 1;
+  return { level, max, eliteFrom: max - meta.heroLevels.eliteLevels + 1, into: xp - from, need: to === undefined ? 0 : to - from };
 }
 
+/** Whether a league is in the highest league group (Elite). */
+export function isEliteLeague(meta: Meta, league: number): boolean {
+  return leagueGroup(meta, league).group === meta.leagues.groups.length - 1;
+}
+
+/**
+ * A hero's XP after gaining some: without `elite` it stops at the last normal level (what goes past is lost); with
+ * `elite` (a ranked run in the highest league group) it goes on through the Elite levels. Never past the top.
+ */
+export function addHeroXp(meta: Meta, xp: number, gained: number, elite: boolean): number {
+  const t = meta.heroLevels.xp;
+  const cap = elite || meta.heroLevels.eliteLevels === 0 ? t[t.length - 1]! : t[t.length - 1 - meta.heroLevels.eliteLevels]!;
+  return Math.max(xp, Math.min(cap, xp + gained));
+}
+
+/** The cosmetics a hero gets for the levels after `from` up to `to`, level by level. */
 export function heroLevelRewards(meta: Meta, hero: string, from: number, to: number): Reward[] {
-  return meta.heroLevels.cosmeticAt.filter((lv) => lv > from && lv <= to).map((lv) => ({ cosmetic: heroCosmeticId(hero, lv) }));
+  const out: Reward[] = [];
+  for (let lv = from + 1; lv <= to; lv++) {
+    if (meta.heroLevels.cosmeticAt.includes(lv)) out.push({ cosmetic: heroCosmeticId(hero, lv) });
+    for (const kind of meta.heroLevels.rewards.find((r) => r.level === lv)?.kinds ?? []) out.push({ cosmetic: heroRewardId(hero, lv, kind) });
+  }
+  return out;
 }
 
 // --- planet track and pass
+
+/** Which track a reward of a booked run comes from: a hero level, the planet track or the season pass. */
+export function rewardTrack(meta: Meta, r: Reward): "level" | "planet" | "pass" {
+  if ("cosmetic" in r && meta.cosmeticById.get(r.cosmetic)?.level !== undefined) return "level";
+  if (meta.planetTrack.some((s) => JSON.stringify(s.reward) === JSON.stringify(r))) return "planet";
+  return "pass";
+}
 
 export function planetRewards(meta: Meta, from: number, to: number): Reward[] {
   return meta.planetTrack.filter((s) => s.galaxies > from && s.galaxies <= to).map((s) => s.reward);
@@ -220,10 +318,20 @@ export function seasonData(meta: Meta, id: number) {
   return s;
 }
 
-/** Pass level for Galaxies earned this season: level 1 at 0, then one level per `galaxiesPerLevel`. */
+/** Galaxies earned in a season needed for a pass level: none for level 1, then `firstLevels`, then `galaxiesPerLevel` each. */
+export function passGalaxies(pass: { galaxiesPerLevel: number; firstLevels?: number[] }, level: number): number {
+  const first = pass.firstLevels ?? [];
+  let total = 0;
+  for (let lv = 2; lv <= level; lv++) total += first[lv - 2] ?? pass.galaxiesPerLevel;
+  return total;
+}
+
+/** Pass level for Galaxies earned this season: level 1 at 0, then one level each time `passGalaxies` is reached. */
 export function passLevel(meta: Meta, s: { id: number; galaxies: number }): number {
   const pass = seasonData(meta, s.id).pass;
-  return Math.min(pass.levels.length, 1 + Math.floor(s.galaxies / pass.galaxiesPerLevel));
+  let lv = 1;
+  while (lv < pass.levels.length && s.galaxies >= passGalaxies(pass, lv + 1)) lv++;
+  return lv;
 }
 
 function passRewardsUpTo(meta: Meta, s: SeasonState, to: number, from: number): Reward[] {
@@ -253,6 +361,16 @@ export function leagueOf(meta: Meta, points: number): number {
   return Math.min(meta.leagues.ids.length - 1, Math.floor(Math.max(0, points) / meta.leagues.pointsPerLeague));
 }
 
+/** The league group of a league (0 = the lowest group) and the leagues it spans, lowest and highest. */
+export function leagueGroup(meta: Meta, league: number): { group: number; from: number; to: number } {
+  let from = 0;
+  for (const [group, size] of meta.leagues.groups.entries()) {
+    if (league < from + size) return { group, from, to: from + size - 1 };
+    from += size;
+  }
+  throw new Error(`league ${league} is in no group`);
+}
+
 /** Points after a run: never below the start of the highest league reached this season. */
 export function addLeaguePoints(meta: Meta, s: { points: number; peak: number }, delta: number): { points: number; peak: number } {
   const points = Math.max(s.peak * meta.leagues.pointsPerLeague, s.points + delta);
@@ -277,9 +395,15 @@ export interface SeasonChange {
   rewards: Reward[];
 }
 
+/** The league a new season starts in: the highest league of the next lower group; in the lowest group the same one. */
+export function seasonStartLeague(meta: Meta, league: number): number {
+  const { group, from } = leagueGroup(meta, league);
+  return group === 0 ? league : from - 1;
+}
+
 /**
- * Moves the profile into a later season: the ended season pays its league patch, the league drops by
- * `seasonDrop` (that league is the new floor), the pass starts again. Nothing happens for the same or an earlier season.
+ * Moves the profile into a later season: the ended season pays its league patch, the league drops to
+ * `seasonStartLeague` (that league is the new floor), the pass starts again. Nothing happens for the same or an earlier season.
  */
 export function enterSeason(meta: Meta, p0: Profile, seasonId: number): SeasonChange | null {
   if (seasonId <= p0.season.id) return null;
@@ -287,7 +411,7 @@ export function enterSeason(meta: Meta, p0: Profile, seasonId: number): SeasonCh
   const before = p.season.peak;
   const patch = patchId(p.season.id, meta.leagues.ids[before]!);
   const rewards = grant(p, [{ cosmetic: patch }]);
-  const after = Math.max(0, before - meta.leagues.seasonDrop);
+  const after = seasonStartLeague(meta, before);
   p.season = { id: seasonId, galaxies: 0, premium: false, points: after * meta.leagues.pointsPerLeague, peak: after };
   rewards.push(...grant(p, passRewardsUpTo(meta, p.season, 1, 0)));
   return { profile: p, patch, league: [before, after], rewards };
@@ -296,14 +420,25 @@ export function enterSeason(meta: Meta, p0: Profile, seasonId: number): SeasonCh
 // --- after a run
 
 /** What a finished run brings, before it is booked. */
-export interface RunSummary { hero: string; wins: number; livesLeft: number; roundsPlayed: number }
+export interface RunSummary {
+  hero: string;
+  wins: number;
+  livesLeft: number;
+  roundsPlayed: number;
+  /** every round of the run played with a life left (not given up) */
+  completed: boolean;
+}
 
 export function runGalaxies(meta: Meta, r: RunSummary): number {
   return r.wins * meta.run.galaxies.perWin + Math.max(0, r.livesLeft) * meta.run.galaxies.perLifeLeft;
 }
 
-export function runHeroXp(meta: Meta, r: RunSummary): number {
-  return r.roundsPlayed * meta.run.heroXp.perRound + r.wins * meta.run.heroXp.perWin;
+/** Hero XP a run earns: per round played, the bonus for a completed run, more for the season hero with the premium pass. */
+export function runHeroXp(meta: Meta, r: RunSummary, season?: { id: number; premium: boolean }): number {
+  const x = meta.run.heroXp;
+  const base = r.roundsPlayed * x.perRound + (r.completed ? x.completedBonus : 0);
+  const boosted = season?.premium && seasonData(meta, season.id).hero === r.hero;
+  return boosted ? Math.floor((base * (100 + x.seasonHeroPremiumPercent)) / 100) : base;
 }
 
 export function runLeaguePoints(meta: Meta, r: RunSummary): number {
@@ -314,6 +449,7 @@ export function runLeaguePoints(meta: Meta, r: RunSummary): number {
 export interface RunBooking {
   profile: Profile;
   galaxies: number;
+  /** hero XP booked: what the run earned, less what a level cap took (see `addHeroXp`) */
   xp: number;
   level: [number, number];
   /** league points as booked (a floor can make them smaller than the run earned) */
@@ -324,20 +460,28 @@ export interface RunBooking {
   rewards: Reward[];
 }
 
-/** Books a finished run: hero XP, Galaxies (season pass and planet track), league points. */
-export function bookRun(meta: Meta, p0: Profile, r: RunSummary): RunBooking {
+/**
+ * Books a finished run: hero XP, Galaxies (season pass and planet track), league points. A quest run (`quest`, the quest
+ * id) books no league points: its special rule makes it unlike a normal run. It pays the quest's bonus Galaxies on top. Only a ranked run (not a quest) played in the highest
+ * league group fills the Elite levels; the league counts as it was when the run was played, before its points.
+ */
+export function bookRun(meta: Meta, p0: Profile, r: RunSummary, opts: { quest?: string } = {}): RunBooking {
   const p = clone(p0);
-  const galaxies = runGalaxies(meta, r), xp = runHeroXp(meta, r);
+  const kind = opts.quest ? questKind(opts.quest) : null;
+  const galaxies = runGalaxies(meta, r) + (kind ? meta.quests.bonusGalaxies[kind] : 0);
   const xp0 = p.heroXp[r.hero] ?? 0;
-  const lv0 = heroLevel(meta, xp0).level, lv1 = heroLevel(meta, xp0 + xp).level;
-  p.heroXp[r.hero] = xp0 + xp;
+  const elite = !opts.quest && isEliteLeague(meta, leagueOf(meta, p.season.points));
+  const xp1 = addHeroXp(meta, xp0, runHeroXp(meta, r, p.season), elite);
+  const xp = xp1 - xp0;
+  const lv0 = heroLevel(meta, xp0).level, lv1 = heroLevel(meta, xp1).level;
+  p.heroXp[r.hero] = xp1;
   const pass0 = passLevel(meta, p.season);
   const total0 = p.galaxies;
   p.galaxies += galaxies;
   p.season.galaxies += galaxies;
   const pass1 = passLevel(meta, p.season);
   const league0 = leagueOf(meta, p.season.points), points0 = p.season.points;
-  Object.assign(p.season, addLeaguePoints(meta, p.season, runLeaguePoints(meta, r)));
+  if (!opts.quest) Object.assign(p.season, addLeaguePoints(meta, p.season, runLeaguePoints(meta, r)));
   p.runs++;
   const rewards = grant(p, [
     ...heroLevelRewards(meta, r.hero, lv0, lv1),
@@ -349,9 +493,20 @@ export function bookRun(meta: Meta, p0: Profile, r: RunSummary): RunBooking {
 
 // --- equipping
 
-/** Equips an owned background, patch or player picture (`null` takes the patch off). Returns null when it cannot be equipped. */
-export function equip(meta: Meta, p0: Profile, slot: "background" | "patch" | "picture", id: string | null): Profile | null {
-  if (id === null) { if (slot !== "patch") return null; const p = clone(p0); p.equipped.patch = null; return p; }
+export const EQUIP_SLOTS = ["background", "patch", "picture", "grid", "title"] as const;
+export type EquipSlot = (typeof EQUIP_SLOTS)[number];
+
+/**
+ * Equips an owned background, patch, player picture, grid background or title (`null` takes the patch, the grid or the
+ * title off). Returns null when it cannot be equipped.
+ */
+export function equip(meta: Meta, p0: Profile, slot: EquipSlot, id: string | null): Profile | null {
+  if (id === null) {
+    if (slot !== "patch" && slot !== "grid" && slot !== "title") return null;
+    const p = clone(p0);
+    p.equipped[slot] = null;
+    return p;
+  }
   const c = meta.cosmeticById.get(id);
   if (!c || c.kind !== slot || !p0.cosmetics.includes(id)) return null;
   const p = clone(p0);
@@ -370,15 +525,33 @@ export function equipSkin(meta: Meta, p0: Profile, hero: string, id: string | nu
   return p;
 }
 
-/** A tidied player name, or null when it is empty or too long. */
-export function playerName(raw: string): string | null {
+const SPELLED: Record<string, string> = { ä: "ae", ö: "oe", ü: "ue", ß: "ss" };
+const LEET: Record<string, string> = { "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "8": "b", "@": "a", $: "s", "!": "i", "|": "i" };
+/** Each run of the same letter as one letter, so stretched words ("fuuuck") are found too. */
+const squeeze = (s: string) => s.replace(/(.)\1+/g, "$1");
+
+/** Whether a name passes the filter of `meta.names` (it says nothing about the length). */
+export function nameAllowed(meta: Meta, name: string): boolean {
+  const lower = name.toLowerCase().replace(/[äöüß]/g, (c) => SPELLED[c]!).normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+  const plain = lower.replace(/[0-9@$!|]/g, (c) => LEET[c]!);
+  const words = plain.split(/[^a-z]+/).filter(Boolean);
+  const joined = words.join("");
+  const digits = lower.replace(/[^a-z0-9]/g, "");
+  const blockedPart = (f: string) =>
+    joined.includes(f) || digits.includes(f) || (squeeze(f).length >= 4 && squeeze(joined).includes(squeeze(f)));
+  if (meta.names.blocked.some(blockedPart)) return false;
+  return !words.some((w) => meta.names.blockedWords.includes(w) || meta.names.blockedWords.includes(squeeze(w)));
+}
+
+/** A tidied player name, or null when it is empty, too long or refused by the filter. */
+export function playerName(meta: Meta, raw: string): string | null {
   const n = raw.replace(/\s+/g, " ").trim();
-  return n.length >= 1 && [...n].length <= NAME_MAX ? n : null;
+  return n.length >= 1 && [...n].length <= NAME_MAX && nameAllowed(meta, n) ? n : null;
 }
 
 /** Renames the player; null when the name is not allowed. */
-export function rename(p0: Profile, raw: string): Profile | null {
-  const n = playerName(raw);
+export function rename(meta: Meta, p0: Profile, raw: string): Profile | null {
+  const n = playerName(meta, raw);
   if (n === null) return null;
   const p = clone(p0);
   p.name = n;
@@ -393,10 +566,15 @@ export function fitProfile(meta: Meta, raw: unknown): Profile | null {
   const q = clone(p);
   q.cosmetics = q.cosmetics.filter((c) => meta.cosmeticById.has(c));
   for (const c of meta.start.cosmetics) if (!q.cosmetics.includes(c)) q.cosmetics.push(c);
-  q.equipped = { background: q.equipped?.background, patch: q.equipped?.patch ?? null, picture: q.equipped?.picture, skins: { ...(q.equipped?.skins ?? {}) } };
+  q.equipped = {
+    background: q.equipped?.background, patch: q.equipped?.patch ?? null, picture: q.equipped?.picture, grid: q.equipped?.grid ?? null,
+    title: q.equipped?.title ?? null, skins: { ...(q.equipped?.skins ?? {}) },
+  };
   if (!q.cosmetics.includes(q.equipped.background)) q.equipped.background = meta.start.background;
   if (!q.cosmetics.includes(q.equipped.picture)) q.equipped.picture = meta.start.picture;
   if (q.equipped.patch && !q.cosmetics.includes(q.equipped.patch)) q.equipped.patch = null;
+  if (q.equipped.grid && !q.cosmetics.includes(q.equipped.grid)) q.equipped.grid = null;
+  if (q.equipped.title && !q.cosmetics.includes(q.equipped.title)) q.equipped.title = null;
   for (const [hero, id] of Object.entries(q.equipped.skins)) if (!q.cosmetics.includes(id) || meta.cosmeticById.get(id)?.hero !== hero) delete q.equipped.skins[hero];
   q.heroXp ??= {};
   if (typeof q.name !== "string" || !q.name.trim()) q.name = meta.start.name;

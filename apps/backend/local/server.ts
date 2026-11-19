@@ -9,12 +9,13 @@ import type { AddressInfo } from "node:net";
 import { fileURLToPath } from "node:url";
 import { MAX_BODY_BYTES } from "@backpack-space/api";
 import { createApp } from "../src/app.js";
+import { TokenBuckets } from "../src/http/throttle.js";
 import { DynamoActionStore, DynamoBackpackPool, DynamoPlayerStore, documentClient } from "../src/adapters/dynamodb.js";
 import { storeIdentity } from "../src/adapters/store-identity.js";
 import { cryptoRandom, stdoutLog, systemClock } from "../src/adapters/system.js";
 import { hmacTokens } from "../src/http/token.js";
 import { loadGameData, loadMeta } from "@backpack-space/core/node";
-import type { Ports } from "../src/domain/context.js";
+import type { Game, Ports } from "../src/domain/context.js";
 import type { HttpRequest, HttpResponse } from "../src/http/types.js";
 import type { LogSink } from "../src/ports/index.js";
 import { loadLocalSettings, localSettingsPort, type LocalSettings } from "./settings.js";
@@ -38,14 +39,20 @@ async function readBody(req: IncomingMessage): Promise<string | null> {
 const CORS = {
   "access-control-allow-origin": "*",
   "access-control-allow-headers": "authorization, content-type, x-app-version",
-  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
   "access-control-expose-headers": "x-request-id",
 };
 
 const data = loadGameData();
 const game = { data, meta: loadMeta(data) };
 
-export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog): Ports {
+/** The simulation builds a server carries: by default the current data only (tests may stand in for a rollout). */
+export interface Builds {
+  game: Game;
+  previousGame?: Game;
+}
+
+export function localPorts(values: LocalSettings, overrides: Partial<LocalSettings> = {}, log: LogSink = stdoutLog, builds: Builds = { game }): Ports {
   const settings = localSettingsPort(systemClock, overrides);
   const doc = documentClient(values.dynamodb);
   return {
@@ -57,9 +64,10 @@ export function localPorts(values: LocalSettings, overrides: Partial<LocalSettin
     actions: new DynamoActionStore(doc, settings),
     identity: storeIdentity(fetch, systemClock),
     tokens: hmacTokens,
-    game,
+    ...builds,
     // RevenueCat comes in M4
-    revenuecat: { balance: async () => 0 },
+    // the stand-in until M4 (#77): no balances, nothing to delete
+    revenuecat: { balance: async () => 0, deleteCustomer: async () => undefined },
     log,
   };
 }
@@ -71,9 +79,9 @@ export interface RunningServer {
 }
 
 /** Starts the local backend; `overrides` replace values of the settings file (tests: ports, tables). */
-export async function startServer(overrides: Partial<LocalSettings> = {}, log?: LogSink): Promise<RunningServer> {
+export async function startServer(overrides: Partial<LocalSettings> = {}, log?: LogSink, builds?: Builds): Promise<RunningServer> {
   const { values } = loadLocalSettings(overrides);
-  const route = createApp(localPorts(values, overrides, log));
+  const route = createApp(localPorts(values, overrides, log, builds), { throttle: new TokenBuckets() });
   const server = createServer((req, res) => {
     void (async () => {
       let out: HttpResponse;

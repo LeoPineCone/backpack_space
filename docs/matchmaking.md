@@ -81,6 +81,8 @@ At launch there are 50 bot backpacks per round and run standing. They belong to 
 - **Variety:** all 4 heroes and all paths of each hero are present. Bot players of different skill also fill the buckets with few lives.
 - **Storage:** the bot backpacks live in the backend, not in the app. They can be replaced without an app update.
 - **Upkeep:** they are checked after every data change. After a major change they are generated again.
+- **Built (M2):** `npm run seed` (`apps/backend/src/seed/bot-pool.ts`). Number of bot players (decided 2026-11-18): 50 per league group (200), half of the lowest group plays a little weaker (lays out with less effort); plus 16 easy bots. Runs that rarely happen (all wins late in a run) are short of builds; such a bucket borrows builds of the same round from the nearest standing (about 7 % of the launch set). The launch set takes about a minute to generate.
+- **Easy tier:** the first `matching.easyRuns` runs of a player (3, in `data/meta.json`) meet bots that buy and lay out at random (decided 2026-11-18; `easy` partitions, a fifth of the normal amount per bucket), with the normal bots as fallback.
 
 ## League groups
 
@@ -93,9 +95,11 @@ The 10 leagues are put into 4 groups. League 1 is the highest here (in `data/met
 | Intermediate | 6, 7, 8 | league 9 |
 | Amateur | 9, 10 | no drop, you stay in your league |
 
-At the start of a season you drop to the highest league of the next lower group. Examples: from league 1 to league 3, from league 6 to league 9. This replaces the earlier rule "2 leagues down". The core and `data/meta.json` still implement the earlier rule.
+At the start of a season you drop to the highest league of the next lower group. Examples: from league 1 to league 3, from league 6 to league 9. This replaces the earlier rule "2 leagues down" (core: `seasonStartLeague`, groups in `data/meta.json`).
 
-Bot players are assigned to a group, not to a single league. For bots, "league plus/minus 1" in the matching rules therefore means "same group".
+Bot players are assigned to a group, not to a single league. For bots, "league plus/minus 1" in the matching rules therefore means "same group". The groups are `leagues.groups` in `data/meta.json` (sizes from the lowest group up); `leagueGroup` in the core reads them.
+
+The matching itself is built in `apps/backend/src/domain/matching.ts` (M2): the steps above, the rules that always hold, and the phase setting `matchingPhase` (1 = bots only, 3 = players first; phase 2 waits for its threshold).
 
 ## Versions
 
@@ -150,5 +154,3 @@ Compressed it is about a third of that. A cap only becomes necessary when the nu
 
 ## Open questions
 
-- How many bot players are there, and how are they spread over the 4 groups? Proposal: about 400, more in Amateur and Intermediate than in Pro and Elite.
-- The group-based season reset still has to be built (core `enterSeason`, `data/meta.json`, glossary text of "League").
