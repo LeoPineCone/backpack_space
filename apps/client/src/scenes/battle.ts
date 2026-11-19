@@ -84,7 +84,7 @@ export function battleScene(game: Game, saved?: SavedFight): Scene {
     for (let y = 0; y < rules.grid.h; y++) for (let x = 0; x < rules.grid.w; x++) g.rect(BX + x * CELL + 0.5, gridY[i]! + y * CELL + 0.5, CELL - 1, CELL - 1);
     g.stroke({ width: 1, color: C.gridLine });
     root.addChild(g);
-    for (const p of b.bags) root.addChild(at(piece(data, p.item, p.rot, CELL, { label: false }), BX + p.x * CELL, gridY[i]! + p.y * CELL));
+    for (const p of b.bags) root.addChild(at(piece(data, p.item, p.rot, CELL, { label: false, placed: true }), BX + p.x * CELL, gridY[i]! + p.y * CELL));
     const flashes = b.items.map((p) => {
       root.addChild(at(piece(data, p.item, p.rot, CELL), BX + p.x * CELL, gridY[i]! + p.y * CELL));
       const f = new Graphics();

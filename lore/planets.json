@@ -1,5 +1,5 @@
 {
-  "about": "Places of the Backpack Space world: planets, moons, comets, belts, stations and stars. Every entry is a draft until Ilja confirms it. Items and heroes link to the place they come from; one item has at most one origin. Edit here, then run npm run lore (writes lore/graph.html) and npm run validate.",
+  "about": "Places of the Backpack Space world: planets, moons, comets, belts, stations, nebulae and stars. Every entry is a draft until Ilja confirms it. Items and heroes link to the place they come from; one item has at most one origin. Edit here, then run npm run lore (writes lore/graph.html) and npm run validate.",
   "places": [
     {
       "id": "rime",
@@ -9,7 +9,7 @@
       "traits": ["frozen night planet", "a sun too far away to warm it", "frozen methane seas", "long darkness"],
       "life": "Large slow animals with ice grown into their coats, wide flat feet for the frozen seas, big pale eyes for the dark.",
       "background": "A flat sea of cracked blue-black methane ice under a tiny pale sun; frost ridges, a herd silhouette far away.",
-      "items": ["tundra_yak", "ice_ferret", "frost_gem", "cryo_coat"],
+      "items": ["tundra_yak", "ice_ferret", "frost_gem", "cryo_coat", "cryo_sprayer", "war_horn"],
       "heroes": []
     },
     {
@@ -31,7 +31,7 @@
       "traits": ["a cloud of icy comets", "almost no gravity", "trails of frozen dust"],
       "life": "Light, long-legged animals that leap from comet to comet, trailing dust like comet tails.",
       "background": "Tumbling comets of dirty ice with long dust tails across a dark sky.",
-      "items": ["comet_fox", "comet_sorbet"],
+      "items": ["comet_fox", "comet_sorbet", "coolant_tank", "lucky_comet", "bone_broth"],
       "heroes": []
     },
     {
@@ -53,7 +53,7 @@
       "traits": ["dry desert with very thin air", "ore pebbles everywhere", "constant dust wind"],
       "life": "Small round burrowers with frilly breathing gills that hoard shiny ore pebbles.",
       "background": "Pale dunes full of glinting ore pebbles, burrow holes, a dusty mustard sky.",
-      "items": ["space_hamster", "dust_bunny"],
+      "items": ["space_hamster", "dust_bunny", "pebble_mites"],
       "heroes": []
     },
     {
@@ -64,7 +64,7 @@
       "traits": ["two moons in its sky", "long twilight", "pale forests"],
       "life": "Night insects whose markings repeat the two moons.",
       "background": "A pale twilight forest under two crescent moons, moths drifting between the trees.",
-      "items": ["moon_moth", "lunar_moth"],
+      "items": ["moon_moth", "lunar_moth", "glow_beetle", "laser_parrot"],
       "heroes": []
     },
     {
@@ -76,7 +76,7 @@
       "traits": ["small cratered moon", "crumbly pale crust", "a ring of drifting crumbs"],
       "life": "Station cooks claim its craters ripen the best moon cheese.",
       "background": "A pocked pale moon, close enough to see every crater, with a few crumbs in orbit.",
-      "items": ["moon_cheese"],
+      "items": ["moon_cheese", "healing_spring"],
       "heroes": []
     },
     {
@@ -87,7 +87,7 @@
       "traits": ["asteroid belt full of wrecks", "mining claims", "drifting ship parts"],
       "life": "Miners, salvage robots and burrowing animals that live inside asteroids.",
       "background": "Asteroids and broken hulls tumbling together, a mining tether between two rocks.",
-      "items": ["mining_pick", "asteroid_chunk", "asteroid_mole", "scrap_metal"],
+      "items": ["mining_pick", "asteroid_chunk", "asteroid_mole", "scrap_metal", "plasma_cutter", "hull_plating"],
       "heroes": ["rook"]
     },
     {
@@ -133,6 +133,39 @@
       "background": "Red sandy desert with mesas under a coral and mustard evening sky, the huge cracked red star low on the horizon, old stone pillars carved with sun and moon phases.",
       "items": [],
       "heroes": ["ysel"]
+    },
+    {
+      "id": "murk",
+      "name": "Murk",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["swamp planet under thick fog", "giant fungi and thorn vines", "toxic spore rain"],
+      "life": "Slow swamp creatures with venom sacs, puffball fungi big as houses, black thorn vines.",
+      "background": "Sage-green fog over black water, giant puffball mushrooms and thorn vines, a dim sun as a pale disc.",
+      "items": ["spore_launcher", "acid_flask", "thorn_mail", "venom_sac", "mushroom_cluster"],
+      "heroes": []
+    },
+    {
+      "id": "facet",
+      "name": "Facet",
+      "kind": "planet",
+      "status": "draft",
+      "traits": ["crystal planet", "forests of teal crystal spikes", "light split into bands everywhere"],
+      "life": "Beasts with crystal teeth and claws; miners who cut needles and candy-shaped shards.",
+      "background": "Teal crystal spires rising from a pale plain, broken light bands drawn as flat stripes across the sky.",
+      "items": ["fang_dagger", "needle_rifle", "crystal_shard", "crystal_candy"],
+      "heroes": []
+    },
+    {
+      "id": "the_veil",
+      "name": "The Veil",
+      "kind": "nebula",
+      "status": "draft",
+      "traits": ["a nebula of slow drifting clouds", "no ground at all", "creatures that swim through gas"],
+      "life": "Jellies, whales and squids that swim between the clouds; their calves are born in the dense middle.",
+      "background": "Soft layered nebula clouds in teal and coral against the navy sky, a whale shape far away.",
+      "items": ["tentacle_whip", "phase_cloak", "nebula_jelly", "star_whale_calf", "void_kraken"],
+      "heroes": []
     }
   ]
 }

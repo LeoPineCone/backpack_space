@@ -4,7 +4,7 @@ import { join } from "node:path";
 import type { GameData } from "@backpack-space/core";
 import { ROOT } from "@backpack-space/core/node";
 
-export const PLACE_KINDS = ["planet", "moon", "comet", "belt", "station", "star"] as const;
+export const PLACE_KINDS = ["planet", "moon", "comet", "belt", "station", "star", "nebula"] as const;
 
 export interface Place {
   id: string;

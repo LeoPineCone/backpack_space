@@ -17,8 +17,12 @@ export const initials = (name: string) => {
   return (words.length === 1 ? words[0]!.slice(0, 2) : words.map((w) => w[0]!).slice(0, 3).join("")).toLocaleUpperCase();
 };
 
-/** bare: an item with a picture is drawn as the picture alone, without tile and frame (shop offers). */
-export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number; bare?: boolean }
+/**
+ * bare: an item or bag with a picture is drawn as the picture alone, without tile and frame (shop offers).
+ * placed: a bag that lies in the backpack grid; it shows its blueprint picture (`items/<id>-blueprint`) so the
+ * items on top stay readable. Anywhere else (shop, loose, popup) a bag shows its normal picture (Ilja, 2026-11-18).
+ */
+export interface PieceOpts { stars?: boolean; label?: boolean; alpha?: number; line?: number; bare?: boolean; placed?: boolean }
 
 /** An item's types as the player sees them: a weapon shows melee or ranged instead of "weapon" (Ilja, 2026-11-18). */
 export function typeIcons(def: ItemDef): string[] {
@@ -37,7 +41,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const def = data.items.get(id)!;
   const s = data.shape(id, rot);
   const c = new Container();
-  if (o.bare && !def.isBag) {
+  if (o.bare) {
     const pic = itemArt(data, id, rot, cell);
     if (pic) { pic.alpha = o.alpha ?? 1; c.addChild(pic); return c; }
   }
@@ -52,8 +56,9 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
     const r = has.has(`${x + 1},${y}`) ? 0 : pad, b = has.has(`${x},${y + 1}`) ? 0 : pad;
     g.rect(x * cell + l, y * cell + t, cell - l - r, cell - t - b);
   }
+  const bagPic = def.isBag ? itemArt(data, id, rot, cell, o.placed ? "-blueprint" : "") : null;
   // with a picture the type colour stays only as a faint tint, so it does not fight the picture's own colours
-  const tint = !def.isBag && artTexture(`items/${id}`) ? 0.22 : 1;
+  const tint = bagPic ? 0 : !def.isBag && artTexture(`items/${id}`) ? 0.22 : 1;
   g.fill({ color: fill, alpha: (o.alpha ?? 1) * tint });
   // outline: every cell edge that has no neighbour
   const lw = def.isBag ? (cell >= 26 ? COMIC.frame : 1) : Math.max(1.5, cell * 0.05);
@@ -64,8 +69,12 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
     if (!has.has(`${x - 1},${y}`)) g.moveTo(x0, y0).lineTo(x0, y1);
     if (!has.has(`${x + 1},${y}`)) g.moveTo(x1, y0).lineTo(x1, y1);
   }
-  g.stroke({ width: lw, color: line, cap: "square" });
-  if (def.isBag) {
+  if (!bagPic) g.stroke({ width: lw, color: line, cap: "square" });
+  if (bagPic) {
+    bagPic.alpha = o.alpha ?? 1;
+    c.addChild(bagPic);
+    for (const [x, y] of s.cells) g.rect(x * cell, y * cell, cell, cell).stroke({ width: 1, color: C.bagLine, alpha: 0.35 });
+  } else if (def.isBag) {
     for (const [x, y] of s.cells) g.rect(x * cell, y * cell, cell, cell).stroke({ width: 1, color: C.bagLine, alpha: 0.35 });
     // a stitched seam just inside the outline, like sewn cloth
     if (cell >= 26) {
@@ -96,7 +105,7 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
   const label = o.label !== false && cell >= 26;
   const pic = def.isBag ? null : itemArt(data, id, rot, cell);
   if (pic) c.addChild(pic);
-  else if (!def.isBag || o.label !== false) {
+  else if (!bagPic && (!def.isBag || o.label !== false)) {
     c.addChild(at(icon(tileIcon(def), cell * (label ? 0.42 : 0.55), def.isBag ? C.dim : C.text), cx, cy - (label ? cell * 0.12 : 0)));
     if (label) c.addChild(at(txt(initials(tr().item(id)), cell * 0.24, { color: def.isBag ? C.dim : C.text, anchor: [0.5, 0.5] }), cx, cy + cell * 0.27));
   }
@@ -108,8 +117,8 @@ export function piece(data: GameData, id: string, rot: number, cell: number, o: 
  * The item's picture over its bounding box, turned with the item. The file is drawn for rotation 0 at
  * width × height of the unturned shape in cells. Returns null while the item has no picture.
  */
-function itemArt(data: GameData, id: string, rot: number, cell: number): Sprite | null {
-  const tex = artTexture(`items/${id}`);
+function itemArt(data: GameData, id: string, rot: number, cell: number, variant = ""): Sprite | null {
+  const tex = artTexture(`items/${id}${variant}`);
   if (!tex) return null;
   const s0 = data.shape(id, 0), s = data.shape(id, rot);
   const sp = new Sprite(tex);

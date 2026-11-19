@@ -1,3 +1,13 @@
+# Item shapes that fit their pictures (2026-11-18)
+
+Question (Ilja): some item shapes do not fit a picture (armour in a long 1×3 box, round shields or animals in an L), and pictures reached into cells the item does not own. Six shapes changed, numbers unchanged; data version raised to 2.0 (shapes changed).
+
+**Changed:** Living Armor L (4 cells) → 2×2; Shadow Lynx L (3) → 3×1; Rat Pack L (3) → 3×1; Exo Suit 1×3 (3) → 2×2 (4); Total Eclipse L (3) → 2×2 (4); Ghost Shroud L (3) → 2×2 (4).
+
+**Measured:** `report:paths --precise --seed 7`, paired with the state before. Change vs before per path between −1 and +2 pts (±1 each), every hero overall 0 pts ±1: nothing beyond chance. The open targets of the report (path gaps, late Ascension, path variety) are unchanged and stay paused.
+
+**Second step (2026-11-19, Ilja):** the two drones lie flat instead of standing with a tail. Scout Drone `*#*/.#.` → `*##*` (2 cells, 2 stars, stars now at both ends); Sentry Drone 1×2 → 2×1 (same shape turned). Paired report as above: paths −2 to +2 pts (±1), heroes −1 to 0 pts: nothing beyond chance. Data version stays 2.0 (not released yet).
+
 # Hero items equal inside each hero's pool (2026-11-16)
 
 Question (Ilja): the hero items of one hero must be worth about the same, so that none is taken every time it is offered. `report:picks` now compares a hero item with the median of **its own hero's three** (a player only ever chooses between those), and lists them per hero.

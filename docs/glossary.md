@@ -114,7 +114,7 @@ Every game term with the English word used in the game, the docs and the code, t
 | **Skin** | Skin | Another look for one hero. Worn in the profile. | `Profile.equipped.skins`, `equipSkin` |
 | **Elite level** | Elite-Stufe | Hero levels 21 to 23 after level 20. Only ranked runs in the Elite league group fill them. | `heroLevels.eliteLevels`, `addHeroXp` |
 | **Title** | Titel | Words shown with your name on the profile. Never sold, only earned, for example with an Elite level. | `Profile.equipped.title` |
-| **Hero pin** | Helden-Pin | A small badge of one hero for the profile, earned at hero level 20 and with each Elite level. Not the shop pin. | `heroRewardId` |
+| **Badge** | Badge | A small mark of one hero for the profile, earned at hero level 20 and with each Elite level. | `heroRewardId` |
 | **Hero frame** | Heldenrahmen | A frame around a hero, earned at hero level 20. Draft. | `heroRewardId` |
 | **Player picture** | Spielerbild | Your picture on the start screen. Chosen in the profile. | `Profile.equipped.picture` |
 | **Quest** | Aufgabe | A daily or weekly run with special rules that pays Galaxies. | `questsScene` |

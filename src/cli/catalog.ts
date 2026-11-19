@@ -63,9 +63,9 @@ artOut.push(
   "- `npm run art:prompt -- <id>` prints the finished prompt for an item: the style part of the prompt base, the description, the accent colour, the box and the background rules.",
   `- Detail follows the size in the backpack: ${limitsText()} (checked by \`npm run validate\`). A small item gets one shape and one feature, a big one up to four.`,
   "- One item per picture, seen from the front or slightly from above, on a plain background that can be cut out. No text, no frame, no stars.",
-  "- The picture fills the item's box: **Box** is width × height in backpack cells. One cell is about 44 px on a phone, so draw at 176 px per cell and keep the silhouette readable at 44 px. Odd shapes (L, T) use the same box; the picture may leave the empty corner free.",
+  "- The picture fills the item's box: **Box** is width × height in backpack cells. One cell is 40 points on a phone, so draw at 176 px per cell and keep the silhouette readable at 40 px. Odd shapes (L, T) use the same box; the picture may leave the empty corner free.",
   "- The game turns pictures with the item, so nothing in them has to stay upright (no text, no horizon).",
-  "- Each brief ends with one accent colour from the palette; everything else stays in ink, night, bone and muted copper.",
+  "- Each brief ends with one accent colour from the palette; everything else stays in cream, warm grey, teal and copper with black outlines.",
   "- Rarity is shown by the client (frame or background), not in the picture.",
   "- File name: `items/<id>.png`.", "");
 const artRow = (it: ItemDef) => `| ${it.name} | \`items/${it.id}.png\` | ${it.crafted ? `crafted ${it.depth}` : it.rarity} | ${box(it)} \`${cellsOf(it)}\` | ${art[it.id]?.brief ?? "**missing**"} | ${art[it.id]?.description ?? "**missing**"} |`;

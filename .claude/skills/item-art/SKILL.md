@@ -10,8 +10,8 @@ boring, they must be creative, and you see at once that the game has a space the
 
 A picture comes from two fields in `data/item-art.json` per item or bag:
 
-- `brief`: one line for the asset list, ends with `Accent: <palette colour>.` (rust red, deep teal, mustard,
-  moss, copper or bone).
+- `brief`: one line for the asset list, ends with `Accent: <palette colour>.` (coral red, teal, mustard,
+  sage, copper or cream; docs/style.md).
 - `description`: the full English picture description that goes into the prompt. It is never shown in the app.
 
 `npm run art:prompt -- <id> [<id> ...]` (or `--all`) builds the finished prompt from the style base in
@@ -63,6 +63,8 @@ Rules for the idea:
   item carries one shape and one feature, a big item up to four.
 - **Still the same world:** worn, practical, salvaged, patched (docs/style.md, "Items"). Inventive does not mean
   clean sci-fi chrome.
+- **No projectiles.** A weapon shows no projectile at all: no shot, slug, needle, nocked arrow, beam or volley
+  leaving or sitting in it (Ilja 2026-11-18). A flame or spray right at the nozzle is part of the weapon.
 - **No glow.** Energy, heat and light are flat colour shapes or wavy ink lines, never glow, bloom or neon.
 - **No text, letters, logos.** No alcohol. Nothing from Backpack Brawl or other existing games.
 
@@ -86,6 +88,21 @@ Rules for the idea:
 - Odd shapes (L, T, gate): say in the description where the parts go and which cells stay empty ("the pick head
   runs along the top two cells, the handle drops down the left cell; the empty corner stays free").
 - Long items are drawn lying across their box; the game rotates them, so draw each item once.
+- **The picture must fill its cells** (Ilja 2026-11-18): in the grid a player must see at a glance which cells an
+  item takes. Pick a motif that is long by nature for long boxes (a long tray, a pole, an animal in side view
+  from nose to tail) instead of a round thing in the middle. Start the description with where it reaches, e.g.
+  "Stretched end to end across the wide box:", "Standing tall from the bottom to the top of the box:" or
+  "Running the full length of the long box, end to end:". Target: the picture covers at least 75 % of the long
+  side of its box (for square boxes, of both sides); measure after every batch and redo what falls short.
+- **Odd shapes** (Ilja 2026-11-18): no part of the picture may reach into a cell outside the shape, because another
+  item can lie there; the prompt names the empty cells (`art:prompt`). Pick a motif whose silhouette already has
+  that shape: L = head and handle (pick, axe, pistol, saw, scythe); long with a foot = gun with grip, flag on a
+  pole; 2×3 without a corner = hammer or sceptre with a big head over the top four cells; gate = arch, door,
+  bridge; gap in the middle of the bottom row = two legs or tentacles. Round things (shields, discs), suits and
+  lying or curled animals do not fit odd shapes: change the item's shape instead (item-design skill, balancing
+  check, data version major), as done for Total Eclipse, Living Armor, Exo Suit, Ghost Shroud, Shadow Lynx and
+  Rat Pack. Mining Pick is the model L.
+- Thin items (1 cell wide) only need to fill their length; 50 % of the box area is fine there (Zenith Lance).
 - Word limits (checked by `npm run validate`, `packages/core/node/load.ts`): 1 cell 30 words, 2–3 cells 45,
   4–5 cells 60, 6+ cells 75. Short is better: describe the idea and the silhouette, not texture.
 - Avoid wording that invites noise: no "scratches", "grain", "fine detail", "intricate".
@@ -93,7 +110,7 @@ Rules for the idea:
 ## 5. Hero items and crafted items
 
 - Hero items speak their hero's language (docs/style.md, "Hero items"): Venn's lab plant, Rook's salvage, Quill's
-  herd-made things, Ysel's iron relics. The space twist comes on top of that language, not instead of it.
+  herd-made things, Ysel's solar-moth relics. The space twist comes on top of that language, not instead of it.
 - A crafted item keeps something recognisable from each ingredient (Prism Laser = Laser Pistol with the Crystal
   Shard on its muzzle).
 
@@ -142,4 +159,19 @@ Image credits are limited. Generate only when Ilja asks, check the balance first
 - Small puffs of smoke or steam at an item's edge look odd at backpack size (Rocket Chili); leave them out.
 - Judge in this order: does it read as the named thing at real size? Is there a space idea? Does it fit the
   style and palette?
+- **Sheets with slots shaped like the items** (2026-11-18): on a 2×2 sheet of square quarters the model draws
+  2×1 and 3×1 items compact and they fill only half their box. Put items of one shape on one sheet with slots of
+  that shape instead (e.g. eight 2×1 items as 2 columns × 4 rows, four 4×1 items as 4 rows).
+- **Slot sheets work** (2026-11-18, 30 sheets, 168 items, no refusal): wide items as "laid out in 4 horizontal rows
+  of equal height ... Row 2, left half: Name (a wide 2:1 item filling the left half of the row from end to end)",
+  3:1 and 4:1 items one per row; tall items as columns ("Column 2, upper half: ... a tall 1:2 item standing
+  upright"). 137 of 168 reached 90 % of their long side. Do not leave half a column empty: the model then
+  stretches that item over the whole column. Big and odd-shaped items in quarters still often come out centred
+  (stem or body in the middle instead of the left cell); check their free cells after cutting.
+- At most two weapons per sheet, mixed with other items, and no flame tongues on weapons: sheets with three or
+  more weapons and flames at a muzzle were refused by the safety filter (2026-11-18).
+- A single weapon alone on one image (Railgun, 21:9) was refused twice by the model's safety filter; put
+  weapons on a normal four-item sheet with other items.
+- Pets that "fire" something (Laser Parrot with a laser line) read badly; show the animal and its alien feature,
+  not the attack.
 - Write lessons learned into this skill.
