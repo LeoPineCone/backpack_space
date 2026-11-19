@@ -396,8 +396,8 @@
     "description": "The round saw disc with black triangle teeth fills the top left cells, the boomerang wing handle bends down the left cell with a tiny thruster at its tip; the lower right cell stays empty."
   },
   "acid_sprayer": {
-    "brief": "Cryo sprayer whose tank is now an acid flask, sage spray. Accent: sage.",
-    "description": "Like a pistol: the spray gun body runs along the whole top row, short nozzle at the right end, the grip drops straight down the lower left cell; a round flask of sage acid on top; nothing in the lower right."
+    "brief": "Cryo sprayer whose tank is now an acid flask. Accent: sage.",
+    "description": "Pistol aiming right: the gun body runs along the whole top row, a round sage acid flask set into it, the nozzle ending at the top right edge, no drip; the grip drops straight down the lower left cell; nothing in the lower right."
   },
   "reinforced_bulkhead": {
     "brief": "Hull plate doubled with scrap, cross braces and big bolts. Accent: copper.",
@@ -649,7 +649,7 @@
   },
   "life_support_suit": {
     "brief": "Exo torso with a tube backpack and a heartbeat screen. Accent: sage.",
-    "description": "The upper body of a suit in a riveted exo frame sits high, filling the top left cells right up to the top edge; a medkit backpack with sage tubes fills the top right cell; a thick hose hangs down the whole lower left cell to the bottom edge; a heartbeat screen on the chest; lower right cell empty."
+    "description": "A suit's upper body in a riveted exo frame fills the top left cells to the top and left edges; a big medkit backpack with sage tubes fills the top right cell; a fat ribbed oxygen tank hangs on a short hose and fills the whole lower left cell; a heartbeat screen on the chest; lower right cell empty."
   },
   "star_piercer": {
     "brief": "Railgun rails stretched long with a crystal sniper scope. Accent: mustard.",
@@ -680,8 +680,8 @@
     "description": "Filling the wide box: a long table with magnet feet, the asteroid honey cake and chili noodle cup on it, bowls and fruit, all held down by straps so nothing floats away."
   },
   "aegis_fortress": {
-    "brief": "Tiny fortress of shield plates with a dish tower and force dome. Accent: teal.",
-    "description": "Standing tall from the bottom to the top of the box: a tall stacked fortress of shield plates from a wide base to a satellite dish tower at the very top, a flat teal force dome arching over it with one crack."
+    "brief": "Tiny fortress of shield plates with a dish tower. Accent: teal.",
+    "description": "Filling the whole tall box edge to edge: a block-shaped fortress of stacked riveted shield plates, its walls running straight up the left and right edges, flat teal force panels between them, a satellite dish tower on the flat roof at the top edge."
   },
   "plague_hydra": {
     "brief": "Three-headed serpent with crystal fangs and jelly frills. Accent: sage.",
@@ -1033,7 +1033,7 @@
   },
   "sun_eagle": {
     "brief": "Star Falcon grown into a sun-crested eagle. Accent: mustard.",
-    "description": "The spread wings fill the whole top row; the body hangs straight down the lower left cell, talons at the bottom edge; nothing in the lower right. The Star Falcon grown into an eagle, crest of sun-ray feathers, a lens over one eye."
+    "description": "Upside-down L: the eagle perches in the lower left cell, talons at the bottom edge, body at the left edge; both spread wings sweep right across the whole top row; nothing in the lower right. Sun-ray crest, a lens over one eye."
   },
   "cozy_den": {
     "brief": "Den dug into a small asteroid, lined with fur. Accent: coral red.",
@@ -1321,7 +1321,7 @@
   },
   "dying_star_scepter": {
     "brief": "Sceptre with the Red Giant Heart in its rings. Accent: coral red.",
-    "description": "Like a war hammer: a big ring cage fills the upper four cells edge to edge, the Red Giant Heart held in its eclipse rings; a thick shaft drops straight down the lower left cell to the bottom edge, the small cocoon censer tied to it; nothing in the lower right."
+    "description": "Upside-down L: a big ring cage holding the Red Giant Heart fills the upper four cells edge to edge; under its left half only, a thick shaft runs down the lower left cell to the bottom, a small cocoon censer tied to it; nothing in the lower right."
   },
   "solstice_engine": {
     "brief": "Engine with two half-suns, chime and flare ring. Accent: mustard.",
@@ -1428,8 +1428,8 @@
     "description": "A round ball of grey fluff from a windy desert planet, rolling like a tumbleweed, two long ears, two dot eyes, a tiny dust devil spinning under it."
   },
   "scout_drone": {
-    "brief": "Round drone with one big camera eye and rotor arms. Accent: teal.",
-    "description": "Standing tall from the bottom to the top of the box: a small round drone hovering upright, one big teal camera eye at the top, two little rotor arms, and a long thin fold-out antenna tail reaching down to the bottom."
+    "brief": "Flat wide drone with one big camera eye and two rotors. Accent: teal.",
+    "description": "Stretched end to end across the wide box: a flat wide drone hovering level, one big teal camera eye in the middle of its round body, a rotor at each end, nothing hanging below."
   },
   "comet_fox": {
     "brief": "Long-legged comet fox mid-leap with a dust-trail tail. Accent: cream.",
@@ -1448,8 +1448,8 @@
     "description": "Stretched end to end across the wide box: a jellyfish drifting sideways, its bell a see-through dome at one end with a small teal swirl of nebula cloud inside, long tentacles trailing out to the other end like dust trails."
   },
   "sentry_drone": {
-    "brief": "Hovering drone with a small gun underneath. Accent: coral red.",
-    "description": "Standing tall from the bottom to the top of the box: a tall hovering drone, two rotor arms at the top, one lens eye in the middle, a long coral red gun hanging straight down underneath to the bottom."
+    "brief": "Hovering drone with a gun built into its belly. Accent: coral red.",
+    "description": "Stretched end to end across the wide box: a hovering drone in side view, a rotor pod on top at each end, one lens eye at the front, a short coral red gun barrel built into its belly pointing forward, nothing hanging below."
   },
   "magma_newt": {
     "brief": "Basalt-skinned newt with heat cracks and a glass tail. Accent: coral red.",
@@ -1536,8 +1536,8 @@
     "description": "Upright, muzzle up: a blaster whose barrel is three teal rings floating apart with nothing between them, like stacked planet rings, below a bulky grip with a small battery dial."
   },
   "spore_launcher": {
-    "brief": "Living tube gun grown from a Murk puffball, spore pods inside. Accent: sage.",
-    "description": "Stretched end to end across the wide box: a long tube gun grown from a giant puffball fungus of the fog planet Murk, its breech a hinged mushroom cap at one end, the open muzzle at the other, round sage spore pods inside."
+    "brief": "Fat living tube gun grown from a Murk puffball. Accent: sage.",
+    "description": "Filling the wide box edge to edge, top to bottom: a fat tube gun grown from a giant Murk puffball fungus, a hinged mushroom-cap breech at one end, a wide open muzzle at the other, a row of big sage spore pods along its side."
   },
   "meteor_hammer": {
     "brief": "Hammer whose head is a whole little meteor with a re-entry scorch. Accent: coral red.",

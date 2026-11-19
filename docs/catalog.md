@@ -260,7 +260,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Vacuum Slug | common | 3 | `##` | pet, organic | Every 4 s: inflict 1 Toxin. | → Plague Slug, Jelly Swarm |
 | Rock Crab | common | 3 | `##` | pet, armor, organic | Battle start: gain 17 Shield and 1 Spikes. | → Fortress Crab, Shell Dragon |
 | Asteroid Mole | common | 3 | `#/#` | pet, organic | Every 3 s: deal 5 damage. | → Drill Mole |
-| Scout Drone | common | 3 | `*#*/.#.` | pet, mechanical | Starred weapons: 20 % faster. | → Medic Drone |
+| Scout Drone | common | 3 | `*##*` | pet, mechanical | Starred weapons: 20 % faster. | → Medic Drone |
 | Dune Ox | common | 4 | `##/##` | pet, beast, weapon, organic | 5–7 damage every 2.6 s. Melee, attacks without Energy. Battle start: gain 6 Shield. |  |
 | Tardigrade | rare | 4 | `#` | pet, organic | Once below 50 % health: gain 49 Shield. You: +21 max health. |  |
 | Repair Bot | rare | 5 | `#/#` | pet, mechanical | Every 3 s: gain 7 Shield. | → Welder Bot, Caretaker Bot |
@@ -271,7 +271,7 @@ The star itself. Starts every fight with Power and gains more with every star ph
 | Needle Wasps | rare | 5 | `##` | pet, swarm, weapon, organic | 1–2 damage every 0.9 s. Melee, attacks without Energy. This item: +15 % crit. |  |
 | Purifier Bot | rare | 5 | `#/#` | pet, mechanical | Every 2.5 s: remove 1 of your debuffs and gain 4 Shield. | → Caretaker Bot |
 | Comet Fox | rare | 6 | `##` | pet, weapon, organic | 3–4 damage every 1.6 s. Melee, attacks without Energy. This item: +15 % crit. On hit: inflict 1 Burn (30 % chance). | → Magma Hound |
-| Sentry Drone | rare | 6 | `#/#` | pet, weapon, mechanical | 2–3 damage every 1.2 s. Ranged, attacks without Energy. | → Gunship Drone |
+| Sentry Drone | rare | 6 | `##` | pet, weapon, mechanical | 2–3 damage every 1.2 s. Ranged, attacks without Energy. | → Gunship Drone |
 | Tundra Yak | rare | 6 | `##/##` | pet, beast, weapon, organic | 7–9 damage every 2.4 s. Melee, attacks without Energy. You: +20 max health. |  |
 | Guardian Drone | rare | 6 | `##` | pet, mechanical | Every 3 s: gain 7 Shield. When a weapon hits you: gain 5 Shield (20 % chance). |  |
 | Shadow Lynx | epic | 8 | `###` | pet, weapon, organic | 3–5 damage every 1.4 s. Melee, attacks without Energy. This item: +25 % crit. | → Snow Lynx |
