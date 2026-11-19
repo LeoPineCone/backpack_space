@@ -132,10 +132,10 @@
     "eliteLevels": 3,
     "cosmeticAt": [3, 6, 10, 15],
     "rewards": [
-      { "level": 20, "kinds": ["skin", "pin", "frame"] },
-      { "level": 21, "kinds": ["pin", "title"] },
-      { "level": 22, "kinds": ["pin", "title"] },
-      { "level": 23, "kinds": ["pin", "title"] }
+      { "level": 20, "kinds": ["skin", "badge", "frame"] },
+      { "level": 21, "kinds": ["badge", "title"] },
+      { "level": 22, "kinds": ["badge", "title"] },
+      { "level": 23, "kinds": ["badge", "title"] }
     ]
   },
   "planetTrack": [

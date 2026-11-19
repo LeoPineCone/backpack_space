@@ -23,7 +23,7 @@ export const Reward = z.union([
 ]);
 export type Reward = z.infer<typeof Reward>;
 
-export const COSMETIC_KINDS = ["background", "grid", "skin", "heroCosmetic", "patch", "picture", "pin", "title", "frame"] as const;
+export const COSMETIC_KINDS = ["background", "grid", "skin", "heroCosmetic", "patch", "picture", "badge", "title", "frame"] as const;
 export type CosmeticKind = (typeof COSMETIC_KINDS)[number];
 
 export const MetaData = z.object({
@@ -68,7 +68,7 @@ export const MetaData = z.object({
     /** levels that give the hero a cosmetic (placeholders `<hero>_lv<level>` until the cosmetics are designed) */
     cosmeticAt: z.array(z.number().int().min(2)),
     /** levels that give the hero cosmetics of these kinds, made per hero as `<hero>_lv<level>_<kind>` */
-    rewards: z.array(z.object({ level: z.number().int().min(2), kinds: z.array(z.enum(["skin", "pin", "title", "frame"])).min(1) }).strict()),
+    rewards: z.array(z.object({ level: z.number().int().min(2), kinds: z.array(z.enum(["skin", "badge", "title", "frame"])).min(1) }).strict()),
   }).strict(),
   /** permanent, across seasons: total Galaxies ever earned unlock each step */
   planetTrack: z.array(z.object({ galaxies: z.number().int().positive(), reward: Reward }).strict()).min(1),
