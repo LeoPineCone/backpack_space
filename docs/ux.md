@@ -146,7 +146,7 @@ One popup with five tabs; every entry opens the matching tab:
 
 **M4 Customise (profile)**
 
-Everything the player customises lives in the profile: player picture, player name, menu background, hero skins, the league patch and a title. **Decided** (2026-11-17) Tap a patch or a background to wear it; the start screen changes at once. The worn title shows above the name (Ilja 2026-11-19: picture, title, name, patch or pin at the side); titles are only earned (Elite hero levels), never sold.
+Everything the player customises lives in the profile: player picture, player name, menu background, hero skins, the league patch and a title. **Decided** (2026-11-17) Tap a patch or a background to wear it; the start screen changes at once. The worn title shows above the name (Ilja 2026-11-19: picture, title, name, patch or badge at the side); titles are only earned (Elite hero levels), never sold.
 
 **M5 Season pass**
 

@@ -123,10 +123,10 @@ Time to level 20 with the main hero (assumptions: 2 / 4 / 6 runs a day on 4 / 6 
 | Level | Reward |
 | --- | --- |
 | 3, 6, 10, 15 | a hero cosmetic (placeholder `<hero>_lv<level>`, still to be designed) |
-| 20 | a skin, a pin and a frame around the hero (the frame is a draft until the design shows it works) |
-| 21, 22, 23 | a pin and a title |
+| 20 | a skin, a badge and a frame around the hero (the frame is a draft until the design shows it works) |
+| 21, 22, 23 | a badge and a title |
 
-**Titles** are new: one title is worn next to the name on the profile. Titles cannot be bought, only earned, in different situations; the Elite levels are the first source, more come later. The profile card shows the player picture on top, then the title, then the name, with the patch or pin at the side. Where pins are worn is decided later. Title words are placeholders for now ("Venn Elite 1").
+**Titles** are new: one title is worn next to the name on the profile. Titles cannot be bought, only earned, in different situations; the Elite levels are the first source, more come later. The profile card shows the player picture on top, then the title, then the name, with the patch or badge at the side. Where badges are worn is decided later. Title words are placeholders for now ("Venn Elite 1").
 
 ## Daily and weekly quests
 
@@ -171,7 +171,7 @@ Ideas (not decided):
 - The 9 new places of the planet track.
 - How many free Credits, and what does a hero cost?
 - Premium pass price? (Season length decided 2026-11-18: 3 months.)
-- Which cosmetics go on hero levels 3, 6, 10 and 15, and what the pins, frames and titles look like and say? Where pins are worn?
+- Which cosmetics go on hero levels 3, 6, 10 and 15, and what the badges, frames and titles look like and say? Where badges are worn?
 - Leagues: points formula, points per league, final league names?
 - First minutes of a new player (onboarding, first runs, when leagues and the pass appear).
 
@@ -188,7 +188,7 @@ Assumptions of step 1 (open for change):
 
 - Rewards are handed out automatically when a step is reached; there is no claim button.
 - Heroes that no season brings are owned from the start (today all 4). A season hero comes with the premium pass at level 1.
-- Hero level rewards at levels 3, 6, 10 and 15 are placeholders (`<hero>_lv<level>`), until it is decided which cosmetics go there. Levels 20 to 23 give `<hero>_lv<level>_<kind>` (skin, pin, frame, title).
+- Hero level rewards at levels 3, 6, 10 and 15 are placeholders (`<hero>_lv<level>`), until it is decided which cosmetics go there. Levels 20 to 23 give `<hero>_lv<level>_<kind>` (skin, badge, frame, title).
 - League points depend on wins only: minus up to 5 wins, 0 at 6, plus from 7 wins upwards.
 - League patch ids are `patch_s<season>_<league>`. Every reached league counts as the floor, so the league at the end of a season is the highest reached.
 - Free Credits come from the free pass.

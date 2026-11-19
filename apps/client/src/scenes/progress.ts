@@ -47,7 +47,7 @@ const KIND_ICON: Record<string, string> = {
   skin: "skin",
   heroCosmetic: "skin",
   patch: "patch",
-  pin: "star",
+  badge: "star",
   title: "flag",
   frame: "hero",
 };

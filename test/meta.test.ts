@@ -204,9 +204,9 @@ describe("hero levels", () => {
     below.season.points = below.season.points + per - 1;
     expect(bookRun(meta, below, { ...run({ completed: true }), wins: 12 }).xp).toBe(0);
   });
-  it("give skin, pin and frame at level 20 and a pin and a title at each Elite level", () => {
-    expect(heroLevelRewards(meta, "venn", last - 1, last)).toEqual(["skin", "pin", "frame"].map((k) => ({ cosmetic: heroRewardId("venn", last, k) })));
-    for (let lv = last + 1; lv <= top; lv++) expect(heroLevelRewards(meta, "venn", lv - 1, lv)).toEqual(["pin", "title"].map((k) => ({ cosmetic: heroRewardId("venn", lv, k) })));
+  it("give skin, badge and frame at level 20 and a badge and a title at each Elite level", () => {
+    expect(heroLevelRewards(meta, "venn", last - 1, last)).toEqual(["skin", "badge", "frame"].map((k) => ({ cosmetic: heroRewardId("venn", last, k) })));
+    for (let lv = last + 1; lv <= top; lv++) expect(heroLevelRewards(meta, "venn", lv - 1, lv)).toEqual(["badge", "title"].map((k) => ({ cosmetic: heroRewardId("venn", lv, k) })));
     const title = heroRewardId("venn", top, "title");
     expect(meta.cosmeticById.get(title)).toMatchObject({ kind: "title", hero: "venn", level: top });
     expect(rewardTrack(meta, { cosmetic: title })).toBe("level");
@@ -222,7 +222,7 @@ describe("hero levels", () => {
     const q = equip(meta, p, "title", title)!;
     expect(q.equipped.title).toBe(title);
     expect(equip(meta, q, "title", null)!.equipped.title).toBeNull();
-    expect(equip(meta, p, "title", heroRewardId("venn", last, "pin"))).toBeNull();
+    expect(equip(meta, p, "title", heroRewardId("venn", last, "badge"))).toBeNull();
   });
 });
 
