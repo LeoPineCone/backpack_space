@@ -87,7 +87,9 @@ describe("quests on the server (META-06, CORE-07)", () => {
     expect(fin.status).toBe(200);
     const booked = RunFinishResponse.parse(fin.body);
     expect(booked.result).toMatchObject({ quest: quest.id, points: 0 });
-    expect(booked.result.galaxies).toBe(booked.result.wins * meta.run.galaxies.perWin + booked.result.livesLeft * meta.run.galaxies.perLifeLeft);
+    expect(booked.result.galaxies).toBe(
+      booked.result.wins * meta.run.galaxies.perWin + booked.result.livesLeft * meta.run.galaxies.perLifeLeft + meta.quests.bonusGalaxies[quest.kind],
+    );
     expect(booked.profile.season.points).toBe(start.season.points);
     expect(await players.get(playerKey(playerId), questKey(quest.id))).toMatchObject({ runId: run.runId });
     // booked once

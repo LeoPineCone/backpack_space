@@ -105,12 +105,15 @@ describe("which quests are open (META-06)", () => {
 });
 
 describe("booking a quest run", () => {
-  it("pays Galaxies and hero XP like a run, but no league points", () => {
+  it("pays Galaxies and hero XP like a run plus the quest bonus, but no league points", () => {
     const p = newProfile(meta);
     const summary = { hero, wins: 9, livesLeft: 1, roundsPlayed: 12, completed: true };
     const normal = bookRun(meta, p, summary);
-    const quest = bookRun(meta, p, summary, { quest: true });
-    expect(quest.galaxies).toBe(normal.galaxies);
+    const quest = bookRun(meta, p, summary, { quest: "d2026-11-19:goldRain" });
+    const weekly = bookRun(meta, p, summary, { quest: "w2026-11-16:oneShot" });
+    expect(quest.galaxies).toBe(normal.galaxies + meta.quests.bonusGalaxies.daily);
+    expect(weekly.galaxies).toBe(normal.galaxies + meta.quests.bonusGalaxies.weekly);
+    expect(weekly.profile.season.galaxies).toBe(weekly.galaxies);
     expect(quest.xp).toBe(normal.xp);
     expect(normal.points).toBeGreaterThan(0);
     expect(quest.points).toBe(0);

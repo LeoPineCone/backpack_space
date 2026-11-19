@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 import { parseOrThrow, type GameData } from "./gamedata.js";
-import { checkQuests, QuestsData } from "./quests.js";
+import { checkQuests, questKind, QuestsData } from "./quests.js";
 
 const Int = z.number().int().min(0);
 
@@ -93,7 +93,11 @@ export const MetaData = z.object({
     /** the hero this season brings (premium pass level 1), if any */
     hero: z.string().optional(),
     pass: z.object({
+      $comment: z.string().optional(),
+      /** Galaxies for each level after the `firstLevels` */
       galaxiesPerLevel: z.number().int().positive(),
+      /** Galaxies for level 2, 3, ... before the flat `galaxiesPerLevel` starts (a fast start); none: flat from level 2 */
+      firstLevels: z.array(z.number().int().positive()).optional(),
       /** level 1, 2, ...; level 1 is open from the start of the season */
       levels: z.array(z.object({ free: Reward.optional(), premium: Reward.optional() }).strict()).min(1),
     }).strict(),
@@ -314,10 +318,20 @@ export function seasonData(meta: Meta, id: number) {
   return s;
 }
 
-/** Pass level for Galaxies earned this season: level 1 at 0, then one level per `galaxiesPerLevel`. */
+/** Galaxies earned in a season needed for a pass level: none for level 1, then `firstLevels`, then `galaxiesPerLevel` each. */
+export function passGalaxies(pass: { galaxiesPerLevel: number; firstLevels?: number[] }, level: number): number {
+  const first = pass.firstLevels ?? [];
+  let total = 0;
+  for (let lv = 2; lv <= level; lv++) total += first[lv - 2] ?? pass.galaxiesPerLevel;
+  return total;
+}
+
+/** Pass level for Galaxies earned this season: level 1 at 0, then one level each time `passGalaxies` is reached. */
 export function passLevel(meta: Meta, s: { id: number; galaxies: number }): number {
   const pass = seasonData(meta, s.id).pass;
-  return Math.min(pass.levels.length, 1 + Math.floor(s.galaxies / pass.galaxiesPerLevel));
+  let lv = 1;
+  while (lv < pass.levels.length && s.galaxies >= passGalaxies(pass, lv + 1)) lv++;
+  return lv;
 }
 
 function passRewardsUpTo(meta: Meta, s: SeasonState, to: number, from: number): Reward[] {
@@ -447,13 +461,14 @@ export interface RunBooking {
 }
 
 /**
- * Books a finished run: hero XP, Galaxies (season pass and planet track), league points. A quest run (`quest`) books
- * no league points: its special rule makes it unlike a normal run. Only a ranked run (not a quest) played in the highest
+ * Books a finished run: hero XP, Galaxies (season pass and planet track), league points. A quest run (`quest`, the quest
+ * id) books no league points: its special rule makes it unlike a normal run. It pays the quest's bonus Galaxies on top. Only a ranked run (not a quest) played in the highest
  * league group fills the Elite levels; the league counts as it was when the run was played, before its points.
  */
-export function bookRun(meta: Meta, p0: Profile, r: RunSummary, opts: { quest?: boolean } = {}): RunBooking {
+export function bookRun(meta: Meta, p0: Profile, r: RunSummary, opts: { quest?: string } = {}): RunBooking {
   const p = clone(p0);
-  const galaxies = runGalaxies(meta, r);
+  const kind = opts.quest ? questKind(opts.quest) : null;
+  const galaxies = runGalaxies(meta, r) + (kind ? meta.quests.bonusGalaxies[kind] : 0);
   const xp0 = p.heroXp[r.hero] ?? 0;
   const elite = !opts.quest && isEliteLeague(meta, leagueOf(meta, p.season.points));
   const xp1 = addHeroXp(meta, xp0, runHeroXp(meta, r, p.season), elite);

@@ -27,15 +27,56 @@ Battles are asynchronous against saved backpacks of real players. While the data
 | Track | Driven by | Duration | Rewards |
 | --- | --- | --- | --- |
 | Hero levels | Hero XP | Permanent, per hero | Cosmetics for that hero |
-| Planet track | Galaxies | Permanent, across seasons | Menu backgrounds: different planets, lightly animated. Some Credits. |
+| Planet track | Galaxies | Permanent, across seasons | Menu backgrounds: 20 planets, lightly animated; more come over time. |
 | Season pass (free) | Galaxies | One season | Cosmetics, some Credits. No new hero. |
 | Season pass (premium) | Galaxies | One season | New hero from level 1, skins, grid backgrounds |
 
-Where exactly free Credits come from (free pass, planet track) is an assumption, not yet decided.
+Free Credits come from the free pass. Whether the planet track gives anything between its planets is open.
 
 **Heroes:** 4 heroes are playable from the start. Each new season adds one more hero. Premium pass owners get it right away; everyone else can buy it for Credits later.
 
-**Planet ideas:** ice planet with drifting floes, gas giant with a storm eye, lava planet with glowing cracks, ringed planet with a turning ring, jungle planet (fits Venn), and at the end the dying sun (a nod to Ysel).
+## Season pass
+
+Decided by Ilja on 2026-11-19. The pass has 50 levels and is full after 940 Galaxies earned in the season: levels 2 to 5 cost 10 Galaxies each (a fast start), levels 6 to 50 cost 20 each, about 5 runs a level (`seasons[].pass.firstLevels` and `galaxiesPerLevel`). A run pays about 4 Galaxies at half the fights won.
+
+| Player | Galaxies per week | Level 10 | Level 25 | Level 50 | Level at season end |
+| --- | --- | --- | --- | --- | --- |
+| Casual (2 runs a day, 4 days a week) | 32 | 4.4 weeks | – | – | 23 |
+| Regular (4 runs a day, 6 days) | 96 | 10 days | 4.6 weeks | 9.8 weeks | 50 |
+| Heavy (6 runs a day, 7 days) | 168 | 6 days | 2.6 weeks | 5.6 weeks | 50 |
+
+The quest bonus (below) adds a little on top. A regular player fills the pass with 3 weeks to spare.
+
+**Rewards** (season 1, placeholders until the cosmetics exist; Credits amounts follow the prices, STORE-12):
+
+| Lane | Reward | Levels |
+| --- | --- | --- |
+| Premium | the season hero (season 1 has none) | 1 |
+| Premium | a skin for each of the 4 base heroes | 10, 20, 30, 40 |
+| Premium | the season hero's skin (season 1: a player picture) | 50 |
+| Premium | grid backgrounds and player pictures | 15, 25, 35, 45 |
+| Premium | Credits | all other levels from 2 |
+| Free | Credits | every second level |
+| Free | a grid background | 25 |
+
+Buying the premium pass later in the season hands out the premium rewards of every level already reached. Galaxies past level 50 still move the planet track. Something more after level 50 is wanted, but not Credits; what it is stays open.
+
+## Planet track
+
+Decided by Ilja on 2026-11-19. The planet track counts every Galaxy ever earned and never resets. It has 20 planets; the last one, the Dying Corona, needs 4,400 Galaxies. The gaps grow from 30 to 750 Galaxies: everyone gets a new planet in the first week, later each planet is something special. Cinder is the start background and not on the track.
+
+| Player | Planet 5 | Planet 10 | Planet 15 | Planet 20 |
+| --- | --- | --- | --- | --- |
+| Casual | 7 weeks | 22 weeks | 57 weeks | 2.6 years |
+| Regular | 2.3 weeks | 7.5 weeks | 19 weeks | 46 weeks (3.5 seasons) |
+| Heavy | 9 days | 4.3 weeks | 11 weeks | 26 weeks (2 seasons) |
+
+**Order** (`planetTrack`, total Galaxies): Rime 30, Pell 70, Ochre 110, The Drift 160, Thinwind 220, Gemell 280, new place 360, The Scrap Belt (Rook) 460, new place 580, The Garden Station (Venn) 720, new place 880, Herdworld (Quill) 1,060, new place 1,270, Vigil (Ysel) 1,520, five new places 1,820 / 2,170 / 2,580 / 3,060 / 3,650, The Dying Corona 4,400. The heroes' homes sit in the middle, the dying sun is the finale.
+
+- The 9 new places are placeholders (`bg_tbd_1` to `bg_tbd_9`, "Unknown planet") until they are written into `lore/planets.json`; Ilja does not want drafts yet.
+- New planets are added over time, at the end of the track, about 750 Galaxies apart (a regular player: about 8 weeks).
+- Every planet needs a surface map (`.claude/skills/planet-art/SKILL.md`); until then it shows the placeholder.
+- Nothing lies between the planets for now; whether small rewards go there is open.
 
 ## Hero levels
 
@@ -89,7 +130,7 @@ Time to level 20 with the main hero (assumptions: 2 / 4 / 6 runs a day on 4 / 6 
 
 ## Daily and weekly quests
 
-Every quest is a whole run with one special rule (decided by Ilja 2026-11-18, rules 1 to 7 of the proposal list). Opponents come from the normal pool. A quest run pays Galaxies and hero XP like a normal run, but no league points and no XP for the Elite levels. Every day 3 daily quests are open and every week (Monday to Sunday, UTC) 1 weekly quest; which ones follows from the date alone, the same for everyone. Each quest can be played once in its day or week.
+Every quest is a whole run with one special rule (decided by Ilja 2026-11-18, rules 1 to 7 of the proposal list). Opponents come from the normal pool. A quest run pays Galaxies and hero XP like a normal run, but no league points and no XP for the Elite levels. On top it pays bonus Galaxies: 1 for a daily quest, 5 for a weekly one (decided 2026-11-19, `quests.bonusGalaxies`); for now every booked quest run gets them. Every day 3 daily quests are open and every week (Monday to Sunday, UTC) 1 weekly quest; which ones follows from the date alone, the same for everyone. Each quest can be played once in its day or week.
 
 | Rule | What changes | Daily | Weekly |
 | --- | --- | --- | --- |
@@ -101,7 +142,7 @@ Every quest is a whole run with one special rule (decided by Ilja 2026-11-18, ru
 | Far light | the shop offers the rarities of 3 rounds later | yes | – |
 | No gifts | no free picks after rounds 2 and 6 | yes | – |
 
-The numbers and which rules are daily or weekly live in `data/meta.json` → `quests`; the core turns a rule into changed run rules (`packages/core/src/quests.ts`). Still open: when a quest counts as done (just played, or a number of wins) and what extra reward it gives.
+The numbers and which rules are daily or weekly live in `data/meta.json` → `quests`; the core turns a rule into changed run rules (`packages/core/src/quests.ts`). Still open: when a quest counts as done (just played, or a number of wins).
 
 ## Leagues
 
@@ -125,8 +166,9 @@ Ideas (not decided):
 
 ## Open points
 
-- Daily and weekly quests: when does one count as done, and what extra reward does it give?
-- Speed of the planet track and pass (Galaxies per level)? (Hero levels decided 2026-11-19.)
+- Daily and weekly quests: when does one count as done?
+- What comes after pass level 50 (not Credits), and whether the planet track has rewards between its planets? (Speed of hero levels, pass and planet track decided 2026-11-19.)
+- The 9 new places of the planet track.
 - How many free Credits, and what does a hero cost?
 - Premium pass price? (Season length decided 2026-11-18: 3 months.)
 - Which cosmetics go on hero levels 3, 6, 10 and 15, and what the badges, frames and titles look like and say? Where badges are worn?
@@ -138,7 +180,7 @@ Ideas (not decided):
 Step 1 (2026-11-16): the structure, with placeholder numbers. Nothing here is balanced yet.
 
 - **Rules** in the core, `packages/core/src/meta.ts`, pure and without clock reads: `bookRun` (hero XP, Galaxies, league points and everything they unlock), `heroLevel`, `passLevel`, `leagueOf` / `addLeaguePoints` (league floor), `enterSeason` (patch for the ended season, down to the highest league of the next lower group, new pass), `seasonAt` (season of a date the caller passes in), `unlockPremium`, `equip`. Tests: `test/meta.test.ts`.
-- **Numbers** in `data/meta.json`, checked by `npm run validate`: Galaxies per win and per life left (1 and 1, as decided), hero XP per round played and the completion bonus, the XP table of 20 hero levels plus 3 Elite levels and the levels that give hero cosmetics, the planet track (6 planets plus some Credits), 10 leagues (100 points each, points by wins, league groups for the season reset), the cosmetics, season 1 with 30 pass levels.
+- **Numbers** in `data/meta.json`, checked by `npm run validate`: Galaxies per win and per life left (1 and 1, as decided), hero XP per round played and the completion bonus, the XP table of 20 hero levels plus 3 Elite levels and the levels that give hero cosmetics, the planet track (20 planets), 10 leagues (100 points each, points by wins, league groups for the season reset), the cosmetics, season 1 with 50 pass levels.
 - **Client** (`apps/client`): the profile is kept on the device (`src/profile.ts`). The run end shows Galaxies (wins + lives), hero XP and level, league points and what was unlocked. The hero screen shows league, Galaxies, Credits, the hero's level and the equipped background. One popup with five tabs (hero levels, planets, season pass, leagues, profile) behind the league badge, the level, the Galaxies and the pass button; the "i" button explains the symbols. On start the client checks whether a new season has begun.
 - **Opponents** come through `OpponentSource` (`apps/client/src/opponents.ts`). For now: the stored bot builds; a server with saved player backpacks replaces it without touching the screens.
 
@@ -149,7 +191,7 @@ Assumptions of step 1 (open for change):
 - Hero level rewards at levels 3, 6, 10 and 15 are placeholders (`<hero>_lv<level>`), until it is decided which cosmetics go there. Levels 20 to 23 give `<hero>_lv<level>_<kind>` (skin, badge, frame, title).
 - League points depend on wins only: minus up to 5 wins, 0 at 6, plus from 7 wins upwards.
 - League patch ids are `patch_s<season>_<league>`. Every reached league counts as the floor, so the league at the end of a season is the highest reached.
-- Free Credits come from the free pass and the planet track.
+- Free Credits come from the free pass.
 - Season 1 started on 2026-11-01 and has no season hero.
 
 Not built yet (step 2 and later): quest rewards beyond a normal run, the shop for skins, heroes and Credits, buying the premium pass, real payments, accounts and a server, real art for planets, patches and skins.

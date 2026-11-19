@@ -3,28 +3,53 @@
   "start": {
     "name": "Pilot",
     "credits": 0,
-    "cosmetics": [
-      "bg_home",
-      "pic_pilot"
-    ],
+    "cosmetics": ["bg_home", "pic_pilot"],
     "background": "bg_home",
     "picture": "pic_pilot"
   },
-  "matching": { "easyRuns": 3 },
+  "matching": {
+    "easyRuns": 3
+  },
   "quests": {
-    "$comment": "Ilja 2026-11-18: rules 1 to 7 of the proposal list. When a quest counts as done and its bonus are still open.",
+    "$comment": "Ilja 2026-11-18: rules 1 to 7 of the proposal list. Ilja 2026-11-19: bonus Galaxies +1 per daily, +5 per weekly. When a quest counts as done is still open.",
     "perDay": 3,
     "perWeek": 1,
     "daily": ["shortFlight", "earlyNova", "goldRain", "noReroll", "farLight", "noGifts"],
     "weekly": ["oneShot", "earlyNova"],
+    "bonusGalaxies": {
+      "daily": 1,
+      "weekly": 5
+    },
     "rules": [
-      { "id": "shortFlight", "rounds": 6, "lives": 2 },
-      { "id": "oneShot", "lives": 1 },
-      { "id": "earlyNova", "phaseSeconds": 4 },
-      { "id": "goldRain", "goldBonus": 5 },
-      { "id": "noReroll", "noReroll": true },
-      { "id": "farLight", "rarityAhead": 3 },
-      { "id": "noGifts", "noSpecials": true }
+      {
+        "id": "shortFlight",
+        "rounds": 6,
+        "lives": 2
+      },
+      {
+        "id": "oneShot",
+        "lives": 1
+      },
+      {
+        "id": "earlyNova",
+        "phaseSeconds": 4
+      },
+      {
+        "id": "goldRain",
+        "goldBonus": 5
+      },
+      {
+        "id": "noReroll",
+        "noReroll": true
+      },
+      {
+        "id": "farLight",
+        "rarityAhead": 3
+      },
+      {
+        "id": "noGifts",
+        "noSpecials": true
+      }
     ]
   },
   "names": {
@@ -128,114 +153,157 @@
   },
   "heroLevels": {
     "$comment": "Ilja 2026-11-19 (docs/retention.md 'Hero levels'): level 20 after about 436 runs with one hero, a heavy player (6 runs a day) after 2 seasons; levels 21 to 23 are Elite levels, 255 ranked runs in the Elite league group.",
-    "xp": [400, 800, 1600, 2400, 4100, 6600, 9900, 14500, 20500, 29500, 42000, 58500, 79000, 104500, 137000, 177000, 225000, 282000, 349000, 405000, 473000, 553000],
+    "xp": [
+      400, 800, 1600, 2400, 4100, 6600, 9900, 14500, 20500, 29500, 42000, 58500, 79000, 104500, 137000, 177000, 225000, 282000, 349000, 405000, 473000, 553000
+    ],
     "eliteLevels": 3,
     "cosmeticAt": [3, 6, 10, 15],
     "rewards": [
-      { "level": 20, "kinds": ["skin", "badge", "frame"] },
-      { "level": 21, "kinds": ["badge", "title"] },
-      { "level": 22, "kinds": ["badge", "title"] },
-      { "level": 23, "kinds": ["badge", "title"] }
+      {
+        "level": 20,
+        "kinds": ["skin", "badge", "frame"]
+      },
+      {
+        "level": 21,
+        "kinds": ["badge", "title"]
+      },
+      {
+        "level": 22,
+        "kinds": ["badge", "title"]
+      },
+      {
+        "level": 23,
+        "kinds": ["badge", "title"]
+      }
     ]
   },
   "planetTrack": [
     {
       "galaxies": 30,
       "reward": {
-        "cosmetic": "bg_ice"
+        "cosmetic": "bg_rime"
       }
     },
     {
-      "galaxies": 60,
+      "galaxies": 70,
       "reward": {
-        "credits": 20
+        "cosmetic": "bg_pell"
       }
     },
     {
-      "galaxies": 100,
+      "galaxies": 110,
       "reward": {
-        "cosmetic": "bg_gas"
+        "cosmetic": "bg_ochre"
       }
     },
     {
-      "galaxies": 150,
+      "galaxies": 160,
       "reward": {
-        "credits": 20
+        "cosmetic": "bg_drift"
       }
     },
     {
       "galaxies": 220,
       "reward": {
-        "cosmetic": "bg_lava"
+        "cosmetic": "bg_thinwind"
       }
     },
     {
-      "galaxies": 300,
+      "galaxies": 280,
       "reward": {
-        "credits": 30
+        "cosmetic": "bg_gemell"
       }
     },
     {
-      "galaxies": 400,
+      "galaxies": 360,
       "reward": {
-        "cosmetic": "bg_ring"
+        "cosmetic": "bg_tbd_1"
       }
     },
     {
-      "galaxies": 520,
+      "galaxies": 460,
       "reward": {
-        "credits": 30
+        "cosmetic": "bg_scrap_belt"
       }
     },
     {
-      "galaxies": 660,
+      "galaxies": 580,
       "reward": {
-        "cosmetic": "bg_jungle"
+        "cosmetic": "bg_tbd_2"
       }
     },
     {
-      "galaxies": 820,
+      "galaxies": 720,
       "reward": {
-        "credits": 40
+        "cosmetic": "bg_garden_station"
       }
     },
     {
-      "galaxies": 1000,
+      "galaxies": 880,
       "reward": {
-        "cosmetic": "bg_dying_sun"
+        "cosmetic": "bg_tbd_3"
+      }
+    },
+    {
+      "galaxies": 1060,
+      "reward": {
+        "cosmetic": "bg_herdworld"
+      }
+    },
+    {
+      "galaxies": 1270,
+      "reward": {
+        "cosmetic": "bg_tbd_4"
+      }
+    },
+    {
+      "galaxies": 1520,
+      "reward": {
+        "cosmetic": "bg_vigil"
+      }
+    },
+    {
+      "galaxies": 1820,
+      "reward": {
+        "cosmetic": "bg_tbd_5"
+      }
+    },
+    {
+      "galaxies": 2170,
+      "reward": {
+        "cosmetic": "bg_tbd_6"
+      }
+    },
+    {
+      "galaxies": 2580,
+      "reward": {
+        "cosmetic": "bg_tbd_7"
+      }
+    },
+    {
+      "galaxies": 3060,
+      "reward": {
+        "cosmetic": "bg_tbd_8"
+      }
+    },
+    {
+      "galaxies": 3650,
+      "reward": {
+        "cosmetic": "bg_tbd_9"
+      }
+    },
+    {
+      "galaxies": 4400,
+      "reward": {
+        "cosmetic": "bg_corona"
       }
     }
   ],
   "leagues": {
-    "ids": [
-      "dust",
-      "asteroid",
-      "comet",
-      "moon",
-      "planet",
-      "gasGiant",
-      "star",
-      "nova",
-      "pulsar",
-      "quasar"
-    ],
+    "ids": ["dust", "asteroid", "comet", "moon", "planet", "gasGiant", "star", "nova", "pulsar", "quasar"],
     "groups": [2, 3, 3, 2],
     "pointsPerLeague": 100,
-    "pointsByWins": [
-      -30,
-      -25,
-      -20,
-      -15,
-      -10,
-      -5,
-      0,
-      10,
-      20,
-      30,
-      40,
-      50,
-      60
-    ]
+    "pointsByWins": [-30, -25, -20, -15, -10, -5, 0, 10, 20, 30, 40, 50, 60]
   },
   "cosmetics": [
     {
@@ -244,30 +312,95 @@
       "planet": "cinder"
     },
     {
-      "id": "bg_ice",
+      "id": "bg_rime",
       "kind": "background",
       "planet": "rime"
     },
     {
-      "id": "bg_gas",
-      "kind": "background"
-    },
-    {
-      "id": "bg_lava",
+      "id": "bg_pell",
       "kind": "background",
-      "planet": "cinder"
+      "planet": "pell"
     },
     {
-      "id": "bg_ring",
+      "id": "bg_ochre",
+      "kind": "background",
+      "planet": "ochre"
+    },
+    {
+      "id": "bg_drift",
+      "kind": "background",
+      "planet": "the_drift"
+    },
+    {
+      "id": "bg_thinwind",
+      "kind": "background",
+      "planet": "thinwind"
+    },
+    {
+      "id": "bg_gemell",
+      "kind": "background",
+      "planet": "gemell"
+    },
+    {
+      "id": "bg_tbd_1",
       "kind": "background"
     },
     {
-      "id": "bg_jungle",
+      "id": "bg_scrap_belt",
+      "kind": "background",
+      "planet": "scrap_belt"
+    },
+    {
+      "id": "bg_tbd_2",
       "kind": "background"
     },
     {
-      "id": "bg_dying_sun",
+      "id": "bg_garden_station",
+      "kind": "background",
+      "planet": "garden_station"
+    },
+    {
+      "id": "bg_tbd_3",
       "kind": "background"
+    },
+    {
+      "id": "bg_herdworld",
+      "kind": "background",
+      "planet": "herdworld"
+    },
+    {
+      "id": "bg_tbd_4",
+      "kind": "background"
+    },
+    {
+      "id": "bg_vigil",
+      "kind": "background",
+      "planet": "vigil"
+    },
+    {
+      "id": "bg_tbd_5",
+      "kind": "background"
+    },
+    {
+      "id": "bg_tbd_6",
+      "kind": "background"
+    },
+    {
+      "id": "bg_tbd_7",
+      "kind": "background"
+    },
+    {
+      "id": "bg_tbd_8",
+      "kind": "background"
+    },
+    {
+      "id": "bg_tbd_9",
+      "kind": "background"
+    },
+    {
+      "id": "bg_corona",
+      "kind": "background",
+      "planet": "corona"
     },
     {
       "id": "grid_s1_a",
@@ -300,6 +433,22 @@
     {
       "id": "pic_pilot",
       "kind": "picture"
+    },
+    {
+      "id": "grid_s1_c",
+      "kind": "grid"
+    },
+    {
+      "id": "pic_s1_a",
+      "kind": "picture"
+    },
+    {
+      "id": "pic_s1_b",
+      "kind": "picture"
+    },
+    {
+      "id": "pic_s1_c",
+      "kind": "picture"
     }
   ],
   "seasons": [
@@ -307,9 +456,19 @@
       "id": 1,
       "start": "2026-11-01",
       "pass": {
-        "galaxiesPerLevel": 10,
+        "$comment": "Ilja 2026-11-19: 50 levels, levels 2 to 5 cost 10 Galaxies each, then 20 each (940 in total, a regular player after about 10 of 13 weeks). Credits amounts are placeholders (STORE-12).",
+        "galaxiesPerLevel": 20,
+        "firstLevels": [10, 10, 10, 10],
         "levels": [
           {},
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
           {
             "premium": {
               "credits": 10
@@ -317,6 +476,35 @@
           },
           {
             "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
               "credits": 10
             }
           },
@@ -334,21 +522,7 @@
             }
           },
           {
-            "free": {
-              "credits": 10
-            },
             "premium": {
-              "credits": 10
-            }
-          },
-          {},
-          {
-            "premium": {
-              "credits": 10
-            }
-          },
-          {
-            "free": {
               "credits": 10
             }
           },
@@ -357,19 +531,35 @@
               "credits": 5
             },
             "premium": {
-              "cosmetic": "grid_s1_a"
+              "credits": 10
             }
           },
-          {},
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
           {
             "free": {
-              "credits": 10
+              "credits": 5
             },
             "premium": {
               "credits": 10
             }
           },
-          {},
+          {
+            "premium": {
+              "cosmetic": "grid_s1_a"
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
           {
             "premium": {
               "credits": 10
@@ -377,7 +567,20 @@
           },
           {
             "free": {
+              "credits": 5
+            },
+            "premium": {
               "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
             },
             "premium": {
               "cosmetic": "skin_s1_rook"
@@ -388,16 +591,61 @@
               "credits": 10
             }
           },
-          {},
           {
             "free": {
-              "credits": 10
+              "credits": 5
             },
             "premium": {
               "credits": 10
             }
           },
-          {},
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "cosmetic": "grid_s1_c"
+            },
+            "premium": {
+              "cosmetic": "pic_s1_a"
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
           {
             "free": {
               "credits": 5
@@ -407,20 +655,6 @@
             }
           },
           {
-            "free": {
-              "credits": 10
-            }
-          },
-          {
-            "premium": {
-              "credits": 10
-            }
-          },
-          {},
-          {
-            "free": {
-              "credits": 10
-            },
             "premium": {
               "credits": 10
             }
@@ -430,16 +664,45 @@
               "credits": 5
             },
             "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
               "cosmetic": "grid_s1_b"
             }
           },
           {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
             "premium": {
               "credits": 10
             }
           },
           {
             "free": {
+              "credits": 5
+            },
+            "premium": {
               "credits": 10
             }
           },
@@ -448,13 +711,77 @@
               "credits": 10
             }
           },
-          {},
           {
             "free": {
-              "credits": 10
+              "credits": 5
             },
             "premium": {
               "cosmetic": "skin_s1_ysel"
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "cosmetic": "pic_s1_b"
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "premium": {
+              "credits": 10
+            }
+          },
+          {
+            "free": {
+              "credits": 5
+            },
+            "premium": {
+              "cosmetic": "pic_s1_c"
             }
           }
         ]
