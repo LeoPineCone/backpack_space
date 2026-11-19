@@ -89,6 +89,8 @@ export const ProfileBody = z.strictObject({
     picture: Id,
     /** the backpack grid background; null = the plain grid */
     grid: Id.nullable(),
+    /** the title shown with the name; null = none */
+    title: Id.nullable(),
     skins: z.record(Id, Id),
   }),
   season: z.strictObject({
@@ -215,6 +217,8 @@ export const RunResult = z.strictObject({
   wins: z.number().int().min(0),
   livesLeft: z.number().int().min(0),
   roundsPlayed: z.number().int().min(0),
+  /** every round played with a life left: the run earned the completion bonus */
+  completed: z.boolean(),
   galaxies: Count,
   xp: Count,
   /** hero level before and after */
@@ -239,8 +243,8 @@ export type RunFinishResponse = z.infer<typeof RunFinishResponse>;
 export const RunCurrentResponse = z.strictObject({ run: RunBody.nullable(), finished: RunFinishResponse.optional() });
 export type RunCurrentResponse = z.infer<typeof RunCurrentResponse>;
 
-/** POST /profile/equip (ACC-06): wears an owned background, picture, grid background or league patch (null takes off the patch or the grid). */
-export const ProfileEquipRequest = z.strictObject({ slot: z.enum(["background", "patch", "picture", "grid"]), id: Id.nullable() });
+/** POST /profile/equip (ACC-06): wears an owned background, picture, grid background, league patch or title (null takes off the patch, the grid or the title). */
+export const ProfileEquipRequest = z.strictObject({ slot: z.enum(["background", "patch", "picture", "grid", "title"]), id: Id.nullable() });
 export type ProfileEquipRequest = z.infer<typeof ProfileEquipRequest>;
 /** POST /profile/skin (ACC-06): puts an owned skin on its hero (null: the hero's own look). */
 export const ProfileSkinRequest = z.strictObject({ hero: Id, id: Id.nullable() });

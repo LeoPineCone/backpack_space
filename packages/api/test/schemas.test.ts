@@ -52,6 +52,7 @@ const samples: Record<RouteName, { request: unknown; response: unknown }> = {
         wins: 3,
         livesLeft: 0,
         roundsPlayed: 7,
+        completed: false,
         galaxies: 3,
         xp: 100,
         level: [1, 2],

@@ -120,38 +120,22 @@
       "perLifeLeft": 1
     },
     "heroXp": {
-      "perRound": 10,
-      "perWin": 10
+      "$comment": "Ilja 2026-11-19: 100 XP per round played, 500 for a completed run, +25 % for the season hero with the premium pass. About 800 XP per run at half the fights won.",
+      "perRound": 100,
+      "completedBonus": 500,
+      "seasonHeroPremiumPercent": 25
     }
   },
   "heroLevels": {
-    "xp": [
-      100,
-      250,
-      450,
-      700,
-      1000,
-      1350,
-      1750,
-      2200,
-      2700,
-      3250,
-      3850,
-      4500,
-      5200,
-      5950,
-      6750,
-      7600,
-      8500,
-      9450,
-      10450
-    ],
-    "cosmeticAt": [
-      3,
-      6,
-      10,
-      15,
-      20
+    "$comment": "Ilja 2026-11-19 (docs/retention.md 'Hero levels'): level 20 after about 436 runs with one hero, a heavy player (6 runs a day) after 2 seasons; levels 21 to 23 are Elite levels, 255 ranked runs in the Elite league group.",
+    "xp": [400, 800, 1600, 2400, 4100, 6600, 9900, 14500, 20500, 29500, 42000, 58500, 79000, 104500, 137000, 177000, 225000, 282000, 349000, 405000, 473000, 553000],
+    "eliteLevels": 3,
+    "cosmeticAt": [3, 6, 10, 15],
+    "rewards": [
+      { "level": 20, "kinds": ["skin", "pin", "frame"] },
+      { "level": 21, "kinds": ["pin", "title"] },
+      { "level": 22, "kinds": ["pin", "title"] },
+      { "level": 23, "kinds": ["pin", "title"] }
     ]
   },
   "planetTrack": [

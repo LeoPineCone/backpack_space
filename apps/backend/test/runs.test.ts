@@ -101,7 +101,7 @@ describe("run lifecycle on the server", () => {
     const res = await finish(run.runId);
     expect(res.status).toBe(200);
     const { result, profile } = RunFinishResponse.parse(res.body);
-    const summary = { hero: run.hero, wins: 3, livesLeft: 2, roundsPlayed: 5 };
+    const summary = { hero: run.hero, wins: 3, livesLeft: 2, roundsPlayed: 5, completed: false };
     const expected = bookRun(ports.game.meta, { ...before, credits: 0 }, summary);
     expect(result).toMatchObject({ runId: run.runId, ...summary, galaxies: expected.galaxies, xp: expected.xp });
     expect(profile.runs).toBe(before.runs + 1);

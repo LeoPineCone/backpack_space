@@ -20,6 +20,7 @@ function answer(o: { xpBefore: number; xp: number; league: [number, number]; poi
       wins: 8,
       livesLeft: 1,
       roundsPlayed: 12,
+      completed: true,
       galaxies: 9,
       xp: o.xp,
       level: [heroLevel(meta, o.xpBefore).level, heroLevel(meta, xpAfter).level],

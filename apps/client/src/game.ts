@@ -348,7 +348,13 @@ export class Game {
 
   /** Books a finished run into the profile: hero XP, Galaxies, league points and what they unlock. */
   bookRun(run: RunState): RunBooking {
-    const b = bookRun(this.meta, this.profile, { hero: run.hero, wins: run.wins, livesLeft: run.lives, roundsPlayed: run.results.length });
+    const b = bookRun(this.meta, this.profile, {
+      hero: run.hero,
+      wins: run.wins,
+      livesLeft: run.lives,
+      roundsPlayed: run.results.length,
+      completed: run.over && run.lives > 0,
+    });
     this.setProfile(b.profile);
     return b;
   }
